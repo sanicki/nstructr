@@ -50,13 +50,6 @@
           "adjust": "kneeL"
         }
       ],
-      "pose": {
-        "torso": 2,
-        "hipL": -120,
-        "hipR": -120,
-        "kneeL": 112,
-        "kneeR": 112
-      },
       "reach": [
         {
           "hand": "handR",
@@ -71,6 +64,13 @@
           "dy": 10
         }
       ],
+      "pose": {
+        "torso": 2,
+        "hipL": -120,
+        "hipR": -120,
+        "kneeL": 112,
+        "kneeR": 112
+      },
       "phase": "rep"
     },
     {
@@ -84,6 +84,20 @@
         "L",
         "R"
       ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dx": -15,
+          "dy": 8
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": -15,
+          "dy": 8
+        }
+      ],
       "pose": {
         "root": -34,
         "torso": -6,
@@ -91,8 +105,8 @@
         "neck": 30,
         "hipL": -86,
         "hipR": -86,
-        "kneeL": 112,
-        "kneeR": 112
+        "kneeL": 60,
+        "kneeR": 60
       },
       "keep": [
         "ankleL",
