@@ -5,11 +5,9 @@
     <svg class="brand-mark" viewBox="66 62 384 384" aria-hidden="true"><path d="M148 383H94L138 262 110 126 394 383H426" stroke="var(--md-primary)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="292" cy="290" r="40" fill="var(--md-primary)"/></svg>
     <div class="rail-items">
       <a class="nav-item" href="#/workouts" data-nav="workouts"><span class="pill"><span class="icon">fitness_center</span></span><span class="label">Workouts</span></a>
-      <a class="nav-item" href="#/explore" data-nav="explore"><span class="pill"><span class="icon">explore</span></span><span class="label">Explore</span></a>
-    <a class="nav-item" href="#/saved" data-nav="saved"><span class="pill"><span class="icon">bookmarks</span></span><span class="label">Saved</span></a>
-      <a class="nav-item" href="#/create" data-nav="create"><span class="pill"><span class="icon">edit_note</span></span><span class="label">Create</span></a>
+      <a class="nav-item" href="#/exercises" data-nav="exercises"><span class="pill"><span class="icon">sprint</span></span><span class="label">Exercises</span></a>
+      <a class="nav-item" href="#/settings" data-nav="settings"><span class="pill"><span class="icon">settings</span></span><span class="label">Settings</span></a>
     </div>
-    <button class="icon-btn stateful theme-btn" title="Switch theme" aria-label="Switch theme"><span class="icon">dark_mode</span></button>
   </nav>
 
   <div class="main">
@@ -19,11 +17,10 @@
         <path d="M148 383H94L138 262 110 126 394 383H426" stroke="var(--md-primary)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="292" cy="290" r="40" fill="var(--md-primary)"/></svg>
       <h1 class="title-large" id="barTitle">NstructR</h1>
       <button class="icon-btn stateful" id="saveBtn" aria-label="Save to my exercises" title="Save" hidden><span class="icon">bookmark_add</span></button>
-      <button class="icon-btn stateful theme-btn bar-theme" title="Switch theme" aria-label="Switch theme"><span class="icon">dark_mode</span></button>
     </header>
 
-    <!-- ===== Explore ===== -->
-    <section class="view" id="view-explore" aria-label="Explore exercises">
+    <!-- ===== Exercises: the library and your saved ones ===== -->
+    <section class="view" id="view-exercises" aria-label="Exercises">
       <div class="explore-head">
         <label class="search"><span class="icon">search</span>
           <input id="search" type="search" placeholder="Search exercises, muscles, equipment" autocomplete="off" aria-label="Search exercises">
@@ -34,56 +31,66 @@
       <div id="exploreBody"></div>
     </section>
 
-    <!-- ===== Saved ===== -->
-    <section class="view" id="view-saved" aria-label="Saved exercises">
-      <div class="page-head">
-        <p class="body-medium muted" id="savedCount" style="margin:0"></p>
-        <div class="row"><button class="btn tonal stateful" data-act="import"><span class="icon">upload_file</span>Import</button></div>
-      </div>
-      <ul class="item-list" id="savedList"></ul>
-    </section>
-
-    <!-- ===== Create ===== -->
-    <section class="view" id="view-create" aria-label="Create exercises">
-      <div class="create-grid">
-        <article class="card">
-          <span class="icon big">upload_file</span>
-          <h2 class="title-medium">Import a file</h2>
-          <p class="muted">Add exercises or workouts from a JSON file. You can also drop a file anywhere on this page.</p>
-          <div class="row"><button class="btn filled stateful" data-act="import"><span class="icon">upload_file</span>Choose file</button>
-          <button class="btn text stateful" data-act="paste">Paste JSON</button></div>
-        </article>
-        <article class="card">
-          <span class="icon big">auto_awesome</span>
-          <h2 class="title-medium">Make one from a video</h2>
-          <p class="muted">Copy this prompt into an AI model that can watch videos (such as Gemini), add a video link, and import the JSON it writes.</p>
-          <div class="row"><button class="btn filled stateful" data-act="copyPrompt"><span class="icon">content_copy</span>Copy prompt</button>
-          <button class="btn text stateful" data-act="showPrompt">Read it</button></div>
-        </article>
-        <article class="card">
-          <span class="icon big">playlist_add</span>
-          <h2 class="title-medium">Turn a written routine into a workout</h2>
-          <p class="muted">Copy this prompt into an AI model, paste your routine where it says, and import the workout it writes. The prompt lists every exercise in the library so it can match them.</p>
-          <div class="row"><button class="btn filled stateful" data-act="copyRoutinePrompt"><span class="icon">content_copy</span>Copy prompt</button>
-          <button class="btn text stateful" data-act="showRoutinePrompt">Read it</button></div>
-        </article>
-        <article class="card">
-          <span class="icon big">backup</span>
-          <h2 class="title-medium">Back up everything</h2>
-          <p class="muted">Your workouts, history, saved exercises and settings live only on this device. Save a backup file now and then, and import it to restore them here or on another device.</p>
-          <div class="row"><button class="btn filled stateful" data-act="backup"><span class="icon">download</span>Export everything</button>
-          <button class="btn text stateful" data-act="import">Import everything</button></div>
-          <p class="body-small muted" id="persistNote" style="margin:0"></p>
-        </article>
-        <article class="card">
-          <span class="icon big">download</span>
-          <h2 class="title-medium">Export your exercises</h2>
-          <p class="muted">Get the JSON for everything in Saved, to back it up or share it.</p>
-          <div class="row"><button class="btn tonal stateful" data-act="exportAll"><span class="icon">data_object</span>Show JSON</button></div>
-        </article>
-      </div>
-      <details class="card format-card"><summary class="stateful"><span class="icon">menu_book</span><span class="title-medium">JSON format reference</span><span class="icon chev">expand_more</span></summary>
-        <div class="body body-small" id="formatRef"></div></details>
+    <!-- ===== Settings ===== -->
+    <section class="view" id="view-settings" aria-label="Settings">
+      <section class="settings-group" aria-labelledby="setWorkoutTitle">
+        <h2 class="title-small settings-title" id="setWorkoutTitle">Workouts</h2>
+        <div class="setting"><div class="txt"><span class="body-large">Sound</span><span class="body-small muted">Voice says each exercise, side switches and rests. Coach also walks you through each exercise once and counts your reps.</span></div>
+          <div class="segmented" id="setSound" role="group" aria-label="Sound"></div></div>
+        <label class="setting"><span class="txt"><span class="body-large">Full screen</span><span class="body-small muted">While working out in the browser. The installed app is always full screen.</span></span>
+          <input type="checkbox" class="switch" id="setFullscreen"></label>
+      </section>
+      <section class="settings-group" aria-labelledby="setDisplayTitle">
+        <h2 class="title-small settings-title" id="setDisplayTitle">Display</h2>
+        <div class="setting"><span class="txt"><span class="body-large">Theme</span></span>
+          <div class="segmented" id="setTheme" role="group" aria-label="Theme"></div></div>
+        <div class="setting"><span class="txt"><span class="body-large">Exercise speed</span><span class="body-small muted">How fast exercises play when you open them.</span></span>
+          <div class="segmented" id="setSpeed" role="group" aria-label="Exercise speed"></div></div>
+        <label class="setting"><span class="txt"><span class="body-large">Authoring mode</span><span class="body-small muted">Shows the pose editor on each exercise, for making and fixing exercises.</span></span>
+          <input type="checkbox" class="switch" id="setAuthoring"></label>
+      </section>
+      <section class="settings-group" aria-labelledby="setToolsTitle">
+        <h2 class="title-small settings-title" id="setToolsTitle">Import &amp; tools</h2>
+        <div class="create-grid">
+          <article class="card">
+            <span class="icon big">backup</span>
+            <h3 class="title-medium">Back up everything</h3>
+            <p class="muted">Your workouts, history, saved exercises and settings live only on this device. Save a backup file now and then, and import it to restore them here or on another device.</p>
+            <div class="row"><button class="btn filled stateful" data-act="backup"><span class="icon">download</span>Export everything</button>
+            <button class="btn text stateful" data-act="import">Import everything</button></div>
+            <p class="body-small muted" id="persistNote" style="margin:0"></p>
+          </article>
+          <article class="card">
+            <span class="icon big">upload_file</span>
+            <h3 class="title-medium">Import a file</h3>
+            <p class="muted">Add exercises, workouts or a backup from a JSON file. You can also drop a file anywhere on this page.</p>
+            <div class="row"><button class="btn filled stateful" data-act="import"><span class="icon">upload_file</span>Choose file</button>
+            <button class="btn text stateful" data-act="paste">Paste JSON</button></div>
+          </article>
+          <article class="card">
+            <span class="icon big">auto_awesome</span>
+            <h3 class="title-medium">Make an exercise from a video</h3>
+            <p class="muted">Copy this prompt into an AI model that can watch videos (such as Gemini), add a video link, and import the JSON it writes.</p>
+            <div class="row"><button class="btn filled stateful" data-act="copyPrompt"><span class="icon">content_copy</span>Copy prompt</button>
+            <button class="btn text stateful" data-act="showPrompt">Read it</button></div>
+          </article>
+          <article class="card">
+            <span class="icon big">playlist_add</span>
+            <h3 class="title-medium">Turn a written routine into a workout</h3>
+            <p class="muted">Copy this prompt into an AI model, paste your routine where it says, and import the workout it writes. The prompt lists every exercise in the library so it can match them.</p>
+            <div class="row"><button class="btn filled stateful" data-act="copyRoutinePrompt"><span class="icon">content_copy</span>Copy prompt</button>
+            <button class="btn text stateful" data-act="showRoutinePrompt">Read it</button></div>
+          </article>
+          <article class="card">
+            <span class="icon big">data_object</span>
+            <h3 class="title-medium">Export your exercises</h3>
+            <p class="muted">The JSON for everything you've saved or imported, to share it or edit it elsewhere.</p>
+            <div class="row"><button class="btn tonal stateful" data-act="exportAll"><span class="icon">data_object</span>Show JSON</button></div>
+          </article>
+        </div>
+        <details class="card format-card"><summary class="stateful"><span class="icon">menu_book</span><span class="title-medium">JSON format reference</span><span class="icon chev">expand_more</span></summary>
+          <div class="body body-small" id="formatRef"></div></details>
+      </section>
     </section>
 
     <!-- ===== Workouts ===== -->
@@ -158,33 +165,35 @@
       </div>
     </section>
 
-    <!-- ===== Player ===== -->
+    <!-- ===== Exercise player: tap the figure for controls; details in a panel you pull up ===== -->
     <section class="view" id="view-player" aria-label="Exercise player">
       <div class="player">
         <div class="stage-col">
-          <div class="stage" id="stageBox">
-            <svg class="scene" id="scene" viewBox="0 0 400 400" role="img" aria-label="Stick figure demonstrating the exercise"></svg>
-            <div class="stage-chips">
-              <span class="stage-chip" id="holdChip" hidden><span class="icon">timer</span><span id="holdText"></span></span>
-              <span class="stage-chip" id="repChip"><span class="icon">replay</span><span id="repText">Rep 1</span></span>
+          <div class="stage-wrap" id="exStageWrap">
+            <div class="stage" id="stageBox">
+              <svg class="scene" id="scene" viewBox="0 0 400 400" role="img" aria-label="Stick figure demonstrating the exercise"></svg>
+              <div class="stage-chips">
+                <span class="stage-chip" id="holdChip" hidden><span class="icon">timer</span><span id="holdText"></span></span>
+                <span class="stage-chip" id="repChip"><span class="icon">replay</span><span id="repText">Rep 1</span></span>
+              </div>
+              <div class="guide" id="guide" hidden>
+                <svg id="guideSvg" viewBox="-60 -60 120 120" aria-hidden="true"></svg>
+                <span class="body-small" id="guideLabel"></span>
+              </div>
+              <div class="legend body-small" aria-hidden="true">
+                <span><i style="background:var(--md-primary)"></i>Right</span><span><i style="background:var(--md-tertiary)"></i>Left</span>
+              </div>
             </div>
-            <div class="guide" id="guide" hidden>
-              <svg id="guideSvg" viewBox="-60 -60 120 120" aria-hidden="true"></svg>
-              <span class="body-small" id="guideLabel"></span>
-            </div>
-            <div class="legend body-small" aria-hidden="true">
-              <span><i style="background:var(--md-primary)"></i>Right</span><span><i style="background:var(--md-tertiary)"></i>Left</span>
+            <div class="ex-controls" id="exControls">
+              <button class="ex-cbtn" id="prevBtn" aria-label="Previous step" title="Previous step (←)"><span class="icon">skip_previous</span></button>
+              <button class="ex-cbtn ex-play" id="playBtn" aria-label="Pause" title="Play or pause (space)"><span class="icon fill">pause</span></button>
+              <button class="ex-cbtn" id="nextBtn" aria-label="Next step" title="Next step (→)"><span class="icon">skip_next</span></button>
             </div>
           </div>
+          <div class="progress" role="progressbar" aria-label="Progress through the sequence"><div id="progressBar"></div></div>
           <div class="now">
             <span class="step" id="stepNum">1</span>
             <div><h2 class="title-medium" id="stepName"></h2><p class="cue" id="stepCue"></p></div>
-          </div>
-          <div class="progress" role="progressbar" aria-label="Progress through the sequence"><div id="progressBar"></div></div>
-          <div class="controls">
-            <button class="icon-btn stateful" id="prevBtn" aria-label="Previous step" title="Previous step (←)"><span class="icon">skip_previous</span></button>
-            <button class="play-btn stateful" id="playBtn" aria-label="Pause" title="Play or pause (space)"><span class="icon fill">pause</span></button>
-            <button class="icon-btn stateful" id="nextBtn" aria-label="Next step" title="Next step (→)"><span class="icon">skip_next</span></button>
           </div>
           <div class="controls-row">
             <div class="segmented" id="sideSeg" role="group" aria-label="Side" hidden>
@@ -202,24 +211,25 @@
             </div>
           </div>
         </div>
-        <div class="info-col">
-          <div class="ex-head">
-            <p class="overline" id="exKicker"></p>
-            <h2 class="headline-small" id="exName"></h2>
-            <p class="subtitle muted" id="exSub"></p>
+        <div class="sheet-scrim" id="sheetScrim" hidden></div>
+        <aside class="info-col sheet" id="exSheet" aria-label="Exercise details">
+          <button class="sheet-head" id="sheetHead" aria-expanded="false" aria-controls="sheetBody">
+            <span class="sheet-handle" aria-hidden="true"></span>
+            <span class="ex-head">
+              <span class="overline" id="exKicker"></span>
+              <span class="headline-small" id="exName"></span>
+              <span class="subtitle muted" id="exSub"></span>
+            </span>
+            <span class="icon sheet-chev" aria-hidden="true">expand_less</span>
+          </button>
+          <div class="sheet-body" id="sheetBody">
             <div class="chips" id="exChips"></div>
+            <section class="panel" aria-labelledby="stepsTitle"><h3 class="title-medium" id="stepsTitle">Steps</h3><ol class="list" id="stepList"></ol></section>
+            <section class="panel" aria-labelledby="howTitle"><h3 class="title-medium" id="howTitle">How to do it</h3><div id="howPanel"></div></section>
+            <section class="panel" aria-labelledby="aboutTitle"><h3 class="title-medium" id="aboutTitle">About</h3><div id="aboutPanel"></div></section>
+            <section class="panel" id="adjustPanel" aria-labelledby="adjustTitle" hidden><h3 class="title-medium" id="adjustTitle">Adjust the pose</h3><div id="editor"></div></section>
           </div>
-          <div class="tabs" role="tablist" aria-label="Exercise details">
-            <button role="tab" class="tab stateful" data-tab="steps" aria-selected="true">Steps</button>
-            <button role="tab" class="tab stateful" data-tab="how" aria-selected="false">How to</button>
-            <button role="tab" class="tab stateful" data-tab="about" aria-selected="false">About</button>
-            <button role="tab" class="tab stateful" data-tab="adjust" aria-selected="false">Adjust</button>
-          </div>
-          <div class="tab-panel" data-panel="steps" role="tabpanel"><ol class="list" id="stepList"></ol></div>
-          <div class="tab-panel" data-panel="how" role="tabpanel" hidden id="howPanel"></div>
-          <div class="tab-panel" data-panel="about" role="tabpanel" hidden id="aboutPanel"></div>
-          <div class="tab-panel" data-panel="adjust" role="tabpanel" hidden><div id="editor"></div></div>
-        </div>
+        </aside>
       </div>
     </section>
   </div>
@@ -227,9 +237,8 @@
   <!-- Navigation bar (narrow screens) -->
   <nav class="navbar" aria-label="Main">
     <a class="nav-item" href="#/workouts" data-nav="workouts"><span class="pill"><span class="icon">fitness_center</span></span><span class="label">Workouts</span></a>
-    <a class="nav-item" href="#/explore" data-nav="explore"><span class="pill"><span class="icon">explore</span></span><span class="label">Explore</span></a>
-    <a class="nav-item" href="#/saved" data-nav="saved"><span class="pill"><span class="icon">bookmarks</span></span><span class="label">Saved</span></a>
-    <a class="nav-item" href="#/create" data-nav="create"><span class="pill"><span class="icon">edit_note</span></span><span class="label">Create</span></a>
+    <a class="nav-item" href="#/exercises" data-nav="exercises"><span class="pill"><span class="icon">sprint</span></span><span class="label">Exercises</span></a>
+    <a class="nav-item" href="#/settings" data-nav="settings"><span class="pill"><span class="icon">settings</span></span><span class="label">Settings</span></a>
   </nav>
 </div>
 

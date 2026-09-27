@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NstructR</title>
 <meta name="theme-color" content="#0e2648">
+<script>/* the theme chosen in Settings, applied before anything is drawn */
+try { const t = localStorage.getItem('nstructr-theme-v1'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) { }</script>
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -290,7 +292,7 @@ body[data-view="player"] .navbar{display:none}
   .rail-items{display:flex;flex-direction:column;gap:12px;flex:1}
   .rail .nav-item{flex:none;width:80px;min-height:56px}
   .rail .pill{width:56px}
-  .navbar,.bar-brand,.bar-theme{display:none!important}
+  .navbar,.bar-brand{display:none!important}
 }
 .top-app-bar{padding:0 4px 0 12px}
 .top-app-bar h1{margin:0 0 0 4px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -363,16 +365,6 @@ body[data-view="player"] .view{padding-bottom:32px}
 .ex-head h2{margin:0}
 .ex-head .subtitle:empty{display:none}
 .ex-head .chips{margin:12px 0 4px}
-.tabs{display:flex;border-bottom:1px solid var(--md-outline-variant);overflow-x:auto;scrollbar-width:none}
-.tab{flex:1;min-width:72px;height:48px;padding:0 12px;font-weight:500;letter-spacing:.1px;color:var(--md-on-surface-variant);position:relative}
-.tab[aria-selected="true"]{color:var(--md-primary)}
-.tab[aria-selected="true"]::after{content:"";position:absolute;left:25%;right:25%;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--md-primary)}
-.tab-panel{padding:12px 4px}
-.tab-panel .list{margin:0 -4px;max-height:none}
-.tab-panel h3{margin:8px 0 4px}
-.tab-panel ol,.tab-panel ul{margin:4px 0 12px;padding-left:20px}
-.tab-panel li{margin:4px 0}
-.tab-panel p{margin:0 0 10px}
 .tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:11px;line-height:16px;font-weight:500;background:var(--md-surface-container-highest);color:var(--md-on-surface-variant)}
 .actions.actions-top{margin:4px 0 16px;justify-content:flex-start;flex-direction:row-reverse}
 #startDialog{margin-top:12px}
@@ -429,6 +421,62 @@ body[data-view="player"] .view{padding-bottom:32px}
 .pick-list .thumb{width:44px;height:44px;border-radius:var(--shape-s);background:var(--md-surface-container)}
 .pick-list .txt span{display:block}
 #pickDialog .lib-head .btn{margin-right:8px}
+/* ===== exercise player: controls over the figure, details in a pull-up panel ===== */
+.stage-wrap{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.ex-controls{position:absolute;inset:0;border-radius:var(--shape-xl);display:flex;align-items:center;justify-content:center;gap:clamp(16px,6vw,40px);
+  background:color-mix(in srgb,var(--md-scrim) 70%,transparent);opacity:0;pointer-events:none;transition:opacity .2s linear}
+.ex-controls.show{opacity:1;pointer-events:auto}
+.ex-cbtn{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:var(--md-on-surface);
+  background:color-mix(in srgb,var(--md-surface-container-highest) 90%,transparent);position:relative;overflow:hidden}
+.ex-cbtn .icon{font-size:30px}
+.ex-play{width:84px;height:84px;background:var(--md-primary-container);color:var(--md-on-primary-container);box-shadow:var(--elev-3)}
+.ex-play .icon{font-size:44px}
+.ex-head .overline,.ex-head .headline-small,.ex-head .subtitle{display:block}
+.panel{padding:4px 4px 8px}
+.panel h3{margin:12px 0 6px}
+.panel ol,.panel ul{margin:4px 0 12px;padding-left:20px}
+.panel li{margin:4px 0}
+.panel p{margin:0 0 10px}
+.panel .list{margin:0 -4px;padding:0;max-height:none}
+.sheet-head{display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;padding:4px 4px 8px;cursor:default}
+.sheet-head .ex-head{flex:1;min-width:0;padding:0}
+.sheet-handle,.sheet-chev{display:none}
+.sheet-scrim{position:fixed;inset:0;z-index:19;background:var(--md-scrim)}
+.sheet-scrim[hidden]{display:none}
+@media (max-width:839.98px){
+  /* the details panel peeks up from the bottom; tap or drag its header */
+  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:20;height:86dvh;display:flex;flex-direction:column;
+    background:var(--md-surface-container-low);border-radius:var(--shape-xl) var(--shape-xl) 0 0;box-shadow:0 -2px 10px rgba(0,0,0,.18);
+    transform:translateY(calc(100% - 76px - env(safe-area-inset-bottom,0px)));transition:transform .3s var(--ease-emph)}
+  .sheet.open{transform:none}
+  .sheet.dragging{transition:none}
+  .sheet-head{position:relative;height:76px;flex:none;align-items:center;padding:14px 12px 0 20px;cursor:pointer;touch-action:none;border-radius:inherit;-webkit-tap-highlight-color:transparent}
+  .sheet-handle{display:block;position:absolute;top:8px;left:50%;width:32px;height:4px;margin-left:-16px;border-radius:2px;background:var(--md-outline-variant)}
+  .sheet-chev{display:block;color:var(--md-on-surface-variant);transition:transform .3s var(--ease-emph)}
+  .sheet.open .sheet-chev{transform:rotate(180deg)}
+  .sheet-head .headline-small{font-size:20px;line-height:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .sheet-head .subtitle{display:none}
+  .sheet-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 16px calc(24px + env(safe-area-inset-bottom,0px))}
+  body[data-view="player"] .view{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+}
+.sheet-body .chips{margin:4px 0 8px}
+
+/* ===== settings ===== */
+.settings-group{margin:4px 0 24px}
+.settings-title{color:var(--md-primary);margin:8px 0 8px 4px}
+.setting{display:flex;align-items:center;justify-content:space-between;gap:12px 16px;padding:14px 16px;margin-bottom:8px;flex-wrap:wrap;
+  background:var(--md-surface-container-low);border-radius:var(--shape-l)}
+.setting .txt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 220px}
+label.setting{cursor:pointer}
+.switch{appearance:none;-webkit-appearance:none;flex:none;margin:0;width:52px;height:32px;border-radius:16px;position:relative;cursor:pointer;
+  background:var(--md-surface-container-highest);border:2px solid var(--md-outline);transition:background .2s,border-color .2s}
+.switch::before{content:"";position:absolute;top:50%;left:6px;width:16px;height:16px;border-radius:50%;background:var(--md-outline);
+  transform:translateY(-50%);transition:all .2s var(--ease-emph)}
+.switch:checked{background:var(--md-primary);border-color:var(--md-primary)}
+.switch:checked::before{left:22px;width:24px;height:24px;background:var(--md-on-primary)}
+.settings-group .create-grid{margin-top:0}
+.settings-group .card h3{margin:4px 0 0}
+
 /* ===== workout player: full screen, floor-readable, gestures ===== */
 body[data-view="wplay"] .top-app-bar, body[data-view="wplay"] .rail, body[data-view="wplay"] .navbar{display:none!important}
 body[data-view="wplay"] .shell{display:block}

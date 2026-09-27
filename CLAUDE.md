@@ -22,4 +22,4 @@ Read `HANDOFF.md` first: formats, engine pipeline, validation rules, design deci
 - Don't run `pkill -f http.server` from a shell whose command line contains that text (it kills itself).
 
 ## Where things are
-Engine: `src/core.js` · App: `src/app/1-engine.js` (state, drawing, playback) … `5-main.js` (routing, boot) · `6-pwa.js` (service worker, backup; calls `boot()`) · PWA: `manifest.webmanifest`, `icons/`, `src/sw.js` (template; the build writes `_site/sw.js`) · Workouts & player: `src/app/4-workouts.js` · CSS: `src/head.html` · Markup: `src/body.html`
+Engine: `src/core.js` · App: `src/app/1-engine.js` (state, drawing, playback) · `2-explore.js` (Exercises tab) · `3-details.js` (exercise player info, overlay, pull-up panel, Settings) · `5-main.js` (routing, boot) · `6-pwa.js` (service worker, backup; calls `boot()`) · PWA: `manifest.webmanifest`, `icons/`, `src/sw.js` (template; the build writes `_site/sw.js`) · Workouts & player: `src/app/4-workouts.js` · CSS: `src/head.html` · Markup: `src/body.html`

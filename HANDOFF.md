@@ -78,7 +78,10 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
   routine to completion; old and bare files import; gestures, editor, Coach speech, layout, floor height and
   arm-circle continuity tests pass against the served build.
 
-**Step 2 (installable app + backup) is built** (see §13): manifest, icons, service worker, storage
+**Step 3 (simpler UI) is built**: three tabs (Workouts, Exercises, Settings), the exercise player's
+tap-for-controls overlay and pull-up details panel, Authoring mode. See §10.
+
+**Step 2 (installable app + backup) is built and tested on the Flip7** (installed; bottom margin confirmed) (see §13): manifest, icons, service worker, storage
 persistence, Export everything / Import everything, and a Material theme generated from the icon's blue.
 Still to do there: test on the Flip7 cover screen as an installed app (Good Lock?).
 
@@ -103,8 +106,8 @@ src/
   thumb.js            static SVG thumbnail of an exercise
   app/0-boot.js       globals the library fills (POSE_DB, LIBRARY_WORKOUTS)
   app/1-engine.js     app state S, import validation, figure SVG, drawing, playback loop, editor sliders
-  app/2-explore.js    Explore tab (collections, filters, search, cards)
-  app/3-details.js    Saved, Create, exercise player info tabs, format reference text
+  app/2-explore.js    Exercises tab (collections incl. Saved, filters, search, cards)
+  app/3-details.js    exercise player info, its tap-for-controls overlay and pull-up panel, Settings, format reference
   app/4-workouts.js   workouts: storage, editor, plan builder, workout player, sound, history, sharing
   app/5-main.js       selection, import, routing, event wiring, boot() (defined here)
   app/6-pwa.js        service worker registration, storage persistence, Export/Import everything; calls boot()
@@ -354,7 +357,9 @@ representations that rotate the short, natural way) over adding a known issue; i
 ## 8. Design decisions (and why)
 
 ### 8.1 Product
-- **Workouts are the focus**; Workouts is the first and default tab. Tabs today: Workouts, Explore, Saved, Create.
+- **Workouts are the focus**; Workouts is the first and default tab. Tabs: Workouts, Exercises, Settings
+  (old links `#/explore`, `#/saved`, `#/create` redirect).
+- Coach counts reps "Begin", 2, 3 … "Last one" ("Begin" is never dropped for overlapping speech).
 - One repo; library and app together. Contributions via **in-app Submit → GitHub issue form → bot PR**, plus
   **share links** (both roadmap).
 - Content: exercises are written **in our own words**, citing sources (Yoga Journal, BHF, Mayo Clinic, NHS,
@@ -469,11 +474,18 @@ steps or the joint will windmill; the jump check will catch it.
   export). Editor: name, rest between exercises, blocks (rename, move, delete, repeat as circuit with rounds and
   rest), items (drag handle, settings sheet with reps/seconds, sets, rest, sides, direction, speed; menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
-- **Explore**: collection shelves, filters (collection, type/focus, equipment), search; exercise player with
-  steps / how-to / about / adjust (pose sliders) tabs, side and direction switches, speed.
-- **Saved**: bookmarked and imported exercises.
-- **Create**: import file/paste, video → exercise AI prompt, written routine → workout AI prompt (lists every
-  exercise id), export, JSON format reference.
+- **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; type/focus,
+  equipment), search (covers the user's own exercises too). Saved = bookmarked library exercises + the user's
+  own (imported/made), which exist only there.
+- **Exercise player**: the figure with a **tap-for-controls overlay** (previous step / play-pause / next step;
+  same rules as the workout player: the first tap only shows them, they stay up while paused, fade while
+  playing; mouse hover shows them), progress, current step, side / direction / speed switches. Details
+  (chips, Steps, How to do it, About, and **Adjust the pose** in Authoring mode) are one scrolling panel:
+  on phones a **pull-up sheet** peeking from the bottom (tap or drag its header; tap outside or Esc closes),
+  on screens ≥ 840 px a right-hand column.
+- **Settings**: Workouts (default sound, full screen), Display (theme System/Light/Dark, exercise speed,
+  **Authoring mode**), Import & tools (backup, import file/paste, the two AI prompts, export your exercises,
+  JSON format reference, storage-persistence note).
 
 ---
 
@@ -487,6 +499,9 @@ steps or the joint will windmill; the jump check will catch it.
 | `motion-guide-sound-v1` | sound mode |
 | `motion-guide-log-v1` | history sessions (capped at 500) |
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
+| `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |
+| `nstructr-speed-v1` | exercise player's starting speed (`0.5`, `1`, `2`) |
+| `nstructr-authoring-v1` | `"on"` shows the pose editor |
 
 The mixed prefixes are historical; renaming them would silently wipe users' data. If you consolidate, migrate
 (read old → write new → keep old until confirmed).
@@ -500,7 +515,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  `circuits_history_share`, `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
+  player overlay and pull-up panel), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, start sheet position), `layout_overlap` (title /
@@ -518,7 +534,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    icons incl. maskable), service worker (cache the shell and `library/index.json`; update strategy for the
    library), `navigator.storage.persist()`, **Export everything / Import everything** (workouts, history, saved
    exercises, settings). Then test on the Flip7 cover screen as an installed app (Good Lock).
-3. **Simplify the UI before going public**: three tabs — Workouts, **Exercises** (Explore + Saved merged, Saved
+3. ✅ **Simplify the UI before going public**: three tabs — Workouts, **Exercises** (Explore + Saved merged, Saved
    as a filter), **Settings** (sound, theme, full screen, speed; "Import & tools" = AI prompts, format
    reference, export; an **Authoring mode** toggle that reveals the pose editor). Exercise player gets the same
    tap-for-controls overlay as the workout player, with a pull-up details panel instead of four tabs.

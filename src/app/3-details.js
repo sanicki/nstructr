@@ -1,18 +1,5 @@
 
-/* ---------- Saved ---------- */
-function renderSaved() {
-  const items = S.lib.items;
-  $('#savedCount').textContent = items.length ? `${items.length} saved ${items.length === 1 ? 'exercise' : 'exercises'}, including anything you import` : '';
-  $('#savedList').innerHTML = items.length ? items.map(ex => `<li class="item">
-      <button class="open stateful" data-open="${esc(ex.id)}">${thumbFor(ex)}
-        <span class="txt"><span class="title-small">${esc(ex.name)}</span><span class="body-small muted">${esc(typeOf(ex) || ex.library || 'Imported')}</span></span></button>
-      <button class="icon-btn stateful" data-del="${esc(ex.id)}" aria-label="Remove ${esc(ex.name)}" title="Remove"><span class="icon">delete</span></button></li>`).join('')
-    : `<li class="empty-state"><span class="icon">bookmarks</span><p class="title-medium" style="margin:8px 0 4px">Nothing saved yet</p>
-       <p class="muted" style="margin:0 0 16px">Tap the bookmark on any exercise to keep it here. Imported exercises land here too.</p>
-       <div class="row" style="justify-content:center"><a class="btn filled stateful" href="#/explore" style="text-decoration:none"><span class="icon">explore</span>Explore</a></div></li>`;
-}
-
-/* ---------- Create ---------- */
+/* ---------- Settings: Import & tools ---------- */
 $('#formatRef').innerHTML = `
       <p>A file holds one exercise (or <code>{"format":"nstructr/exercise","exercises":[...]}</code> for several), with <code>"version":1</code>, an <code>id</code>, a <code>name</code> and a list of <code>keyframes</code>. Your own exercises' ids start with <code>u-</code> (like <code>u-banded-pull-apart</code>) so they never clash with the library; imported exercises without it get it added.</p>
       <p> Each keyframe is a pose the figure moves into over <code>durationMs</code> and then holds for <code>holdMs</code>.</p>
@@ -73,6 +60,7 @@ function renderPlayerInfo() {
     <div class="row" style="margin-top:12px"><button class="btn tonal stateful" data-act="json"><span class="icon">data_object</span>Show JSON</button>
     ${isSaved(ex.id) ? `<button class="btn text stateful" data-del="${esc(ex.id)}"><span class="icon">bookmark_remove</span>Remove from Saved</button>` : ''}</div>`;
   updateSaveBtn();
+  $('#adjustPanel').hidden = !authoring();
   updateEditor();
   S.shownIdx = -1;
 }
@@ -82,7 +70,99 @@ function updateSaveBtn() {
   b.setAttribute('aria-label', saved ? 'Remove from Saved' : 'Save');
   b.title = saved ? 'Saved' : 'Save';
 }
-function selectTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.tab === name)));
-  document.querySelectorAll('.tab-panel').forEach(p => (p.hidden = p.dataset.panel !== name));
+
+/* ---------- Exercise player: tap the figure for controls, like the workout player ----------
+   The first tap only shows the controls; a control responds only to a press that started after they were
+   showing (so the revealing tap can't hit a button that appears under the finger). Tapping the figure again
+   hides them; they fade by themselves while playing, and stay while paused. */
+const XC = { shownAt: 0, downAt: 0, t: 0 };
+function showExControls(stay) {
+  const c = $('#exControls');
+  if (!c.classList.contains('show')) XC.shownAt = performance.now();
+  c.classList.add('show'); clearTimeout(XC.t);
+  if (!stay && S.playing) XC.t = setTimeout(() => { if (S.playing) c.classList.remove('show'); }, 2500);
 }
+function hideExControls() { clearTimeout(XC.t); $('#exControls').classList.remove('show'); }
+$('#exStageWrap').addEventListener('pointerdown', () => { XC.downAt = performance.now(); }, true);
+$('#exStageWrap').addEventListener('click', e => {
+  if (S.view !== 'player') return;
+  const btn = e.target.closest('.ex-cbtn'), shown = $('#exControls').classList.contains('show');
+  if (btn) {
+    // keyboard presses (detail 0) always count; a pointer press only once the controls were already up
+    if (e.detail !== 0 && (!shown || XC.downAt < XC.shownAt)) { e.stopPropagation(); e.preventDefault(); showExControls(); return; }
+    setTimeout(() => showExControls(!S.playing), 0);         // after the button's own handler
+    return;
+  }
+  if (shown) hideExControls(); else showExControls(!S.playing);
+}, true);
+$('#exStageWrap').addEventListener('pointermove', e => { if (e.pointerType === 'mouse' && S.view === 'player') showExControls(!S.playing); });
+$('#exControls').addEventListener('focusin', () => showExControls(true));
+
+/* ---------- Exercise details: a panel you pull up (phones); a side column on wide screens ---------- */
+const sheetDocked = () => matchMedia('(min-width: 840px)').matches;
+function setSheet(open) {
+  const sh = $('#exSheet');
+  sh.classList.toggle('open', open); sh.style.transform = '';
+  $('#sheetHead').setAttribute('aria-expanded', String(open));
+  $('#sheetScrim').hidden = !open || sheetDocked();
+  if (!open) $('#sheetBody').scrollTop = 0;
+}
+(() => {
+  const head = $('#sheetHead'), sh = $('#exSheet');
+  let drag = null;
+  head.addEventListener('pointerdown', e => {
+    if (sheetDocked()) return;
+    drag = { y0: e.clientY, t0: performance.now(), open: sh.classList.contains('open'), moved: false, id: e.pointerId };
+    head.setPointerCapture(e.pointerId);
+  });
+  head.addEventListener('pointermove', e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dy = e.clientY - drag.y0;
+    if (Math.abs(dy) > 6) drag.moved = true;
+    if (!drag.moved) return;
+    sh.classList.add('dragging');
+    const closedY = sh.offsetHeight - head.offsetHeight - (parseFloat(getComputedStyle(document.documentElement).paddingBottom) || 0);   // only the header showing (above the safe area)
+    const y = Math.max(0, Math.min(closedY, (drag.open ? 0 : closedY) + dy));
+    sh.style.transform = `translateY(${y}px)`;
+  });
+  const end = e => {
+    if (!drag || e.pointerId !== drag.id) return;
+    const dy = e.clientY - drag.y0, v = dy / Math.max(1, performance.now() - drag.t0), moved = drag.moved, was = drag.open;
+    drag = null; sh.classList.remove('dragging');
+    if (!moved) { setSheet(!was); return; }                         // a tap toggles
+    setSheet(v < -0.3 || (v <= 0.3 && (was ? dy < 80 : dy < -80)));  // a flick, or dragged far enough
+  };
+  head.addEventListener('pointerup', end); head.addEventListener('pointercancel', end);
+  head.addEventListener('click', e => { if (e.detail === 0 && !sheetDocked()) setSheet(!sh.classList.contains('open')); });   // keyboard
+  $('#sheetScrim').addEventListener('click', () => setSheet(false));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && sh.classList.contains('open') && S.view === 'player') setSheet(false); });
+})();
+
+/* ---------- Settings ---------- */
+const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1';
+const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
+const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
+const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
+const defaultSpeed = () => +pref(SPEED_KEY, '1') || 1;
+function applyTheme(t) {
+  if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
+}
+function renderSettings() {
+  const seg = (id, key, opts, cur) => { $(id).innerHTML = opts.map(([v, l]) => `<button class="stateful" data-${key}="${v}" aria-pressed="${String(v) === String(cur)}"><span class="icon">check</span>${l}</button>`).join(''); };
+  seg('#setSound', 'setsound', [['off', 'Silent'], ['beeps', 'Beeps'], ['voice', 'Voice'], ['coach', 'Coach']], WK.sound);
+  seg('#setTheme', 'settheme', [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']], pref(THEME_KEY, 'system'));
+  seg('#setSpeed', 'setspeed', [[0.5, '0.5×'], [1, '1×'], [2, '2×']], defaultSpeed());
+  $('#setFullscreen').checked = wantFullscreen();
+  $('#setAuthoring').checked = authoring();
+  renderPersistNote();
+}
+$('#view-settings').addEventListener('click', e => {
+  const b = e.target.closest('[data-setsound], [data-settheme], [data-setspeed]'); if (!b) return;
+  const d = b.dataset;
+  if (d.setsound) setSound(d.setsound);
+  if (d.settheme) { setPref(THEME_KEY, d.settheme); applyTheme(d.settheme); }
+  if (d.setspeed) setPref(SPEED_KEY, d.setspeed);
+  b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+});
+$('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
+$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); snack(e.target.checked ? 'Authoring mode on: each exercise has a pose editor' : 'Authoring mode off'); });

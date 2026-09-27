@@ -73,7 +73,6 @@ async function shareFile(text, name, title) {
 document.querySelector('.shell').addEventListener('click', e => {
   const t = e.target.closest('[data-act="backup"]'); if (t) exportEverything();
 });
-addEventListener('hashchange', () => { if (location.hash === '#/create') renderPersistNote(); });
 if (installedApp()) keepStorage();
 
 boot();                                    // everything's defined: load the library and show the first page

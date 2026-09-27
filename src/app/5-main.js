@@ -35,7 +35,8 @@ function selectExercise(id) {
   S.ex = S.lib.items.find(it => it.id === id) || (findInDb(id) ? clone(findInDb(id)) : null);
   if (!S.ex) return false;
   S.seg = { ...DEFAULT_SEGMENTS, ...((S.ex.figure && S.ex.figure.segments) || {}) };
-  S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.speed = +(document.querySelector('#speedSeg [aria-pressed="true"]') || { dataset: { speed: 1 } }).dataset.speed;
+  S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.speed = defaultSpeed();
+  document.querySelectorAll('#speedSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.speed === S.speed)));
   const dirs = S.ex.direction && S.ex.direction.labels;
   $('#dirSeg').hidden = !dirs;
   if (dirs) document.querySelectorAll('#dirSeg button').forEach(b => { b.querySelector('.lbl').textContent = dirs[b.dataset.dir]; b.setAttribute('aria-pressed', String(b.dataset.dir === 'A')); });
@@ -51,7 +52,7 @@ function selectExercise(id) {
   rebuild(); buildFigure(); buildGuide(); requestAnimationFrame(syncLimbWidth);
   S.t = S.resolved.length ? S.resolved[0].dur : 0;
   $('#editor').dataset.built = '';
-  renderPlayerInfo(); selectTab('steps'); draw();
+  renderPlayerInfo(); setSheet(false); draw();
   const miss = S.resolved.findIndex(r => r.misses.length);
   if (miss >= 0) {
     const m = S.resolved[miss].misses[0];
@@ -84,8 +85,8 @@ function removeSaved(id) {
   saveLib();
   const builtIn = !!findInDb(id);
   snack(builtIn ? `Removed ${it ? it.name : 'exercise'} from Saved` : `Deleted ${it ? it.name : 'exercise'}`);
-  if (S.view === 'player' && S.ex && S.ex.id === id) { if (builtIn) renderPlayerInfo(); else go('#/saved'); }
-  if (S.view === 'saved') renderSaved();
+  if (S.view === 'player' && S.ex && S.ex.id === id) { if (builtIn) renderPlayerInfo(); else { E.coll = SAVED; go('#/exercises'); } }
+  if (S.view === 'exercises') renderExplore();
 }
 /* Users' own exercises have ids starting "u-", so a library update can never overwrite one (the build rejects
    "u-" ids in library/). An imported exercise keeps its id if it already starts with "u-", if it's an unchanged
@@ -165,14 +166,17 @@ function snack(msg, ms = 3500) {
 }
 
 /* ---------- Routing ---------- */
-const TITLES = { workouts: APP_NAME, explore: 'Explore', saved: 'Saved', create: 'Create' };
+const TITLES = { workouts: APP_NAME, exercises: 'Exercises', settings: 'Settings' };
+/* older links: Explore and Saved are now the Exercises tab (Saved is a filter there), Create is in Settings */
+const OLD_ROUTES = { '#/explore': '#/exercises', '#/saved': '#/exercises', '#/create': '#/settings' };
 let lastList = '#/workouts';
 function go(hash) { if (location.hash === hash) route(); else location.hash = hash; }
 function route() {
+  if (OLD_ROUTES[location.hash]) { if (location.hash === '#/saved') E.coll = SAVED; history.replaceState(null, '', OLD_ROUTES[location.hash]); }
   const h = location.hash || '#/workouts';
   const mPlay = h.match(/^#\/play\/(.+)$/), mEdit = h.match(/^#\/workout\/(.+)$/), mRun = h.match(/^#\/wplay\/(.+)$/);
   let view = mPlay ? 'player' : mEdit ? 'workout' : mRun ? 'wplay' : (h.replace('#/', '') || 'workouts');
-  if (!['explore', 'saved', 'create', 'player', 'workouts', 'workout', 'wplay'].includes(view)) view = 'workouts';
+  if (!['exercises', 'settings', 'player', 'workouts', 'workout', 'wplay'].includes(view)) view = 'workouts';
   const leavingWorkout = S.view === 'wplay' && view !== 'wplay';
   if (leavingWorkout) {                                        // stop the workout, give the stage back
     S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.playing = false; wakeOff(); leaveFullscreen(); moveStage(false); resetScene(); buildFigure();
@@ -183,7 +187,7 @@ function route() {
   if (view === 'player') {
     const id = decodeURIComponent(mPlay[1]);
     if (!S.ex || S.ex.id !== id || S.mode !== 'explore') {
-      if (!selectExercise(id)) { snack("That exercise isn't in the library."); go('#/explore'); return; }
+      if (!selectExercise(id)) { snack("That exercise isn't in the library."); go('#/exercises'); return; }
       setPlaying(!matchMedia('(prefers-reduced-motion: reduce)').matches);
     }
   } else if (view === 'workout') {
@@ -198,7 +202,7 @@ function route() {
   S.view = view;
   document.body.dataset.view = view;
   document.querySelectorAll('.view').forEach(v => (v.hidden = v.id !== 'view-' + view));
-  const navFor = view === 'player' ? lastList.replace('#/', '').split('/')[0] : (view === 'workout' || view === 'wplay') ? 'workouts' : view;
+  const navFor = view === 'player' ? lastList.replace('#/', '').split('/')[0].replace(/^workout$/, 'workouts') : (view === 'workout' || view === 'wplay') ? 'workouts' : view;
   document.querySelectorAll('.nav-item').forEach(a => { if (a.dataset.nav === navFor) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   const sub = view === 'player' || view === 'workout' || view === 'wplay';
   $('#backBtn').hidden = !sub;
@@ -206,19 +210,18 @@ function route() {
   document.querySelector('.bar-brand').style.display = sub ? 'none' : '';
   $('#barTitle').textContent = view === 'player' ? (S.ex ? S.ex.name : '') : view === 'workout' ? EDIT.name : view === 'wplay' ? WP.w.name : TITLES[view];
   document.title = view === 'player' && S.ex ? `${S.ex.name} · ${APP_NAME}` : APP_NAME;
-  if (view === 'explore') renderExplore();
-  if (view === 'saved') renderSaved();
+  if (view === 'exercises') renderExplore();
+  if (view === 'settings') renderSettings();
   if (view === 'workouts') renderWorkouts();
-  if (view === 'create') renderPersistNote();
   if (view === 'workout') renderEditor();
   if (view === 'wplay') { setSound(WK.sound); renderWpInfo(); requestAnimationFrame(syncLimbWidth); }
-  if (view === 'player') requestAnimationFrame(syncLimbWidth);
+  if (view === 'player') { requestAnimationFrame(syncLimbWidth); if (S.playing) hideExControls(); else showExControls(true); }
   if (view !== 'wplay') scrollTo(0, 0);
 }
 addEventListener('hashchange', route);
 
 /* ---------- Wiring ---------- */
-$('#playBtn').addEventListener('click', () => setPlaying(!S.playing));
+$('#playBtn').addEventListener('click', () => setPlaying(!S.playing));      // (the overlay shows these first: see 3-details.js)
 $('#prevBtn').addEventListener('click', () => jumpTo(S.idx - 1));
 $('#nextBtn').addEventListener('click', () => jumpTo(S.idx + 1));
 $('#sideSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setSide(b.dataset.side); });
@@ -234,7 +237,6 @@ $('#backBtn').addEventListener('click', () => {
   go(lastList.startsWith('#/workout/') ? lastList : lastList);
 });
 $('#saveBtn').addEventListener('click', toggleSave);
-document.querySelector('.tabs').addEventListener('click', e => { const t = e.target.closest('.tab'); if (t) selectTab(t.dataset.tab); });
 $('#search').addEventListener('input', e => { E.q = e.target.value; renderExplore(); });
 $('#clearSearch').addEventListener('click', () => { E.q = ''; $('#search').value = ''; renderExplore(); $('#search').focus(); });
 $('#fileInput').addEventListener('change', e => { importFiles([...e.target.files]); e.target.value = ''; });
@@ -245,12 +247,6 @@ $('#pasteImport').addEventListener('click', () => {
 });
 document.querySelectorAll('dialog [data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
 $('#copyJson').addEventListener('click', () => copyText($('#jsonArea').value, 'Copied'));
-document.querySelectorAll('.theme-btn').forEach(btn => btn.addEventListener('click', () => {
-  const root = document.documentElement;
-  const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-  root.dataset.theme = dark ? 'light' : 'dark';
-  document.querySelectorAll('.theme-btn .icon').forEach(i => (i.textContent = dark ? 'dark_mode' : 'light_mode'));
-}));
 // one click handler for everything inside the app
 document.querySelector('.shell').addEventListener('click', e => {
   const t = e.target.closest('button, a'); if (!t) return;
