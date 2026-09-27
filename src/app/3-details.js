@@ -30,7 +30,7 @@ function showJson(title, text) {
 function renderPlayerInfo() {
   const ex = S.ex; if (!ex) return;
   const pr = ex.prescription || {};
-  $('#exKicker').textContent = ex.library || (isSaved(ex.id) ? 'My exercise' : '');
+  $('#exKicker').textContent = ex.library || (isOwn(ex.id) ? 'My exercises' : '');
   $('#exName').textContent = ex.name;
   $('#exSub').textContent = ex.sanskrit || '';
   const chips = [];
@@ -59,14 +59,14 @@ function renderPlayerInfo() {
     ${src.note ? `<p class="body-small muted">${esc(src.note)}</p>` : ''}
     <div class="row" style="margin-top:12px">${findInDb(ex.id) ? '' : `<button class="btn tonal stateful" data-act="shareEx"><span class="icon">share</span>Share</button>`}
     <button class="btn text stateful authoring-only" data-act="json"><span class="icon">data_object</span>Show JSON</button>
-    ${isSaved(ex.id) ? `<button class="btn text stateful" data-del="${esc(ex.id)}"><span class="icon">bookmark_remove</span>${findInDb(ex.id) ? 'Remove bookmark' : 'Delete'}</button>` : ''}</div>`;
+    ${isOwn(ex.id) ? `<button class="btn text stateful danger" data-del="${esc(ex.id)}"><span class="icon">delete</span>Delete</button>` : ''}</div>`;
   updateSaveBtn();
   $('#adjustPanel').hidden = !authoring();
   updateEditor();
   S.shownIdx = -1;
 }
 function updateSaveBtn() {
-  const saved = S.ex && isSaved(S.ex.id), b = $('#saveBtn');
+  const saved = S.ex && isBookmarked(S.ex.id), b = $('#saveBtn');
   b.innerHTML = `<span class="icon${saved ? ' fill' : ''}">${saved ? 'bookmark' : 'bookmark_add'}</span>`;
   b.setAttribute('aria-label', saved ? 'Remove bookmark' : 'Bookmark');
   b.title = saved ? 'Bookmarked' : 'Bookmark';

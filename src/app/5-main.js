@@ -12,7 +12,7 @@ function editorOrigin() {
 /* before the first change: a library exercise (or a bookmarked copy of one) becomes the user's own copy */
 function ensureOwnCopy() {
   const lib = findInDb(S.ex.id);
-  if (!lib) { if (!isSaved(S.ex.id)) { S.lib.items.push(S.ex); } return; }
+  if (!lib) { if (!S.lib.items.includes(S.ex)) { S.lib.items.push(S.ex); } return; }
   const base = 'u-' + S.ex.id.replace(/^u-/, '') + '-copy';
   let id = base, n = 2; while (S.lib.items.some(x => x.id === id) || findInDb(id)) id = `${base}-${n++}`;
   const copy = { ...clone(S.ex), id, name: `${lib.name} (copy)`, basedOn: lib.id };
@@ -162,7 +162,7 @@ function discardEdits() {
   const o = ED.orig; if (!o || o.id !== S.ex.id) return;
   if (!confirm(o.madeCopy ? `Discard your changes and delete "${S.ex.name}"?` : `Undo every change to "${S.ex.name}" since you started editing?`)) return;
   if (o.madeCopy) {
-    S.lib.items = S.lib.items.filter(x => x.id !== o.id); saveLib(); ED.orig = null;
+    S.lib.items = S.lib.items.filter(x => x.id !== o.id); saveLib(); ED.orig = null; if (BOOKMARKS.delete(o.id)) saveBookmarks();
     history.replaceState(null, '', `#/play/${encodeURIComponent(o.madeCopy)}`); S.ex = null; route();
     snack('Changes discarded'); return;
   }
@@ -218,20 +218,22 @@ function setSide(side) {
   const keepT = S.t; rebuild(); S.t = Math.min(keepT, S.resolved[S.idx].dur + S.resolved[S.idx].hold - 1);
   renderPlayerInfo(); draw();
 }
+/* the bookmark: only ever a flag (your own exercises stay in My exercises either way) */
 function toggleSave() {
   if (!S.ex) return;
-  if (isSaved(S.ex.id)) removeSaved(S.ex.id);
-  else { S.lib.items.push(S.ex); saveLib(); snack(`Bookmarked ${S.ex.name}`); renderPlayerInfo(); }
+  const on = !isBookmarked(S.ex.id);
+  if (on) BOOKMARKS.add(S.ex.id); else BOOKMARKS.delete(S.ex.id);
+  saveBookmarks(); snack(on ? `Bookmarked ${S.ex.name}` : `Removed the bookmark from ${S.ex.name}`); renderPlayerInfo();
 }
+/* deleting is only for the user's own exercises, and asks first (saying which workouts use it) */
 function removeSaved(id) {
-  const it = S.lib.items.find(x => x.id === id);
-  // a bookmarked library exercise just leaves Saved; the user's own (imported, or a copy they edited) is deleted
-  if (!findInDb(id) && !confirm(`Delete "${it ? it.name : 'this exercise'}"? It's your own exercise, so it will be gone from this device (a backup or an exported file can bring it back).`)) return;
-  S.lib.items = S.lib.items.filter(x => x.id !== id);
-  saveLib();
-  const builtIn = !!findInDb(id);
-  snack(builtIn ? `Removed the bookmark from ${it ? it.name : 'the exercise'}` : `Deleted ${it ? it.name : 'exercise'}`);
-  if (S.view === 'player' && S.ex && S.ex.id === id) { if (builtIn) renderPlayerInfo(); else { E.coll = SAVED; go('#/exercises'); } }
+  const it = S.lib.items.find(x => x.id === id); if (!it || findInDb(id)) return;
+  const uses = (WK.list || []).filter(w => w.blocks.some(b => b.items.some(i => i.ex === id))).map(w => `"${w.name}"`);
+  if (!confirm(`Delete "${it.name}"? It's your own exercise, so it will be gone from this device (a backup or an exported file can bring it back).${uses.length ? `\n\nIt's used in ${uses.join(', ')}, which will show it as missing.` : ''}`)) return;
+  S.lib.items = S.lib.items.filter(x => x.id !== id); saveLib();
+  if (BOOKMARKS.delete(id)) saveBookmarks();
+  snack(`Deleted ${it.name}`);
+  if (S.view === 'player' && S.ex && S.ex.id === id) { E.coll = MINE; go('#/exercises'); }
   if (S.view === 'exercises') renderExplore();
 }
 /* Users' own exercises have ids starting "u-", so a library update can never overwrite one (the build rejects
@@ -263,6 +265,11 @@ function claimIds(list, workouts) {
   for (const w of workouts || []) for (const b of (w && w.blocks) || []) for (const it of (b && b.items) || []) if (it && renamed[it.ex]) it.ex = renamed[it.ex];
   return out;
 }
+/* an imported exercise: an unchanged library one is just bookmarked; the user's own is added (or replaced) */
+function keepImported(ex) {
+  if (findInDb(ex.id)) { BOOKMARKS.add(ex.id); saveBookmarks(); return; }
+  const i = S.lib.items.findIndex(it => it.id === ex.id); if (i >= 0) S.lib.items[i] = ex; else S.lib.items.push(ex);
+}
 /* Every file carries "version". Older versions get upgraded here as the formats change; newer ones are refused. */
 function upgradeFile(data) {
   const v = data && typeof data === 'object' && data.version;
@@ -278,15 +285,14 @@ function importText(text, label) {
   if (data && Array.isArray(data.workouts)) {                    // a workout file (may bring its own exercises)
     data = { ...data, workouts: JSON.parse(JSON.stringify(data.workouts)) };
     const exs = Array.isArray(data.exercises) && data.exercises.length ? claimIds(normalizeImport({ exercises: data.exercises }), data.workouts) : [];
-    for (const ex of exs) { const i = S.lib.items.findIndex(it => it.id === ex.id); if (i >= 0) S.lib.items[i] = ex; else S.lib.items.push(ex); }
+    for (const ex of exs) keepImported(ex);
     const ws = importWorkouts(data);
     IMPORTED_WORKOUTS.push(...ws);
     return [];
   }
   const list = claimIds(normalizeImport(data));
   for (const ex of list) {
-    const i = S.lib.items.findIndex(it => it.id === ex.id);
-    if (i >= 0) S.lib.items[i] = ex; else S.lib.items.push(ex);
+    keepImported(ex);
   }
   return list;
 }
@@ -425,7 +431,7 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.act === 'paste') { $('#pasteArea').value = ''; $('#pasteDialog').showModal(); }
   else if (d.act === 'copyPrompt') copyText(aiPromptText(), 'Prompt copied');
   else if (d.act === 'showPrompt') showJson('Prompt for making an exercise from a video', aiPromptText());
-  else if (d.act === 'exportAll') showJson('Your saved exercises', JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: S.lib.items }, null, 2));
+  else if (d.act === 'exportAll') showJson('Your exercises', JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: S.lib.items }, null, 2));
   else if (d.act === 'edPrev' || d.act === 'edNext') { setPlaying(false); jumpTo(S.idx + (d.act === 'edNext' ? 1 : -1)); }
   else if (d.act === 'edRevertStep') revertStep();
   else if (d.act === 'edDiscard') discardEdits();
@@ -455,6 +461,7 @@ async function boot() {
   POSE_DB = { exercises: b.exercises || [] };
   LIBRARY_WORKOUTS = b.workouts || [];
   hydrateLibrary();
+  migrateSaved();                                            // bookmarks and My exercises (once; see 2-explore.js)
   if (WK.list === null) { WK.list = []; saveWorkouts(); }     // first run: library workouts are listed on their own
   setPlaying(S.playing);
   route();

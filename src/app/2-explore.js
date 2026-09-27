@@ -2,7 +2,35 @@
 /* the library's collections (each exercise's "library" field), alphabetically; Bookmarked comes before them */
 const collections = () => [...new Set(POSE_DB.exercises.map(ex => ex.library || 'Other'))].sort((a, b) => a.localeCompare(b));
 const typeOf = ex => ex.focus || ex.category || '';
-const isSaved = id => S.lib.items.some(it => it.id === id);
+/* Two separate things:
+   - My exercises: the user's own (imported, copied, made). They live in S.lib.items (the old "saved" store).
+   - Bookmarks: a flag on any exercise, library or own: a set of ids (BOOKMARKS, nstructr-bookmarks-v1).
+   A library exercise is bookmarked by id only, so library fixes reach it. */
+const BOOKMARK_KEY = 'nstructr-bookmarks-v1';
+let BOOKMARKS = (() => { try { const v = JSON.parse(localStorage.getItem(BOOKMARK_KEY) || 'null'); return Array.isArray(v) ? new Set(v) : null; } catch (e) { return null; } })();
+const saveBookmarks = () => { try { localStorage.setItem(BOOKMARK_KEY, JSON.stringify([...BOOKMARKS])); } catch (e) { } };
+const isBookmarked = id => !!BOOKMARKS && BOOKMARKS.has(id);
+const isOwn = id => !findInDb(id) && S.lib.items.some(it => it.id === id);
+const bookmarkedExercises = () => [...(BOOKMARKS || [])].map(id => exById(id)).filter(Boolean);
+/* Before bookmarks, "Saved" held copies of library exercises. Once, and after restoring an old backup: everything
+   saved stays bookmarked; a stored library copy becomes a plain bookmark, unless it was changed (with the old pose
+   editor), in which case it becomes the user's own "<name> (copy)" so nothing is lost. */
+function migrateSaved() {
+  const first = BOOKMARKS === null; if (first) BOOKMARKS = new Set();
+  let changed = first;
+  S.lib.items = S.lib.items.flatMap(ex => {
+    const lib = findInDb(ex.id);
+    if (!lib) { if (first) BOOKMARKS.add(ex.id); return [ex]; }
+    changed = true;
+    if (canonical(lib) === canonical(ex)) { BOOKMARKS.add(ex.id); return []; }       // just a bookmark
+    BOOKMARKS.delete(ex.id);                                                          // the changed version is what they had
+    let id = `u-${ex.id}-copy`, n = 2; while (S.lib.items.some(x => x.id === id) || findInDb(id)) id = `u-${ex.id}-copy-${n++}`;
+    const copy = { ...ex, id, name: `${lib.name} (copy)`, basedOn: lib.id }; delete copy.library;
+    BOOKMARKS.add(id);
+    return [copy];
+  });
+  if (changed) { saveBookmarks(); saveLib(); }
+}
 const E = { coll: 'All', type: 'All', equip: 'Any', q: '' };
 const THUMBS = new Map();
 function thumbFor(ex) {
@@ -15,7 +43,7 @@ function thumbFor(ex) {
 }
 function card(ex) {
   return `<button class="pose-card stateful" data-open="${esc(ex.id)}">
-    ${thumbFor(ex)}${isSaved(ex.id) ? '<span class="badge" title="Bookmarked"><span class="icon fill">bookmark</span></span>' : ''}
+    ${thumbFor(ex)}${isBookmarked(ex.id) ? '<span class="badge" title="Bookmarked"><span class="icon fill">bookmark</span></span>' : ''}
     <span class="t title-small">${esc(ex.name)}</span>
     <span class="meta body-small">${esc(ex.sanskrit || typeOf(ex))}</span></button>`;
 }
@@ -25,18 +53,20 @@ const chip = (attr, val, on, label = val) =>
 /* ---------- Exercises ----------
    "Bookmarked" is a collection like the others: bookmarked library exercises plus the user's own (imported or made),
    which exist only there. Searching "All" covers both. */
-const SAVED = 'Bookmarked';
+const SAVED = 'Bookmarked', MINE = 'My exercises';
 const ownExercises = () => S.lib.items.filter(ex => !findInDb(ex.id));
 function renderExplore() {
-  const colls = collections(), nSaved = S.lib.items.length;
+  const colls = collections(), marked = bookmarkedExercises(), mine = ownExercises();
+  const nSaved = marked.length;
   $('#fCollection').innerHTML = chip('data-coll', 'All', E.coll === 'All', 'All collections') +
-    chip('data-coll', SAVED, E.coll === SAVED, nSaved ? `${SAVED} (${nSaved})` : SAVED) + colls.map(c => chip('data-coll', c, E.coll === c)).join('');
-  const scope = E.coll === SAVED ? S.lib.items
-    : E.coll === 'All' ? [...POSE_DB.exercises, ...ownExercises()] : POSE_DB.exercises.filter(ex => (ex.library || 'Other') === E.coll);
+    chip('data-coll', SAVED, E.coll === SAVED, nSaved ? `${SAVED} (${nSaved})` : SAVED) +
+    chip('data-coll', MINE, E.coll === MINE, mine.length ? `${MINE} (${mine.length})` : MINE) + colls.map(c => chip('data-coll', c, E.coll === c)).join('');
+  const scope = E.coll === SAVED ? marked : E.coll === MINE ? mine
+    : E.coll === 'All' ? [...POSE_DB.exercises, ...mine] : POSE_DB.exercises.filter(ex => (ex.library || 'Other') === E.coll);
   const types = [...new Set(scope.map(typeOf).filter(Boolean))].sort();
   const equip = [...new Set(scope.flatMap(ex => ex.equipment || []))].sort();
   let more = '';
-  if (E.coll !== 'All' && E.coll !== SAVED && types.length > 1) more += chip('data-type', 'All', E.type === 'All', 'All types') + types.map(t => chip('data-type', t, E.type === t)).join('');
+  if (E.coll !== 'All' && E.coll !== SAVED && E.coll !== MINE && types.length > 1) more += chip('data-type', 'All', E.type === 'All', 'All types') + types.map(t => chip('data-type', t, E.type === t)).join('');
   if (equip.length > 1) more += (more ? '<span class="chip-sep" aria-hidden="true"></span>' : '') + chip('data-equip', 'Any', E.equip === 'Any', 'All equipment') + equip.map(q => chip('data-equip', q, E.equip === q)).join('');
   $('#fMore').innerHTML = more;
   $('#fMore').hidden = !more;
@@ -53,12 +83,17 @@ function renderExplore() {
         <h2 class="title-medium">${esc(c)}<span class="count">${items.length}</span></h2>
         <button class="btn text stateful" data-coll="${esc(c)}">See all</button></div>
         <div class="carousel">${items.slice(0, 14).map(card).join('')}</div></section>`;
-    body.innerHTML = (nSaved ? shelf(SAVED, S.lib.items) : '') + colls.map(c => shelf(c, POSE_DB.exercises.filter(ex => (ex.library || 'Other') === c))).join('');
+    body.innerHTML = (nSaved ? shelf(SAVED, marked) : '') + (mine.length ? shelf(MINE, mine) : '') + colls.map(c => shelf(c, POSE_DB.exercises.filter(ex => (ex.library || 'Other') === c))).join('');
     return;
   }
   if (E.coll === SAVED && !nSaved && !q) {
     body.innerHTML = `<div class="empty-state"><span class="icon">bookmarks</span><p class="title-medium" style="margin:8px 0 4px">Nothing bookmarked yet</p>
-      <p class="muted" style="margin:0 0 16px">Tap the bookmark on any exercise to keep it here. Exercises you import land here too.</p>
+      <p class="muted" style="margin:0 0 16px">Tap the bookmark on any exercise to keep it here.</p></div>`;
+    return;
+  }
+  if (E.coll === MINE && !mine.length && !q) {
+    body.innerHTML = `<div class="empty-state"><span class="icon">person</span><p class="title-medium" style="margin:8px 0 4px">No exercises of your own yet</p>
+      <p class="muted" style="margin:0 0 16px">Exercises you import, make with AI, or copy by editing a library one show up here.</p>
       <div class="row" style="justify-content:center"><button class="btn tonal stateful" data-act="import"><span class="icon">upload_file</span>Import</button></div></div>`;
     return;
   }

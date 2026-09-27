@@ -31,7 +31,7 @@ function backupData() {
   let fullscreen = null; try { fullscreen = localStorage.getItem(FS_KEY); } catch (e) { }
   return {
     format: BACKUP_FORMAT, version: FILE_VERSION, exported: new Date().toISOString(),
-    workouts: WK.list || [], exercises: S.lib.items, history: loadLog(),
+    workouts: WK.list || [], exercises: S.lib.items, bookmarks: [...(BOOKMARKS || [])], history: loadLog(),
     settings: { sound: WK.sound, ...(fullscreen ? { fullscreen } : {}) }
   };
 }
@@ -49,6 +49,8 @@ function restoreBackup(data) {
   const log = (Array.isArray(data.history) ? data.history : []).filter(s => s && s.id && s.start);
   WK.list = byId(WK.list || [], ws); saveWorkouts();
   S.lib.items = byId(S.lib.items, exs); saveLib();
+  for (const id of Array.isArray(data.bookmarks) ? data.bookmarks : []) if (typeof id === 'string') BOOKMARKS.add(id);
+  saveBookmarks(); migrateSaved();                           // an older backup may hold stored library copies
   saveLog(byId(loadLog(), log).sort((a, b) => String(a.start).localeCompare(String(b.start))));
   const st = data.settings || {};
   if (st.sound && SOUND_MODES.some(m => m[0] === st.sound)) setSound(st.sound);

@@ -43,7 +43,7 @@ async def main():
         await pg.click('[data-act="edDiscard"]'); await pg.wait_for_timeout(400)
         print('discard (new copy)      ', await pg.evaluate("[location.hash, S.ex.id, S.lib.items.some(x=>x.id.startsWith('u-bw-squat'))]"))
         # the copy shows under Saved, not the library
-        await pg.evaluate("E.coll='Bookmarked'; go('#/exercises')"); await pg.wait_for_timeout(300)
+        await pg.evaluate("E.coll='My exercises'; go('#/exercises')"); await pg.wait_for_timeout(300)
         print('Saved shows             ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"))
         # --- workouts ---
         await pg.evaluate("""window.SPOKEN=[]; window.CANCELS=0; Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{

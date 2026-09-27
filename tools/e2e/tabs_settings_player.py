@@ -14,9 +14,9 @@ async def main():
         for old in ['#/explore', '#/saved', '#/create']:
             await pg.evaluate(f"location.hash='{old}'"); await pg.wait_for_timeout(250)
             print(f'old link {old:<14} ', await pg.evaluate("[location.hash, S.view, E.coll]"))
-        # Saved filter: a bookmarked library exercise and an imported one of your own
+        # a bookmarked library exercise and an imported one of your own (bookmarked too)
         own = await pg.evaluate("JSON.stringify({...findInDb('bw-squat'), id:'u-my-squat', name:'My Squat'})")
-        await pg.evaluate(f"S.lib.items.push(clone(findInDb('bw-reverse-lunge')), JSON.parse({json.dumps(own)})); saveLib(); E.coll='All'; go('#/exercises')"); await pg.wait_for_timeout(300)
+        await pg.evaluate(f"S.lib.items.push(JSON.parse({json.dumps(own)})); saveLib(); BOOKMARKS.add('bw-reverse-lunge'); BOOKMARKS.add('u-my-squat'); saveBookmarks(); E.coll='All'; go('#/exercises')"); await pg.wait_for_timeout(300)
         print('first shelf             ', await pg.evaluate("document.querySelector('#exploreBody .section-head h2').textContent"))
         await pg.fill('#search', 'my squat'); await pg.wait_for_timeout(200)
         print('search finds own        ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"))
