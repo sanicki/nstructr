@@ -39,8 +39,8 @@ function renderPlayerInfo() {
   if (ex.category && ex.category !== ex.focus) c('category', ex.category);
   (ex.equipment || []).forEach(q => c(/band/i.test(q) ? 'fitness_center' : /towel/i.test(q) ? 'dry_cleaning' : /wall|door/i.test(q) ? 'door_front' : 'handyman', q));
   if (pr.reps) c('tag', /\d\s*$/.test(pr.reps) ? `${pr.reps} ${ex.repName && ex.repName !== 'rep' ? ex.repName + 's' : 'reps'}` : pr.reps);
-  c('timer', `${Math.round(S.total / 1000)} s per round`);
-  $('#exChips').innerHTML = chips.join('');
+  $('#exTime').innerHTML = `<span class="icon">timer</span>About ${Math.round(S.total / 1000)} s per round${ex.bilateral ? ', each side' : ''}`;
+  $('#stepsTitle').textContent = `Steps (${S.resolved.length})`;
   // steps
   const phaseTag = i => { const ph = (S.ex.keyframes[i] || {}).phase; return ph === 'setup' ? ' <span class="tag">Setup</span>' : ph === 'finish' ? ' <span class="tag">Finish</span>' : ''; };
   $('#stepList').innerHTML = S.resolved.map((r, i) => `<li><button class="stateful" data-step="${i}"><span class="num">${i + 1}</span>
@@ -55,13 +55,14 @@ function renderPlayerInfo() {
   // about
   const src = ex.source || {};
   $('#aboutPanel').innerHTML = `${ex.description ? `<p class="body-large">${esc(ex.description)}</p>` : ''}
+    ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
     ${src.url ? `<p><a class="source" href="${esc(src.url)}" target="_blank" rel="noopener"><span class="icon" style="font-size:18px">${/youtu/.test(src.url) ? 'play_circle' : 'open_in_new'}</span>${esc(src.title || 'Source')}</a></p>` : ''}
     ${src.note ? `<p class="body-small muted">${esc(src.note)}</p>` : ''}
     <div class="row" style="margin-top:12px">${findInDb(ex.id) ? '' : `<button class="btn tonal stateful" data-act="shareEx"><span class="icon">share</span>Share</button>`}
     <button class="btn text stateful authoring-only" data-act="json"><span class="icon">data_object</span>Show JSON</button>
     ${isOwn(ex.id) ? `<button class="btn text stateful danger" data-del="${esc(ex.id)}"><span class="icon">delete</span>Delete</button>` : ''}</div>`;
   updateSaveBtn();
-  $('#adjustPanel').hidden = !authoring();
+  $('#adjustPanel').hidden = !XC.editing;
   updateEditor();
   S.shownIdx = -1;
 }
@@ -100,61 +101,42 @@ $('#exStageWrap').addEventListener('click', e => {
 $('#exStageWrap').addEventListener('pointermove', e => { if (e.pointerType === 'mouse' && S.view === 'player') showExControls(!S.playing); });
 $('#exControls').addEventListener('focusin', () => showExControls(true));
 
-/* ---------- Exercise details: a panel you pull up (phones); a side column on wide screens ---------- */
-const sheetDocked = () => matchMedia('(min-width: 840px), (max-height: 520px)').matches;   // a column / part of the page, not a sheet
-function setSheet(open, half = false) {
-  const sh = $('#exSheet');
-  sh.classList.toggle('open', open); sh.classList.toggle('half', open && half); sh.style.transform = '';
-  if (!half) XC.editing = false;
-  $('#sheetHead').setAttribute('aria-expanded', String(open));
-  $('#sheetScrim').hidden = !open || half || sheetDocked();
-  if (!open) $('#sheetBody').scrollTop = 0;
-}
-(() => {
-  const head = $('#sheetHead'), sh = $('#exSheet');
-  let drag = null;
-  head.addEventListener('pointerdown', e => {
-    if (sheetDocked()) return;
-    // closed = only the header showing, above the safe area (and above the camera cutouts on short screens)
-    const lift = (parseFloat(getComputedStyle(document.documentElement).paddingBottom) || 0) + (matchMedia('(max-height: 520px)').matches ? innerHeight * 0.22 : 0);
-    drag = { y0: e.clientY, t0: performance.now(), open: sh.classList.contains('open'), moved: false, id: e.pointerId,
-      base: new DOMMatrixReadOnly(getComputedStyle(sh).transform).m42, closedY: sh.offsetHeight - head.offsetHeight - lift };
-    head.setPointerCapture(e.pointerId);
-  });
-  head.addEventListener('pointermove', e => {
-    if (!drag || e.pointerId !== drag.id) return;
-    const dy = e.clientY - drag.y0;
-    if (Math.abs(dy) > 6) drag.moved = true;
-    if (!drag.moved) return;
-    sh.classList.add('dragging');
-    const y = Math.max(0, Math.min(drag.closedY, drag.base + dy));
-    sh.style.transform = `translateY(${y}px)`;
-  });
-  const end = e => {
-    if (!drag || e.pointerId !== drag.id) return;
-    const dy = e.clientY - drag.y0, v = dy / Math.max(1, performance.now() - drag.t0), moved = drag.moved, was = drag.open;
-    const y = drag.base + dy, closedY = drag.closedY;
-    drag = null; sh.classList.remove('dragging');
-    if (!moved) { setSheet(!was); return; }                         // a tap toggles
-    setSheet(v < -0.3 || (v <= 0.3 && y < closedY * 0.6));          // a flick, or let go high enough
-  };
-  head.addEventListener('pointerup', end); head.addEventListener('pointercancel', end);
-  head.addEventListener('click', e => { if (e.detail === 0 && !sheetDocked()) setSheet(!sh.classList.contains('open')); });   // keyboard
-  $('#sheetScrim').addEventListener('click', () => setSheet(false));
-  addEventListener('keydown', e => { if (e.key === 'Escape' && sh.classList.contains('open') && S.view === 'player') setSheet(false); });
-})();
-
-/* Authoring mode: the pencil in the top bar opens the pose editor. On phones the panel opens halfway so the
-   figure stays visible above it; use the controls on the figure to pick the step to edit. */
-function openPoseEditor() {
+/* ---------- Editing an exercise ----------
+   The Edit button (pencil, top bar) is for everyone: the words (name, description, instructions, each step's name
+   and spoken cue). Authoring mode adds the poses and the camera, and the JSON. While editing, playback pauses and,
+   on narrow screens, the figure stays pinned at the top so the change can be seen; the controls on the figure
+   fade even while paused so they don't cover the pose. */
+function openEditor() {
   if (!S.ex) return;
   setPlaying(false); hideExControls();
-  $('#adjustPanel').hidden = false;
-  if (sheetDocked()) { XC.editing = true; $('#adjustPanel').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-  setSheet(true, true); XC.editing = true;
-  requestAnimationFrame(() => { $('#sheetBody').scrollTop = $('#adjustPanel').offsetTop - $('#sheetBody').offsetTop; });
+  XC.editing = true; document.body.classList.add('ex-editing');
+  $('#adjustPanel').hidden = false; updateEditor();
+  requestAnimationFrame(() => $('#adjustPanel').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
 }
-$('#editPoseBtn').addEventListener('click', openPoseEditor);
+function closeEditor() {
+  XC.editing = false; document.body.classList.remove('ex-editing');
+  $('#adjustPanel').hidden = true;
+}
+$('#editPoseBtn').addEventListener('click', () => (XC.editing ? closeEditor() : openEditor()));
+
+/* ---------- Sound in the exercise player ----------
+   It follows the Sound setting: Silent and Beeps stay quiet (there are no rests or holds to beep for); Voice and
+   Coach read each step's cue on the first pass through the exercise (the step waits for its line), then count the
+   reps. Pausing stops the voice; a new side or direction starts a new first pass. */
+const XS = { speaking: false, token: 0, last: '' };
+const exVoice = () => WK.sound === 'voice' || WK.sound === 'coach';
+function exStepSound(i) {
+  if (S.view !== 'player' || S.mode === 'workout' || !S.playing || !exVoice() || XC.editing) return;
+  const r = S.resolved[i]; if (!r) return;
+  const key = [i, S.rep, S.side, S.dir].join(':'); if (key === XS.last) return;   // redrawing the same step says nothing new
+  XS.last = key;
+  if (S.rep === 1) {
+    if (r.quiet || !(r.cue || r.name)) return;
+    XS.speaking = true; const token = ++XS.token;
+    say(r.cue || r.name).then(() => { if (XS.token === token) XS.speaking = false; });
+  } else if (i === (S.phase ? S.phase.start : 0) && S.ex.measure !== 'time') say(String(S.rep), false, { dropIfBusy: true });
+}
+function exHush() { XS.token++; XS.speaking = false; XS.last = ''; try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } }
 
 /* ---------- Settings ---------- */
 const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1';
@@ -164,8 +146,7 @@ const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
 /* Authoring mode shows the tools for making exercises (pose editor, JSON views, exporters) */
 function applyAuthoring() {
   document.body.classList.toggle('authoring', authoring());
-  $('#adjustPanel').hidden = !authoring();
-  if (!authoring() && $('#exSheet').classList.contains('half')) setSheet(false);
+  if (S.ex) updateEditor();
 }
 const defaultSpeed = () => +pref(SPEED_KEY, '1') || 1;
 function applyTheme(t) {
@@ -187,6 +168,6 @@ $('#view-settings').addEventListener('click', e => {
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
-$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Authoring mode on: open any exercise and tap the Edit pose button (sliders) at the top' : 'Authoring mode off', 6000); });
+$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Authoring mode on: the Edit button (pencil) on any exercise now shows the poses and camera too' : 'Authoring mode off', 6000); });
 
 applyAuthoring();

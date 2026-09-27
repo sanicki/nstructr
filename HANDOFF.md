@@ -79,7 +79,7 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
   arm-circle continuity tests pass against the served build.
 
 **Step 3 (simpler UI) is built**: three tabs (Workouts, Exercises, Settings), the exercise player's
-tap-for-controls overlay and pull-up details panel, Authoring mode. See §10.
+tap-for-controls overlay with its details on the page below, Authoring mode. See §10.
 
 **Step 2 (installable app + backup) is built and tested on the Flip7** (installed; bottom margin confirmed) (see §13): manifest, icons, service worker, storage
 persistence, Export everything / Import everything, and a Material theme generated from the icon's blue.
@@ -106,7 +106,7 @@ src/
   app/0-boot.js       globals the library fills (POSE_DB, LIBRARY_WORKOUTS)
   app/1-engine.js     app state S, import validation, figure SVG, drawing, playback loop, editor sliders
   app/2-explore.js    Exercises tab (collections incl. Saved, filters, search, cards)
-  app/3-details.js    exercise player info, its tap-for-controls overlay and pull-up panel, Settings, format reference
+  app/3-details.js    exercise page info, its tap-for-controls overlay, Edit, its sound, Settings, format reference
   app/4-workouts.js   workouts: storage, editor, plan builder, workout player, sound, history, sharing
   app/5-main.js       selection, import, routing, event wiring, boot() (defined here)
   app/5-share.js       share links: pack/unpack, share dialog with QR code, opening a link
@@ -384,7 +384,7 @@ representations that rotate the short, natural way) over adding a known issue; i
   leg"); clinical names (anterior, posteromedial…) only in About text. Star Excursion uses no tape and no
   "lines" — directions are imagined.
 - Safety notes from sources are kept (BHF heart-condition note, Mayo osteoporosis warning for knee-to-chest,
-  coach/spotter notes on barbell lifts) and surfaced in the "Before you start" sheet.
+  coach/spotter notes on barbell lifts) and shown on the workout card (when expanded) and in the workout editor.
 
 ### 8.2 Reps
 - One loop of an exercise's rep steps is one rep. Nested reps (Wall Sit + Pull-Apart) are modelled with
@@ -413,8 +413,8 @@ representations that rotate the short, natural way) over adding a known issue; i
   that appears under the finger); tap empty space hides them; they auto-hide 4 s after the last tap unless
   paused. Swipe (only while controls are hidden, ≥ ⅓ screen width, mostly horizontal) = next/previous
   exercise. Exit = **hold ✕ for 0.8 s** (a tap only shows "Hold ✕ to exit"). Space = pause on keyboards.
-- "Before you start" sheet: Start/Cancel at the **top** (camera cutouts), equipment, safety notes, sound mode,
-  full-screen switch.
+- **Start goes straight into the workout** (no "Before you start" popup since Sep 2026): equipment and safety
+  notes are on the expanded workout card and in the editor; sound and full screen are in Settings.
 - Full screen: requested on start unless disabled (`nstructr-fullscreen-v1`) or already running as an installed
   app (then Chrome shows no notice). Chrome's own "exit full screen" notice can't be moved by the page.
 - Screen Wake Lock while working out; re-acquired on visibility change. Session saved per exercise for Resume.
@@ -489,7 +489,7 @@ steps or the joint will windmill; the jump check will catch it.
 
 ## 10. UI inventory (current)
 
-- **Workouts**: Resume card, your workout cards (Start/Edit, est. time, count, equipment), Library workouts (Start/Customize), History (delete, clear). Editor: name, rest between exercises, blocks (rename, move, delete, repeat as circuit with rounds and
+- **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (Start/Edit, est. time, count, equipment, safety notes), Library workouts (Start/Customize), History (delete, clear). Editor: name, rest between exercises, blocks (rename, move, delete, repeat as circuit with rounds and
   rest), items (drag handle, settings sheet with reps/seconds, sets, rest, sides, direction, speed; menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
 - **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; type/focus,
@@ -497,15 +497,20 @@ steps or the joint will windmill; the jump check will catch it.
   own (imported/made), which exist only there.
 - **Exercise player**: the figure with a **tap-for-controls overlay** (previous step / play-pause / next step;
   same rules as the workout player: the first tap only shows them, they stay up while paused, fade while
-  playing; mouse hover shows them), progress, current step, side / direction / speed switches. Details
-  (chips, Steps, How to do it, About, and **Adjust the pose** in Authoring mode) are one scrolling panel:
-  on phones a **pull-up sheet** peeking from the bottom (tap or drag its header; tap outside or Esc closes),
-  on screens ≥ 840 px a right-hand column; on short screens (≤ 520 px tall: the cover screen, landscape) part
-  of the page below the controls, since a peeking panel would cover the figure.
+  playing; mouse hover shows them), progress, current step, then the selectors labelled **Side**, **Direction**,
+  **Speed**. The details are part of the page, below the controls (on screens ≥ 840 px a right-hand column):
+  **About** (description, chips), the time estimate ("About N s per round, each side"), **How to do it**,
+  **Steps (n)** (collapsed), and the editor when open.
+  - **Sound** follows the Sound setting: Silent / Beeps say nothing; Voice / Coach read each step's cue on the
+    first pass (the step waits for it: `S.canAdvance`), then count reps (not for timed exercises). Pausing,
+    changing side/direction or leaving the page stops the voice (`exHush()`); a new side/direction starts the
+    first pass again. Code: `XS`, `exStepSound()`, `exHush()` in `3-details.js`.
 - **Short screens** (≤ 520 px tall, < 840 px wide): the three tabs sit in the top bar (icons only), the snackbar
   shows at the top, and pages end with 22 vh of empty space, all to keep clear of the cover screen's cutouts.
-- **Authoring mode**: an **Edit pose** button (sliders icon) in the exercise page's top bar pauses playback and
-  opens the pose editor; on phones the panel opens halfway (48dvh) so the figure stays visible. The editor has its
+- **Edit** (pencil in the exercise page's top bar, for everyone) pauses playback and opens the editor at the
+  end of the page with **Done** at its top; on phones the figure stays pinned at the top while editing
+  (`body.ex-editing`). Everyone gets the words (step name and cue; name, description and instructions);
+  **Authoring mode** adds the pose tools (joints, camera, JSON). The editor has its
   own previous/next step buttons, and the figure's overlay controls fade even while paused so they don't cover the
   pose. Each joint has **− / +** (hold to repeat) in steps of 1°, 5° or 15°, and an **undo** shown once it differs
   from where editing started; plus **Revert this step** and **Discard all changes**.
@@ -559,15 +564,15 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
   `circuits_history_share`, `exercises_tab` (the move from Saved, chips/shelves order, bookmark vs own,
   delete asks and names workouts, imports), `workouts_tab` (sections, collapsed cards, drag order kept, touch swipe to
-  delete), `quick_fixes` (start sheet, Duplicate, Authoring-only JSON views, collections
+  delete), `quick_fixes` (Start goes straight in, no Workouts Import, safety note on the card, edit words vs poses, Duplicate, Authoring-only JSON views, collections
   order, QR picture, incline push-up head), `share_links` (library/own workouts and exercises through a link on a
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay and pull-up panel), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
-  `gestures_cover` (two-tap controls, swipes, hold-to-exit, start sheet position), `layout_overlap` (title /
+  `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /
   caption / figure never overlap on cover, phone, landscape), `floor_height_cover` (floor ≥ 23% above bottom),
   `arm_circles_continuity` (constant angular speed, never reverses), `star_excursion_coach`.
   They print results rather than assert; read the output. Install with a Playwright version matching the
@@ -585,7 +590,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 3. ✅ **Simplify the UI before going public**: three tabs — Workouts, **Exercises** (Explore + Saved merged, Saved
    as a filter), **Settings** (sound, theme, full screen, speed; "Import & tools" = AI prompts, format
    reference, export; an **Authoring mode** toggle that reveals the pose editor). Exercise player gets the same
-   tap-for-controls overlay as the workout player, with a pull-up details panel instead of four tabs.
+   tap-for-controls overlay as the workout player, with its details on the page (a pull-up panel until Sep 2026) instead of four tabs.
 4. ✅ **Share links**: workout/exercise compressed into the URL fragment (`CompressionStream` + base64url), no
    server; QR codes for short links (see §5.3).
 5. **Owner decisions before contributions**: library license (needed for the submission checkbox), trademark
@@ -624,19 +629,20 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 1. ✅ Quick fixes (chair incline push-up head, QR picture, no sharing library items, start sheet without sound /
    full screen, Duplicate needs exercises, Bookmarked, Other names, speed remembered, Authoring-only JSON views,
    no history export, collections A–Z, `figure.segments` and `prescription.rounds/sides` removed).
-2. ✅ **Workouts tab**: My Workouts heading with Import / New workout under its message; cards collapsed by default
+2. ✅ **Workouts tab**: My Workouts heading with New workout under its message (Import moved to Settings only in 4); cards collapsed by default
    (Start + name) and expandable; drag to reorder My Workouts **and** Library workouts (per-user order,
    `nstructr-libwk-order-v1`); swipe left on a My Workouts card shows a trash can, tapping it deletes (no dialog,
    no undo). Filters say "All collections" / "All equipment".
 3. ✅ **Exercises tab**: My Exercises collection (the user's own, bookmarked or not; removing a bookmark no longer
    deletes; delete is its own action) → order: Bookmarked, My Exercises, then collections A–Z. Storage change with
    migration.
-4. **Exercise page**: drop the pull-up panel; the page scrolls: controls → About → time → How to do it → Steps
+4. ✅ **Exercise page**: drop the pull-up panel; the page scrolls: controls → About → time → How to do it → Steps
    (collapsible) → Edit. Labels **Side**, **Direction**, **Speed** on the selectors (Leg Circles would be a good
    exercise needing both Side and Direction: add it, from https://pilatesology.com/pilatesology-encyclopedia-leg-circles/
    described in our own words). The exercise player follows the Sound setting (Silent / Beeps: quiet;
    Voice / Coach: read each step's cue on the first pass, then count reps). **Edit details** (words) for everyone
-   on their own exercises and copies; Authoring mode adds poses and camera.
+   on their own exercises and copies; Authoring mode adds poses and camera. Also: Start goes straight into a workout
+   (no popup; safety notes on the card and in the editor), Import only in Settings. **Leg Circles is still to do.**
 5. **Create with AI** (deep links, no keys): one screen: what it is (a name, a written routine, a YouTube link, a
    photo or video) → provider (default in Settings: Claude, ChatGPT, Gemini, Grok, DeepSeek…) → open it with the
    prompt filled in (copy where the provider can't take it in the link) → paste the JSON back. One prompt that can

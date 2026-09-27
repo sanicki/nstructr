@@ -96,21 +96,21 @@ function updateEditor() {
     box.innerHTML = `<div class="editor-head"><span class="title-small" id="edTitle"></span>
       <span class="editor-steps"><button class="icon-btn stateful" data-act="edPrev" aria-label="Previous step"><span class="icon">chevron_left</span></button>
         <button class="icon-btn stateful" data-act="edNext" aria-label="Next step"><span class="icon">chevron_right</span></button></span></div>
-      <div class="editor-tools"><div class="segmented" id="viewSeg" role="group" aria-label="Camera view">
+      <div class="editor-tools authoring-only"><div class="segmented" id="viewSeg" role="group" aria-label="Camera view">
           <button class="stateful" data-view="side"><span class="icon">check</span>Side</button>
           <button class="stateful" data-view="front"><span class="icon">check</span>Front</button></div>
         <div class="segmented" id="edStepSeg" role="group" aria-label="Change by">${[1, 5, 15].map(n => `<button class="stateful" data-edstep="${n}"><span class="icon">check</span>${n}°</button>`).join('')}</div></div>
       <div class="step-text"><label class="field"><span class="field-label">Step name</span><input id="edStepName" data-sfield="name" autocomplete="off"></label>
         <label class="field"><span class="field-label">Spoken cue</span><input id="edStepCue" data-sfield="cue" autocomplete="off"></label></div>
       <p class="body-small muted" id="edNote" style="margin:0 0 8px"></p>
-      <div class="joints">${JOINTS.map(([k, label]) => `<div class="joint" data-jrow="${k}"><span class="jl">${label}</span>
+      <div class="joints authoring-only">${JOINTS.map(([k, label]) => `<div class="joint" data-jrow="${k}"><span class="jl">${label}</span>
         <button class="icon-btn stateful jbtn" data-jdelta="-1" data-joint="${k}" aria-label="${label}: less"><span class="icon">remove</span></button>
         <output id="o-${k}"></output>
         <button class="icon-btn stateful jbtn" data-jdelta="1" data-joint="${k}" aria-label="${label}: more"><span class="icon">add</span></button>
         <button class="icon-btn stateful jundo" data-jundo="${k}" aria-label="${label}: undo" title="Back to how it was"><span class="icon">undo</span></button></div>`).join('')}</div>
       <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="btn tonal stateful" data-act="edRevertStep"><span class="icon">undo</span>Revert this step</button>
         <button class="btn text stateful danger" data-act="edDiscard"><span class="icon">delete_history</span>Discard all changes</button>
-        <button class="btn text stateful" data-act="json"><span class="icon">data_object</span>Show JSON</button></div>`;
+        <button class="btn text stateful authoring-only" data-act="json"><span class="icon">data_object</span>Show JSON</button></div>`;
   }
   $('#edTitle').textContent = `Step ${S.idx + 1}: ${r.name || ''}`;
   if (box.dataset.textFor !== S.ex.id) { box.dataset.textFor = S.ex.id; renderTextForm(); }
@@ -118,9 +118,9 @@ function updateEditor() {
   if (document.activeElement !== $('#edStepName')) $('#edStepName').value = kf.name || '';
   if (document.activeElement !== $('#edStepCue')) $('#edStepCue').value = kf.cue || '';
   const labels = (S.ex.bilateral && S.ex.bilateral.labels) || {};
-  $('#edNote').textContent = locked ? `Switch to ${labels.L || 'the first side'} to edit. The other side is mirrored from it.`
-    : (findInDb(S.ex.id) ? 'Your first change makes your own copy of this exercise, "(copy)", and leaves the library one as it is. ' : 'Changes are saved as you go. ')
-      + 'Joints marked auto are set for you (feet planted, hands reaching).';
+  $('#edNote').textContent = (findInDb(S.ex.id) ? 'Your first change makes your own copy of this exercise, "(copy)", and leaves the library one as it is. ' : 'Changes are saved as you go. ')
+    + (!authoring() ? 'Step words are written for the first side; the other side swaps left and right for you.'
+      : locked ? `Switch to ${labels.L || 'the first side'} to change the pose: the other side is mirrored from it.` : 'Joints marked auto are set for you (feet planted, hands reaching).');
   document.querySelectorAll('#viewSeg button').forEach(b => { b.setAttribute('aria-pressed', String((kf.view || 'side') === b.dataset.view)); b.disabled = locked; });
   document.querySelectorAll('#edStepSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.edstep === ED.step)));
   const changed = orig && JSON.stringify(orig) !== JSON.stringify(kf);
@@ -182,10 +182,10 @@ function selectExercise(id) {
   S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.speed = defaultSpeed();
   document.querySelectorAll('#speedSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.speed === S.speed)));
   const dirs = S.ex.direction && S.ex.direction.labels;
-  $('#dirSeg').hidden = !dirs;
+  $('#dirCtl').hidden = !dirs;
   if (dirs) document.querySelectorAll('#dirSeg button').forEach(b => { b.querySelector('.lbl').textContent = dirs[b.dataset.dir]; b.setAttribute('aria-pressed', String(b.dataset.dir === 'A')); });
   const bil = !!S.ex.bilateral;
-  $('#sideSeg').hidden = !bil;
+  $('#sideCtl').hidden = !bil;
   if (bil) {
     const labels = S.ex.bilateral.labels || {};
     document.querySelectorAll('#sideSeg button').forEach(b => {
@@ -196,7 +196,8 @@ function selectExercise(id) {
   rebuild(); buildFigure(); buildGuide(); requestAnimationFrame(syncLimbWidth);
   S.t = S.resolved.length ? S.resolved[0].dur : 0;
   $('#editor').dataset.built = '';
-  renderPlayerInfo(); setSheet(false); draw();
+  closeEditor(); exHush(); renderPlayerInfo(); draw();
+  S.canAdvance = () => !XS.speaking;                          // on the first pass, a step waits for its spoken cue
   const miss = S.resolved.findIndex(r => r.misses.length);
   if (miss >= 0) {
     const m = S.resolved[miss].misses[0];
@@ -207,13 +208,13 @@ function selectExercise(id) {
 }
 function setDir(dir) {
   if (dir === S.dir) return;
-  S.dir = dir; S.rep = 1;
+  S.dir = dir; S.rep = 1; exHush();
   document.querySelectorAll('#dirSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.dir === dir)));
   rebuild(); S.idx = S.phase.start; S.prev = null; S.t = S.resolved[S.idx].dur; renderPlayerInfo(); draw();
 }
 function setSide(side) {
   if (side === S.side) return;
-  S.side = side; S.rep = 1;
+  S.side = side; S.rep = 1; exHush();
   document.querySelectorAll('#sideSeg button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.side === side)));
   const keepT = S.t; rebuild(); S.t = Math.min(keepT, S.resolved[S.idx].dur + S.resolved[S.idx].hold - 1);
   renderPlayerInfo(); draw();
@@ -366,6 +367,7 @@ function route() {
     moveStage(true);
   } else lastList = h;
   S.view = view;
+  if (view === 'player' && S.playing) exStepSound(S.idx);     // it started playing before the view switched: read the first step now
   document.body.dataset.view = view;
   document.querySelectorAll('.view').forEach(v => (v.hidden = v.id !== 'view-' + view));
   const navFor = view === 'player' ? lastList.replace('#/', '').split('/')[0].replace(/^workout$/, 'workouts') : (view === 'workout' || view === 'wplay') ? 'workouts' : view;
@@ -375,7 +377,8 @@ function route() {
   $('#saveBtn').hidden = view !== 'player';
   $('#shareExBtn').hidden = view !== 'player' || !S.ex || !!findInDb(S.ex.id);      // library exercises: everyone has them
   if (view === 'player') applyAuthoring();
-  $('#editPoseBtn').hidden = view !== 'player' || !authoring();
+  $('#editPoseBtn').hidden = view !== 'player';
+  if (view !== 'player') { exHush(); if (XC.editing) closeEditor(); }
   document.querySelector('.bar-brand').style.display = sub ? 'none' : '';
   $('#barTitle').textContent = view === 'player' ? (S.ex ? S.ex.name : '') : view === 'workout' ? EDIT.name : view === 'wplay' ? WP.w.name : TITLES[view];
   document.title = view === 'player' && S.ex ? `${S.ex.name} · ${APP_NAME}` : APP_NAME;
@@ -434,6 +437,7 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.act === 'exportAll') showJson('Your exercises', JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: S.lib.items }, null, 2));
   else if (d.act === 'edPrev' || d.act === 'edNext') { setPlaying(false); jumpTo(S.idx + (d.act === 'edNext' ? 1 : -1)); }
   else if (d.act === 'edRevertStep') revertStep();
+  else if (d.act === 'edDone') closeEditor();
   else if (d.act === 'edDiscard') discardEdits();
   else if (d.act === 'json') showJson(S.ex.name, JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: [S.ex] }, null, 2));
   else if (d.view && S.side === 'L') editPose(kf => { kf.view = d.view; });

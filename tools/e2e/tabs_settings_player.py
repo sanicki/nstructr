@@ -52,37 +52,27 @@ async def main():
         print('tap figure while playing', await pg.evaluate(st), '<- hides')
         await pg.keyboard.press('Space'); await pg.wait_for_timeout(200)
         print('Space pauses            ', await pg.evaluate(st))
-        # the details panel: tap to open, drag down to close, drag up to open
-        sh = "[$('#exSheet').classList.contains('open'), Math.round($('#exSheet').getBoundingClientRect().top)]"
-        print('panel closed            ', await pg.evaluate(sh))
-        await pg.click('#sheetHead'); await pg.wait_for_timeout(450)
-        print('tap header: open        ', await pg.evaluate(sh), await pg.evaluate("!$('#sheetScrim').hidden"))
-        hb = await pg.evaluate("(()=>{const r=$('#sheetHead').getBoundingClientRect(); return [r.x+r.width/2, r.y+20]})()")
-        await pg.mouse.move(*hb); await pg.mouse.down()
-        for k in range(1, 9): await pg.mouse.move(hb[0], hb[1] + k * 40); await pg.wait_for_timeout(15)
-        await pg.mouse.up(); await pg.wait_for_timeout(450)
-        print('drag down 320 px: closed', await pg.evaluate(sh))
-        hb = await pg.evaluate("(()=>{const r=$('#sheetHead').getBoundingClientRect(); return [r.x+r.width/2, r.y+20]})()")
-        await pg.mouse.move(*hb); await pg.mouse.down()
-        for k in range(1, 9): await pg.mouse.move(hb[0], hb[1] - k * 40); await pg.wait_for_timeout(15)
-        await pg.mouse.up(); await pg.wait_for_timeout(450)
-        print('drag up 320 px: open    ', await pg.evaluate(sh))
-        await pg.click('#sheetScrim', position={'x': 200, 'y': 40}); await pg.wait_for_timeout(450)
-        print('tap outside: closed     ', await pg.evaluate(sh))
-        # wide screens: the details are a column, no panel
+        # the details are part of the page, in order: speed selector, About, time, How to do it, Steps, (Edit)
+        order = "[...document.querySelectorAll('#speedSeg, #aboutTitle, #exTime, #howTitle, #stepsPanel')].map(e=>Math.round(e.getBoundingClientRect().top))"
+        tops = await pg.evaluate(order)
+        print('page order (tops)       ', tops, '<- increasing' if tops == sorted(tops) else '<- OUT OF ORDER')
+        print('labels                  ', await pg.evaluate("[...document.querySelectorAll('.controls-row .ctl:not([hidden]) .ctl-label')].map(x=>x.textContent)"))
+        print('steps collapsed         ', await pg.evaluate("!$('#stepsPanel').open"))
+        # wide screens: the details are a column beside the figure
         await pg.set_viewport_size({'width': 1280, 'height': 800}); await pg.wait_for_timeout(300)
-        print('wide: details column    ', await pg.evaluate("[getComputedStyle($('#exSheet')).position, getComputedStyle($('#exSheet')).transform]"))
-        # Authoring mode: the Edit pose button opens the editor halfway up, the figure still visible above it
+        print('wide: details column    ', await pg.evaluate("Math.round($('#exInfo').getBoundingClientRect().left) > Math.round($('#stageBox').getBoundingClientRect().right)"))
+        # Edit (for everyone): the words; Authoring mode adds the poses. The figure stays pinned while editing
         await pg.set_viewport_size({'width': 412, 'height': 860}); await pg.wait_for_timeout(300)
-        await pg.click('#editPoseBtn'); await pg.wait_for_timeout(500)
-        print('Edit pose               ', await pg.evaluate("[S.playing, $('#exSheet').className, Math.round($('#exSheet').getBoundingClientRect().top), Math.round($('#stageBox').getBoundingClientRect().bottom), $('#exControls').classList.contains('show'), $('#edTitle').textContent]"))
+        await pg.click('#editPoseBtn'); await pg.wait_for_timeout(600)
+        print('Edit                    ', await pg.evaluate("[S.playing, !$('#adjustPanel').hidden, $('#exControls').classList.contains('show'), $('#edTitle').textContent, !!$('#edStepName').checkVisibility(), $('#editor .joints').checkVisibility()]"))
+        print('figure pinned on screen ', await pg.evaluate("(()=>{const r=$('#stageBox').getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight && r.bottom > 100})()"))
         await pg.click('[data-act="edNext"]'); await pg.wait_for_timeout(200)
         print('editor next step        ', await pg.evaluate("$('#edTitle').textContent"))
-        # the cover screen: tabs at the top, details part of the page (no panel over the figure)
+        await pg.click('[data-act="edDone"]'); await pg.wait_for_timeout(200)
+        print('Done                    ', await pg.evaluate("[$('#adjustPanel').hidden, document.body.classList.contains('ex-editing')]"))
+        # the cover screen: tabs at the top
         await pg.set_viewport_size({'width': 360, 'height': 398}); await pg.evaluate("go('#/exercises')"); await pg.wait_for_timeout(300)
         print('cover: tabs (top,bottom)', await pg.evaluate("[...document.querySelectorAll('.navbar .nav-item')].map(a=>{const r=a.getBoundingClientRect();return [a.dataset.nav,Math.round(r.top),Math.round(r.bottom)]})"))
-        await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(300)
-        print('cover: details          ', await pg.evaluate("getComputedStyle($('#exSheet')).position"), '| editor button', await pg.evaluate("!$('#editPoseBtn').hidden"))
         # the workout player still borrows the stage, without the exercise controls
         await pg.set_viewport_size({'width': 360, 'height': 398})
         await pg.evaluate("WK.hinted=true; setSound('off'); startWorkout(LIB_WK[0], 1)"); await pg.wait_for_timeout(500)

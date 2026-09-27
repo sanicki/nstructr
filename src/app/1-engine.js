@@ -370,6 +370,7 @@ function onStepChange() {
   $('#stepNum').textContent = S.idx + 1;
   $('#stepName').textContent = r.name || `Step ${S.idx + 1}`;
   $('#stepCue').textContent = r.cue || '';
+  if (typeof exStepSound === 'function') exStepSound(S.idx);
   document.querySelectorAll('#stepList button').forEach((btn, i) => {
     if (i === S.idx) {
       btn.setAttribute('aria-current', 'step');
@@ -387,6 +388,8 @@ function setPlaying(p) {
   btn.innerHTML = `<span class="icon fill">${p ? 'pause' : 'play_arrow'}</span>`;
   btn.setAttribute('aria-label', p ? 'Pause' : 'Play');
   if (S.view === 'player' && typeof showExControls === 'function' && !XC.editing) p ? showExControls() : showExControls(true);   // paused: controls stay up (not while editing a pose)
+  // the exercise player's voice: pausing stops it; playing again reads the current step (on the first pass)
+  if (S.view === 'player' && S.mode !== 'workout' && typeof exHush === 'function') { if (!p) exHush(); else exStepSound(S.idx); }
 }
 function jumpTo(i) {
   const n = S.resolved.length; if (!n) return;
