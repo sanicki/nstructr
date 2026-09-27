@@ -7,10 +7,12 @@
    2. Every exercise is played through (both sides, both directions) and checked for floating/sinking poses,
       snapping limbs and planted feet/hands that wander. Accepted deviations live in tools/known-issues.json.
    3. library/index.json bundles the whole library; the app loads it (and caches it for offline use).
-   4. _site/ is what GitHub Pages serves: index.html + src/ + library/, and nstructr.html, a single file with
-      everything inlined that also works opened straight from disk. */
+   4. _site/ is what GitHub Pages serves: index.html + src/ + library/, the web app manifest, icons and a service
+      worker (so the installed app works offline), and nstructr.html, a single file with everything inlined that
+      also works opened straight from disk. */
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const Ajv2020 = require('ajv/dist/2020').default;
@@ -70,11 +72,22 @@ fs.writeFileSync(path.join(ROOT, 'library/index.json'), JSON.stringify(bundle));
 const SITE = path.join(ROOT, '_site');
 fs.rmSync(SITE, { recursive: true, force: true });
 const copy = (from, to = from) => fs.cpSync(path.join(ROOT, from), path.join(SITE, to), { recursive: true });
-copy('src'); copy('library'); copy('schema');
+copy('src'); copy('library'); copy('schema'); copy('icons'); copy('manifest.webmanifest');
+fs.rmSync(path.join(SITE, 'src/sw.js'));
 const appFiles = fs.readdirSync(path.join(ROOT, 'src/app')).filter(f => f.endsWith('.js')).sort();
 const head = rd('src/head.html'), body = rd('src/body.html');
 const scripts = ['src/core.js', 'src/thumb.js', ...appFiles.map(f => `src/app/${f}`)];
-fs.writeFileSync(path.join(SITE, 'index.html'), head + body + scripts.map(s => `<script src="${s}"></script>`).join('\n') + '\n</body></html>\n');
+// the installable app: manifest, icons, and a service worker that caches everything it needs
+const pwaHead = head.replace('</title>', `</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">`);
+fs.writeFileSync(path.join(SITE, 'index.html'), pwaHead + body + scripts.map(s => `<script src="${s}"></script>`).join('\n') + '\n</body></html>\n');
+const assets = ['index.html', 'manifest.webmanifest', 'library/index.json', ...scripts,
+  ...fs.readdirSync(path.join(ROOT, 'icons')).sort().map(f => `icons/${f}`)];
+const hash = crypto.createHash('sha256');
+for (const a of assets) hash.update(a).update(fs.readFileSync(path.join(SITE, a)));
+fs.writeFileSync(path.join(SITE, 'sw.js'), rd('src/sw.js').replace('__VERSION__', hash.digest('hex').slice(0, 12)).replace('__ASSETS__', JSON.stringify(['./', ...assets])));
 // single file: everything inline, the library included
 const inline = s => rd(s).replace(/<\/script/gi, '<\\/script');
 fs.writeFileSync(path.join(SITE, 'nstructr.html'), head + body + '<script>\nwindow.NSTRUCTR_BUNDLE = ' + JSON.stringify(bundle).replace(/<\/script/gi, '<\\/script') + ';\n' +

@@ -375,17 +375,9 @@ function importWorkouts(data) {
 }
 
 /* share a workout as a .json file (the phone's share sheet), or copy it where sharing files isn't supported */
-async function shareWorkout(w) {
-  const text = workoutJSON(w), name = (w.name || 'workout').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-').toLowerCase() + '.json';
-  try {
-    const file = new File([text], name, { type: 'application/json' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: w.name, text: `${w.name}: a workout for NstructR` }); return; }
-  } catch (e) { if (e && e.name === 'AbortError') return; }
-  try {
-    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' })); a.download = name;
-    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
-    snack(`Saved ${name}`);
-  } catch (e) { showJson(w.name, text); }
+function shareWorkout(w) {
+  const name = (w.name || 'workout').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-').toLowerCase() + '.json';
+  return shareFile(workoutJSON(w), name, w.name);
 }
 
 /* ===================== Workout player ===================== */
@@ -549,7 +541,7 @@ function startWorkout(w, fromIndex = 0) {
   WP.w = w; WP.flat = flattenWorkout(w); WP.log = { start: Date.now(), done: [] }; WP.lastLogged = -1;
   if (!WP.flat.length) { snack('Add some exercises first.'); return; }
   WP.i = Math.min(fromIndex, WP.flat.length - 1); WP.set = 0; WP.seg = 0; WP.started = Date.now(); WP.phase = 'work';
-  unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound);
+  unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound); keepStorage();
   go(`#/wplay/${encodeURIComponent(w.id)}`);
   runCurrent(true);
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
