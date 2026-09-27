@@ -199,8 +199,10 @@ function legsOverlap(P) {
   return false;
 }
 function layerLegs(a, b, f, e) {
-  // while moving, either end of the move can ask; once there, only the step being held
-  const said = s => (b.layers && b.layers['leg' + s]) || (e < 1 && a.layers && a.layers['leg' + s]) || null;
+  // while moving, either end of the move can ask; while holding a step, that step, or else the step that comes
+  // next, so the swap happens during the hold (legs apart) and the leg sets off already on the right side
+  const nx = e >= 1 ? S.resolved[peekNext(S.idx)] : null;
+  const said = s => (b.layers && b.layers['leg' + s]) || (e < 1 ? a.layers && a.layers['leg' + s] : nx && nx.layers && nx.layers['leg' + s]) || null;
   const want = s => said(s) || (s === 'L' ? 'back' : 'front');
   // both on the same side of the body: the leg the step names goes outermost (furthest back, or on top), so a
   // leg crossing behind passes behind the standing leg and one crossing in front passes over it
@@ -305,6 +307,12 @@ function drawGuide(a, b, e) {
 /* ---------- Playback ---------- */
 /* Which step comes next. Exploring: setup plays once, then the rep (or hold) loops. In a workout the plan is a
    straight line and the workout controller takes over at its end. */
+/* the step after i, without counting a rep */
+function peekNext(i) {
+  if (S.mode === 'workout') return i + 1 < S.resolved.length ? i + 1 : i;
+  const ph = S.phase || { start: 0, end: S.resolved.length - 1 };
+  return i >= ph.end || i + 1 >= S.resolved.length ? ph.start : i + 1;
+}
 function nextIndex(i) {
   if (S.mode === 'workout') return i + 1 < S.resolved.length ? i + 1 : -1;
   const ph = S.phase || { start: 0, end: S.resolved.length - 1 };
