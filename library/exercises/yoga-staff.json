@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-staff",
+  "name": "Staff Pose",
+  "sanskrit": "Dandasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Seated with the legs straight out and the spine tall.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/staff-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit down",
+      "cue": "Sit with the knees bent.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -120,
+        "hipR": -120,
+        "kneeL": 110,
+        "kneeR": 110,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Staff Pose",
+      "cue": "Straighten the legs, flex the feet, and press the hands down.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Sit on a blanket if the back rounds.",
+    "Lift through the crown."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

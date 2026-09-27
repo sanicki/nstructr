@@ -1,0 +1,66 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-bow",
+  "name": "Bow Pose",
+  "sanskrit": "Dhanurasana",
+  "category": "Backbend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Belly-down backbend where the hands hold the ankles and the chest and thighs lift.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/bow-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your belly",
+      "cue": "Lie face down with the arms along your sides.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "neck": -34,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Bow Pose",
+      "cue": "Bend the knees, hold the ankles, and lift the chest and thighs.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "torso": -28,
+        "neck": -10,
+        "hipL": 22,
+        "hipR": 22,
+        "kneeL": 95,
+        "kneeR": 95,
+        "shoulderL": 62,
+        "shoulderR": 62
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Kick the feet into the hands to lift.",
+    "Keep the knees about hip-width."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

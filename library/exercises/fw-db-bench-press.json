@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-db-bench-press",
+  "name": "Dumbbell Bench Press",
+  "category": "Strength",
+  "focus": "Chest",
+  "library": "Free weights",
+  "equipment": [
+    "Dumbbells",
+    "Bench"
+  ],
+  "description": "Lying on a bench, press the dumbbells from beside your chest to straight above it, then lower with control.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on a bench with your feet flat on the floor.",
+    "Hold the dumbbells beside your chest, elbows out and a little below the bench."
+  ],
+  "cues": [
+    "Keep your feet down and your back in its natural curve.",
+    "Press up over your chest.",
+    "Lower slowly to the start."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Weights at your chest",
+      "cue": "Elbows out to the sides, forearms upright.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "anchorX": 60,
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderL": -90,
+        "shoulderR": -90,
+        "armDepthL": 82,
+        "armDepthR": 82
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Press",
+      "cue": "Press the weights straight up.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "anchorX": 60,
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderL": -90,
+        "shoulderR": -90
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    },
+    {
+      "type": "bench",
+      "x": -30
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

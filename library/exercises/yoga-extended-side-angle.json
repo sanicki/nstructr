@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-extended-side-angle",
+  "name": "Extended Side Angle Pose",
+  "sanskrit": "Utthita Parsvakonasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Wide-legged lunge with the forearm or hand down and the top arm reaching over the ear.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/extended-side-angle-pose-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Step wide",
+      "cue": "Step the feet wide apart, arms out to the sides.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "shoulderL": 270,
+        "shoulderR": 90,
+        "hipL": -30,
+        "hipR": 30
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Extended Side Angle Pose",
+      "cue": "Bend the right knee, lower the right hand, reach the left arm overhead.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "hipR": 90,
+        "kneeR": -90,
+        "hipL": -60,
+        "torso": -60,
+        "shoulderR": 60,
+        "shoulderL": 180
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the front knee over the ankle.",
+    "Make one line from back heel to fingertips."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

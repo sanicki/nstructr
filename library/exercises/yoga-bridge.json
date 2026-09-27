@@ -1,0 +1,92 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-bridge",
+  "name": "Bridge Pose",
+  "sanskrit": "Setu Bandha Sarvangasana",
+  "category": "Backbend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Lying on the back with the feet planted, lift the hips toward the ceiling.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/bridge-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, feet flat and hip-width apart, close to your hips.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -58,
+        "hipR": -58,
+        "kneeL": 125,
+        "kneeR": 125
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Bridge Pose",
+      "cue": "Press into the feet and lift the hips.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "root": -150,
+        "chest": 50,
+        "neck": 50,
+        "hipL": -5,
+        "hipR": -5,
+        "kneeL": 115,
+        "kneeR": 115,
+        "shoulderL": 5,
+        "shoulderR": 5
+      },
+      "keep": [
+        "ankleL",
+        "ankleR",
+        "handL",
+        "handR"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the knees over the ankles.",
+    "Press the arms into the floor."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

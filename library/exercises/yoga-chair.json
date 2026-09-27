@@ -1,0 +1,67 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-chair",
+  "name": "Chair Pose",
+  "sanskrit": "Utkatasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Standing squat with the hips back and the arms reaching overhead.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/chair-pose-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "setup"
+    },
+    {
+      "name": "Chair Pose",
+      "cue": "Bend the knees, sit the hips back, reach the arms up.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 35,
+        "hipL": -60,
+        "hipR": -60,
+        "kneeL": 75,
+        "kneeR": 75,
+        "shoulderL": -180,
+        "shoulderR": -180
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the weight in the heels.",
+    "Draw the belly in."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

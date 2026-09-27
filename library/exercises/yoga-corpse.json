@@ -1,0 +1,75 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-corpse",
+  "name": "Corpse Pose",
+  "sanskrit": "Savasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Final relaxation lying flat on the back.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/corpse-pose-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie down with the knees bent and feet flat.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -45,
+        "hipR": -45,
+        "kneeL": 120,
+        "kneeR": 120
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Corpse Pose",
+      "cue": "Extend the legs, rest the arms, and relax completely.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 8000,
+      "anchor": "neckBase",
+      "pose": {
+        "root": -90,
+        "neck": 34
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Let the feet fall open.",
+    "Release effort everywhere."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

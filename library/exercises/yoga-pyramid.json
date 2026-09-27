@@ -1,0 +1,80 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-pyramid",
+  "name": "Pyramid Pose",
+  "sanskrit": "Parsvottanasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Straight-legged split stance folding the torso over the front leg.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/intense-side-stretch-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "setup"
+    },
+    {
+      "name": "Pyramid Pose",
+      "cue": "Step the left foot back and fold over the straight right leg.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": 100,
+        "hipR": -25,
+        "hipL": 25,
+        "shoulderL": 80,
+        "shoulderR": 80,
+        "elbowL": -100,
+        "elbowR": -100
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Square the hips forward.",
+    "Reach the chest toward the front shin."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "anchorX": 20,
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

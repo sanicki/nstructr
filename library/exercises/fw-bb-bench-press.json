@@ -1,0 +1,118 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-bb-bench-press",
+  "name": "Barbell Bench Press",
+  "category": "Strength",
+  "focus": "Chest, shoulders and arms",
+  "library": "Free weights",
+  "equipment": [
+    "Barbell",
+    "Bench"
+  ],
+  "description": "The classic upper-body press: lying on a bench, lower the bar to your chest with control, then press it back up to straight arms.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on a flat bench with your eyes under the bar and your feet flat on the floor.",
+    "Grip the bar a little wider than your shoulders and lift it off the rack to straight arms over your shoulders."
+  ],
+  "cues": [
+    "Keep your shoulder blades squeezed together and your feet planted.",
+    "Lower the bar to your lower chest, elbows at roughly 45° to your body, not flared straight out.",
+    "Press back up over your shoulders.",
+    "Use a spotter or a rack with safety bars, and learn with light weight first."
+  ],
+  "prescription": {
+    "reps": "5–8",
+    "note": "Warm up with lighter sets first. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Arms straight",
+      "cue": "Bar over your shoulders, arms straight.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "anchorX": 60,
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderL": -90,
+        "shoulderR": -90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lower to your chest",
+      "cue": "Bend your elbows and lower the bar to your chest.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "anchorX": 60,
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderL": -90,
+        "shoulderR": -90,
+        "armDepthL": 86,
+        "armDepthR": 86,
+        "forearmDepthL": 60,
+        "forearmDepthR": 60
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "barbell",
+      "from": "handL",
+      "to": "handR"
+    },
+    {
+      "type": "bench",
+      "x": -30
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

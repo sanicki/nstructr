@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bhf-chest-press",
+  "name": "Band Chest Press",
+  "category": "Strength",
+  "focus": "Chest",
+  "library": "Resistance band",
+  "equipment": [
+    "Resistance band"
+  ],
+  "description": "Builds the chest muscles and mobilises the shoulders: with the band around your back, press your hands forward until your arms are nearly straight.",
+  "source": {
+    "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
+    "title": "British Heart Foundation: resistance band exercises",
+    "note": "Standing version. The article also shows each exercise seated on a chair."
+  },
+  "setup": [
+    "Stand with your feet hip-width apart.",
+    "Put the band behind your back and bring the ends forward under your arms.",
+    "Lift your elbows up and out to the sides, knuckles forward."
+  ],
+  "cues": [
+    "Press until your arms are nearly straight.",
+    "Return slowly.",
+    "Harder: hold the band tighter across your back."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
+  },
+  "facing": "right",
+  "props": [
+    {
+      "type": "band",
+      "from": "handR",
+      "via": [
+        "armpitR"
+      ],
+      "to": "backR",
+      "layer": "back"
+    },
+    {
+      "type": "band",
+      "from": "handL",
+      "via": [
+        "armpitL"
+      ],
+      "to": "backL",
+      "layer": "back"
+    }
+  ],
+  "keyframes": [
+    {
+      "name": "Elbows out",
+      "cue": "Elbows up and out to the sides, hands by your chest.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "shoulderR": -90,
+        "elbowL": -4,
+        "elbowR": -4,
+        "armDepthL": 88,
+        "armDepthR": 88
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Press",
+      "cue": "Push your hands forward until your arms are nearly straight.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "shoulderR": -90,
+        "elbowL": -4,
+        "elbowR": -4
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

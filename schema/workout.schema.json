@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "workout.schema.json",
+  "title": "NstructR workout",
+  "description": "A workout: blocks of exercises (referenced by id), each with reps or a hold time, sets, rests, and side/direction options.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "blocks"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "restBetween": {
+      "type": "number",
+      "minimum": 0
+    },
+    "blocks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "items"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "rounds": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "roundRest": {
+            "type": "number",
+            "minimum": 0
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "ex"
+              ],
+              "properties": {
+                "ex": {
+                  "type": "string"
+                },
+                "sets": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "reps": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "seconds": {
+                  "type": "number",
+                  "minimum": 1
+                },
+                "rest": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "tempo": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "sides": {
+                  "enum": [
+                    "L",
+                    "R",
+                    "both",
+                    "alternate"
+                  ]
+                },
+                "dir": {
+                  "enum": [
+                    "A",
+                    "B",
+                    "both",
+                    "alternate"
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

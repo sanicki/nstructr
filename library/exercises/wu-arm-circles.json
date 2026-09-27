@@ -1,0 +1,141 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "wu-arm-circles",
+  "name": "Standing Arm Circles",
+  "category": "Mobility",
+  "focus": "Shoulders",
+  "library": "Warm-up",
+  "equipment": [],
+  "description": "A shoulder warm-up: arms straight out to your sides at shoulder height, make controlled circles forward, then reverse.",
+  "source": {
+    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand tall, feet hip-width apart.",
+    "Reach your arms straight out to the sides at shoulder height, palms down."
+  ],
+  "cues": [
+    "Small to medium circles, smooth and controlled.",
+    "Keep your shoulders relaxed, down away from your ears.",
+    "Do the forward set, pause, then circle backward."
+  ],
+  "prescription": {
+    "reps": "10 each direction",
+    "note": "About 30 seconds."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Top",
+      "cue": "Up top.",
+      "view": "side",
+      "durationMs": 0,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 180,
+        "shoulderR": 180,
+        "armDepthL": 72,
+        "armDepthR": 72
+      },
+      "ease": "linear",
+      "phase": "rep"
+    },
+    {
+      "name": "Front",
+      "cue": "Out in front.",
+      "view": "side",
+      "durationMs": 375,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 270,
+        "shoulderR": 270,
+        "armDepthL": 72,
+        "armDepthR": 72
+      },
+      "ease": "linear",
+      "phase": "rep"
+    },
+    {
+      "name": "Bottom",
+      "cue": "Down low.",
+      "view": "side",
+      "durationMs": 375,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 360,
+        "shoulderR": 360,
+        "armDepthL": 72,
+        "armDepthR": 72
+      },
+      "ease": "linear",
+      "phase": "rep"
+    },
+    {
+      "name": "Back",
+      "cue": "Round the back.",
+      "view": "side",
+      "durationMs": 375,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 450,
+        "shoulderR": 450,
+        "armDepthL": 72,
+        "armDepthR": 72
+      },
+      "ease": "linear",
+      "phase": "rep"
+    },
+    {
+      "name": "Top",
+      "cue": "Up top.",
+      "view": "side",
+      "durationMs": 375,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 540,
+        "shoulderR": 540,
+        "armDepthL": 72,
+        "armDepthR": 72
+      },
+      "ease": "linear",
+      "phase": "rep"
+    }
+  ],
+  "direction": {
+    "labels": {
+      "A": "Forward",
+      "B": "Backward"
+    }
+  },
+  "repName": "circle",
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-hamstring",
+  "name": "Hamstring Stretch",
+  "category": "Stretch",
+  "focus": "Hamstrings",
+  "library": "Stretches",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "Stretches the back of the thigh lying down at a doorway: rest one heel up the wall or door frame and gently straighten the knee.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on the floor by the outer corner of a wall or door frame, left leg next to the wall. (The line shows the door frame; your other leg goes through the doorway.)"
+  ],
+  "cues": [
+    "Start with the knee slightly bent.",
+    "Straighten until you feel a stretch along the back of the thigh.",
+    "More stretch as you get flexible: shuffle closer to the wall."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie by the doorway",
+      "cue": "Lie on your back, left leg beside the wall.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 800,
+      "anchor": "neckBase",
+      "pose": {
+        "root": -90,
+        "neck": 34
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Heel on the wall",
+      "cue": "Raise your left leg and rest the heel on the wall, knee slightly bent.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 600,
+      "anchor": "neckBase",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -85,
+        "kneeL": 22
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Straighten the leg",
+      "cue": "Gently straighten your left leg until the back of the thigh stretches.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 30000,
+      "anchor": "neckBase",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -85
+      },
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "props": [
+    {
+      "type": "wall",
+      "at": "ankleL",
+      "keyframe": 2,
+      "offset": 7
+    }
+  ],
+  "measure": "time",
+  "holdStep": 2,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

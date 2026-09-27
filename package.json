@@ -1,0 +1,12 @@
+{
+  "name": "nstructr",
+  "private": true,
+  "description": "NstructR: stick-figure exercise animations and workouts",
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "check": "node tools/build.mjs --check-only"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  }
+}

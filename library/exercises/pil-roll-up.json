@@ -1,0 +1,101 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-roll-up",
+  "name": "Roll-Up",
+  "category": "Pilates",
+  "focus": "Abdominals and spine",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Roll up from lying down one vertebra at a time, reach forward over your legs, then roll back down with control.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back, legs straight, arms reaching overhead on the mat."
+  ],
+  "cues": [
+    "Lift your arms first, then your head, then peel your spine off the mat.",
+    "Reach past your toes with a rounded back.",
+    "Roll down slowly; don't drop."
+  ],
+  "prescription": {
+    "reps": "5–8",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie long",
+      "cue": "Arms overhead.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": -180,
+        "shoulderR": -180
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Arms up, chin in",
+      "cue": "Bring your arms to the ceiling and curl your head up.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 100,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "shoulderL": -60,
+        "shoulderR": -60
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Roll up and reach",
+      "cue": "Peel up and reach forward over your legs.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "pose": {
+        "torso": 55,
+        "chest": 25,
+        "neck": 20,
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": -170,
+        "shoulderR": -170
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Roll back down",
+      "cue": "Curl back down, one vertebra at a time.",
+      "view": "side",
+      "durationMs": 2400,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "shoulderL": -60,
+        "shoulderR": -60
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

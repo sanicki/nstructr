@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-warrior-3",
+  "name": "Warrior 3 Pose",
+  "sanskrit": "Virabhadrasana III",
+  "category": "Balancing",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Balance on one leg with the torso and lifted leg level with the floor.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/warrior-iii-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "setup"
+    },
+    {
+      "name": "Warrior 3",
+      "cue": "Tip forward on the left leg and lift the right leg back.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 90,
+        "hipR": 90,
+        "shoulderL": -180,
+        "shoulderR": -180
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the hips level.",
+    "Reach long through the heel and the fingertips."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "anchorX": -20,
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

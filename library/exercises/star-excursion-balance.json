@@ -1,0 +1,564 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "star-excursion-balance",
+  "name": "Star Excursion Balance",
+  "category": "Balance",
+  "equipment": [],
+  "description": "Single-leg balance and reach: standing on one leg, reach the other foot out in eight directions around you, like the points of a star, tapping the floor lightly each time and coming back to the middle.",
+  "source": {
+    "url": "https://youtu.be/UoMSMdMKfBY",
+    "title": "Star Excursion Balance Exercise",
+    "note": "Built from the video's title and description. Poses are a stick-figure approximation of the standard eight-direction sequence. In clinical terms the reaches are anterior, anteromedial, medial, posteromedial, posterior, posterolateral, lateral and anterolateral."
+  },
+  "setup": [
+    "Stand on one leg with the knee slightly bent, hands on your hips.",
+    "Picture a star on the floor around your standing foot: forward, back, both sides and the four diagonals in between."
+  ],
+  "cues": [
+    "Keep the standing heel down the whole time.",
+    "Tap the floor lightly with your toes; don't put weight on the reaching foot.",
+    "Bend the standing knee to reach further, but stay in control.",
+    "Come back to the middle between every reach, without putting the foot down."
+  ],
+  "prescription": {
+    "rounds": 3,
+    "sides": "both",
+    "note": "The video description doesn't state reps; three rounds per leg is a common starting point."
+  },
+  "facing": "right",
+  "anchorX": 40,
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "floorGuide": {
+    "type": "star",
+    "arms": 8
+  },
+  "keyframes": [
+    {
+      "name": "Stand in the middle",
+      "cue": "Left foot in the middle, hands on hips.",
+      "view": "side",
+      "durationMs": 1200,
+      "holdMs": 800,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "root": 0,
+        "torso": 0,
+        "neck": 0,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": 0,
+        "kneeL": 0,
+        "hipR": 0,
+        "kneeR": 0
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Balance on the left leg",
+      "cue": "Lift the right foot. Keep the left heel down.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 600,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach forward",
+      "cue": "Forward. Bend the standing knee and tap lightly.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 900,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "guide": {
+        "direction": 0,
+        "label": "Forward"
+      },
+      "pose": {
+        "torso": 15,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -45,
+        "kneeL": 75,
+        "hipR": -70,
+        "kneeR": 0,
+        "ankleR": 55
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Back to the middle",
+      "cue": "Back to the middle.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach forward right",
+      "cue": "Forward right.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 900,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "guide": {
+        "direction": 45,
+        "label": "Forward right"
+      },
+      "pose": {
+        "torso": 15,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -40,
+        "kneeL": 65,
+        "hipR": -55,
+        "kneeR": 15,
+        "ankleR": 45
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Back to the middle",
+      "cue": "Back to the middle.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach right",
+      "cue": "Out to the right.",
+      "view": "front",
+      "durationMs": 1400,
+      "holdMs": 900,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "guide": {
+        "direction": 90,
+        "label": "Right"
+      },
+      "pose": {
+        "torso": 8,
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": 0,
+        "kneeL": 0,
+        "hipR": 25,
+        "kneeR": 0,
+        "ankleR": -90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Back to the middle",
+      "cue": "Back to the middle.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach back right",
+      "cue": "Back right. Hinge forward as you reach.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 900,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "guide": {
+        "direction": 135,
+        "label": "Back right"
+      },
+      "pose": {
+        "torso": 35,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -50,
+        "kneeL": 55,
+        "hipR": 35,
+        "kneeR": 10,
+        "ankleR": 30
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Back to the middle",
+      "cue": "Back to the middle.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach back",
+      "cue": "Straight back.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 900,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "guide": {
+        "direction": 180,
+        "label": "Back"
+      },
+      "pose": {
+        "torso": 45,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -60,
+        "kneeL": 55,
+        "hipR": 50,
+        "kneeR": 5,
+        "ankleR": 30
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Back to the middle",
+      "cue": "Back to the middle.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach back left",
+      "cue": "Back left, crossing behind your standing leg.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 900,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "guide": {
+        "direction": 225,
+        "label": "Back left"
+      },
+      "pose": {
+        "torso": 35,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -50,
+        "kneeL": 60,
+        "hipR": 30,
+        "kneeR": 15,
+        "ankleR": 35
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Back to the middle",
+      "cue": "Back to the middle.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach left",
+      "cue": "Left, crossing behind your standing leg.",
+      "view": "front",
+      "durationMs": 1400,
+      "holdMs": 900,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "guide": {
+        "direction": 270,
+        "label": "Left"
+      },
+      "pose": {
+        "torso": 8,
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": 0,
+        "kneeL": 0,
+        "hipR": -25,
+        "kneeR": 0,
+        "ankleR": -90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Back to the middle",
+      "cue": "Back to the middle.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach forward left",
+      "cue": "Forward left, crossing in front.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 900,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "guide": {
+        "direction": 315,
+        "label": "Forward left"
+      },
+      "pose": {
+        "torso": 15,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -40,
+        "kneeL": 65,
+        "hipR": -45,
+        "kneeR": 20,
+        "ankleR": 45
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Back to the middle",
+      "cue": "Back to the middle, then put the foot down to finish the round.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 600,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 5,
+        "shoulderL": 27.5,
+        "elbowL": -69.4,
+        "shoulderR": 27.5,
+        "elbowR": -69.4,
+        "hipL": -12,
+        "kneeL": 18,
+        "hipR": -25,
+        "kneeR": 75,
+        "ankleR": -10
+      },
+      "phase": "rep"
+    }
+  ],
+  "library": "Balance",
+  "focus": "Balance and ankle stability",
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  },
+  "repName": "circuit"
+}

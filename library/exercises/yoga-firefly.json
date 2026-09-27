@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-firefly",
+  "name": "Firefly Pose",
+  "sanskrit": "Tittibhasana",
+  "category": "Arm Balance",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Arm balance with the legs extended wide and forward over the arms.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/firefly-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Squat",
+      "cue": "Squat low with the hands on the floor in front.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 900,
+      "anchor": "handR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "torso": 55,
+        "hipL": -110,
+        "hipR": 250,
+        "kneeL": 140,
+        "kneeR": 140,
+        "shoulderL": -55,
+        "shoulderR": -55
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Firefly Pose",
+      "cue": "Hands down behind the feet, lift the hips, and straighten the legs.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "handR",
+      "pose": {
+        "hipL": -100,
+        "hipR": 100,
+        "shoulderL": -8,
+        "shoulderR": 8
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Squeeze the thighs onto the arms.",
+    "Point the toes and straighten the knees."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

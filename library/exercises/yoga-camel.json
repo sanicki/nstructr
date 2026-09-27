@@ -1,0 +1,66 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-camel",
+  "name": "Camel Pose",
+  "sanskrit": "Ustrasana",
+  "category": "Backbend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Kneeling backbend reaching the hands back toward the heels.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/camel-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Kneel tall",
+      "cue": "Kneel with the hips over the knees.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "kneeL",
+      "pose": {
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Camel Pose",
+      "cue": "Lift the chest, arch back, and reach for the heels.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "pose": {
+        "torso": -55,
+        "neck": -30,
+        "hipL": 5,
+        "hipR": 5,
+        "kneeL": 85,
+        "kneeR": 85,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": 85,
+        "shoulderR": 85
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the hips over the knees.",
+    "Lift the chest before reaching back."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bw-side-leg-lift",
+  "name": "Standing Side Leg Lift",
+  "category": "Strength",
+  "focus": "Outer hips",
+  "library": "Bodyweight",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "Strengthens the outer hip for balance: holding a wall, lift one straight leg out to the side and lower it slowly.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
+    "title": "NHS: strength exercises (sideways leg lift)",
+    "note": "Stick-figure approximation; the NHS version uses a chair for support."
+  },
+  "setup": [
+    "Stand tall beside a wall with one hand on it for support."
+  ],
+  "cues": [
+    "Keep your back and hips straight; don't lean away.",
+    "Lift only as far as is comfortable.",
+    "Toes point forward."
+  ],
+  "prescription": {
+    "reps": "5–10 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Right hand on the wall.",
+      "view": "front",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderR": 80
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lift out to the side",
+      "cue": "Raise your left leg out to the side.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 500,
+      "anchor": "ankleR",
+      "plant": [
+        "R"
+      ],
+      "pose": {
+        "shoulderR": 80,
+        "hipL": -30
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "wall"
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "handR",
+      "keyframe": 0
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

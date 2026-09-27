@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "wall-chest-stretch",
+  "name": "Wall Chest Stretch",
+  "category": "Stretch",
+  "focus": "Chest and front of the shoulder",
+  "library": "Stretches",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "Stretches the chest: forearm flat on a wall beside you with the elbow at shoulder height, step forward and turn your body away from the wall.",
+  "source": {
+    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand side-on to a wall.",
+    "Place your right forearm flat on the wall, elbow bent to 90° at shoulder height."
+  ],
+  "cues": [
+    "Step forward with the foot nearest the wall.",
+    "Turn your chest away from the wall until you feel the stretch.",
+    "Keep your shoulder down and relaxed."
+  ],
+  "prescription": {
+    "reps": "30 s each side",
+    "note": "Hold about 30 seconds and breathe slowly."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Forearm on the wall",
+      "cue": "Elbow at shoulder height, forearm up the wall.",
+      "view": "front",
+      "durationMs": 1800,
+      "holdMs": 600,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderR": 90,
+        "elbowR": 90,
+        "shoulderL": -6
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Turn away",
+      "cue": "Step forward and turn your chest away from the wall.",
+      "view": "front",
+      "durationMs": 2200,
+      "holdMs": 30000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderR": 98,
+        "elbowR": 82,
+        "shoulderL": -6,
+        "torso": 8,
+        "chest": 6
+      },
+      "keep": [
+        {
+          "point": "handR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "elbowR",
+      "keyframe": 0,
+      "offset": -6
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right side",
+      "R": "Left side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

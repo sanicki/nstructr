@@ -1,0 +1,109 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "chair-mini-squat",
+  "name": "Mini-Squat with Chair",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "library": "Chair-based",
+  "equipment": [
+    "Chair"
+  ],
+  "description": "A supported half squat: holding the back of a chair, bend your knees a little way and come back up, squeezing your buttocks.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
+    "title": "NHS: strength exercises (mini-squats)",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Stand behind a sturdy chair with your hands on its back.",
+    "Feet hip-width apart."
+  ],
+  "cues": [
+    "Bend only as far as is comfortable, knees facing forward.",
+    "Keep your back straight.",
+    "Squeeze your buttocks as you come up."
+  ],
+  "prescription": {
+    "reps": "5",
+    "note": "Repeat 5 times and build up gradually. Do these strength exercises at least twice a week."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Hands on the chair back.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -40,
+        "shoulderR": -40,
+        "elbowL": -20,
+        "elbowR": -20
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Bend your knees",
+      "cue": "Slowly bend your knees, keeping your back straight.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 14,
+        "hipL": -42,
+        "hipR": -42,
+        "kneeL": 58,
+        "kneeR": 58,
+        "shoulderL": -40,
+        "shoulderR": -40,
+        "elbowL": -20,
+        "elbowR": -20
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "x": 78,
+      "back": "left"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

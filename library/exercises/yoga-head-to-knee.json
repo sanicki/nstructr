@@ -1,0 +1,147 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-head-to-knee",
+  "name": "Head-to-Knee Pose",
+  "sanskrit": "Janu Sirsasana",
+  "category": "Forward Bend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Seated forward bend over one straight leg with the other foot against the inner thigh.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/head-to-knee-forward-bend/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Draw the left knee in",
+      "cue": "Bend the left knee and bring the foot toward the thigh.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -135,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20,
+        "kneeL": 135
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Head-to-Knee Pose",
+      "cue": "Bend the left knee, then fold over the straight right leg.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "pose": {
+        "torso": 62,
+        "neck": 10,
+        "hipR": -90,
+        "hipL": -90,
+        "kneeL": 180,
+        "ankleL": 90,
+        "shoulderL": -150,
+        "shoulderR": -150
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Left knee back up",
+      "cue": "Bring the left knee back up, foot planted, before straightening the leg.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -135,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20,
+        "kneeL": 135
+      },
+      "phase": "finish"
+    }
+  ],
+  "cues": [
+    "Fold from the hips.",
+    "Keep the straight leg active."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 2,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

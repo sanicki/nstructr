@@ -1,0 +1,125 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-cat-cow",
+  "name": "Cat-Cow",
+  "sanskrit": "Marjaryasana–Bitilasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Flowing spine warm-up on hands and knees, arching and rounding the back with the breath.",
+  "source": {
+    "note": "Not part of the Yoga Journal list; added separately. Stick-figure approximation."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Tabletop",
+      "cue": "Hands under shoulders, knees under hips, spine neutral.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 800,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 75,
+        "hipL": -75,
+        "hipR": -75,
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": -75,
+        "shoulderR": -75
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Cow",
+      "cue": "Inhale: drop the belly, lift the chest and tailbone, look forward.",
+      "view": "side",
+      "durationMs": 2800,
+      "holdMs": 600,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 75,
+        "hipL": -75,
+        "hipR": -75,
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleL": 90,
+        "ankleR": 90,
+        "torso": 14,
+        "chest": -30,
+        "neck": -35,
+        "shoulderL": -59,
+        "shoulderR": -59
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Cat",
+      "cue": "Exhale: round the back toward the ceiling and drop the head.",
+      "view": "side",
+      "durationMs": 3200,
+      "holdMs": 600,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 75,
+        "hipL": -75,
+        "hipR": -75,
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleL": 90,
+        "ankleR": 90,
+        "torso": -14,
+        "chest": 30,
+        "neck": 45,
+        "shoulderL": -91,
+        "shoulderR": -91
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Move with the breath: inhale into Cow, exhale into Cat.",
+    "Keep the arms straight and the hips over the knees.",
+    "Move slowly; let the whole spine take part."
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "rep"
+}

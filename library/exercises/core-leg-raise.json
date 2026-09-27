@@ -1,0 +1,64 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "core-leg-raise",
+  "name": "Lying Leg Raise",
+  "category": "Core",
+  "focus": "Lower abdominals",
+  "library": "Core",
+  "equipment": [],
+  "description": "Works the lower stomach: lying on your back with legs straight, lift both legs toward the ceiling and lower them slowly.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back, legs straight, arms by your sides with palms down."
+  ],
+  "cues": [
+    "Keep your lower back pressed into the floor.",
+    "Lower slowly; stop before your back arches.",
+    "Easier: bend your knees."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Legs down",
+      "cue": "Legs straight, hovering just above the floor.",
+      "view": "side",
+      "durationMs": 2400,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -8,
+        "hipR": -8
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lift",
+      "cue": "Raise both legs toward the ceiling.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 400,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -85,
+        "hipR": -85
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

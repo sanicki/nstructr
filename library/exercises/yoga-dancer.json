@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-dancer",
+  "name": "Dancer Pose",
+  "sanskrit": "Natarajasana",
+  "category": "Backbend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Standing balance holding the back foot and kicking it up while the chest reaches forward.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/lord-of-the-dance-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "setup"
+    },
+    {
+      "name": "Dancer Pose",
+      "cue": "Hold the right foot, kick it up and back, and reach the left arm forward.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 45,
+        "shoulderL": 165,
+        "shoulderR": 105,
+        "hipR": 122,
+        "kneeR": 47
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Kick the foot into the hand.",
+    "Keep the standing leg strong."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

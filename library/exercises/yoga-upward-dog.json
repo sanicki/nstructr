@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-upward-dog",
+  "name": "Upward-Facing Dog Pose",
+  "sanskrit": "Urdhva Mukha Svanasana",
+  "category": "Backbend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Backbend on straight arms with the chest lifted and the tops of the feet down.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/upward-facing-dog-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Plank",
+      "cue": "Hands under shoulders, body in one straight line.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 900,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 66,
+        "shoulderL": -66,
+        "shoulderR": -66,
+        "ankleL": 24,
+        "ankleR": 24
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Upward-Facing Dog",
+      "cue": "Press into the hands and lift the chest and thighs.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 78,
+        "torso": -38,
+        "neck": -10,
+        "shoulderL": -40,
+        "shoulderR": -40,
+        "ankleL": 101,
+        "ankleR": 101
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the shoulders away from the ears.",
+    "Lift the thighs off the floor."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

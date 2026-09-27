@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "calf-raise",
+  "name": "Calf Raises",
+  "category": "Strength",
+  "focus": "Calves",
+  "library": "Bodyweight",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "Strengthens the calf muscles: holding a wall for balance, rise slowly onto the balls of both feet and lower back down.",
+  "source": {
+    "url": "https://abuhb.nhs.wales/files/patient-information-leaflets1/foot-care-podiatry/calf-strengthening-guide-piu1441-pdf/",
+    "title": "NHS podiatry: calf strengthening guide",
+    "note": "Stick-figure approximation; the heel is drawn at the ankle."
+  },
+  "setup": [
+    "Stand on a level surface, feet about 15 cm (6 in) apart.",
+    "Rest your hands on a wall or other stable surface for balance."
+  ],
+  "cues": [
+    "Take about 3 seconds to rise and 3 seconds to lower.",
+    "Keep your knees straight but not locked.",
+    "Push evenly through the whole width of each foot."
+  ],
+  "prescription": {
+    "reps": "5, building to 20",
+    "note": "Start with 5 repetitions 3 times a day and build up to 20 repetitions 5 times a day. Move on to single-leg raises when this feels easy."
+  },
+  "facing": "right",
+  "props": [
+    {
+      "type": "wall",
+      "at": "handL",
+      "keyframe": 0
+    }
+  ],
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet flat, hands on the wall.",
+      "view": "side",
+      "durationMs": 3000,
+      "holdMs": 500,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -78,
+        "shoulderR": -78,
+        "elbowL": -14,
+        "elbowR": -14
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Rise onto your toes",
+      "cue": "Slowly lift both heels until you're on the balls of your feet.",
+      "view": "side",
+      "durationMs": 3000,
+      "holdMs": 500,
+      "anchor": "toeL",
+      "pose": {
+        "shoulderL": -78,
+        "shoulderR": -78,
+        "elbowL": -14,
+        "elbowR": -14,
+        "ankleL": 38,
+        "ankleR": 38
+      },
+      "keep": [
+        "handL",
+        "handR"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,8 @@
+{
+  "_comment": "Accepted, understood deviations. The build fails on anything not listed here (or bigger than listed).",
+  "yoga-downward-dog": { "planted": 21, "_why": "the toes swing round as the foot pivots from top-down to sole-down" },
+  "mayo-quadriceps": { "rest": 7, "_why": "the hand is 6px short of the ankle: reads as holding it" },
+  "mayo-hip-flexor": { "rest": 7 },
+  "yoga-wheel": { "planted": 7 },
+  "pil-swan": { "planted": 6 }
+}

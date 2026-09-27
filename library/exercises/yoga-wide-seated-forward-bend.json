@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-wide-seated-forward-bend",
+  "name": "Wide-Angled Seated Forward Bend",
+  "sanskrit": "Upavistha Konasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Seated with the legs wide, folding forward between them.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/wide-angle-seated-forward-bend/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": 270,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Wide-Angled Seated Bend",
+      "cue": "Open the legs wide and walk the hands forward.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": -90,
+        "hipR": 90,
+        "shoulderL": -55,
+        "shoulderR": 55
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the knees pointing up.",
+    "Fold only as far as the back stays long."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

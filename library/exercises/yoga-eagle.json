@@ -1,0 +1,75 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-eagle",
+  "name": "Eagle Pose",
+  "sanskrit": "Garudasana",
+  "category": "Balancing",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Standing balance with one leg wrapped over the other and the arms wrapped in front.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/eagle-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "setup"
+    },
+    {
+      "name": "Eagle Pose",
+      "cue": "Bend the knees, cross the right thigh over, and wrap the arms.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "torso": 22,
+        "hipL": -40,
+        "hipR": -40,
+        "shoulderL": -112,
+        "shoulderR": -112,
+        "elbowL": -95,
+        "elbowR": -95,
+        "kneeL": 60,
+        "kneeR": 85,
+        "ankleR": 20
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Sit low as if in Chair Pose.",
+    "Lift the elbows to shoulder height."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

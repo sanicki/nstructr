@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-downward-dog",
+  "name": "Downward-Facing Dog Pose",
+  "sanskrit": "Adho Mukha Svanasana",
+  "category": "Forward Bend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Upside-down V shape pressing the hips up and back from the hands and feet.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/downward-facing-dog/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Tabletop",
+      "cue": "Come to hands and knees, wrists under shoulders.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 900,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 75,
+        "shoulderL": -75,
+        "shoulderR": -75,
+        "hipL": -75,
+        "hipR": -75,
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Downward-Facing Dog",
+      "cue": "Press the hips up and back into an upside-down V.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "handR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": 135,
+        "shoulderL": -180,
+        "shoulderR": -180,
+        "hipL": 25,
+        "hipR": 25
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Bend the knees if the back rounds.",
+    "Press the floor away with the hands."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

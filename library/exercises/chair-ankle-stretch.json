@@ -1,0 +1,207 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "chair-ankle-stretch",
+  "name": "Seated Ankle Stretch",
+  "category": "Mobility",
+  "focus": "Ankles",
+  "library": "Chair-based",
+  "equipment": [
+    "Chair"
+  ],
+  "description": "Improves ankle flexibility and helps circulation: with one leg straightened off the floor, point the toes away and then pull them back toward you.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
+    "title": "NHS: sitting exercises (ankle stretch)",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Sit upright on a solid chair, holding the sides of the seat."
+  ],
+  "cues": [
+    "Keep the raised leg straight.",
+    "Point your toes away, then pull them back toward you.",
+    "Move slowly through the full range."
+  ],
+  "prescription": {
+    "reps": "2 sets of 5 each foot",
+    "note": "Also helps lower the risk of developing a blood clot. Do these exercises at least twice a week."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Hands on the sides of the seat, feet flat.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "kneeL": 90,
+        "kneeR": 90
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Straighten your left leg",
+      "cue": "Lift your left foot and straighten the leg.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": -97,
+        "hipR": -90,
+        "kneeR": 90
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Point your toes",
+      "cue": "Point your toes away from you.",
+      "view": "side",
+      "durationMs": 1200,
+      "holdMs": 1200,
+      "anchor": "pelvis",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": -97,
+        "hipR": -90,
+        "kneeR": 90,
+        "ankleL": 62
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Toes toward you",
+      "cue": "Pull your toes back toward you.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1200,
+      "anchor": "pelvis",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": -97,
+        "hipR": -90,
+        "kneeR": 90,
+        "ankleL": -22
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "x": -12,
+      "back": "left"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left foot",
+      "R": "Right foot"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 2
+  },
+  "repName": "rep"
+}

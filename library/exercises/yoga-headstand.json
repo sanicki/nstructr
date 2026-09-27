@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-headstand",
+  "name": "Supported Headstand",
+  "sanskrit": "Salamba Sirsasana",
+  "category": "Balancing",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Inversion balancing on the forearms and the crown of the head.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/supported-headstand/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Dolphin",
+      "cue": "Forearms down, lift the hips high.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 1000,
+      "anchor": "elbowR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": 135,
+        "shoulderL": 225,
+        "shoulderR": 225,
+        "elbowL": 270,
+        "elbowR": 270,
+        "hipL": 30,
+        "hipR": 30
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Supported Headstand",
+      "cue": "Interlace the hands behind the head, walk in, and lift the legs.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "pose": {
+        "root": 180,
+        "shoulderL": 155,
+        "shoulderR": 155,
+        "elbowL": 115,
+        "elbowR": 115
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Most weight goes in the forearms.",
+    "Learn with a teacher."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

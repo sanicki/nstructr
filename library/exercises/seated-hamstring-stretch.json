@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "seated-hamstring-stretch",
+  "name": "Seated Hamstring Stretch",
+  "category": "Stretch",
+  "focus": "Hamstrings and calves",
+  "library": "Stretches",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Sitting with one leg straight and the other foot against its inner thigh, hinge forward from your hips with a flat back and reach toward your ankle.",
+  "source": {
+    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+  },
+  "setup": [
+    "Sit on a mat with your left leg straight out and your right foot tucked against your left inner thigh."
+  ],
+  "cues": [
+    "Sit tall first, then hinge forward from your hips.",
+    "Keep your back flat; don't round your shoulders.",
+    "Reach toward your ankle or toes until you feel the stretch."
+  ],
+  "prescription": {
+    "reps": "30–45 s each side",
+    "note": "Hold 30 to 45 seconds and breathe slowly."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Left leg straight, right foot at your inner thigh.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "kneeR": 180,
+        "ankleR": 90,
+        "shoulderL": -80,
+        "shoulderR": -80
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Hinge forward",
+      "cue": "Hinge forward with a flat back, reaching for your ankle.",
+      "view": "side",
+      "durationMs": 2400,
+      "holdMs": 30000,
+      "anchor": "pelvis",
+      "pose": {
+        "torso": 42,
+        "hipL": -90,
+        "hipR": -90,
+        "kneeR": 180,
+        "ankleR": 90,
+        "shoulderL": -128,
+        "shoulderR": -128
+      },
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

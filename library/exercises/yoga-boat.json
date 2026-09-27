@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-boat",
+  "name": "Boat Pose",
+  "sanskrit": "Navasana",
+  "category": "Core",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Balance on the sit bones with the legs lifted and the torso leaning back, making a V shape.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/full-boat-pose-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Boat Pose",
+      "cue": "Lean back, lift the legs, reach the arms forward.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "pose": {
+        "torso": -45,
+        "hipL": -135,
+        "hipR": -135,
+        "shoulderL": -45,
+        "shoulderR": -45
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the chest lifted and the spine long.",
+    "Bend the knees if the back rounds."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

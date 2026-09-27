@@ -1,0 +1,130 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "core-crunch",
+  "name": "Crunch",
+  "category": "Core",
+  "focus": "Abdominals",
+  "library": "Core",
+  "equipment": [],
+  "description": "Works the stomach muscles: lying on your back with knees bent, curl your head and shoulders up off the floor and lower slowly.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back with your knees bent and feet flat.",
+    "Cross your arms over your chest."
+  ],
+  "cues": [
+    "Curl up from the upper back; the lower back stays down.",
+    "Don't pull on your neck.",
+    "Breathe out as you curl up."
+  ],
+  "prescription": {
+    "reps": "8–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, arms across your chest.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -58,
+        "hipR": -58,
+        "kneeL": 125,
+        "kneeR": 125
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 18,
+          "dy": -6,
+          "bend": 1
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": 18,
+          "dy": -6,
+          "bend": 1
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Curl up",
+      "cue": "Lift your head and shoulders off the floor.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "hipL": -58,
+        "hipR": -58,
+        "kneeL": 125,
+        "kneeR": 125
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 18,
+          "dy": -6,
+          "bend": 1
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": 18,
+          "dy": -6,
+          "bend": 1
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

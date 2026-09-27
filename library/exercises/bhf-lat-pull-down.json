@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bhf-lat-pull-down",
+  "name": "Band Lat Pull Down",
+  "category": "Strength",
+  "focus": "Back",
+  "library": "Resistance band",
+  "equipment": [
+    "Resistance band"
+  ],
+  "description": "Works the large muscles of the back (the lats): pull the band apart and down from overhead until it passes below your chin.",
+  "source": {
+    "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
+    "title": "British Heart Foundation: resistance band exercises",
+    "note": "Standing version. The article also shows each exercise seated on a chair."
+  },
+  "setup": [
+    "Stand with your feet hip-width apart.",
+    "Hold the band with your hands about 15 cm apart and lift it overhead, slightly in front, arms straight."
+  ],
+  "cues": [
+    "Pull your hands apart as your elbows come down.",
+    "Stop when the band is below your chin.",
+    "Easier: start with your hands further apart."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
+  },
+  "facing": "right",
+  "props": [
+    {
+      "type": "band",
+      "from": "handL",
+      "to": "handR",
+      "layer": "front",
+      "restLength": 40
+    }
+  ],
+  "keyframes": [
+    {
+      "name": "Band overhead",
+      "cue": "Arms straight up, hands close together, band slightly in front of you.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -188,
+        "shoulderR": 188
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Pull down",
+      "cue": "Draw your elbows down and hands apart until the band is below your chin.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -45,
+        "elbowL": -125,
+        "shoulderR": 45,
+        "elbowR": 125
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

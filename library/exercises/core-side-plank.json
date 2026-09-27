@@ -1,0 +1,102 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "core-side-plank",
+  "name": "Forearm Side Plank",
+  "category": "Core",
+  "focus": "Side of the core",
+  "library": "Core",
+  "equipment": [],
+  "description": "Works the obliques: propped on one forearm with your legs stacked, lift your hips so your body makes a straight line.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your left side, propped on your left forearm, elbow under your shoulder, legs stacked."
+  ],
+  "cues": [
+    "Lift from the bottom hip.",
+    "Keep your head, hips and feet in line.",
+    "Easier: bend your knees and keep them down."
+  ],
+  "prescription": {
+    "reps": "Hold 15–30 s each side",
+    "note": "Breathe steadily; build up the hold time gradually."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Prop on your forearm",
+      "cue": "Elbow under your shoulder, hips on the floor.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 600,
+      "anchor": "elbowL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "root": 55,
+        "hipL": 35,
+        "hipR": 35,
+        "shoulderL": -55,
+        "forearmDepthL": 90,
+        "shoulderR": -20,
+        "elbowR": -60
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Lift your hips",
+      "cue": "Raise your hips and hold, top arm reaching up.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 20000,
+      "anchor": "elbowL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "root": 77.6,
+        "shoulderL": -77.6,
+        "forearmDepthL": 90,
+        "shoulderR": 102
+      },
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side down",
+      "R": "Right side down"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 20
+  },
+  "repName": "rep"
+}

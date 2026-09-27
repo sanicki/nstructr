@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-teaser",
+  "name": "Teaser",
+  "category": "Pilates",
+  "focus": "Abdominals",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "An advanced balance: from lying down, roll up into a V shape with your legs raised and your arms reaching toward your toes, then roll down.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back with your legs raised to about 45° and your arms overhead."
+  ],
+  "cues": [
+    "Lift your arms, head and chest together.",
+    "Balance just behind your sit bones.",
+    "Easier: keep your knees bent, or one foot on the mat."
+  ],
+  "prescription": {
+    "reps": "3–5",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie long, legs up",
+      "cue": "Legs at about 45°, arms overhead.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -45,
+        "hipR": -45,
+        "shoulderL": -180,
+        "shoulderR": -180
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Roll up to a V",
+      "cue": "Reach toward your toes and balance.",
+      "view": "side",
+      "durationMs": 2400,
+      "holdMs": 1500,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -40,
+        "chest": 10,
+        "neck": 10,
+        "hipL": -95,
+        "hipR": -95,
+        "shoulderL": -70,
+        "shoulderR": -70
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  },
+  "repName": "rep"
+}

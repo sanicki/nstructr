@@ -1,0 +1,94 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bhf-squat",
+  "name": "Band Squat",
+  "category": "Strength",
+  "focus": "Legs",
+  "library": "Resistance band",
+  "equipment": [
+    "Resistance band"
+  ],
+  "description": "A harder leg exercise that also mobilises the hips, knees and ankles: squat down and back up with the band under your feet and the ends at your waist.",
+  "source": {
+    "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
+    "title": "British Heart Foundation: resistance band exercises",
+    "note": "Standing version. The article also shows each exercise seated on a chair."
+  },
+  "setup": [
+    "Stand with your feet hip-width apart on the middle of the band.",
+    "Hold the ends at your waist."
+  ],
+  "cues": [
+    "Bend your knees only as far as is comfortable.",
+    "Come back up slowly.",
+    "If standing up is too hard, try the leg press instead."
+  ],
+  "prescription": {
+    "reps": "12–16",
+    "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
+  },
+  "facing": "right",
+  "props": [
+    {
+      "type": "band",
+      "from": "footL",
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": "footR",
+      "to": "handR"
+    }
+  ],
+  "keyframes": [
+    {
+      "name": "Stand",
+      "cue": "Band under both feet, ends at your waist.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 15,
+        "shoulderR": 15,
+        "elbowL": -95,
+        "elbowR": -95
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Squat",
+      "cue": "Lower your hips and bend your knees as far as is comfortable.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 32,
+        "hipL": -78,
+        "hipR": -78,
+        "kneeL": 95,
+        "kneeR": 95,
+        "shoulderL": -17,
+        "shoulderR": -17,
+        "elbowL": -95,
+        "elbowR": -95
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  },
+  "repName": "rep"
+}

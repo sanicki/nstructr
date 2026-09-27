@@ -1,0 +1,104 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "chair-heel-bridge",
+  "name": "Heels-on-Chair Bridge",
+  "category": "Strength",
+  "focus": "Hamstrings and glutes",
+  "library": "Chair-based",
+  "equipment": [
+    "Chair",
+    "Mat"
+  ],
+  "description": "A bridge with your heels up on a chair seat, which works the hamstrings harder: press your heels down and lift your hips until shoulders, hips and knees line up.",
+  "source": {
+    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back with your knees bent to 90° and your heels on the chair seat.",
+    "Arms rest at your sides."
+  ],
+  "cues": [
+    "Press your heels down into the seat.",
+    "Squeeze your hamstrings and glutes to lift.",
+    "Stop when your shoulders, hips and knees make a straight line; lower with control."
+  ],
+  "prescription": {
+    "reps": "10–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Heels on the chair",
+      "cue": "Knees at 90°, heels on the seat.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -90,
+        "hipR": -90,
+        "kneeL": 90,
+        "kneeR": 90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lift your hips",
+      "cue": "Press through your heels and lift.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 800,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "root": -122,
+        "chest": 32,
+        "neck": 52,
+        "hipL": -60,
+        "hipR": -60,
+        "kneeL": 100,
+        "kneeR": 100,
+        "shoulderL": 4,
+        "shoulderR": 4
+      },
+      "keep": [
+        "ankleL",
+        "ankleR"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "x": 200,
+      "back": "right"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "rep"
+}

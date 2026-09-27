@@ -1,0 +1,92 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bhf-lateral-raise",
+  "name": "Band Lateral Raise",
+  "category": "Strength",
+  "focus": "Shoulders",
+  "library": "Resistance band",
+  "equipment": [
+    "Resistance band"
+  ],
+  "description": "Shoulder strengthener: with the band under one foot, raise both arms out to the sides up to shoulder height.",
+  "source": {
+    "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
+    "title": "British Heart Foundation: resistance band exercises",
+    "note": "Standing version. The article also shows each exercise seated on a chair."
+  },
+  "setup": [
+    "Stand tall with your feet together.",
+    "Put the middle of the band under one foot and hold an end in each hand, band taut.",
+    "Arms by your sides, elbows slightly bent, palms facing in."
+  ],
+  "cues": [
+    "Lift only to shoulder height.",
+    "Lower slowly.",
+    "Easier: raise one arm at a time."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
+  },
+  "facing": "right",
+  "props": [
+    {
+      "type": "band",
+      "from": "footL",
+      "to": "handL",
+      "layer": "front"
+    },
+    {
+      "type": "band",
+      "from": "footL",
+      "to": "handR",
+      "layer": "front"
+    }
+  ],
+  "keyframes": [
+    {
+      "name": "Arms by your sides",
+      "cue": "Elbows soft, band taut from your foot to your hands.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -6,
+        "shoulderR": 6,
+        "elbowL": 8,
+        "elbowR": -8
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Raise",
+      "cue": "Lift both arms out to the sides to shoulder height.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "shoulderR": 90,
+        "elbowL": 8,
+        "elbowR": -8
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

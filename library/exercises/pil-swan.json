@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-swan",
+  "name": "Swan Prep",
+  "category": "Pilates",
+  "focus": "Back extensors",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Lying on your front with hands under your shoulders, lengthen and lift your chest into a gentle back extension, then lower.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie face down with your hands under your shoulders and legs together."
+  ],
+  "cues": [
+    "Lengthen first, then lift; think of reaching your head forward.",
+    "Keep your hips on the mat.",
+    "Lift only as high as feels comfortable in your lower back."
+  ],
+  "prescription": {
+    "reps": "5–6",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your front",
+      "cue": "Hands under your shoulders.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "neck": -34,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": -235,
+        "shoulderR": -235,
+        "elbowL": -189,
+        "elbowR": -189
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 10,
+          "dy": 0,
+          "bend": 1
+        },
+        {
+          "hand": "handL",
+          "to": "shoulderL",
+          "dx": 10,
+          "dy": 0,
+          "bend": 1
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Lift your chest",
+      "cue": "Press gently and lift your chest.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 800,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "torso": -22,
+        "chest": -14,
+        "neck": -20,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": -235,
+        "shoulderR": -235,
+        "elbowL": -200,
+        "elbowR": -200
+      },
+      "keep": [
+        "handL",
+        "handR"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

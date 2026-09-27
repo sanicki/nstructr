@@ -1,0 +1,83 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-child",
+  "name": "Child's Pose",
+  "sanskrit": "Balasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Resting pose kneeling with the hips on the heels and the forehead toward the floor.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/child-s-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Kneel tall",
+      "cue": "Kneel with the hips over the knees.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "kneeL",
+      "pose": {
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": 360,
+        "shoulderR": 360
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Child's Pose",
+      "cue": "Sit back on the heels and fold forward, arms reaching ahead.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "kneeL",
+      "touch": [
+        {
+          "point": "headLow",
+          "adjust": "torso"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": 100,
+        "neck": 10,
+        "hipL": -78,
+        "hipR": -78,
+        "kneeL": 170,
+        "kneeR": 170,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": 165,
+        "shoulderR": 165
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Widen the knees if the belly needs room.",
+    "Breathe into the back."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

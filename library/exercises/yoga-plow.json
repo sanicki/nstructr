@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-plow",
+  "name": "Plow Pose",
+  "sanskrit": "Halasana",
+  "category": "Inversion",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Inversion on the shoulders with the legs lowered over the head.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/plow-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie down with the knees bent and feet flat.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -45,
+        "hipR": -45,
+        "kneeL": 120,
+        "kneeR": 120
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Plow Pose",
+      "cue": "Lift the hips over the shoulders and lower the feet behind the head.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": -180,
+        "neck": 124,
+        "hipL": -143,
+        "hipR": -143,
+        "shoulderL": 90,
+        "shoulderR": 90
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the neck still; don't turn the head.",
+    "Rest the feet on a block if they don't reach."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,90 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bw-wall-pushup",
+  "name": "Wall Push-Up",
+  "category": "Strength",
+  "focus": "Chest, shoulders and arms",
+  "library": "Bodyweight",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "The gentlest push-up: lean into a wall with straight arms, then bend your elbows to bring your chest toward it and push back.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
+    "title": "NHS: strength exercises (wall press-up)",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Stand an arm's length from a wall.",
+    "Put your hands flat on the wall at chest height, fingers pointing up."
+  ],
+  "cues": [
+    "Keep your body in a straight line from head to heels.",
+    "Elbows stay close to your sides.",
+    "Close the gap to the wall as far as you comfortably can, then push back slowly."
+  ],
+  "prescription": {
+    "reps": "3 rounds of 5–10",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Arms straight",
+      "cue": "Hands on the wall at chest height, body straight.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "root": 18,
+        "shoulderL": -98,
+        "shoulderR": -98,
+        "elbowL": -4,
+        "elbowR": -4
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Bend your elbows",
+      "cue": "Lower your chest toward the wall.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "root": 32,
+        "shoulderL": -98,
+        "shoulderR": -98,
+        "elbowL": -4,
+        "elbowR": -4
+      },
+      "keep": [
+        "handL",
+        "handR"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "handR",
+      "keyframe": 0
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  },
+  "repName": "rep"
+}

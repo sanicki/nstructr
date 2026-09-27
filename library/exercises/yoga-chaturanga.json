@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-chaturanga",
+  "name": "Four-Limbed Staff Pose",
+  "sanskrit": "Chaturanga Dandasana",
+  "category": "Arm Balance",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Low plank with the elbows bent to 90 degrees and the body in one line.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/four-limbed-staff-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Plank",
+      "cue": "Hands under shoulders, body in one straight line.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 900,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 66,
+        "shoulderL": -66,
+        "shoulderR": -66,
+        "ankleL": 24,
+        "ankleR": 24
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Chaturanga",
+      "cue": "Lower with the elbows hugging in until the upper arms are level.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 79,
+        "shoulderL": 11,
+        "shoulderR": 11,
+        "elbowL": -90,
+        "elbowR": -90,
+        "ankleL": 11,
+        "ankleR": 11
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Stop when the shoulders reach elbow height.",
+    "Keep the hips level with the shoulders."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

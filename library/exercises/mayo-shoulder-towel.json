@@ -1,0 +1,105 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-shoulder-towel",
+  "name": "Shoulder Stretch with Towel",
+  "category": "Stretch",
+  "focus": "Shoulder rotators",
+  "library": "Stretches",
+  "equipment": [
+    "Towel"
+  ],
+  "description": "Stretches the shoulder's internal rotators: a rolled towel held behind your back, top hand pulls up so the lower hand slides up your back.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Hold a rolled-up towel behind your back: right hand over your shoulder at the top, left hand behind your back at the bottom."
+  ],
+  "cues": [
+    "Pull gently upward with the top hand.",
+    "You'll feel it in the shoulder of the lower arm.",
+    "Useful for tennis serves and overhead throwing."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Towel behind your back",
+      "cue": "Top hand behind your head, bottom hand behind your back.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 800,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderR": 185,
+        "elbowR": -150,
+        "shoulderL": 35
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "handR",
+          "dy": 78,
+          "bend": 1
+        }
+      ],
+      "phase": "setup"
+    },
+    {
+      "name": "Pull up",
+      "cue": "Gently pull the towel upward with your top hand.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 30000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderR": 180,
+        "elbowR": -118,
+        "shoulderL": 25
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "handR",
+          "dy": 78,
+          "bend": 1
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left shoulder",
+      "R": "Right shoulder"
+    }
+  },
+  "props": [
+    {
+      "type": "towel",
+      "from": "handR",
+      "to": "handL",
+      "layer": "back"
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

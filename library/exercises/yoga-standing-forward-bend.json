@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-standing-forward-bend",
+  "name": "Standing Forward Bend",
+  "sanskrit": "Uttanasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Standing fold with the torso hanging over the legs.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/standing-forward-bend-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -360,
+        "shoulderR": -360
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Standing Forward Bend",
+      "cue": "Hinge from the hips and let the torso hang.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": 150,
+        "neck": 10,
+        "shoulderL": -165,
+        "shoulderR": -165
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Bend the knees as much as needed.",
+    "Let the head hang."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

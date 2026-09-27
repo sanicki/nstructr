@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-shoulder",
+  "name": "Shoulder Stretch",
+  "category": "Stretch",
+  "focus": "Back of the shoulder",
+  "library": "Stretches",
+  "equipment": [],
+  "description": "Stretches the back of the shoulder: bring one arm across your body and hold it with the other arm, above or below the elbow.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Stand or sit tall."
+  ],
+  "cues": [
+    "Hold above or below the elbow, not on the joint.",
+    "Keep your shoulders down and relaxed.",
+    "Helpful if you play golf, tennis or other throwing or overhead sports."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Arms relaxed.",
+      "view": "front",
+      "durationMs": 1600,
+      "holdMs": 800,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -4,
+        "shoulderR": 4
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Arm across",
+      "cue": "Bring your left arm across your body and hold it with your right arm.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 30000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 82,
+        "elbowL": 4,
+        "shoulderR": 30
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "elbowL",
+          "dx": -18
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left shoulder",
+      "R": "Right shoulder"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}
