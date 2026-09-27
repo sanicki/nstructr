@@ -482,7 +482,14 @@ steps or the joint will windmill; the jump check will catch it.
   playing; mouse hover shows them), progress, current step, side / direction / speed switches. Details
   (chips, Steps, How to do it, About, and **Adjust the pose** in Authoring mode) are one scrolling panel:
   on phones a **pull-up sheet** peeking from the bottom (tap or drag its header; tap outside or Esc closes),
-  on screens ≥ 840 px a right-hand column.
+  on screens ≥ 840 px a right-hand column; on short screens (≤ 520 px tall: the cover screen, landscape) part
+  of the page below the controls, since a peeking panel would cover the figure.
+- **Short screens** (≤ 520 px tall, < 840 px wide): the three tabs sit in the top bar (icons only), the snackbar
+  shows at the top, and pages end with 22 vh of empty space, all to keep clear of the cover screen's cutouts.
+- **Authoring mode**: an **Edit pose** button (sliders icon) in the exercise page's top bar pauses playback and
+  opens the pose editor; on phones the panel opens halfway so the figure stays visible. The editor has its own
+  previous/next step buttons, and the figure's overlay controls fade even while paused so they don't cover the
+  pose.
 - **Settings**: Workouts (default sound, full screen), Display (theme System/Light/Dark, exercise speed,
   **Authoring mode**), Import & tools (backup, import file/paste, the two AI prompts, export your exercises,
   JSON format reference, storage-persistence note).

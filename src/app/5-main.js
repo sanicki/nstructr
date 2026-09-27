@@ -7,6 +7,8 @@ function updateEditor() {
   if (box.dataset.built !== S.ex.id) {
     box.dataset.built = S.ex.id;
     box.innerHTML = `<div class="editor-head"><span class="title-small" id="edTitle"></span>
+      <span class="editor-steps"><button class="icon-btn stateful" data-act="edPrev" aria-label="Previous step"><span class="icon">chevron_left</span></button>
+        <button class="icon-btn stateful" data-act="edNext" aria-label="Next step"><span class="icon">chevron_right</span></button></span>
       <div class="segmented" id="viewSeg" role="group" aria-label="Camera view">
         <button class="stateful" data-view="side"><span class="icon">check</span>Side</button>
         <button class="stateful" data-view="front"><span class="icon">check</span>Front</button></div></div>
@@ -207,6 +209,7 @@ function route() {
   const sub = view === 'player' || view === 'workout' || view === 'wplay';
   $('#backBtn').hidden = !sub;
   $('#saveBtn').hidden = view !== 'player';
+  $('#editPoseBtn').hidden = view !== 'player' || !authoring();
   document.querySelector('.bar-brand').style.display = sub ? 'none' : '';
   $('#barTitle').textContent = view === 'player' ? (S.ex ? S.ex.name : '') : view === 'workout' ? EDIT.name : view === 'wplay' ? WP.w.name : TITLES[view];
   document.title = view === 'player' && S.ex ? `${S.ex.name} · ${APP_NAME}` : APP_NAME;
@@ -263,6 +266,7 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.act === 'copyPrompt') copyText(aiPromptText(), 'Prompt copied');
   else if (d.act === 'showPrompt') showJson('Prompt for making an exercise from a video', aiPromptText());
   else if (d.act === 'exportAll') showJson('Your saved exercises', JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: S.lib.items }, null, 2));
+  else if (d.act === 'edPrev' || d.act === 'edNext') { setPlaying(false); jumpTo(S.idx + (d.act === 'edNext' ? 1 : -1)); }
   else if (d.act === 'json') showJson(S.ex.name, JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: [S.ex] }, null, 2));
   else if (d.view && S.side === 'L') {
     S.ex.keyframes[S.idx].view = d.view; setPlaying(false); rebuild(); jumpTo(S.idx); updateEditor(); saveLib();
