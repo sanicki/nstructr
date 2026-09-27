@@ -76,7 +76,7 @@ copy('src'); copy('library'); copy('schema'); copy('icons'); copy('manifest.webm
 fs.rmSync(path.join(SITE, 'src/sw.js'));
 const appFiles = fs.readdirSync(path.join(ROOT, 'src/app')).filter(f => f.endsWith('.js')).sort();
 const head = rd('src/head.html'), body = rd('src/body.html');
-const scripts = ['src/core.js', 'src/thumb.js', ...appFiles.map(f => `src/app/${f}`)];
+const scripts = ['src/core.js', 'src/thumb.js', 'src/vendor/qrcode.js', ...appFiles.map(f => `src/app/${f}`)];
 // the installable app: manifest, icons, and a service worker that caches everything it needs
 const pwaHead = head.replace('</title>', `</title>
 <link rel="manifest" href="manifest.webmanifest">

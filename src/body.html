@@ -17,6 +17,7 @@
         <path d="M148 383H94L138 262 110 126 394 383H426" stroke="var(--md-primary)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="292" cy="290" r="40" fill="var(--md-primary)"/></svg>
       <h1 class="title-large" id="barTitle">NstructR</h1>
       <button class="icon-btn stateful" id="editPoseBtn" aria-label="Edit the pose" title="Edit the pose" hidden><span class="icon">tune</span></button>
+      <button class="icon-btn stateful" id="shareExBtn" data-act="shareEx" aria-label="Share this exercise" title="Share" hidden><span class="icon">share</span></button>
       <button class="icon-btn stateful" id="saveBtn" aria-label="Save to my exercises" title="Save" hidden><span class="icon">bookmark_add</span></button>
     </header>
 
@@ -122,7 +123,7 @@
         <div class="row">
           <button class="btn filled stateful" data-wact="start"><span class="icon fill">play_arrow</span>Start</button>
           <button class="btn tonal stateful" data-wact="addBlock"><span class="icon">add</span>Add block</button>
-          <button class="btn text stateful" data-wact="share"><span class="icon">share</span>Share</button>
+          <button class="btn text stateful" data-share-wk="@edit"><span class="icon">share</span>Share</button>
           <button class="btn text stateful" data-wact="export"><span class="icon">data_object</span>JSON</button>
           <button class="btn text stateful" data-wact="duplicateWorkout"><span class="icon">content_copy</span>Duplicate</button>
           <button class="btn text stateful danger" data-wact="deleteWorkout"><span class="icon">delete</span>Delete</button>
@@ -275,6 +276,23 @@
   <h2 class="headline-small" id="startTitle">Before you start</h2>
   <div class="actions actions-top"><button class="btn text stateful" data-close>Cancel</button><button class="btn filled stateful" id="startGo"><span class="icon fill">play_arrow</span>Start</button></div>
   <div id="startBody"></div>
+</dialog>
+<dialog id="shareDialog" aria-labelledby="shareTitle">
+  <h2 class="headline-small" id="shareTitle">Share</h2>
+  <p class="body-medium muted" id="shareWhat" style="margin:0 0 12px"></p>
+  <div class="share-qr" id="shareQr"></div>
+  <label class="field" style="max-width:none"><span class="field-label">Link</span><input id="shareUrl" readonly></label>
+  <div class="actions share-actions">
+    <button class="btn text stateful" data-close>Close</button>
+    <button class="btn text stateful" id="shareFile"><span class="icon">description</span>As a file</button>
+    <button class="btn tonal stateful" id="shareCopy"><span class="icon">content_copy</span>Copy link</button>
+    <button class="btn filled stateful" id="shareSend"><span class="icon">share</span>Share link</button>
+  </div>
+</dialog>
+<dialog id="linkDialog" aria-labelledby="linkTitle">
+  <h2 class="headline-small" id="linkTitle">Shared with you</h2>
+  <div id="linkBody"></div>
+  <div class="actions"><button class="btn text stateful" data-close>Not now</button><button class="btn filled stateful" id="linkAdd"><span class="icon">add</span>Add</button></div>
 </dialog>
 <div class="menu" id="menu" hidden role="menu"></div>
 <div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>

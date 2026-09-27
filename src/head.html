@@ -389,6 +389,7 @@ body[data-view="player"] .view{padding-bottom:32px}
 .wk-card{display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:var(--shape-m);background:var(--md-surface-container-low);text-align:left}
 .wk-card h2{margin:0}
 .wk-card .row{margin-top:4px}
+.wk-card .row .wk-share{order:3;margin-left:auto}
 .wk-meta{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--md-on-surface-variant)}
 .wk-meta span{display:inline-flex;align-items:center;gap:6px}
 .wk-meta .icon{font-size:18px}
@@ -489,6 +490,12 @@ label.setting{cursor:pointer}
 .switch:checked{background:var(--md-primary);border-color:var(--md-primary)}
 .switch:checked::before{left:22px;width:24px;height:24px;background:var(--md-on-primary)}
 .settings-group .create-grid{margin-top:0}
+.share-qr{display:grid;place-items:center;margin:0 0 12px}
+.share-qr svg{width:min(240px,70vw);height:auto;background:#fff;border-radius:8px}
+.share-qr p{margin:0}
+.share-actions{flex-wrap:wrap}
+#shareUrl{font-size:13px}
+#linkBody ul{margin:4px 0 8px;padding-left:20px}
 .settings-group .card h3{margin:4px 0 0}
 
 /* ===== workout player: full screen, floor-readable, gestures ===== */

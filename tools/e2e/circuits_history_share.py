@@ -40,7 +40,8 @@ async def main():
         pr=await pg.evaluate("routinePrompt()"); print('prompt chars', len(pr), '| has ids:', 'wu-arm-circles | Standing Arm Circles' in pr, '| lines:', pr.count('\n'))
         # share falls back to a download here
         await pg.goto(URL + '#/workout/circ', wait_until='domcontentloaded'); await pg.wait_for_timeout(300)
-        async with pg.expect_download() as dl: await pg.click('[data-wact="share"]')
+        await pg.click('[data-share-wk="@edit"]'); await pg.wait_for_timeout(300)
+        async with pg.expect_download() as dl: await pg.click('#shareFile')
         d=await dl.value; print('share fallback download:', d.suggested_filename)
         # block rounds dialog
         await pg.click('[data-bmenu="b1"]'); await pg.click('[data-mact="rounds"]'); await pg.wait_for_timeout(150)
