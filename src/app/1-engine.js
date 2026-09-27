@@ -198,8 +198,9 @@ function legsOverlap(P) {
   for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (segsCross(L[i], L[i + 1], R[j], R[j + 1])) return true;
   return false;
 }
-function layerLegs(a, b, f) {
-  const said = s => (b.layers && b.layers['leg' + s]) || (a.layers && a.layers['leg' + s]) || null;
+function layerLegs(a, b, f, e) {
+  // while moving, either end of the move can ask; once there, only the step being held
+  const said = s => (b.layers && b.layers['leg' + s]) || (e < 1 && a.layers && a.layers['leg' + s]) || null;
   const want = s => said(s) || (s === 'L' ? 'back' : 'front');
   // both on the same side of the body: the leg the step names goes outermost (furthest back, or on top), so a
   // leg crossing behind passes behind the standing leg and one crossing in front passes over it
@@ -337,7 +338,7 @@ function draw() {
   const f = frameAt(a, b, e, S.seg);
   applyPose(f.pose, f.v, { x: f.pos.x + S.shiftX, y: f.pos.y }, CX + lerp(a.rule.anchorX, b.rule.anchorX, e) + S.shiftX);
   S.curV = f.v;
-  layerLegs(a, b, f);
+  layerLegs(a, b, f, e);
   if (S.props && S.props.length) drawProps(fk(f.pose, f.v, S.seg, f.pos.x + S.shiftX, f.pos.y));
   drawGuide(a, b, e);
   if (S.mode !== 'workout') $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';
