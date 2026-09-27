@@ -3,11 +3,14 @@ import asyncio, os
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 import json
 from playwright.async_api import async_playwright
+ASK_JS = """setInterval(() => { const d = document.getElementById('askDialog'); if (!d || !d.open) return;   // answers NstructR's confirm dialog
+  (window.ASKED = window.ASKED || []).push(document.getElementById('askTitle').textContent + ' | ' + document.getElementById('askText').textContent.split('\\n').pop());
+  document.getElementById(window.ASK_NO ? 'askNo' : 'askYes').click(); }, 40)"""
 async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch(); pg=await b.new_page(viewport={'width':1280,'height':900}); errs=[]
         pg.on('pageerror',lambda e: errs.append(str(e)))
-        pg.on('dialog', lambda d: asyncio.ensure_future(d.accept()))
+        await pg.add_init_script(ASK_JS)
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         # new workout -> rename -> add exercises via picker
         await pg.click('[data-wact="new"]'); await pg.wait_for_timeout(300)

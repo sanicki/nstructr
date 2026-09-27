@@ -2,14 +2,16 @@ import asyncio, os, json
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+ASK_JS = """setInterval(() => { const d = document.getElementById('askDialog'); if (!d || !d.open) return;   // answers NstructR's confirm dialog
+  (window.ASKED = window.ASKED || []).push(document.getElementById('askTitle').textContent + ' | ' + document.getElementById('askText').textContent.split('\\n').pop());
+  document.getElementById(window.ASK_NO ? 'askNo' : 'askYes').click(); }, 40)"""
 # Bookmarked vs My exercises: the one-time move from "Saved", the Exercises tab (chips and shelves, in order),
 # bookmarks as a flag, deleting your own (asks, names the workouts using it), imports
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
         ctx = await b.new_context(viewport={'width': 412, 'height': 860}); pg = await ctx.new_page()
-        pg.on('pageerror', lambda e: errs.append(str(e))); asked = []
-        pg.on('dialog', lambda d: (asked.append(d.message.split('\n')[-1][:70]), asyncio.ensure_future(d.accept())))
+        pg.on('pageerror', lambda e: errs.append(str(e))); await pg.add_init_script(ASK_JS)
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
         # an install from before bookmarks: "Saved" holds an unchanged library copy, one changed with the old pose
         # editor, and an exercise of the user's own; there's no bookmark list yet
@@ -38,7 +40,7 @@ async def main():
         # deleting: asks, and names the workouts that use it
         await pg.evaluate("WK.list.push({id:'w1',name:'Calves',blocks:[{id:'b',name:'B',items:[newItem(exById('u-my-raise'))]}]}); saveWorkouts(); go('#/play/u-my-raise')"); await pg.wait_for_timeout(300)
         await pg.evaluate("document.querySelector('#aboutPanel [data-del]').click()"); await pg.wait_for_timeout(300)
-        print('delete                  ', asked, await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash, E.coll]"))
+        print('delete                  ', [a.split(' | ')[-1][:70] for a in await pg.evaluate('window.ASKED || []')], await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash, E.coll]"))
         # importing an unchanged library exercise just bookmarks it; your own lands in My exercises
         lib = await pg.evaluate("JSON.stringify({format:'nstructr/exercise', version:1, exercises:[findInDb('core-forearm-plank')]})")
         await pg.evaluate(f"importAndShow([[{json.dumps(lib)}, 'x.json']])"); await pg.wait_for_timeout(300)

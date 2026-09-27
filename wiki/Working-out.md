@@ -18,6 +18,8 @@ caption of what's being said.
 | Hide the controls | Tap an empty spot, or wait: they fade after a few seconds while playing |
 | **Leave the workout** | **Hold ✕** for about a second. A tap only reminds you to hold. |
 | Pause with a keyboard | Space |
+| Leave with a keyboard | Esc (or Tab to ✕ and press Enter) |
+| Leave with a screen reader | Double-tap ✕ (TalkBack and VoiceOver don't need the hold) |
 
 <img src="images/cover-player-controls.png" width="300" alt="The controls: exit, sound, previous, pause, next">
 

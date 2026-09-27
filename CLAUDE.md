@@ -18,6 +18,8 @@ The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wik
 - Exercise text: our own words, cite the source, never copy. Spoken cues: short, plain directions.
 - Workout player targets the Galaxy Z Flip7 **cover screen on the floor**: nothing important at the bottom (camera cutouts), first tap only shows controls, hold ✕ to exit, test at 360×398.
 - Don't rename localStorage keys without a migration (see HANDOFF §11).
+- UI changes: run `tools/audit.py` (axe, 48 px targets, sideways scroll); confirmations use `ask()`, never `confirm()`.
+- User-visible changes: update the README / `wiki/` and retake screenshots (`tools/wiki_screenshots.py`).
 - No framework, no bundler: `src/app/*.js` are classic scripts concatenated in filename order into one global scope.
 - A build deletes and recreates `_site/`, so restart a server started with `-d _site` after each build.
 - Don't run `pkill -f http.server` from a shell whose command line contains that text (it kills itself).

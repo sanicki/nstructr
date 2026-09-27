@@ -43,7 +43,7 @@ function compactWorkout(w) {
     const o = { name: b.name, items: b.items.map(it => {
       const ex = exById(it.ex), x = { ex: it.ex };
       if (ex && ex.measure === 'time') x.seconds = it.seconds; else x.reps = it.reps;
-      if (it.sets > 1) { x.sets = it.sets; x.rest = it.rest; }
+      if (it.sets > 1) x.sets = it.sets;
       if (it.sides) x.sides = it.sides;
       if (it.dir) x.dir = it.dir;
       if (it.tempo && it.tempo !== 1) x.tempo = it.tempo;

@@ -2,8 +2,8 @@
 
 [← User guide](Home.md)
 
-Have a routine from a class, a physio's sheet, or a video? **Create with AI** gets an AI app (Claude, ChatGPT,
-Gemini, Grok, DeepSeek, Copilot, Vibe or any other) to turn it into an exercise or workout for NstructR. You need an
+Have a routine from a class, a physio's sheet, or a video? **Create with AI** gets an AI app (ChatGPT, Claude,
+Copilot, DeepSeek, Gemini, Grok, Vibe or any other) to turn it into an exercise or workout for NstructR. You need an
 account with that AI app. NstructR doesn't send anything itself: you see everything in the AI app.
 
 Open it from **Workouts → Create with AI**, or **Settings → Create with AI → Create**.
@@ -14,14 +14,17 @@ Open it from **Workouts → Create with AI**, or **Settings → Create with AI �
 
 | Choice | Type or paste |
 |---|---|
-| **A name** | e.g. *Pilates leg circles*, or *10-minute morning stretch* |
+| **The name of the exercise** | e.g. *Pilates leg circles* |
 | **Written routine** | The whole routine: exercises, reps, sets, rests |
 | **Video or web link** | A YouTube or web address. Gemini can watch YouTube videos; most others read the page. |
 | **Photo or video** | Nothing here: attach it in the AI app after it opens (pick an app that accepts pictures or video) |
 
+The instructions ask the AI to use what it knows **and to check it with a web search** where it can (how the
+exercise is done, its steps, typical reps and safety notes), and to name the page it relied on as the source.
+
 ## 2. Ask the AI
 
-Pick the AI app (your usual one can be set in [Settings](Settings.md#ai-app)) and tap **Open**:
+Pick the AI app (Gemini at first; the app remembers the one you pick) and tap **Open**:
 
 - **Claude, ChatGPT, Grok, Copilot, Vibe**: open with NstructR's instructions already typed in. Check it, then send it.
 - **Gemini, DeepSeek**: can't be opened with a message, so the instructions are **copied**. Paste them into the
@@ -33,9 +36,9 @@ again.
 
 ## 3. Paste its answer
 
-<img src="images/create-with-ai-answer.png" width="300" alt="Paste the AI's answer, then Add it">
+<img src="images/create-with-ai-answer.png" width="300" alt="Paste the AI's answer, then Add">
 
-When the AI has answered, copy its whole reply, come back, tap **Paste** (or long-press the box), then **Add it**.
+When the AI has answered, copy its whole reply, come back, tap **Paste** (or long-press the box), then **Add**.
 
 - **One exercise** is added to **My exercises** and opens so you can watch it.
 - **A routine** becomes a workout in **My workouts**, using library exercises where they match and new ones

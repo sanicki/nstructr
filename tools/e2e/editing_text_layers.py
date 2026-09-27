@@ -2,15 +2,17 @@ import asyncio, os, json
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+ASK_JS = """setInterval(() => { const d = document.getElementById('askDialog'); if (!d || !d.open) return;   // answers NstructR's confirm dialog
+  (window.ASKED = window.ASKED || []).push(document.getElementById('askTitle').textContent + ' | ' + document.getElementById('askText').textContent.split('\\n').pop());
+  document.getElementById(window.ASK_NO ? 'askNo' : 'askYes').click(); }, 40)"""
 # no copy without a change; editing an exercise's words; deleting your own exercise asks first; crossing legs
 # change drawing order only while the legs are apart
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
         pg = await b.new_page(viewport={'width': 412, 'height': 860}); pg.on('pageerror', lambda e: errs.append(str(e)))
-        answer = {'v': True}; asked = []
-        def on_dialog(d): asked.append(d.message[:60]); asyncio.ensure_future(d.accept() if answer['v'] else d.dismiss())
-        pg.on('dialog', on_dialog)
+        await pg.add_init_script(ASK_JS)
+        async def asked(): return [a[:60] for a in await pg.evaluate('window.ASKED || []')]
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         await pg.evaluate("localStorage.setItem('nstructr-authoring-v1','on'); go('#/play/bw-reverse-lunge')"); await pg.wait_for_timeout(500)
         await pg.click('#editPoseBtn'); await pg.wait_for_timeout(300)
@@ -38,21 +40,21 @@ async def main():
         await pg.click('[data-act="edDiscard"]'); await pg.wait_for_timeout(300)
         print('discard (words)         ', await pg.evaluate("[S.ex.id, S.ex.name, S.ex.description === findInDb('bw-reverse-lunge').description]"), '<- back to where this editing started')
         # the bookmark is only a flag; deleting your own exercise is its own action and asks first
-        asked.clear()
+        await pg.evaluate('window.ASKED = []')
         await pg.click('#saveBtn'); await pg.wait_for_timeout(150); await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
-        print('bookmark on/off (own)   ', asked, await pg.evaluate("[S.lib.items.map(x=>x.id), isBookmarked(S.ex.id)]"), '<- no question, still mine')
-        answer['v'] = False; asked.clear()
+        print('bookmark on/off (own)   ', await asked(), await pg.evaluate("[S.lib.items.map(x=>x.id), isBookmarked(S.ex.id)]"), '<- no question, still mine')
+        await pg.evaluate('window.ASK_NO = true'); await pg.evaluate('window.ASKED = []')
         await pg.evaluate("document.querySelector('#aboutPanel [data-del]').click()"); await pg.wait_for_timeout(200)
-        print('Delete, Cancel          ', asked, await pg.evaluate("S.lib.items.map(x=>x.id)"))
-        answer['v'] = True; asked.clear()
+        print('Delete, Cancel          ', await asked(), await pg.evaluate("S.lib.items.map(x=>x.id)"))
+        await pg.evaluate('window.ASK_NO = false'); await pg.evaluate('window.ASKED = []')
         await pg.evaluate("document.querySelector('#aboutPanel [data-del]').click()"); await pg.wait_for_timeout(300)
-        print('Delete, OK              ', asked, await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash]"))
+        print('Delete, OK              ', await asked(), await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash]"))
         # a library exercise: bookmarking stores nothing but the id, no question either way
         await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(300)
         await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
         print('bookmark library        ', await pg.evaluate("[isBookmarked('bw-squat'), S.lib.items.length, !!document.querySelector('#aboutPanel [data-del]')]"))
-        asked.clear(); await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
-        print('unbookmark library      ', asked, await pg.evaluate("[isBookmarked('bw-squat'), S.lib.items.length]"))
+        await pg.evaluate('window.ASKED = []'); await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
+        print('unbookmark library      ', await asked(), await pg.evaluate("[isBookmarked('bw-squat'), S.lib.items.length]"))
         # crossing legs, played for real (both sides, one full round): the drawing order only ever changes on a
         # frame where the legs are apart, and on every step that says a leg goes behind, it is behind
         for ex in ['star-excursion-4-point', 'star-excursion-balance']:

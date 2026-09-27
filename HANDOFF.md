@@ -491,7 +491,7 @@ steps or the joint will windmill; the jump check will catch it.
 ## 10. UI inventory (current)
 
 - **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (Start/Edit, est. time, count, equipment, safety notes), Library workouts (Start/Customize), History (delete, clear). Editor: name, blocks (rename, move, delete, repeat as circuit with rounds and
-  rest), items (drag handle, settings sheet with reps/seconds, sets, rest between sets (shown with 2+ sets), sides, direction, **seconds per rep** (0.1 s steps, typed or −/+, "Usual: n s" = the exercise's own pace; stored as `tempo` = usual ÷ chosen, clamped to ¼–4×; not for timed exercises); menu: move,
+  rest), items (drag handle, settings sheet with reps/seconds, sets, sides, direction, **seconds per rep** (0.1 s steps, typed or −/+, "Usual: n s" = the exercise's own pace; stored as `tempo` = usual ÷ chosen, clamped to ¼–4×; not for timed exercises); menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
 - **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; then type and equipment,
   each on its own row; the equipment choice is kept across collections, one without it shows all), search (covers the user's own exercises too). Saved = bookmarked library exercises + the user's
@@ -527,8 +527,9 @@ steps or the joint will windmill; the jump check will catch it.
     note, rep name, side and direction labels, and source. The first real change to a library exercise makes the
     copy, as for poses (a typed name replaces "(copy)").
 - **Create with AI** (`src/app/5-ai.js`; Settings > Create with AI, and Workouts next to New workout): a full-screen
-  dialog in three steps. 1: what you have (a name, a written routine, a video or web link, a photo or video; the
-  last has no text box: it's attached in the AI app). 2: the AI app (default in Settings, `nstructr-ai-app-v1`):
+  dialog in three steps. 1: what you have (the name of the exercise, a written routine, a video or web link, a photo or
+  video; the last has no text box: it's attached in the AI app). 2: the AI app, A–Z with "Another AI app" last (Gemini
+  until the user picks another; the last one picked is kept in `nstructr-ai-app-v1`; there's no Settings entry):
   **Open** copies the instructions and opens the app; apps with a message parameter (`?q=`: Claude, ChatGPT, Grok,
   Copilot, Vibe) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
   URLs over 16 KB); Gemini and DeepSeek have none, so they're only copied; "Another AI app" just copies. 3: paste
@@ -543,9 +544,17 @@ steps or the joint will windmill; the jump check will catch it.
 - The **bookmark** is only a flag, on any exercise. The user's own exercises are always in **My exercises**;
   deleting one is its own action (About → Delete), asks first and names the workouts that use it. Backups carry
   `bookmarks` too.
-- **Settings**: Workouts (default sound, full screen, rest between exercises), Display (theme System/Light/Dark,
-  **Authoring mode**), Create with AI (AI app, Create), Import & tools (backup, import file/paste, export your exercises,
+- **Settings**, in order: Documentation (link to the user guide), Workouts (rest between exercises, rest between
+  sets, sound, full screen), Display (theme System/Light/Dark, **Authoring mode**), Create with AI (Create), Import & tools (backup, import file/paste, export your exercises,
   JSON format reference, storage-persistence note).
+- **Confirmations** use `ask(title, text, action, danger)` (a Material dialog, `#askDialog`; resolves true/false),
+  never the browser's `confirm()`. Tests answer it with an init script (`ASK_JS` in the tests that need it).
+- **Leaving a workout**: hold ✕ (a tap only reminds you); Enter on ✕, **Esc**, or a screen reader's click (no
+  pointer press) leave straight away.
+- **Touch targets**: buttons, chips, segmented and icon buttons carry a transparent 48 px `::after`; don't put
+  `overflow:hidden` on their containers (it clips it). `tools/audit.py` checks this.
+- **Rests**: between exercises and between sets are settings (`restGap()`, `restSets()`); between circuit rounds
+  is per block.
 - **User guide**: `wiki/*.md` (Home, Getting started, Exercises, Workouts, Working out, Create with AI, Editing
   exercises, Sharing and backups, Settings, Troubleshooting), linked from the README. Screenshots in `wiki/images/`
   come from `tools/wiki_screenshots.py` (phone 412×860 and cover 360×398, light theme, 2× then 128-colour PNG). It
@@ -574,7 +583,8 @@ steps or the joint will windmill; the jump check will catch it.
 | `nstructr-speed-v1` | the exercise player's last-used speed (`0.5`, `1`, `2`), where the next exercise starts |
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
 | `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end) |
-| `nstructr-ai-app-v1` | the AI app Create with AI opens (`claude`, `chatgpt`, `gemini`…) |
+| `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
+| `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 20, 0–300; Settings > Workouts). Workout items' `rest` is ignored |
 | `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 10, 0–300 in 1 s steps; Settings > Workouts). Workout files' `restBetween` is ignored |
 
 The mixed prefixes are historical; renaming them would silently wipe users' data. If you consolidate, migrate
@@ -596,7 +606,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay, page order, labels, Edit with the figure pinned, Done), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /
@@ -673,9 +683,10 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    prompt filled in (copy where the provider can't take it in the link) → paste the JSON back. One prompt that can
    return an exercise or a workout. Built: see §10 "Create with AI". Also in that PR: MIT license, rest between
    exercises moved to Settings, Half Roll-Back without the band.
-6. **Audits** (next): Material Design 3 compliance, UI consistency, accessibility (contrast, touch targets, labels,
-   focus, screen reader, reduced motion), plus performance on the cover screen, offline/PWA behaviour, safety of
-   imported files and links, and the library's text and sources. A written report, then fixes.
+6. ✅ **Audits**: Material Design 3, UI consistency, accessibility, layout, security, performance, library
+   content. Report and what was fixed: `docs/audit-2026-09.md`. Re-run with `tools/audit.py` (axe-core + touch
+   targets + text size + sideways scroll) and `tools/perf.py`. Follow-ups: Setup for the 52 yoga poses, source
+   links for 52 exercises, a TalkBack pass on the Flip7.
 
 ---
 
