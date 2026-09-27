@@ -399,6 +399,9 @@
         "direction": 225,
         "label": "Back left"
       },
+      "layers": {
+        "legR": "back"
+      },
       "pose": {
         "torso": 35,
         "shoulderL": 27.5,
@@ -457,6 +460,9 @@
         "direction": 270,
         "label": "Left"
       },
+      "layers": {
+        "legR": "back"
+      },
       "pose": {
         "torso": 8,
         "shoulderL": -27.2,
@@ -514,6 +520,9 @@
       "guide": {
         "direction": 315,
         "label": "Forward left"
+      },
+      "layers": {
+        "legR": "front"
       },
       "pose": {
         "torso": 15,

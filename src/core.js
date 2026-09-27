@@ -344,7 +344,7 @@ function resolveKeyframe(kf, seg, ex = {}) {
     if (Math.abs(gap) > 2) misses.push({ point: t.point, adjust: t.adjust, gap });
   }
   return {
-    pose, v, rule, auto, misses, touch: kf.touch || [], reach: kf.reach || [], ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
+    pose, v, rule, auto, misses, touch: kf.touch || [], reach: kf.reach || [], ease: kf.ease || 'smooth', guide: kf.guide || null, layers: kf.layers || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
     dur: kf.durationMs == null ? 1000 : Math.max(0, num(kf.durationMs)), hold: Math.max(0, kf.holdMs == null ? 500 : num(kf.holdMs))
   };
 }
@@ -545,7 +545,8 @@ function mirrorKeyframe(kf) {
     touch: (kf.touch || []).map(t => ({ ...t, point: swapSide(t.point), adjust: swapSide(t.adjust) })),
     keep: (kf.keep || []).map(k => (typeof k === 'string' ? swapSide(k) : { ...k, point: swapSide(k.point) })),
     reach: (kf.reach || []).map(r => ({ ...r, hand: swapSide(r.hand), to: swapSide(r.to), dx: front ? -num(r.dx) : num(r.dx), bend: r.bend && front ? -r.bend : r.bend })),
-    guide: kf.guide ? { ...kf.guide, direction: -num(kf.guide.direction) } : kf.guide
+    guide: kf.guide ? { ...kf.guide, direction: -num(kf.guide.direction) } : kf.guide,
+    layers: kf.layers ? Object.fromEntries(Object.entries(kf.layers).map(([k, v]) => [swapSide(k), v])) : kf.layers
   };
 }
 

@@ -281,6 +281,9 @@
         "direction": 270,
         "label": "Left"
       },
+      "layers": {
+        "legR": "back"
+      },
       "pose": {
         "torso": 8,
         "shoulderL": -27.2,

@@ -43,6 +43,8 @@ function validateExercise(ex, path) {
     if (kf.keep != null && (!Array.isArray(kf.keep) || kf.keep.some(k => !/^(ankle|hand)[LR]$/.test(typeof k === 'string' ? k : (k && k.point) || '') || (typeof k === 'object' && !(Number.isInteger(k.keyframe) && k.keyframe >= 0 && k.keyframe < ex.keyframes.length)))))
       fail(`${p}.keep must list ankleL/ankleR/handL/handR, or {"point": "ankleR", "keyframe": 0} to return to where it was in that step.`);
     if (kf.quiet != null && typeof kf.quiet !== 'boolean') fail(`${p}.quiet must be true or false.`);
+    if (kf.layers != null && (typeof kf.layers !== 'object' || Object.entries(kf.layers).some(([k, v]) => !['legL', 'legR'].includes(k) || !['front', 'back'].includes(v))))
+      fail(`${p}.layers must look like {"legR": "back"}: legL/legR, "front" or "back".`);
     if (kf.ease != null && !['smooth', 'linear'].includes(kf.ease)) fail(`${p}.ease must be "smooth" or "linear".`);
     if (kf.phase != null && !['setup', 'rep', 'finish'].includes(kf.phase)) fail(`${p}.phase must be "setup", "rep" or "finish".`);
     for (const f of ['durationMs', 'holdMs']) if (kf[f] != null && (typeof kf[f] !== 'number' || kf[f] < 0)) fail(`${p}.${f} must be a positive number of milliseconds.`);
@@ -94,10 +96,11 @@ function loadLib() {
   return { items: [] };
 }
 let saveTimer = 0;
-function saveLib() {
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => { try { localStorage.setItem(STORE_KEY, JSON.stringify({ items: S.lib.items, current: S.ex && S.ex.id })); } catch (e) { } }, 250);
-}
+const writeLib = () => { clearTimeout(saveTimer); saveTimer = 0; try { localStorage.setItem(STORE_KEY, JSON.stringify({ items: S.lib.items, current: S.ex && S.ex.id })); } catch (e) { } };
+function saveLib() { clearTimeout(saveTimer); saveTimer = setTimeout(writeLib, 250); }
+// don't lose the last quarter second of edits when the app is closed or hidden
+addEventListener('pagehide', () => { if (saveTimer) writeLib(); });
+document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden' && saveTimer) writeLib(); });
 
 /* ---------- State ---------- */
 const S = {
@@ -167,9 +170,9 @@ function buildFigure() {
     `<g ${facing}>` +
     `<g style="transform: translate(calc(var(--root-x) * 1px), 0)"><ellipse class="shadow" cy="${FLOOR + 7}" rx="52" ry="6"/></g>` +
     `<g id="propsBack"></g>` +
-    `<g style="transform: translate(calc(var(--root-x) * 1px), calc(var(--root-y) * 1px)) rotate(calc(var(--root) * 1deg))">` +
-      leg('L') +
-      `<g class="core" style="transform: rotate(calc(var(--torso) * 1deg))">` +
+    `<g id="figRoot" style="transform: translate(calc(var(--root-x) * 1px), calc(var(--root-y) * 1px)) rotate(calc(var(--root) * 1deg))">` +
+      `<g id="leg-L">${leg('L')}</g>` +
+      `<g class="core" id="figCore" style="transform: rotate(calc(var(--torso) * 1deg))">` +
         `<line class="bone" x2="0" y2="${-lower}"/>` +
         rotG('0px', `${-lower}px`, 'chest',
           arm('L') +
@@ -177,8 +180,24 @@ function buildFigure() {
           rotG('0px', `${-upper}px`, 'neck', `<line class="bone" x2="0" y2="${-g.neck}"/><circle class="head" cy="${-(g.neck + g.head)}" r="${g.head}"/>`) +
           arm('R')) +
       `</g>` +
-      leg('R') +
+      `<g id="leg-R">${leg('R')}</g>` +
     `</g><g id="propsFront"></g></g>`;
+  S.legLayers = 'back,front,L';
+}
+/* Legs are drawn left behind the body, right in front, unless a step says otherwise ("layers"): a leg crossing
+   behind or in front of the standing leg. It applies to the whole move into and out of that step. */
+function layerLegs(a, b) {
+  const said = s => (b.layers && b.layers['leg' + s]) || (a.layers && a.layers['leg' + s]) || null;
+  const want = s => said(s) || (s === 'L' ? 'back' : 'front');
+  // both on the same side of the body: the leg the step names goes outermost (furthest back, or on top), so a
+  // leg crossing behind passes behind the standing leg and one crossing in front passes over it
+  let first = 'L';
+  if (want('L') === want('R')) { const named = said('R') ? 'R' : said('L') ? 'L' : null; if (named) first = (want(named) === 'back') === (named === 'R') ? 'R' : 'L'; }
+  const key = want('L') + ',' + want('R') + ',' + first;
+  if (key === S.legLayers) return;
+  S.legLayers = key;
+  const root = $('#figRoot'), core = $('#figCore'); if (!root || !core) return;
+  for (const s of first === 'L' ? ['L', 'R'] : ['R', 'L']) { const g = $('#leg-' + s); if (want(s) === 'back') root.insertBefore(g, core); else root.appendChild(g); }
 }
 
 /* keep every bone the same thickness at any zoom: scale the screen-pixel limbs to the scene's current scale */
@@ -305,6 +324,7 @@ function draw() {
   const f = frameAt(a, b, e, S.seg);
   applyPose(f.pose, f.v, { x: f.pos.x + S.shiftX, y: f.pos.y }, CX + lerp(a.rule.anchorX, b.rule.anchorX, e) + S.shiftX);
   S.curV = f.v;
+  layerLegs(a, b);
   if (S.props && S.props.length) drawProps(fk(f.pose, f.v, S.seg, f.pos.x + S.shiftX, f.pos.y));
   drawGuide(a, b, e);
   if (S.mode !== 'workout') $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';

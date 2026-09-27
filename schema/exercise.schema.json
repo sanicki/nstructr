@@ -47,6 +47,10 @@
     "description": {
       "type": "string"
     },
+    "basedOn": {
+      "type": "string",
+      "description": "For a user's copy of a library exercise: the id it was copied from."
+    },
     "source": {
       "type": "object",
       "properties": {
@@ -481,6 +485,15 @@
               }
             ]
           }
+        },
+        "layers": {
+          "type": "object",
+          "description": "Draw a leg behind or in front of the body for the move into and out of this step (by default the left leg is behind, the right in front). For crossing behind or in front of the standing leg.",
+          "properties": {
+            "legL": { "enum": ["front", "back"] },
+            "legR": { "enum": ["front", "back"] }
+          },
+          "additionalProperties": false
         },
         "guide": {
           "type": "object",

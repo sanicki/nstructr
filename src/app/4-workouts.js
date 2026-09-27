@@ -41,7 +41,7 @@ function hydrateLibrary() { LIB_WK = LIBRARY_WORKOUTS.map(fw => ({ ...hydrateWor
 const isLibWorkout = w => !!(w && w.libId);
 const wkById = id => (WK.list || []).find(w => w.id === id) || LIB_WK.find(w => w.id === id);
 function customizeWorkout(w) {
-  const c = JSON.parse(JSON.stringify(w)); c.id = uid(); delete c.libId; delete c.description;
+  const c = JSON.parse(JSON.stringify(w)); c.id = uid(); c.name = `${w.name} (copy)`; delete c.libId; delete c.description;
   c.blocks.forEach(b => { b.id = uid(); b.items.forEach(i => (i.uid = uid())); });
   WK.list.push(c); saveWorkouts();
   return c;
@@ -573,12 +573,7 @@ function runCurrent(announce) {
 }
 function onWorkStep(i) {
   const m = S.planMeta[i] || {};
-  if (m.say) {
-    // the guided run-through: this step waits until its cue has been read out
-    WP.speaking = true;
-    const token = WP.speakToken = (WP.speakToken || 0) + 1;
-    say(m.say).then(() => { if (WP.speakToken === token) WP.speaking = false; });
-  }
+  if (m.say) speakGuided(m.say);
   if (m.repNo && m.alt !== 1) {
     WP.rep = m.repNo;
     // coach counts the reps: "Begin", 2, 3 … "Last one". Numbers are skipped if it's already talking; "Begin" never is
@@ -586,6 +581,12 @@ function onWorkStep(i) {
     say(first ? 'Begin' : WP.rep === m.repOf ? 'Last one' : String(WP.rep), true, { dropIfBusy: !first });
   }
   renderWpCount();
+}
+/* the guided run-through: a step waits until its cue has been read out */
+function speakGuided(text) {
+  WP.speaking = true;
+  const token = WP.speakToken = (WP.speakToken || 0) + 1;
+  say(text).then(() => { if (WP.speakToken === token) WP.speaking = false; });
 }
 function onWorkEnd() {
   const cur = current(); if (!cur) return;
@@ -710,7 +711,7 @@ $('#wpRoot').addEventListener('pointerup', e => {
   btn.addEventListener('pointerleave', stop); btn.addEventListener('pointercancel', stop);
   btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); exitWorkout(); } });
 })();
-function exitWorkout() { go(isLibWorkout(WP.w) ? '#/workouts' : `#/workout/${WP.w.id}`); }
+function exitWorkout() { go('#/workouts'); }
 /* full screen while working out (hides the phone's status bar where allowed) */
 const FS_KEY = 'nstructr-fullscreen-v1';
 const installedApp = () => matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches;
@@ -800,8 +801,11 @@ $('#wpRoot').addEventListener('pointerdown', () => { LAST_DOWN_AT = performance.
 function wpAction(act) {
   if (S.view === 'wplay' && ['pause', 'nextItem', 'prevItem', 'sound'].includes(act) && LAST_DOWN_AT && LAST_DOWN_AT < CTRL_SHOWN_AT) return;
   if (act === 'pause') {
-    if (WP.phase === 'rest') { WP.paused = !WP.paused; setWpPlay(!WP.paused); toast(WP.paused ? 'Paused' : 'Resumed'); return; }
-    S.playing = !S.playing; setWpPlay(S.playing); toast(S.playing ? 'Resumed' : 'Paused'); return;
+    // pausing stops the voice mid-sentence; resuming a guided step reads its line again
+    if (WP.phase === 'rest') { WP.paused = !WP.paused; if (WP.paused) hush(); setWpPlay(!WP.paused); toast(WP.paused ? 'Paused' : 'Resumed'); return; }
+    S.playing = !S.playing;
+    if (!S.playing) hush(); else { const m = S.planMeta[S.idx] || {}; if (m.guided && m.say) speakGuided(m.say); }
+    setWpPlay(S.playing); toast(S.playing ? 'Resumed' : 'Paused'); return;
   }
   if (S.view === 'wplay' && WP.phase !== 'done' && act !== 'pause') showControls(isPaused());
   if (act === 'sound') {
