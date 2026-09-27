@@ -68,6 +68,17 @@ async def main():
         # wide screens: the details are a column, no panel
         await pg.set_viewport_size({'width': 1280, 'height': 800}); await pg.wait_for_timeout(300)
         print('wide: details column    ', await pg.evaluate("[getComputedStyle($('#exSheet')).position, getComputedStyle($('#exSheet')).transform]"))
+        # Authoring mode: the Edit pose button opens the editor halfway up, the figure still visible above it
+        await pg.set_viewport_size({'width': 412, 'height': 860}); await pg.wait_for_timeout(300)
+        await pg.click('#editPoseBtn'); await pg.wait_for_timeout(500)
+        print('Edit pose               ', await pg.evaluate("[S.playing, $('#exSheet').className, Math.round($('#exSheet').getBoundingClientRect().top), Math.round($('#stageBox').getBoundingClientRect().bottom), $('#exControls').classList.contains('show'), $('#edTitle').textContent]"))
+        await pg.click('[data-act="edNext"]'); await pg.wait_for_timeout(200)
+        print('editor next step        ', await pg.evaluate("$('#edTitle').textContent"))
+        # the cover screen: tabs at the top, details part of the page (no panel over the figure)
+        await pg.set_viewport_size({'width': 360, 'height': 398}); await pg.evaluate("go('#/exercises')"); await pg.wait_for_timeout(300)
+        print('cover: tabs (top,bottom)', await pg.evaluate("[...document.querySelectorAll('.navbar .nav-item')].map(a=>{const r=a.getBoundingClientRect();return [a.dataset.nav,Math.round(r.top),Math.round(r.bottom)]})"))
+        await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(300)
+        print('cover: details          ', await pg.evaluate("getComputedStyle($('#exSheet')).position"), '| editor button', await pg.evaluate("!$('#editPoseBtn').hidden"))
         # the workout player still borrows the stage, without the exercise controls
         await pg.set_viewport_size({'width': 360, 'height': 398})
         await pg.evaluate("WK.hinted=true; setSound('off'); startWorkout(LIB_WK[0], 1)"); await pg.wait_for_timeout(500)

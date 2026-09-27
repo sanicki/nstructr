@@ -80,7 +80,8 @@ function showExControls(stay) {
   const c = $('#exControls');
   if (!c.classList.contains('show')) XC.shownAt = performance.now();
   c.classList.add('show'); clearTimeout(XC.t);
-  if (!stay && S.playing) XC.t = setTimeout(() => { if (S.playing) c.classList.remove('show'); }, 2500);
+  // while editing a pose they fade even when paused, so they don't cover the pose
+  if (XC.editing || (!stay && S.playing)) XC.t = setTimeout(() => { if (S.playing || XC.editing) c.classList.remove('show'); }, 2500);
 }
 function hideExControls() { clearTimeout(XC.t); $('#exControls').classList.remove('show'); }
 $('#exStageWrap').addEventListener('pointerdown', () => { XC.downAt = performance.now(); }, true);
@@ -99,12 +100,13 @@ $('#exStageWrap').addEventListener('pointermove', e => { if (e.pointerType === '
 $('#exControls').addEventListener('focusin', () => showExControls(true));
 
 /* ---------- Exercise details: a panel you pull up (phones); a side column on wide screens ---------- */
-const sheetDocked = () => matchMedia('(min-width: 840px)').matches;
-function setSheet(open) {
+const sheetDocked = () => matchMedia('(min-width: 840px), (max-height: 520px)').matches;   // a column / part of the page, not a sheet
+function setSheet(open, half = false) {
   const sh = $('#exSheet');
-  sh.classList.toggle('open', open); sh.style.transform = '';
+  sh.classList.toggle('open', open); sh.classList.toggle('half', open && half); sh.style.transform = '';
+  if (!half) XC.editing = false;
   $('#sheetHead').setAttribute('aria-expanded', String(open));
-  $('#sheetScrim').hidden = !open || sheetDocked();
+  $('#sheetScrim').hidden = !open || half || sheetDocked();
   if (!open) $('#sheetBody').scrollTop = 0;
 }
 (() => {
@@ -112,7 +114,10 @@ function setSheet(open) {
   let drag = null;
   head.addEventListener('pointerdown', e => {
     if (sheetDocked()) return;
-    drag = { y0: e.clientY, t0: performance.now(), open: sh.classList.contains('open'), moved: false, id: e.pointerId };
+    // closed = only the header showing, above the safe area (and above the camera cutouts on short screens)
+    const lift = (parseFloat(getComputedStyle(document.documentElement).paddingBottom) || 0) + (matchMedia('(max-height: 520px)').matches ? innerHeight * 0.22 : 0);
+    drag = { y0: e.clientY, t0: performance.now(), open: sh.classList.contains('open'), moved: false, id: e.pointerId,
+      base: new DOMMatrixReadOnly(getComputedStyle(sh).transform).m42, closedY: sh.offsetHeight - head.offsetHeight - lift };
     head.setPointerCapture(e.pointerId);
   });
   head.addEventListener('pointermove', e => {
@@ -121,22 +126,34 @@ function setSheet(open) {
     if (Math.abs(dy) > 6) drag.moved = true;
     if (!drag.moved) return;
     sh.classList.add('dragging');
-    const closedY = sh.offsetHeight - head.offsetHeight - (parseFloat(getComputedStyle(document.documentElement).paddingBottom) || 0);   // only the header showing (above the safe area)
-    const y = Math.max(0, Math.min(closedY, (drag.open ? 0 : closedY) + dy));
+    const y = Math.max(0, Math.min(drag.closedY, drag.base + dy));
     sh.style.transform = `translateY(${y}px)`;
   });
   const end = e => {
     if (!drag || e.pointerId !== drag.id) return;
     const dy = e.clientY - drag.y0, v = dy / Math.max(1, performance.now() - drag.t0), moved = drag.moved, was = drag.open;
+    const y = drag.base + dy, closedY = drag.closedY;
     drag = null; sh.classList.remove('dragging');
     if (!moved) { setSheet(!was); return; }                         // a tap toggles
-    setSheet(v < -0.3 || (v <= 0.3 && (was ? dy < 80 : dy < -80)));  // a flick, or dragged far enough
+    setSheet(v < -0.3 || (v <= 0.3 && y < closedY * 0.6));          // a flick, or let go high enough
   };
   head.addEventListener('pointerup', end); head.addEventListener('pointercancel', end);
   head.addEventListener('click', e => { if (e.detail === 0 && !sheetDocked()) setSheet(!sh.classList.contains('open')); });   // keyboard
   $('#sheetScrim').addEventListener('click', () => setSheet(false));
   addEventListener('keydown', e => { if (e.key === 'Escape' && sh.classList.contains('open') && S.view === 'player') setSheet(false); });
 })();
+
+/* Authoring mode: the pencil in the top bar opens the pose editor. On phones the panel opens halfway so the
+   figure stays visible above it; use the controls on the figure to pick the step to edit. */
+function openPoseEditor() {
+  if (!S.ex) return;
+  setPlaying(false); hideExControls();
+  $('#adjustPanel').hidden = false;
+  if (sheetDocked()) { XC.editing = true; $('#adjustPanel').scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+  setSheet(true, true); XC.editing = true;
+  requestAnimationFrame(() => { $('#sheetBody').scrollTop = $('#adjustPanel').offsetTop - $('#sheetBody').offsetTop; });
+}
+$('#editPoseBtn').addEventListener('click', openPoseEditor);
 
 /* ---------- Settings ---------- */
 const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1';
@@ -165,4 +182,4 @@ $('#view-settings').addEventListener('click', e => {
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
-$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); snack(e.target.checked ? 'Authoring mode on: each exercise has a pose editor' : 'Authoring mode off'); });
+$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); snack(e.target.checked ? 'Authoring mode on: open any exercise and tap the Edit pose button (sliders) at the top' : 'Authoring mode off', 6000); });
