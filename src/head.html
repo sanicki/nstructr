@@ -385,11 +385,27 @@ body[data-view="player"] .view{padding-bottom:32px}
 .note .icon{color:var(--md-primary);font-size:20px}
 
 /* ===================== Workouts ===================== */
-.wk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-.wk-card{display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:var(--shape-m);background:var(--md-surface-container-low);text-align:left}
-.wk-card h2{margin:0}
-.wk-card .row{margin-top:4px}
-.wk-card .row .wk-share{order:3;margin-left:auto}
+.wk-list{display:flex;flex-direction:column;gap:8px;max-width:760px}
+.wk-card{position:relative;border-radius:var(--shape-m);overflow:hidden;text-align:left}
+.wk-face{position:relative;display:flex;flex-direction:column;background:var(--md-surface-container-low);border-radius:inherit;
+  transition:transform .2s var(--ease-emph);touch-action:pan-y}
+.wk-card.swiping .wk-face,.wk-card.dragging .wk-face{transition:none}
+.wk-card.dragging{box-shadow:var(--elev-3);z-index:2}
+.wk-del{position:absolute;right:0;top:0;bottom:0;width:96px;padding-left:8px;display:grid;place-items:center;background:var(--md-error);color:#fff}
+.wk-del .icon{font-size:28px}
+.wk-card:not(.swiping):not(.swiped) .wk-del{visibility:hidden}
+.wk-row{display:flex;align-items:center;gap:4px;padding:6px 8px 6px 2px;min-height:64px}
+.wk-row .handle{width:36px;height:48px;display:grid;place-items:center;color:var(--md-on-surface-variant);cursor:grab;touch-action:none;flex:none}
+.wk-start{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;flex:none;background:var(--md-primary);color:var(--md-on-primary)}
+.wk-title{flex:1;min-width:0;display:flex;align-items:center;gap:8px;min-height:48px;padding:0 4px 0 10px;text-align:left;border-radius:var(--shape-s)}
+.wk-title .title-medium{flex:1;min-width:0}
+.wk-title .icon{color:var(--md-on-surface-variant);transition:transform .2s}
+.wk-card.open .wk-title .icon{transform:rotate(180deg)}
+.wk-details{display:flex;flex-direction:column;gap:8px;padding:0 16px 14px 50px}
+.wk-details[hidden]{display:none}
+.wk-details .row{margin-top:4px}
+.wk-details .wk-share{margin-left:auto}
+.wk-add{margin-top:12px}
 .wk-meta{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--md-on-surface-variant)}
 .wk-meta span{display:inline-flex;align-items:center;gap:6px}
 .wk-meta .icon{font-size:18px}

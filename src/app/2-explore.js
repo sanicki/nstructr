@@ -29,7 +29,7 @@ const SAVED = 'Bookmarked';
 const ownExercises = () => S.lib.items.filter(ex => !findInDb(ex.id));
 function renderExplore() {
   const colls = collections(), nSaved = S.lib.items.length;
-  $('#fCollection').innerHTML = chip('data-coll', 'All', E.coll === 'All', 'All') +
+  $('#fCollection').innerHTML = chip('data-coll', 'All', E.coll === 'All', 'All collections') +
     chip('data-coll', SAVED, E.coll === SAVED, nSaved ? `${SAVED} (${nSaved})` : SAVED) + colls.map(c => chip('data-coll', c, E.coll === c)).join('');
   const scope = E.coll === SAVED ? S.lib.items
     : E.coll === 'All' ? [...POSE_DB.exercises, ...ownExercises()] : POSE_DB.exercises.filter(ex => (ex.library || 'Other') === E.coll);
@@ -37,7 +37,7 @@ function renderExplore() {
   const equip = [...new Set(scope.flatMap(ex => ex.equipment || []))].sort();
   let more = '';
   if (E.coll !== 'All' && E.coll !== SAVED && types.length > 1) more += chip('data-type', 'All', E.type === 'All', 'All types') + types.map(t => chip('data-type', t, E.type === t)).join('');
-  if (equip.length > 1) more += (more ? '<span class="chip-sep" aria-hidden="true"></span>' : '') + chip('data-equip', 'Any', E.equip === 'Any', 'Any equipment') + equip.map(q => chip('data-equip', q, E.equip === q)).join('');
+  if (equip.length > 1) more += (more ? '<span class="chip-sep" aria-hidden="true"></span>' : '') + chip('data-equip', 'Any', E.equip === 'Any', 'All equipment') + equip.map(q => chip('data-equip', q, E.equip === q)).join('');
   $('#fMore').innerHTML = more;
   $('#fMore').hidden = !more;
   $('#clearSearch').hidden = !E.q;

@@ -12,7 +12,7 @@ async def main():
         pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         # a library-only workout (the library routine, customised)
-        await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(300)
+        await pg.click('[data-wtoggle="lib:full-body-routine"]'); await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="@edit"]'); await pg.wait_for_timeout(400)
         url1 = await pg.input_value('#shareUrl')
         print('library workout link    ', len(url1), 'chars |', url1[:60] + '…', '| QR:', await pg.evaluate("!!$('#shareQr svg')"))
@@ -26,7 +26,7 @@ async def main():
         await pg.evaluate(f"""(()=>{{ S.lib.items.push(JSON.parse({json.dumps(own)})); saveLib();
           WK.list.push({{id:'mine', name:'Legs Day', restBetween:10, blocks:[{{id:'b', name:'Main', rounds:2, roundRest:45, items:[{{...newItem(exById('u-wide-squat')), reps:12}}, {{...newItem(exById('core-forearm-plank')), seconds:40, sets:2, rest:15}}]}}]}}); saveWorkouts(); go('#/workouts'); }})()""")
         await pg.wait_for_timeout(300)
-        await pg.click('[data-share-wk="mine"]'); await pg.wait_for_timeout(400)
+        await pg.click('[data-wtoggle="mine"]'); await pg.click('[data-share-wk="mine"]'); await pg.wait_for_timeout(400)
         url2 = await pg.input_value('#shareUrl')
         print('workout + own exercise  ', len(url2), 'chars | QR:', await pg.evaluate("!!$('#shareQr svg')"), '|', await pg.inner_text('#shareWhat'))
         await pg.click('#shareDialog [data-close]')
