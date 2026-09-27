@@ -221,7 +221,7 @@ The schemas in `schema/` are authoritative for structure. This section is the me
 | `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). |
 | `reach` | `[{hand, to, dx?, dy?, bend?}]`: two-bone arm IK to put a hand on a body point, `"wall"` or `"chair"` (the chair back). `bend` ±1 picks the elbow direction. |
 | `keep` | Hands/feet that stay exactly where they were: `"ankleL"` = where it was in the previous step; `{"point":"ankleR","keyframe":0}` = where it was in step 0. Solved with two-bone IK after everything else. |
-| `layers` | `{"legR": "back"}` / `{"legR": "front"}`: draw that leg behind or in front of the body for the move into and out of this step (default: left behind, right in front). For a leg crossing behind or in front of the standing leg; mirrored for the other side. The named leg goes outermost when both legs are on the same side of the body. |
+| `layers` | `{"legR": "back"}` / `{"legR": "front"}`: draw that leg behind or in front of the body for the move into and out of this step (default: left behind, right in front). For a leg crossing behind or in front of the standing leg; mirrored for the other side. The named leg goes outermost when both legs are on the same side of the body. **The order only changes on a frame where the legs don't overlap on screen** (so the swap is never seen), which means a crossed pose needs an *earlier* step where the legs come apart to carry the change (e.g. the 4-point Star Excursion also marks "Reach back"); `editing_text_layers.py` reports any swap made while overlapping. |
 | `guide` | `{direction, label}` for the compass: 0 = forward, 90 = the figure's right (for the default side), clockwise from above. |
 | `pose` | Joint angles (see §4). Joints not listed are 0. |
 
@@ -500,8 +500,15 @@ steps or the joint will windmill; the jump check will catch it.
     `u-<id>-copy` named "<name> (copy)" with `basedOn: <library id>`, saved like an import (shows under Saved);
     the library exercise is untouched. The user's own exercises are edited in place. Everything saves as you go
     (`saveLib`, flushed on page hide).
-  - "Discard all changes" goes back to where editing started (`ED.orig`); if that session created the copy, it
-    deletes the copy and returns to the library exercise.
+  - "Discard all changes" goes back to where editing started (`ED.orig`, the whole exercise); if that session
+    created the copy, it deletes the copy and returns to the library exercise.
+  - Nothing is copied or saved unless a change actually changes something (`editExercise` compares first).
+  - **Words**: the step's name and spoken cue are in the editor; "Name, description and instructions" edits the
+    exercise's name, other name, focus, category, equipment, description, setup, form cues, suggested reps and
+    note, rep name, side and direction labels, and source. The first real change to a library exercise makes the
+    copy, as for poses (a typed name replaces "(copy)").
+- Removing the bookmark from one of the user's **own** exercises deletes it, so it asks first; a bookmarked
+  library exercise just leaves Saved.
 - **Settings**: Workouts (default sound, full screen), Display (theme System/Light/Dark, exercise speed,
   **Authoring mode**), Import & tools (backup, import file/paste, the two AI prompts, export your exercises,
   JSON format reference, storage-persistence note).
@@ -534,7 +541,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
+  `circuits_history_share`, `editing_text_layers` (no copy without a change, editing words, delete asks,
+  leg layer swaps only while apart), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
   player overlay and pull-up panel), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,

@@ -185,8 +185,20 @@ function buildFigure() {
   S.legLayers = 'back,front,L';
 }
 /* Legs are drawn left behind the body, right in front, unless a step says otherwise ("layers"): a leg crossing
-   behind or in front of the standing leg. It applies to the whole move into and out of that step. */
-function layerLegs(a, b) {
+   behind or in front of the standing leg, for the move into and out of that step. The drawing order only changes
+   on a frame where the two legs don't overlap on screen, so the swap itself is never visible: the leg is seen
+   to travel behind (or in front), instead of flicking there while they still cross. */
+const segsCross = (p, q, r, t) => {
+  const d = (q.x - p.x) * (t.y - r.y) - (q.y - p.y) * (t.x - r.x); if (!d) return false;
+  const u = ((r.x - p.x) * (t.y - r.y) - (r.y - p.y) * (t.x - r.x)) / d, w = ((r.x - p.x) * (q.y - p.y) - (r.y - p.y) * (q.x - p.x)) / d;
+  return u > 0 && u < 1 && w > 0 && w < 1;
+};
+function legsOverlap(P) {
+  const chain = s => ['hip', 'knee', 'ankle', 'toe'].map(k => P[k + s]), L = chain('L'), R = chain('R');
+  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (segsCross(L[i], L[i + 1], R[j], R[j + 1])) return true;
+  return false;
+}
+function layerLegs(a, b, f) {
   const said = s => (b.layers && b.layers['leg' + s]) || (a.layers && a.layers['leg' + s]) || null;
   const want = s => said(s) || (s === 'L' ? 'back' : 'front');
   // both on the same side of the body: the leg the step names goes outermost (furthest back, or on top), so a
@@ -195,6 +207,7 @@ function layerLegs(a, b) {
   if (want('L') === want('R')) { const named = said('R') ? 'R' : said('L') ? 'L' : null; if (named) first = (want(named) === 'back') === (named === 'R') ? 'R' : 'L'; }
   const key = want('L') + ',' + want('R') + ',' + first;
   if (key === S.legLayers) return;
+  if (legsOverlap(fk(f.pose, f.v, S.seg, f.pos.x, f.pos.y))) return;       // wait until they're apart
   S.legLayers = key;
   const root = $('#figRoot'), core = $('#figCore'); if (!root || !core) return;
   for (const s of first === 'L' ? ['L', 'R'] : ['R', 'L']) { const g = $('#leg-' + s); if (want(s) === 'back') root.insertBefore(g, core); else root.appendChild(g); }
@@ -324,7 +337,7 @@ function draw() {
   const f = frameAt(a, b, e, S.seg);
   applyPose(f.pose, f.v, { x: f.pos.x + S.shiftX, y: f.pos.y }, CX + lerp(a.rule.anchorX, b.rule.anchorX, e) + S.shiftX);
   S.curV = f.v;
-  layerLegs(a, b);
+  layerLegs(a, b, f);
   if (S.props && S.props.length) drawProps(fk(f.pose, f.v, S.seg, f.pos.x + S.shiftX, f.pos.y));
   drawGuide(a, b, e);
   if (S.mode !== 'workout') $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';

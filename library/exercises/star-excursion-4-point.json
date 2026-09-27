@@ -223,6 +223,9 @@
         "direction": 180,
         "label": "Back"
       },
+      "layers": {
+        "legR": "back"
+      },
       "pose": {
         "torso": 45,
         "shoulderL": 27.5,

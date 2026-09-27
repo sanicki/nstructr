@@ -4,9 +4,9 @@
    how it was when editing started. The first change to a library exercise makes the user's own copy,
    "<name> (copy)", saved like an imported exercise; the user's own exercises are changed in place (saved as you
    go). "Discard all changes" undoes everything since editing started (and removes a copy made for it). */
-const ED = { step: 5, orig: null };        // orig: { id, keyframes, madeCopy: original id or null }
+const ED = { step: 5, orig: null };        // orig: { id, ex (as it was), keyframes, madeCopy: original id or null }
 function editorOrigin() {
-  if (!ED.orig || ED.orig.id !== S.ex.id) ED.orig = { id: S.ex.id, keyframes: clone(S.ex.keyframes), madeCopy: null };
+  if (!ED.orig || ED.orig.id !== S.ex.id) ED.orig = { id: S.ex.id, ex: clone(S.ex), keyframes: clone(S.ex.keyframes), madeCopy: null };
   return ED.orig;
 }
 /* before the first change: a library exercise (or a bookmarked copy of one) becomes the user's own copy */
@@ -19,18 +19,72 @@ function ensureOwnCopy() {
   delete copy.library;
   S.lib.items.push(copy);
   const origKfs = ED.orig && ED.orig.id === S.ex.id ? ED.orig.keyframes : clone(copy.keyframes);
-  S.ex = copy; ED.orig = { id, keyframes: origKfs, madeCopy: lib.id };
+  S.ex = copy; ED.orig = { id, ex: clone(copy), keyframes: origKfs, madeCopy: lib.id };
   history.replaceState(null, '', `#/play/${encodeURIComponent(id)}`); lastList = lastList || '#/exercises';
   $('#barTitle').textContent = copy.name; document.title = `${copy.name} · ${APP_NAME}`;
   renderPlayerInfo();
   snack(`Editing your copy, "${copy.name}". Changes are saved as you go.`, 5000);
 }
+/* apply a change to the exercise; nothing happens (and no copy is made) unless it actually changes something */
+function editExercise(change) {
+  const trial = clone(S.ex); change(trial);
+  if (JSON.stringify(trial) === JSON.stringify(S.ex)) return false;
+  editorOrigin(); ensureOwnCopy();
+  change(S.ex); saveLib();
+  return true;
+}
 function editPose(change) {
   if (S.side !== 'L') return;
-  editorOrigin(); ensureOwnCopy();
-  change(S.ex.keyframes[S.idx]);
-  setPlaying(false); rebuild(); jumpTo(S.idx); updateEditor(); saveLib();
+  const i = S.idx;
+  if (!editExercise(ex => change(ex.keyframes[i]))) return;
+  setPlaying(false); rebuild(); jumpTo(i); updateEditor();
 }
+/* text: the exercise's own fields, and the current step's name and spoken cue */
+const lines = v => v.split('\n').map(x => x.trim()).filter(Boolean);
+const TEXT_FIELDS = [
+  ['name', 'Name', 'input'], ['sanskrit', 'Other name (e.g. Sanskrit)', 'input'], ['focus', 'Focus', 'input'], ['category', 'Category', 'input'],
+  ['equipment', 'Equipment (separate with commas)', 'input', v => v.split(',').map(x => x.trim()).filter(Boolean), v => (v || []).join(', ')],
+  ['description', 'Description', 'textarea'],
+  ['setup', 'Setup (one per line)', 'textarea', lines, v => (v || []).join('\n')],
+  ['cues', 'Form cues (one per line)', 'textarea', lines, v => (v || []).join('\n')],
+  ['prescription.reps', 'Suggested reps', 'input'], ['prescription.note', 'Note', 'textarea'],
+  ['repName', 'One rep is called (e.g. "circle")', 'input', null, null, ex => ex.measure !== 'time'],
+  ['bilateral.labels.L', 'First side is called', 'input', null, null, ex => !!ex.bilateral], ['bilateral.labels.R', 'Second side is called', 'input', null, null, ex => !!ex.bilateral],
+  ['direction.labels.A', 'Direction A is called', 'input', null, null, ex => !!ex.direction], ['direction.labels.B', 'Direction B is called', 'input', null, null, ex => !!ex.direction],
+  ['source.title', 'Source title', 'input'], ['source.url', 'Source link', 'input'], ['source.note', 'Source note', 'textarea']
+];
+const getPath = (o, p) => p.split('.').reduce((x, k) => (x == null ? x : x[k]), o);
+function setPath(o, p, v) {
+  const ks = p.split('.'), last = ks.pop();
+  const t = ks.reduce((x, k) => (x[k] = x[k] && typeof x[k] === 'object' ? x[k] : {}), o);
+  if (v === '' || v == null || (Array.isArray(v) && !v.length)) delete t[last]; else t[last] = v;
+  // drop objects emptied by the edit (e.g. a source with nothing left)
+  for (let i = ks.length; i > 0; i--) { const parent = getPath(o, ks.slice(0, i - 1).join('.')) || o, key = ks[i - 1], obj = i > 1 ? parent[key] : o[key]; if (obj && typeof obj === 'object' && !Object.keys(obj).length) delete (i > 1 ? parent : o)[key]; }
+}
+function renderTextForm() {
+  const ex = S.ex, box = $('#textForm'); if (!box || !ex) return;
+  box.innerHTML = TEXT_FIELDS.filter(f => !f[5] || f[5](ex)).map(([path, label, kind, , show]) => {
+    const v = show ? show(getPath(ex, path)) : (getPath(ex, path) || '');
+    const ctl = kind === 'textarea' ? `<textarea data-field="${path}" rows="${/setup|cues/.test(path) ? 4 : 2}">${esc(v)}</textarea>` : `<input data-field="${path}" value="${esc(v)}" autocomplete="off">`;
+    return `<label class="field"><span class="field-label">${label}</span>${ctl}</label>`;
+  }).join('');
+}
+$('#view-player').addEventListener('change', e => {
+  const el = e.target;
+  if (el.dataset.field) {
+    const f = TEXT_FIELDS.find(x => x[0] === el.dataset.field), v = f[3] ? f[3](el.value) : el.value.trim();
+    if (f[0] === 'name' && !v) { el.value = S.ex.name; return; }                     // an exercise always has a name
+    if (!editExercise(ex => setPath(ex, f[0], v))) return;
+    renderPlayerInfo(); renderTextForm();
+    $('#barTitle').textContent = S.ex.name; document.title = `${S.ex.name} · ${APP_NAME}`;
+    return;
+  }
+  if (el.dataset.sfield) {
+    const k = el.dataset.sfield, v = el.value.trim(), i = S.idx;
+    if (!editExercise(ex => { const kf = ex.keyframes[i]; if (v) kf[k] = v; else delete kf[k]; })) return;
+    rebuild(); S.shownIdx = -1; renderPlayerInfo(); draw();
+  }
+});
 function updateEditor() {
   const box = $('#editor'); if (!box || !S.ex || !S.resolved.length) return;
   const kf = S.ex.keyframes[S.idx], r = S.resolved[S.idx];
@@ -45,6 +99,8 @@ function updateEditor() {
           <button class="stateful" data-view="side"><span class="icon">check</span>Side</button>
           <button class="stateful" data-view="front"><span class="icon">check</span>Front</button></div>
         <div class="segmented" id="edStepSeg" role="group" aria-label="Change by">${[1, 5, 15].map(n => `<button class="stateful" data-edstep="${n}"><span class="icon">check</span>${n}°</button>`).join('')}</div></div>
+      <div class="step-text"><label class="field"><span class="field-label">Step name</span><input id="edStepName" data-sfield="name" autocomplete="off"></label>
+        <label class="field"><span class="field-label">Spoken cue</span><input id="edStepCue" data-sfield="cue" autocomplete="off"></label></div>
       <p class="body-small muted" id="edNote" style="margin:0 0 8px"></p>
       <div class="joints">${JOINTS.map(([k, label]) => `<div class="joint" data-jrow="${k}"><span class="jl">${label}</span>
         <button class="icon-btn stateful jbtn" data-jdelta="-1" data-joint="${k}" aria-label="${label}: less"><span class="icon">remove</span></button>
@@ -56,6 +112,10 @@ function updateEditor() {
         <button class="btn text stateful" data-act="json"><span class="icon">data_object</span>Show JSON</button></div>`;
   }
   $('#edTitle').textContent = `Step ${S.idx + 1}: ${r.name || ''}`;
+  if (box.dataset.textFor !== S.ex.id) { box.dataset.textFor = S.ex.id; renderTextForm(); }
+  // the step's words as written (for the first side; the other side's left/right are swapped for you)
+  if (document.activeElement !== $('#edStepName')) $('#edStepName').value = kf.name || '';
+  if (document.activeElement !== $('#edStepCue')) $('#edStepCue').value = kf.cue || '';
   const labels = (S.ex.bilateral && S.ex.bilateral.labels) || {};
   $('#edNote').textContent = locked ? `Switch to ${labels.L || 'the first side'} to edit. The other side is mirrored from it.`
     : (findInDb(S.ex.id) ? 'Your first change makes your own copy of this exercise, "(copy)", and leaves the library one as it is. ' : 'Changes are saved as you go. ')
@@ -64,7 +124,7 @@ function updateEditor() {
   document.querySelectorAll('#edStepSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.edstep === ED.step)));
   const changed = orig && JSON.stringify(orig) !== JSON.stringify(kf);
   $('#editor [data-act="edRevertStep"]').disabled = locked || !changed;
-  $('#editor [data-act="edDiscard"]').disabled = locked || !(ED.orig && ED.orig.id === S.ex.id && (ED.orig.madeCopy || JSON.stringify(ED.orig.keyframes) !== JSON.stringify(S.ex.keyframes)));
+  $('#editor [data-act="edDiscard"]').disabled = !(ED.orig && ED.orig.id === S.ex.id && (ED.orig.madeCopy || JSON.stringify(ED.orig.ex) !== JSON.stringify(S.ex)));
   for (const k of JOINT_KEYS) {
     const auto = r.auto.has(k), val = locked || auto ? r.pose[k] : num(kf.pose && kf.pose[k]);
     $('#o-' + k).textContent = auto ? 'auto' : `${Math.round(val)}°`;
@@ -105,7 +165,10 @@ function discardEdits() {
     history.replaceState(null, '', `#/play/${encodeURIComponent(o.madeCopy)}`); S.ex = null; route();
     snack('Changes discarded'); return;
   }
-  S.ex.keyframes = clone(o.keyframes); setPlaying(false); rebuild(); jumpTo(S.idx); updateEditor(); saveLib();
+  for (const k of Object.keys(S.ex)) delete S.ex[k];
+  Object.assign(S.ex, clone(o.ex));                                  // the saved object itself, so Saved sees it
+  setPlaying(false); rebuild(); jumpTo(S.idx); $('#editor').dataset.textFor = ''; renderPlayerInfo(); saveLib();
+  $('#barTitle').textContent = S.ex.name;
   snack('Changes discarded');
 }
 
@@ -161,6 +224,8 @@ function toggleSave() {
 }
 function removeSaved(id) {
   const it = S.lib.items.find(x => x.id === id);
+  // a bookmarked library exercise just leaves Saved; the user's own (imported, or a copy they edited) is deleted
+  if (!findInDb(id) && !confirm(`Delete "${it ? it.name : 'this exercise'}"? It's your own exercise, so it will be gone from this device (a backup or an exported file can bring it back).`)) return;
   S.lib.items = S.lib.items.filter(x => x.id !== id);
   saveLib();
   const builtIn = !!findInDb(id);
