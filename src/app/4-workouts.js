@@ -581,8 +581,9 @@ function onWorkStep(i) {
   }
   if (m.repNo && m.alt !== 1) {
     WP.rep = m.repNo;
-    // coach counts the reps, but only when it isn't already talking
-    say(WP.rep === m.repOf && m.repOf > 1 ? 'Last one' : String(WP.rep), true, { dropIfBusy: true });
+    // coach counts the reps: "Begin", 2, 3 … "Last one". Numbers are skipped if it's already talking; "Begin" never is
+    const first = WP.rep === 1;
+    say(first ? 'Begin' : WP.rep === m.repOf ? 'Last one' : String(WP.rep), true, { dropIfBusy: !first });
   }
   renderWpCount();
 }
