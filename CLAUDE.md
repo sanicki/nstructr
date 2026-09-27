@@ -18,7 +18,8 @@ Read `HANDOFF.md` first: formats, engine pipeline, validation rules, design deci
 - Workout player targets the Galaxy Z Flip7 **cover screen on the floor**: nothing important at the bottom (camera cutouts), first tap only shows controls, hold ✕ to exit, test at 360×398.
 - Don't rename localStorage keys without a migration (see HANDOFF §11).
 - No framework, no bundler: `src/app/*.js` are classic scripts concatenated in filename order into one global scope.
+- A build deletes and recreates `_site/`, so restart a server started with `-d _site` after each build.
 - Don't run `pkill -f http.server` from a shell whose command line contains that text (it kills itself).
 
 ## Where things are
-Engine: `src/core.js` · App: `src/app/1-engine.js` (state, drawing, playback) … `5-main.js` (routing, boot) · Workouts & player: `src/app/4-workouts.js` · CSS: `src/head.html` · Markup: `src/body.html`
+Engine: `src/core.js` · App: `src/app/1-engine.js` (state, drawing, playback) … `5-main.js` (routing, boot) · `6-pwa.js` (service worker, backup; calls `boot()`) · PWA: `manifest.webmanifest`, `icons/`, `src/sw.js` (template; the build writes `_site/sw.js`) · Workouts & player: `src/app/4-workouts.js` · CSS: `src/head.html` · Markup: `src/body.html`

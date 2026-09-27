@@ -78,6 +78,10 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
   routine to completion; old and bare files import; gestures, editor, Coach speech, layout, floor height and
   arm-circle continuity tests pass against the served build.
 
+**Step 2 (installable app + backup) is built** (see §13): manifest, icons, service worker, storage
+persistence, Export everything / Import everything, and a Material theme generated from the icon's blue.
+Still to do there: test on the Flip7 cover screen as an installed app (Good Lock?).
+
 **Still to do in step 1:** merge to `main`, enable Pages (Settings → Pages → Source: GitHub Actions), confirm
 the workflow deploys, test on the Flip7.
 
@@ -102,7 +106,11 @@ src/
   app/2-explore.js    Explore tab (collections, filters, search, cards)
   app/3-details.js    Saved, Create, exercise player info tabs, format reference text
   app/4-workouts.js   workouts: storage, editor, plan builder, workout player, sound, history, sharing
-  app/5-main.js       selection, import, routing, event wiring, boot()
+  app/5-main.js       selection, import, routing, event wiring, boot() (defined here)
+  app/6-pwa.js        service worker registration, storage persistence, Export/Import everything; calls boot()
+  sw.js               service worker template (the build fills in the version hash and the file list)
+manifest.webmanifest  web app manifest (display: fullscreen)
+icons/                app icons: icon-192/512 (any), maskable-192/512 (Android adaptive), apple-touch-icon, favicon
 library/exercises/*.json   one exercise per file (source of truth)
 library/workouts/*.json    one workout per file
 library/index.json         generated bundle (committed or not — see note)
@@ -256,6 +264,9 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
 - Import accepts: `{format: "nstructr/exercise", exercises: [...]}`, a bare exercise object, `{format:
   "nstructr/workout", workouts: [...], exercises?: [...]}` (a workout file may carry its own custom exercises),
   a bare workout object, and the legacy `pose-player/*` equivalents. `format` strings aren't strictly checked.
+- **Backup** (`nstructr/backup`, Create → Back up everything): `{format, version, exported, workouts, exercises
+  (saved), history, settings: {sound, fullscreen?}}`. Importing it (any import path detects the format)
+  **merges** by id: backup items replace same-id items, nothing is deleted, importing twice changes nothing.
 - Export: exercise JSON from the exercise page; workout JSON / Share (Web Share with a `.json` file, falling back
   to a download) from the editor; "Export your exercises" on Create; history export on the Workouts tab.
 - History (`nstructr/log`): `{sessions: [{id, workout, library? (true for a library workout), name, start, end (ISO), seconds, completed,
@@ -413,6 +424,24 @@ steps or the joint will windmill; the jump check will catch it.
 
 ---
 
+### 8.7 Installable app (step 2)
+- Only the multi-file build (`index.html`) is the PWA: the build injects the manifest/icon links and writes
+  `_site/sw.js`. The single-file `nstructr.html` doesn't register a service worker.
+- `sw.js` precaches the app shell, `library/index.json`, the manifest and icons under `nstructr-<hash of those
+  files>`; a deploy changes the hash, the new worker installs, calls `skipWaiting`, deletes old caches. The
+  running page keeps its loaded code and shows "was updated, reopen it". Google Fonts are cached at runtime
+  (`nstructr-fonts-v1`) the first time they load online.
+- `display: fullscreen` (with `standalone` as fallback): no browser UI and no "exit full screen" notice; the
+  app already skips `requestFullscreen` when installed (`installedApp()`).
+- `navigator.storage.persist()` is requested when a workout starts, after a backup/restore, and at launch in
+  the installed app. The Create page's backup card says whether storage is persistent.
+- Colours: Material 3 tonal-spot scheme from seed `#216CAD` (the icon's blue bar), generated with
+  `@material/material-color-utilities` (not a dependency; the values are pasted into `src/head.html`). The
+  workout player's background is a dark navy `#0b1422`; the side colours (teal right, orange left) are
+  functional and unchanged. Theme colour for the browser/splash: icon navy `#0e2648`.
+- Maskable icons were made from the 1024 px artwork at 80% on the navy background (the supplied
+  `adaptive-foreground.png` put a navy square on transparency, which shows as a square in a white circle).
+
 ## 9. Things not visible in the code
 
 - **Flip7 cover screen**: ~360×398 CSS px (948×1048 physical). Camera cutouts and flash along the **bottom**.
@@ -471,7 +500,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
+  `circuits_history_share`, `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, start sheet position), `layout_overlap` (title /
   caption / figure never overlap on cover, phone, landscape), `floor_height_cover` (floor ≥ 23% above bottom),

@@ -115,6 +115,7 @@ function importText(text, label) {
   let data;
   try { data = JSON.parse(text); } catch (e) { throw new Error(`${label ? label + ' is' : "That's"} not valid JSON (${e.message}).`); }
   data = upgradeFile(data);
+  if (data && data.format === BACKUP_FORMAT) { RESTORED = restoreBackup(data); return []; }   // Export everything
   if (data && Array.isArray(data.blocks) && !data.workouts) data = { workouts: [data] };   // one workout file
   if (data && Array.isArray(data.workouts)) {                    // a workout file (may bring its own exercises)
     data = { ...data, workouts: JSON.parse(JSON.stringify(data.workouts)) };
@@ -131,12 +132,18 @@ function importText(text, label) {
   }
   return list;
 }
-let IMPORTED_WORKOUTS = [];
+let IMPORTED_WORKOUTS = [], RESTORED = null;
 function importAndShow(texts) {
-  const added = []; IMPORTED_WORKOUTS = [];
+  const added = []; IMPORTED_WORKOUTS = []; RESTORED = null;
   try { for (const [text, label] of texts) added.push(...importText(text, label)); }
-  catch (e) { snack(`Couldn't import: ${e.message}`, 6000); if (!added.length && !IMPORTED_WORKOUTS.length) return false; }
+  catch (e) { snack(`Couldn't import: ${e.message}`, 6000); if (!added.length && !IMPORTED_WORKOUTS.length && !RESTORED) return false; }
   saveLib();
+  if (RESTORED) {
+    const n = (k, one, many) => `${RESTORED[k]} ${RESTORED[k] === 1 ? one : many}`;
+    snack(`Restored ${n('workouts', 'workout', 'workouts')}, ${n('exercises', 'saved exercise', 'saved exercises')} and ${n('sessions', 'history entry', 'history entries')}`, 6000);
+    if (location.hash === '#/workouts') route(); else go('#/workouts');
+    return true;
+  }
   if (IMPORTED_WORKOUTS.length) {
     snack(IMPORTED_WORKOUTS.length === 1 ? `Imported workout: ${IMPORTED_WORKOUTS[0].name}` : `Imported ${IMPORTED_WORKOUTS.length} workouts`);
     go(`#/workout/${IMPORTED_WORKOUTS[0].id}`);
@@ -202,6 +209,7 @@ function route() {
   if (view === 'explore') renderExplore();
   if (view === 'saved') renderSaved();
   if (view === 'workouts') renderWorkouts();
+  if (view === 'create') renderPersistNote();
   if (view === 'workout') renderEditor();
   if (view === 'wplay') { setSound(WK.sound); renderWpInfo(); requestAnimationFrame(syncLimbWidth); }
   if (view === 'player') requestAnimationFrame(syncLimbWidth);
@@ -299,4 +307,3 @@ async function boot() {
   route();
   requestAnimationFrame(frame);
 }
-boot();
