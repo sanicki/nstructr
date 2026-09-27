@@ -1,35 +1,112 @@
 
-/* ---------- Adjust tab (pose editor) ---------- */
+/* ---------- Pose editor (Authoring mode) ----------
+   Each joint has − and + buttons (hold to repeat) in steps of 1°, 5° or 15°, and an undo that brings it back to
+   how it was when editing started. The first change to a library exercise makes the user's own copy,
+   "<name> (copy)", saved like an imported exercise; the user's own exercises are changed in place (saved as you
+   go). "Discard all changes" undoes everything since editing started (and removes a copy made for it). */
+const ED = { step: 5, orig: null };        // orig: { id, keyframes, madeCopy: original id or null }
+function editorOrigin() {
+  if (!ED.orig || ED.orig.id !== S.ex.id) ED.orig = { id: S.ex.id, keyframes: clone(S.ex.keyframes), madeCopy: null };
+  return ED.orig;
+}
+/* before the first change: a library exercise (or a bookmarked copy of one) becomes the user's own copy */
+function ensureOwnCopy() {
+  const lib = findInDb(S.ex.id);
+  if (!lib) { if (!isSaved(S.ex.id)) { S.lib.items.push(S.ex); } return; }
+  const base = 'u-' + S.ex.id.replace(/^u-/, '') + '-copy';
+  let id = base, n = 2; while (S.lib.items.some(x => x.id === id) || findInDb(id)) id = `${base}-${n++}`;
+  const copy = { ...clone(S.ex), id, name: `${lib.name} (copy)`, basedOn: lib.id };
+  delete copy.library;
+  S.lib.items.push(copy);
+  const origKfs = ED.orig && ED.orig.id === S.ex.id ? ED.orig.keyframes : clone(copy.keyframes);
+  S.ex = copy; ED.orig = { id, keyframes: origKfs, madeCopy: lib.id };
+  history.replaceState(null, '', `#/play/${encodeURIComponent(id)}`); lastList = lastList || '#/exercises';
+  $('#barTitle').textContent = copy.name; document.title = `${copy.name} · ${APP_NAME}`;
+  renderPlayerInfo();
+  snack(`Editing your copy, "${copy.name}". Changes are saved as you go.`, 5000);
+}
+function editPose(change) {
+  if (S.side !== 'L') return;
+  editorOrigin(); ensureOwnCopy();
+  change(S.ex.keyframes[S.idx]);
+  setPlaying(false); rebuild(); jumpTo(S.idx); updateEditor(); saveLib();
+}
 function updateEditor() {
   const box = $('#editor'); if (!box || !S.ex || !S.resolved.length) return;
   const kf = S.ex.keyframes[S.idx], r = S.resolved[S.idx];
   const locked = S.side === 'R';
+  const orig = ED.orig && ED.orig.id === S.ex.id ? ED.orig.keyframes[S.idx] : null;
   if (box.dataset.built !== S.ex.id) {
     box.dataset.built = S.ex.id;
     box.innerHTML = `<div class="editor-head"><span class="title-small" id="edTitle"></span>
       <span class="editor-steps"><button class="icon-btn stateful" data-act="edPrev" aria-label="Previous step"><span class="icon">chevron_left</span></button>
-        <button class="icon-btn stateful" data-act="edNext" aria-label="Next step"><span class="icon">chevron_right</span></button></span>
-      <div class="segmented" id="viewSeg" role="group" aria-label="Camera view">
-        <button class="stateful" data-view="side"><span class="icon">check</span>Side</button>
-        <button class="stateful" data-view="front"><span class="icon">check</span>Front</button></div></div>
+        <button class="icon-btn stateful" data-act="edNext" aria-label="Next step"><span class="icon">chevron_right</span></button></span></div>
+      <div class="editor-tools"><div class="segmented" id="viewSeg" role="group" aria-label="Camera view">
+          <button class="stateful" data-view="side"><span class="icon">check</span>Side</button>
+          <button class="stateful" data-view="front"><span class="icon">check</span>Front</button></div>
+        <div class="segmented" id="edStepSeg" role="group" aria-label="Change by">${[1, 5, 15].map(n => `<button class="stateful" data-edstep="${n}"><span class="icon">check</span>${n}°</button>`).join('')}</div></div>
       <p class="body-small muted" id="edNote" style="margin:0 0 8px"></p>
-      ${JOINTS.map(([k, label]) => `<div class="joint"><label for="j-${k}">${label}</label>
-        <input type="range" id="j-${k}" data-joint="${k}" min="-360" max="360" step="1"><output id="o-${k}" for="j-${k}"></output></div>`).join('')}
-      <div class="row" style="margin-top:12px"><button class="btn tonal stateful" data-act="json"><span class="icon">data_object</span>Show JSON</button></div>`;
+      <div class="joints">${JOINTS.map(([k, label]) => `<div class="joint" data-jrow="${k}"><span class="jl">${label}</span>
+        <button class="icon-btn stateful jbtn" data-jdelta="-1" data-joint="${k}" aria-label="${label}: less"><span class="icon">remove</span></button>
+        <output id="o-${k}"></output>
+        <button class="icon-btn stateful jbtn" data-jdelta="1" data-joint="${k}" aria-label="${label}: more"><span class="icon">add</span></button>
+        <button class="icon-btn stateful jundo" data-jundo="${k}" aria-label="${label}: undo" title="Back to how it was"><span class="icon">undo</span></button></div>`).join('')}</div>
+      <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="btn tonal stateful" data-act="edRevertStep"><span class="icon">undo</span>Revert this step</button>
+        <button class="btn text stateful danger" data-act="edDiscard"><span class="icon">delete_history</span>Discard all changes</button>
+        <button class="btn text stateful" data-act="json"><span class="icon">data_object</span>Show JSON</button></div>`;
   }
   $('#edTitle').textContent = `Step ${S.idx + 1}: ${r.name || ''}`;
   const labels = (S.ex.bilateral && S.ex.bilateral.labels) || {};
   $('#edNote').textContent = locked ? `Switch to ${labels.L || 'the first side'} to edit. The other side is mirrored from it.`
-    : 'Edits apply to the step shown and pause playback. Joints marked auto are set for you (feet planted, hands reaching).'
-      + (isSaved(S.ex.id) ? '' : ' Save the exercise to keep your changes.');
+    : (findInDb(S.ex.id) ? 'Your first change makes your own copy of this exercise, "(copy)", and leaves the library one as it is. ' : 'Changes are saved as you go. ')
+      + 'Joints marked auto are set for you (feet planted, hands reaching).';
   document.querySelectorAll('#viewSeg button').forEach(b => { b.setAttribute('aria-pressed', String((kf.view || 'side') === b.dataset.view)); b.disabled = locked; });
+  document.querySelectorAll('#edStepSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.edstep === ED.step)));
+  const changed = orig && JSON.stringify(orig) !== JSON.stringify(kf);
+  $('#editor [data-act="edRevertStep"]').disabled = locked || !changed;
+  $('#editor [data-act="edDiscard"]').disabled = locked || !(ED.orig && ED.orig.id === S.ex.id && (ED.orig.madeCopy || JSON.stringify(ED.orig.keyframes) !== JSON.stringify(S.ex.keyframes)));
   for (const k of JOINT_KEYS) {
-    const input = $('#j-' + k), out = $('#o-' + k), auto = r.auto.has(k);
-    const val = auto ? r.pose[k] : num(kf.pose && kf.pose[k]);
-    if (document.activeElement !== input) input.value = Math.round(locked ? r.pose[k] : val);
-    input.disabled = locked || auto;
-    out.textContent = auto ? 'auto' : `${Math.round(locked ? r.pose[k] : val)}°`;
+    const auto = r.auto.has(k), val = locked || auto ? r.pose[k] : num(kf.pose && kf.pose[k]);
+    $('#o-' + k).textContent = auto ? 'auto' : `${Math.round(val)}°`;
+    document.querySelectorAll(`#editor [data-joint="${k}"]`).forEach(b => (b.disabled = locked || auto));
+    const u = $(`#editor [data-jundo="${k}"]`);
+    u.style.visibility = !locked && orig && num(orig.pose && orig.pose[k]) !== num(kf.pose && kf.pose[k]) ? 'visible' : 'hidden';
   }
+}
+/* − / +: one step per tap; hold to keep going */
+(() => {
+  const box = $('#editor'); let hold = null;
+  const nudge = b => editPose(kf => { kf.pose = kf.pose || {}; const k = b.dataset.joint; kf.pose[k] = Math.round(num(kf.pose[k]) + +b.dataset.jdelta * ED.step); });
+  const stop = () => { if (hold) { clearTimeout(hold.t); clearInterval(hold.i); } };
+  box.addEventListener('pointerdown', e => {
+    const b = e.target.closest('[data-jdelta]'); if (!b || b.disabled) return;
+    stop(); hold = { b, repeated: false };
+    hold.t = setTimeout(() => { hold.repeated = true; hold.i = setInterval(() => nudge(b), 110); }, 450);
+  });
+  addEventListener('pointerup', stop); addEventListener('pointercancel', stop);
+  box.addEventListener('click', e => {
+    const b = e.target.closest('[data-jdelta]');
+    if (b) { if (hold && hold.b === b && hold.repeated) { hold = null; return; } nudge(b); return; }
+    const u = e.target.closest('[data-jundo]');
+    if (u) { const k = u.dataset.jundo, o = ED.orig.keyframes[S.idx]; editPose(kf => { kf.pose = kf.pose || {}; if (o.pose && k in o.pose) kf.pose[k] = o.pose[k]; else delete kf.pose[k]; }); return; }
+    const st = e.target.closest('[data-edstep]'); if (st) { ED.step = +st.dataset.edstep; updateEditor(); }
+  });
+})();
+function revertStep() {
+  const o = ED.orig && ED.orig.id === S.ex.id && ED.orig.keyframes[S.idx]; if (!o) return;
+  editPose(kf => { for (const k of Object.keys(kf)) delete kf[k]; Object.assign(kf, clone(o)); });
+  snack(`Step ${S.idx + 1} is back to how it was`);
+}
+function discardEdits() {
+  const o = ED.orig; if (!o || o.id !== S.ex.id) return;
+  if (!confirm(o.madeCopy ? `Discard your changes and delete "${S.ex.name}"?` : `Undo every change to "${S.ex.name}" since you started editing?`)) return;
+  if (o.madeCopy) {
+    S.lib.items = S.lib.items.filter(x => x.id !== o.id); saveLib(); ED.orig = null;
+    history.replaceState(null, '', `#/play/${encodeURIComponent(o.madeCopy)}`); S.ex = null; route();
+    snack('Changes discarded'); return;
+  }
+  S.ex.keyframes = clone(o.keyframes); setPlaying(false); rebuild(); jumpTo(S.idx); updateEditor(); saveLib();
+  snack('Changes discarded');
 }
 
 /* ---------- Actions ---------- */
@@ -37,6 +114,7 @@ function selectExercise(id) {
   S.ex = S.lib.items.find(it => it.id === id) || (findInDb(id) ? clone(findInDb(id)) : null);
   if (!S.ex) return false;
   S.seg = { ...DEFAULT_SEGMENTS, ...((S.ex.figure && S.ex.figure.segments) || {}) };
+  ED.orig = null;
   S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.speed = defaultSpeed();
   document.querySelectorAll('#speedSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.speed === S.speed)));
   const dirs = S.ex.direction && S.ex.direction.labels;
@@ -267,17 +345,10 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.act === 'showPrompt') showJson('Prompt for making an exercise from a video', aiPromptText());
   else if (d.act === 'exportAll') showJson('Your saved exercises', JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: S.lib.items }, null, 2));
   else if (d.act === 'edPrev' || d.act === 'edNext') { setPlaying(false); jumpTo(S.idx + (d.act === 'edNext' ? 1 : -1)); }
+  else if (d.act === 'edRevertStep') revertStep();
+  else if (d.act === 'edDiscard') discardEdits();
   else if (d.act === 'json') showJson(S.ex.name, JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: [S.ex] }, null, 2));
-  else if (d.view && S.side === 'L') {
-    S.ex.keyframes[S.idx].view = d.view; setPlaying(false); rebuild(); jumpTo(S.idx); updateEditor(); saveLib();
-  }
-});
-$('#editor').addEventListener('input', e => {
-  const k = e.target.dataset && e.target.dataset.joint; if (!k || S.side !== 'L') return;
-  const kf = S.ex.keyframes[S.idx]; kf.pose = kf.pose || {}; kf.pose[k] = +e.target.value;
-  setPlaying(false); rebuild(); jumpTo(S.idx);
-  $('#o-' + k).textContent = `${e.target.value}°`;
-  saveLib();
+  else if (d.view && S.side === 'L') editPose(kf => { kf.view = d.view; });
 });
 document.addEventListener('keydown', e => {
   if (S.view === 'wplay' && !e.target.closest('input, textarea, dialog') && e.key === ' ') { e.preventDefault(); LAST_DOWN_AT = 0; wpAction('pause'); return; }

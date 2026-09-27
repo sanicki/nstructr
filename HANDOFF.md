@@ -62,7 +62,7 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
   copied into the user's list on first run, so library updates reach everyone. At runtime they're hydrated into
   `LIB_WK` with ids `lib:<id>` (so they never clash with a user workout, including the first-run copy older
   installs have under the plain id) and `libId`. `wkById` finds both; library workouts have no editor, and
-  exiting their player returns to `#/workouts`. Customize = `customizeWorkout()`: a copy with a new id in
+  exiting their player returns to `#/workouts`. Customize = `customizeWorkout()`: a copy named "<name> (copy)" with a new id in
   `WK.list`. History records of a library workout carry the library id plus `library: true`.
 - **`u-` ids on import** (`claimIds` in `5-main.js`): an imported exercise keeps its id if it starts with `u-`,
   if it's an unchanged copy of a library exercise, or if it replaces one of the user's own saved exercises
@@ -221,6 +221,7 @@ The schemas in `schema/` are authoritative for structure. This section is the me
 | `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). |
 | `reach` | `[{hand, to, dx?, dy?, bend?}]`: two-bone arm IK to put a hand on a body point, `"wall"` or `"chair"` (the chair back). `bend` ±1 picks the elbow direction. |
 | `keep` | Hands/feet that stay exactly where they were: `"ankleL"` = where it was in the previous step; `{"point":"ankleR","keyframe":0}` = where it was in step 0. Solved with two-bone IK after everything else. |
+| `layers` | `{"legR": "back"}` / `{"legR": "front"}`: draw that leg behind or in front of the body for the move into and out of this step (default: left behind, right in front). For a leg crossing behind or in front of the standing leg; mirrored for the other side. The named leg goes outermost when both legs are on the same side of the body. |
 | `guide` | `{direction, label}` for the compass: 0 = forward, 90 = the figure's right (for the default side), clockwise from above. |
 | `pose` | Joint angles (see §4). Joints not listed are 0. |
 
@@ -379,7 +380,11 @@ representations that rotate the short, natural way) over adding a known issue; i
 - Circles use `ease: "linear"` and a 0-ms seam step so they flow like a clock hand.
 
 ### 8.3 Workout player on the cover screen (all measured on 360×398 CSS px, ≈ Flip7 cover)
-- Full screen, dark, app bars hidden. Right side teal `#57d6c6`, left side orange `#f2a65a`, body `#eef3f1`.
+- Full screen, app bars hidden, **follows the theme** (`--wp-*` variables on `.fs`): dark = navy `#0b1422`, body
+  `#eef3f1`, right side teal `#57d6c6`, left orange `#f2a65a`; light = `#f8f9ff`, body `#191c20`, teal `#00897b`,
+  orange `#d2680f`.
+- Pausing stops the voice immediately (`hush()`); resuming a Coach run-through step reads its line again.
+  Exiting (hold ✕, or finishing) always returns to the Workouts list.
 - The camera frames each exercise tightly (`frameScene`: viewBox from head-top to floor over the whole plan).
 - Stacked from the top: title band (name, up to 2 lines on short screens; block/set lines hidden when height
   ≤ 520 px) with the count at top right ("3/10 reps" inline on short screens) → caption line (room for 2 lines)
@@ -487,9 +492,16 @@ steps or the joint will windmill; the jump check will catch it.
 - **Short screens** (≤ 520 px tall, < 840 px wide): the three tabs sit in the top bar (icons only), the snackbar
   shows at the top, and pages end with 22 vh of empty space, all to keep clear of the cover screen's cutouts.
 - **Authoring mode**: an **Edit pose** button (sliders icon) in the exercise page's top bar pauses playback and
-  opens the pose editor; on phones the panel opens halfway so the figure stays visible. The editor has its own
-  previous/next step buttons, and the figure's overlay controls fade even while paused so they don't cover the
-  pose.
+  opens the pose editor; on phones the panel opens halfway (48dvh) so the figure stays visible. The editor has its
+  own previous/next step buttons, and the figure's overlay controls fade even while paused so they don't cover the
+  pose. Each joint has **− / +** (hold to repeat) in steps of 1°, 5° or 15°, and an **undo** shown once it differs
+  from where editing started; plus **Revert this step** and **Discard all changes**.
+  - The **first change to a library exercise** (or a bookmarked copy of one) creates the user's own exercise
+    `u-<id>-copy` named "<name> (copy)" with `basedOn: <library id>`, saved like an import (shows under Saved);
+    the library exercise is untouched. The user's own exercises are edited in place. Everything saves as you go
+    (`saveLib`, flushed on page hide).
+  - "Discard all changes" goes back to where editing started (`ED.orig`); if that session created the copy, it
+    deletes the copy and returns to the library exercise.
 - **Settings**: Workouts (default sound, full screen), Display (theme System/Light/Dark, exercise speed,
   **Authoring mode**), Import & tools (backup, import file/paste, the two AI prompts, export your exercises,
   JSON format reference, storage-persistence note).
@@ -522,7 +534,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
+  `circuits_history_share`, `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
+  pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
   player overlay and pull-up panel), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
@@ -553,6 +566,9 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    forms YAML; if the JSON is too long for the URL, copy to clipboard and ask to paste) → an Action validates
    with `tools/build.mjs` logic, renders a preview (headless browser → GIF/PNG), comments, and opens a PR. Prompt
    and form require original wording + source link + license checkbox.
+   **Owner's requirement:** editing exercises and workouts in the app is easy on purpose, so submitting must be a
+   **deliberate, user-triggered action** on something the user chooses (e.g. "Submit this exercise"), ideally
+   batching several items into one submission — never a PR per edit or anything automatic.
 7. **Content**: exercise machines (cable stations first — a fixed anchor + rigid cable, close to bands; then
    leg press, lat pulldown; then cardio machines). Two small open choices in §14.
 8. **Experiments**: Flex mode layout (viewport segments; figure on the top half), voice commands (optional;
