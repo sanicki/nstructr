@@ -39,7 +39,6 @@ function renderPlayerInfo() {
   if (ex.category && ex.category !== ex.focus) c('category', ex.category);
   (ex.equipment || []).forEach(q => c(/band/i.test(q) ? 'fitness_center' : /towel/i.test(q) ? 'dry_cleaning' : /wall|door/i.test(q) ? 'door_front' : 'handyman', q));
   if (pr.reps) c('tag', /\d\s*$/.test(pr.reps) ? `${pr.reps} ${ex.repName && ex.repName !== 'rep' ? ex.repName + 's' : 'reps'}` : pr.reps);
-  if (pr.rounds) c('repeat', `${pr.rounds} rounds${pr.sides === 'both' ? ' per side' : ''}`);
   c('timer', `${Math.round(S.total / 1000)} s per round`);
   $('#exChips').innerHTML = chips.join('');
   // steps
@@ -58,9 +57,9 @@ function renderPlayerInfo() {
   $('#aboutPanel').innerHTML = `${ex.description ? `<p class="body-large">${esc(ex.description)}</p>` : ''}
     ${src.url ? `<p><a class="source" href="${esc(src.url)}" target="_blank" rel="noopener"><span class="icon" style="font-size:18px">${/youtu/.test(src.url) ? 'play_circle' : 'open_in_new'}</span>${esc(src.title || 'Source')}</a></p>` : ''}
     ${src.note ? `<p class="body-small muted">${esc(src.note)}</p>` : ''}
-    <div class="row" style="margin-top:12px"><button class="btn tonal stateful" data-act="shareEx"><span class="icon">share</span>Share</button>
-    <button class="btn text stateful" data-act="json"><span class="icon">data_object</span>Show JSON</button>
-    ${isSaved(ex.id) ? `<button class="btn text stateful" data-del="${esc(ex.id)}"><span class="icon">bookmark_remove</span>Remove from Saved</button>` : ''}</div>`;
+    <div class="row" style="margin-top:12px">${findInDb(ex.id) ? '' : `<button class="btn tonal stateful" data-act="shareEx"><span class="icon">share</span>Share</button>`}
+    <button class="btn text stateful authoring-only" data-act="json"><span class="icon">data_object</span>Show JSON</button>
+    ${isSaved(ex.id) ? `<button class="btn text stateful" data-del="${esc(ex.id)}"><span class="icon">bookmark_remove</span>${findInDb(ex.id) ? 'Remove bookmark' : 'Delete'}</button>` : ''}</div>`;
   updateSaveBtn();
   $('#adjustPanel').hidden = !authoring();
   updateEditor();
@@ -69,8 +68,8 @@ function renderPlayerInfo() {
 function updateSaveBtn() {
   const saved = S.ex && isSaved(S.ex.id), b = $('#saveBtn');
   b.innerHTML = `<span class="icon${saved ? ' fill' : ''}">${saved ? 'bookmark' : 'bookmark_add'}</span>`;
-  b.setAttribute('aria-label', saved ? 'Remove from Saved' : 'Save');
-  b.title = saved ? 'Saved' : 'Save';
+  b.setAttribute('aria-label', saved ? 'Remove bookmark' : 'Bookmark');
+  b.title = saved ? 'Bookmarked' : 'Bookmark';
 }
 
 /* ---------- Exercise player: tap the figure for controls, like the workout player ----------
@@ -162,6 +161,12 @@ const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_K
 const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
 const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
+/* Authoring mode shows the tools for making exercises (pose editor, JSON views, exporters) */
+function applyAuthoring() {
+  document.body.classList.toggle('authoring', authoring());
+  $('#adjustPanel').hidden = !authoring();
+  if (!authoring() && $('#exSheet').classList.contains('half')) setSheet(false);
+}
 const defaultSpeed = () => +pref(SPEED_KEY, '1') || 1;
 function applyTheme(t) {
   if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
@@ -170,18 +175,18 @@ function renderSettings() {
   const seg = (id, key, opts, cur) => { $(id).innerHTML = opts.map(([v, l]) => `<button class="stateful" data-${key}="${v}" aria-pressed="${String(v) === String(cur)}"><span class="icon">check</span>${l}</button>`).join(''); };
   seg('#setSound', 'setsound', [['off', 'Silent'], ['beeps', 'Beeps'], ['voice', 'Voice'], ['coach', 'Coach']], WK.sound);
   seg('#setTheme', 'settheme', [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']], pref(THEME_KEY, 'system'));
-  seg('#setSpeed', 'setspeed', [[0.5, '0.5×'], [1, '1×'], [2, '2×']], defaultSpeed());
   $('#setFullscreen').checked = wantFullscreen();
   $('#setAuthoring').checked = authoring();
   renderPersistNote();
 }
 $('#view-settings').addEventListener('click', e => {
-  const b = e.target.closest('[data-setsound], [data-settheme], [data-setspeed]'); if (!b) return;
+  const b = e.target.closest('[data-setsound], [data-settheme]'); if (!b) return;
   const d = b.dataset;
   if (d.setsound) setSound(d.setsound);
   if (d.settheme) { setPref(THEME_KEY, d.settheme); applyTheme(d.settheme); }
-  if (d.setspeed) setPref(SPEED_KEY, d.setspeed);
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
-$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); snack(e.target.checked ? 'Authoring mode on: open any exercise and tap the Edit pose button (sliders) at the top' : 'Authoring mode off', 6000); });
+$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Authoring mode on: open any exercise and tap the Edit pose button (sliders) at the top' : 'Authoring mode off', 6000); });
+
+applyAuthoring();

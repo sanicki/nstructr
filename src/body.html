@@ -18,7 +18,7 @@
       <h1 class="title-large" id="barTitle">NstructR</h1>
       <button class="icon-btn stateful" id="editPoseBtn" aria-label="Edit the pose" title="Edit the pose" hidden><span class="icon">tune</span></button>
       <button class="icon-btn stateful" id="shareExBtn" data-act="shareEx" aria-label="Share this exercise" title="Share" hidden><span class="icon">share</span></button>
-      <button class="icon-btn stateful" id="saveBtn" aria-label="Save to my exercises" title="Save" hidden><span class="icon">bookmark_add</span></button>
+      <button class="icon-btn stateful" id="saveBtn" aria-label="Bookmark" title="Bookmark" hidden><span class="icon">bookmark_add</span></button>
     </header>
 
     <!-- ===== Exercises: the library and your saved ones ===== -->
@@ -46,8 +46,6 @@
         <h2 class="title-small settings-title" id="setDisplayTitle">Display</h2>
         <div class="setting"><span class="txt"><span class="body-large">Theme</span></span>
           <div class="segmented" id="setTheme" role="group" aria-label="Theme"></div></div>
-        <div class="setting"><span class="txt"><span class="body-large">Exercise speed</span><span class="body-small muted">How fast exercises play when you open them.</span></span>
-          <div class="segmented" id="setSpeed" role="group" aria-label="Exercise speed"></div></div>
         <label class="setting"><span class="txt"><span class="body-large">Authoring mode</span><span class="body-small muted">Shows the pose editor on each exercise, for making and fixing exercises.</span></span>
           <input type="checkbox" class="switch" id="setAuthoring"></label>
       </section>
@@ -83,7 +81,7 @@
             <div class="row"><button class="btn filled stateful" data-act="copyRoutinePrompt"><span class="icon">content_copy</span>Copy prompt</button>
             <button class="btn text stateful" data-act="showRoutinePrompt">Read it</button></div>
           </article>
-          <article class="card">
+          <article class="card authoring-only">
             <span class="icon big">data_object</span>
             <h3 class="title-medium">Export your exercises</h3>
             <p class="muted">The JSON for everything you've saved or imported, to share it or edit it elsewhere.</p>
@@ -110,7 +108,7 @@
       </section>
       <section class="section" aria-labelledby="histTitle">
         <div class="section-head"><h2 class="title-medium" id="histTitle">History</h2>
-          <div class="row" id="historyActions"><button class="btn text stateful" data-wact="exportLog"><span class="icon">data_object</span>Export</button><button class="btn text stateful" data-wact="clearLog">Clear</button></div></div>
+          <div class="row" id="historyActions"><button class="btn text stateful" data-wact="clearLog">Clear</button></div></div>
         <ul class="item-list" id="historyList"></ul>
       </section>
     </section>
@@ -124,7 +122,7 @@
           <button class="btn filled stateful" data-wact="start"><span class="icon fill">play_arrow</span>Start</button>
           <button class="btn tonal stateful" data-wact="addBlock"><span class="icon">add</span>Add block</button>
           <button class="btn text stateful" data-share-wk="@edit"><span class="icon">share</span>Share</button>
-          <button class="btn text stateful" data-wact="export"><span class="icon">data_object</span>JSON</button>
+          <button class="btn text stateful authoring-only" data-wact="export"><span class="icon">data_object</span>JSON</button>
           <button class="btn text stateful" data-wact="duplicateWorkout"><span class="icon">content_copy</span>Duplicate</button>
           <button class="btn text stateful danger" data-wact="deleteWorkout"><span class="icon">delete</span>Delete</button>
         </div>
@@ -285,6 +283,7 @@
   <div class="actions share-actions">
     <button class="btn text stateful" data-close>Close</button>
     <button class="btn text stateful" id="shareFile"><span class="icon">description</span>As a file</button>
+    <button class="btn tonal stateful" id="shareQrImg"><span class="icon">qr_code_2</span>Share QR code</button>
     <button class="btn tonal stateful" id="shareCopy"><span class="icon">content_copy</span>Copy link</button>
     <button class="btn filled stateful" id="shareSend"><span class="icon">share</span>Share link</button>
   </div>
@@ -309,7 +308,7 @@ FILE (one exercise per file)
   "focus": "main body area", "equipment": ["..."], "description": "1-2 sentences in your own words",
   "source": { "url": "...", "title": "...", "note": "anything approximated" },
   "setup": ["..."], "cues": ["..."],
-  "prescription": { "reps": "8-12", "rounds": 3, "note": "..." },
+  "prescription": { "reps": "8-12", "note": "..." },   // reps is free text: "8-12", "3 rounds each leg"
   "measure": "reps" | "time",                 // how a workout counts it: reps, or a timed hold
   "defaults": { "reps": 10 } | { "seconds": 30 },   // used when it's added to a workout
   "repName": "rep",                           // what one rep is called ("circle", "pull-apart")

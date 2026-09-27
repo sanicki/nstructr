@@ -113,7 +113,7 @@ function wkCard(w) {
       <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${n} exercises</span><span><span class="icon">view_agenda</span>${w.blocks.length} ${w.blocks.length === 1 ? 'block' : 'blocks'}</span></div>
       ${workoutEquipment(w).length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(workoutEquipment(w).join(', '))}</span></div>` : ''}
       <div class="row"><button class="btn filled stateful" data-wstart="${esc(w.id)}"><span class="icon fill">play_arrow</span>Start</button>
-      <button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>
+      ${lib ? '' : `<button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>`}
       ${lib ? `<button class="btn text stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
     : `<a class="btn text stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>`}</div></article>`;
 }
@@ -157,6 +157,7 @@ let EDIT = null;
 function renderEditor() {
   const w = EDIT; if (!w) return;
   if (document.activeElement !== $('#wkName')) $('#wkName').value = w.name;
+  $('#view-workout [data-wact="duplicateWorkout"]').disabled = !w.blocks.some(b => b.items.length);   // nothing to copy yet
   const eq = workoutEquipment(w);
   $('#wkSummary').innerHTML = `<span class="chip"><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span>
     <span class="chip"><span class="icon">format_list_numbered</span>${w.blocks.flatMap(b => b.items).length} exercises</span>
@@ -458,7 +459,7 @@ function segLabel(ex, item, segInfo) {
   return bits.join(', ').toLowerCase();
 }
 function buildPlan(item, segInfo) {
-  const ex = exById(item.ex), seg = { ...DEFAULT_SEGMENTS, ...((ex.figure && ex.figure.segments) || {}) };
+  const ex = exById(item.ex), seg = { ...DEFAULT_SEGMENTS };
   const ph = phaseInfo(ex.keyframes), tempo = item.tempo || 1;
   const altSide = item.sides === 'alternate', altDir = item.dir === 'alternate';
   const versions = [];
@@ -826,15 +827,10 @@ function confirmStart(w, fromIndex = 0) {
   $('#startBody').innerHTML = `<p class="body-medium" style="margin:0 0 12px">About ${fmtMin(workoutSeconds(w))}, ${w.blocks.flatMap(b => b.items).length} exercises${fromIndex ? `, starting at exercise ${fromIndex + 1}` : ''}.</p>
     ${eq.length ? `<p class="title-small" style="margin:0 0 6px">You'll need</p><div class="chips" style="margin:0 0 12px">${eq.map(q => `<span class="chip">${esc(q)}</span>`).join('')}</div>` : ''}
     ${notes.length ? `<p class="title-small" style="margin:0 0 6px">Safety</p><ul style="margin:0 0 12px;padding-left:20px">${notes.map(n => `<li class="body-small">${esc(n)}</li>`).join('')}</ul>` : ''}
-    <p class="title-small" style="margin:0 0 6px">Sound</p>
-    <div class="segmented" id="startSound" role="group" aria-label="Sound">${[['off', 'Silent'], ['beeps', 'Beeps'], ['voice', 'Voice'], ['coach', 'Coach']].map(([v, l]) => `<button class="stateful" data-sound="${v}" aria-pressed="${WK.sound === v}"><span class="icon">check</span>${l}</button>`).join('')}</div>
-    ${installedApp() ? '' : `<label class="row" style="margin:12px 0 0;gap:10px"><input type="checkbox" id="fsToggle" ${wantFullscreen() ? 'checked' : ''} style="width:20px;height:20px;accent-color:var(--md-primary)"><span class="body-medium">Full screen (the browser shows a short notice when it starts)</span></label>`}
-    <p class="body-small muted" style="margin:8px 0 0">Voice says each exercise, side switches and rests. Coach first walks you through one slow run-through of each exercise (and each side or direction), reading every step, then counts your reps and calls out hold milestones.</p>
-    <p class="body-small muted" style="margin:12px 0 0">Stop if anything hurts. Rep-based sets move on by themselves when the reps are done.</p>`;
+    <p class="body-small muted" style="margin:0">Sound: ${(SOUND_MODES.find(m => m[0] === WK.sound) || SOUND_MODES[1])[2]} (change it in Settings, or with the sound button during the workout).</p>
+    <p class="body-small muted" style="margin:8px 0 0">Stop if anything hurts. Rep-based sets move on by themselves when the reps are done.</p>`;
   $('#startDialog').showModal();
 }
-$('#startBody').addEventListener('change', e => { if (e.target.id === 'fsToggle') { try { localStorage.setItem(FS_KEY, e.target.checked ? 'on' : 'off'); } catch (err) { } } });
-$('#startBody').addEventListener('click', e => { const b = e.target.closest('[data-sound]'); if (b) { setSound(b.dataset.sound); b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); } });
 $('#startGo').addEventListener('click', () => { $('#startDialog').close(); if (PENDING_START) startWorkout(PENDING_START.w, PENDING_START.fromIndex); });
 
 
@@ -860,7 +856,6 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.wact === 'start' && EDIT) confirmStart(EDIT);
   else if (d.wact === 'addBlock' && EDIT) { EDIT.blocks.push({ id: uid(), name: `Block ${EDIT.blocks.length + 1}`, items: [] }); commitEdit(); }
   else if (d.wact === 'export' && EDIT) showJson(EDIT.name, workoutJSON(EDIT));
-  else if (d.wact === 'exportLog') showJson('Workout history', JSON.stringify({ format: 'nstructr/log', version: 1, sessions: loadLog() }, null, 2));
   else if (d.wact === 'clearLog') { if (confirm('Clear all workout history?')) { saveLog([]); renderHistory(); } }
   else if (d.logdel) { saveLog(loadLog().filter(s => s.id !== d.logdel)); renderHistory(); }
   else if (d.act === 'copyRoutinePrompt') copyText(routinePrompt(), 'Prompt copied');

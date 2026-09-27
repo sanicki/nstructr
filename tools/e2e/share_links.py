@@ -17,12 +17,10 @@ async def main():
         url1 = await pg.input_value('#shareUrl')
         print('library workout link    ', len(url1), 'chars |', url1[:60] + '…', '| QR:', await pg.evaluate("!!$('#shareQr svg')"))
         await pg.click('#shareDialog [data-close]')
-        # straight from the library card: the link just names it
+        # library workouts aren't shared (everyone has them); a link naming one still opens
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
-        await pg.click('[data-share-wk="lib:full-body-routine"]'); await pg.wait_for_timeout(300)
-        url0 = await pg.input_value('#shareUrl')
-        print('library card link       ', len(url0), 'chars |', url0.split('#')[1], '| QR:', await pg.evaluate("!!$('#shareQr svg')"))
-        await pg.click('#shareDialog [data-close]')
+        print('library card share      ', await pg.evaluate("document.querySelectorAll('#libWkList [data-share-wk]').length"), 'buttons')
+        url0 = await pg.evaluate("shareBase() + '#/link/l1.full-body-routine'")
         # a workout using an exercise of the sender's own
         own = await pg.evaluate("JSON.stringify({...findInDb('bw-squat'), id:'u-wide-squat', name:'Wide Squat', description:'Squat with feet wide.'})")
         await pg.evaluate(f"""(()=>{{ S.lib.items.push(JSON.parse({json.dumps(own)})); saveLib();
@@ -34,9 +32,7 @@ async def main():
         await pg.click('#shareDialog [data-close]')
         # an exercise: library one = plain link, own one = packed
         await pg.evaluate("go('#/play/bw-reverse-lunge')"); await pg.wait_for_timeout(400)
-        await pg.click('#shareExBtn'); await pg.wait_for_timeout(300)
-        print('library exercise link   ', (await pg.input_value('#shareUrl')).split('#')[1])
-        await pg.click('#shareDialog [data-close]')
+        print('library exercise share  ', await pg.evaluate("[$('#shareExBtn').hidden, !!document.querySelector('#aboutPanel [data-act=shareEx]')]"), '<- hidden')
         await pg.evaluate("go('#/play/u-wide-squat')"); await pg.wait_for_timeout(400)
         await pg.click('#shareExBtn'); await pg.wait_for_timeout(300)
         url3 = await pg.input_value('#shareUrl')

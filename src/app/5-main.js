@@ -22,6 +22,7 @@ function ensureOwnCopy() {
   S.ex = copy; ED.orig = { id, ex: clone(copy), keyframes: origKfs, madeCopy: lib.id };
   history.replaceState(null, '', `#/play/${encodeURIComponent(id)}`); lastList = lastList || '#/exercises';
   $('#barTitle').textContent = copy.name; document.title = `${copy.name} · ${APP_NAME}`;
+  $('#shareExBtn').hidden = false;                                   // it's the user's own now, so it can be shared
   renderPlayerInfo();
   snack(`Editing your copy, "${copy.name}". Changes are saved as you go.`, 5000);
 }
@@ -42,7 +43,7 @@ function editPose(change) {
 /* text: the exercise's own fields, and the current step's name and spoken cue */
 const lines = v => v.split('\n').map(x => x.trim()).filter(Boolean);
 const TEXT_FIELDS = [
-  ['name', 'Name', 'input'], ['sanskrit', 'Other name (e.g. Sanskrit)', 'input'], ['focus', 'Focus', 'input'], ['category', 'Category', 'input'],
+  ['name', 'Name', 'input'], ['sanskrit', 'Other names (separate with commas)', 'input'], ['focus', 'Focus', 'input'], ['category', 'Category', 'input'],
   ['equipment', 'Equipment (separate with commas)', 'input', v => v.split(',').map(x => x.trim()).filter(Boolean), v => (v || []).join(', ')],
   ['description', 'Description', 'textarea'],
   ['setup', 'Setup (one per line)', 'textarea', lines, v => (v || []).join('\n')],
@@ -176,7 +177,7 @@ function discardEdits() {
 function selectExercise(id) {
   S.ex = S.lib.items.find(it => it.id === id) || (findInDb(id) ? clone(findInDb(id)) : null);
   if (!S.ex) return false;
-  S.seg = { ...DEFAULT_SEGMENTS, ...((S.ex.figure && S.ex.figure.segments) || {}) };
+  S.seg = { ...DEFAULT_SEGMENTS };
   ED.orig = null;
   S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.speed = defaultSpeed();
   document.querySelectorAll('#speedSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.speed === S.speed)));
@@ -220,7 +221,7 @@ function setSide(side) {
 function toggleSave() {
   if (!S.ex) return;
   if (isSaved(S.ex.id)) removeSaved(S.ex.id);
-  else { S.lib.items.push(S.ex); saveLib(); snack(`Saved ${S.ex.name}`); renderPlayerInfo(); }
+  else { S.lib.items.push(S.ex); saveLib(); snack(`Bookmarked ${S.ex.name}`); renderPlayerInfo(); }
 }
 function removeSaved(id) {
   const it = S.lib.items.find(x => x.id === id);
@@ -229,7 +230,7 @@ function removeSaved(id) {
   S.lib.items = S.lib.items.filter(x => x.id !== id);
   saveLib();
   const builtIn = !!findInDb(id);
-  snack(builtIn ? `Removed ${it ? it.name : 'exercise'} from Saved` : `Deleted ${it ? it.name : 'exercise'}`);
+  snack(builtIn ? `Removed the bookmark from ${it ? it.name : 'the exercise'}` : `Deleted ${it ? it.name : 'exercise'}`);
   if (S.view === 'player' && S.ex && S.ex.id === id) { if (builtIn) renderPlayerInfo(); else { E.coll = SAVED; go('#/exercises'); } }
   if (S.view === 'exercises') renderExplore();
 }
@@ -366,7 +367,8 @@ function route() {
   const sub = view === 'player' || view === 'workout' || view === 'wplay';
   $('#backBtn').hidden = !sub;
   $('#saveBtn').hidden = view !== 'player';
-  $('#shareExBtn').hidden = view !== 'player';
+  $('#shareExBtn').hidden = view !== 'player' || !S.ex || !!findInDb(S.ex.id);      // library exercises: everyone has them
+  if (view === 'player') applyAuthoring();
   $('#editPoseBtn').hidden = view !== 'player' || !authoring();
   document.querySelector('.bar-brand').style.display = sub ? 'none' : '';
   $('#barTitle').textContent = view === 'player' ? (S.ex ? S.ex.name : '') : view === 'workout' ? EDIT.name : view === 'wplay' ? WP.w.name : TITLES[view];
@@ -389,7 +391,7 @@ $('#sideSeg').addEventListener('click', e => { const b = e.target.closest('butto
 $('#dirSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setDir(b.dataset.dir); });
 $('#speedSeg').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
-  S.speed = +b.dataset.speed;
+  S.speed = +b.dataset.speed; setPref(SPEED_KEY, String(S.speed));           // remembered as the starting speed
   document.querySelectorAll('#speedSeg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#backBtn').addEventListener('click', () => {
