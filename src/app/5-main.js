@@ -158,9 +158,10 @@ function revertStep() {
   editPose(kf => { for (const k of Object.keys(kf)) delete kf[k]; Object.assign(kf, clone(o)); });
   snack(`Step ${S.idx + 1} is back to how it was`);
 }
-function discardEdits() {
+async function discardEdits() {
   const o = ED.orig; if (!o || o.id !== S.ex.id) return;
-  if (!confirm(o.madeCopy ? `Discard your changes and delete "${S.ex.name}"?` : `Undo every change to "${S.ex.name}" since you started editing?`)) return;
+  if (!(await ask(o.madeCopy ? `Discard your changes?` : 'Undo every change?', o.madeCopy ? `Your copy, "${S.ex.name}", is deleted and the library exercise is left as it was.` : `"${S.ex.name}" goes back to how it was when you started editing.`, 'Discard', true))) return;
+  if (!ED.orig || ED.orig !== o) return;
   if (o.madeCopy) {
     S.lib.items = S.lib.items.filter(x => x.id !== o.id); saveLib(); ED.orig = null; if (BOOKMARKS.delete(o.id)) saveBookmarks();
     history.replaceState(null, '', `#/play/${encodeURIComponent(o.madeCopy)}`); S.ex = null; route();
@@ -227,10 +228,10 @@ function toggleSave() {
   saveBookmarks(); snack(on ? `Bookmarked ${S.ex.name}` : `Removed the bookmark from ${S.ex.name}`); renderPlayerInfo();
 }
 /* deleting is only for the user's own exercises, and asks first (saying which workouts use it) */
-function removeSaved(id) {
+async function removeSaved(id) {
   const it = S.lib.items.find(x => x.id === id); if (!it || findInDb(id)) return;
   const uses = (WK.list || []).filter(w => w.blocks.some(b => b.items.some(i => i.ex === id))).map(w => `"${w.name}"`);
-  if (!confirm(`Delete "${it.name}"? It's your own exercise, so it will be gone from this device (a backup or an exported file can bring it back).${uses.length ? `\n\nIt's used in ${uses.join(', ')}, which will show it as missing.` : ''}`)) return;
+  if (!(await ask(`Delete "${it.name}"?`, `It's your own exercise, so it will be gone from this device (a backup or an exported file can bring it back).${uses.length ? `\n\nIt's used in ${uses.join(', ')}, which will show it as missing.` : ''}`, 'Delete', true))) return;
   S.lib.items = S.lib.items.filter(x => x.id !== id); saveLib();
   if (BOOKMARKS.delete(id)) saveBookmarks();
   snack(`Deleted ${it.name}`);
@@ -442,6 +443,7 @@ document.querySelector('.shell').addEventListener('click', e => {
 });
 document.addEventListener('keydown', e => {
   if (S.view === 'wplay' && !e.target.closest('input, textarea, dialog') && e.key === ' ') { e.preventDefault(); LAST_DOWN_AT = 0; wpAction('pause'); return; }
+  if (S.view === 'wplay' && e.key === 'Escape' && !document.querySelector('dialog[open]')) { exitWorkout(); return; }   // a keyboard can't "hold
   if (S.view !== 'player' || e.target.closest('input, textarea, dialog') || e.metaKey || e.ctrlKey || e.altKey) return;
   if (e.key === ' ' && !e.target.closest('button')) { e.preventDefault(); setPlaying(!S.playing); }
   else if (e.key === 'ArrowRight') jumpTo(S.idx + 1);

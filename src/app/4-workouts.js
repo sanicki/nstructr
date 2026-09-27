@@ -62,7 +62,7 @@ function itemSeconds(item) {
     ? item.seconds + sum(ph.setup) + sum(ph.finish) + (kfs[ex.holdStep || ph.start].durationMs || 0) / 1000 / t
     : sum(ph.setup) + sum(ph.finish) + sum(ph.rep) * item.reps * alt;
   const guide = WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) : 0;   // + ~2 s of speech a step
-  return item.sets * segs * (work + guide) + (item.sets - 1) * (item.rest || 0);
+  return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
 }
 function blockSeconds(b, w) {
   const r = b.rounds || 1, one = b.items.reduce((s, it) => s + itemSeconds(it), 0) + Math.max(0, b.items.length - 1) * restGap();
@@ -263,8 +263,9 @@ async function blockMenu(btn, id) {
   if (act === 'up' && bi > 0) EDIT.blocks.splice(bi - 1, 0, EDIT.blocks.splice(bi, 1)[0]);
   if (act === 'down' && bi < EDIT.blocks.length - 1) EDIT.blocks.splice(bi + 1, 0, EDIT.blocks.splice(bi, 1)[0]);
   if (act === 'del') {
-    if (EDIT.blocks[bi].items.length && !confirm(`Delete "${EDIT.blocks[bi].name}" and its ${EDIT.blocks[bi].items.length} exercises?`)) return;
-    EDIT.blocks.splice(bi, 1);
+    const b = EDIT.blocks[bi];
+    if (b.items.length && !(await ask(`Delete "${b.name}"?`, `Its ${b.items.length} ${b.items.length === 1 ? 'exercise goes' : 'exercises go'} too.`, 'Delete', true))) return;
+    EDIT.blocks.splice(EDIT.blocks.indexOf(b), 1);
   }
   if (act) commitEdit();
 }
@@ -322,7 +323,7 @@ function openItemSettings(uid_) {
   const bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels;
   $('#itemForm').innerHTML =
     (ex.measure === 'time' ? stepper('seconds', 'Hold for', 5, 600, 5, ' s') : stepper('reps', ex.repName && ex.repName !== 'rep' ? `${cap(ex.repName)}s` : 'Reps', 1, 200, 1, '')) +
-    stepper('sets', 'Sets', 1, 10, 1, '') + stepper('rest', 'Rest between sets', 0, 300, 5, ' s').replace('class="form-row"', `class="form-row" id="restRow"${ITEM_EDIT.sets > 1 ? '' : ' hidden'}`) +
+    stepper('sets', 'Sets', 1, 10, 1, '') +
     (bl ? seg('sides', 'Sides', [['L', bl.L || 'Left'], ['R', bl.R || 'Right'], ['both', 'Both'], ['alternate', 'Alternate']]) : '') +
     (dl ? seg('dir', 'Direction', [['A', dl.A], ['B', dl.B], ['both', 'Both'], ['alternate', 'Alternate']]) : '') +
     (ex.measure === 'time' ? '' : `<div class="form-row"><span class="lbl">Seconds per ${esc(ex.repName || 'rep')}<span class="body-small muted" style="display:block">Usual: ${round1(repSeconds(ex))} s</span></span><div class="stepper">
@@ -337,7 +338,6 @@ $('#itemForm').addEventListener('click', e => {
   if (s) {
     const k = s.dataset.stepKey, v = Math.min(+s.dataset.max, Math.max(+s.dataset.min, (+ITEM_EDIT[k] || 0) + +s.dataset.delta));
     ITEM_EDIT[k] = v; $('#st-' + k).textContent = v + (k === 'seconds' || k === 'rest' ? ' s' : '');
-    if (k === 'sets') $('#restRow').hidden = v < 2;           // rest between sets only means something with 2+ sets
   }
 
   const g = e.target.closest('[data-seg-key]');
@@ -652,7 +652,7 @@ function onWorkEnd() {
   const segs = itemSegments(cur.item);
   if (WP.seg < segs.length - 1) { WP.seg++; beep(660, 160); return runCurrent(true); }
   WP.seg = 0;
-  if (WP.set < cur.item.sets - 1) { WP.set++; return startRest(cur.item.rest || 0, 'set'); }
+  if (WP.set < cur.item.sets - 1) { WP.set++; return startRest(restSets(), 'set'); }
   WP.set = 0;
   logItem(cur);
   if (WP.i < WP.flat.length - 1) {
@@ -766,9 +766,11 @@ $('#wpRoot').addEventListener('pointerup', e => {
     if (p >= 1) { stop(); exitWorkout(); return; } raf = requestAnimationFrame(tick); };
   const stop = () => { cancelAnimationFrame(raf); btn.style.setProperty('--p', '0%'); };
   btn.addEventListener('pointerdown', e => { e.preventDefault(); t0 = performance.now(); raf = requestAnimationFrame(tick); showControls(true); });
-  btn.addEventListener('pointerup', () => { if (performance.now() - t0 < 800) toast('Hold ✕ to exit'); stop(); showControls(isPaused()); });
+  btn.addEventListener('pointerup', () => { if (performance.now() - t0 < 800) toast('Hold ✕ to exit'); stop(); showControls(isPaused()); setTimeout(() => (t0 = 0), 0); });
   btn.addEventListener('pointerleave', stop); btn.addEventListener('pointercancel', stop);
   btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); exitWorkout(); } });
+  // a screen reader's double-tap (TalkBack, VoiceOver) arrives as a click with no pointer press: nothing to hold, so it exits
+  btn.addEventListener('click', e => { if (e.detail === 0 && !t0) exitWorkout(); t0 = 0; });
 })();
 function exitWorkout() { go('#/workouts'); }
 /* full screen while working out (hides the phone's status bar where allowed) */
@@ -908,7 +910,7 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.wact === 'start' && EDIT) confirmStart(EDIT);
   else if (d.wact === 'addBlock' && EDIT) { EDIT.blocks.push({ id: uid(), name: `Block ${EDIT.blocks.length + 1}`, items: [] }); commitEdit(); }
   else if (d.wact === 'export' && EDIT) showJson(EDIT.name, workoutJSON(EDIT));
-  else if (d.wact === 'clearLog') { if (confirm('Clear all workout history?')) { saveLog([]); renderHistory(); } }
+  else if (d.wact === 'clearLog') ask('Clear all workout history?', 'Every finished workout is removed from History.', 'Clear', true).then(y => { if (y) { saveLog([]); renderHistory(); } });
   else if (d.logdel) { saveLog(loadLog().filter(s => s.id !== d.logdel)); renderHistory(); }
   else if (d.wact === 'duplicateWorkout' && EDIT) {
     const c = JSON.parse(JSON.stringify(EDIT)); c.id = uid(); c.name = EDIT.name + ' (copy)';
@@ -916,8 +918,8 @@ document.querySelector('.shell').addEventListener('click', e => {
     WK.list.push(c); saveWorkouts(); go(`#/workout/${c.id}`); snack('Duplicated');
   }
   else if (d.wact === 'deleteWorkout' && EDIT) {
-    if (!confirm(`Delete "${EDIT.name}"?`)) return;
-    WK.list = WK.list.filter(w => w !== EDIT); saveWorkouts(); EDIT = null; go('#/workouts'); snack('Workout deleted');
+    const w = EDIT;
+    ask(`Delete "${w.name}"?`, '', 'Delete', true).then(y => { if (!y) return; WK.list = WK.list.filter(x => x !== w); saveWorkouts(); if (EDIT === w) EDIT = null; go('#/workouts'); snack('Workout deleted'); });
   }
   else if (d.iedit) openItemSettings(d.iedit);
   else if (d.imenu) itemMenu(t, d.imenu);

@@ -48,9 +48,11 @@ the UI. The build deletes and recreates `_site/`, so restart the server after ea
    ```
    Check anything the workout player shows at 360×398 (the Flip7 cover screen), with nothing important at the
    bottom of the screen.
-5. Update `HANDOFF.md` (and the [user guide](wiki/Home.md) if users will notice) in the same pull request.
-   Screenshots for the guide come from `tools/wiki_screenshots.py`.
-6. Open the pull request against `main`, saying what changed and how you tested it. CI runs the build and the
+5. For UI changes, run `python3 tools/audit.py` (accessibility, 48 px touch targets, text size, sideways
+   scrolling, in light and dark; see [`docs/audit-2026-09.md`](docs/audit-2026-09.md)) and fix what it reports.
+6. Update `HANDOFF.md` (and the [user guide](wiki/Home.md) and its screenshots if users will notice) in the
+   same pull request. Screenshots come from `tools/wiki_screenshots.py`.
+7. Open the pull request against `main`, saying what changed and how you tested it. CI runs the build and the
    checks; merged changes deploy to GitHub Pages.
 
 Contributions are accepted under the MIT license below.
@@ -64,6 +66,7 @@ Read these, in this order, before changing anything:
 | [`CLAUDE.md`](CLAUDE.md) | Commands, rules and where the code is (short; read first). [`AGENTS.md`](AGENTS.md) points here too. |
 | [`HANDOFF.md`](HANDOFF.md) | The full picture: file formats, engine pipeline, validation rules, UI inventory, storage keys, tests, roadmap, open questions |
 | [`docs/3d-skeleton.md`](docs/3d-skeleton.md) | The proposed 3D skeleton (not built yet) |
+| [`docs/audit-2026-09.md`](docs/audit-2026-09.md) | The Sep 2026 audit: accessibility, Material Design, security, performance |
 | [`wiki/`](wiki/Home.md) | The user guide: how the app behaves from a user's side |
 | `schema/*.schema.json` | JSON Schemas for exercise and workout files |
 

@@ -49,8 +49,7 @@ Tap an exercise in the editor to set how it's done:
 | Setting | What it does |
 |---|---|
 | **Reps** or **Hold for** | Reps for rep-based exercises; seconds for holds (planks, stretches) |
-| **Sets** | Do it this many times in a row |
-| **Rest between sets** | Shown when there are 2 or more sets |
+| **Sets** | Do it this many times in a row (the rest between sets is a [setting](Settings.md#rest-between-sets)) |
 | **Sides** | For one-sided exercises: one side only, **Both** (all reps on one side, then the other), or **Alternate** (switch every rep). Reps count per side. |
 | **Direction** | For exercises that go two ways: one way, **Both**, or **Alternate** |
 | **Seconds per rep** | How long one rep takes. *Usual* is the exercise's own pace. Type a number or use − / + (0.1 s steps). |
@@ -59,6 +58,6 @@ The estimated time updates as you change things.
 
 ## Rests
 
-- **Rest between exercises** is one setting for all workouts, in [Settings](Settings.md#rest-between-exercises)
-  (default 10 s, 1 s steps).
-- **Rest between sets** is per exercise (above); **rest between rounds** is per block (circuits).
+- **Rest between exercises** and **rest between sets** are settings for all workouts, in
+  [Settings](Settings.md#rest-between-exercises) (defaults 10 s and 20 s, 1 s steps).
+- **Rest between rounds** is set on each block (circuits).

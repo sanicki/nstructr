@@ -5,23 +5,23 @@
    One prompt: the AI answers with an exercise file or a workout file, whichever fits what the user has. */
 const AI_KEY = 'nstructr-ai-app-v1';
 const AI_Q_MAX = 15000;          // longest link we fill in (Cloudflare, in front of most of these, refuses URLs over 16 KB); longer ones are only copied
-const AI_APPS = [                // q: the link parameter that fills in the message, where the app has one
-  { id: 'claude', name: 'Claude', url: 'https://claude.ai/new', q: 'q' },
+const AI_APPS = [                // A–Z, "other" last. q: the link parameter that fills in the message, where the app has one
   { id: 'chatgpt', name: 'ChatGPT', url: 'https://chatgpt.com/', q: 'q' },
+  { id: 'claude', name: 'Claude', url: 'https://claude.ai/new', q: 'q' },
+  { id: 'copilot', name: 'Copilot', url: 'https://copilot.microsoft.com/', q: 'q' },
+  { id: 'deepseek', name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
   { id: 'gemini', name: 'Gemini', url: 'https://gemini.google.com/app' },
   { id: 'grok', name: 'Grok', url: 'https://grok.com/', q: 'q' },
-  { id: 'deepseek', name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
-  { id: 'copilot', name: 'Copilot', url: 'https://copilot.microsoft.com/', q: 'q' },
-  { id: 'mistral', name: 'Vibe (Mistral, was Le Chat)', url: 'https://chat.mistral.ai/chat', q: 'q' },
+  { id: 'mistral', name: 'Vibe', url: 'https://chat.mistral.ai/chat', q: 'q' },     // Mistral's, formerly Le Chat
   { id: 'other', name: 'Another AI app (copy only)' },
 ];
 const AI_KINDS = [
-  { id: 'name', label: 'A name', field: 'Exercise or workout name', ph: 'e.g. Pilates leg circles, or a 10-minute morning stretch', hint: 'The AI works from what it knows about it.' },
+  { id: 'name', label: 'The name of the exercise', field: 'Exercise name', ph: 'e.g. Pilates leg circles', hint: 'The AI uses what it knows, and looks it up on the web where it can to check it.' },
   { id: 'routine', label: 'Written routine', field: 'The routine', ph: 'Paste or type it: exercises, reps, sets, rests…', hint: 'A list of exercises makes a workout; one exercise makes an exercise.' },
   { id: 'link', label: 'Video or web link', field: 'Link', ph: 'https://www.youtube.com/watch?v=…', hint: 'Gemini can watch YouTube videos; most other apps only read the page.' },
   { id: 'media', label: 'Photo or video', field: '', ph: '', hint: 'Attach your photo or video in the AI app after it opens (a link can\'t carry it). Pick an app that accepts them.' },
 ];
-const aiApp = () => AI_APPS.find(a => a.id === pref(AI_KEY, 'claude')) || AI_APPS[0];
+const aiApp = () => AI_APPS.find(a => a.id === pref(AI_KEY, 'gemini')) || AI_APPS.find(a => a.id === 'gemini');   // the last one picked
 let AI_KIND = 'name';
 
 /* the library, one line per exercise, so the AI can use what's already there */
@@ -46,6 +46,9 @@ function aiPrompt(kind = AI_KIND, input = '') {
 
 The app is NstructR: a stick figure animates each exercise step by step. Answer with ONE JSON file and nothing else (no markdown fences, no commentary before or after).
 
+GET IT RIGHT
+Use what you know, and if you can search the web, look up the exercise (or each exercise of a routine) to confirm or correct it: how it is done, its steps, typical reps or hold times, and safety notes. Prefer reputable sources (physiotherapy, sports medicine, certified instructors). Put the page you relied on most in "source" (url and title).
+
 WHICH FILE
 - ONE exercise that is in the LIBRARY below: answer {"inLibrary":"<its id>"}.
 - ONE exercise that is not in the LIBRARY: an exercise file (EXERCISE FORMAT).
@@ -56,14 +59,14 @@ WHICH FILE
 WORKOUT
 {"version":1,"id":"kebab-case-name","name":"...","description":"one sentence","blocks":[
   {"name":"Warm-up","rounds":1,"roundRest":30,"items":[
-    {"ex":"<exercise id>","sets":1,"reps":10,"rest":20,"sides":"both","dir":"both","tempo":1},
+    {"ex":"<exercise id>","sets":1,"reps":10,"sides":"both","dir":"both","tempo":1},
     {"ex":"<exercise id>","seconds":30,"sides":"both"}]}]}
 - Rep-based exercises get "reps"; time-based ones get "seconds". Use the routine's numbers; for a range, use the lower end.
 - "sides" (only for exercises marked sides): "L", "R", "both" (one side then the other) or "alternate". Reps count per side.
 - "dir" (only for exercises marked dir): "A", "B", "both" or "alternate".
-- "sets" and "rest" (seconds between sets) default to 1 and 20. "tempo" is a speed multiplier (1 = the exercise's own pace, 2 = twice as fast).
+- "sets" defaults to 1 (rests between exercises and between sets are the user's settings). "tempo" is a speed multiplier (1 = the exercise's own pace, 2 = twice as fast).
 - Keep the routine's sections as blocks, in order. For a circuit ("repeat 3 times"), set the block's "rounds" and "roundRest".
-- Leave out "sides" and "dir" for exercises that don't list them, and "sets", "rest" and "tempo" when they're the defaults.
+- Leave out "sides" and "dir" for exercises that don't list them, and "sets" and "tempo" when they're the defaults.
 
 ${aiPromptText()}
 8. Write "description", "setup" and "cues" in your own words; short, plain directions. Put where it came from in "source".

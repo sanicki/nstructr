@@ -8,6 +8,7 @@
     "check": "node tools/build.mjs --check-only"
   },
   "devDependencies": {
-    "ajv": "^8.17.1"
+    "ajv": "^8.17.1",
+    "axe-core": "^4.10.2"
   }
 }

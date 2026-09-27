@@ -78,6 +78,7 @@
                   "minimum": 1
                 },
                 "rest": {
+                  "description": "Ignored: rest between sets is a setting (Settings > Workouts). Still accepted so older files import.",
                   "type": "number",
                   "minimum": 0
                 },
