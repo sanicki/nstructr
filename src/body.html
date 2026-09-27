@@ -96,15 +96,16 @@
     <!-- ===== Workouts ===== -->
     <section class="view" id="view-workouts" aria-label="Workouts">
       <div id="resumeSlot"></div>
-      <div class="page-head">
-        <p class="body-medium muted" id="wkCount" style="margin:0"></p>
-        <div class="row"><button class="btn text stateful" data-act="import"><span class="icon">upload_file</span>Import</button>
+      <section class="section" aria-labelledby="myWkTitle">
+        <div class="section-head"><h2 class="title-medium" id="myWkTitle">My workouts<span class="count" id="wkCount"></span></h2></div>
+        <p class="body-medium muted" id="wkEmpty" style="margin:0 0 12px">Your own workouts show up here. Start one from the library below, or tap Customize on one to make your own copy.</p>
+        <div class="wk-list" id="wkList" data-list="mine"></div>
+        <div class="row wk-add"><button class="btn text stateful" data-act="import"><span class="icon">upload_file</span>Import</button>
           <button class="btn filled stateful" data-wact="new"><span class="icon">add</span>New workout</button></div>
-      </div>
-      <div class="wk-grid" id="wkList"></div>
+      </section>
       <section class="section" id="libWkSection" aria-labelledby="libWkTitle" hidden>
         <div class="section-head"><h2 class="title-medium" id="libWkTitle">Library workouts</h2></div>
-        <div class="wk-grid" id="libWkList"></div>
+        <div class="wk-list" id="libWkList" data-list="lib"></div>
       </section>
       <section class="section" aria-labelledby="histTitle">
         <div class="section-head"><h2 class="title-medium" id="histTitle">History</h2>

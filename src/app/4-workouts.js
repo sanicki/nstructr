@@ -37,7 +37,7 @@ function saveWorkouts() { try { localStorage.setItem(WK_KEY, JSON.stringify({ li
    user's list. */
 const LIB_PREFIX = 'lib:';
 let LIB_WK = [];
-function hydrateLibrary() { LIB_WK = LIBRARY_WORKOUTS.map(fw => ({ ...hydrateWorkout(fw), id: LIB_PREFIX + fw.id, libId: fw.id, description: fw.description })); }
+function hydrateLibrary() { LIB_WK = LIBRARY_WORKOUTS.map(fw => ({ ...hydrateWorkout(fw), id: LIB_PREFIX + fw.id, libId: fw.id, description: fw.description })); orderLibrary(); }
 const isLibWorkout = w => !!(w && w.libId);
 const wkById = id => (WK.list || []).find(w => w.id === id) || LIB_WK.find(w => w.id === id);
 function customizeWorkout(w) {
@@ -95,28 +95,106 @@ function itemSummary(item) {
 /* ---------- list ---------- */
 function renderWorkouts() {
   renderHistory();
-  $('#wkCount').textContent = WK.list.length ? `${WK.list.length} ${WK.list.length === 1 ? 'workout' : 'workouts'} of your own` : '';
+  $('#wkCount').textContent = WK.list.length ? String(WK.list.length) : '';
   const sess = loadSession(), sw = sess && wkById(sess.wid);
   $('#resumeSlot').innerHTML = sw ? `<div class="resume"><span class="icon">history</span><span class="txt"><span class="title-small" style="display:block">Resume ${esc(sw.name)}</span>
     <span class="body-small">From exercise ${sess.i + 1} of ${sw.blocks.flatMap(b => b.items).length}</span></span>
     <button class="btn filled stateful" data-wact="resume">Resume</button><button class="icon-btn stateful" data-wact="dropSession" aria-label="Discard"><span class="icon">close</span></button></div>` : '';
-  $('#wkList').innerHTML = WK.list.map(w => wkCard(w)).join('') || (LIB_WK.length
-    ? `<p class="body-medium muted" style="margin:0">Your own workouts show up here. Start one from the library below, or tap Customize to make your own copy.</p>`
-    : `<div class="empty-state"><span class="icon">fitness_center</span><p class="title-medium">No workouts yet</p></div>`);
+  $('#wkEmpty').hidden = !!WK.list.length;
+  $('#wkList').innerHTML = WK.list.map(w => wkCard(w)).join('');
   $('#libWkSection').hidden = !LIB_WK.length;
   $('#libWkList').innerHTML = LIB_WK.map(w => wkCard(w)).join('');
 }
+/* A card is collapsed to: drag handle, Start, name. Tapping the name shows the details. Your own workouts can be
+   swiped left to show a trash can (tap it to delete). Both lists can be put in any order by dragging the handle. */
+const WK_OPEN = new Set();
 function wkCard(w) {
-  const n = w.blocks.flatMap(b => b.items).length, lib = isLibWorkout(w);
-  return `<article class="wk-card"><h2 class="title-medium">${esc(w.name)}</h2>
-      ${lib && w.description ? `<p class="body-small muted" style="margin:0">${esc(w.description)}</p>` : ''}
-      <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${n} exercises</span><span><span class="icon">view_agenda</span>${w.blocks.length} ${w.blocks.length === 1 ? 'block' : 'blocks'}</span></div>
-      ${workoutEquipment(w).length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(workoutEquipment(w).join(', '))}</span></div>` : ''}
-      <div class="row"><button class="btn filled stateful" data-wstart="${esc(w.id)}"><span class="icon fill">play_arrow</span>Start</button>
-      ${lib ? '' : `<button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>`}
-      ${lib ? `<button class="btn text stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
-    : `<a class="btn text stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>`}</div></article>`;
+  const n = w.blocks.flatMap(b => b.items).length, lib = isLibWorkout(w), open = WK_OPEN.has(w.id), eq = workoutEquipment(w);
+  return `<article class="wk-card${open ? ' open' : ''}" data-wk="${esc(w.id)}">
+    ${lib ? '' : `<button class="wk-del stateful" data-wdel="${esc(w.id)}" aria-label="Delete ${esc(w.name)}" tabindex="-1"><span class="icon">delete</span></button>`}
+    <div class="wk-face">
+      <div class="wk-row">
+        <span class="handle" data-wkhandle aria-hidden="true"><span class="icon">drag_indicator</span></span>
+        <button class="wk-start stateful" data-wstart="${esc(w.id)}" aria-label="Start ${esc(w.name)}"><span class="icon fill">play_arrow</span></button>
+        <button class="wk-title stateful" data-wtoggle="${esc(w.id)}" aria-expanded="${open}"><span class="title-medium">${esc(w.name)}</span><span class="icon">expand_more</span></button>
+      </div>
+      <div class="wk-details"${open ? '' : ' hidden'}>
+        ${lib && w.description ? `<p class="body-small muted" style="margin:0">${esc(w.description)}</p>` : ''}
+        <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${n} exercises</span><span><span class="icon">view_agenda</span>${w.blocks.length} ${w.blocks.length === 1 ? 'block' : 'blocks'}</span></div>
+        ${eq.length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(eq.join(', '))}</span></div>` : ''}
+        <div class="row">${lib ? `<button class="btn tonal stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
+          : `<a class="btn tonal stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>
+             <button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>`}</div>
+      </div>
+    </div></article>`;
 }
+function deleteWorkout(id) {
+  const w = wkById(id); if (!w || isLibWorkout(w)) return;
+  WK.list = WK.list.filter(x => x !== w); saveWorkouts();
+  const sess = loadSession(); if (sess && sess.wid === id) dropSession();
+  WK_OPEN.delete(id); renderWorkouts(); snack(`Deleted ${w.name}`);
+}
+/* the library's workouts in the order this person put them (new library workouts go at the end) */
+const LIB_ORDER_KEY = 'nstructr-libwk-order-v1';
+function orderLibrary() {
+  let order = []; try { order = JSON.parse(localStorage.getItem(LIB_ORDER_KEY) || '[]'); } catch (e) { }
+  const at = id => { const i = order.indexOf(id); return i < 0 ? 1e9 : i; };
+  LIB_WK.sort((a, b) => at(a.libId) - at(b.libId));
+}
+(() => {
+  const lists = [$('#wkList'), $('#libWkList')];
+  let drag = null, swipe = null;
+  const closeSwipes = except => document.querySelectorAll('.wk-card.swiped').forEach(c => { if (c !== except) { c.classList.remove('swiped'); c.querySelector('.wk-face').style.transform = ''; } });
+  for (const list of lists) {
+    list.addEventListener('pointerdown', e => {
+      const card = e.target.closest('.wk-card'); if (!card) return;
+      if (e.target.closest('[data-wkhandle]')) {                 // reorder
+        e.preventDefault(); closeSwipes();
+        card.setPointerCapture(e.pointerId); drag = { card, list, id: e.pointerId }; card.classList.add('dragging'); return;
+      }
+      if (list.dataset.list !== 'mine' || (e.target.closest('button, a') && !e.target.closest('[data-wtoggle]'))) return;   // swipe from the name or the card
+      swipe = { card, x0: e.clientX, y0: e.clientY, id: e.pointerId, base: card.classList.contains('swiped') ? -88 : 0, moved: false };
+    });
+    list.addEventListener('pointermove', e => {
+      if (drag && e.pointerId === drag.id) {
+        const before = [...drag.list.children].find(c => c !== drag.card && e.clientY < c.getBoundingClientRect().top + c.offsetHeight / 2) || null;
+        if (drag.card.nextElementSibling !== before) drag.list.insertBefore(drag.card, before);
+        return;
+      }
+      if (!swipe || e.pointerId !== swipe.id) return;
+      const dx = e.clientX - swipe.x0, dy = e.clientY - swipe.y0;
+      if (!swipe.moved) { if (Math.abs(dx) < 10 || Math.abs(dx) < Math.abs(dy)) { if (Math.abs(dy) > 10) swipe = null; return; } swipe.moved = true; swipe.card.setPointerCapture(e.pointerId); closeSwipes(swipe.card); swipe.card.classList.add('swiping'); }
+      swipe.card.querySelector('.wk-face').style.transform = `translateX(${Math.max(-110, Math.min(0, swipe.base + dx))}px)`;
+    });
+    const end = e => {
+      if (drag && e.pointerId === drag.id) {
+        drag.card.classList.remove('dragging');
+        const ids = [...drag.list.children].map(c => c.dataset.wk);
+        if (drag.list.dataset.list === 'mine') { WK.list = ids.map(id => WK.list.find(w => w.id === id)).filter(Boolean); saveWorkouts(); }
+        else { try { localStorage.setItem(LIB_ORDER_KEY, JSON.stringify(ids.map(id => (LIB_WK.find(w => w.id === id) || {}).libId))); } catch (err) { } orderLibrary(); }
+        drag = null; return;
+      }
+      if (!swipe || e.pointerId !== swipe.id) return;
+      const { card, moved, base } = swipe, dx = e.clientX - swipe.x0; swipe = null;
+      card.classList.remove('swiping');
+      if (!moved) { if (card.classList.contains('swiped')) { closeSwipes(); e.preventDefault(); } return; }
+      const open = base + dx < -44;
+      card.classList.toggle('swiped', open); card.querySelector('.wk-face').style.transform = open ? 'translateX(-88px)' : '';
+      card.dataset.justSwiped = '1'; setTimeout(() => delete card.dataset.justSwiped, 0);
+    };
+    list.addEventListener('pointerup', end); list.addEventListener('pointercancel', end);
+    list.addEventListener('click', e => {
+      const card = e.target.closest('.wk-card'); if (!card) return;
+      if (card.dataset.justSwiped) { e.stopPropagation(); e.preventDefault(); return; }          // the click that ends a swipe
+      if (card.classList.contains('swiped') && !e.target.closest('[data-wdel]')) { e.stopPropagation(); e.preventDefault(); closeSwipes(); return; }
+      const t = e.target.closest('[data-wtoggle]');
+      if (t) { e.stopPropagation(); const id = t.dataset.wtoggle; WK_OPEN.has(id) ? WK_OPEN.delete(id) : WK_OPEN.add(id);
+        card.classList.toggle('open', WK_OPEN.has(id)); card.querySelector('.wk-details').hidden = !WK_OPEN.has(id); t.setAttribute('aria-expanded', String(WK_OPEN.has(id))); }
+      const d = e.target.closest('[data-wdel]'); if (d) { e.stopPropagation(); deleteWorkout(d.dataset.wdel); }
+    }, true);
+  }
+  addEventListener('pointerdown', e => { if (!e.target.closest('.wk-card.swiped')) closeSwipes(); }, true);
+})();
 
 /* ---------- AI prompt: a written routine -> workout JSON, using this library's exercise ids ---------- */
 function routinePrompt() {

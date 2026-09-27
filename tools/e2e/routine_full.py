@@ -10,7 +10,7 @@ async def main():
         await pg.screenshot(path='/tmp/w_list.png')
         # library workouts are listed on their own; Customize copies one into the user's workouts
         print('library cards:', await pg.evaluate("[...document.querySelectorAll('#libWkList .wk-card h2')].map(h=>h.textContent)"), ' my workouts:', await pg.evaluate("WK.list.length"))
-        await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(400)
+        await pg.click('[data-wtoggle="lib:full-body-routine"]'); await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(400)
         print('after Customize:', await pg.evaluate("[location.hash.startsWith('#/workout/'), WK.list.length, WK.list[0].name, !!WK.list[0].libId]"))
         await pg.screenshot(path='/tmp/w_edit.png', full_page=True)
         # settings dialog on the lunge

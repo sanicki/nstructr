@@ -540,8 +540,9 @@ steps or the joint will windmill; the jump check will catch it.
 | `motion-guide-log-v1` | history sessions (capped at 500) |
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
 | `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |
-| `nstructr-speed-v1` | exercise player's starting speed (`0.5`, `1`, `2`) |
+| `nstructr-speed-v1` | the exercise player's last-used speed (`0.5`, `1`, `2`), where the next exercise starts |
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
+| `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end) |
 
 The mixed prefixes are historical; renaming them would silently wipe users' data. If you consolidate, migrate
 (read old → write new → keep old until confirmed).
@@ -555,7 +556,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `quick_fixes` (start sheet, Duplicate, Authoring-only JSON views, collections
+  `circuits_history_share`, `workouts_tab` (sections, collapsed cards, drag order kept, touch swipe to
+  delete), `quick_fixes` (start sheet, Duplicate, Authoring-only JSON views, collections
   order, QR picture, incline push-up head), `share_links` (library/own workouts and exercises through a link on a
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
@@ -620,15 +622,17 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 1. ✅ Quick fixes (chair incline push-up head, QR picture, no sharing library items, start sheet without sound /
    full screen, Duplicate needs exercises, Bookmarked, Other names, speed remembered, Authoring-only JSON views,
    no history export, collections A–Z, `figure.segments` and `prescription.rounds/sides` removed).
-2. **Workouts tab**: My Workouts heading with Import / New workout under its message; cards collapsed by default
-   (Start + name) and expandable; drag to reorder My Workouts **and** Library workouts (per-user order); swipe left
-   on a My Workouts card shows a trash can, tapping it deletes (no dialog, no undo).
+2. ✅ **Workouts tab**: My Workouts heading with Import / New workout under its message; cards collapsed by default
+   (Start + name) and expandable; drag to reorder My Workouts **and** Library workouts (per-user order,
+   `nstructr-libwk-order-v1`); swipe left on a My Workouts card shows a trash can, tapping it deletes (no dialog,
+   no undo). Filters say "All collections" / "All equipment".
 3. **Exercises tab**: My Exercises collection (the user's own, bookmarked or not; removing a bookmark no longer
    deletes; delete is its own action) → order: Bookmarked, My Exercises, then collections A–Z. Storage change with
    migration.
 4. **Exercise page**: drop the pull-up panel; the page scrolls: controls → About → time → How to do it → Steps
    (collapsible) → Edit. Labels **Side**, **Direction**, **Speed** on the selectors (Leg Circles would be a good
-   exercise needing both Side and Direction). The exercise player follows the Sound setting (Silent / Beeps: quiet;
+   exercise needing both Side and Direction: add it, from https://pilatesology.com/pilatesology-encyclopedia-leg-circles/
+   described in our own words). The exercise player follows the Sound setting (Silent / Beeps: quiet;
    Voice / Coach: read each step's cue on the first pass, then count reps). **Edit details** (words) for everyone
    on their own exercises and copies; Authoring mode adds poses and camera.
 5. **Create with AI** (deep links, no keys): one screen: what it is (a name, a written routine, a YouTube link, a
