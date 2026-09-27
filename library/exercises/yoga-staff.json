@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Sit on the floor with your legs straight out in front of you and together.",
+    "Put your hands on the floor beside your hips."
+  ],
   "facing": "right",
   "keyframes": [
     {

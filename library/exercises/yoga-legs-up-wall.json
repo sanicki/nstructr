@@ -16,6 +16,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Sit sideways with one hip against a wall.",
+    "Swing your legs up the wall as you lower your back to the floor; put a folded blanket under your hips if you like."
+  ],
   "facing": "right",
   "keyframes": [
     {

@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Stand in Mountain Pose and shift your weight onto one foot.",
+    "Lift the other foot and place its sole on the inner calf or thigh, not the knee."
+  ],
   "facing": "right",
   "keyframes": [
     {

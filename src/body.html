@@ -204,23 +204,15 @@
                 <button class="stateful" data-dir="A" aria-pressed="true"><span class="icon">check</span><span class="lbl">Forward</span></button>
                 <button class="stateful" data-dir="B" aria-pressed="false"><span class="icon">check</span><span class="lbl">Backward</span></button>
               </div></div>
-            <div class="ctl"><span class="ctl-label">Speed</span>
-              <div class="segmented" id="speedSeg" role="group" aria-label="Speed">
-                <button class="stateful" data-speed="0.5" aria-pressed="false"><span class="icon">check</span>0.5×</button>
-                <button class="stateful" data-speed="1" aria-pressed="true"><span class="icon">check</span>1×</button>
-                <button class="stateful" data-speed="2" aria-pressed="false"><span class="icon">check</span>2×</button>
-              </div></div>
           </div>
         </div>
         <!-- the details: part of the page (a column beside the figure on wide screens) -->
         <div class="info-col" id="exInfo">
           <div class="ex-head">
-            <span class="overline" id="exKicker"></span>
             <h2 class="headline-small" id="exName"></h2>
             <span class="subtitle muted" id="exSub"></span>
           </div>
           <section class="panel" aria-labelledby="aboutTitle"><h3 class="title-medium" id="aboutTitle">About</h3><div id="aboutPanel"></div></section>
-          <p class="ex-time body-medium" id="exTime"></p>
           <section class="panel" aria-labelledby="howTitle"><h3 class="title-medium" id="howTitle">How to do it</h3><div id="howPanel"></div></section>
           <details class="panel steps-panel" id="stepsPanel"><summary class="stateful"><span class="title-medium" id="stepsTitle">Steps</span><span class="icon chev">expand_more</span></summary><ol class="list" id="stepList"></ol></details>
           <section class="panel edit-panel" id="adjustPanel" aria-labelledby="adjustTitle" hidden>

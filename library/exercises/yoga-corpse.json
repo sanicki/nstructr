@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Lie on your back with your legs long and slightly apart.",
+    "Rest your arms a little away from your sides, palms up; add a blanket if you get cold."
+  ],
   "facing": "right",
   "keyframes": [
     {

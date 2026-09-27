@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Stand with your feet wide apart and parallel, toes turned slightly in.",
+    "Put your hands on your hips."
+  ],
   "facing": "right",
   "keyframes": [
     {

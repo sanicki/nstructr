@@ -31,7 +31,6 @@ async def main():
         print('second load             ', await pg.evaluate("[S.lib.items.length, BOOKMARKS.size]"))
         # unbookmarking your own keeps it in My exercises
         await pg.evaluate("go('#/play/u-my-raise')"); await pg.wait_for_timeout(300)
-        print('kicker                  ', await pg.evaluate("$('#exKicker').textContent"))
         await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
         await pg.evaluate("E.coll='My exercises'; go('#/exercises')"); await pg.wait_for_timeout(200)
         print('unbookmarked, still mine', await pg.evaluate("[isBookmarked('u-my-raise'), [...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)]"))

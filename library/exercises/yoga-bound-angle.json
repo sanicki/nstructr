@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Sit tall with your legs straight out in front of you.",
+    "Bend your knees, bring the soles of your feet together and draw your heels in toward you."
+  ],
   "facing": "right",
   "keyframes": [
     {

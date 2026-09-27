@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Kneel and set your forearms down, clasping your hands with your elbows shoulder-width apart.",
+    "Rest the crown of your head on the floor with the back of it against your hands. Learn this with a teacher."
+  ],
   "facing": "right",
   "keyframes": [
     {

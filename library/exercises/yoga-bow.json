@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Lie on your belly with your arms by your sides and your forehead down.",
+    "Bend your knees and reach back to hold the outsides of your ankles."
+  ],
   "facing": "right",
   "keyframes": [
     {

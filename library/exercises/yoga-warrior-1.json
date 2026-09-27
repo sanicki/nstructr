@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Stand tall, then step one foot back about a leg's length.",
+    "Turn the back foot out a little with the heel down, and face your hips forward."
+  ],
   "facing": "right",
   "keyframes": [
     {

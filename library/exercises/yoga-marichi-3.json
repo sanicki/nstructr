@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Sit tall with both legs straight out in front of you.",
+    "Bend one knee and plant that foot near your sitting bone, beside the straight leg's inner thigh."
+  ],
   "facing": "right",
   "keyframes": [
     {

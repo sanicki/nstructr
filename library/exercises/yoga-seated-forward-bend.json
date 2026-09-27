@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Sit tall with your legs straight out in front of you, feet flexed.",
+    "Sit on a folded blanket if your back rounds."
+  ],
   "facing": "right",
   "keyframes": [
     {

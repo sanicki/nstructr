@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Stand tall in Mountain Pose and shift your weight onto one foot.",
+    "Bend the other knee and hold the inside of that foot or ankle behind you."
+  ],
   "facing": "right",
   "keyframes": [
     {

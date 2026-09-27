@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Sit with your legs out in front and lift one leg over the same-side upper arm, high toward the shoulder.",
+    "Plant your hands beside your hips, shoulder-width apart."
+  ],
   "facing": "right",
   "keyframes": [
     {

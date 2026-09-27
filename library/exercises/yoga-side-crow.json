@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Squat with your feet and knees together, then twist to bring one elbow outside the opposite knee.",
+    "Plant both hands shoulder-width apart beside your feet."
+  ],
   "facing": "right",
   "keyframes": [
     {

@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Stand with your feet about a leg's length apart; turn your front foot out and your back foot slightly in.",
+    "Reach your arms out to the sides at shoulder height."
+  ],
   "facing": "right",
   "keyframes": [
     {

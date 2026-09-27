@@ -29,7 +29,7 @@ The **Exercises** tab is the library: over 130 exercises, each animated step by 
 
 ## The exercise page
 
-<img src="images/exercise-page.png" width="300" alt="An exercise page: the figure, the current step, Side and Speed">
+<img src="images/exercise-page.png" width="300" alt="An exercise page: the figure, the current step and Side">
 
 - **The figure** plays the exercise on a loop (it starts by itself unless you turn off
   [Autoplay](Settings.md#autoplay-exercise-videos)). Tap it to show the controls: previous step, play/pause, next step.
@@ -37,18 +37,15 @@ The **Exercises** tab is the library: over 130 exercises, each animated step by 
 - Under the figure: the **current step**, with its number, name and cue.
 - **Side** (for exercises done one side at a time, such as *Right leg back* / *Left leg back*) and **Direction**
   (for exercises that go two ways, such as arm circles forward and backward) switch what the figure shows.
-- **Speed** (0.5×, 1×, 2×) slows the figure down or speeds it up. The next exercise you open starts at the
-  speed you last picked.
 - The legend (**Right**, **Left**) tells you which colour is which limb.
 
 Scroll down for the details:
 
-<img src="images/exercise-details.png" width="300" alt="About, time per round, How to do it and Steps">
+<img src="images/exercise-details.png" width="300" alt="About, How to do it with the time per round and the source, and Steps">
 
-- **About**: what it is, what it works, its type and suggested reps, and where the
-  description comes from.
-- **Time**: roughly how long one round takes, and whether that's for each side.
-- **How to do it**: setup, form cues and notes.
+- **About**: what it is, what it works, its type and suggested reps.
+- **How to do it**: setup and form cues, then roughly how long one round takes (and whether that's for each
+  side), where the description comes from, and any note on reps.
 - **Steps**: every step in order (tap one to jump the figure to it).
 
 ### Sound on the exercise page

@@ -180,8 +180,7 @@ function selectExercise(id) {
   if (!S.ex) return false;
   S.seg = { ...DEFAULT_SEGMENTS };
   ED.orig = null;
-  S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.speed = defaultSpeed();
-  document.querySelectorAll('#speedSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.speed === S.speed)));
+  S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.speed = 1;
   const dirs = S.ex.direction && S.ex.direction.labels;
   $('#dirCtl').hidden = !dirs;
   if (dirs) document.querySelectorAll('#dirSeg button').forEach(b => { b.querySelector('.lbl').textContent = dirs[b.dataset.dir]; b.setAttribute('aria-pressed', String(b.dataset.dir === 'A')); });
@@ -400,11 +399,6 @@ $('#prevBtn').addEventListener('click', () => jumpTo(S.idx - 1));
 $('#nextBtn').addEventListener('click', () => jumpTo(S.idx + 1));
 $('#sideSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setSide(b.dataset.side); });
 $('#dirSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setDir(b.dataset.dir); });
-$('#speedSeg').addEventListener('click', e => {
-  const b = e.target.closest('button'); if (!b) return;
-  S.speed = +b.dataset.speed; setPref(SPEED_KEY, String(S.speed));           // remembered as the starting speed
-  document.querySelectorAll('#speedSeg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-});
 $('#backBtn').addEventListener('click', () => {
   if (S.view === 'wplay') { exitWorkout(); return; }
   if (S.view === 'workout') { go('#/workouts'); return; }

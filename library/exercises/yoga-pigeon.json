@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Start on your hands and knees.",
+    "Bring one knee forward behind that wrist, with the shin angled across in front of you, and slide the other leg back."
+  ],
   "facing": "right",
   "keyframes": [
     {

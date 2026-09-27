@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Start on your hands and knees, hands a little ahead of your shoulders.",
+    "Tuck your toes under before you lift your hips."
+  ],
   "facing": "right",
   "keyframes": [
     {

@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Start in a high plank: hands under your shoulders, legs straight, body in one line.",
+    "Shift a little forward onto your toes before you lower."
+  ],
   "facing": "right",
   "keyframes": [
     {
