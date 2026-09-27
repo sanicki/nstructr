@@ -424,7 +424,7 @@ document.querySelector('.shell').addEventListener('click', e => {
   const t = e.target.closest('button, a'); if (!t) return;
   const d = t.dataset;
   if (d.open) go(`#/play/${encodeURIComponent(d.open)}`);
-  else if (d.coll) { E.coll = d.coll; E.type = 'All'; E.equip = 'Any'; renderExplore(); scrollTo(0, 0); }
+  else if (d.coll) { E.coll = d.coll; E.type = 'All'; renderExplore(); scrollTo(0, 0); }
   else if (d.type) { E.type = d.type; renderExplore(); }
   else if (d.equip) { E.equip = d.equip; renderExplore(); }
   else if (d.step != null) jumpTo(+d.step);

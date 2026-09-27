@@ -65,19 +65,23 @@ function renderExplore() {
     : E.coll === 'All' ? [...POSE_DB.exercises, ...mine] : POSE_DB.exercises.filter(ex => (ex.library || 'Other') === E.coll);
   const types = [...new Set(scope.map(typeOf).filter(Boolean))].sort();
   const equip = [...new Set(scope.flatMap(ex => ex.equipment || []))].sort();
-  let more = '';
-  if (E.coll !== 'All' && E.coll !== SAVED && E.coll !== MINE && types.length > 1) more += chip('data-type', 'All', E.type === 'All', 'All types') + types.map(t => chip('data-type', t, E.type === t)).join('');
-  if (equip.length > 1) more += (more ? '<span class="chip-sep" aria-hidden="true"></span>' : '') + chip('data-equip', 'Any', E.equip === 'Any', 'All equipment') + equip.map(q => chip('data-equip', q, E.equip === q)).join('');
-  $('#fMore').innerHTML = more;
-  $('#fMore').hidden = !more;
+  // type and equipment each get their own row, so neither scrolls out of sight behind the other. Equipment shows
+  // whenever it can narrow the list: two kinds, or one kind that only some of the exercises use
+  const showType = E.coll !== 'All' && E.coll !== SAVED && E.coll !== MINE && types.length > 1;
+  const showEquip = equip.length > 1 || (equip.length === 1 && scope.some(ex => !(ex.equipment || []).length));
+  const eq = equip.includes(E.equip) ? E.equip : 'Any';     // the choice is kept across collections; one without it shows all
+  $('#fType').innerHTML = showType ? chip('data-type', 'All', E.type === 'All', 'All types') + types.map(t => chip('data-type', t, E.type === t)).join('') : '';
+  $('#fType').hidden = !showType;
+  $('#fEquip').innerHTML = showEquip ? chip('data-equip', 'Any', eq === 'Any', 'All equipment') + equip.map(q => chip('data-equip', q, eq === q)).join('') : '';
+  $('#fEquip').hidden = !showEquip;
   $('#clearSearch').hidden = !E.q;
 
   const q = E.q.trim().toLowerCase();
   const list = scope.filter(ex => (E.type === 'All' || typeOf(ex) === E.type) &&
-    (E.equip === 'Any' || (ex.equipment || []).includes(E.equip)) &&
+    (eq === 'Any' || (ex.equipment || []).includes(eq)) &&
     (!q || [ex.name, ex.sanskrit, ex.category, ex.focus, ex.library, ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q))));
   const body = $('#exploreBody');
-  if (E.coll === 'All' && E.type === 'All' && E.equip === 'Any' && !q) {
+  if (E.coll === 'All' && E.type === 'All' && eq === 'Any' && !q) {
     // browsing: one shelf per collection, Saved first
     const shelf = (c, items) => `<section class="section"><div class="section-head">
         <h2 class="title-medium">${esc(c)}<span class="count">${items.length}</span></h2>

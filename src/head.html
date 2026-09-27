@@ -274,6 +274,7 @@ dialog.library[open]{display:flex;flex-direction:column}
 .search:focus-within{outline:3px solid var(--md-primary);outline-offset:0}
 .filters{display:flex;gap:8px;overflow-x:auto;padding:12px 16px 8px;scrollbar-width:none}
 .filters::-webkit-scrollbar{display:none}
+.filters+.filters{padding-top:0}
 .filter{flex:none;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 16px;border-radius:var(--shape-s);border:1px solid var(--md-outline-variant);
   color:var(--md-on-surface-variant);font-weight:500;letter-spacing:.1px}
 .filter[aria-pressed="true"]{background:var(--md-secondary-container);color:var(--md-on-secondary-container);border-color:transparent;padding-left:8px}
@@ -390,7 +391,6 @@ body[data-view="player"] .view{padding-bottom:32px}
 .ex-head .chips{margin:12px 0 4px}
 .tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:11px;line-height:16px;font-weight:500;background:var(--md-surface-container-highest);color:var(--md-on-surface-variant)}
 .actions.actions-top{margin:4px 0 16px;justify-content:flex-start;flex-direction:row-reverse}
-.chip-sep{flex:none;width:1px;align-self:stretch;margin:4px 4px;background:var(--md-outline-variant)}
 .note{padding:12px 14px;border-radius:var(--shape-m);background:var(--md-surface-container);display:flex;gap:10px}
 .note .icon{color:var(--md-primary);font-size:20px}
 
@@ -453,11 +453,17 @@ body[data-view="player"] .view{padding-bottom:32px}
 .danger{color:var(--md-error)!important}
 .form-row{margin:0 0 16px}
 .form-row>label,.form-row>.lbl{display:block;font-size:12px;line-height:16px;font-weight:500;color:var(--md-on-surface-variant);margin-bottom:6px}
-.form-row .segmented{max-width:100%;overflow-x:auto;scrollbar-width:none}
-.form-row .segmented button{flex:none}
+.form-row .segmented{display:flex;width:100%;height:auto;min-height:40px}
+.form-row .segmented button{flex:1 1 auto;min-width:0;padding:6px 8px;white-space:normal;line-height:1.2;text-align:center}   /* long side names wrap instead of running off the edge */
+.form-row .segmented button .icon{display:none}
 .stepper{display:inline-flex;align-items:center;gap:4px}
 .stepper output{min-width:56px;text-align:center;font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
 .stepper .icon-btn{width:40px;height:40px;border:1px solid var(--md-outline-variant)}
+.stepper .num-field{width:72px;height:40px;text-align:center;font:inherit;font-size:20px;font-weight:500;font-variant-numeric:tabular-nums;color:var(--md-on-surface);
+  background:var(--md-surface-container-highest);border:0;border-bottom:1px solid var(--md-on-surface-variant);border-radius:4px 4px 0 0;-moz-appearance:textfield}
+.stepper .num-field::-webkit-inner-spin-button,.stepper .num-field::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.stepper .unit{margin-left:2px;color:var(--md-on-surface-variant)}
+.stepper .num-field:focus-visible{outline:none;border-bottom:2px solid var(--md-primary)}
 .pick-list{list-style:none;margin:0;padding:4px 8px 24px;overflow:auto;flex:1}
 .pick-list li label{display:flex;align-items:center;gap:12px;padding:6px 8px;border-radius:var(--shape-m);cursor:pointer}
 .pick-list li label:hover{background:var(--md-surface-container-high)}

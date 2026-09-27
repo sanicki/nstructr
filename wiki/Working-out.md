@@ -1,0 +1,54 @@
+# Working out
+
+[← User guide](Home.md)
+
+Tap ▶ on a workout to start. The player fills the screen with the figure, the exercise's name, the count, and a
+caption of what's being said.
+
+<img src="images/cover-player.png" width="300" alt="The workout player on the cover screen">
+
+## Controls
+
+| To | Do this |
+|---|---|
+| Show the controls | Tap anywhere. (The first tap only shows them.) |
+| Pause / play | Show the controls, then tap the big button |
+| Previous / next step | The buttons either side of it |
+| Next / previous **exercise** | Swipe left / right (with the controls hidden) |
+| Hide the controls | Tap an empty spot, or wait: they fade after a few seconds while playing |
+| **Leave the workout** | **Hold ✕** for about a second. A tap only reminds you to hold. |
+| Pause with a keyboard | Space |
+
+<img src="images/cover-player-controls.png" width="300" alt="The controls: exit, sound, previous, pause, next">
+
+The chip at the top right shows the **sound** mode; tap it to change it for this workout.
+
+## Rests
+
+Between exercises (and sets and rounds) a big countdown shows what's next. **+15 s** adds time; **Skip** moves
+on. Beeps count down the last 3 seconds in Beeps, Voice and Coach modes.
+
+<img src="images/cover-rest.png" width="300" alt="A rest: countdown, what's next, +15 s and Skip">
+
+## Sound
+
+| Mode | You hear |
+|---|---|
+| **Silent** | Nothing. Captions still show what would be said. |
+| **Beeps** | A 3-2-1 before rests and holds end, a chime when switching |
+| **Voice** | The exercise's name, side and direction switches, rests, what's next |
+| **Coach** | Voice, plus a **guided run-through** of each exercise: one slow pass reading every step's cue, then counted reps ("Halfway", "Last one") |
+
+The voice is your phone's own text-to-speech, so it works offline. It never talks over itself: a count is skipped
+rather than interrupting a sentence. Pausing stops it; playing again re-reads the current step.
+
+## Stopping and resuming
+
+- Your place is saved after every exercise. If you leave (hold ✕, or the phone locks), a **Resume** card on the
+  Workouts tab takes you back.
+- A finished workout goes into **History**.
+
+## Full screen and the screen staying on
+
+In the browser, workouts go full screen unless you turn that off in [Settings](Settings.md#full-screen). The
+installed app is always full screen. The screen stays on while a workout plays.

@@ -1,6 +1,7 @@
 # NstructR — working notes for Claude Code
 
 Read `HANDOFF.md` first: formats, engine pipeline, validation rules, design decisions, roadmap, open questions.
+The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wiki/images/`); update it with user-visible changes.
 
 ## Commands
 - `npm install` (once) · `node tools/build.mjs` (validate + animation checks + bundle + `_site/`)

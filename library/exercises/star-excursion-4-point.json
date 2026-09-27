@@ -40,8 +40,8 @@
       "name": "Stand in the middle",
       "cue": "Left foot in the middle, hands on hips.",
       "view": "side",
-      "durationMs": 1200,
-      "holdMs": 800,
+      "durationMs": 600,
+      "holdMs": 400,
       "anchor": "ankleL",
       "plant": [
         "L",
@@ -66,8 +66,8 @@
       "name": "Balance on the left leg",
       "cue": "Lift the right foot. Keep the left heel down.",
       "view": "side",
-      "durationMs": 1000,
-      "holdMs": 600,
+      "durationMs": 500,
+      "holdMs": 300,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -90,8 +90,8 @@
       "name": "Reach forward",
       "cue": "Forward. Bend the standing knee and tap lightly.",
       "view": "side",
-      "durationMs": 1400,
-      "holdMs": 900,
+      "durationMs": 700,
+      "holdMs": 450,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -124,8 +124,8 @@
       "name": "Back to the middle",
       "cue": "Back to the middle.",
       "view": "side",
-      "durationMs": 1000,
-      "holdMs": 400,
+      "durationMs": 500,
+      "holdMs": 200,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -148,8 +148,8 @@
       "name": "Reach right",
       "cue": "Out to the right.",
       "view": "front",
-      "durationMs": 1400,
-      "holdMs": 900,
+      "durationMs": 700,
+      "holdMs": 450,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -182,8 +182,8 @@
       "name": "Back to the middle",
       "cue": "Back to the middle.",
       "view": "side",
-      "durationMs": 1000,
-      "holdMs": 400,
+      "durationMs": 500,
+      "holdMs": 200,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -206,8 +206,8 @@
       "name": "Reach back",
       "cue": "Straight back.",
       "view": "side",
-      "durationMs": 1400,
-      "holdMs": 900,
+      "durationMs": 700,
+      "holdMs": 450,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -240,8 +240,8 @@
       "name": "Back to the middle",
       "cue": "Back to the middle.",
       "view": "side",
-      "durationMs": 1000,
-      "holdMs": 400,
+      "durationMs": 500,
+      "holdMs": 200,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -264,8 +264,8 @@
       "name": "Behind the standing heel",
       "cue": "Take the foot back behind your standing heel.",
       "view": "side",
-      "durationMs": 600,
-      "holdMs": 150,
+      "durationMs": 300,
+      "holdMs": 100,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -289,8 +289,8 @@
       "name": "Reach left",
       "cue": "Left, crossing behind your standing leg.",
       "view": "front",
-      "durationMs": 1400,
-      "holdMs": 900,
+      "durationMs": 700,
+      "holdMs": 450,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -326,8 +326,8 @@
       "name": "Behind the standing heel",
       "cue": "Bring the foot back behind your heel.",
       "view": "side",
-      "durationMs": 600,
-      "holdMs": 150,
+      "durationMs": 300,
+      "holdMs": 100,
       "anchor": "ankleL",
       "plant": [
         "L"
@@ -351,8 +351,8 @@
       "name": "Back to the middle",
       "cue": "Return the foot, then put it down to finish the round.",
       "view": "side",
-      "durationMs": 1000,
-      "holdMs": 400,
+      "durationMs": 500,
+      "holdMs": 200,
       "anchor": "ankleL",
       "plant": [
         "L"

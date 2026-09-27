@@ -49,6 +49,9 @@ function customizeWorkout(w) {
 
 /* ---------- timing ---------- */
 const stepMs = k => (k.durationMs || 0) + (k.holdMs == null ? 500 : k.holdMs);
+/* one rep at the exercise's own pace, in seconds; a workout item's "tempo" divides it (2 = twice as fast) */
+function repSeconds(ex) { const ph = phaseInfo(ex.keyframes); return ph.rep.reduce((s, i) => s + stepMs(ex.keyframes[i]), 0) / 1000; }
+const round1 = x => Math.round(x * 10) / 10;
 function itemSeconds(item) {
   const ex = exById(item.ex); if (!ex) return 0;
   const kfs = ex.keyframes, ph = phaseInfo(kfs), t = item.tempo || 1;
@@ -88,7 +91,7 @@ function itemSummary(item) {
   const bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels;
   if (item.sides) parts.push(item.sides === 'both' ? (ex.measure === 'time' ? 'each side' : 'per side') : item.sides === 'alternate' ? 'alternating sides' : `${(bl && bl[item.sides]) || item.sides} only`);
   if (item.dir) parts.push(item.dir === 'both' ? 'each direction' : item.dir === 'alternate' ? 'alternating directions' : `${(dl && dl[item.dir]) || item.dir} only`);
-  if (item.tempo && item.tempo !== 1) parts.push(`${item.tempo}× speed`);
+  if (item.tempo && item.tempo !== 1 && ex.measure !== 'time') parts.push(`${round1(repSeconds(ex) / item.tempo)} s per rep`);
   return parts.join(', ');
 }
 
@@ -319,10 +322,13 @@ function openItemSettings(uid_) {
   const bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels;
   $('#itemForm').innerHTML =
     (ex.measure === 'time' ? stepper('seconds', 'Hold for', 5, 600, 5, ' s') : stepper('reps', ex.repName && ex.repName !== 'rep' ? `${cap(ex.repName)}s` : 'Reps', 1, 200, 1, '')) +
-    stepper('sets', 'Sets', 1, 10, 1, '') + stepper('rest', 'Rest between sets', 0, 300, 5, ' s') +
+    stepper('sets', 'Sets', 1, 10, 1, '') + stepper('rest', 'Rest between sets', 0, 300, 5, ' s').replace('class="form-row"', `class="form-row" id="restRow"${ITEM_EDIT.sets > 1 ? '' : ' hidden'}`) +
     (bl ? seg('sides', 'Sides', [['L', bl.L || 'Left'], ['R', bl.R || 'Right'], ['both', 'Both'], ['alternate', 'Alternate']]) : '') +
     (dl ? seg('dir', 'Direction', [['A', dl.A], ['B', dl.B], ['both', 'Both'], ['alternate', 'Alternate']]) : '') +
-    seg('tempo', 'Speed', [[0.5, '0.5×'], [0.75, '0.75×'], [1, '1×'], [1.25, '1.25×'], [1.5, '1.5×']]) +
+    (ex.measure === 'time' ? '' : `<div class="form-row"><span class="lbl">Seconds per ${esc(ex.repName || 'rep')}<span class="body-small muted" style="display:block">Usual: ${round1(repSeconds(ex))} s</span></span><div class="stepper">
+      <button class="icon-btn stateful" data-rep-delta="-0.1" aria-label="Faster"><span class="icon">remove</span></button>
+      <input id="st-repSec" class="num-field" type="number" inputmode="decimal" step="0.1" min="${round1(Math.max(0.3, repSeconds(ex) / 4))}" max="${round1(repSeconds(ex) * 4)}" value="${round1(repSeconds(ex) / (ITEM_EDIT.tempo || 1))}" aria-label="Seconds per rep">
+      <button class="icon-btn stateful" data-rep-delta="0.1" aria-label="Slower"><span class="icon">add</span></button></div></div>`) +
     `<p class="body-small muted" style="margin:0">${ex.measure === 'time' ? '' : (bl || dl) && (ITEM_EDIT.sides === 'both' || ITEM_EDIT.dir === 'both' || ITEM_EDIT.sides === 'alternate' || ITEM_EDIT.dir === 'alternate') ? 'Reps count for each side or direction. ' : ''}Estimated time: <span id="itemEst">${fmtMin(itemSeconds(ITEM_EDIT))}</span></p>`;
   $('#itemDialog').showModal();
 }
@@ -331,7 +337,9 @@ $('#itemForm').addEventListener('click', e => {
   if (s) {
     const k = s.dataset.stepKey, v = Math.min(+s.dataset.max, Math.max(+s.dataset.min, (+ITEM_EDIT[k] || 0) + +s.dataset.delta));
     ITEM_EDIT[k] = v; $('#st-' + k).textContent = v + (k === 'seconds' || k === 'rest' ? ' s' : '');
+    if (k === 'sets') $('#restRow').hidden = v < 2;           // rest between sets only means something with 2+ sets
   }
+
   const g = e.target.closest('[data-seg-key]');
   if (g) {
     const k = g.dataset.segKey; ITEM_EDIT[k] = k === 'tempo' ? +g.dataset.val : g.dataset.val;
@@ -339,6 +347,16 @@ $('#itemForm').addEventListener('click', e => {
   }
   if (s || g) $('#itemEst').textContent = fmtMin(itemSeconds(ITEM_EDIT));
 });
+/* seconds per rep -> the item's tempo (kept as a multiplier in files, so older files mean the same) */
+holdRepeat($('#itemForm'), '[data-rep-delta]', b => { const f = $('#st-repSec'); f.value = round1((+f.value || 0) + +b.dataset.repDelta); setRepSeconds(); f.value = round1(repSeconds(exById(ITEM_EDIT.ex)) / (ITEM_EDIT.tempo || 1)); });
+function setRepSeconds() {
+  const f = $('#st-repSec'), ex = ITEM_EDIT && exById(ITEM_EDIT.ex); if (!f || !ex) return;
+  const nat = repSeconds(ex), sec = Math.min(+f.max, Math.max(+f.min, round1(+f.value || nat)));
+  ITEM_EDIT.tempo = sec === round1(nat) ? 1 : Math.round(nat / sec * 1000) / 1000;
+  $('#itemEst').textContent = fmtMin(itemSeconds(ITEM_EDIT));
+}
+$('#itemForm').addEventListener('change', e => { if (e.target.id === 'st-repSec') { setRepSeconds(); const f = e.target, ex = exById(ITEM_EDIT.ex); f.value = round1(repSeconds(ex) / (ITEM_EDIT.tempo || 1)); } });
+$('#itemForm').addEventListener('input', e => { if (e.target.id === 'st-repSec' && e.target.value !== '') setRepSeconds(); });
 $('#itemSave').addEventListener('click', () => {
   if ($('#itemDialog').dataset.mode === 'block') {
     const b = EDIT.blocks.find(x => x.id === BLOCK_EDIT.id); if (b) { b.rounds = BLOCK_EDIT.rounds; b.roundRest = BLOCK_EDIT.roundRest; }
