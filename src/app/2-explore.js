@@ -1,9 +1,6 @@
-/* ===================== UI: Exercises (the library + Saved) ===================== */
-const COLLECTION_ORDER = ['Warm-up', 'Bodyweight', 'Core', 'Free weights', 'Pilates', 'Chair-based', 'Stretches', 'Resistance band', 'Balance', 'Yoga poses'];
-const collections = () => {
-  const set = new Set(POSE_DB.exercises.map(ex => ex.library || 'Other'));
-  return [...COLLECTION_ORDER.filter(c => set.has(c)), ...[...set].filter(c => !COLLECTION_ORDER.includes(c)).sort()];
-};
+/* ===================== UI: Exercises (the library + Bookmarked) ===================== */
+/* the library's collections (each exercise's "library" field), alphabetically; Bookmarked comes before them */
+const collections = () => [...new Set(POSE_DB.exercises.map(ex => ex.library || 'Other'))].sort((a, b) => a.localeCompare(b));
 const typeOf = ex => ex.focus || ex.category || '';
 const isSaved = id => S.lib.items.some(it => it.id === id);
 const E = { coll: 'All', type: 'All', equip: 'Any', q: '' };
@@ -18,7 +15,7 @@ function thumbFor(ex) {
 }
 function card(ex) {
   return `<button class="pose-card stateful" data-open="${esc(ex.id)}">
-    ${thumbFor(ex)}${isSaved(ex.id) ? '<span class="badge" title="Saved"><span class="icon fill">bookmark</span></span>' : ''}
+    ${thumbFor(ex)}${isSaved(ex.id) ? '<span class="badge" title="Bookmarked"><span class="icon fill">bookmark</span></span>' : ''}
     <span class="t title-small">${esc(ex.name)}</span>
     <span class="meta body-small">${esc(ex.sanskrit || typeOf(ex))}</span></button>`;
 }
@@ -26,9 +23,9 @@ const chip = (attr, val, on, label = val) =>
   `<button class="filter stateful" ${attr}="${esc(val)}" aria-pressed="${on}"><span class="icon">check</span>${esc(label)}</button>`;
 
 /* ---------- Exercises ----------
-   "Saved" is a collection like the others: bookmarked library exercises plus the user's own (imported or made),
+   "Bookmarked" is a collection like the others: bookmarked library exercises plus the user's own (imported or made),
    which exist only there. Searching "All" covers both. */
-const SAVED = 'Saved';
+const SAVED = 'Bookmarked';
 const ownExercises = () => S.lib.items.filter(ex => !findInDb(ex.id));
 function renderExplore() {
   const colls = collections(), nSaved = S.lib.items.length;
@@ -60,7 +57,7 @@ function renderExplore() {
     return;
   }
   if (E.coll === SAVED && !nSaved && !q) {
-    body.innerHTML = `<div class="empty-state"><span class="icon">bookmarks</span><p class="title-medium" style="margin:8px 0 4px">Nothing saved yet</p>
+    body.innerHTML = `<div class="empty-state"><span class="icon">bookmarks</span><p class="title-medium" style="margin:8px 0 4px">Nothing bookmarked yet</p>
       <p class="muted" style="margin:0 0 16px">Tap the bookmark on any exercise to keep it here. Exercises you import land here too.</p>
       <div class="row" style="justify-content:center"><button class="btn tonal stateful" data-act="import"><span class="icon">upload_file</span>Import</button></div></div>`;
     return;

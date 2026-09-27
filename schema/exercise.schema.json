@@ -84,12 +84,6 @@
         "reps": {
           "type": "string"
         },
-        "rounds": {
-          "type": "number"
-        },
-        "sides": {
-          "type": "string"
-        },
         "note": {
           "type": "string"
         }
@@ -169,18 +163,6 @@
             }
           },
           "additionalProperties": false
-        }
-      }
-    },
-    "figure": {
-      "type": "object",
-      "properties": {
-        "segments": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "number",
-            "exclusiveMinimum": 0
-          }
         }
       }
     },
@@ -490,8 +472,18 @@
           "type": "object",
           "description": "Draw a leg behind or in front of the body for the move into and out of this step (by default the left leg is behind, the right in front). For crossing behind or in front of the standing leg.",
           "properties": {
-            "legL": { "enum": ["front", "back"] },
-            "legR": { "enum": ["front", "back"] }
+            "legL": {
+              "enum": [
+                "front",
+                "back"
+              ]
+            },
+            "legR": {
+              "enum": [
+                "front",
+                "back"
+              ]
+            }
           },
           "additionalProperties": false
         },

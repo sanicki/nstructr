@@ -151,7 +151,7 @@ All in `src/core.js`.
 - Stage: `W = 400`, `CX = 200`, `FLOOR = 360` (SVG units; y grows downward).
 - Segments (`DEFAULT_SEGMENTS`): torso 100 (two halves: lower back `torso`, upper back `chest`), neck 14,
   head radius 18, upper arm 55, forearm 50, thigh 80, shin 80, foot 22 (`footFront` 12), shoulder half-width 22,
-  hip half-width 12. An exercise may override via `figure.segments`. The figure is ~310 units tall ≈ 170 cm
+  hip half-width 12 (the same for every exercise; the per-exercise `figure.segments` override was removed, unused). The figure is ~310 units tall ≈ 170 cm
   (≈ 1.8 units/cm) — use this to size equipment.
 - **Joints** (all degrees, **relative to the parent bone**, **positive = clockwise on screen**; at 0 the spine
   points up and limbs hang down): `root torso chest neck shoulderL/R elbowL/R hipL/R kneeL/R ankleL/R`, plus
@@ -191,7 +191,7 @@ The schemas in `schema/` are authoritative for structure. This section is the me
   "equipment": ["Wall"],               // free text, used for filters and the "You'll need" list
   "description": "…", "setup": ["…"], "cues": ["…"],   // cues[0] is also spoken by Coach
   "source": { "url": "…", "title": "…", "note": "…" },
-  "prescription": { "reps": "8–12 each leg", "rounds": 3, "note": "…" },  // display text only
+  "prescription": { "reps": "8–12 each leg", "note": "…" },  // display text only ("3 rounds each leg" is fine)
   "measure": "reps" | "time",          // how a workout counts it
   "repName": "circle",                 // "3/10 circles"; default "rep"
   "holdStep": 1,                       // time-based: which step is the hold
@@ -199,7 +199,6 @@ The schemas in `schema/` are authoritative for structure. This section is the me
   "bilateral": { "labels": { "L": "Right leg back", "R": "Left leg back" } },
   "direction": { "labels": { "A": "Forward", "B": "Backward" } },   // B = rep steps played in reverse
   "facing": "right", "anchorX": 0,
-  "figure": { "segments": { "thigh": 85 } },
   "floorGuide": { "type": "star", "arms": 8 },   // top-down compass (Star Excursion, Hip Circles)
   "props": [ … ],
   "keyframes": [ … ]
@@ -285,11 +284,14 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   (saved), history, settings: {sound, fullscreen?}}`. Importing it (any import path detects the format)
   **merges** by id: backup items replace same-id items, nothing is deleted, importing twice changes nothing.
 - Export: exercise JSON from the exercise page; workout JSON / Share (Web Share with a `.json` file, falling back
-  to a download) from the editor; "Export your exercises" on Create; history export on the Workouts tab.
+  to a download) from the editor; "Export your exercises" in Settings (Authoring mode). JSON views (workout
+  editor "JSON", exercise "Show JSON", "Export your exercises") show only in **Authoring mode** (class
+  `authoring-only`, hidden unless `body.authoring`).
 - History (`nstructr/log`): `{sessions: [{id, workout, library? (true for a library workout), name, start, end (ISO), seconds, completed,
   exercisesDone, exercisesTotal, exercises: [{ex, name, category, measure, sets, reps|seconds, sides, dir,
-  block, round}]}]}`. Stopped-early sessions are logged with `completed: false`. Designed so an external logger
-  (the owner's Health Connect logger project) can read it.
+  block, round}]}]}`. Stopped-early sessions are logged with `completed: false`. It was designed for the owner's
+  Health Connect logger, which was dropped, so the separate history export was removed (Sep 2026); history is
+  still in **Export everything**.
 
 ---
 
@@ -488,8 +490,7 @@ steps or the joint will windmill; the jump check will catch it.
 
 ## 10. UI inventory (current)
 
-- **Workouts**: Resume card, your workout cards (Start/Edit, est. time, count, equipment), Library workouts (Start/Customize), History (delete, clear,
-  export). Editor: name, rest between exercises, blocks (rename, move, delete, repeat as circuit with rounds and
+- **Workouts**: Resume card, your workout cards (Start/Edit, est. time, count, equipment), Library workouts (Start/Customize), History (delete, clear). Editor: name, rest between exercises, blocks (rename, move, delete, repeat as circuit with rounds and
   rest), items (drag handle, settings sheet with reps/seconds, sets, rest, sides, direction, speed; menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
 - **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; type/focus,
@@ -554,7 +555,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `share_links` (library/own workouts and exercises through a link on a
+  `circuits_history_share`, `quick_fixes` (start sheet, Duplicate, Authoring-only JSON views, collections
+  order, QR picture, incline push-up head), `share_links` (library/own workouts and exercises through a link on a
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
@@ -594,6 +596,9 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    forms YAML; if the JSON is too long for the URL, copy to clipboard and ask to paste) → an Action validates
    with `tools/build.mjs` logic, renders a preview (headless browser → GIF/PNG), comments, and opens a PR. Prompt
    and form require original wording + source link + license checkbox.
+   **The `library` field** (which collection an exercise belongs to: "Bodyweight", "Yoga poses"…) matters for
+   exercises accepted into the library: the submission form (or review) must set it; users' own exercises don't
+   need it (they live under My Exercises).
    **Owner's requirement:** editing exercises and workouts in the app is easy on purpose, so submitting must be a
    **deliberate, user-triggered action** on something the user chooses (e.g. "Submit this exercise"), ideally
    batching several items into one submission — never a PR per edit or anything automatic.
@@ -601,6 +606,35 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    leg press, lat pulldown; then cardio machines). Two small open choices in §14.
 9. **Experiments**: Flex mode layout (viewport segments; figure on the top half), voice commands (optional;
    browser speech recognition is flaky/online-only).
+
+10. **Later / ideas**:
+    - **AI with API keys**: the Create with AI screen calling the provider directly (the user's own key, kept on the
+      device): Gemini for YouTube links and videos, the others with photos (videos as still frames); feed the
+      animation checks' errors back to the model to fix its JSON. **Self-hosted models** (an OpenAI-compatible
+      address) in the same mode; their server must allow browser requests (CORS).
+    - **Linked variations**: an exercise names its easier/harder versions (knee push-up ↔ push-up ↔ decline
+      push-up), so a workout can swap one for another.
+
+### Agreed next (Sep 2026, in this order)
+
+1. ✅ Quick fixes (chair incline push-up head, QR picture, no sharing library items, start sheet without sound /
+   full screen, Duplicate needs exercises, Bookmarked, Other names, speed remembered, Authoring-only JSON views,
+   no history export, collections A–Z, `figure.segments` and `prescription.rounds/sides` removed).
+2. **Workouts tab**: My Workouts heading with Import / New workout under its message; cards collapsed by default
+   (Start + name) and expandable; drag to reorder My Workouts **and** Library workouts (per-user order); swipe left
+   on a My Workouts card shows a trash can, tapping it deletes (no dialog, no undo).
+3. **Exercises tab**: My Exercises collection (the user's own, bookmarked or not; removing a bookmark no longer
+   deletes; delete is its own action) → order: Bookmarked, My Exercises, then collections A–Z. Storage change with
+   migration.
+4. **Exercise page**: drop the pull-up panel; the page scrolls: controls → About → time → How to do it → Steps
+   (collapsible) → Edit. Labels **Side**, **Direction**, **Speed** on the selectors (Leg Circles would be a good
+   exercise needing both Side and Direction). The exercise player follows the Sound setting (Silent / Beeps: quiet;
+   Voice / Coach: read each step's cue on the first pass, then count reps). **Edit details** (words) for everyone
+   on their own exercises and copies; Authoring mode adds poses and camera.
+5. **Create with AI** (deep links, no keys): one screen: what it is (a name, a written routine, a YouTube link, a
+   photo or video) → provider (default in Settings: Claude, ChatGPT, Gemini, Grok, DeepSeek…) → open it with the
+   prompt filled in (copy where the provider can't take it in the link) → paste the JSON back. One prompt that can
+   return an exercise or a workout.
 
 ---
 

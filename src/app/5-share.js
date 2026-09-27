@@ -79,6 +79,7 @@ async function openShare(what) {
   $('#shareQr').innerHTML = url.length <= QR_MAX ? qrSvg(url)
     : `<p class="body-small muted">Too long for a QR code (${url.length} characters): share the link or the file instead.</p>`;
   $('#shareSend').hidden = !navigator.share;
+  $('#shareQrImg').hidden = !$('#shareQr svg');
   $('#shareDialog').showModal();
 }
 /* a QR code as SVG: dark on white always (whatever the theme), with the standard quiet zone */
@@ -90,6 +91,24 @@ function qrSvg(text) {
     return `<svg viewBox="0 0 ${n + 2 * m} ${n + 2 * m}" role="img" aria-label="QR code for the link" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
   } catch (e) { return '<p class="body-small muted">Couldn\'t make a QR code for this link.</p>'; }
 }
+/* the QR code as a picture (PNG): to the share sheet, or saved where sharing files isn't possible */
+$('#shareQrImg').addEventListener('click', async () => {
+  const svg = $('#shareQr svg'); if (!SHARING || !svg) return;
+  try {
+    const img = new Image(), size = 720;
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(new XMLSerializer().serializeToString(svg));
+    await img.decode();
+    const c = document.createElement('canvas'); c.width = c.height = size;
+    const g = c.getContext('2d'); g.imageSmoothingEnabled = false; g.fillStyle = '#fff'; g.fillRect(0, 0, size, size); g.drawImage(img, 0, 0, size, size);
+    const blob = await new Promise(res => c.toBlob(res, 'image/png'));
+    const name = (SHARING.name || 'nstructr').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-').toLowerCase() + '-qr.png';
+    const file = new File([blob], name, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) { await navigator.share({ files: [file], title: SHARING.name }); return; }
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+    snack(`Saved ${name}`);
+  } catch (e) { if (!e || e.name !== 'AbortError') snack("Couldn't make the picture. Share the link instead."); }
+});
 $('#shareCopy').addEventListener('click', () => SHARING && copyText(SHARING.url, 'Link copied'));
 $('#shareSend').addEventListener('click', async () => {
   if (!SHARING) return;
@@ -123,7 +142,7 @@ async function openSharedLink(payload) {
     $('#linkBody').innerHTML = `<p class="title-medium" style="margin:0 0 4px">${esc(ex.name || 'Exercise')}</p>
       <p class="body-medium muted" style="margin:0 0 8px">${esc([ex.focus, ex.category, (ex.equipment || []).join(', ')].filter(Boolean).join(' · '))}</p>
       ${ex.description ? `<p class="body-small" style="margin:0 0 8px">${esc(ex.description)}</p>` : ''}
-      <p class="body-small muted" style="margin:0">Adding it puts it in Saved, as your own exercise. Nothing is added unless you tap Add.</p>`;
+      <p class="body-small muted" style="margin:0">Adding it puts it in Bookmarked, as your own exercise. Nothing is added unless you tap Add.</p>`;
   }
   $('#linkDialog').showModal();
 }

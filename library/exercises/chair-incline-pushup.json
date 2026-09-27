@@ -73,13 +73,13 @@
         }
       ],
       "pose": {
-        "root": 59.5,
-        "shoulderL": 30.5,
-        "shoulderR": 30.5,
+        "root": 57,
+        "shoulderL": -10,
+        "shoulderR": -10,
         "elbowL": -90,
         "elbowR": -90,
-        "ankleL": 30.5,
-        "ankleR": 30.5
+        "ankleL": 4,
+        "ankleR": 4
       },
       "phase": "rep"
     }

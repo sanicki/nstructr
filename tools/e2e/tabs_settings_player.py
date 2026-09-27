@@ -20,12 +20,16 @@ async def main():
         print('first shelf             ', await pg.evaluate("document.querySelector('#exploreBody .section-head h2').textContent"))
         await pg.fill('#search', 'my squat'); await pg.wait_for_timeout(200)
         print('search finds own        ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"))
-        await pg.fill('#search', ''); await pg.click('[data-coll="Saved"]'); await pg.wait_for_timeout(200)
+        await pg.fill('#search', ''); await pg.click('[data-coll="Bookmarked"]'); await pg.wait_for_timeout(200)
         print('Saved filter            ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"))
         # Settings
         await pg.evaluate("go('#/settings')"); await pg.wait_for_timeout(300)
-        await pg.click('[data-settheme="dark"]'); await pg.click('[data-setspeed="0.5"]'); await pg.click('[data-setsound="voice"]')
+        await pg.click('[data-settheme="dark"]'); await pg.click('[data-setsound="voice"]')
+        print('no speed setting        ', await pg.evaluate("!document.querySelector('[data-setspeed]')"))
         await pg.click('#setAuthoring'); await pg.click('#setFullscreen'); await pg.wait_for_timeout(100)
+        # the exercise player remembers the speed you pick: it's where the next exercise starts
+        await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(300); await pg.click('#speedSeg [data-speed="0.5"]')
+        await pg.evaluate("go('#/settings')"); await pg.wait_for_timeout(200)
         await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         print('settings after reload   ', await pg.evaluate("[document.documentElement.dataset.theme, defaultSpeed(), WK.sound, authoring(), wantFullscreen()]"),
               await pg.evaluate("[...document.querySelectorAll('#view-settings [aria-pressed=true]')].map(x=>x.textContent)"))
