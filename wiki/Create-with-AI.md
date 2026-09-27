@@ -1,0 +1,47 @@
+# Create with AI
+
+[← User guide](Home.md)
+
+Have a routine from a class, a physio's sheet, or a video? **Create with AI** gets an AI app (Claude, ChatGPT,
+Gemini, Grok, DeepSeek, Copilot, Vibe or any other) to turn it into an exercise or workout for NstructR. You need an
+account with that AI app. NstructR doesn't send anything itself: you see everything in the AI app.
+
+Open it from **Workouts → Create with AI**, or **Settings → Create with AI → Create**.
+
+<img src="images/create-with-ai.png" width="300" alt="Create with AI: what you have, the AI app, Open">
+
+## 1. What do you have?
+
+| Choice | Type or paste |
+|---|---|
+| **A name** | e.g. *Pilates leg circles*, or *10-minute morning stretch* |
+| **Written routine** | The whole routine: exercises, reps, sets, rests |
+| **Video or web link** | A YouTube or web address. Gemini can watch YouTube videos; most others read the page. |
+| **Photo or video** | Nothing here: attach it in the AI app after it opens (pick an app that accepts pictures or video) |
+
+## 2. Ask the AI
+
+Pick the AI app (your usual one can be set in [Settings](Settings.md#ai-app)) and tap **Open**:
+
+- **Claude, ChatGPT, Grok, Copilot, Vibe**: open with NstructR's instructions already typed in. Check it, then send it.
+- **Gemini, DeepSeek**: can't be opened with a message, so the instructions are **copied**. Paste them into the
+  chat (long-press → Paste), add your photo or video if you have one, and send.
+- **Another AI app**: copies the instructions for you to paste anywhere.
+
+The instructions are always copied too, in case the message doesn't show up. **Copy instructions** copies them
+again.
+
+## 3. Paste its answer
+
+<img src="images/create-with-ai-answer.png" width="300" alt="Paste the AI's answer, then Add it">
+
+When the AI has answered, copy its whole reply, come back, tap **Paste** (or long-press the box), then **Add it**.
+
+- **One exercise** is added to **My exercises** and opens so you can watch it.
+- **A routine** becomes a workout in **My workouts**, using library exercises where they match and new ones
+  where they don't, and opens in the editor.
+- If the exercise **is already in the library**, that exercise opens instead.
+- If the answer isn't usable, you're told why; ask the AI to try again or to "answer with only the JSON".
+
+AI apps make mistakes. Watch a new exercise before you use it, and fix the words or poses if needed (see
+[Editing exercises](Editing-exercises.md)).

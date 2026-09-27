@@ -339,8 +339,7 @@ $('#itemForm').addEventListener('click', e => {
     ITEM_EDIT[k] = v; $('#st-' + k).textContent = v + (k === 'seconds' || k === 'rest' ? ' s' : '');
     if (k === 'sets') $('#restRow').hidden = v < 2;           // rest between sets only means something with 2+ sets
   }
-  const r = e.target.closest('[data-rep-delta]');
-  if (r) { const f = $('#st-repSec'); f.value = round1((+f.value || 0) + +r.dataset.repDelta); setRepSeconds(); }
+
   const g = e.target.closest('[data-seg-key]');
   if (g) {
     const k = g.dataset.segKey; ITEM_EDIT[k] = k === 'tempo' ? +g.dataset.val : g.dataset.val;
@@ -349,6 +348,7 @@ $('#itemForm').addEventListener('click', e => {
   if (s || g) $('#itemEst').textContent = fmtMin(itemSeconds(ITEM_EDIT));
 });
 /* seconds per rep -> the item's tempo (kept as a multiplier in files, so older files mean the same) */
+holdRepeat($('#itemForm'), '[data-rep-delta]', b => { const f = $('#st-repSec'); f.value = round1((+f.value || 0) + +b.dataset.repDelta); setRepSeconds(); f.value = round1(repSeconds(exById(ITEM_EDIT.ex)) / (ITEM_EDIT.tempo || 1)); });
 function setRepSeconds() {
   const f = $('#st-repSec'), ex = ITEM_EDIT && exById(ITEM_EDIT.ex); if (!f || !ex) return;
   const nat = repSeconds(ex), sec = Math.min(+f.max, Math.max(+f.min, round1(+f.value || nat)));

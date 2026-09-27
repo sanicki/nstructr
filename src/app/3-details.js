@@ -108,6 +108,7 @@ $('#exControls').addEventListener('focusin', () => showExControls(true));
 function openEditor() {
   if (!S.ex) return;
   setPlaying(false); hideExControls();
+  jumpTo(S.idx);                                           // show the step's own pose, not wherever the animation paused
   XC.editing = true; document.body.classList.add('ex-editing');
   $('#adjustPanel').hidden = false; updateEditor();
   requestAnimationFrame(() => $('#adjustPanel').scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
@@ -148,8 +149,23 @@ function applyAuthoring() {
   if (S.ex) updateEditor();
 }
 const defaultSpeed = () => +pref(SPEED_KEY, '1') || 1;
-const REST_CHOICES = [0, 5, 10, 15, 20, 30, 45, 60, 90];
 /* seconds of rest between exercises, in every workout (a setting since Sep 2026; workout files' "restBetween" is ignored) */
+/* − / + buttons: one step per tap, hold to keep going (the tap that ends a hold adds nothing) */
+function holdRepeat(box, sel, nudge) {
+  let hold = null;
+  const stop = () => { if (hold) { clearTimeout(hold.t); clearInterval(hold.i); } };
+  box.addEventListener('pointerdown', e => {
+    const b = e.target.closest(sel); if (!b || b.disabled) return;
+    stop(); hold = { b, repeated: false };
+    hold.t = setTimeout(() => { hold.repeated = true; hold.i = setInterval(() => nudge(b), 110); }, 450);
+  });
+  addEventListener('pointerup', stop); addEventListener('pointercancel', stop);
+  box.addEventListener('click', e => {
+    const b = e.target.closest(sel); if (!b) return;
+    if (hold && hold.b === b && hold.repeated) { hold = null; return; }
+    nudge(b);
+  });
+}
 const restGap = () => { const v = parseFloat(pref(REST_KEY, '10')); return v >= 0 ? v : 10; };
 function applyTheme(t) {
   if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
@@ -159,7 +175,7 @@ function renderSettings() {
   seg('#setSound', 'setsound', [['off', 'Silent'], ['beeps', 'Beeps'], ['voice', 'Voice'], ['coach', 'Coach']], WK.sound);
   seg('#setTheme', 'settheme', [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']], pref(THEME_KEY, 'system'));
   $('#setFullscreen').checked = wantFullscreen();
-  $('#setRest').innerHTML = [...new Set([...REST_CHOICES, restGap()])].sort((a, b) => a - b).map(s => `<option value="${s}"${s === restGap() ? ' selected' : ''}>${s ? s + ' s' : 'None'}</option>`).join('');
+  $('#setRest').value = restGap();
   $('#setAi').innerHTML = AI_APPS.map(a => `<option value="${a.id}"${a.id === aiApp().id ? ' selected' : ''}>${esc(a.name)}</option>`).join('');
   $('#setAuthoring').checked = authoring();
   renderPersistNote();
@@ -172,7 +188,9 @@ $('#view-settings').addEventListener('click', e => {
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
-$('#setRest').addEventListener('change', e => setPref(REST_KEY, e.target.value));
+function setRest(v) { v = Math.min(300, Math.max(0, Math.round(+v || 0))); setPref(REST_KEY, String(v)); $('#setRest').value = v; }
+$('#setRest').addEventListener('change', e => setRest(e.target.value));
+holdRepeat($('#view-settings'), '[data-rest-delta]', b => setRest(restGap() + +b.dataset.restDelta));
 $('#setAi').addEventListener('change', e => setPref(AI_KEY, e.target.value));
 $('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Authoring mode on: the Edit button (pencil) on any exercise now shows the poses and camera too' : 'Authoring mode off', 6000); });
 

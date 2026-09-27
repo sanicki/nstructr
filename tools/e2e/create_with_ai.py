@@ -43,7 +43,7 @@ async def main():
         print('settings AI app         ', await pg.evaluate("$('#setAi').value"))
         w = "(()=>{ const w={id:'r',name:'R',blocks:[{id:'b',name:'B',items:[newItem(exById('bw-squat')),newItem(exById('bw-squat'))]}]}; return workoutSeconds(w); })()"
         t10 = await pg.evaluate(w)
-        await pg.select_option('#setRest', '30'); await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
+        await pg.fill('#setRest', '29'); await pg.dispatch_event('#setRest', 'change'); await pg.click('[data-rest-delta="1"]'); await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         print('rest between exercises  ', await pg.evaluate("[$('#setRest').value, restGap()]"), '| workout time', t10, '->', await pg.evaluate(w), '(+20 s)')
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(200)
         await pg.click('[data-wact="new"]'); await pg.wait_for_timeout(300)

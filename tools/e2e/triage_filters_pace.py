@@ -37,5 +37,15 @@ async def main():
         # the workout plays at that pace: first rep of the Star Excursion ~4.4 s of animation
         await pg.evaluate("WK.hinted=true; setSound('off'); startWorkout(wkById('p'), 0)"); await pg.wait_for_timeout(300)
         print('player tempo            ', await pg.evaluate("S.tempo"))
+        # rest between exercises: 1 s steps, hold to repeat
+        await pg.evaluate("exitWorkout(); go('#/settings')"); await pg.wait_for_timeout(300)
+        r0 = await pg.evaluate("restGap()")
+        await pg.click('[data-rest-delta="1"]'); await pg.wait_for_timeout(100)
+        r1 = await pg.evaluate("restGap()")
+        btn = await pg.evaluate("(()=>{const r=$('[data-rest-delta=\"1\"]').getBoundingClientRect(); return [r.x+r.width/2, r.y+r.height/2]})()")
+        await pg.mouse.move(*btn); await pg.mouse.down(); await pg.wait_for_timeout(1000); await pg.mouse.up(); await pg.wait_for_timeout(150)
+        rh = await pg.evaluate("restGap()")
+        await pg.fill('#setRest', '7'); await pg.dispatch_event('#setRest', 'change')
+        print('rest 1 s steps, hold    ', r0, '->', r1, '-> hold 1 s:', rh, '| typed 7:', await pg.evaluate("[restGap(), $('#setRest').value]"))
         print('errors', errs); await b.close()
 asyncio.run(main())
