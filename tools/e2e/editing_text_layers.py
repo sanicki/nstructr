@@ -68,5 +68,30 @@ async def main():
           return out;
         })()""")
         print('\n'.join(res))
+        # the real thing: play the move, stop on the crossed pose, and look at the pixel where the legs cross.
+        # Crossing behind = the standing leg's colour is on top there.
+        for ex, fr, to in [('star-excursion-balance', 13, 14), ('star-excursion-balance', 11, 12), ('star-excursion-4-point', 7, 8)]:
+            for side in 'LR':
+                q = await b.new_page(viewport={'width': 412, 'height': 860})
+                await q.goto(URL + f'#/play/{ex}', wait_until='domcontentloaded'); await q.wait_for_timeout(400)
+                info = await q.evaluate("""([fr, to, side]) => new Promise(res => {
+                  setPlaying(false); setSide(side); S.idx = fr - 1; S.prev = fr - 2; S.t = 0; S.speed = 0.5; setPlaying(true); hideExControls();
+                  const tick = () => { if (S.idx === to && S.t >= S.resolved[to].dur) { setPlaying(false); hideExControls(); setTimeout(() => {
+                    const P = fk(...(f => [f.pose, f.v, S.seg, f.pos.x + S.shiftX, f.pos.y])(frameAt(S.resolved[fr], S.resolved[to], 1, S.seg)));
+                    const mov = side === 'L' ? 'R' : 'L', stand = side, ch = s => ['hip', 'knee', 'ankle', 'toe'].map(k => P[k + s]);
+                    let pt = null; const A = ch(stand), B = ch(mov);
+                    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { const p = A[i], q = A[i + 1], r = B[j], t = B[j + 1], d = (q.x - p.x) * (t.y - r.y) - (q.y - p.y) * (t.x - r.x); if (!d) continue;
+                      const u = ((r.x - p.x) * (t.y - r.y) - (r.y - p.y) * (t.x - r.x)) / d, w = ((r.x - p.x) * (q.y - p.y) - (r.y - p.y) * (q.x - p.x)) / d;
+                      if (u > .05 && u < .95 && w > .05 && w < .95) pt = new DOMPoint(p.x + u * (q.x - p.x), p.y + u * (q.y - p.y)).matrixTransform($('#scene').getScreenCTM()); }
+                    res(pt && { x: pt.x, y: pt.y, stand: getComputedStyle($('#leg-' + stand + ' line')).stroke, mov: getComputedStyle($('#leg-' + mov + ' line')).stroke }); }, 100); }
+                    else requestAnimationFrame(tick); }; requestAnimationFrame(tick); })""", [fr, to, side])
+                if not info: print(f'{ex[:22]} {side} {fr}->{to}: legs don\'t cross in the picture'); await q.close(); continue
+                path = '/tmp/_cross.png'; await q.screenshot(path=path)
+                from PIL import Image
+                px = Image.open(path).convert('RGB').getpixel((round(info['x']), round(info['y'])))
+                rgb = lambda c: tuple(int(v) for v in c[4:-1].split(','))
+                near = min((sum((a - b) ** 2 for a, b in zip(px, rgb(info[k]))), k) for k in ('stand', 'mov'))[1]
+                print(f'{ex[:22]} {side} {fr}->{to}: on top where they cross = {"standing leg (moving leg behind)" if near == "stand" else "MOVING LEG (in front!)"}')
+                await q.close()
         print('errors', errs); await b.close()
 asyncio.run(main())
