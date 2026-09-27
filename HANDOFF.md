@@ -427,7 +427,9 @@ representations that rotate the short, natural way) over adding a known issue; i
   step, reading each step's cue; each step waits for **whichever takes longer, its line or its animation**
   (`S.canAdvance`). Then counted reps: counts, "Last one", "Halfway", "10 seconds" are **dropped if something
   is already being said** (never talk over). Timed exercises: setup steps, then "Now hold for N seconds".
-- Speech is **queued, never cancelled**, except on skip/stop. Each line's promise resolves on `onend`, with a
+- Speech is **queued, never cancelled**, except on skip/stop. Routing cancels speech only when *leaving* the exercise
+  page (`exHush`) or the workout player: until Sep 2026 any route away from the exercise page's view hushed, which cut
+  off every workout's first line as the player opened (`autoplay_first_speech.py`). Each line's promise resolves on `onend`, with a
   fallback timeout (1.5 s + 0.45 s/word) for voices that don't report back.
 - Captions show every line (even in Silent). Uses the browser's built-in voices (offline once installed). May
   not work inside some in-app viewers; test in Chrome.
@@ -528,11 +530,12 @@ steps or the joint will windmill; the jump check will catch it.
     copy, as for poses (a typed name replaces "(copy)").
 - **Create with AI** (`src/app/5-ai.js`; Settings > Create with AI, and Workouts next to New workout): a full-screen
   dialog in three steps. 1: what you have (the name of the exercise, a written routine, a video or web link, a photo or
-  video; the last has no text box: it's attached in the AI app). 2: the AI app, A–Z with "Another AI app" last (Gemini
+  video; the last has no text box: it's attached in the AI app). 2: the AI app, A–Z with "Other LLM" last (Gemini
   until the user picks another; the last one picked is kept in `nstructr-ai-app-v1`; there's no Settings entry):
-  **Open** copies the instructions and opens the app; apps with a message parameter (`?q=`: Claude, ChatGPT, Grok,
-  Copilot, Vibe) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
-  URLs over 16 KB); Gemini and DeepSeek have none, so they're only copied; "Another AI app" just copies. 3: paste
+  **Open** copies the instructions and opens the app; apps with a message parameter that takes a link this long (`?q=`: ChatGPT, Claude,
+  Copilot) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
+  URLs over 16 KB); Gemini and DeepSeek have none, and Grok and Vibe answer the long link with "header too large" (owner, Sep 2026), so
+  those four are only copied; "Other LLM" just copies. 3: paste
   the answer: `extractJson()` takes the JSON out of ``` fences or surrounding sentences; `{"inLibrary": "<id>"}`
   opens that library exercise; anything else goes through the normal import (exercise, or a workout file bringing
   its own `u-` exercises).
@@ -545,7 +548,7 @@ steps or the joint will windmill; the jump check will catch it.
   deleting one is its own action (About → Delete), asks first and names the workouts that use it. Backups carry
   `bookmarks` too.
 - **Settings**, in order: Documentation (link to the user guide), Workouts (rest between exercises, rest between
-  sets, sound, full screen), Display (theme System/Light/Dark, **Authoring mode**), Create with AI (Create), Import & tools (backup, import file/paste, export your exercises,
+  sets, sound, full screen), Exercises (autoplay), Display (theme System/Light/Dark, **Authoring mode**), Create with AI (Create), Import & tools (backup, import file/paste, export your exercises,
   JSON format reference, storage-persistence note).
 - **Confirmations** use `ask(title, text, action, danger)` (a Material dialog, `#askDialog`; resolves true/false),
   never the browser's `confirm()`. Tests answer it with an init script (`ASK_JS` in the tests that need it).
@@ -584,6 +587,7 @@ steps or the joint will windmill; the jump check will catch it.
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
 | `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end) |
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
+| `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 20, 0–300; Settings > Workouts). Workout items' `rest` is ignored |
 | `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 10, 0–300 in 1 s steps; Settings > Workouts). Workout files' `restBetween` is ignored |
 
@@ -606,7 +610,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay, page order, labels, Edit with the figure pinned, Done), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /
