@@ -345,7 +345,7 @@ function route() {
   const mPlay = h.match(/^#\/play\/(.+)$/), mEdit = h.match(/^#\/workout\/(.+)$/), mRun = h.match(/^#\/wplay\/(.+)$/);
   let view = mPlay ? 'player' : mEdit ? 'workout' : mRun ? 'wplay' : (h.replace('#/', '') || 'workouts');
   if (!['exercises', 'settings', 'player', 'workouts', 'workout', 'wplay'].includes(view)) view = 'workouts';
-  const leavingWorkout = S.view === 'wplay' && view !== 'wplay';
+  const leavingWorkout = S.view === 'wplay' && view !== 'wplay', leavingPlayer = S.view === 'player' && view !== 'player';
   if (leavingWorkout) {                                        // stop the workout, give the stage back
     S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.playing = false; wakeOff(); leaveFullscreen(); moveStage(false); resetScene(); buildFigure();
     if ('speechSynthesis' in window) speechSynthesis.cancel();
@@ -356,7 +356,7 @@ function route() {
     const id = decodeURIComponent(mPlay[1]);
     if (!S.ex || S.ex.id !== id || S.mode !== 'explore') {
       if (!selectExercise(id)) { snack("That exercise isn't in the library."); go('#/exercises'); return; }
-      setPlaying(!matchMedia('(prefers-reduced-motion: reduce)').matches);
+      setPlaying(autoplay());
     }
   } else if (view === 'workout') {
     EDIT = wkById(decodeURIComponent(mEdit[1]));
@@ -379,7 +379,8 @@ function route() {
   $('#shareExBtn').hidden = view !== 'player' || !S.ex || !!findInDb(S.ex.id);      // library exercises: everyone has them
   if (view === 'player') applyAuthoring();
   $('#editPoseBtn').hidden = view !== 'player';
-  if (view !== 'player') { exHush(); if (XC.editing) closeEditor(); }
+  if (leavingPlayer) exHush();                             // only the exercise page's own voice: a workout starting now has already begun speaking
+  if (view !== 'player' && XC.editing) closeEditor();
   document.querySelector('.bar-brand').style.display = sub ? 'none' : '';
   $('#barTitle').textContent = view === 'player' ? (S.ex ? S.ex.name : '') : view === 'workout' ? EDIT.name : view === 'wplay' ? WP.w.name : TITLES[view];
   document.title = view === 'player' && S.ex ? `${S.ex.name} · ${APP_NAME}` : APP_NAME;

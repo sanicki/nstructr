@@ -151,7 +151,7 @@ function exStepSound(i) {
 function exHush() { XS.token++; XS.speaking = false; XS.last = ''; try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } }
 
 /* ---------- Settings ---------- */
-const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1';
+const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1';
 const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
 const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
@@ -160,6 +160,8 @@ function applyAuthoring() {
   document.body.classList.toggle('authoring', authoring());
   if (S.ex) updateEditor();
 }
+/* exercises start playing when opened, unless turned off (or the system asks for reduced motion) */
+const autoplay = () => pref(AUTOPLAY_KEY, 'on') !== 'off' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
 const defaultSpeed = () => +pref(SPEED_KEY, '1') || 1;
 /* seconds of rest between exercises, in every workout (a setting since Sep 2026; workout files' "restBetween" is ignored) */
 /* − / + buttons: one step per tap, hold to keep going (the tap that ends a hold adds nothing) */
@@ -189,6 +191,7 @@ function renderSettings() {
   seg('#setSound', 'setsound', [['off', 'Silent'], ['beeps', 'Beeps'], ['voice', 'Voice'], ['coach', 'Coach']], WK.sound);
   seg('#setTheme', 'settheme', [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']], pref(THEME_KEY, 'system'));
   $('#setFullscreen').checked = wantFullscreen();
+  $('#setAutoplay').checked = pref(AUTOPLAY_KEY, 'on') !== 'off';
   $('#setRest').value = restGap(); $('#setRestSets').value = restSets();
   $('#setAuthoring').checked = authoring();
   renderPersistNote();
@@ -201,6 +204,7 @@ $('#view-settings').addEventListener('click', e => {
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
+$('#setAutoplay').addEventListener('change', e => setPref(AUTOPLAY_KEY, e.target.checked ? 'on' : 'off'));
 function setRest(which, v) {
   v = Math.min(300, Math.max(0, Math.round(+v || 0)));
   setPref(which === 'sets' ? REST_SETS_KEY : REST_KEY, String(v)); $(which === 'sets' ? '#setRestSets' : '#setRest').value = v;

@@ -31,7 +31,8 @@ The **Exercises** tab is the library: over 130 exercises, each animated step by 
 
 <img src="images/exercise-page.png" width="300" alt="An exercise page: the figure, the current step, Side and Speed">
 
-- **The figure** plays the exercise on a loop. Tap it to show the controls: previous step, play/pause, next step.
+- **The figure** plays the exercise on a loop (it starts by itself unless you turn off
+  [Autoplay](Settings.md#autoplay-exercise-videos)). Tap it to show the controls: previous step, play/pause, next step.
   The first tap only shows them. They stay up while paused and fade while playing.
 - Under the figure: the **current step**, with its number, name and cue.
 - **Side** (for exercises done one side at a time, such as *Right leg back* / *Left leg back*) and **Direction**

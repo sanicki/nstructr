@@ -25,6 +25,12 @@ exercise page (Voice and Coach read each step's cue once, then count).
 ### Full screen
 Whether a workout in the browser goes full screen. The installed app is always full screen.
 
+## Exercises
+
+### Autoplay exercise videos
+On (the default): an exercise starts moving as soon as you open it. Off: it waits until you tap Play. (If your
+phone is set to reduce motion, exercises wait for Play either way.)
+
 ## Display
 
 ### Theme

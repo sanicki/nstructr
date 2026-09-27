@@ -11,9 +11,9 @@ const AI_APPS = [                // A–Z, "other" last. q: the link parameter t
   { id: 'copilot', name: 'Copilot', url: 'https://copilot.microsoft.com/', q: 'q' },
   { id: 'deepseek', name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
   { id: 'gemini', name: 'Gemini', url: 'https://gemini.google.com/app' },
-  { id: 'grok', name: 'Grok', url: 'https://grok.com/', q: 'q' },
-  { id: 'mistral', name: 'Vibe', url: 'https://chat.mistral.ai/chat', q: 'q' },     // Mistral's, formerly Le Chat
-  { id: 'other', name: 'Another AI app (copy only)' },
+  { id: 'grok', name: 'Grok', url: 'https://grok.com/' },                           // refuses the long link (header too large): copy
+  { id: 'mistral', name: 'Vibe', url: 'https://chat.mistral.ai/chat' },             // Mistral's, formerly Le Chat; refuses the long link too
+  { id: 'other', name: 'Other LLM' },
 ];
 const AI_KINDS = [
   { id: 'name', label: 'The name of the exercise', field: 'Exercise name', ph: 'e.g. Pilates leg circles', hint: 'The AI uses what it knows, and looks it up on the web where it can to check it.' },
