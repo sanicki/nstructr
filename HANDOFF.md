@@ -23,7 +23,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **136 exercises, 1 workout**.
+Library today: **137 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -32,7 +32,7 @@ Library today: **136 exercises, 1 workout**.
 | Resistance band | 15 | 10 BHF standing exercises + seated row + routine additions |
 | Free weights | 13 | dumbbell, kettlebell, barbell |
 | Stretches | 11 | Mayo Clinic basic stretches + routine additions |
-| Pilates | 11 | classic mat exercises |
+| Pilates | 12 | classic mat exercises (Leg Circles: Side and Direction, with a compass) |
 | Core | 7 | planks, bird dog, dead bug, crunch… |
 | Chair-based | 7 | NHS chair/sitting exercises, chair dip, chair push-up, heels-on-chair bridge |
 | Warm-up | 2 | arm circles, hip circles (both have directions) |
@@ -275,8 +275,11 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   An unmodified library workout is `#/link/l1.<library id>` and a library exercise is just `#/play/<id>`.
   Opening a link shows what it holds; nothing is added until **Add** (workouts → My workouts, exercises →
   Saved). Ids from a link never overwrite a different exercise of the receiver's own (`LINK_IMPORT` in
-  `claimIds` gives it `<id>-2`). Share dialog: the link, the phone's share sheet, copy, a QR code when the link
-  is ≤ 900 characters (`src/vendor/qrcode.js`, qrcode-generator, MIT, vendored), and "As a file". Share
+  `claimIds` gives it `<id>-2`). Share dialog (✕ in the corner, Esc or Back to close): a QR code when the link
+  is ≤ 900 characters (`src/vendor/qrcode.js`, qrcode-generator, MIT, vendored), then four equal buttons: **Share QR
+  code** (filled = recommended; disabled without a QR code), **Share link** (tonal; filled when there's no QR code;
+  the phone's share sheet, or copies the link where there's none), **Export workout/exercise** (a `.json` file),
+  **Submit suggestion** (disabled until submissions exist, step 7). No link field or Copy link since Sep 2026. Share
   buttons: workout editor, each workout card, the exercise page's top bar and About. `<site>` is the page's own
   address, or `https://sanicki.github.io/nstructr/` when opened from a file. Typical sizes: library workout
   62 chars; the 24-item routine customised ≈ 770; a workout with one own exercise ≈ 1200 (no QR).
@@ -607,7 +610,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   delete asks and names workouts, imports), `workouts_tab` (sections, collapsed cards, drag order kept, touch swipe to
   delete), `quick_fixes` (Start goes straight in, no Workouts Import, safety note on the card, edit words vs poses, Duplicate, Authoring-only JSON views, collections
   order, QR picture, incline push-up head), `share_links` (library/own workouts and exercises through a link on a
-  second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
+  second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback, the dialog's four buttons), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
   player overlay, page order, labels, Edit with the figure pinned, Done), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
@@ -681,7 +684,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    described in our own words). The exercise player follows the Sound setting (Silent / Beeps: quiet;
    Voice / Coach: read each step's cue on the first pass, then count reps). **Edit details** (words) for everyone
    on their own exercises and copies; Authoring mode adds poses and camera. Also: Start goes straight into a workout
-   (no popup; safety notes on the card and in the editor), Import only in Settings. **Leg Circles is still to do.**
+   (no popup; safety notes on the card and in the editor), Import only in Settings. Leg Circles added in the next PR (`pil-leg-circles`).
 5. ✅ **Create with AI** (deep links, no keys): one screen: what it is (a name, a written routine, a YouTube link, a
    photo or video) → provider (default in Settings: Claude, ChatGPT, Gemini, Grok, DeepSeek…) → open it with the
    prompt filled in (copy where the provider can't take it in the link) → paste the JSON back. One prompt that can

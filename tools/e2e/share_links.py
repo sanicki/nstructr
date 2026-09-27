@@ -8,13 +8,13 @@ from playwright.async_api import async_playwright
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
-        sender = await b.new_context(viewport={'width': 412, 'height': 860}); pg = await sender.new_page()
+        sender = await b.new_context(viewport={'width': 412, 'height': 860}, permissions=['clipboard-read', 'clipboard-write']); pg = await sender.new_page()
         pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         # a library-only workout (the library routine, customised)
         await pg.click('[data-wtoggle="lib:full-body-routine"]'); await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="@edit"]'); await pg.wait_for_timeout(400)
-        url1 = await pg.input_value('#shareUrl')
+        url1 = await pg.evaluate('SHARING.url')
         print('library workout link    ', len(url1), 'chars |', url1[:60] + '…', '| QR:', await pg.evaluate("!!$('#shareQr svg')"))
         await pg.click('#shareDialog [data-close]')
         # library workouts aren't shared (everyone has them); a link naming one still opens
@@ -27,7 +27,7 @@ async def main():
           WK.list.push({{id:'mine', name:'Legs Day', blocks:[{{id:'b', name:'Main', rounds:2, roundRest:45, items:[{{...newItem(exById('u-wide-squat')), reps:12}}, {{...newItem(exById('core-forearm-plank')), seconds:40, sets:2, rest:15}}]}}]}}); saveWorkouts(); go('#/workouts'); }})()""")
         await pg.wait_for_timeout(300)
         await pg.click('[data-wtoggle="mine"]'); await pg.click('[data-share-wk="mine"]'); await pg.wait_for_timeout(400)
-        url2 = await pg.input_value('#shareUrl')
+        url2 = await pg.evaluate('SHARING.url')
         print('workout + own exercise  ', len(url2), 'chars | QR:', await pg.evaluate("!!$('#shareQr svg')"), '|', await pg.inner_text('#shareWhat'))
         await pg.click('#shareDialog [data-close]')
         # an exercise: library one = plain link, own one = packed
@@ -35,7 +35,7 @@ async def main():
         print('library exercise share  ', await pg.evaluate("[$('#shareExBtn').hidden, !!document.querySelector('#aboutPanel [data-act=shareEx]')]"), '<- hidden')
         await pg.evaluate("go('#/play/u-wide-squat')"); await pg.wait_for_timeout(400)
         await pg.click('#shareExBtn'); await pg.wait_for_timeout(300)
-        url3 = await pg.input_value('#shareUrl')
+        url3 = await pg.evaluate('SHARING.url')
         print('own exercise link       ', len(url3), 'chars', url3.split('#')[1][:14] + '…')
         # --- a different phone (fresh storage) opens the links ---
         recv = await b.new_context(viewport={'width': 412, 'height': 860}); rp = await recv.new_page()
@@ -67,8 +67,24 @@ async def main():
         await pg.click('#shareDialog [data-close]')
         await pg.evaluate("delete window.CompressionStream; go('#/workouts')"); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="mine"]'); await pg.wait_for_timeout(300)
-        url4 = await pg.input_value('#shareUrl')
+        url4 = await pg.evaluate('SHARING.url')
         await rp.goto(url4.replace('#', '?w#'), wait_until='domcontentloaded'); await rp.wait_for_timeout(700)
         print('plain (no compression)  ', len(url4), 'chars', url4.split('#')[1][:10] + '…', '| opens:', await rp.evaluate("$('#linkDialog').open"))
+        # the dialog: four equal buttons; QR recommended (filled) when there is one, else the link is; Submit not yet
+        st = "[...document.querySelectorAll('.share-grid .btn')].map(b=>[b.textContent.replace(/^[a-z_0-9]+/,''), b.classList.contains('filled') ? 'filled' : 'tonal', b.disabled, Math.round(b.getBoundingClientRect().width), Math.round(b.getBoundingClientRect().height)])"
+        print('long link (no QR)       ', await pg.evaluate(st))
+        await pg.click('#shareDialog [data-close]')
+        await pg.evaluate("openShare({workout: {id:'s', name:'Short', blocks:[{id:'b', name:'B', items:[newItem(exById('bw-squat'))]}]}})"); await pg.wait_for_timeout(300)
+        print('short workout (QR)      ', await pg.evaluate(st), await pg.evaluate("!!$('#shareQr svg')"))
+        await pg.click('#shareDialog [data-close]')
+        await pg.evaluate("go('#/play/u-wide-squat')"); await pg.wait_for_timeout(300); await pg.click('#shareExBtn'); await pg.wait_for_timeout(300)
+        print('own exercise            ', await pg.evaluate("$('#shareFileLabel').textContent"))
+        print('no Link field / Close / Copy', await pg.evaluate("[!document.querySelector('#shareDialog input'), [...document.querySelectorAll('#shareDialog button')].filter(b=>/Close$|Copy link/.test(b.textContent)).length, $('#shareDialog [data-close]').getAttribute('aria-label')]"))
+        await pg.keyboard.press('Escape'); await pg.wait_for_timeout(150)
+        print('Esc closes              ', await pg.evaluate("!$('#shareDialog').open"))
+        await pg.click('#shareExBtn'); await pg.wait_for_timeout(300)
+        await pg.evaluate("delete navigator.__proto__.share; window.navigator.share = undefined")
+        await pg.click('#shareSend'); await pg.wait_for_timeout(200)
+        print('Share link, no share sheet', await pg.evaluate("$('#snackbar').textContent"))
         print('errors', errs); await b.close()
 asyncio.run(main())

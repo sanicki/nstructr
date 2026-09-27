@@ -7,11 +7,14 @@
 **Share** on one of your workouts (or on one of your own exercises) makes a link that **carries the whole thing
 inside it**: no account and no server. Send it any way you like, or let someone scan the QR code.
 
-<img src="images/share.png" width="300" alt="The Share dialog: QR code, link, Share QR code, Copy link">
+<img src="images/share.png" width="300" alt="The Share dialog: QR code, Share QR code, Share link, Export, Submit suggestion">
 
-- **Share link** / **Copy link**: send the link.
-- **Share QR code**: the QR code as a picture (for very long links there's no QR code; send the link).
-- **As a file**: a small `.json` file instead.
+- **Share QR code** (recommended): the QR code as a picture, for the other person to scan. Very long links get no
+  QR code; then **Share link** is the one to use.
+- **Share link**: your phone's share sheet (on a computer, the link is copied).
+- **Export workout** / **Export exercise**: a small `.json` file instead.
+- **Submit suggestion**: sending it for the library. Coming soon.
+- Close with ✕, Esc, or your phone's Back.
 
 Library workouts and exercises don't need sharing: everyone has them. Send the page's address instead.
 

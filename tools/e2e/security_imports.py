@@ -24,7 +24,7 @@ async def main():
         await pg.evaluate("E.coll='My exercises'; go('#/exercises')"); await pg.wait_for_timeout(300)
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
         await pg.evaluate(f"document.querySelector('[data-wtoggle=\"{w}\"]').click(); openShare({{workout: wkById('{w}')}})"); await pg.wait_for_timeout(500)
-        link = await pg.evaluate("$('#shareUrl').value"); await pg.evaluate("$('#shareDialog').close()")
+        link = await pg.evaluate("SHARING.url"); await pg.evaluate("$('#shareDialog').close()")
         await pg.evaluate(f"WK.hinted=true; setSound('coach'); startWorkout(wkById('{w}'), 0)"); await pg.wait_for_timeout(3000)
         await pg.evaluate("startRest(5,'item')"); await pg.wait_for_timeout(800); await pg.evaluate("exitWorkout()")
         print('PWNED before link:', await pg.evaluate("window.PWNED || 'none'"))

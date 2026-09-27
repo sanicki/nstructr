@@ -1,0 +1,216 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-leg-circles",
+  "name": "Leg Circles",
+  "sanskrit": "Single-Leg Circles",
+  "category": "Pilates",
+  "focus": "Hips and deep core",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Lying on your back with one leg reaching to the ceiling, draw small, smooth circles with that leg while your pelvis and back stay still on the mat. Then reverse, and switch legs.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-single-leg-circles/",
+    "title": "Single Leg Circles on the Mat (Online Pilates Classes)",
+    "note": "Classical Pilates mat exercise, described in our own words; also checked against Pilatesology's encyclopedia entry. Stick-figure approximation: from the side you see the leg sweep toward your head and feet, and it looks shorter as it crosses the body or swings out; the compass shows where the foot is."
+  },
+  "setup": [
+    "Lie on your back, legs long, arms by your sides with palms down.",
+    "Lift one leg straight up toward the ceiling; keep the other leg long and heavy on the mat."
+  ],
+  "cues": [
+    "Keep the circles small enough that your pelvis doesn't rock.",
+    "Press your arms and the back of your body into the mat.",
+    "Pause at the top of each circle, then reverse after the set.",
+    "Tight hamstrings? Bend the lifted knee a little, or bend the bottom knee with that foot flat."
+  ],
+  "prescription": {
+    "reps": "5 each direction, each leg",
+    "note": "Breathe out as the leg circles down, in as it comes back up."
+  },
+  "facing": "right",
+  "floorGuide": {
+    "type": "star",
+    "arms": 4
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "direction": {
+    "labels": {
+      "A": "Across first",
+      "B": "Out first"
+    }
+  },
+  "repName": "circle",
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie on your back, arms by your sides.",
+      "view": "side",
+      "durationMs": 1200,
+      "holdMs": 400,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": 0,
+        "thighDepthR": 0,
+        "ankleR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Leg up",
+      "cue": "Lift your right leg to the ceiling.",
+      "view": "side",
+      "durationMs": 1200,
+      "holdMs": 400,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -100,
+        "thighDepthR": 0
+      },
+      "guide": {
+        "direction": 0,
+        "label": "Up"
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Across",
+      "cue": "Across your body.",
+      "view": "side",
+      "durationMs": 450,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -88,
+        "thighDepthR": -32
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 270,
+        "label": "Across"
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Down",
+      "cue": "Down.",
+      "view": "side",
+      "durationMs": 450,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -68,
+        "thighDepthR": 0
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 180,
+        "label": "Down"
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Out",
+      "cue": "Out to the side.",
+      "view": "side",
+      "durationMs": 450,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -88,
+        "thighDepthR": 32
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 90,
+        "label": "Out"
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Up",
+      "cue": "Back up, and pause.",
+      "view": "side",
+      "durationMs": 450,
+      "holdMs": 250,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -100,
+        "thighDepthR": 0
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 0,
+        "label": "Up"
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lower the leg",
+      "cue": "Lower the leg to the mat.",
+      "view": "side",
+      "durationMs": 1200,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": 0,
+        "thighDepthR": 0,
+        "ankleR": 20
+      },
+      "phase": "finish"
+    }
+  ]
+}
