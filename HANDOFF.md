@@ -44,7 +44,7 @@ Library today: **136 exercises, 1 workout**.
 
 ## 2. State of the repo right now
 
-This handoff happens **in the middle of roadmap step 1** (§13). What's done:
+Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's done:
 
 - Library split into **one JSON file per exercise** (`library/exercises/<id>.json`) and per workout
   (`library/workouts/<id>.json`), each with `"$schema"` and `"version": 1`. **These files are now the source of
@@ -58,8 +58,19 @@ This handoff happens **in the middle of roadmap step 1** (§13). What's done:
   to Pages. **Not yet run on GitHub.** One-time setup: repo Settings → Pages → Source: **GitHub Actions**.
 - App loads the library at startup (`boot()` in `src/app/5-main.js`): from `window.NSTRUCTR_BUNDLE` in the
   single-file build, otherwise `fetch('library/index.json')`.
-- First run seeds the user's workout list from the library workouts (`hydrateWorkout`). The old hard-coded copy
-  of the routine in JS is gone.
+- **Library workouts** are listed in their own section on the Workouts tab (Start / **Customize**), no longer
+  copied into the user's list on first run, so library updates reach everyone. At runtime they're hydrated into
+  `LIB_WK` with ids `lib:<id>` (so they never clash with a user workout, including the first-run copy older
+  installs have under the plain id) and `libId`. `wkById` finds both; library workouts have no editor, and
+  exiting their player returns to `#/workouts`. Customize = `customizeWorkout()`: a copy with a new id in
+  `WK.list`. History records of a library workout carry the library id plus `library: true`.
+- **`u-` ids on import** (`claimIds` in `5-main.js`): an imported exercise keeps its id if it starts with `u-`,
+  if it's an unchanged copy of a library exercise, or if it replaces one of the user's own saved exercises
+  with that id; otherwise it's renamed `u-<id>` and workouts in the same file follow the rename.
+- **File versions**: `upgradeFile()` refuses files with a `version` newer than the app's `FILE_VERSION` (1);
+  upgrades of older versions go there when a format changes.
+- AI prompts (Create page) produce one bare exercise / workout per file matching the schemas, with `u-` ids,
+  `measure`, `defaults`, `phase`, and `headLow` in the point list.
 - File formats renamed to `nstructr/exercise`, `nstructr/workout`, `nstructr/log`. Old `pose-player/*` files
   (and bare single exercise/workout objects) still import.
 - Browser tests ported to `tools/e2e/` (Python Playwright), pointed at a URL via `NSTRUCTR_URL`.
@@ -67,22 +78,13 @@ This handoff happens **in the middle of roadmap step 1** (§13). What's done:
   routine to completion; old and bare files import; gestures, editor, Coach speech, layout, floor height and
   arm-circle continuity tests pass against the served build.
 
-**Still to do in step 1** (do these first):
+**Still to do in step 1:** merge to `main`, enable Pages (Settings → Pages → Source: GitHub Actions), confirm
+the workflow deploys, test on the Flip7.
 
-1. **Library workouts vs. my workouts.** Right now library workouts are only used to seed a first-run copy.
-   Planned: a "Library workouts" section on the Workouts tab (Start / "Customize" = copy into my workouts), so
-   library updates reach users and aren't frozen into their copies. `wkById` must find both; exiting the player
-   of a library workout should return to `#/workouts` (there's no editor for it).
-2. **`u-` prefix on import.** User-made exercises must have ids starting `u-` so a library update never collides
-   with them. On import: if an incoming exercise id exists in the library (and isn't identical), rename it to
-   `u-<id>` and rewrite references to it in any workouts in the same file. The build already rejects `u-` ids in
-   `library/`.
-3. **AI prompts** (Create page; `#aiPrompt` template in `src/body.html`, `routinePrompt()` in
-   `src/app/4-workouts.js`): update for `nstructr/*` format names, `u-` ids, and single-file output (one
-   exercise or workout per file, matching the schemas), and mention `headLow`.
-4. `npm install` once to create `package-lock.json` (the workflow uses `npm ci`), commit it.
-5. `README.md` for the public repo (short; point to HANDOFF for depth).
-6. Push, enable Pages, confirm the workflow deploys, test on the Flip7.
+Known gaps, deliberately left: exercises users saved *before* the `u-` rule keep their old ids (no migration;
+a clash needs the library to add that exact id). Saved copies of library exercises (bookmarks, and ones edited
+in the pose editor) keep the library id and shadow the library version, so library fixes don't reach them —
+worth revisiting with step 3's Saved filter.
 
 ---
 
@@ -256,7 +258,7 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   a bare workout object, and the legacy `pose-player/*` equivalents. `format` strings aren't strictly checked.
 - Export: exercise JSON from the exercise page; workout JSON / Share (Web Share with a `.json` file, falling back
   to a download) from the editor; "Export your exercises" on Create; history export on the Workouts tab.
-- History (`nstructr/log`): `{sessions: [{id, workout, name, start, end (ISO), seconds, completed,
+- History (`nstructr/log`): `{sessions: [{id, workout, library? (true for a library workout), name, start, end (ISO), seconds, completed,
   exercisesDone, exercisesTotal, exercises: [{ex, name, category, measure, sets, reps|seconds, sides, dir,
   block, round}]}]}`. Stopped-early sessions are logged with `completed: false`. Designed so an external logger
   (the owner's Health Connect logger project) can read it.
@@ -434,7 +436,7 @@ steps or the joint will windmill; the jump check will catch it.
 
 ## 10. UI inventory (current)
 
-- **Workouts**: Resume card, workout cards (Start/Edit, est. time, count, equipment), History (delete, clear,
+- **Workouts**: Resume card, your workout cards (Start/Edit, est. time, count, equipment), Library workouts (Start/Customize), History (delete, clear,
   export). Editor: name, rest between exercises, blocks (rename, move, delete, repeat as circuit with rounds and
   rest), items (drag handle, settings sheet with reps/seconds, sets, rest, sides, direction, speed; menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
@@ -469,11 +471,13 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `coach_speech` (guided steps wait for speech; nothing cancelled),
+  `circuits_history_share`, `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
+  newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, start sheet position), `layout_overlap` (title /
   caption / figure never overlap on cover, phone, landscape), `floor_height_cover` (floor ≥ 23% above bottom),
   `arm_circles_continuity` (constant angular speed, never reverses), `star_excursion_coach`.
-  They print results rather than assert; read the output. Turning them into asserting tests is worthwhile.
+  They print results rather than assert; read the output. Install with a Playwright version matching the
+  Chromium you have (Claude Code's cloud sandbox: `pip install playwright==1.56.0 pillow`, no `playwright install`). Turning them into asserting tests is worthwhile.
 
 ---
 
@@ -512,7 +516,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    cross-behind diagonal?
 4. **Seated band row**: draw the band crossed in an X (as the routine describes)?
 5. Is **22 vh** the right bottom margin on the real cover screen, or can it shrink?
-6. Library workouts: should first run still copy them into "my workouts", or only show them in a library
-   section (planned)?
+6. ~~Library workouts: copy on first run, or only a library section?~~ Decided: library section only;
+   Customize makes a copy. Existing installs keep their first-run copy.
 7. Does Chrome run on the cover screen without Good Lock, and is full screen honoured there?
 8. Machines: which machines matter to the owner first?

@@ -8,7 +8,10 @@ async def main():
         pg.on('pageerror',lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         await pg.screenshot(path='/tmp/w_list.png')
-        await pg.click('a[href="#/workout/full-body-routine"]'); await pg.wait_for_timeout(400)
+        # library workouts are listed on their own; Customize copies one into the user's workouts
+        print('library cards:', await pg.evaluate("[...document.querySelectorAll('#libWkList .wk-card h2')].map(h=>h.textContent)"), ' my workouts:', await pg.evaluate("WK.list.length"))
+        await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(400)
+        print('after Customize:', await pg.evaluate("[location.hash.startsWith('#/workout/'), WK.list.length, WK.list[0].name, !!WK.list[0].libId]"))
         await pg.screenshot(path='/tmp/w_edit.png', full_page=True)
         # settings dialog on the lunge
         uid=await pg.evaluate("EDIT.blocks[1].items[0].uid")

@@ -86,6 +86,10 @@
           <button class="btn filled stateful" data-wact="new"><span class="icon">add</span>New workout</button></div>
       </div>
       <div class="wk-grid" id="wkList"></div>
+      <section class="section" id="libWkSection" aria-labelledby="libWkTitle" hidden>
+        <div class="section-head"><h2 class="title-medium" id="libWkTitle">Library workouts</h2></div>
+        <div class="wk-grid" id="libWkList"></div>
+      </section>
       <section class="section" aria-labelledby="histTitle">
         <div class="section-head"><h2 class="title-medium" id="histTitle">History</h2>
           <div class="row" id="historyActions"><button class="btn text stateful" data-wact="exportLog"><span class="icon">data_object</span>Export</button><button class="btn text stateful" data-wact="clearLog">Clear</button></div></div>
@@ -223,7 +227,7 @@
 <input type="file" id="fileInput" accept=".json,application/json" class="vh" multiple>
 <dialog id="pasteDialog" aria-labelledby="pasteTitle">
   <h2 class="headline-small" id="pasteTitle">Paste exercise JSON</h2>
-  <textarea id="pasteArea" spellcheck="false" placeholder='{ "format": "nstructr/exercise", "exercises": [ ... ] }'></textarea>
+  <textarea id="pasteArea" spellcheck="false" placeholder='{ "version": 1, "id": "u-my-exercise", "name": "...", "keyframes": [ ... ] }'></textarea>
   <div class="actions"><button class="btn text stateful" data-close>Cancel</button><button class="btn filled stateful" id="pasteImport">Import</button></div>
 </dialog>
 <dialog id="jsonDialog" aria-labelledby="jsonTitle">
@@ -258,21 +262,26 @@
 
 Output ONLY valid JSON (no markdown fences, no commentary).
 
-FILE
-{ "format": "nstructr/exercise", "version": 1, "exercises": [ {
-  "id": "kebab-case", "name": "...", "category": "Strength | Stretch | Balance | Mobility | Cardio | Yoga pose type",
+FILE (one exercise per file)
+{ "version": 1,
+  "id": "u-kebab-case-name",                  // must start with "u-" (marks it as your own exercise)
+  "name": "...", "category": "Strength | Stretch | Balance | Mobility | Cardio | Yoga pose type",
   "focus": "main body area", "equipment": ["..."], "description": "1-2 sentences in your own words",
   "source": { "url": "...", "title": "...", "note": "anything approximated" },
   "setup": ["..."], "cues": ["..."],
   "prescription": { "reps": "8-12", "rounds": 3, "note": "..." },
+  "measure": "reps" | "time",                 // how a workout counts it: reps, or a timed hold
+  "defaults": { "reps": 10 } | { "seconds": 30 },   // used when it's added to a workout
+  "repName": "rep",                           // what one rep is called ("circle", "pull-apart")
   "facing": "right",
   "bilateral": { "labels": { "L": "Right side", "R": "Left side" } },   // only if done on each side; write keyframes for ONE side
   "props": [ ... ],                                                    // equipment drawn with the figure (see EQUIPMENT)
-  "keyframes": [ ... ] } ] }
+  "keyframes": [ ... ] }
 
 KEYFRAME
 { "name": "Short step name", "cue": "One instruction", "view": "side" | "front",
   "durationMs": 1500, "holdMs": 500,          // time to move into the pose, time held (30000 for a 30 s stretch hold)
+  "phase": "setup" | "rep" | "finish",        // optional: played once first / one rep (or the hold) / once at the end
   "anchor": "ankleL",                         // point pinned to the floor (keeps feet/hands/seat from sliding)
   "plant": ["L"],                             // feet kept flat
   "touch": [{ "point": "toeR", "adjust": "hipR" }],     // turn "adjust" until "point" touches the floor
@@ -305,4 +314,6 @@ RULES
 2. Use side view for forward/back movement, front view for sideways movement.
 3. Use anchor/plant/touch/reach for contact instead of hand-tuning angles.
 4. Take reps and hold times from the video; if not stated, give a default and say so in prescription.note.
-5. Check signs against the conventions above before answering.</template>
+5. Check signs against the conventions above before answering.
+6. "id" starts with "u-", then the exercise name in lowercase words joined by hyphens, e.g. "u-banded-pull-apart".
+7. Timed exercises ("measure": "time") hold one step for the whole time: mark it "phase": "rep", steps before it "setup", after it "finish".</template>

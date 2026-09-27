@@ -87,18 +87,44 @@ function removeSaved(id) {
   if (S.view === 'player' && S.ex && S.ex.id === id) { if (builtIn) renderPlayerInfo(); else go('#/saved'); }
   if (S.view === 'saved') renderSaved();
 }
+/* Users' own exercises have ids starting "u-", so a library update can never overwrite one (the build rejects
+   "u-" ids in library/). An imported exercise keeps its id if it already starts with "u-", if it's an unchanged
+   copy of a library exercise (that's just a saved library exercise), or if it updates one of the user's own
+   saved exercises. Anything else gets "u-" in front, and workouts in the same file are pointed at the new id. */
+const FILE_VERSION = 1;
+const canonical = o => JSON.stringify(o, (k, v) => (v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.keys(v).filter(x => x !== '$schema' && x !== 'version').sort().map(x => [x, v[x]])) : v));
+function claimIds(list, workouts) {
+  const renamed = {};
+  const out = list.map(ex => {
+    if (ex.id.startsWith('u-')) return ex;
+    const lib = findInDb(ex.id);
+    if (lib ? canonical(lib) === canonical(ex) : S.lib.items.some(it => it.id === ex.id)) return ex;
+    renamed[ex.id] = 'u-' + ex.id;
+    return { ...ex, id: renamed[ex.id] };
+  });
+  for (const w of workouts || []) for (const b of (w && w.blocks) || []) for (const it of (b && b.items) || []) if (it && renamed[it.ex]) it.ex = renamed[it.ex];
+  return out;
+}
+/* Every file carries "version". Older versions get upgraded here as the formats change; newer ones are refused. */
+function upgradeFile(data) {
+  const v = data && typeof data === 'object' && data.version;
+  if (typeof v === 'number' && v > FILE_VERSION) throw new Error(`it was made by a newer version of ${APP_NAME} (file version ${v}). Update the app and try again.`);
+  return data;
+}
 function importText(text, label) {
   let data;
   try { data = JSON.parse(text); } catch (e) { throw new Error(`${label ? label + ' is' : "That's"} not valid JSON (${e.message}).`); }
+  data = upgradeFile(data);
   if (data && Array.isArray(data.blocks) && !data.workouts) data = { workouts: [data] };   // one workout file
   if (data && Array.isArray(data.workouts)) {                    // a workout file (may bring its own exercises)
-    const exs = Array.isArray(data.exercises) && data.exercises.length ? normalizeImport({ exercises: data.exercises }) : [];
+    data = { ...data, workouts: JSON.parse(JSON.stringify(data.workouts)) };
+    const exs = Array.isArray(data.exercises) && data.exercises.length ? claimIds(normalizeImport({ exercises: data.exercises }), data.workouts) : [];
     for (const ex of exs) { const i = S.lib.items.findIndex(it => it.id === ex.id); if (i >= 0) S.lib.items[i] = ex; else S.lib.items.push(ex); }
     const ws = importWorkouts(data);
     IMPORTED_WORKOUTS.push(...ws);
     return [];
   }
-  const list = normalizeImport(data);
+  const list = claimIds(normalizeImport(data));
   for (const ex of list) {
     const i = S.lib.items.findIndex(it => it.id === ex.id);
     if (i >= 0) S.lib.items[i] = ex; else S.lib.items.push(ex);
@@ -155,11 +181,11 @@ function route() {
     }
   } else if (view === 'workout') {
     EDIT = wkById(decodeURIComponent(mEdit[1]));
-    if (!EDIT) { go('#/workouts'); return; }
+    if (!EDIT || isLibWorkout(EDIT)) { EDIT = null; go('#/workouts'); return; }
     lastList = h;
   } else if (view === 'wplay') {
     const w = wkById(decodeURIComponent(mRun[1]));
-    if (!w || WP.w !== w || WP.phase === 'idle') { go(w ? `#/workout/${w.id}` : '#/workouts'); return; }
+    if (!w || WP.w !== w || WP.phase === 'idle') { go(w && !isLibWorkout(w) ? `#/workout/${w.id}` : '#/workouts'); return; }
     moveStage(true);
   } else lastList = h;
   S.view = view;
@@ -195,7 +221,7 @@ $('#speedSeg').addEventListener('click', e => {
   document.querySelectorAll('#speedSeg button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#backBtn').addEventListener('click', () => {
-  if (S.view === 'wplay') { go(`#/workout/${WP.w.id}`); return; }
+  if (S.view === 'wplay') { exitWorkout(); return; }
   if (S.view === 'workout') { go('#/workouts'); return; }
   go(lastList.startsWith('#/workout/') ? lastList : lastList);
 });
@@ -267,7 +293,8 @@ async function boot() {
   }
   POSE_DB = { exercises: b.exercises || [] };
   LIBRARY_WORKOUTS = b.workouts || [];
-  if (WK.list === null) { WK.list = LIBRARY_WORKOUTS.map(hydrateWorkout); saveWorkouts(); }   // first run
+  hydrateLibrary();
+  if (WK.list === null) { WK.list = []; saveWorkouts(); }     // first run: library workouts are listed on their own
   setPlaying(S.playing);
   route();
   requestAnimationFrame(frame);

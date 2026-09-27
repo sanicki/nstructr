@@ -10,10 +10,10 @@ async def main():
         pg.on('pageerror',lambda e: errs.append(str(e)))
         await pg.goto(URL, wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         await pg.evaluate("setSound('beeps'); WK.hinted=true")
-        n=await pg.evaluate("flattenWorkout(WK.list[0]).length")
+        n=await pg.evaluate("flattenWorkout(LIB_WK[0]).length")
         worst=[]; shots=[]
         for i in range(n):
-            await pg.evaluate(f"startWorkout(WK.list[0], {i})"); await pg.wait_for_timeout(250)
+            await pg.evaluate(f"startWorkout(LIB_WK[0], {i})"); await pg.wait_for_timeout(250)
             await pg.evaluate("S.speed=5"); await pg.wait_for_timeout(700)
             # where the floor line lands on the screen, as a share of the screen height from the bottom
             gap=await pg.evaluate("""(()=>{const l=scene.querySelector('.floor-line').getBoundingClientRect(); return (innerHeight - l.top)/innerHeight;})()""")

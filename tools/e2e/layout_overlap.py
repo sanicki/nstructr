@@ -9,7 +9,7 @@ async def main():
         for name,vp,dsf in SIZES:
             pg=await b.new_page(viewport=vp, device_scale_factor=dsf); pg.on('pageerror',lambda e: errs.append(str(e)))
             await pg.goto(URL, wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
-            await pg.evaluate("WK.hinted=true; setSound('coach'); startWorkout(WK.list[0], 3)"); await pg.wait_for_timeout(300)
+            await pg.evaluate("WK.hinted=true; setSound('coach'); startWorkout(LIB_WK[0], 3)"); await pg.wait_for_timeout(300)
             await pg.evaluate("caption('Drive through your front heel and lift the back foot.')"); await pg.wait_for_timeout(300)
             r=await pg.evaluate("""(()=>{const b=s=>document.querySelector(s).getBoundingClientRect();
                const t=b('#wpRoot .ov-top'), c=b('#wpCaption span'), f=b('#scene'); 

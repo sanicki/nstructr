@@ -10,7 +10,7 @@ async def main():
         pg.on('dialog', lambda d: asyncio.ensure_future(d.accept()))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         # capture speech
-        await pg.evaluate("""window.SPOKEN=[]; window.speechSynthesis={speak:u=>{if(u.text) SPOKEN.push(u.text)}, cancel:()=>{}}; window.SpeechSynthesisUtterance=function(t){this.text=t};""")
+        await pg.evaluate("""window.SPOKEN=[]; Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{speak:u=>{if(u.text) SPOKEN.push(u.text); setTimeout(()=>u.onend&&u.onend(),50)}, cancel:()=>{}}}); window.SpeechSynthesisUtterance=function(t){this.text=t};""")
         await pg.evaluate("""(()=>{const mk=(id,o)=>({...newItem(exById(id)),...o});
           WK.list.push({id:'circ',name:'Circuit Test',restBetween:1,blocks:[
             {id:'b1',name:'Circuit',rounds:2,roundRest:2,items:[mk('bw-squat',{reps:3}), mk('core-forearm-plank',{seconds:20})]},

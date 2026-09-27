@@ -14,7 +14,7 @@ function newItem(ex) {
     sides: ex.bilateral ? 'both' : null, dir: ex.direction ? 'both' : null
   };
 }
-/* null = first run: boot() seeds the list from the library's workouts once the library has loaded */
+/* the user's own workouts; null = first run (boot() starts it empty: library workouts are listed separately) */
 function loadWorkouts() {
   try { const d = JSON.parse(localStorage.getItem(WK_KEY) || 'null'); if (d && Array.isArray(d.list)) return d.list; } catch (e) { }
   return null;
@@ -31,7 +31,21 @@ function hydrateWorkout(fw) {
 }
 const WK = { list: loadWorkouts(), sound: (() => { try { return localStorage.getItem(SOUND_KEY) || 'beeps'; } catch (e) { return 'beeps'; } })() };
 function saveWorkouts() { try { localStorage.setItem(WK_KEY, JSON.stringify({ list: WK.list })); } catch (e) { } }
-const wkById = id => (WK.list || []).find(w => w.id === id);
+/* Library workouts aren't copied into the user's list: they're shown in their own section, so library updates
+   reach everyone. Their runtime ids carry a "lib:" prefix so they never clash with the user's workouts (older
+   installs have a first-run copy of the routine under the plain library id). "Customize" copies one into the
+   user's list. */
+const LIB_PREFIX = 'lib:';
+let LIB_WK = [];
+function hydrateLibrary() { LIB_WK = LIBRARY_WORKOUTS.map(fw => ({ ...hydrateWorkout(fw), id: LIB_PREFIX + fw.id, libId: fw.id, description: fw.description })); }
+const isLibWorkout = w => !!(w && w.libId);
+const wkById = id => (WK.list || []).find(w => w.id === id) || LIB_WK.find(w => w.id === id);
+function customizeWorkout(w) {
+  const c = JSON.parse(JSON.stringify(w)); c.id = uid(); delete c.libId; delete c.description;
+  c.blocks.forEach(b => { b.id = uid(); b.items.forEach(i => (i.uid = uid())); });
+  WK.list.push(c); saveWorkouts();
+  return c;
+}
 
 /* ---------- timing ---------- */
 const stepMs = k => (k.durationMs || 0) + (k.holdMs == null ? 500 : k.holdMs);
@@ -81,19 +95,26 @@ function itemSummary(item) {
 /* ---------- list ---------- */
 function renderWorkouts() {
   renderHistory();
-  $('#wkCount').textContent = `${WK.list.length} ${WK.list.length === 1 ? 'workout' : 'workouts'}`;
+  $('#wkCount').textContent = WK.list.length ? `${WK.list.length} ${WK.list.length === 1 ? 'workout' : 'workouts'} of your own` : '';
   const sess = loadSession(), sw = sess && wkById(sess.wid);
   $('#resumeSlot').innerHTML = sw ? `<div class="resume"><span class="icon">history</span><span class="txt"><span class="title-small" style="display:block">Resume ${esc(sw.name)}</span>
     <span class="body-small">From exercise ${sess.i + 1} of ${sw.blocks.flatMap(b => b.items).length}</span></span>
     <button class="btn filled stateful" data-wact="resume">Resume</button><button class="icon-btn stateful" data-wact="dropSession" aria-label="Discard"><span class="icon">close</span></button></div>` : '';
-  $('#wkList').innerHTML = WK.list.map(w => {
-    const n = w.blocks.flatMap(b => b.items).length;
-    return `<article class="wk-card"><h2 class="title-medium">${esc(w.name)}</h2>
+  $('#wkList').innerHTML = WK.list.map(w => wkCard(w)).join('') || (LIB_WK.length
+    ? `<p class="body-medium muted" style="margin:0">Your own workouts show up here. Start one from the library below, or tap Customize to make your own copy.</p>`
+    : `<div class="empty-state"><span class="icon">fitness_center</span><p class="title-medium">No workouts yet</p></div>`);
+  $('#libWkSection').hidden = !LIB_WK.length;
+  $('#libWkList').innerHTML = LIB_WK.map(w => wkCard(w)).join('');
+}
+function wkCard(w) {
+  const n = w.blocks.flatMap(b => b.items).length, lib = isLibWorkout(w);
+  return `<article class="wk-card"><h2 class="title-medium">${esc(w.name)}</h2>
+      ${lib && w.description ? `<p class="body-small muted" style="margin:0">${esc(w.description)}</p>` : ''}
       <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${n} exercises</span><span><span class="icon">view_agenda</span>${w.blocks.length} ${w.blocks.length === 1 ? 'block' : 'blocks'}</span></div>
       ${workoutEquipment(w).length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(workoutEquipment(w).join(', '))}</span></div>` : ''}
       <div class="row"><button class="btn filled stateful" data-wstart="${esc(w.id)}"><span class="icon fill">play_arrow</span>Start</button>
-      <a class="btn text stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a></div></article>`;
-  }).join('') || `<div class="empty-state"><span class="icon">fitness_center</span><p class="title-medium">No workouts yet</p></div>`;
+      ${lib ? `<button class="btn text stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
+    : `<a class="btn text stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>`}</div></article>`;
 }
 
 /* ---------- AI prompt: a written routine -> workout JSON, using this library's exercise ids ---------- */
@@ -106,11 +127,11 @@ function routinePrompt() {
   }).join('\n');
   return `Convert the workout routine below into a workout file for my exercise animator.
 
-Output ONLY valid JSON (no markdown fences, no commentary), in this shape:
-{"format":"nstructr/workout","version":1,"workouts":[{"name":"...","restBetween":10,"blocks":[
+Output ONLY valid JSON (no markdown fences, no commentary): one workout, in this shape:
+{"version":1,"id":"kebab-case-name","name":"...","description":"one sentence","restBetween":10,"blocks":[
   {"name":"Warm-up","rounds":1,"roundRest":30,"items":[
     {"ex":"<exercise id>","sets":1,"reps":10,"rest":20,"sides":"both","dir":"both","tempo":1},
-    {"ex":"<exercise id>","seconds":30,"sides":"both"}]}]}]}
+    {"ex":"<exercise id>","seconds":30,"sides":"both"}]}]}
 
 RULES
 - "ex" must be an id from the EXERCISES list below. Pick the closest match by movement, not just by name.
@@ -120,6 +141,7 @@ RULES
 - "sets" and "rest" (seconds between sets) default to 1 and 20. "tempo" is a speed multiplier (1 = normal).
 - Keep the routine's sections as blocks, in order. For a circuit ("repeat 3 times"), set the block's "rounds" and "roundRest".
 - "restBetween" is the rest in seconds between exercises (0 for a straight-through routine).
+- Leave out "sides" and "dir" for exercises that don't list them, and "sets", "rest" and "tempo" when they're the defaults.
 - If an exercise in the routine has no reasonable match, leave it out and list it at the end of the workout name in brackets, e.g. "My Routine [missing: Turkish get-up]".
 
 EXERCISES (id | name | measured by, options)
@@ -402,7 +424,7 @@ function say(text, coachOnly = false, { dropIfBusy = false } = {}) {
       const u = new SpeechSynthesisUtterance(text); u.rate = 1;
       u.onend = fin; u.onerror = fin;
       setTimeout(fin, 1500 + text.split(/\s+/).length * 450);      // never wait forever on a voice that doesn't report back
-      speechSynthesis.speak(u);
+      try { speechSynthesis.speak(u); } catch (e) { fin(); }        // a throw here would otherwise leave a guided step waiting forever
     });
   } catch (e) { return Promise.resolve(); }
 }
@@ -617,7 +639,7 @@ function logItem(entry) {
 function writeSession(completed) {
   if (!WP.log || !WP.log.done.length) return;
   const list = loadLog();
-  list.push({ id: uid(), workout: WP.w.id, name: WP.w.name, start: new Date(WP.log.start).toISOString(), end: new Date().toISOString(),
+  list.push({ id: uid(), workout: WP.w.libId || WP.w.id, ...(isLibWorkout(WP.w) ? { library: true } : {}), name: WP.w.name, start: new Date(WP.log.start).toISOString(), end: new Date().toISOString(),
     seconds: Math.round((Date.now() - WP.log.start) / 1000), completed, exercisesDone: WP.log.done.length, exercisesTotal: WP.flat.length, exercises: WP.log.done });
   saveLog(list); WP.log = null;
 }
@@ -695,7 +717,7 @@ $('#wpRoot').addEventListener('pointerup', e => {
   btn.addEventListener('pointerleave', stop); btn.addEventListener('pointercancel', stop);
   btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); exitWorkout(); } });
 })();
-function exitWorkout() { go(`#/workout/${WP.w.id}`); }
+function exitWorkout() { go(isLibWorkout(WP.w) ? '#/workouts' : `#/workout/${WP.w.id}`); }
 /* full screen while working out (hides the phone's status bar where allowed) */
 const FS_KEY = 'nstructr-fullscreen-v1';
 const installedApp = () => matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches;
@@ -835,6 +857,7 @@ document.querySelector('.shell').addEventListener('click', e => {
   const t = e.target.closest('button, a'); if (!t) return;
   const d = t.dataset;
   if (d.wstart) { const w = wkById(d.wstart); if (w) confirmStart(w); }
+  else if (d.wcustom) { const w = wkById(d.wcustom); if (w) { const c = customizeWorkout(w); go(`#/workout/${c.id}`); snack(`Copied to your workouts. Changes stay in your copy.`); } }
   else if (d.wact === 'new') {
     const w = { id: uid(), name: 'New workout', restBetween: 10, blocks: [{ id: uid(), name: 'Block 1', items: [] }] };
     WK.list.push(w); saveWorkouts(); go(`#/workout/${w.id}`);
