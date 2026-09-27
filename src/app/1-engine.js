@@ -344,6 +344,7 @@ function setPlaying(p) {
   const btn = $('#playBtn');
   btn.innerHTML = `<span class="icon fill">${p ? 'pause' : 'play_arrow'}</span>`;
   btn.setAttribute('aria-label', p ? 'Pause' : 'Play');
+  if (S.view === 'player' && typeof showExControls === 'function') p ? showExControls() : showExControls(true);   // paused: controls stay up
 }
 function jumpTo(i) {
   const n = S.resolved.length; if (!n) return;

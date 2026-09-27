@@ -1,4 +1,4 @@
-/* ===================== UI: Explore / Saved / Create / Player ===================== */
+/* ===================== UI: Exercises (the library + Saved) ===================== */
 const COLLECTION_ORDER = ['Warm-up', 'Bodyweight', 'Core', 'Free weights', 'Pilates', 'Chair-based', 'Stretches', 'Resistance band', 'Balance', 'Yoga poses'];
 const collections = () => {
   const set = new Set(POSE_DB.exercises.map(ex => ex.library || 'Other'));
@@ -25,15 +25,21 @@ function card(ex) {
 const chip = (attr, val, on, label = val) =>
   `<button class="filter stateful" ${attr}="${esc(val)}" aria-pressed="${on}"><span class="icon">check</span>${esc(label)}</button>`;
 
-/* ---------- Explore ---------- */
+/* ---------- Exercises ----------
+   "Saved" is a collection like the others: bookmarked library exercises plus the user's own (imported or made),
+   which exist only there. Searching "All" covers both. */
+const SAVED = 'Saved';
+const ownExercises = () => S.lib.items.filter(ex => !findInDb(ex.id));
 function renderExplore() {
-  const colls = collections();
-  $('#fCollection').innerHTML = chip('data-coll', 'All', E.coll === 'All', 'All') + colls.map(c => chip('data-coll', c, E.coll === c)).join('');
-  const scope = POSE_DB.exercises.filter(ex => E.coll === 'All' || (ex.library || 'Other') === E.coll);
+  const colls = collections(), nSaved = S.lib.items.length;
+  $('#fCollection').innerHTML = chip('data-coll', 'All', E.coll === 'All', 'All') +
+    chip('data-coll', SAVED, E.coll === SAVED, nSaved ? `${SAVED} (${nSaved})` : SAVED) + colls.map(c => chip('data-coll', c, E.coll === c)).join('');
+  const scope = E.coll === SAVED ? S.lib.items
+    : E.coll === 'All' ? [...POSE_DB.exercises, ...ownExercises()] : POSE_DB.exercises.filter(ex => (ex.library || 'Other') === E.coll);
   const types = [...new Set(scope.map(typeOf).filter(Boolean))].sort();
   const equip = [...new Set(scope.flatMap(ex => ex.equipment || []))].sort();
   let more = '';
-  if (E.coll !== 'All' && types.length > 1) more += chip('data-type', 'All', E.type === 'All', 'All types') + types.map(t => chip('data-type', t, E.type === t)).join('');
+  if (E.coll !== 'All' && E.coll !== SAVED && types.length > 1) more += chip('data-type', 'All', E.type === 'All', 'All types') + types.map(t => chip('data-type', t, E.type === t)).join('');
   if (equip.length > 1) more += (more ? '<span class="chip-sep" aria-hidden="true"></span>' : '') + chip('data-equip', 'Any', E.equip === 'Any', 'Any equipment') + equip.map(q => chip('data-equip', q, E.equip === q)).join('');
   $('#fMore').innerHTML = more;
   $('#fMore').hidden = !more;
@@ -45,14 +51,18 @@ function renderExplore() {
     (!q || [ex.name, ex.sanskrit, ex.category, ex.focus, ex.library, ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q))));
   const body = $('#exploreBody');
   if (E.coll === 'All' && E.type === 'All' && E.equip === 'Any' && !q) {
-    // browsing: one shelf per collection
-    body.innerHTML = colls.map(c => {
-      const items = POSE_DB.exercises.filter(ex => (ex.library || 'Other') === c);
-      return `<section class="section"><div class="section-head">
+    // browsing: one shelf per collection, Saved first
+    const shelf = (c, items) => `<section class="section"><div class="section-head">
         <h2 class="title-medium">${esc(c)}<span class="count">${items.length}</span></h2>
         <button class="btn text stateful" data-coll="${esc(c)}">See all</button></div>
         <div class="carousel">${items.slice(0, 14).map(card).join('')}</div></section>`;
-    }).join('');
+    body.innerHTML = (nSaved ? shelf(SAVED, S.lib.items) : '') + colls.map(c => shelf(c, POSE_DB.exercises.filter(ex => (ex.library || 'Other') === c))).join('');
+    return;
+  }
+  if (E.coll === SAVED && !nSaved && !q) {
+    body.innerHTML = `<div class="empty-state"><span class="icon">bookmarks</span><p class="title-medium" style="margin:8px 0 4px">Nothing saved yet</p>
+      <p class="muted" style="margin:0 0 16px">Tap the bookmark on any exercise to keep it here. Exercises you import land here too.</p>
+      <div class="row" style="justify-content:center"><button class="btn tonal stateful" data-act="import"><span class="icon">upload_file</span>Import</button></div></div>`;
     return;
   }
   body.innerHTML = list.length
