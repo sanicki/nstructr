@@ -12,7 +12,7 @@ const AI_APPS = [                // q: the link parameter that fills in the mess
   { id: 'grok', name: 'Grok', url: 'https://grok.com/', q: 'q' },
   { id: 'deepseek', name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
   { id: 'copilot', name: 'Copilot', url: 'https://copilot.microsoft.com/', q: 'q' },
-  { id: 'mistral', name: 'Le Chat (Mistral)', url: 'https://chat.mistral.ai/chat', q: 'q' },
+  { id: 'mistral', name: 'Vibe (Mistral, was Le Chat)', url: 'https://chat.mistral.ai/chat', q: 'q' },
   { id: 'other', name: 'Another AI app (copy only)' },
 ];
 const AI_KINDS = [
@@ -61,7 +61,7 @@ WORKOUT
 - Rep-based exercises get "reps"; time-based ones get "seconds". Use the routine's numbers; for a range, use the lower end.
 - "sides" (only for exercises marked sides): "L", "R", "both" (one side then the other) or "alternate". Reps count per side.
 - "dir" (only for exercises marked dir): "A", "B", "both" or "alternate".
-- "sets" and "rest" (seconds between sets) default to 1 and 20. "tempo" is a speed multiplier (1 = normal).
+- "sets" and "rest" (seconds between sets) default to 1 and 20. "tempo" is a speed multiplier (1 = the exercise's own pace, 2 = twice as fast).
 - Keep the routine's sections as blocks, in order. For a circuit ("repeat 3 times"), set the block's "rounds" and "roundRest".
 - Leave out "sides" and "dir" for exercises that don't list them, and "sets", "rest" and "tempo" when they're the defaults.
 

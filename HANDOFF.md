@@ -491,10 +491,10 @@ steps or the joint will windmill; the jump check will catch it.
 ## 10. UI inventory (current)
 
 - **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (Start/Edit, est. time, count, equipment, safety notes), Library workouts (Start/Customize), History (delete, clear). Editor: name, blocks (rename, move, delete, repeat as circuit with rounds and
-  rest), items (drag handle, settings sheet with reps/seconds, sets, rest, sides, direction, speed; menu: move,
+  rest), items (drag handle, settings sheet with reps/seconds, sets, rest between sets (shown with 2+ sets), sides, direction, **seconds per rep** (0.1 s steps, typed or −/+, "Usual: n s" = the exercise's own pace; stored as `tempo` = usual ÷ chosen, clamped to ¼–4×; not for timed exercises); menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
-- **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; type/focus,
-  equipment), search (covers the user's own exercises too). Saved = bookmarked library exercises + the user's
+- **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; then type and equipment,
+  each on its own row; the equipment choice is kept across collections, one without it shows all), search (covers the user's own exercises too). Saved = bookmarked library exercises + the user's
   own (imported/made), which exist only there.
 - **Exercise player**: the figure with a **tap-for-controls overlay** (previous step / play-pause / next step;
   same rules as the workout player: the first tap only shows them, they stay up while paused, fade while
@@ -530,7 +530,7 @@ steps or the joint will windmill; the jump check will catch it.
   dialog in three steps. 1: what you have (a name, a written routine, a video or web link, a photo or video; the
   last has no text box: it's attached in the AI app). 2: the AI app (default in Settings, `nstructr-ai-app-v1`):
   **Open** copies the instructions and opens the app; apps with a message parameter (`?q=`: Claude, ChatGPT, Grok,
-  Copilot, Le Chat) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
+  Copilot, Vibe) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
   URLs over 16 KB); Gemini and DeepSeek have none, so they're only copied; "Another AI app" just copies. 3: paste
   the answer: `extractJson()` takes the JSON out of ``` fences or surrounding sentences; `{"inLibrary": "<id>"}`
   opens that library exercise; anything else goes through the normal import (exercise, or a workout file bringing
@@ -586,7 +586,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay, page order, labels, Edit with the figure pinned, Done), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `triage_filters_pace` (type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /
