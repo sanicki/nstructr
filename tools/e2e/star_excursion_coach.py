@@ -11,7 +11,7 @@ async def main():
           Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{speak:u=>{if(!u.text)return;SP.queue.push(u);next();},cancel:()=>{SP.queue.length=0},get speaking(){return SP.busy},get pending(){return SP.queue.length>0}}});
           window.SpeechSynthesisUtterance=function(t){this.text=t};""")
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
-        await pg.evaluate("""(()=>{WK.list.push({id:'s4',name:'S',restBetween:0,blocks:[{id:'b',name:'B',items:[{...newItem(exById('star-excursion-4-point')),reps:1,sides:'both'}]}]}); setSound('coach'); startWorkout(wkById('s4'));})()""")
+        await pg.evaluate("""(()=>{WK.list.push({id:'s4',name:'S',blocks:[{id:'b',name:'B',items:[{...newItem(exById('star-excursion-4-point')),reps:1,sides:'both'}]}]}); setSound('coach'); startWorkout(wkById('s4'));})()""")
         labels=[]; last=None
         for k in range(1200):
             await pg.evaluate("S.speed=6"); await pg.wait_for_timeout(20)

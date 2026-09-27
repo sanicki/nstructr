@@ -12,7 +12,7 @@ async def main():
         # capture speech
         await pg.evaluate("""window.SPOKEN=[]; Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{speak:u=>{if(u.text) SPOKEN.push(u.text); setTimeout(()=>u.onend&&u.onend(),50)}, cancel:()=>{}}}); window.SpeechSynthesisUtterance=function(t){this.text=t};""")
         await pg.evaluate("""(()=>{const mk=(id,o)=>({...newItem(exById(id)),...o});
-          WK.list.push({id:'circ',name:'Circuit Test',restBetween:1,blocks:[
+          localStorage.setItem('nstructr-rest-between-v1','1'); WK.list.push({id:'circ',name:'Circuit Test',blocks:[
             {id:'b1',name:'Circuit',rounds:2,roundRest:2,items:[mk('bw-squat',{reps:3}), mk('core-forearm-plank',{seconds:20})]},
             {id:'b2',name:'Finisher',items:[mk('bw-reverse-lunge',{reps:2,sides:'alternate'})]}]});
           saveWorkouts(); setSound('coach'); startWorkout(wkById('circ'));})()""")
@@ -37,7 +37,7 @@ async def main():
         log=await pg.evaluate("loadLog()"); print('after early stop:', len(log), {k:log[-1][k] for k in ['completed','exercisesDone','exercisesTotal']})
         print('history UI:', (await pg.inner_text('#historyList'))[:160].replace('\n',' | '))
         # routine prompt
-        pr=await pg.evaluate("routinePrompt()"); print('prompt chars', len(pr), '| has ids:', 'wu-arm-circles | Standing Arm Circles' in pr, '| lines:', pr.count('\n'))
+        pr=await pg.evaluate("aiPrompt('routine', 'Squats 3x10')"); print('prompt chars', len(pr), '| has ids:', 'wu-arm-circles (dir' in pr, '| lines:', pr.count('\n'))
         # share falls back to a download here
         await pg.goto(URL + '#/workout/circ', wait_until='domcontentloaded'); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="@edit"]'); await pg.wait_for_timeout(300)

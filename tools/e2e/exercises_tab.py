@@ -36,7 +36,7 @@ async def main():
         await pg.evaluate("E.coll='Bookmarked'; renderExplore()"); await pg.wait_for_timeout(100)
         print('Bookmarked              ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"))
         # deleting: asks, and names the workouts that use it
-        await pg.evaluate("WK.list.push({id:'w1',name:'Calves',restBetween:0,blocks:[{id:'b',name:'B',items:[newItem(exById('u-my-raise'))]}]}); saveWorkouts(); go('#/play/u-my-raise')"); await pg.wait_for_timeout(300)
+        await pg.evaluate("WK.list.push({id:'w1',name:'Calves',blocks:[{id:'b',name:'B',items:[newItem(exById('u-my-raise'))]}]}); saveWorkouts(); go('#/play/u-my-raise')"); await pg.wait_for_timeout(300)
         await pg.evaluate("document.querySelector('#aboutPanel [data-del]').click()"); await pg.wait_for_timeout(300)
         print('delete                  ', asked, await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash, E.coll]"))
         # importing an unchanged library exercise just bookmarks it; your own lands in My exercises

@@ -24,7 +24,7 @@ async def main():
         # a workout using an exercise of the sender's own
         own = await pg.evaluate("JSON.stringify({...findInDb('bw-squat'), id:'u-wide-squat', name:'Wide Squat', description:'Squat with feet wide.'})")
         await pg.evaluate(f"""(()=>{{ S.lib.items.push(JSON.parse({json.dumps(own)})); saveLib();
-          WK.list.push({{id:'mine', name:'Legs Day', restBetween:10, blocks:[{{id:'b', name:'Main', rounds:2, roundRest:45, items:[{{...newItem(exById('u-wide-squat')), reps:12}}, {{...newItem(exById('core-forearm-plank')), seconds:40, sets:2, rest:15}}]}}]}}); saveWorkouts(); go('#/workouts'); }})()""")
+          WK.list.push({{id:'mine', name:'Legs Day', blocks:[{{id:'b', name:'Main', rounds:2, roundRest:45, items:[{{...newItem(exById('u-wide-squat')), reps:12}}, {{...newItem(exById('core-forearm-plank')), seconds:40, sets:2, rest:15}}]}}]}}); saveWorkouts(); go('#/workouts'); }})()""")
         await pg.wait_for_timeout(300)
         await pg.click('[data-wtoggle="mine"]'); await pg.click('[data-share-wk="mine"]'); await pg.wait_for_timeout(400)
         url2 = await pg.input_value('#shareUrl')

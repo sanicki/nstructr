@@ -8,7 +8,7 @@ async def main():
         pg.on('pageerror',lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         await pg.evaluate("""(()=>{const mk=(id,o)=>({...newItem(exById(id)),...o});
-          WK.list.push({id:'t1',name:'Test',restBetween:1,blocks:[{id:'b',name:'B',items:[
+          localStorage.setItem('nstructr-rest-between-v1','1'); WK.list.push({id:'t1',name:'Test',blocks:[{id:'b',name:'B',items:[
             mk('bw-squat',{sets:2,reps:3,rest:1}), mk('core-bird-dog',{reps:2,sides:'alternate'}), mk('wu-arm-circles',{reps:2,dir:'alternate'}),
             mk('band-wall-sit-pull-apart',{reps:4}), mk('core-forearm-plank',{seconds:5})]}]}); saveWorkouts(); startWorkout(wkById('t1'));})()""")
         await pg.wait_for_timeout(300)

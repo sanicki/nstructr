@@ -41,6 +41,15 @@
           <div class="segmented" id="setSound" role="group" aria-label="Sound"></div></div>
         <label class="setting"><span class="txt"><span class="body-large">Full screen</span><span class="body-small muted">While working out in the browser. The installed app is always full screen.</span></span>
           <input type="checkbox" class="switch" id="setFullscreen"></label>
+        <label class="setting"><span class="txt"><span class="body-large">Rest between exercises</span><span class="body-small muted">In every workout. Rests between sets and rounds are set per exercise and block.</span></span>
+          <select class="select" id="setRest" aria-label="Rest between exercises"></select></label>
+      </section>
+      <section class="settings-group" aria-labelledby="setAiTitle">
+        <h2 class="title-small settings-title" id="setAiTitle">Create with AI</h2>
+        <label class="setting"><span class="txt"><span class="body-large">AI app</span><span class="body-small muted">Create with AI opens it with the instructions filled in, or copied where it can't take them.</span></span>
+          <select class="select" id="setAi" aria-label="AI app"></select></label>
+        <div class="setting"><span class="txt"><span class="body-large">Make an exercise or a workout</span><span class="body-small muted">From a name, a written routine, a video link, or a photo or video.</span></span>
+          <button class="btn filled stateful" data-act="ai"><span class="icon">auto_awesome</span>Create</button></div>
       </section>
       <section class="settings-group" aria-labelledby="setDisplayTitle">
         <h2 class="title-small settings-title" id="setDisplayTitle">Display</h2>
@@ -67,20 +76,6 @@
             <div class="row"><button class="btn filled stateful" data-act="import"><span class="icon">upload_file</span>Choose file</button>
             <button class="btn text stateful" data-act="paste">Paste JSON</button></div>
           </article>
-          <article class="card">
-            <span class="icon big">auto_awesome</span>
-            <h3 class="title-medium">Make an exercise from a video</h3>
-            <p class="muted">Copy this prompt into an AI model that can watch videos (such as Gemini), add a video link, and import the JSON it writes.</p>
-            <div class="row"><button class="btn filled stateful" data-act="copyPrompt"><span class="icon">content_copy</span>Copy prompt</button>
-            <button class="btn text stateful" data-act="showPrompt">Read it</button></div>
-          </article>
-          <article class="card">
-            <span class="icon big">playlist_add</span>
-            <h3 class="title-medium">Turn a written routine into a workout</h3>
-            <p class="muted">Copy this prompt into an AI model, paste your routine where it says, and import the workout it writes. The prompt lists every exercise in the library so it can match them.</p>
-            <div class="row"><button class="btn filled stateful" data-act="copyRoutinePrompt"><span class="icon">content_copy</span>Copy prompt</button>
-            <button class="btn text stateful" data-act="showRoutinePrompt">Read it</button></div>
-          </article>
           <article class="card authoring-only">
             <span class="icon big">data_object</span>
             <h3 class="title-medium">Export your exercises</h3>
@@ -100,7 +95,8 @@
         <div class="section-head"><h2 class="title-medium" id="myWkTitle">My workouts<span class="count" id="wkCount"></span></h2></div>
         <p class="body-medium muted" id="wkEmpty" style="margin:0 0 12px">Your own workouts show up here. Start one from the library below, or tap Customize on one to make your own copy.</p>
         <div class="wk-list" id="wkList" data-list="mine"></div>
-        <div class="row wk-add"><button class="btn filled stateful" data-wact="new"><span class="icon">add</span>New workout</button></div>
+        <div class="row wk-add"><button class="btn filled stateful" data-wact="new"><span class="icon">add</span>New workout</button>
+          <button class="btn tonal stateful" data-act="ai"><span class="icon">auto_awesome</span>Create with AI</button></div>
       </section>
       <section class="section" id="libWkSection" aria-labelledby="libWkTitle" hidden>
         <div class="section-head"><h2 class="title-medium" id="libWkTitle">Library workouts</h2></div>
@@ -286,15 +282,35 @@
   <div id="linkBody"></div>
   <div class="actions"><button class="btn text stateful" data-close>Not now</button><button class="btn filled stateful" id="linkAdd"><span class="icon">add</span>Add</button></div>
 </dialog>
+<dialog id="aiDialog" class="library ai-dialog" aria-labelledby="aiTitle">
+  <div class="lib-head">
+    <button class="icon-btn stateful" data-close aria-label="Close"><span class="icon">close</span></button>
+    <h2 class="title-large" id="aiTitle">Create with AI</h2>
+  </div>
+  <div class="ai-body">
+    <p class="body-medium muted">An AI app writes the exercise or workout; NstructR gives it the instructions. Nothing is sent from here: you'll see everything in the AI app.</p>
+    <h3 class="title-small ai-step"><span class="ai-num">1</span>What do you have?</h3>
+    <div class="chips" id="aiKind" role="group" aria-label="What do you have?"></div>
+    <label class="field ai-input" id="aiInputWrap"><span class="field-label" id="aiInputLabel">Name</span><textarea id="aiInput" rows="3"></textarea></label>
+    <p class="body-small muted" id="aiKindHint"></p>
+    <h3 class="title-small ai-step"><span class="ai-num">2</span>Ask the AI</h3>
+    <label class="field"><span class="field-label">AI app</span><select id="aiApp"></select></label>
+    <p class="body-small muted" id="aiAppHint"></p>
+    <div class="row"><button class="btn filled stateful" id="aiOpen"><span class="icon">open_in_new</span><span id="aiOpenLabel">Open</span></button>
+      <button class="btn text stateful" id="aiCopy"><span class="icon">content_copy</span>Copy instructions</button>
+      <button class="btn text stateful authoring-only" id="aiShow">Read them</button></div>
+    <h3 class="title-small ai-step"><span class="ai-num">3</span>Paste its answer</h3>
+    <p class="body-small muted">Copy the whole answer (the JSON) from the AI app and paste it here.</p>
+    <textarea id="aiAnswer" spellcheck="false" aria-label="The AI's answer" placeholder='{ ... }'></textarea>
+    <div class="row"><button class="btn tonal stateful" id="aiPaste"><span class="icon">content_paste</span>Paste</button>
+      <button class="btn filled stateful" id="aiImport"><span class="icon">download</span>Add it</button></div>
+  </div>
+</dialog>
 <div class="menu" id="menu" hidden role="menu"></div>
 <div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>
 <div class="drop" id="drop"><div><span class="icon">file_download</span><p class="title-medium">Drop JSON to import</p></div></div>
 
-<template id="aiPrompt">Watch this video and convert the exercise it demonstrates into JSON for my exercise animator: [VIDEO URL]
-
-Output ONLY valid JSON (no markdown fences, no commentary).
-
-FILE (one exercise per file)
+<template id="aiPrompt">EXERCISE FORMAT
 { "version": 1,
   "id": "u-kebab-case-name",                  // must start with "u-" (marks it as your own exercise)
   "name": "...", "category": "Strength | Stretch | Balance | Mobility | Cardio | Yoga pose type",
@@ -307,6 +323,7 @@ FILE (one exercise per file)
   "repName": "rep",                           // what one rep is called ("circle", "pull-apart")
   "facing": "right",
   "bilateral": { "labels": { "L": "Right side", "R": "Left side" } },   // only if done on each side; write keyframes for ONE side
+  "direction": { "labels": { "A": "Clockwise", "B": "Counter-clockwise" } },   // only if it goes two ways (circles); keyframes are A, B plays the rep steps backwards
   "props": [ ... ],                                                    // equipment drawn with the figure (see EQUIPMENT)
   "keyframes": [ ... ] }
 

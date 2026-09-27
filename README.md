@@ -10,4 +10,4 @@ including on a Samsung Galaxy Z Flip cover screen — with optional voice coachi
 Exercises and workouts live in `library/` as one JSON file each; see `HANDOFF.md` for the formats and the
 animation checks every exercise must pass.
 
-License: not yet chosen. All rights reserved until one is added.
+License: [MIT](LICENSE): the engine, the app and the exercise library.

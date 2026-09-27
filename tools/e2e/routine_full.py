@@ -19,7 +19,7 @@ async def main():
         await pg.screenshot(path='/tmp/w_item.png')
         await pg.click('#itemDialog [data-close]')
         # start: before-start sheet
-        await pg.evaluate("WK.list[0].restBetween=1")
+        await pg.evaluate("localStorage.setItem('nstructr-rest-between-v1','1')")
         await pg.click('[data-wact="start"]'); await pg.wait_for_timeout(500)
         await pg.screenshot(path='/tmp/w_play.png')
         # fast-forward the whole routine, logging what happens

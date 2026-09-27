@@ -13,7 +13,7 @@ async def main():
         order = "[...document.querySelectorAll('#view-workouts h2, #wkEmpty, #view-workouts .wk-add button')].filter(x=>x.checkVisibility()).map(x=>x.textContent.trim().replace(/\\s+/g,' ').slice(0,28))"
         print('empty page, top down    ', await pg.evaluate(order))
         # three of my own, plus a second library workout (the library will grow)
-        await pg.evaluate("""(()=>{ for (const n of ['Alpha','Bravo','Charlie']) WK.list.push({id:n,name:n,restBetween:10,blocks:[{id:'b',name:'Main',items:[newItem(exById('bw-squat'))]}]});
+        await pg.evaluate("""(()=>{ for (const n of ['Alpha','Bravo','Charlie']) WK.list.push({id:n,name:n,blocks:[{id:'b',name:'Main',items:[newItem(exById('bw-squat'))]}]});
           saveWorkouts(); LIBRARY_WORKOUTS.push({...LIBRARY_WORKOUTS[0], id:'second-routine', name:'Second Routine'}); hydrateLibrary(); renderWorkouts(); })()""")
         names = lambda sel: pg.evaluate(f"[...document.querySelectorAll('{sel} .wk-title .title-medium')].map(x=>x.textContent)")
         print('cards                   ', await names('#wkList'), await names('#libWkList'))

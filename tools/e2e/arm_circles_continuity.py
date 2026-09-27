@@ -23,7 +23,7 @@ async def main():
         await pg.click('[data-dir="B"]'); await pg.wait_for_timeout(100)
         await pg.evaluate('setPlaying(false); S.idx=S.phase.start; S.prev=null; S.t=0'); await sample('backward, exercise player')
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
-        await pg.evaluate("""(()=>{WK.list.push({id:'c',name:'C',restBetween:0,blocks:[{id:'b',name:'B',items:[{...newItem(exById('wu-arm-circles')),reps:3,dir:'A'}]}]}); startWorkout(wkById('c')); S.playing=false;})()""")
+        await pg.evaluate("""(()=>{WK.list.push({id:'c',name:'C',blocks:[{id:'b',name:'B',items:[{...newItem(exById('wu-arm-circles')),reps:3,dir:'A'}]}]}); startWorkout(wkById('c')); S.playing=false;})()""")
         await pg.wait_for_timeout(100); await sample('3 circles in a workout')
         print(errs); await b.close()
 asyncio.run(main())

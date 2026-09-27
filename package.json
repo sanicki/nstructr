@@ -1,5 +1,6 @@
 {
   "name": "nstructr",
+  "license": "MIT",
   "private": true,
   "description": "NstructR: stick-figure exercise animations and workouts",
   "scripts": {
