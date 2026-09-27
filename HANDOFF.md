@@ -110,6 +110,8 @@ src/
   app/3-details.js    exercise player info, its tap-for-controls overlay and pull-up panel, Settings, format reference
   app/4-workouts.js   workouts: storage, editor, plan builder, workout player, sound, history, sharing
   app/5-main.js       selection, import, routing, event wiring, boot() (defined here)
+  app/5-share.js       share links: pack/unpack, share dialog with QR code, opening a link
+  vendor/qrcode.js    QR code generator (qrcode-generator 2.0.4, MIT), vendored for offline use
   app/6-pwa.js        service worker registration, storage persistence, Export/Import everything; calls boot()
   sw.js               service worker template (the build fills in the version hash and the file list)
 manifest.webmanifest  web app manifest (display: fullscreen)
@@ -268,6 +270,17 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
 - Import accepts: `{format: "nstructr/exercise", exercises: [...]}`, a bare exercise object, `{format:
   "nstructr/workout", workouts: [...], exercises?: [...]}` (a workout file may carry its own custom exercises),
   a bare workout object, and the legacy `pose-player/*` equivalents. `format` strings aren't strictly checked.
+- **Share links** (`src/app/5-share.js`): `<site>#/link/<kind>1<enc>.<data>` — kind `w` workout (a compact
+  `nstructr/workout` file: no runtime ids, default values dropped, the sender's own exercises included), `e`
+  exercise; enc `z` = deflate-raw (`CompressionStream`) + base64url, `j` = plain JSON + base64url (fallback).
+  An unmodified library workout is `#/link/l1.<library id>` and a library exercise is just `#/play/<id>`.
+  Opening a link shows what it holds; nothing is added until **Add** (workouts → My workouts, exercises →
+  Saved). Ids from a link never overwrite a different exercise of the receiver's own (`LINK_IMPORT` in
+  `claimIds` gives it `<id>-2`). Share dialog: the link, the phone's share sheet, copy, a QR code when the link
+  is ≤ 900 characters (`src/vendor/qrcode.js`, qrcode-generator, MIT, vendored), and "As a file". Share
+  buttons: workout editor, each workout card, the exercise page's top bar and About. `<site>` is the page's own
+  address, or `https://sanicki.github.io/nstructr/` when opened from a file. Typical sizes: library workout
+  62 chars; the 24-item routine customised ≈ 770; a workout with one own exercise ≈ 1200 (no QR).
 - **Backup** (`nstructr/backup`, Create → Back up everything): `{format, version, exported, workouts, exercises
   (saved), history, settings: {sound, fullscreen?}}`. Importing it (any import path detects the format)
   **merges** by id: backup items replace same-id items, nothing is deleted, importing twice changes nothing.
@@ -541,7 +554,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
+  `circuits_history_share`, `share_links` (library/own workouts and exercises through a link on a
+  second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
   player overlay and pull-up panel), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
@@ -557,8 +571,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 
 ## 13. Roadmap (agreed order)
 
-1. **Finish the repo split** — the items in §2.
-2. **Installable PWA + backup**: `manifest.webmanifest` (`display: fullscreen`, any orientation, theme colours,
+1. ✅ **Finish the repo split** — the items in §2.
+2. ✅ **Installable PWA + backup**: `manifest.webmanifest` (`display: fullscreen`, any orientation, theme colours,
    icons incl. maskable), service worker (cache the shell and `library/index.json`; update strategy for the
    library), `navigator.storage.persist()`, **Export everything / Import everything** (workouts, history, saved
    exercises, settings). Then test on the Flip7 cover screen as an installed app (Good Lock).
@@ -566,34 +580,42 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    as a filter), **Settings** (sound, theme, full screen, speed; "Import & tools" = AI prompts, format
    reference, export; an **Authoring mode** toggle that reveals the pose editor). Exercise player gets the same
    tap-for-controls overlay as the workout player, with a pull-up details panel instead of four tabs.
-4. **Share links**: workout/exercise compressed into the URL fragment (`CompressionStream` + base64url), no
-   server; QR codes for small workouts (library-referencing workouts are tiny).
+4. ✅ **Share links**: workout/exercise compressed into the URL fragment (`CompressionStream` + base64url), no
+   server; QR codes for short links (see §5.3).
 5. **Owner decisions before contributions**: library license (needed for the submission checkbox), trademark
-   check.
-6. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`
+   check. **Reminder for the owner (their current thinking, open to discussion then):** the *engine* should be
+   free to use **with attribution for non-commercial use only**, and **commercial use would need a licence**
+   from the owner (e.g. PolyForm Noncommercial or CC BY-NC for the engine, plus a separate commercial licence;
+   dual licensing). The library content and the app code may get different licences; decide together.
+6. **3D skeleton, still drawn as SVG** — see `docs/3d-skeleton.md`: joints with real 3D rotations, a real
+   camera, bones drawn in depth order (no more `layers`, depth joints or crossing workarounds), exercise format
+   v2 with a converter so v1 files keep working. Before submissions, so contributors only ever learn one format.
+7. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`
    forms YAML; if the JSON is too long for the URL, copy to clipboard and ask to paste) → an Action validates
    with `tools/build.mjs` logic, renders a preview (headless browser → GIF/PNG), comments, and opens a PR. Prompt
    and form require original wording + source link + license checkbox.
    **Owner's requirement:** editing exercises and workouts in the app is easy on purpose, so submitting must be a
    **deliberate, user-triggered action** on something the user chooses (e.g. "Submit this exercise"), ideally
    batching several items into one submission — never a PR per edit or anything automatic.
-7. **Content**: exercise machines (cable stations first — a fixed anchor + rigid cable, close to bands; then
+8. **Content**: exercise machines (cable stations first — a fixed anchor + rigid cable, close to bands; then
    leg press, lat pulldown; then cardio machines). Two small open choices in §14.
-8. **Experiments**: Flex mode layout (viewport segments; figure on the top half), voice commands (optional;
+9. **Experiments**: Flex mode layout (viewport segments; figure on the top half), voice commands (optional;
    browser speech recognition is flaky/online-only).
 
 ---
 
 ## 14. Open questions for the owner
 
-1. **License** for the code and for the library content (e.g. CC BY 4.0 vs CC0 for content). Required before
-   step 6. Until then the public repo is "all rights reserved" by default.
+1. **License** for the engine, the app code and the library content. Required before step 7 (submissions).
+   Until then the public repo is "all rights reserved" by default. Owner's current preference for the engine:
+   free with attribution for non-commercial use, commercial use licensed (see §13 step 5).
 2. **Trademark** check on "NstructR".
 3. **4-Point Star Excursion**: switch the fourth reach from "left, crossing behind" to the owner's routine's
    cross-behind diagonal?
 4. **Seated band row**: draw the band crossed in an X (as the routine describes)?
-5. Is **22 vh** the right bottom margin on the real cover screen, or can it shrink?
+5. ~~Is **22 vh** the right bottom margin on the real cover screen?~~ Confirmed on the Flip7.
 6. ~~Library workouts: copy on first run, or only a library section?~~ Decided: library section only;
    Customize makes a copy. Existing installs keep their first-run copy.
-7. Does Chrome run on the cover screen without Good Lock, and is full screen honoured there?
+7. ~~Does the app run on the cover screen?~~ Installed as an app, it runs there (owner, Sep 2026).
+9. **3D skeleton** (`docs/3d-skeleton.md`): go / no-go and timing; keep a v1 export for a while or not.
 8. Machines: which machines matter to the owner first?

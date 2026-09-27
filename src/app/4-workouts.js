@@ -113,6 +113,7 @@ function wkCard(w) {
       <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${n} exercises</span><span><span class="icon">view_agenda</span>${w.blocks.length} ${w.blocks.length === 1 ? 'block' : 'blocks'}</span></div>
       ${workoutEquipment(w).length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(workoutEquipment(w).join(', '))}</span></div>` : ''}
       <div class="row"><button class="btn filled stateful" data-wstart="${esc(w.id)}"><span class="icon fill">play_arrow</span>Start</button>
+      <button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>
       ${lib ? `<button class="btn text stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
     : `<a class="btn text stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>`}</div></article>`;
 }
@@ -374,11 +375,6 @@ function importWorkouts(data) {
   return out;
 }
 
-/* share a workout as a .json file (the phone's share sheet), or copy it where sharing files isn't supported */
-function shareWorkout(w) {
-  const name = (w.name || 'workout').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-').toLowerCase() + '.json';
-  return shareFile(workoutJSON(w), name, w.name);
-}
 
 /* ===================== Workout player ===================== */
 const WP = { w: null, flat: [], i: 0, set: 0, seg: 0, phase: 'idle', restLeft: 0, restNext: null, started: 0, beeped: {} };
@@ -864,7 +860,6 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.wact === 'start' && EDIT) confirmStart(EDIT);
   else if (d.wact === 'addBlock' && EDIT) { EDIT.blocks.push({ id: uid(), name: `Block ${EDIT.blocks.length + 1}`, items: [] }); commitEdit(); }
   else if (d.wact === 'export' && EDIT) showJson(EDIT.name, workoutJSON(EDIT));
-  else if (d.wact === 'share' && EDIT) shareWorkout(EDIT);
   else if (d.wact === 'exportLog') showJson('Workout history', JSON.stringify({ format: 'nstructr/log', version: 1, sessions: loadLog() }, null, 2));
   else if (d.wact === 'clearLog') { if (confirm('Clear all workout history?')) { saveLog([]); renderHistory(); } }
   else if (d.logdel) { saveLog(loadLog().filter(s => s.id !== d.logdel)); renderHistory(); }

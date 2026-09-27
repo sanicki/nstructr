@@ -239,14 +239,25 @@ function removeSaved(id) {
    saved exercises. Anything else gets "u-" in front, and workouts in the same file are pointed at the new id. */
 const FILE_VERSION = 1;
 const canonical = o => JSON.stringify(o, (k, v) => (v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.keys(v).filter(x => x !== '$schema' && x !== 'version').sort().map(x => [x, v[x]])) : v));
+/* From a shared link the exercise is someone else's: one with the same id as a different exercise of the user's
+   own gets a new id instead of replacing it (LINK_IMPORT, set while a link is imported). */
+let LINK_IMPORT = false;
 function claimIds(list, workouts) {
   const renamed = {};
+  const mine = id => S.lib.items.find(it => it.id === id);
+  const free = (ex, id) => {                                   // an id that won't overwrite something different
+    if (!LINK_IMPORT || !mine(id) || canonical(mine(id)) === canonical({ ...ex, id })) return id;
+    let n = 2; while (mine(`${id}-${n}`) || findInDb(`${id}-${n}`)) n++;
+    return `${id}-${n}`;
+  };
   const out = list.map(ex => {
-    if (ex.id.startsWith('u-')) return ex;
     const lib = findInDb(ex.id);
-    if (lib ? canonical(lib) === canonical(ex) : S.lib.items.some(it => it.id === ex.id)) return ex;
-    renamed[ex.id] = 'u-' + ex.id;
-    return { ...ex, id: renamed[ex.id] };
+    let id = ex.id;
+    if (!id.startsWith('u-') && !(lib ? canonical(lib) === canonical(ex) : (!LINK_IMPORT && mine(id)))) id = 'u-' + id;
+    if (!findInDb(id)) id = free(ex, id);
+    if (id === ex.id) return ex;
+    renamed[ex.id] = id;
+    return { ...ex, id };
   });
   for (const w of workouts || []) for (const b of (w && w.blocks) || []) for (const it of (b && b.items) || []) if (it && renamed[it.ex]) it.ex = renamed[it.ex];
   return out;
@@ -317,6 +328,9 @@ const OLD_ROUTES = { '#/explore': '#/exercises', '#/saved': '#/exercises', '#/cr
 let lastList = '#/workouts';
 function go(hash) { if (location.hash === hash) route(); else location.hash = hash; }
 function route() {
+  // a shared workout or exercise: show it (and offer to add it) over whatever page comes up
+  const lm = /^#\/link\/(.+)$/.exec(location.hash);
+  if (lm) { history.replaceState(null, '', ['exercises', 'settings'].includes(S.view) && document.body.dataset.view ? `#/${S.view}` : '#/workouts'); openSharedLink(lm[1]); }
   if (OLD_ROUTES[location.hash]) { if (location.hash === '#/saved') E.coll = SAVED; history.replaceState(null, '', OLD_ROUTES[location.hash]); }
   const h = location.hash || '#/workouts';
   const mPlay = h.match(/^#\/play\/(.+)$/), mEdit = h.match(/^#\/workout\/(.+)$/), mRun = h.match(/^#\/wplay\/(.+)$/);
@@ -352,6 +366,7 @@ function route() {
   const sub = view === 'player' || view === 'workout' || view === 'wplay';
   $('#backBtn').hidden = !sub;
   $('#saveBtn').hidden = view !== 'player';
+  $('#shareExBtn').hidden = view !== 'player';
   $('#editPoseBtn').hidden = view !== 'player' || !authoring();
   document.querySelector('.bar-brand').style.display = sub ? 'none' : '';
   $('#barTitle').textContent = view === 'player' ? (S.ex ? S.ex.name : '') : view === 'workout' ? EDIT.name : view === 'wplay' ? WP.w.name : TITLES[view];

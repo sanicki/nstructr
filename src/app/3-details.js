@@ -58,7 +58,8 @@ function renderPlayerInfo() {
   $('#aboutPanel').innerHTML = `${ex.description ? `<p class="body-large">${esc(ex.description)}</p>` : ''}
     ${src.url ? `<p><a class="source" href="${esc(src.url)}" target="_blank" rel="noopener"><span class="icon" style="font-size:18px">${/youtu/.test(src.url) ? 'play_circle' : 'open_in_new'}</span>${esc(src.title || 'Source')}</a></p>` : ''}
     ${src.note ? `<p class="body-small muted">${esc(src.note)}</p>` : ''}
-    <div class="row" style="margin-top:12px"><button class="btn tonal stateful" data-act="json"><span class="icon">data_object</span>Show JSON</button>
+    <div class="row" style="margin-top:12px"><button class="btn tonal stateful" data-act="shareEx"><span class="icon">share</span>Share</button>
+    <button class="btn text stateful" data-act="json"><span class="icon">data_object</span>Show JSON</button>
     ${isSaved(ex.id) ? `<button class="btn text stateful" data-del="${esc(ex.id)}"><span class="icon">bookmark_remove</span>Remove from Saved</button>` : ''}</div>`;
   updateSaveBtn();
   $('#adjustPanel').hidden = !authoring();
