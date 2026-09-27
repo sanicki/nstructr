@@ -37,18 +37,22 @@ async def main():
         await pg.click('.text-edit summary'); await pg.fill('[data-field="description"]', 'Changed.'); await pg.press('[data-field="description"]', 'Tab'); await pg.wait_for_timeout(100)
         await pg.click('[data-act="edDiscard"]'); await pg.wait_for_timeout(300)
         print('discard (words)         ', await pg.evaluate("[S.ex.id, S.ex.name, S.ex.description === findInDb('bw-reverse-lunge').description]"), '<- back to where this editing started')
-        # deleting your own exercise asks first
+        # the bookmark is only a flag; deleting your own exercise is its own action and asks first
+        asked.clear()
+        await pg.click('#saveBtn'); await pg.wait_for_timeout(150); await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
+        print('bookmark on/off (own)   ', asked, await pg.evaluate("[S.lib.items.map(x=>x.id), isBookmarked(S.ex.id)]"), '<- no question, still mine')
         answer['v'] = False; asked.clear()
-        await pg.click('#saveBtn'); await pg.wait_for_timeout(200)
-        print('unbookmark own, Cancel  ', asked, await pg.evaluate("S.lib.items.map(x=>x.id)"))
+        await pg.evaluate("document.querySelector('#aboutPanel [data-del]').click()"); await pg.wait_for_timeout(200)
+        print('Delete, Cancel          ', asked, await pg.evaluate("S.lib.items.map(x=>x.id)"))
         answer['v'] = True; asked.clear()
-        await pg.click('#saveBtn'); await pg.wait_for_timeout(300)
-        print('unbookmark own, OK      ', asked, await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash]"))
-        # a bookmarked library exercise just leaves Saved, no question
+        await pg.evaluate("document.querySelector('#aboutPanel [data-del]').click()"); await pg.wait_for_timeout(300)
+        print('Delete, OK              ', asked, await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash]"))
+        # a library exercise: bookmarking stores nothing but the id, no question either way
         await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(300)
-        await pg.click('#saveBtn'); await pg.wait_for_timeout(150); asked.clear()
         await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
-        print('unbookmark library      ', asked, await pg.evaluate("S.lib.items.map(x=>x.id)"))
+        print('bookmark library        ', await pg.evaluate("[isBookmarked('bw-squat'), S.lib.items.length, !!document.querySelector('#aboutPanel [data-del]')]"))
+        asked.clear(); await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
+        print('unbookmark library      ', asked, await pg.evaluate("[isBookmarked('bw-squat'), S.lib.items.length]"))
         # crossing legs, played for real (both sides, one full round): the drawing order only ever changes on a
         # frame where the legs are apart, and on every step that says a leg goes behind, it is behind
         for ex in ['star-excursion-4-point', 'star-excursion-balance']:

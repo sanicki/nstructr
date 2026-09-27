@@ -88,10 +88,9 @@ Still to do there: test on the Flip7 cover screen as an installed app (Good Lock
 **Still to do in step 1:** merge to `main`, enable Pages (Settings → Pages → Source: GitHub Actions), confirm
 the workflow deploys, test on the Flip7.
 
-Known gaps, deliberately left: exercises users saved *before* the `u-` rule keep their old ids (no migration;
-a clash needs the library to add that exact id). Saved copies of library exercises (bookmarks, and ones edited
-in the pose editor) keep the library id and shadow the library version, so library fixes don't reach them —
-worth revisiting with step 3's Saved filter.
+Known gap, deliberately left: exercises users saved *before* the `u-` rule keep their old ids (no migration;
+a clash needs the library to add that exact id). (The other old gap, stored copies of library exercises shadowing
+library fixes, is gone: bookmarks are ids now, and a changed stored copy became the user's own "(copy)".)
 
 ---
 
@@ -521,8 +520,9 @@ steps or the joint will windmill; the jump check will catch it.
     exercise's name, other name, focus, category, equipment, description, setup, form cues, suggested reps and
     note, rep name, side and direction labels, and source. The first real change to a library exercise makes the
     copy, as for poses (a typed name replaces "(copy)").
-- Removing the bookmark from one of the user's **own** exercises deletes it, so it asks first; a bookmarked
-  library exercise just leaves Saved.
+- The **bookmark** is only a flag, on any exercise. The user's own exercises are always in **My exercises**;
+  deleting one is its own action (About → Delete), asks first and names the workouts that use it. Backups carry
+  `bookmarks` too.
 - **Settings**: Workouts (default sound, full screen), Display (theme System/Light/Dark, exercise speed,
   **Authoring mode**), Import & tools (backup, import file/paste, the two AI prompts, export your exercises,
   JSON format reference, storage-persistence note).
@@ -533,7 +533,8 @@ steps or the joint will windmill; the jump check will catch it.
 
 | Key | Contents |
 |---|---|
-| `pose-player-library-v1` | `{items: [...]}` saved/imported exercises |
+| `pose-player-library-v1` | `{items: [...]}` **My exercises**: the user's own (imported, copied, made). Before bookmarks it also held copies of bookmarked library exercises; `migrateSaved()` moves those to bookmarks once |
+| `nstructr-bookmarks-v1` | ids of bookmarked exercises, library or own (a flag; library ones aren't copied, so library fixes reach them) |
 | `motion-guide-workouts-v1` | `{list: [...]}` user workouts (runtime form with uids) |
 | `motion-guide-session-v1` | `{wid, i}` resume point |
 | `motion-guide-sound-v1` | sound mode |
@@ -556,7 +557,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   served build via `NSTRUCTR_URL`:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
-  `circuits_history_share`, `workouts_tab` (sections, collapsed cards, drag order kept, touch swipe to
+  `circuits_history_share`, `exercises_tab` (the move from Saved, chips/shelves order, bookmark vs own,
+  delete asks and names workouts, imports), `workouts_tab` (sections, collapsed cards, drag order kept, touch swipe to
   delete), `quick_fixes` (start sheet, Duplicate, Authoring-only JSON views, collections
   order, QR picture, incline push-up head), `share_links` (library/own workouts and exercises through a link on a
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
@@ -626,7 +628,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    (Start + name) and expandable; drag to reorder My Workouts **and** Library workouts (per-user order,
    `nstructr-libwk-order-v1`); swipe left on a My Workouts card shows a trash can, tapping it deletes (no dialog,
    no undo). Filters say "All collections" / "All equipment".
-3. **Exercises tab**: My Exercises collection (the user's own, bookmarked or not; removing a bookmark no longer
+3. ✅ **Exercises tab**: My Exercises collection (the user's own, bookmarked or not; removing a bookmark no longer
    deletes; delete is its own action) → order: Bookmarked, My Exercises, then collections A–Z. Storage change with
    migration.
 4. **Exercise page**: drop the pull-up panel; the page scrolls: controls → About → time → How to do it → Steps

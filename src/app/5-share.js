@@ -142,7 +142,7 @@ async function openSharedLink(payload) {
     $('#linkBody').innerHTML = `<p class="title-medium" style="margin:0 0 4px">${esc(ex.name || 'Exercise')}</p>
       <p class="body-medium muted" style="margin:0 0 8px">${esc([ex.focus, ex.category, (ex.equipment || []).join(', ')].filter(Boolean).join(' · '))}</p>
       ${ex.description ? `<p class="body-small" style="margin:0 0 8px">${esc(ex.description)}</p>` : ''}
-      <p class="body-small muted" style="margin:0">Adding it puts it in Bookmarked, as your own exercise. Nothing is added unless you tap Add.</p>`;
+      <p class="body-small muted" style="margin:0">Adding it puts it in My exercises. Nothing is added unless you tap Add.</p>`;
   }
   $('#linkDialog').showModal();
 }

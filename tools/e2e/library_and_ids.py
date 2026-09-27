@@ -34,7 +34,8 @@ async def main():
         already = json.loads(lib); already['id'] = 'u-mine'; already['name'] = 'Already Mine'
         for label, ex in [('unchanged library copy', json.loads(lib)), ('changed, library id', changed), ('new id', own), ('already u-', already)]:
             await pg.evaluate(f"importAndShow([[{json.dumps(json.dumps(ex))}, 'x.json']])"); await pg.wait_for_timeout(100)
-            print(f'import {label:<30}', await pg.evaluate("S.lib.items.slice(-1)[0].id"))
+            # an unchanged library exercise is just bookmarked (nothing stored); the rest land in My exercises
+            print(f'import {label:<30}', await pg.evaluate("[S.lib.items.length ? S.lib.items.slice(-1)[0].id : '(none stored)', [...BOOKMARKS].join(' ')]"))
         # a workout file with its own exercise: the reference follows the rename
         wk = {"version": 1, "name": "Ref Test", "blocks": [{"name": "B", "items": [{"ex": "bw-reverse-lunge", "reps": 3}, {"ex": "bw-squat-x", "reps": 3}]}]}
         sq = json.loads(lib); sq['id'] = 'bw-squat-x'; sq['name'] = 'Squat X'

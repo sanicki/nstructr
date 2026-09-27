@@ -1,6 +1,7 @@
 /* Animation checks for one exercise, run by tools/build.mjs (and CI) on every exercise, both sides and directions.
    Each check mirrors something a person would notice:
-   - rest:    a held pose where the pinned point or a "touch" point isn't on the floor/surface, or a hand misses its reach
+   - rest:    a held pose where the pinned point, the step's own anchor or a "touch" point isn't on the floor/surface,
+              or a hand misses its reach
    - jump:    a body segment snapping round more than 20° in 1/60 of a move
    - planted: a hand/foot/knee resting in the same spot before and after a move that wanders during it */
 const C = require('../src/core.js');
@@ -38,7 +39,10 @@ function check(ex, opts = {}) {
       const k = kfs[i];
       C.frameAt(r, r, 1, seg);
       const pos = C.place(r.pose, r.v, seg, r.rule), P = C.fk(r.pose, r.v, seg, pos.x, pos.y);
-      const need = [...(k.anchor ? [[r.rule.anchor, 0]] : []), ...(k.touch || []).map(t => [t.point, t.gap || 0])];
+      // the point the engine pinned, and the step's own anchor too: a hand-off to another pin (e.g. feet that
+      // stayed put) must not leave the anchor (a seated pelvis, say) floating off the floor
+      const pins = [...new Set(k.anchor ? [r.rule.anchor, k.anchor] : [])];
+      const need = [...pins.map(p => [p, 0]), ...(k.touch || []).map(t => [t.point, t.gap || 0])];
       for (const [p, gap] of need) {
         const d = C.supportY(P[p].x) - P[p].y - gap;
         if (Math.abs(d) > tol.rest) issues.push({ kind: 'rest', px: Math.abs(d), msg: `${label} step ${i + 1} "${r.name}": ${p} ${d > 0 ? 'floats' : 'sinks'} ${Math.abs(d).toFixed(0)}px` });
