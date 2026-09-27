@@ -432,8 +432,6 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.act === 'clearFilters') { Object.assign(E, { coll: 'All', type: 'All', equip: 'Any', q: '' }); $('#search').value = ''; renderExplore(); }
   else if (d.act === 'import') $('#fileInput').click();
   else if (d.act === 'paste') { $('#pasteArea').value = ''; $('#pasteDialog').showModal(); }
-  else if (d.act === 'copyPrompt') copyText(aiPromptText(), 'Prompt copied');
-  else if (d.act === 'showPrompt') showJson('Prompt for making an exercise from a video', aiPromptText());
   else if (d.act === 'exportAll') showJson('Your exercises', JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: S.lib.items }, null, 2));
   else if (d.act === 'edPrev' || d.act === 'edNext') { setPlaying(false); jumpTo(S.idx + (d.act === 'edNext' ? 1 : -1)); }
   else if (d.act === 'edRevertStep') revertStep();

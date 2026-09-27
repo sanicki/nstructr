@@ -22,7 +22,7 @@ function loadWorkouts() {
 /* a library workout file -> the editable form the app stores (block ids, item uids, defaults filled in) */
 function hydrateWorkout(fw) {
   return {
-    id: fw.id, name: fw.name, restBetween: num(fw.restBetween),
+    id: fw.id, name: fw.name,
     blocks: fw.blocks.map(b => ({
       id: uid(), name: b.name, rounds: b.rounds || 1, roundRest: b.roundRest != null ? b.roundRest : 30,
       items: b.items.map(it => { const ex = exById(it.ex); return ex ? { ...newItem(ex), rest: 0, ...it, uid: uid() } : null; }).filter(Boolean)
@@ -62,11 +62,11 @@ function itemSeconds(item) {
   return item.sets * segs * (work + guide) + (item.sets - 1) * (item.rest || 0);
 }
 function blockSeconds(b, w) {
-  const r = b.rounds || 1, one = b.items.reduce((s, it) => s + itemSeconds(it), 0) + Math.max(0, b.items.length - 1) * ((w && w.restBetween) || 0);
+  const r = b.rounds || 1, one = b.items.reduce((s, it) => s + itemSeconds(it), 0) + Math.max(0, b.items.length - 1) * restGap();
   return one * r + (r - 1) * (b.roundRest || 0);
 }
 function workoutSeconds(w) {
-  return w.blocks.reduce((s, b) => s + blockSeconds(b, w), 0) + Math.max(0, w.blocks.filter(b => b.items.length).length - 1) * (w.restBetween || 0);
+  return w.blocks.reduce((s, b) => s + blockSeconds(b, w), 0) + Math.max(0, w.blocks.filter(b => b.items.length).length - 1) * restGap();
 }
 /* the workout as the player runs it: every item of every round of every block, in order */
 function flattenWorkout(w) {
@@ -197,39 +197,6 @@ function orderLibrary() {
   addEventListener('pointerdown', e => { if (!e.target.closest('.wk-card.swiped')) closeSwipes(); }, true);
 })();
 
-/* ---------- AI prompt: a written routine -> workout JSON, using this library's exercise ids ---------- */
-function routinePrompt() {
-  const lines = allExercises().map(ex => {
-    const bits = [ex.measure === 'time' ? 'time' : `reps (${ex.repName || 'rep'})`];
-    if (ex.bilateral) bits.push('sides: L/R/both/alternate');
-    if (ex.direction) bits.push(`dir: A=${ex.direction.labels.A}/B=${ex.direction.labels.B}`);
-    return `${ex.id} | ${ex.name} | ${bits.join(', ')}`;
-  }).join('\n');
-  return `Convert the workout routine below into a workout file for my exercise animator.
-
-Output ONLY valid JSON (no markdown fences, no commentary): one workout, in this shape:
-{"version":1,"id":"kebab-case-name","name":"...","description":"one sentence","restBetween":10,"blocks":[
-  {"name":"Warm-up","rounds":1,"roundRest":30,"items":[
-    {"ex":"<exercise id>","sets":1,"reps":10,"rest":20,"sides":"both","dir":"both","tempo":1},
-    {"ex":"<exercise id>","seconds":30,"sides":"both"}]}]}
-
-RULES
-- "ex" must be an id from the EXERCISES list below. Pick the closest match by movement, not just by name.
-- Rep-based exercises get "reps"; time-based ones get "seconds". Use the routine's numbers; for a range, use the lower end.
-- "sides" (only for exercises marked sides): "L", "R", "both" (one side then the other) or "alternate". Reps count per side.
-- "dir" (only for exercises marked dir): "A", "B", "both" or "alternate".
-- "sets" and "rest" (seconds between sets) default to 1 and 20. "tempo" is a speed multiplier (1 = normal).
-- Keep the routine's sections as blocks, in order. For a circuit ("repeat 3 times"), set the block's "rounds" and "roundRest".
-- "restBetween" is the rest in seconds between exercises (0 for a straight-through routine).
-- Leave out "sides" and "dir" for exercises that don't list them, and "sets", "rest" and "tempo" when they're the defaults.
-- If an exercise in the routine has no reasonable match, leave it out and list it at the end of the workout name in brackets, e.g. "My Routine [missing: Turkish get-up]".
-
-EXERCISES (id | name | measured by, options)
-${lines}
-
-ROUTINE
-[PASTE THE ROUTINE HERE]`;
-}
 
 /* ---------- editor ---------- */
 let EDIT = null;
@@ -240,8 +207,6 @@ function renderEditor() {
   const eq = workoutEquipment(w);
   $('#wkSummary').innerHTML = `<span class="chip"><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span>
     <span class="chip"><span class="icon">format_list_numbered</span>${w.blocks.flatMap(b => b.items).length} exercises</span>
-    <label class="chip" style="gap:6px"><span class="icon">timer</span>Rest between exercises
-      <select id="wkRestBetween" aria-label="Rest between exercises" style="font:inherit;background:transparent;color:inherit;border:0">${[0, 5, 10, 15, 20, 30, 45, 60, 90].map(s => `<option value="${s}"${s === (w.restBetween || 0) ? ' selected' : ''}>${s} s</option>`).join('')}</select></label>
     ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}${safetyHtml(w)}`;
   $('#wkBlocks').innerHTML = w.blocks.map((b, bi) => `<section class="block" data-block="${b.id}">
     <div class="block-head"><input value="${esc(b.name)}" data-bname="${b.id}" aria-label="Block name"><span class="count">${(b.rounds || 1) > 1 ? `<span class="icon" style="font-size:16px;vertical-align:-3px">repeat</span> ${b.rounds} rounds, ` : ''}${b.items.length} exercises, ${fmtMin(blockSeconds(b, w))}</span>
@@ -431,7 +396,7 @@ $('#pickAdd').addEventListener('click', () => {
 /* export / import */
 function workoutJSON(w) {
   const custom = [...new Set(w.blocks.flatMap(b => b.items).map(i => i.ex))].filter(id => !findInDb(id)).map(exById).filter(Boolean);
-  return JSON.stringify({ format: 'nstructr/workout', version: 1, workouts: [w], ...(custom.length ? { exercises: custom } : {}) }, null, 2);
+  return JSON.stringify({ format: 'nstructr/workout', version: 1, workouts: [{ ...w, restBetween: undefined }], ...(custom.length ? { exercises: custom } : {}) }, null, 2);
 }
 function importWorkouts(data) {
   if (!data || !Array.isArray(data.workouts)) return [];
@@ -439,7 +404,7 @@ function importWorkouts(data) {
   data.workouts.forEach((w, i) => {
     if (!w || typeof w.name !== 'string' || !Array.isArray(w.blocks)) throw new Error(`workouts[${i}] needs a "name" and "blocks".`);
     const clean = {
-      id: (w.id && !wkById(w.id)) ? String(w.id) : uid(), name: w.name, restBetween: num(w.restBetween),
+      id: (w.id && !wkById(w.id)) ? String(w.id) : uid(), name: w.name,
       blocks: w.blocks.map((b, bi) => ({
         id: uid(), name: String(b.name || `Block ${bi + 1}`), rounds: Math.max(1, Math.min(10, num(b.rounds) || 1)), roundRest: b.roundRest != null ? num(b.roundRest) : 30,
         items: (b.items || []).map((it, ii) => {
@@ -676,7 +641,7 @@ function onWorkEnd() {
     WP.i++; saveSession();
     const nx = WP.flat[WP.i];
     if (nx.firstOfRound) return startRest(nx.block.roundRest != null ? nx.block.roundRest : 30, 'round');
-    return startRest(WP.w.restBetween || 0, 'item');
+    return startRest(restGap(), 'item');
   }
   finishWorkout();
 }
@@ -917,7 +882,7 @@ document.querySelector('.shell').addEventListener('click', e => {
   if (d.wstart) { const w = wkById(d.wstart); if (w) confirmStart(w); }
   else if (d.wcustom) { const w = wkById(d.wcustom); if (w) { const c = customizeWorkout(w); go(`#/workout/${c.id}`); snack(`Copied to your workouts. Changes stay in your copy.`); } }
   else if (d.wact === 'new') {
-    const w = { id: uid(), name: 'New workout', restBetween: 10, blocks: [{ id: uid(), name: 'Block 1', items: [] }] };
+    const w = { id: uid(), name: 'New workout', blocks: [{ id: uid(), name: 'Block 1', items: [] }] };
     WK.list.push(w); saveWorkouts(); go(`#/workout/${w.id}`);
   }
   else if (d.wact === 'resume') { const s = loadSession(), w = s && wkById(s.wid); if (w) confirmStart(w, s.i); }
@@ -927,8 +892,6 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.wact === 'export' && EDIT) showJson(EDIT.name, workoutJSON(EDIT));
   else if (d.wact === 'clearLog') { if (confirm('Clear all workout history?')) { saveLog([]); renderHistory(); } }
   else if (d.logdel) { saveLog(loadLog().filter(s => s.id !== d.logdel)); renderHistory(); }
-  else if (d.act === 'copyRoutinePrompt') copyText(routinePrompt(), 'Prompt copied');
-  else if (d.act === 'showRoutinePrompt') showJson('Prompt: written routine to workout', routinePrompt());
   else if (d.wact === 'duplicateWorkout' && EDIT) {
     const c = JSON.parse(JSON.stringify(EDIT)); c.id = uid(); c.name = EDIT.name + ' (copy)';
     c.blocks.forEach(b => { b.id = uid(); b.items.forEach(i => (i.uid = uid())); });
@@ -949,4 +912,3 @@ $('#wkBlocks').addEventListener('input', e => {
   const id = e.target.dataset && e.target.dataset.bname; if (!id || !EDIT) return;
   const b = EDIT.blocks.find(x => x.id === id); if (b) { b.name = e.target.value; saveWorkouts(); }
 });
-$('#wkSummary').addEventListener('change', e => { if (e.target.id === 'wkRestBetween' && EDIT) { EDIT.restBetween = +e.target.value; commitEdit(); } });

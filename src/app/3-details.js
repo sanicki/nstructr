@@ -12,12 +12,11 @@ $('#formatRef').innerHTML = `
       <p>Crossing legs: a keyframe's <code>"layers":{"legR":"back"}</code> draws that leg behind the body (or <code>"front"</code> in front) for the move into and out of that step, for a leg crossing behind or in front of the standing leg. By default the left leg is behind and the right in front. The order only changes while the legs are apart on screen, so a leg that stays crossed needs an earlier step where they separate.</p>
       <p>Reaching: a keyframe's <code>reach</code> puts a hand on something, e.g. <code>[{"hand":"handR","to":"ankleR"}]</code> (hold the ankle) or <code>{"hand":"handL","to":"wall"}</code>; <code>dx</code>/<code>dy</code> nudge the spot and <code>bend</code> (1 or -1) picks which way the elbow bends.</p>
       <p>Reps: a step's <code>phase</code> is <code>"setup"</code> (played once first), <code>"rep"</code> (one rep, or the held step of a timed exercise) or <code>"finish"</code> (played once at the end); unmarked steps are all one rep. An exercise's <code>measure</code> is <code>"reps"</code> or <code>"time"</code>, <code>repName</code> names a rep ("circle", "pull-apart"), and <code>direction</code>, e.g. <code>{"labels":{"A":"Forward","B":"Backward"}}</code>, lets the rep be played in reverse. A step's <code>"ease":"linear"</code> moves at a constant speed instead of speeding up and slowing down, for circles and other continuous motion.</p>
-      <p>Workouts: <code>{"version":1,"name":"...","restBetween":10,"blocks":[{"name":"Warm-up","items":[{"ex":"wu-arm-circles","reps":10,"dir":"both"},{"ex":"core-forearm-plank","seconds":30},{"ex":"bw-reverse-lunge","reps":8,"sets":2,"rest":20,"sides":"alternate","tempo":1}]}]}</code> (or several in <code>{"format":"nstructr/workout","workouts":[...]}</code>). <code>sides</code> is <code>"L"</code>, <code>"R"</code>, <code>"both"</code> or <code>"alternate"</code> (reps count per side), <code>dir</code> the same with <code>"A"</code>/<code>"B"</code>. A block can repeat as a circuit with <code>"rounds":3</code> and <code>"roundRest":30</code>. A workout file can carry its own <code>exercises</code> too.</p>
+      <p>Workouts: <code>{"version":1,"name":"...","blocks":[{"name":"Warm-up","items":[{"ex":"wu-arm-circles","reps":10,"dir":"both"},{"ex":"core-forearm-plank","seconds":30},{"ex":"bw-reverse-lunge","reps":8,"sets":2,"rest":20,"sides":"alternate","tempo":1}]}]}</code> (or several in <code>{"format":"nstructr/workout","workouts":[...]}</code>). <code>sides</code> is <code>"L"</code>, <code>"R"</code>, <code>"both"</code> or <code>"alternate"</code> (reps count per side), <code>dir</code> the same with <code>"A"</code>/<code>"B"</code>. A block can repeat as a circuit with <code>"rounds":3</code> and <code>"roundRest":30</code>. A workout file can carry its own <code>exercises</code> too.</p>
       <p>History exports as <code>{"format":"nstructr/log","sessions":[{"name","start","end","seconds","completed","exercisesDone","exercisesTotal","exercises":[{"ex","name","category","sets","reps"|"seconds","sides","dir","block","round"}]}]}</code>, with ISO dates, ready for a logger or tracker to read.</p>
       <p>Staying put: <code>keep</code> lists hands or feet that stay exactly where they were in the previous step, e.g. <code>["ankleL","ankleR"]</code> so the feet don't move while the hips lift. <code>{"point":"ankleR","keyframe":0}</code> puts it back exactly where it was in that step instead (a foot stepping back to its starting spot). The knees or elbows bend to make it work.</p>
       <p>Foreshortening: <code>armDepthL</code>/<code>armDepthR</code>, <code>forearmDepthL</code>/<code>forearmDepthR</code>, <code>thighDepthL</code>/<code>thighDepthR</code> and <code>shinDepthL</code>/<code>shinDepthR</code> turn that segment toward the camera; at 90 it points straight at you and shows no length. Use them for movements across the picture's depth, like arms swinging out to the sides.</p>
     `;
-function aiPromptText() { return $('#aiPrompt').innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&'); }
 async function copyText(text, done) {
   try { await navigator.clipboard.writeText(text); snack(done); }
   catch (e) { showJson('Copy this', text); snack('Select the text and copy it.'); }
@@ -139,7 +138,7 @@ function exStepSound(i) {
 function exHush() { XS.token++; XS.speaking = false; XS.last = ''; try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } }
 
 /* ---------- Settings ---------- */
-const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1';
+const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1';
 const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
 const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
@@ -149,6 +148,9 @@ function applyAuthoring() {
   if (S.ex) updateEditor();
 }
 const defaultSpeed = () => +pref(SPEED_KEY, '1') || 1;
+const REST_CHOICES = [0, 5, 10, 15, 20, 30, 45, 60, 90];
+/* seconds of rest between exercises, in every workout (a setting since Sep 2026; workout files' "restBetween" is ignored) */
+const restGap = () => { const v = parseFloat(pref(REST_KEY, '10')); return v >= 0 ? v : 10; };
 function applyTheme(t) {
   if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
 }
@@ -157,6 +159,8 @@ function renderSettings() {
   seg('#setSound', 'setsound', [['off', 'Silent'], ['beeps', 'Beeps'], ['voice', 'Voice'], ['coach', 'Coach']], WK.sound);
   seg('#setTheme', 'settheme', [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']], pref(THEME_KEY, 'system'));
   $('#setFullscreen').checked = wantFullscreen();
+  $('#setRest').innerHTML = [...new Set([...REST_CHOICES, restGap()])].sort((a, b) => a - b).map(s => `<option value="${s}"${s === restGap() ? ' selected' : ''}>${s ? s + ' s' : 'None'}</option>`).join('');
+  $('#setAi').innerHTML = AI_APPS.map(a => `<option value="${a.id}"${a.id === aiApp().id ? ' selected' : ''}>${esc(a.name)}</option>`).join('');
   $('#setAuthoring').checked = authoring();
   renderPersistNote();
 }
@@ -168,6 +172,8 @@ $('#view-settings').addEventListener('click', e => {
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
+$('#setRest').addEventListener('change', e => setPref(REST_KEY, e.target.value));
+$('#setAi').addEventListener('change', e => setPref(AI_KEY, e.target.value));
 $('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Authoring mode on: the Edit button (pencil) on any exercise now shows the poses and camera too' : 'Authoring mode off', 6000); });
 
 applyAuthoring();

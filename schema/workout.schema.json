@@ -28,6 +28,7 @@
       "type": "string"
     },
     "restBetween": {
+      "description": "Ignored: rest between exercises is a setting (Settings > Workouts). Still accepted so older files import.",
       "type": "number",
       "minimum": 0
     },

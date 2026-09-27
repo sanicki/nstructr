@@ -258,6 +258,17 @@ dialog.library[open]{display:flex;flex-direction:column}
 .lib-head{display:flex;align-items:center;gap:4px;padding:8px 12px 0 4px}
 .lib-head h2{flex:1;margin:0}
 .lib-tools{padding:8px 16px 4px}
+.ai-body{flex:1;overflow:auto;padding:4px 24px 24px}
+.ai-body>p{margin:0 0 4px}
+.ai-step{display:flex;align-items:center;gap:10px;margin:20px 0 8px}
+.ai-num{width:24px;height:24px;flex:none;border-radius:var(--shape-full);display:grid;place-items:center;background:var(--md-primary);color:var(--md-on-primary);font-size:12px}
+.ai-dialog .field{max-width:none;margin:0 0 4px}
+.ai-dialog .chips{margin:0 0 12px}
+.ai-dialog .filter{height:auto;min-height:32px}
+.ai-dialog textarea#aiAnswer{min-height:120px;margin:0 0 8px}
+.ai-dialog textarea#aiInput{min-height:0;resize:vertical;font:inherit;font-size:16px}
+.ai-dialog .row{display:flex;flex-wrap:wrap;gap:8px}
+@media (max-height:520px){.ai-body{padding-bottom:22vh}}
 .search{display:flex;align-items:center;gap:12px;height:56px;padding:0 16px;border-radius:var(--shape-full);background:var(--md-surface-container-highest);color:var(--md-on-surface-variant)}
 .search input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:16px;color:var(--md-on-surface);outline:none}
 .search:focus-within{outline:3px solid var(--md-primary);outline-offset:0}
@@ -418,6 +429,9 @@ body[data-view="player"] .view{padding-bottom:32px}
 .field input,.field select,.field textarea{font:inherit;font-size:16px;color:var(--md-on-surface);background:var(--md-surface-container-highest);border:0;border-bottom:1px solid var(--md-on-surface-variant);
   border-radius:4px 4px 0 0;padding:12px 14px;outline:none}
 .field input:focus,.field select:focus,.field textarea:focus{border-bottom:2px solid var(--md-primary)}
+.setting .select{font:inherit;font-size:16px;color:var(--md-on-surface);background:var(--md-surface-container-highest);border:0;border-bottom:1px solid var(--md-on-surface-variant);
+  border-radius:4px 4px 0 0;padding:10px 12px;min-height:48px;flex:none}
+.setting .select:focus-visible{outline:none;border-bottom:2px solid var(--md-primary)}
 .wk-summary{display:flex;flex-wrap:wrap;gap:8px}
 .block{margin:0 0 20px}
 .block-head{display:flex;align-items:center;gap:4px;border-bottom:1px solid var(--md-outline-variant);padding:4px 0}

@@ -7,20 +7,20 @@
   "focus": "Abdominals and spine",
   "library": "Pilates",
   "equipment": [
-    "Mat",
-    "Resistance band"
+    "Mat"
   ],
-  "description": "Sitting tall with knees bent, curve your spine into a C and roll back part-way until your arms straighten, then scoop your abs to come back up.",
+  "description": "Sitting tall with knees bent and arms reaching forward, curve your spine into a C and roll back part-way, then scoop your abs to come back up.",
   "source": {
-    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+    "note": "From your full-body routine, described in our own words (no band: the classic mat version, e.g. onlinepilatesclasses.com \"Half Roll Back on the Mat\"). Stick-figure approximation.",
+    "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-half-roll-back/"
   },
   "setup": [
-    "Sit tall with your knees bent and feet flat.",
-    "Hold a band wrapped behind your thighs (or your thighs themselves) for light support."
+    "Sit tall with your knees bent, feet flat and hip-width apart.",
+    "Reach your arms forward at shoulder height, palms facing each other."
   ],
   "cues": [
     "Tuck your tailbone and make a smooth C shape.",
-    "Roll back only until your arms are straight.",
+    "Roll back only as far as you can keep your feet down and your back curved.",
     "Use your stomach, not your arms, to come back up."
   ],
   "prescription": {
@@ -31,7 +31,7 @@
   "keyframes": [
     {
       "name": "Sit tall",
-      "cue": "Knees bent, feet flat, band around your thighs.",
+      "cue": "Knees bent, feet flat, arms reaching forward.",
       "view": "side",
       "durationMs": 1600,
       "holdMs": 300,
@@ -50,32 +50,20 @@
           "adjust": "kneeL"
         }
       ],
-      "reach": [
-        {
-          "hand": "handR",
-          "to": "kneeR",
-          "dx": -26,
-          "dy": 10
-        },
-        {
-          "hand": "handL",
-          "to": "kneeL",
-          "dx": -26,
-          "dy": 10
-        }
-      ],
       "pose": {
         "torso": 2,
         "hipL": -120,
         "hipR": -120,
         "kneeL": 112,
-        "kneeR": 112
+        "kneeR": 112,
+        "shoulderL": -90,
+        "shoulderR": -90
       },
       "phase": "rep"
     },
     {
       "name": "Roll back",
-      "cue": "Curve into a C and roll back until your arms straighten.",
+      "cue": "Curve into a C and roll back halfway.",
       "view": "side",
       "durationMs": 2200,
       "holdMs": 600,
@@ -83,20 +71,6 @@
       "plant": [
         "L",
         "R"
-      ],
-      "reach": [
-        {
-          "hand": "handR",
-          "to": "kneeR",
-          "dx": -15,
-          "dy": 8
-        },
-        {
-          "hand": "handL",
-          "to": "kneeL",
-          "dx": -15,
-          "dy": 8
-        }
       ],
       "pose": {
         "root": -34,
@@ -106,22 +80,15 @@
         "hipL": -86,
         "hipR": -86,
         "kneeL": 60,
-        "kneeR": 60
+        "kneeR": 60,
+        "shoulderL": -88,
+        "shoulderR": -88
       },
       "keep": [
         "ankleL",
         "ankleR"
       ],
       "phase": "rep"
-    }
-  ],
-  "props": [
-    {
-      "type": "band",
-      "from": "handR",
-      "to": "kneeR",
-      "restLength": 34,
-      "layer": "front"
     }
   ],
   "measure": "reps",

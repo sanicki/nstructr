@@ -17,7 +17,7 @@ async def main():
           window.SpeechSynthesisUtterance=function(t){this.text=t};""")
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         await pg.evaluate("""(()=>{const mk=(id,o)=>({...newItem(exById(id)),...o});
-          WK.list.push({id:'g',name:'Guided',restBetween:1,blocks:[{id:'b',name:'B',items:[
+          localStorage.setItem('nstructr-rest-between-v1','1'); WK.list.push({id:'g',name:'Guided',blocks:[{id:'b',name:'B',items:[
             mk('wu-arm-circles',{reps:2,dir:'both'}), mk('mayo-calf',{seconds:4,sides:'L'}), mk('bw-reverse-lunge',{reps:2,sides:'alternate'})]}]});
           setSound('coach'); window.STEPLOG=[]; startWorkout(wkById('g'));
           const orig=S.onStep; })()""")

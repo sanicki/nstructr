@@ -44,7 +44,7 @@ async def main():
         await pg.evaluate("go('#/exercises')"); await pg.wait_for_timeout(300)
         print('collections             ', await pg.evaluate("[...document.querySelectorAll('#fCollection .filter')].map(x=>x.textContent)"))
         # QR picture
-        await pg.evaluate("WK.list.push({id:'q',name:'QR Test',restBetween:0,blocks:[{id:'b',name:'B',items:[newItem(exById('bw-squat'))]}]}); saveWorkouts(); go('#/workouts')"); await pg.wait_for_timeout(300)
+        await pg.evaluate("WK.list.push({id:'q',name:'QR Test',blocks:[{id:'b',name:'B',items:[newItem(exById('bw-squat'))]}]}); saveWorkouts(); go('#/workouts')"); await pg.wait_for_timeout(300)
         await pg.click('[data-wtoggle="q"]'); await pg.click('[data-share-wk="q"]'); await pg.wait_for_timeout(300)
         async with pg.expect_download() as dl: await pg.click('#shareQrImg')
         d = await dl.value; path = await d.path()

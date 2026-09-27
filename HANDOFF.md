@@ -4,7 +4,7 @@ This is the full context for whoever picks up NstructR next (written for Claude 
 how it works, the file formats, the rules the animations must obey, the decisions already made and why, and
 what's left. `CLAUDE.md` is the short version; this is the reference.
 
-Repo: https://github.com/sanicki/nstructr (one repo, **no license yet** — see Open questions).
+Repo: https://github.com/sanicki/nstructr (one repo, **MIT license** (`LICENSE`), covering the engine, the app and the library).
 Published site (once Pages is enabled): https://sanicki.github.io/nstructr/
 
 ---
@@ -69,7 +69,7 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
   with that id; otherwise it's renamed `u-<id>` and workouts in the same file follow the rename.
 - **File versions**: `upgradeFile()` refuses files with a `version` newer than the app's `FILE_VERSION` (1);
   upgrades of older versions go there when a format changes.
-- AI prompts (Create page) produce one bare exercise / workout per file matching the schemas, with `u-` ids,
+- AI prompts (now one prompt, Create with AI, `src/app/5-ai.js`) produce one bare exercise / workout per file matching the schemas, with `u-` ids,
   `measure`, `defaults`, `phase`, and `headLow` in the point list.
 - File formats renamed to `nstructr/exercise`, `nstructr/workout`, `nstructr/log`. Old `pose-player/*` files
   (and bare single exercise/workout objects) still import.
@@ -109,6 +109,7 @@ src/
   app/3-details.js    exercise page info, its tap-for-controls overlay, Edit, its sound, Settings, format reference
   app/4-workouts.js   workouts: storage, editor, plan builder, workout player, sound, history, sharing
   app/5-main.js       selection, import, routing, event wiring, boot() (defined here)
+  app/5-ai.js          Create with AI: the prompt, AI apps and their links, reading the answer back
   app/5-share.js       share links: pack/unpack, share dialog with QR code, opening a link
   vendor/qrcode.js    QR code generator (qrcode-generator 2.0.4, MIT), vendored for offline use
   app/6-pwa.js        service worker registration, storage persistence, Export/Import everything; calls boot()
@@ -249,7 +250,7 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
 ```jsonc
 { "$schema": "../../schema/workout.schema.json", "version": 1,
   "id": "full-body-routine", "name": "…", "description": "…",
-  "restBetween": 10,                                     // seconds between exercises
+  // "restBetween" (seconds between exercises) is ignored since Sep 2026: it is a setting
   "blocks": [ { "name": "Warm-up", "rounds": 1, "roundRest": 30,   // rounds > 1 = circuit
       "items": [ { "ex": "wu-arm-circles", "reps": 10, "dir": "both" },
                  { "ex": "core-forearm-plank", "seconds": 30 },
@@ -489,7 +490,7 @@ steps or the joint will windmill; the jump check will catch it.
 
 ## 10. UI inventory (current)
 
-- **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (Start/Edit, est. time, count, equipment, safety notes), Library workouts (Start/Customize), History (delete, clear). Editor: name, rest between exercises, blocks (rename, move, delete, repeat as circuit with rounds and
+- **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (Start/Edit, est. time, count, equipment, safety notes), Library workouts (Start/Customize), History (delete, clear). Editor: name, blocks (rename, move, delete, repeat as circuit with rounds and
   rest), items (drag handle, settings sheet with reps/seconds, sets, rest, sides, direction, speed; menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
 - **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; type/focus,
@@ -525,11 +526,25 @@ steps or the joint will windmill; the jump check will catch it.
     exercise's name, other name, focus, category, equipment, description, setup, form cues, suggested reps and
     note, rep name, side and direction labels, and source. The first real change to a library exercise makes the
     copy, as for poses (a typed name replaces "(copy)").
+- **Create with AI** (`src/app/5-ai.js`; Settings > Create with AI, and Workouts next to New workout): a full-screen
+  dialog in three steps. 1: what you have (a name, a written routine, a video or web link, a photo or video; the
+  last has no text box: it's attached in the AI app). 2: the AI app (default in Settings, `nstructr-ai-app-v1`):
+  **Open** copies the instructions and opens the app; apps with a message parameter (`?q=`: Claude, ChatGPT, Grok,
+  Copilot, Le Chat) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
+  URLs over 16 KB); Gemini and DeepSeek have none, so they're only copied; "Another AI app" just copies. 3: paste
+  the answer: `extractJson()` takes the JSON out of ``` fences or surrounding sentences; `{"inLibrary": "<id>"}`
+  opens that library exercise; anything else goes through the normal import (exercise, or a workout file bringing
+  its own `u-` exercises).
+  - One prompt (`aiPrompt()`): what the user gave, which file to answer with, the workout rules, the exercise format
+    (`<template id="aiPrompt">`, alignment spaces squeezed out), and the library as ids with `time` / `sides` / `dir`
+    flags. About 10 000 characters, 12 700 as a link. As the library grows, links will pass the limit and fall back
+    to copying. **Not yet tried on each app from a phone**: check that each opens with the text filled in (the
+    app, rather than the site, may ignore `q`).
 - The **bookmark** is only a flag, on any exercise. The user's own exercises are always in **My exercises**;
   deleting one is its own action (About → Delete), asks first and names the workouts that use it. Backups carry
   `bookmarks` too.
-- **Settings**: Workouts (default sound, full screen), Display (theme System/Light/Dark, exercise speed,
-  **Authoring mode**), Import & tools (backup, import file/paste, the two AI prompts, export your exercises,
+- **Settings**: Workouts (default sound, full screen, rest between exercises), Display (theme System/Light/Dark,
+  **Authoring mode**), Create with AI (AI app, Create), Import & tools (backup, import file/paste, export your exercises,
   JSON format reference, storage-persistence note).
 
 ---
@@ -549,6 +564,8 @@ steps or the joint will windmill; the jump check will catch it.
 | `nstructr-speed-v1` | the exercise player's last-used speed (`0.5`, `1`, `2`), where the next exercise starts |
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
 | `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end) |
+| `nstructr-ai-app-v1` | the AI app Create with AI opens (`claude`, `chatgpt`, `gemini`…) |
+| `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 10; Settings > Workouts). Workout files' `restBetween` is ignored |
 
 The mixed prefixes are historical; renaming them would silently wipe users' data. If you consolidate, migrate
 (read old → write new → keep old until confirmed).
@@ -569,7 +586,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay, page order, labels, Edit with the figure pinned, Done), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /
@@ -593,11 +610,9 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    tap-for-controls overlay as the workout player, with its details on the page (a pull-up panel until Sep 2026) instead of four tabs.
 4. ✅ **Share links**: workout/exercise compressed into the URL fragment (`CompressionStream` + base64url), no
    server; QR codes for short links (see §5.3).
-5. **Owner decisions before contributions**: library license (needed for the submission checkbox), trademark
-   check. **Reminder for the owner (their current thinking, open to discussion then):** the *engine* should be
-   free to use **with attribution for non-commercial use only**, and **commercial use would need a licence**
-   from the owner (e.g. PolyForm Noncommercial or CC BY-NC for the engine, plus a separate commercial licence;
-   dual licensing). The library content and the app code may get different licences; decide together.
+5. **Owner decisions before contributions**: ✅ license: **MIT** for everything (Sep 2026; this replaces the earlier
+   idea of non-commercial-only with a paid commercial licence: MIT allows commercial use, with the copyright
+   notice kept). Submissions are accepted under MIT (the submission checkbox says so). Still open: trademark check.
 6. **3D skeleton, still drawn as SVG** — see `docs/3d-skeleton.md`: joints with real 3D rotations, a real
    camera, bones drawn in depth order (no more `layers`, depth joints or crossing workarounds), exercise format
    v2 with a converter so v1 files keep working. Before submissions, so contributors only ever learn one format.
@@ -643,18 +658,20 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    Voice / Coach: read each step's cue on the first pass, then count reps). **Edit details** (words) for everyone
    on their own exercises and copies; Authoring mode adds poses and camera. Also: Start goes straight into a workout
    (no popup; safety notes on the card and in the editor), Import only in Settings. **Leg Circles is still to do.**
-5. **Create with AI** (deep links, no keys): one screen: what it is (a name, a written routine, a YouTube link, a
+5. ✅ **Create with AI** (deep links, no keys): one screen: what it is (a name, a written routine, a YouTube link, a
    photo or video) → provider (default in Settings: Claude, ChatGPT, Gemini, Grok, DeepSeek…) → open it with the
    prompt filled in (copy where the provider can't take it in the link) → paste the JSON back. One prompt that can
-   return an exercise or a workout.
+   return an exercise or a workout. Built: see §10 "Create with AI". Also in that PR: MIT license, rest between
+   exercises moved to Settings, Half Roll-Back without the band.
+6. **Audits** (next): Material Design 3 compliance, UI consistency, accessibility (contrast, touch targets, labels,
+   focus, screen reader, reduced motion), plus performance on the cover screen, offline/PWA behaviour, safety of
+   imported files and links, and the library's text and sources. A written report, then fixes.
 
 ---
 
 ## 14. Open questions for the owner
 
-1. **License** for the engine, the app code and the library content. Required before step 7 (submissions).
-   Until then the public repo is "all rights reserved" by default. Owner's current preference for the engine:
-   free with attribution for non-commercial use, commercial use licensed (see §13 step 5).
+1. ~~**License**~~ Decided: MIT for the engine, the app code and the library content (`LICENSE`).
 2. **Trademark** check on "NstructR".
 3. **4-Point Star Excursion**: switch the fourth reach from "left, crossing behind" to the owner's routine's
    cross-behind diagonal?
