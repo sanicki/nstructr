@@ -122,6 +122,7 @@ function wkCard(w) {
         ${lib && w.description ? `<p class="body-small muted" style="margin:0">${esc(w.description)}</p>` : ''}
         <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${n} exercises</span><span><span class="icon">view_agenda</span>${w.blocks.length} ${w.blocks.length === 1 ? 'block' : 'blocks'}</span></div>
         ${eq.length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(eq.join(', '))}</span></div>` : ''}
+        ${safetyHtml(w)}
         <div class="row">${lib ? `<button class="btn tonal stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
           : `<a class="btn tonal stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>
              <button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>`}</div>
@@ -241,7 +242,7 @@ function renderEditor() {
     <span class="chip"><span class="icon">format_list_numbered</span>${w.blocks.flatMap(b => b.items).length} exercises</span>
     <label class="chip" style="gap:6px"><span class="icon">timer</span>Rest between exercises
       <select id="wkRestBetween" aria-label="Rest between exercises" style="font:inherit;background:transparent;color:inherit;border:0">${[0, 5, 10, 15, 20, 30, 45, 60, 90].map(s => `<option value="${s}"${s === (w.restBetween || 0) ? ' selected' : ''}>${s} s</option>`).join('')}</select></label>
-    ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}`;
+    ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}${safetyHtml(w)}`;
   $('#wkBlocks').innerHTML = w.blocks.map((b, bi) => `<section class="block" data-block="${b.id}">
     <div class="block-head"><input value="${esc(b.name)}" data-bname="${b.id}" aria-label="Block name"><span class="count">${(b.rounds || 1) > 1 ? `<span class="icon" style="font-size:16px;vertical-align:-3px">repeat</span> ${b.rounds} rounds, ` : ''}${b.items.length} exercises, ${fmtMin(blockSeconds(b, w))}</span>
       <button class="icon-btn stateful" data-bmenu="${b.id}" aria-label="Block options"><span class="icon">more_vert</span></button></div>
@@ -895,21 +896,11 @@ function wpAction(act) {
   if (act === 'finish') { go('#/workouts'); return; }
 }
 
-/* before-you-start sheet: equipment and any safety notes in the workout */
-let PENDING_START = null;
-function confirmStart(w, fromIndex = 0) {
-  PENDING_START = { w, fromIndex };
-  const eq = workoutEquipment(w);
-  const notes = [...new Set(w.blocks.flatMap(b => b.items).map(it => ((exById(it.ex) || {}).prescription || {}).note).filter(n => n && /doctor|osteoporosis|heart|coach|spotter|blood pressure/i.test(n)))];
-  $('#startTitle').textContent = w.name;
-  $('#startBody').innerHTML = `<p class="body-medium" style="margin:0 0 12px">About ${fmtMin(workoutSeconds(w))}, ${w.blocks.flatMap(b => b.items).length} exercises${fromIndex ? `, starting at exercise ${fromIndex + 1}` : ''}.</p>
-    ${eq.length ? `<p class="title-small" style="margin:0 0 6px">You'll need</p><div class="chips" style="margin:0 0 12px">${eq.map(q => `<span class="chip">${esc(q)}</span>`).join('')}</div>` : ''}
-    ${notes.length ? `<p class="title-small" style="margin:0 0 6px">Safety</p><ul style="margin:0 0 12px;padding-left:20px">${notes.map(n => `<li class="body-small">${esc(n)}</li>`).join('')}</ul>` : ''}
-    <p class="body-small muted" style="margin:0">Sound: ${(SOUND_MODES.find(m => m[0] === WK.sound) || SOUND_MODES[1])[2]} (change it in Settings, or with the sound button during the workout).</p>
-    <p class="body-small muted" style="margin:8px 0 0">Stop if anything hurts. Rep-based sets move on by themselves when the reps are done.</p>`;
-  $('#startDialog').showModal();
-}
-$('#startGo').addEventListener('click', () => { $('#startDialog').close(); if (PENDING_START) startWorkout(PENDING_START.w, PENDING_START.fromIndex); });
+/* Start goes straight into the workout (no "before you start" sheet): the time and equipment are on the card,
+   and the safety notes from the sources are on the card and in the editor (safetyNotes). */
+const safetyNotes = w => [...new Set(w.blocks.flatMap(b => b.items).map(it => ((exById(it.ex) || {}).prescription || {}).note).filter(n => n && /doctor|osteoporosis|heart|coach|spotter|blood pressure/i.test(n)))];
+const safetyHtml = w => { const n = safetyNotes(w); return n.length ? `<div class="note wk-safety"><span class="icon">health_and_safety</span><div>${n.map(x => `<p class="body-small" style="margin:0">${esc(x)}</p>`).join('')}</div></div>` : ''; };
+function confirmStart(w, fromIndex = 0) { startWorkout(w, fromIndex); }
 
 
 /* stage lives in the exercise player; the workout player borrows it */

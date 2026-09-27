@@ -16,7 +16,7 @@
       <svg class="brand-mark bar-brand" viewBox="66 62 384 384" aria-hidden="true"><!-- the app icon's pose: hips up, one knee bent, head on the line down to the hand -->
         <path d="M148 383H94L138 262 110 126 394 383H426" stroke="var(--md-primary)" stroke-width="30" stroke-linecap="round" stroke-linejoin="round" fill="none"/><circle cx="292" cy="290" r="40" fill="var(--md-primary)"/></svg>
       <h1 class="title-large" id="barTitle">NstructR</h1>
-      <button class="icon-btn stateful" id="editPoseBtn" aria-label="Edit the pose" title="Edit the pose" hidden><span class="icon">tune</span></button>
+      <button class="icon-btn stateful" id="editPoseBtn" aria-label="Edit this exercise" title="Edit" hidden><span class="icon">edit</span></button>
       <button class="icon-btn stateful" id="shareExBtn" data-act="shareEx" aria-label="Share this exercise" title="Share" hidden><span class="icon">share</span></button>
       <button class="icon-btn stateful" id="saveBtn" aria-label="Bookmark" title="Bookmark" hidden><span class="icon">bookmark_add</span></button>
     </header>
@@ -100,8 +100,7 @@
         <div class="section-head"><h2 class="title-medium" id="myWkTitle">My workouts<span class="count" id="wkCount"></span></h2></div>
         <p class="body-medium muted" id="wkEmpty" style="margin:0 0 12px">Your own workouts show up here. Start one from the library below, or tap Customize on one to make your own copy.</p>
         <div class="wk-list" id="wkList" data-list="mine"></div>
-        <div class="row wk-add"><button class="btn text stateful" data-act="import"><span class="icon">upload_file</span>Import</button>
-          <button class="btn filled stateful" data-wact="new"><span class="icon">add</span>New workout</button></div>
+        <div class="row wk-add"><button class="btn filled stateful" data-wact="new"><span class="icon">add</span>New workout</button></div>
       </section>
       <section class="section" id="libWkSection" aria-labelledby="libWkTitle" hidden>
         <div class="section-head"><h2 class="title-medium" id="libWkTitle">Library workouts</h2></div>
@@ -197,43 +196,41 @@
             <div><h2 class="title-medium" id="stepName"></h2><p class="cue" id="stepCue"></p></div>
           </div>
           <div class="controls-row">
-            <div class="segmented" id="sideSeg" role="group" aria-label="Side" hidden>
-              <button class="stateful" data-side="L" aria-pressed="true"><span class="icon">check</span><span class="lbl">Left</span></button>
-              <button class="stateful" data-side="R" aria-pressed="false"><span class="icon">check</span><span class="lbl">Right</span></button>
-            </div>
-            <div class="segmented" id="dirSeg" role="group" aria-label="Direction" hidden>
-              <button class="stateful" data-dir="A" aria-pressed="true"><span class="icon">check</span><span class="lbl">Forward</span></button>
-              <button class="stateful" data-dir="B" aria-pressed="false"><span class="icon">check</span><span class="lbl">Backward</span></button>
-            </div>
-            <div class="segmented" id="speedSeg" role="group" aria-label="Speed">
-              <button class="stateful" data-speed="0.5" aria-pressed="false"><span class="icon">check</span>0.5×</button>
-              <button class="stateful" data-speed="1" aria-pressed="true"><span class="icon">check</span>1×</button>
-              <button class="stateful" data-speed="2" aria-pressed="false"><span class="icon">check</span>2×</button>
-            </div>
+            <div class="ctl" id="sideCtl" hidden><span class="ctl-label">Side</span>
+              <div class="segmented" id="sideSeg" role="group" aria-label="Side">
+                <button class="stateful" data-side="L" aria-pressed="true"><span class="icon">check</span><span class="lbl">Left</span></button>
+                <button class="stateful" data-side="R" aria-pressed="false"><span class="icon">check</span><span class="lbl">Right</span></button>
+              </div></div>
+            <div class="ctl" id="dirCtl" hidden><span class="ctl-label">Direction</span>
+              <div class="segmented" id="dirSeg" role="group" aria-label="Direction">
+                <button class="stateful" data-dir="A" aria-pressed="true"><span class="icon">check</span><span class="lbl">Forward</span></button>
+                <button class="stateful" data-dir="B" aria-pressed="false"><span class="icon">check</span><span class="lbl">Backward</span></button>
+              </div></div>
+            <div class="ctl"><span class="ctl-label">Speed</span>
+              <div class="segmented" id="speedSeg" role="group" aria-label="Speed">
+                <button class="stateful" data-speed="0.5" aria-pressed="false"><span class="icon">check</span>0.5×</button>
+                <button class="stateful" data-speed="1" aria-pressed="true"><span class="icon">check</span>1×</button>
+                <button class="stateful" data-speed="2" aria-pressed="false"><span class="icon">check</span>2×</button>
+              </div></div>
           </div>
         </div>
-        <div class="sheet-scrim" id="sheetScrim" hidden></div>
-        <aside class="info-col sheet" id="exSheet" aria-label="Exercise details">
-          <button class="sheet-head" id="sheetHead" aria-expanded="false" aria-controls="sheetBody">
-            <span class="sheet-handle" aria-hidden="true"></span>
-            <span class="ex-head">
-              <span class="overline" id="exKicker"></span>
-              <span class="headline-small" id="exName"></span>
-              <span class="subtitle muted" id="exSub"></span>
-            </span>
-            <span class="icon sheet-chev" aria-hidden="true">expand_less</span>
-          </button>
-          <div class="sheet-body" id="sheetBody">
-            <div class="chips" id="exChips"></div>
-            <section class="panel" aria-labelledby="stepsTitle"><h3 class="title-medium" id="stepsTitle">Steps</h3><ol class="list" id="stepList"></ol></section>
-            <section class="panel" aria-labelledby="howTitle"><h3 class="title-medium" id="howTitle">How to do it</h3><div id="howPanel"></div></section>
-            <section class="panel" aria-labelledby="aboutTitle"><h3 class="title-medium" id="aboutTitle">About</h3><div id="aboutPanel"></div></section>
-            <section class="panel" id="adjustPanel" aria-labelledby="adjustTitle" hidden><h3 class="title-medium" id="adjustTitle">Edit this exercise</h3>
-              <details class="text-edit"><summary class="stateful"><span class="icon">edit_note</span><span class="title-small">Name, description and instructions</span><span class="icon chev">expand_more</span></summary>
-                <div class="text-form" id="textForm"></div></details>
-              <div id="editor"></div></section>
+        <!-- the details: part of the page (a column beside the figure on wide screens) -->
+        <div class="info-col" id="exInfo">
+          <div class="ex-head">
+            <span class="overline" id="exKicker"></span>
+            <h2 class="headline-small" id="exName"></h2>
+            <span class="subtitle muted" id="exSub"></span>
           </div>
-        </aside>
+          <section class="panel" aria-labelledby="aboutTitle"><h3 class="title-medium" id="aboutTitle">About</h3><div id="aboutPanel"></div></section>
+          <p class="ex-time body-medium" id="exTime"></p>
+          <section class="panel" aria-labelledby="howTitle"><h3 class="title-medium" id="howTitle">How to do it</h3><div id="howPanel"></div></section>
+          <details class="panel steps-panel" id="stepsPanel"><summary class="stateful"><span class="title-medium" id="stepsTitle">Steps</span><span class="icon chev">expand_more</span></summary><ol class="list" id="stepList"></ol></details>
+          <section class="panel edit-panel" id="adjustPanel" aria-labelledby="adjustTitle" hidden>
+            <div class="edit-head"><h3 class="title-medium" id="adjustTitle">Edit this exercise</h3><button class="btn tonal stateful" data-act="edDone"><span class="icon">check</span>Done</button></div>
+            <details class="text-edit"><summary class="stateful"><span class="icon">edit_note</span><span class="title-small">Name, description and instructions</span><span class="icon chev">expand_more</span></summary>
+              <div class="text-form" id="textForm"></div></details>
+            <div id="editor"></div></section>
+        </div>
       </div>
     </section>
   </div>
@@ -270,11 +267,6 @@
   </div>
   <div class="lib-tools"><label class="search"><span class="icon">search</span><input id="pickSearch" type="search" placeholder="Search exercises" autocomplete="off" aria-label="Search exercises"></label></div>
   <ul class="pick-list" id="pickList"></ul>
-</dialog>
-<dialog id="startDialog" aria-labelledby="startTitle">
-  <h2 class="headline-small" id="startTitle">Before you start</h2>
-  <div class="actions actions-top"><button class="btn text stateful" data-close>Cancel</button><button class="btn filled stateful" id="startGo"><span class="icon fill">play_arrow</span>Start</button></div>
-  <div id="startBody"></div>
 </dialog>
 <dialog id="shareDialog" aria-labelledby="shareTitle">
   <h2 class="headline-small" id="shareTitle">Share</h2>

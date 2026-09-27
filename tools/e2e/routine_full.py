@@ -20,9 +20,7 @@ async def main():
         await pg.click('#itemDialog [data-close]')
         # start: before-start sheet
         await pg.evaluate("WK.list[0].restBetween=1")
-        await pg.click('[data-wact="start"]'); await pg.wait_for_timeout(200)
-        await pg.screenshot(path='/tmp/w_start.png')
-        await pg.click('#startGo'); await pg.wait_for_timeout(500)
+        await pg.click('[data-wact="start"]'); await pg.wait_for_timeout(500)
         await pg.screenshot(path='/tmp/w_play.png')
         # fast-forward the whole routine, logging what happens
         log=[]; last=None

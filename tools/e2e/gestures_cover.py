@@ -37,11 +37,10 @@ async def main():
         await pg.touchscreen.tap(180, 60); await pg.wait_for_timeout(250)      # hide the controls
         await drag(320,60); await pg.wait_for_timeout(200)
         print('deliberate 260 px swipe             ', await st(), ' <- next exercise')
-        # start sheet: Start sits above "You'll need"
+        # Start goes straight into the workout (no "before you start" sheet)
+        await pg.evaluate("exitWorkout()"); await pg.wait_for_timeout(300)
         await pg.evaluate("go('#/workout/' + customizeWorkout(LIB_WK[0]).id)"); await pg.wait_for_timeout(300)
-        await pg.click('[data-wact="start"]'); await pg.wait_for_timeout(200)
-        pos=await pg.evaluate("(()=>{const y=s=>Math.round(document.querySelector(s).getBoundingClientRect().top); return {start:y('#startGo'), youllNeed:y('#startBody .title-small'), dialogBottom:Math.round($('#startDialog').getBoundingClientRect().bottom), screen:innerHeight};})()")
-        print('start sheet (y positions)           ', pos)
-        await pg.screenshot(path='/tmp/startsheet.png')
+        await pg.click('[data-wact="start"]'); await pg.wait_for_timeout(300)
+        print('Start in the editor                 ', await pg.evaluate("[location.hash.slice(0, 8), WP.phase]"))
         print(errs); await b.close()
 asyncio.run(main())

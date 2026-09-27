@@ -379,7 +379,6 @@ body[data-view="player"] .view{padding-bottom:32px}
 .ex-head .chips{margin:12px 0 4px}
 .tag{display:inline-block;margin-left:6px;padding:0 6px;border-radius:4px;font-size:11px;line-height:16px;font-weight:500;background:var(--md-surface-container-highest);color:var(--md-on-surface-variant)}
 .actions.actions-top{margin:4px 0 16px;justify-content:flex-start;flex-direction:row-reverse}
-#startDialog{margin-top:12px}
 .chip-sep{flex:none;width:1px;align-self:stretch;margin:4px 4px;background:var(--md-outline-variant)}
 .note{padding:12px 14px;border-radius:var(--shape-m);background:var(--md-surface-container);display:flex;gap:10px}
 .note .icon{color:var(--md-primary);font-size:20px}
@@ -406,6 +405,8 @@ body[data-view="player"] .view{padding-bottom:32px}
 .wk-details .row{margin-top:4px}
 .wk-details .wk-share{margin-left:auto}
 .wk-add{margin-top:12px}
+.wk-safety{margin:0}
+.wk-summary .wk-safety{flex-basis:100%}
 .wk-meta{display:flex;flex-wrap:wrap;gap:6px 16px;color:var(--md-on-surface-variant)}
 .wk-meta span{display:inline-flex;align-items:center;gap:6px}
 .wk-meta .icon{font-size:18px}
@@ -468,29 +469,29 @@ body[data-view="player"] .view{padding-bottom:32px}
 .panel li{margin:4px 0}
 .panel p{margin:0 0 10px}
 .panel .list{margin:0 -4px;padding:0;max-height:none}
-.sheet-head{display:flex;align-items:flex-start;gap:8px;width:100%;text-align:left;padding:4px 4px 8px;cursor:default}
-.sheet-head .ex-head{flex:1;min-width:0;padding:0}
-.sheet-handle,.sheet-chev{display:none}
-.sheet-scrim{position:fixed;inset:0;z-index:19;background:var(--md-scrim)}
-.sheet-scrim[hidden]{display:none}
+.ex-head{padding:4px 4px 0}
+.ex-head .overline,.ex-head .headline-small,.ex-head .subtitle{display:block}
+@media (max-width:839.98px){.ex-head .headline-small{display:none}}   /* the name is in the top bar already */
+.ex-time{display:flex;align-items:center;gap:8px;margin:4px 4px 0;color:var(--md-on-surface-variant)}
+.ex-time .icon{font-size:20px;color:var(--md-primary)}
+.panel .chips{margin:8px 0 4px}
+.steps-panel{padding:0}
+.steps-panel summary{display:flex;align-items:center;gap:8px;padding:10px 4px;list-style:none;cursor:pointer;border-radius:var(--shape-s)}
+.steps-panel summary::-webkit-details-marker{display:none}
+.steps-panel summary .chev{margin-left:auto;transition:transform .2s}
+.steps-panel[open] summary .chev{transform:rotate(180deg)}
+.edit-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0}
+.edit-head h3{margin:0}
+.controls-row .ctl{display:flex;flex-direction:column;gap:4px}
+.controls-row .ctl[hidden]{display:none}
+.ctl-label{font-size:12px;line-height:16px;font-weight:500;letter-spacing:.4px;color:var(--md-on-surface-variant);margin-left:4px}
+.controls-row{align-items:flex-end}
+/* editing on a narrow screen: the figure stays pinned at the top, smaller, while the controls scroll under it */
 @media (max-width:839.98px){
-  /* the details panel peeks up from the bottom; tap or drag its header */
-  .sheet{position:fixed;left:0;right:0;bottom:0;z-index:20;height:86dvh;display:flex;flex-direction:column;
-    background:var(--md-surface-container-low);border-radius:var(--shape-xl) var(--shape-xl) 0 0;box-shadow:0 -2px 10px rgba(0,0,0,.18);
-    transform:translateY(calc(100% - 76px - env(safe-area-inset-bottom,0px)));transition:transform .3s var(--ease-emph)}
-  .sheet.open{transform:none}
-  .sheet.open.half{height:48dvh}   /* editing a pose: the figure stays in view above (and the panel still scrolls to its end) */
-  .sheet.dragging{transition:none}
-  .sheet-head{position:relative;height:76px;flex:none;align-items:center;padding:14px 12px 0 20px;cursor:pointer;touch-action:none;border-radius:inherit;-webkit-tap-highlight-color:transparent}
-  .sheet-handle{display:block;position:absolute;top:8px;left:50%;width:32px;height:4px;margin-left:-16px;border-radius:2px;background:var(--md-outline-variant)}
-  .sheet-chev{display:block;color:var(--md-on-surface-variant);transition:transform .3s var(--ease-emph)}
-  .sheet.open .sheet-chev{transform:rotate(180deg)}
-  .sheet-head .headline-small{font-size:20px;line-height:26px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .sheet-head .subtitle{display:none}
-  .sheet-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:4px 16px calc(24px + env(safe-area-inset-bottom,0px))}
-  body[data-view="player"] .view{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+  body.ex-editing .player .stage-col{position:sticky;top:calc(56px + env(safe-area-inset-top,0px));z-index:5;background:var(--md-surface);padding-bottom:6px}
+  body.ex-editing .stage-col > :not(.stage-wrap){display:none}
+  body.ex-editing .stage svg.scene{max-height:34vh}
 }
-.sheet-body .chips{margin:4px 0 8px}
 
 /* ===== settings ===== */
 .settings-group{margin:4px 0 24px}
@@ -609,12 +610,6 @@ body[data-view="wplay"]{overflow:hidden;background:var(--md-surface)}
   body:not([data-view="player"]):not([data-view="workout"]) .top-app-bar{padding-right:162px}
   .view{padding-bottom:calc(24px + 22vh)}
   .snackbar{bottom:auto;top:calc(64px + env(safe-area-inset-top,0px));transform:translate(-50%,-24px)}
-  /* no room for a panel peeking over the figure: the details follow the controls down the page */
-  .sheet{position:static;height:auto;transform:none!important;display:block;background:none;box-shadow:none;border-radius:0;z-index:auto}
-  .sheet-head{height:auto;padding:8px 4px;cursor:default;touch-action:auto}
-  .sheet-handle,.sheet-chev{display:none}
-  .sheet-head .headline-small{white-space:normal}
-  .sheet-body{overflow:visible;padding:0 4px}
   body[data-view="player"] .view{padding-bottom:calc(24px + 22vh)}
 }
 @media (max-height:520px) and (max-width:839.98px){ body[data-view="workout"] .navbar{display:none} }
