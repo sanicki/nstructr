@@ -267,17 +267,17 @@
   <ul class="pick-list" id="pickList"></ul>
 </dialog>
 <dialog id="shareDialog" aria-labelledby="shareTitle">
-  <h2 class="headline-small" id="shareTitle">Share</h2>
+  <div class="dlg-head"><h2 class="headline-small" id="shareTitle">Share</h2>
+    <button class="icon-btn stateful" data-close aria-label="Close"><span class="icon">close</span></button></div>
   <p class="body-medium muted" id="shareWhat" style="margin:0 0 12px"></p>
   <div class="share-qr" id="shareQr"></div>
-  <label class="field" style="max-width:none"><span class="field-label">Link</span><input id="shareUrl" readonly></label>
-  <div class="actions share-actions">
-    <button class="btn text stateful" data-close>Close</button>
-    <button class="btn text stateful" id="shareFile"><span class="icon">description</span>As a file</button>
-    <button class="btn tonal stateful" id="shareQrImg"><span class="icon">qr_code_2</span>Share QR code</button>
-    <button class="btn tonal stateful" id="shareCopy"><span class="icon">content_copy</span>Copy link</button>
-    <button class="btn filled stateful" id="shareSend"><span class="icon">share</span>Share link</button>
+  <div class="share-grid">
+    <button class="btn filled stateful" id="shareQrImg"><span class="icon">qr_code_2</span>Share QR code</button>
+    <button class="btn tonal stateful" id="shareSend"><span class="icon">share</span>Share link</button>
+    <button class="btn tonal stateful" id="shareFile"><span class="icon">download</span><span id="shareFileLabel">Export</span></button>
+    <button class="btn tonal stateful" id="shareSubmit" disabled aria-describedby="shareSoon"><span class="icon">library_add</span>Submit suggestion</button>
   </div>
+  <p class="body-small muted" id="shareSoon" style="margin:8px 0 0">Submitting a suggestion to the library is coming soon.</p>
 </dialog>
 <dialog id="linkDialog" aria-labelledby="linkTitle">
   <h2 class="headline-small" id="linkTitle">Shared with you</h2>

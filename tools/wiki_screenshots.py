@@ -109,7 +109,7 @@ async def main():
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="legs"]'); await pg.wait_for_timeout(500); await shot(pg, 'share')
         await pg.evaluate("$('#shareDialog').close()")
-        link = await pg.evaluate("$('#shareUrl').value")
+        link = await pg.evaluate("SHARING.url")
         # the other phone opens the link
         pg2 = await page(b, 412, 860)
         await pg2.goto(link.replace('#', '?r#'), wait_until='domcontentloaded'); await pg2.wait_for_timeout(1200)

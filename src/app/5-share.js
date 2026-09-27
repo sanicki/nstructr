@@ -75,11 +75,13 @@ async function openShare(what) {
   SHARING = { url, name, file };
   $('#shareTitle').textContent = `Share "${name}"`;
   $('#shareWhat').textContent = desc;
-  $('#shareUrl').value = url;
   $('#shareQr').innerHTML = url.length <= QR_MAX ? qrSvg(url)
-    : `<p class="body-small muted">Too long for a QR code (${url.length} characters): share the link or the file instead.</p>`;
-  $('#shareSend').hidden = !navigator.share;
-  $('#shareQrImg').hidden = !$('#shareQr svg');
+    : `<p class="body-small muted">Too long for a QR code (${url.length} characters): share the link or export it instead.</p>`;
+  // the QR code is the recommended way (filled); without one, the link takes its place
+  const qr = !!$('#shareQr svg');
+  $('#shareQrImg').disabled = !qr;
+  $('#shareSend').classList.toggle('filled', !qr); $('#shareSend').classList.toggle('tonal', qr);
+  $('#shareFileLabel').textContent = what.workout ? 'Export workout' : 'Export exercise';
   $('#shareDialog').showModal();
 }
 /* a QR code as SVG: dark on white always (whatever the theme), with the standard quiet zone */
@@ -109,13 +111,12 @@ $('#shareQrImg').addEventListener('click', async () => {
     snack(`Saved ${name}`);
   } catch (e) { if (!e || e.name !== 'AbortError') snack("Couldn't make the picture. Share the link instead."); }
 });
-$('#shareCopy').addEventListener('click', () => SHARING && copyText(SHARING.url, 'Link copied'));
 $('#shareSend').addEventListener('click', async () => {
   if (!SHARING) return;
+  if (!navigator.share) { copyText(SHARING.url, 'Link copied: paste it anywhere'); return; }      // computers without a share sheet
   try { await navigator.share({ title: SHARING.name, text: `${SHARING.name}, for ${APP_NAME}`, url: SHARING.url }); } catch (e) { if (e && e.name !== 'AbortError') copyText(SHARING.url, 'Link copied'); }
 });
 $('#shareFile').addEventListener('click', () => { if (!SHARING) return; $('#shareDialog').close(); shareFile(SHARING.file[0], SHARING.file[1], SHARING.name); });
-$('#shareUrl').addEventListener('focus', e => e.target.select());
 
 /* ---------- receiving ---------- */
 let INCOMING = null;
