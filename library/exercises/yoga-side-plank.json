@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-side-plank",
+  "name": "Side Plank Pose",
+  "sanskrit": "Vasisthasana",
+  "category": "Arm Balance",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Balance on one hand and the edge of the foot with the body in one line.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/side-plank-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Plank",
+      "cue": "Hands under shoulders, body in one straight line.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 900,
+      "anchor": "handL",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 66,
+        "shoulderL": -66,
+        "shoulderR": -66,
+        "ankleL": 24,
+        "ankleR": 24
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Side Plank",
+      "cue": "Roll onto the left hand, stack the feet, and lift the right arm.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "handL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 66,
+        "shoulderL": -66,
+        "shoulderR": 114
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Lift the hips.",
+    "Lower the bottom knee for support.",
+    "Repeat on the other side."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

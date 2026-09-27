@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-double-leg-stretch",
+  "name": "Double-Leg Stretch",
+  "category": "Pilates",
+  "focus": "Deep core",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Hug both knees in with your head curled up, then reach your arms overhead and your legs away at the same time, and circle back in.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back, curl your head and shoulders up and hug your knees."
+  ],
+  "cues": [
+    "Reach long in both directions without lowering your head.",
+    "Keep your lower back on the mat.",
+    "Breathe in as you reach, out as you hug."
+  ],
+  "prescription": {
+    "reps": "6–10",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Hug your knees",
+      "cue": "Knees in, hands on your shins.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 200,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "hipL": -112,
+        "hipR": -112,
+        "kneeL": 118,
+        "kneeR": 118
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dx": 6,
+          "dy": 14
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": 6,
+          "dy": 14
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Reach out",
+      "cue": "Arms overhead, legs out to about 45°.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 400,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "hipL": -42,
+        "hipR": -42,
+        "ankleL": 40,
+        "ankleR": 40,
+        "shoulderL": -210,
+        "shoulderR": -210
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  },
+  "repName": "rep"
+}

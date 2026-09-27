@@ -1,0 +1,103 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "chair-incline-pushup",
+  "name": "Chair Incline Push-Up",
+  "category": "Strength",
+  "focus": "Chest, shoulders and arms",
+  "library": "Chair-based",
+  "equipment": [
+    "Chair",
+    "Wall"
+  ],
+  "description": "An incline push-up on a chair braced against a wall: hands on the front edge of the seat, lower your chest toward it and press back up.",
+  "source": {
+    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+  },
+  "setup": [
+    "Push the chair back against a wall so it can't slide.",
+    "Hands on the front edge of the seat, shoulder-width apart, and step your feet back into a plank."
+  ],
+  "cues": [
+    "Body in one straight line from head to heels.",
+    "Lower your chest toward the seat.",
+    "Press through your palms back to straight arms."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Arms straight",
+      "cue": "Hands on the seat edge, body straight.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 44,
+        "shoulderL": -44,
+        "shoulderR": -44,
+        "ankleL": 46,
+        "ankleR": 46
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lower",
+      "cue": "Bend your elbows and lower your chest.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 59.5,
+        "shoulderL": 30.5,
+        "shoulderR": 30.5,
+        "elbowL": -90,
+        "elbowR": -90,
+        "ankleL": 30.5,
+        "ankleR": 30.5
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "x": 32,
+      "back": "right"
+    },
+    {
+      "type": "wall",
+      "x": 74
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

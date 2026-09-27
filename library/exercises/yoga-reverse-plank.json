@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-reverse-plank",
+  "name": "Reverse Plank",
+  "sanskrit": "Purvottanasana",
+  "category": "Hands & wrists",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Face-up plank with the hands under the shoulders and the hips lifted.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/upward-plank-pose-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Reverse Plank",
+      "cue": "Hands behind you, press up, and lift the hips.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "handR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": -70,
+        "neck": -20,
+        "shoulderL": 70,
+        "shoulderR": 70
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Press through the soles.",
+    "Lift the chest."
+  ],
+  "anchorX": -40,
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

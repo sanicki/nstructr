@@ -1,0 +1,310 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "wu-hip-circles",
+  "name": "Standing Hip Circles",
+  "category": "Mobility",
+  "focus": "Hips and lower back",
+  "library": "Warm-up",
+  "equipment": [],
+  "description": "A hip and lower-back warm-up: hands on your hips, circle your hips in a wide, smooth loop one way, then the other.",
+  "source": {
+    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand with your feet slightly wider than hip-width, hands on your hips."
+  ],
+  "cues": [
+    "Drive the hips forward, to the side, back and around.",
+    "Keep your head and shoulders fairly still.",
+    "Do one direction, pause, then reverse."
+  ],
+  "prescription": {
+    "reps": "10 each direction",
+    "note": "About 30 seconds. From the front you see the side-to-side part of each circle; the compass shows where your hips are."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Hips forward",
+      "cue": "Forward.",
+      "view": "front",
+      "durationMs": 360,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": -6,
+        "hipR": 6
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 0,
+        "label": "Forward"
+      },
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Hips forward right",
+      "cue": "",
+      "view": "front",
+      "durationMs": 360,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": -10.05,
+        "hipR": 1.95,
+        "torso": 5.85
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 45,
+        "label": "Forward right"
+      },
+      "quiet": true,
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Hips right",
+      "cue": "Right.",
+      "view": "front",
+      "durationMs": 360,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": -11.74,
+        "hipR": 0.26,
+        "torso": 8.29
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 90,
+        "label": "Right"
+      },
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Hips back right",
+      "cue": "",
+      "view": "front",
+      "durationMs": 360,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": -10.05,
+        "hipR": 1.95,
+        "torso": 5.85
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 135,
+        "label": "Back right"
+      },
+      "quiet": true,
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Hips back",
+      "cue": "Back.",
+      "view": "front",
+      "durationMs": 360,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": -6,
+        "hipR": 6
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 180,
+        "label": "Back"
+      },
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Hips back left",
+      "cue": "",
+      "view": "front",
+      "durationMs": 360,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": -1.95,
+        "hipR": 10.05,
+        "torso": -5.85
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 225,
+        "label": "Back left"
+      },
+      "quiet": true,
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Hips left",
+      "cue": "Left.",
+      "view": "front",
+      "durationMs": 360,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": -0.26,
+        "hipR": 11.74,
+        "torso": -8.29
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 270,
+        "label": "Left"
+      },
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Hips forward left",
+      "cue": "",
+      "view": "front",
+      "durationMs": 360,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -27.2,
+        "elbowL": 65.8,
+        "shoulderR": 27.2,
+        "elbowR": -65.8,
+        "hipL": -1.95,
+        "hipR": 10.05,
+        "torso": -5.85
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 315,
+        "label": "Forward left"
+      },
+      "quiet": true,
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "floorGuide": {
+    "type": "star",
+    "arms": 8
+  },
+  "direction": {
+    "labels": {
+      "A": "Clockwise",
+      "B": "Counterclockwise"
+    }
+  },
+  "repName": "circle",
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

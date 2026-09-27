@@ -1,0 +1,135 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bw-reverse-lunge",
+  "name": "Reverse Lunge",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "library": "Bodyweight",
+  "equipment": [],
+  "description": "Single-leg strength and balance: step one foot back and lower until both knees bend to about 90°, then step back up.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand tall with your hands on your hips."
+  ],
+  "cues": [
+    "Step back far enough that your front knee stays over your ankle.",
+    "Lower straight down; keep your torso upright.",
+    "Push through the front heel to come back up.",
+    "Hold a wall or chair for balance if you need it."
+  ],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Hands on your hips.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 27.5,
+        "shoulderR": 27.5,
+        "elbowL": -69.4,
+        "elbowR": -69.4
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lift the foot",
+      "cue": "Shift onto your left leg and lift your right foot.",
+      "view": "side",
+      "durationMs": 900,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "shoulderL": 27.5,
+        "shoulderR": 27.5,
+        "elbowL": -69.4,
+        "elbowR": -69.4,
+        "hipL": -8,
+        "kneeL": 10,
+        "hipR": 10,
+        "kneeR": 55,
+        "ankleR": 20
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Step back and lower",
+      "cue": "Place your right toes behind you and bend both knees.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": 27.5,
+        "shoulderR": 27.5,
+        "elbowL": -69.4,
+        "elbowR": -69.4,
+        "hipL": -85,
+        "kneeL": 88,
+        "hipR": 22,
+        "kneeR": 100,
+        "ankleR": 40
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Push back up",
+      "cue": "Drive through your front heel and lift the back foot.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 0,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "shoulderL": 27.5,
+        "shoulderR": 27.5,
+        "elbowL": -69.4,
+        "elbowR": -69.4,
+        "hipL": -8,
+        "kneeL": 10,
+        "hipR": 10,
+        "kneeR": 55,
+        "ankleR": 20
+      },
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg back",
+      "R": "Left leg back"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

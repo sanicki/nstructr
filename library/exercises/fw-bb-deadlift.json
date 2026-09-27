@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-bb-deadlift",
+  "name": "Barbell Deadlift",
+  "category": "Strength",
+  "focus": "Back, glutes and hamstrings",
+  "library": "Free weights",
+  "equipment": [
+    "Barbell"
+  ],
+  "description": "Lift the bar from the floor to standing by pushing through your legs and driving your hips forward, with a flat back throughout.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand with the bar over the middle of your feet.",
+    "Hinge down and grip it just outside your legs, shins close to the bar."
+  ],
+  "cues": [
+    "Flat back, chest up, stomach braced.",
+    "Push the floor away; keep the bar close to your legs.",
+    "Stand tall at the top without leaning back.",
+    "Learn it with a coach and light weight first."
+  ],
+  "prescription": {
+    "reps": "3–6",
+    "note": "Warm up with lighter sets first. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Set up",
+      "cue": "Hips back, back flat, hands on the bar.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 66,
+        "hipL": -84,
+        "hipR": -84,
+        "kneeL": 114,
+        "kneeR": 114,
+        "shoulderL": -66,
+        "shoulderR": -66
+      },
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR",
+          "gap": 20
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL",
+          "gap": 20
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Stand up",
+      "cue": "Drive through your feet and stand tall.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -4,
+        "shoulderR": -4
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "barbell",
+      "from": "handL",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  },
+  "repName": "rep"
+}

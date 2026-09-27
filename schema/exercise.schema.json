@@ -1,0 +1,664 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "exercise.schema.json",
+  "title": "NstructR exercise",
+  "description": "One exercise: metadata, instructions, equipment drawn with the figure, and the keyframes the figure moves through. Angles are in degrees, relative to the parent bone, positive = clockwise on screen.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "keyframes"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "kebab-case, unique. Exercises made by users start with u-."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sanskrit": {
+      "type": "string"
+    },
+    "library": {
+      "type": "string",
+      "description": "Collection shown in the app (Bodyweight, Stretches, ...)."
+    },
+    "category": {
+      "type": "string"
+    },
+    "focus": {
+      "type": "string"
+    },
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "description": {
+      "type": "string"
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "setup": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "cues": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "prescription": {
+      "type": "object",
+      "properties": {
+        "reps": {
+          "type": "string"
+        },
+        "rounds": {
+          "type": "number"
+        },
+        "sides": {
+          "type": "string"
+        },
+        "note": {
+          "type": "string"
+        }
+      }
+    },
+    "facing": {
+      "enum": [
+        "right",
+        "left"
+      ]
+    },
+    "anchorX": {
+      "type": "number"
+    },
+    "measure": {
+      "enum": [
+        "reps",
+        "time"
+      ]
+    },
+    "repName": {
+      "type": "string"
+    },
+    "holdStep": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "defaults": {
+      "type": "object",
+      "properties": {
+        "reps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "seconds": {
+          "type": "number",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "bilateral": {
+      "type": "object",
+      "properties": {
+        "labels": {
+          "type": "object",
+          "properties": {
+            "L": {
+              "type": "string"
+            },
+            "R": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "direction": {
+      "type": "object",
+      "required": [
+        "labels"
+      ],
+      "properties": {
+        "labels": {
+          "type": "object",
+          "required": [
+            "A",
+            "B"
+          ],
+          "properties": {
+            "A": {
+              "type": "string"
+            },
+            "B": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "figure": {
+      "type": "object",
+      "properties": {
+        "segments": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        }
+      }
+    },
+    "floorGuide": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "star"
+        },
+        "arms": {
+          "type": "integer",
+          "minimum": 2,
+          "maximum": 16
+        }
+      }
+    },
+    "props": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/prop"
+      }
+    },
+    "keyframes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/keyframe"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "keyframe": {
+      "type": "object",
+      "required": [
+        "pose"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "cue": {
+          "type": "string"
+        },
+        "view": {
+          "enum": [
+            "side",
+            "front"
+          ]
+        },
+        "durationMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "holdMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "ease": {
+          "enum": [
+            "smooth",
+            "linear"
+          ]
+        },
+        "phase": {
+          "enum": [
+            "setup",
+            "rep",
+            "finish"
+          ]
+        },
+        "quiet": {
+          "type": "boolean"
+        },
+        "anchor": {
+          "type": "string",
+          "enum": [
+            "pelvis",
+            "spine",
+            "neckBase",
+            "head",
+            "headTop",
+            "headLow",
+            "hipL",
+            "hipR",
+            "kneeL",
+            "kneeR",
+            "ankleL",
+            "ankleR",
+            "toeL",
+            "toeR",
+            "footL",
+            "footR",
+            "shoulderL",
+            "shoulderR",
+            "elbowL",
+            "elbowR",
+            "handL",
+            "handR",
+            "armpitL",
+            "armpitR",
+            "backL",
+            "backR"
+          ]
+        },
+        "anchorX": {
+          "type": "number"
+        },
+        "lift": {
+          "type": "number"
+        },
+        "plant": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "L",
+              "R"
+            ]
+          }
+        },
+        "touch": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "point",
+              "adjust"
+            ],
+            "properties": {
+              "point": {
+                "type": "string",
+                "enum": [
+                  "pelvis",
+                  "spine",
+                  "neckBase",
+                  "head",
+                  "headTop",
+                  "headLow",
+                  "hipL",
+                  "hipR",
+                  "kneeL",
+                  "kneeR",
+                  "ankleL",
+                  "ankleR",
+                  "toeL",
+                  "toeR",
+                  "footL",
+                  "footR",
+                  "shoulderL",
+                  "shoulderR",
+                  "elbowL",
+                  "elbowR",
+                  "handL",
+                  "handR",
+                  "armpitL",
+                  "armpitR",
+                  "backL",
+                  "backR"
+                ]
+              },
+              "adjust": {
+                "type": "string",
+                "enum": [
+                  "root",
+                  "torso",
+                  "chest",
+                  "neck",
+                  "shoulderL",
+                  "elbowL",
+                  "shoulderR",
+                  "elbowR",
+                  "hipL",
+                  "kneeL",
+                  "ankleL",
+                  "hipR",
+                  "kneeR",
+                  "ankleR",
+                  "armDepthL",
+                  "forearmDepthL",
+                  "armDepthR",
+                  "forearmDepthR",
+                  "thighDepthL",
+                  "shinDepthL",
+                  "thighDepthR",
+                  "shinDepthR"
+                ]
+              },
+              "gap": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "reach": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "hand",
+              "to"
+            ],
+            "properties": {
+              "hand": {
+                "type": "string",
+                "enum": [
+                  "handL",
+                  "handR"
+                ]
+              },
+              "to": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "enum": [
+                      "pelvis",
+                      "spine",
+                      "neckBase",
+                      "head",
+                      "headTop",
+                      "headLow",
+                      "hipL",
+                      "hipR",
+                      "kneeL",
+                      "kneeR",
+                      "ankleL",
+                      "ankleR",
+                      "toeL",
+                      "toeR",
+                      "footL",
+                      "footR",
+                      "shoulderL",
+                      "shoulderR",
+                      "elbowL",
+                      "elbowR",
+                      "handL",
+                      "handR",
+                      "armpitL",
+                      "armpitR",
+                      "backL",
+                      "backR"
+                    ]
+                  },
+                  {
+                    "enum": [
+                      "wall",
+                      "chair"
+                    ]
+                  }
+                ]
+              },
+              "dx": {
+                "type": "number"
+              },
+              "dy": {
+                "type": "number"
+              },
+              "bend": {
+                "enum": [
+                  1,
+                  -1
+                ]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "keep": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "enum": [
+                  "ankleL",
+                  "ankleR",
+                  "handL",
+                  "handR"
+                ]
+              },
+              {
+                "type": "object",
+                "required": [
+                  "point",
+                  "keyframe"
+                ],
+                "properties": {
+                  "point": {
+                    "enum": [
+                      "ankleL",
+                      "ankleR",
+                      "handL",
+                      "handR"
+                    ]
+                  },
+                  "keyframe": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              }
+            ]
+          }
+        },
+        "guide": {
+          "type": "object",
+          "properties": {
+            "direction": {
+              "type": "number"
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "pose": {
+          "type": "object",
+          "propertyNames": {
+            "enum": [
+              "root",
+              "torso",
+              "chest",
+              "neck",
+              "shoulderL",
+              "elbowL",
+              "shoulderR",
+              "elbowR",
+              "hipL",
+              "kneeL",
+              "ankleL",
+              "hipR",
+              "kneeR",
+              "ankleR",
+              "armDepthL",
+              "forearmDepthL",
+              "armDepthR",
+              "forearmDepthR",
+              "thighDepthL",
+              "shinDepthL",
+              "thighDepthR",
+              "shinDepthR"
+            ]
+          },
+          "additionalProperties": {
+            "type": "number"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "prop": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "band",
+            "towel",
+            "wall",
+            "chair",
+            "bench",
+            "step",
+            "dumbbell",
+            "kettlebell",
+            "barbell"
+          ]
+        },
+        "from": {
+          "type": "string"
+        },
+        "to": {
+          "type": "string"
+        },
+        "via": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "layer": {
+          "enum": [
+            "front",
+            "back"
+          ]
+        },
+        "restLength": {
+          "type": "number"
+        },
+        "at": {
+          "type": "string",
+          "enum": [
+            "pelvis",
+            "spine",
+            "neckBase",
+            "head",
+            "headTop",
+            "headLow",
+            "hipL",
+            "hipR",
+            "kneeL",
+            "kneeR",
+            "ankleL",
+            "ankleR",
+            "toeL",
+            "toeR",
+            "footL",
+            "footR",
+            "shoulderL",
+            "shoulderR",
+            "elbowL",
+            "elbowR",
+            "handL",
+            "handR",
+            "armpitL",
+            "armpitR",
+            "backL",
+            "backR"
+          ]
+        },
+        "keyframe": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "offset": {
+          "type": "number"
+        },
+        "view": {
+          "enum": [
+            "side",
+            "front"
+          ]
+        },
+        "x": {
+          "type": "number"
+        },
+        "width": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "height": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "back": {
+          "enum": [
+            "left",
+            "right"
+          ]
+        },
+        "backHeight": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "hand": {
+          "type": "string",
+          "enum": [
+            "handL",
+            "handR"
+          ]
+        },
+        "hands": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "handL",
+              "handR"
+            ]
+          }
+        },
+        "axis": {
+          "enum": [
+            "lr",
+            "fb",
+            "ud"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

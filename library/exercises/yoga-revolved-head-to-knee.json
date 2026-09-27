@@ -1,0 +1,135 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-revolved-head-to-knee",
+  "name": "Revolved Head-to-Knee Pose",
+  "sanskrit": "Parivrtta Janu Sirsasana",
+  "category": "Seated",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Seated side bend over one straight leg with the top arm reaching overhead.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/revolved-head-to-knee-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit with legs wide",
+      "cue": "Sit tall with both legs stretched out to the sides.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 900,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": 90,
+        "shoulderL": -20,
+        "shoulderR": 20,
+        "kneeL": 360
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Fold the left leg in",
+      "cue": "Bend the left knee and bring the foot to the inner right thigh.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 600,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipR": 90,
+        "hipL": -90,
+        "kneeL": 180,
+        "ankleL": 90,
+        "shoulderL": -20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Revolved Head-to-Knee",
+      "cue": "Side-bend toward the right leg and reach the left arm overhead.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "pose": {
+        "hipR": 90,
+        "hipL": -90,
+        "kneeL": 180,
+        "ankleL": 90,
+        "torso": -60,
+        "shoulderR": 150,
+        "shoulderL": -160
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Fold the left leg in",
+      "cue": "Come back up to sitting tall.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 600,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipR": 90,
+        "hipL": -90,
+        "kneeL": 180,
+        "ankleL": 90,
+        "shoulderL": -20,
+        "shoulderR": 20
+      },
+      "phase": "finish"
+    }
+  ],
+  "cues": [
+    "Turn the chest up toward the ceiling.",
+    "Keep both sit bones down."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 2,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

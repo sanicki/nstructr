@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bhf-pull-apart",
+  "name": "Band Pull Apart",
+  "category": "Strength",
+  "focus": "Back",
+  "library": "Resistance band",
+  "equipment": [
+    "Resistance band"
+  ],
+  "description": "Upper-back exercise for posture: hold the band at shoulder height with straight arms and pull it apart until your shoulder blades squeeze, which also opens the chest.",
+  "source": {
+    "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
+    "title": "British Heart Foundation: resistance band exercises",
+    "note": "Standing version. The article also shows each exercise seated on a chair."
+  },
+  "setup": [
+    "Stand with your feet hip-width apart.",
+    "Hold the band at shoulder height, hands shoulder-width apart, palms down."
+  ],
+  "cues": [
+    "Keep your arms straight throughout.",
+    "Squeeze your shoulder blades together as the band opens.",
+    "Come back slowly.",
+    "Harder: start with your hands closer together."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
+  },
+  "facing": "right",
+  "props": [
+    {
+      "type": "band",
+      "from": "handL",
+      "to": "handR",
+      "layer": "front"
+    }
+  ],
+  "keyframes": [
+    {
+      "name": "Arms forward",
+      "cue": "Arms straight out in front at shoulder height, band just taut.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "shoulderR": 90,
+        "armDepthL": 90,
+        "armDepthR": 90,
+        "forearmDepthL": 90,
+        "forearmDepthR": 90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Pull apart",
+      "cue": "Sweep your hands out to the sides and squeeze your shoulder blades.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "shoulderR": 90
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

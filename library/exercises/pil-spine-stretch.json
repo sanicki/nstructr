@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-spine-stretch",
+  "name": "Spine Stretch Forward",
+  "category": "Pilates",
+  "focus": "Spine",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Sitting tall with your legs apart, round forward from the top of your head as if over a ball, reaching forward, then stack back up.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Sit tall with your legs straight and a little wider than your hips, feet flexed.",
+    "Arms reach forward at shoulder height."
+  ],
+  "cues": [
+    "Start the curl with your head, then your upper back.",
+    "Keep your hips still on the mat.",
+    "Breathe out as you round forward; rebuild the spine as you breathe in."
+  ],
+  "prescription": {
+    "reps": "5",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Arms forward at shoulder height.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 400,
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": -90,
+        "shoulderR": -90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Round forward",
+      "cue": "Curl forward, reaching past your feet.",
+      "view": "side",
+      "durationMs": 2400,
+      "holdMs": 800,
+      "anchor": "pelvis",
+      "pose": {
+        "torso": 22,
+        "chest": 42,
+        "neck": 22,
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": -144,
+        "shoulderR": -144
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

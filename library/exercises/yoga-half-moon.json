@@ -1,0 +1,80 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-half-moon",
+  "name": "Half Moon Pose",
+  "sanskrit": "Ardha Chandrasana",
+  "category": "Balancing",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Standing balance on one leg with the torso and lifted leg parallel to the floor.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/half-moon-pose-3/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Step wide",
+      "cue": "Step the feet wide apart, arms out to the sides.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "shoulderR": 90,
+        "hipL": -30,
+        "hipR": 30
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Half Moon Pose",
+      "cue": "Balance on the right leg, lift the left leg, reach the left arm up.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleR",
+      "plant": [
+        "R"
+      ],
+      "pose": {
+        "torso": -100,
+        "hipL": -80,
+        "shoulderR": 100,
+        "shoulderL": -80
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Use a block under the lower hand.",
+    "Flex the lifted foot."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

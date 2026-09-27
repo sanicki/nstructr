@@ -1,0 +1,151 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "step-up",
+  "name": "Step-Up",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "library": "Bodyweight",
+  "equipment": [
+    "Step"
+  ],
+  "description": "Leg strength and balance: step up onto a low step with one foot, bring the other foot up, then step back down one foot at a time.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand facing a sturdy step or the bottom stair, hands on your hips.",
+    "Hold a rail or wall if you need support."
+  ],
+  "cues": [
+    "Put your whole foot on the step.",
+    "Push through the heel of the leading leg to step up.",
+    "Stand tall at the top.",
+    "Step down with control, leading with the same foot."
+  ],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand in front of the step",
+      "cue": "Feet together, hands on hips.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 27.5,
+        "shoulderR": 27.5,
+        "elbowL": -69.4,
+        "elbowR": -69.4
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Right foot up",
+      "cue": "Place your right foot flat on the step.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": 27.5,
+        "shoulderR": 27.5,
+        "elbowL": -69.4,
+        "elbowR": -69.4,
+        "hipR": -66,
+        "kneeR": 62
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Step up",
+      "cue": "Push up and bring your left foot onto the step.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 400,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": 27.5,
+        "shoulderR": 27.5,
+        "elbowL": -69.4,
+        "elbowR": -69.4
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Right foot down",
+      "cue": "Bend your left knee and step your right foot back down to the floor.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": 27.5,
+        "shoulderR": 27.5,
+        "elbowL": -69.4,
+        "elbowR": -69.4,
+        "torso": 14,
+        "hipL": -50,
+        "kneeL": 88,
+        "hipR": 26,
+        "kneeR": 4
+      },
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "step",
+      "x": 82
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right foot leads",
+      "R": "Left foot leads"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bw-squat",
+  "name": "Squat",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "library": "Bodyweight",
+  "equipment": [],
+  "description": "The basic lower-body strength move: sit your hips back and down as if onto a chair, then stand back up.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
+    "title": "NHS: strength exercises (mini-squats)",
+    "note": "Stick-figure approximation of a full bodyweight squat; the NHS version is a smaller 'mini-squat' holding a chair."
+  },
+  "setup": [
+    "Stand with your feet hip-width apart, toes pointing forward."
+  ],
+  "cues": [
+    "Push your hips back first, then bend your knees.",
+    "Keep your chest up and your heels down.",
+    "Knees follow the line of your toes.",
+    "Only go as low as is comfortable; hold a chair back for support if you need it."
+  ],
+  "prescription": {
+    "reps": "8–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet hip-width apart.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "rep"
+    },
+    {
+      "name": "Squat down",
+      "cue": "Sit your hips back and bend your knees, arms reaching forward.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 38,
+        "hipL": -88,
+        "hipR": -88,
+        "kneeL": 102,
+        "kneeR": 102,
+        "shoulderL": -128,
+        "shoulderR": -128
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

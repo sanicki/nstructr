@@ -1,0 +1,66 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-locust",
+  "name": "Locust Pose",
+  "sanskrit": "Salabhasana",
+  "category": "Backbend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Belly-down backbend lifting the chest, arms, and legs.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/locust-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your belly",
+      "cue": "Lie face down with the arms along your sides.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "neck": -34,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Locust Pose",
+      "cue": "Lift the chest, arms, and legs off the floor.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "torso": -20,
+        "neck": -10,
+        "hipL": 16,
+        "hipR": 16,
+        "shoulderL": 30,
+        "shoulderR": 30,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Reach back through the toes.",
+    "Keep the neck long."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

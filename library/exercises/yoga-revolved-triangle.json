@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-revolved-triangle",
+  "name": "Revolved Triangle Pose",
+  "sanskrit": "Parivrtta Trikonasana",
+  "category": "Standing",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Straight-legged split stance twisting with one hand down and the other up.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/revolved-triangle-pose-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "setup"
+    },
+    {
+      "name": "Revolved Triangle",
+      "cue": "Step back, fold forward, left hand down, right arm up.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": 90,
+        "hipR": -25,
+        "hipL": 25,
+        "shoulderL": -90,
+        "shoulderR": 90
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Use a block under the lower hand.",
+    "Keep the hips level."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "anchorX": 20,
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

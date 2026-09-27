@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "core-superman",
+  "name": "Superman",
+  "category": "Core",
+  "focus": "Lower back and glutes",
+  "library": "Core",
+  "equipment": [],
+  "description": "Strengthens the back of the body: lying face down with arms overhead, lift your arms, chest and legs a little way off the floor.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie face down with your arms stretched out in front of you."
+  ],
+  "cues": [
+    "Lift only a few centimetres; it's not a backbend.",
+    "Keep your neck long, looking at the floor.",
+    "Squeeze your glutes as your legs lift."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie face down",
+      "cue": "Arms stretched in front.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 400,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "neck": -34,
+        "shoulderL": -180,
+        "shoulderR": -180,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lift",
+      "cue": "Raise your arms, chest and legs.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 2000,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "torso": -14,
+        "neck": -8,
+        "shoulderL": -172,
+        "shoulderR": -172,
+        "hipL": 12,
+        "hipR": 12,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

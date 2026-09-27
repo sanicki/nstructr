@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-kb-swing",
+  "name": "Kettlebell Swing",
+  "category": "Strength",
+  "focus": "Glutes, hamstrings and back",
+  "library": "Free weights",
+  "equipment": [
+    "Kettlebell"
+  ],
+  "description": "A powerful hip hinge: swing the kettlebell back between your legs, then snap your hips forward so it floats up to chest height.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand with your feet a little wider than your hips, kettlebell held in both hands."
+  ],
+  "cues": [
+    "It's a hinge, not a squat: push your hips back.",
+    "Drive with your hips; your arms just guide the bell.",
+    "Stand tall at the top with your glutes squeezed.",
+    "Learn it with a light bell first."
+  ],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Explosive hips, controlled arms. Stop the set before your form fades."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Hike back",
+      "cue": "Hinge and swing the bell back between your legs.",
+      "view": "side",
+      "durationMs": 700,
+      "holdMs": 100,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 62,
+        "hipL": -20,
+        "hipR": -20,
+        "kneeL": 30,
+        "kneeR": 30,
+        "shoulderL": -45,
+        "shoulderR": -45
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Swing up",
+      "cue": "Snap your hips forward; the bell floats to chest height.",
+      "view": "side",
+      "durationMs": 700,
+      "holdMs": 150,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -88,
+        "shoulderR": -88
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hands": [
+        "handL",
+        "handR"
+      ]
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "rep"
+}

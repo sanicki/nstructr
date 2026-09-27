@@ -1,0 +1,74 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-handstand",
+  "name": "Handstand",
+  "sanskrit": "Adho Mukha Vrksasana",
+  "category": "Balancing",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Full inversion balancing on the hands with the body vertical.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/handstand/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Downward-Facing Dog",
+      "cue": "Press the hips up and back into an upside-down V.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 1000,
+      "anchor": "handR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": 135,
+        "shoulderL": 180,
+        "shoulderR": 180,
+        "hipL": 25,
+        "hipR": 25
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Handstand",
+      "cue": "Kick up and stack the hips and feet over the hands.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "pose": {
+        "root": 180,
+        "shoulderL": 180,
+        "shoulderR": 180
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Spread the fingers wide.",
+    "Practice at a wall."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

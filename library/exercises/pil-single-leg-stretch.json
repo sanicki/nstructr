@@ -1,0 +1,101 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-single-leg-stretch",
+  "name": "Single-Leg Stretch",
+  "category": "Pilates",
+  "focus": "Deep core",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Head and shoulders curled up, draw one knee in toward your chest while the other leg reaches long, then switch.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back, curl your head and shoulders up.",
+    "Draw your right knee in and extend your left leg to about 45°."
+  ],
+  "cues": [
+    "Hands on the bent leg: outside hand at the ankle, inside hand at the knee.",
+    "Keep your trunk still as the legs switch.",
+    "Breathe out as you switch."
+  ],
+  "prescription": {
+    "reps": "5–10 each leg",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Right knee in",
+      "cue": "Draw your right knee in, left leg long.",
+      "view": "side",
+      "durationMs": 900,
+      "holdMs": 100,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "hipR": -112,
+        "kneeR": 118,
+        "hipL": -40,
+        "ankleL": 40
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dx": 4,
+          "dy": 10
+        },
+        {
+          "hand": "handL",
+          "to": "kneeR",
+          "dx": 12,
+          "dy": 20
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Left knee in",
+      "cue": "Switch: left knee in, right leg long.",
+      "view": "side",
+      "durationMs": 900,
+      "holdMs": 100,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "hipL": -112,
+        "kneeL": 118,
+        "hipR": -40,
+        "ankleR": 40
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": 4,
+          "dy": 10
+        },
+        {
+          "hand": "handR",
+          "to": "kneeL",
+          "dx": 12,
+          "dy": 20
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

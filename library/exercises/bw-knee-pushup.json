@@ -1,0 +1,93 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bw-knee-pushup",
+  "name": "Knee Push-Up",
+  "category": "Strength",
+  "focus": "Chest, shoulders and arms",
+  "library": "Bodyweight",
+  "equipment": [],
+  "description": "A push-up from the knees: body straight from knees to head, lower your chest toward the floor and press back up.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Kneel with your hands on the floor just wider than your shoulders.",
+    "Walk your hands forward until your body is a straight line from knees to head."
+  ],
+  "cues": [
+    "Keep your hips in line; don't let them sag or pike.",
+    "Elbows angle back, not straight out.",
+    "Lower until your upper arms are level, then press up."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Arms straight",
+      "cue": "Body straight from knees to head.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 53,
+        "kneeL": 37,
+        "kneeR": 37,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": -53,
+        "shoulderR": -53
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lower",
+      "cue": "Bend your elbows and lower your chest.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 73,
+        "kneeL": 17,
+        "kneeR": 17,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": 17,
+        "shoulderR": 17,
+        "elbowL": -90,
+        "elbowR": -90
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

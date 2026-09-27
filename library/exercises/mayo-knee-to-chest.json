@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-knee-to-chest",
+  "name": "Knee-to-Chest Stretch",
+  "category": "Stretch",
+  "focus": "Lower back",
+  "library": "Stretches",
+  "equipment": [],
+  "description": "Stretches the lower back lying down: draw one knee in toward your chest while the other leg stays relaxed.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back on a firm surface, heels flat on the floor."
+  ],
+  "cues": [
+    "Skip it if you have osteoporosis.",
+    "Pull gently until you feel the lower back stretch.",
+    "Bring the knee as close as is comfortable.",
+    "Keep the other leg relaxed, bent or straight."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Skip this stretch if you have osteoporosis: it can raise the risk of compression fractures in the spine. Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Legs out, heels on the floor.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 800,
+      "anchor": "neckBase",
+      "pose": {
+        "root": -90,
+        "neck": 34
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Knee to chest",
+      "cue": "Hold your left knee and draw it toward your chest.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 30000,
+      "anchor": "neckBase",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -110,
+        "kneeL": 130,
+        "ankleL": 30
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeL",
+          "dx": 12,
+          "dy": 6,
+          "bend": 1
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": 12,
+          "dy": 6,
+          "bend": 1
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left knee",
+      "R": "Right knee"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

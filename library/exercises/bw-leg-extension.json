@@ -1,0 +1,109 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bw-leg-extension",
+  "name": "Standing Leg Extension",
+  "category": "Strength",
+  "focus": "Glutes and hamstrings",
+  "library": "Bodyweight",
+  "equipment": [
+    "Chair"
+  ],
+  "description": "Works the back of the thigh and the buttock: holding the back of a chair, lift one straight leg behind you without arching your back.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
+    "title": "NHS: strength exercises (leg extension)",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Stand behind a sturdy chair with your hands resting on its back."
+  ],
+  "cues": [
+    "Keep the lifting leg straight.",
+    "Don't arch your back as the leg goes back.",
+    "Hold the lift for up to 5 seconds."
+  ],
+  "prescription": {
+    "reps": "5 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Hands on the wall.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -78,
+        "shoulderR": -78,
+        "elbowL": -14,
+        "elbowR": -14
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Lift back",
+      "cue": "Raise your right leg straight back and hold.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 3000,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "shoulderL": -78,
+        "shoulderR": -78,
+        "elbowL": -14,
+        "elbowR": -14,
+        "hipR": 28
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "x": 78,
+      "back": "left"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

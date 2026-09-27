@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "core-forearm-plank",
+  "name": "Forearm Plank",
+  "category": "Core",
+  "focus": "Core",
+  "library": "Core",
+  "equipment": [],
+  "description": "The classic core hold: on your forearms and toes, keep your body in a straight line from head to heels.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Kneel on all fours, then lower onto your forearms, elbows under your shoulders."
+  ],
+  "cues": [
+    "Squeeze your glutes and brace your stomach.",
+    "Don't let your hips sag or lift.",
+    "Look at the floor to keep your neck long.",
+    "Easier: keep your knees down."
+  ],
+  "prescription": {
+    "reps": "Hold 20–30 s, 2–3 times",
+    "note": "Breathe steadily; build up the hold time gradually."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Forearms and knees",
+      "cue": "Elbows under your shoulders, knees on the floor.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 800,
+      "anchor": "elbowR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 105,
+        "hipL": -105,
+        "hipR": -105,
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": -105,
+        "shoulderR": -105,
+        "elbowL": -90,
+        "elbowR": -90
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Plank",
+      "cue": "Lift your knees and hold a straight line.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 30000,
+      "anchor": "elbowR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 77.6,
+        "ankleL": 12.4,
+        "ankleR": 12.4,
+        "shoulderL": -77.6,
+        "shoulderR": -77.6,
+        "elbowL": -90,
+        "elbowR": -90
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

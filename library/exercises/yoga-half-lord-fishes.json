@@ -1,0 +1,160 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-half-lord-fishes",
+  "name": "Half Lord of the Fishes Pose",
+  "sanskrit": "Ardha Matsyendrasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Seated twist with one knee up and the opposite elbow hooked outside it.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/half-lord-of-the-fishes-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Draw the right knee in",
+      "cue": "Bend the right knee and plant the foot.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -135,
+        "shoulderL": 20,
+        "shoulderR": 20,
+        "kneeR": 135
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Half Lord of the Fishes",
+      "cue": "Cross the right foot over, hook the left elbow outside the knee, and twist.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "hipR": -135,
+        "kneeR": 135,
+        "hipL": -90,
+        "kneeL": -180,
+        "ankleL": 90,
+        "shoulderL": -60,
+        "elbowL": -80,
+        "shoulderR": 32
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Right knee back up",
+      "cue": "Bring the right knee back up, foot planted, before straightening the leg.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -135,
+        "shoulderL": 20,
+        "shoulderR": 20,
+        "kneeR": 135
+      },
+      "phase": "finish"
+    }
+  ],
+  "cues": [
+    "Lengthen up before you twist.",
+    "Turn from the belly, not the neck."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 2,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

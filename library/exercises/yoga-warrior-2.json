@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-warrior-2",
+  "name": "Warrior 2 Pose",
+  "sanskrit": "Virabhadrasana II",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Wide lunge with the torso upright and the arms reaching out to the sides.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/warrior-ii-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Step wide",
+      "cue": "Step the feet wide apart, arms out to the sides.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "shoulderR": 90,
+        "hipL": -30,
+        "hipR": 30
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Warrior 2",
+      "cue": "Bend the right knee over the ankle and reach the arms wide.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "hipR": 90,
+        "kneeR": -90,
+        "hipL": -60,
+        "shoulderL": -90,
+        "shoulderR": 90,
+        "neck": -4
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the torso over the hips.",
+    "Look past the front hand."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

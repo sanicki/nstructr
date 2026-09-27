@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-legs-up-wall",
+  "name": "Legs Up the Wall Pose",
+  "sanskrit": "Viparita Karani",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat",
+    "Wall"
+  ],
+  "description": "Restorative pose lying on the back with the legs straight up a wall.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/legs-up-the-wall-pose-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie down with the knees bent and feet flat.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -45,
+        "hipR": -45,
+        "kneeL": 120,
+        "kneeR": 120
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Legs Up the Wall",
+      "cue": "Swing the legs up the wall and rest the arms.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 8000,
+      "anchor": "neckBase",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -90,
+        "hipR": -90
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Move the hips closer to the wall as it feels comfortable.",
+    "Relax the belly."
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "ankleL",
+      "keyframe": 1,
+      "offset": 7
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

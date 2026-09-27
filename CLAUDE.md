@@ -1,0 +1,24 @@
+# NstructR — working notes for Claude Code
+
+Read `HANDOFF.md` first: formats, engine pipeline, validation rules, design decisions, roadmap, open questions.
+
+## Commands
+- `npm install` (once) · `node tools/build.mjs` (validate + animation checks + bundle + `_site/`)
+- `node tools/build.mjs --check-only` (what CI runs on PRs) · `--no-checks` (fast UI iteration)
+- Serve: `python3 -m http.server 8000 -d _site` → `/` (fetches `library/index.json`) or `/nstructr.html` (single file)
+- Browser tests: `NSTRUCTR_URL=http://127.0.0.1:8000/nstructr.html python3 tools/e2e/<test>.py` (they print, read the output)
+
+## Rules
+- `library/exercises/*.json` and `library/workouts/*.json` are the source of truth. File name = `id`. Library ids never start with `u-` (reserved for users).
+- Every exercise must pass `tools/checks.cjs` for all sides/directions. Fix geometry rather than adding to `tools/known-issues.json`; if you add an exception, write why.
+- Angle values like `540` or `-235` are deliberate (they choose the direction a joint turns). Keep continuity with neighbouring steps.
+- `durationMs: 0` means instant, not "unset".
+- Write bilateral exercises for one side; the other is mirrored (names/cues/guide labels have left/right swapped automatically).
+- Exercise text: our own words, cite the source, never copy. Spoken cues: short, plain directions.
+- Workout player targets the Galaxy Z Flip7 **cover screen on the floor**: nothing important at the bottom (camera cutouts), first tap only shows controls, hold ✕ to exit, test at 360×398.
+- Don't rename localStorage keys without a migration (see HANDOFF §11).
+- No framework, no bundler: `src/app/*.js` are classic scripts concatenated in filename order into one global scope.
+- Don't run `pkill -f http.server` from a shell whose command line contains that text (it kills itself).
+
+## Where things are
+Engine: `src/core.js` · App: `src/app/1-engine.js` (state, drawing, playback) … `5-main.js` (routing, boot) · Workouts & player: `src/app/4-workouts.js` · CSS: `src/head.html` · Markup: `src/body.html`

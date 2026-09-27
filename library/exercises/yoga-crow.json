@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-crow",
+  "name": "Crow Pose",
+  "sanskrit": "Bakasana",
+  "category": "Arm Balance",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Arm balance with the knees resting high on the upper arms and the feet lifted.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/crane-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Squat",
+      "cue": "Squat low with the hands on the floor in front.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 900,
+      "anchor": "handR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "torso": 55,
+        "hipL": -110,
+        "hipR": -110,
+        "kneeL": 140,
+        "kneeR": 140,
+        "shoulderL": -55,
+        "shoulderR": -55
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Crow Pose",
+      "cue": "Knees on the upper arms, lean forward, and lift the feet.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "handR",
+      "pose": {
+        "torso": 73,
+        "neck": -25,
+        "shoulderL": -53,
+        "shoulderR": -53,
+        "elbowL": -28,
+        "elbowR": -28,
+        "hipL": -87,
+        "hipR": -87,
+        "kneeL": 178,
+        "kneeR": 178,
+        "ankleL": 60,
+        "ankleR": 60
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Look forward, not down.",
+    "Squeeze the knees into the arms."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-rolling-ball",
+  "name": "Rolling Like a Ball",
+  "category": "Pilates",
+  "focus": "Core and spine",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Curled into a ball and balanced on your tailbone, roll back to your shoulder blades and back up to balance again.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Sit and hug your shins, feet off the mat, chin tucked, back rounded like a ball."
+  ],
+  "cues": [
+    "Keep the ball shape the same the whole time.",
+    "Roll only to your shoulder blades, never your neck.",
+    "Use your stomach to stop at the top."
+  ],
+  "prescription": {
+    "reps": "6–8",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Balance",
+      "cue": "Curled up, balancing on your tailbone.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 400,
+      "pose": {
+        "root": -38,
+        "chest": 32,
+        "neck": 34,
+        "hipL": -110,
+        "hipR": -110,
+        "kneeL": 150,
+        "kneeR": 150
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dx": 10,
+          "dy": 22
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": 10,
+          "dy": 22
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Roll back",
+      "cue": "Roll back to your shoulder blades.",
+      "view": "side",
+      "durationMs": 1000,
+      "holdMs": 100,
+      "pose": {
+        "root": -118,
+        "chest": 32,
+        "neck": 34,
+        "hipL": -110,
+        "hipR": -110,
+        "kneeL": 150,
+        "kneeR": 150
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dx": 10,
+          "dy": 22
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": 10,
+          "dy": 22
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  },
+  "repName": "rep"
+}

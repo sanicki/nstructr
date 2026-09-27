@@ -1,0 +1,111 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-bb-squat",
+  "name": "Barbell Back Squat",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "library": "Free weights",
+  "equipment": [
+    "Barbell"
+  ],
+  "description": "The classic barbell lift: with the bar across your upper back, squat down until your thighs are about level, then stand up.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Set the bar across your upper back, below your neck, hands just outside your shoulders.",
+    "Feet about shoulder-width apart."
+  ],
+  "cues": [
+    "Brace your stomach before each rep.",
+    "Sit down and back; keep your chest up.",
+    "Knees track over your toes.",
+    "Use a rack with safety bars, or learn with a coach."
+  ],
+  "prescription": {
+    "reps": "5–8",
+    "note": "Warm up with lighter sets first. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Bar on your back",
+      "cue": "Stand tall, stomach braced.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "backR",
+          "dx": -4,
+          "dy": -2,
+          "bend": -1
+        },
+        {
+          "hand": "handL",
+          "to": "backL",
+          "dx": -4,
+          "dy": -2,
+          "bend": -1
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Squat",
+      "cue": "Lower until your thighs are about level.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 42,
+        "hipL": -90,
+        "hipR": -90,
+        "kneeL": 104,
+        "kneeR": 104
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "backR",
+          "dx": -4,
+          "dy": -2,
+          "bend": -1
+        },
+        {
+          "hand": "handL",
+          "to": "backL",
+          "dx": -4,
+          "dy": -2,
+          "bend": -1
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "barbell",
+      "from": "handL",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-leg-pull-front",
+  "name": "Leg Pull Front",
+  "category": "Pilates",
+  "focus": "Core and shoulders",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "From a straight-arm plank, lift one straight leg a little way and lower it, keeping your hips and shoulders completely still.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Start in a straight-arm plank: hands under your shoulders, body in one line."
+  ],
+  "cues": [
+    "Don't let your hips sway or sag.",
+    "Lift from the glute, leg straight and long.",
+    "Easier: do it from a forearm plank or with knees down."
+  ],
+  "prescription": {
+    "reps": "5 each leg",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Plank",
+      "cue": "Body in one straight line.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 200,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 66,
+        "shoulderL": -66,
+        "shoulderR": -66,
+        "ankleL": 24,
+        "ankleR": 24
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lift your right leg",
+      "cue": "Raise your right leg, then lower it.",
+      "view": "side",
+      "durationMs": 1200,
+      "holdMs": 300,
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 66,
+        "shoulderL": -66,
+        "shoulderR": -66,
+        "ankleL": 24,
+        "ankleR": 24,
+        "hipR": 22
+      },
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

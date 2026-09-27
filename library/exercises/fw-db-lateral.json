@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-db-lateral",
+  "name": "Dumbbell Lateral Raise",
+  "category": "Strength",
+  "focus": "Shoulders",
+  "library": "Free weights",
+  "equipment": [
+    "Dumbbells"
+  ],
+  "description": "Raise the dumbbells out to your sides to shoulder height with a slight bend in your elbows, then lower slowly.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand tall with a light dumbbell in each hand by your sides."
+  ],
+  "cues": [
+    "Lead with your elbows.",
+    "Stop at shoulder height.",
+    "Lower more slowly than you lift."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Arms by your sides",
+      "cue": "Elbows soft.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -8,
+        "shoulderR": 8,
+        "elbowL": 10,
+        "elbowR": -10
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Raise",
+      "cue": "Lift your arms out to shoulder height.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -88,
+        "shoulderR": 88,
+        "elbowL": 10,
+        "elbowR": -10
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "fb"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "fb"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

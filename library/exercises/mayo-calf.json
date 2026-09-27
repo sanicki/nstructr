@@ -1,0 +1,115 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-calf",
+  "name": "Calf Stretch",
+  "category": "Stretch",
+  "focus": "Calves",
+  "library": "Stretches",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "Stretches the calf along the back of the lower leg: hands on a wall, one foot back with the heel down, bend the front knee.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Stand an arm's length from a wall or sturdy support.",
+    "Put your right foot behind your left."
+  ],
+  "cues": [
+    "Keep the back knee straight and the back heel on the floor.",
+    "Back straight, hips forward.",
+    "Point both feet straight ahead.",
+    "Deeper: bend the back knee slightly as you lean in."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Hands on the wall",
+      "cue": "Arms straight to the wall, right foot back.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 800,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "shoulderR": -90,
+        "hipR": 22
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Lean in",
+      "cue": "Bend your left knee forward, right heel down, back straight.",
+      "view": "side",
+      "durationMs": 2400,
+      "holdMs": 30000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "torso": 12,
+        "shoulderL": -95,
+        "shoulderR": -95,
+        "hipL": -30,
+        "kneeL": 42,
+        "hipR": 34
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "wall"
+        },
+        {
+          "hand": "handL",
+          "to": "wall"
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right calf",
+      "R": "Left calf"
+    }
+  },
+  "props": [
+    {
+      "type": "wall",
+      "at": "handR",
+      "keyframe": 0
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

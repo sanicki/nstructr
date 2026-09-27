@@ -1,0 +1,133 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "chair-hip-marching",
+  "name": "Seated Hip Marching",
+  "category": "Strength",
+  "focus": "Hips and thighs",
+  "library": "Chair-based",
+  "equipment": [
+    "Chair"
+  ],
+  "description": "Strengthens the hips and thighs from a chair: sitting tall and holding the sides of the seat, lift one knee, then place the foot down with control.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
+    "title": "NHS: sitting exercises (hip marching)",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Sit upright on a solid chair without leaning on its back.",
+    "Hold on to the sides of the seat."
+  ],
+  "cues": [
+    "Lift the knee only as far as is comfortable.",
+    "Put the foot down with control.",
+    "Alternate legs."
+  ],
+  "prescription": {
+    "reps": "5 each leg",
+    "note": "Build up the repetitions gradually. Do these exercises at least twice a week."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Hands on the sides of the seat, feet flat.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 500,
+      "anchor": "pelvis",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "kneeL": 90,
+        "kneeR": 90
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Lift your left knee",
+      "cue": "Raise your left knee with it bent, then lower the foot.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 400,
+      "anchor": "pelvis",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": -118,
+        "hipR": -90,
+        "kneeL": 108,
+        "kneeR": 90
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": 12,
+          "bend": -1
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "x": -12,
+      "back": "left"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

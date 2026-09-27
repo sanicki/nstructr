@@ -1,0 +1,65 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-mountain",
+  "name": "Mountain Pose",
+  "sanskrit": "Tadasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "The foundational standing pose: feet grounded, spine tall, arms by the sides.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/mountain-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand",
+      "cue": "Stand with the feet together.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 4,
+        "neck": 6
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Mountain Pose",
+      "cue": "Lift through the crown, relax the shoulders, palms forward.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -8,
+        "shoulderR": 8
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Spread the weight evenly through both feet.",
+    "Soften the knees slightly."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bw-glute-bridge",
+  "name": "Glute Bridge",
+  "category": "Strength",
+  "focus": "Glutes and hamstrings",
+  "library": "Bodyweight",
+  "equipment": [],
+  "description": "Strengthens the glutes: lying on your back with knees bent, squeeze your buttocks and lift your hips until your body is straight from knees to shoulders.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back, knees bent, feet flat and hip-width apart, arms by your sides."
+  ],
+  "cues": [
+    "Squeeze your glutes to lift, not your lower back.",
+    "Stop when your knees, hips and shoulders line up.",
+    "Lower one vertebra at a time."
+  ],
+  "prescription": {
+    "reps": "8–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, feet flat, arms by your sides.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 400,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "hipL": -58,
+        "hipR": -58,
+        "kneeL": 125,
+        "kneeR": 125
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lift your hips",
+      "cue": "Squeeze your glutes and lift.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "anchor": "neckBase",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "root": -150,
+        "chest": 50,
+        "neck": 50,
+        "hipL": -5,
+        "hipR": -5,
+        "kneeL": 115,
+        "kneeR": 115,
+        "shoulderL": 5,
+        "shoulderR": 5
+      },
+      "keep": [
+        "ankleL",
+        "ankleR",
+        "handL",
+        "handR"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

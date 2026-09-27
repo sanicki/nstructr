@@ -1,0 +1,87 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-db-rdl",
+  "name": "Dumbbell Romanian Deadlift",
+  "category": "Strength",
+  "focus": "Hamstrings and glutes",
+  "library": "Free weights",
+  "equipment": [
+    "Dumbbells"
+  ],
+  "description": "A hip hinge: with soft knees, push your hips back and lower the dumbbells down the front of your legs, then stand up by driving your hips forward.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand with the dumbbells in front of your thighs, feet hip-width apart."
+  ],
+  "cues": [
+    "Push your hips back rather than bending your knees.",
+    "Keep your back flat and the weights close to your legs.",
+    "Lower until you feel your hamstrings stretch, then stand up."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Weights in front of your thighs.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -8,
+        "shoulderR": -8
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Hinge",
+      "cue": "Push your hips back and lower the weights down your legs.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 72,
+        "hipL": -18,
+        "hipR": -18,
+        "kneeL": 22,
+        "kneeR": 22,
+        "shoulderL": -80,
+        "shoulderR": -80
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-it-band",
+  "name": "Iliotibial Band Stretch",
+  "category": "Stretch",
+  "focus": "Outer hip and thigh",
+  "library": "Stretches",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "Stretches the band of tissue along the outside of the hip and thigh: cross one ankle over the other and reach that arm overhead toward the other side.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Stand near a wall or sturdy support for balance.",
+    "Cross your left leg over your right at the ankle."
+  ],
+  "cues": [
+    "Reach up and over toward your right side.",
+    "You'll feel it along the outside of your left hip.",
+    "Keep your weight steady; use the wall."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Cross your ankles",
+      "cue": "Left leg crossed over the right at the ankle, right hand on the wall.",
+      "view": "front",
+      "durationMs": 1800,
+      "holdMs": 800,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "hipL": 9,
+        "hipR": -3,
+        "shoulderR": 80,
+        "shoulderL": -360
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Reach over",
+      "cue": "Reach your left arm overhead toward your right side.",
+      "view": "front",
+      "durationMs": 2400,
+      "holdMs": 30000,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "hipL": 9,
+        "hipR": -3,
+        "torso": -12,
+        "chest": -12,
+        "shoulderL": -185,
+        "elbowL": -10,
+        "shoulderR": 80
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "wall"
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left hip",
+      "R": "Right hip"
+    }
+  },
+  "props": [
+    {
+      "type": "wall",
+      "at": "handR",
+      "keyframe": 0
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

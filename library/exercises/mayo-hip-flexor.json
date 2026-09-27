@@ -1,0 +1,121 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-hip-flexor",
+  "name": "Hip Flexor Stretch",
+  "category": "Stretch",
+  "focus": "Hip flexors",
+  "library": "Stretches",
+  "equipment": [
+    "Towel"
+  ],
+  "description": "Stretches the front of the hip: kneel on one knee with the other foot forward, then shift your weight forward with a straight back.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Kneel on your right knee, with a folded towel under it if you like.",
+    "Left foot in front, knee bent, left hand on your left leg.",
+    "Right hand on your right hip so you don't bend at the waist."
+  ],
+  "cues": [
+    "Keep your back straight and your stomach tight.",
+    "Lean forward from the hips, not the waist.",
+    "You'll feel it in the front of the right thigh."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Half kneel",
+      "cue": "Right knee down, left foot forward, hands on thigh and hip.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 800,
+      "anchor": "kneeR",
+      "plant": [
+        "L"
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleR": 90
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": -18,
+          "dy": -4
+        },
+        {
+          "hand": "handR",
+          "to": "hipR",
+          "dy": -10,
+          "bend": 1
+        }
+      ],
+      "phase": "setup"
+    },
+    {
+      "name": "Lean forward",
+      "cue": "Shift your weight onto the front leg.",
+      "view": "side",
+      "durationMs": 2400,
+      "holdMs": 30000,
+      "anchor": "kneeR",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "hipL": -100,
+        "kneeL": 68,
+        "hipR": 28,
+        "kneeR": 62,
+        "ankleR": 90
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": -18,
+          "dy": -4
+        },
+        {
+          "hand": "handR",
+          "to": "hipR",
+          "dy": -10,
+          "bend": 1
+        }
+      ],
+      "keep": [
+        "ankleL"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right hip",
+      "R": "Left hip"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

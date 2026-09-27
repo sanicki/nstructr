@@ -1,0 +1,180 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "band-wall-sit-pull-apart",
+  "name": "Wall Sit + Pull-Apart",
+  "category": "Strength",
+  "focus": "Thighs, upper back and shoulders",
+  "library": "Resistance band",
+  "equipment": [
+    "Resistance band",
+    "Wall"
+  ],
+  "description": "A combination hold: sit in a 90° squat against a wall, and while you hold it, do band pull-aparts at chest height, squeezing your shoulder blades.",
+  "source": {
+    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand with your back against a wall and walk your feet forward.",
+    "Hold a band at chest height with straight arms, hands shoulder-width apart.",
+    "Slide down into a 90° squat: thighs about level, knees over ankles."
+  ],
+  "cues": [
+    "Keep your whole back on the wall through the hold.",
+    "Pull the band outward until it touches your chest, squeezing your shoulder blades together.",
+    "Return under control; keep your arms straight.",
+    "Breathe steadily; don't hold your breath."
+  ],
+  "prescription": {
+    "reps": "12–15 pull-aparts during one hold",
+    "note": "Do 12 to 15 pull-aparts while you hold the wall sit, then stand up and rest."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Back to the wall",
+      "cue": "Feet forward, band held out in front at chest height.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "hipL": -30,
+        "hipR": -30,
+        "shoulderL": -90,
+        "shoulderR": -90
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Slide down",
+      "cue": "Slide down into a 90° wall sit.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderL": -90,
+        "shoulderR": -90
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Arms forward",
+      "cue": "Hold the sit; arms straight, hands shoulder-width.",
+      "view": "front",
+      "durationMs": 1400,
+      "holdMs": 200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "thighDepthL": 86,
+        "thighDepthR": 86,
+        "shoulderL": -90,
+        "shoulderR": 90,
+        "armDepthL": 86,
+        "armDepthR": 86,
+        "forearmDepthL": 86,
+        "forearmDepthR": 86
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Pull apart",
+      "cue": "Pull the band out to your chest and squeeze your shoulder blades.",
+      "view": "front",
+      "durationMs": 1200,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "thighDepthL": 86,
+        "thighDepthR": 86,
+        "shoulderL": -90,
+        "shoulderR": 90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Return",
+      "cue": "Bring your hands back together under control.",
+      "view": "front",
+      "durationMs": 1500,
+      "holdMs": 100,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "thighDepthL": 86,
+        "thighDepthR": 86,
+        "shoulderL": -90,
+        "shoulderR": 90,
+        "armDepthL": 86,
+        "armDepthR": 86,
+        "forearmDepthL": 86,
+        "forearmDepthR": 86
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Stand up",
+      "cue": "When the set is done, turn and slide back up the wall.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "hipL": -30,
+        "hipR": -30,
+        "shoulderL": -90,
+        "shoulderR": -90
+      },
+      "phase": "finish"
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "handL",
+      "to": "handR",
+      "layer": "front",
+      "restLength": 110
+    },
+    {
+      "type": "wall",
+      "at": "backL",
+      "keyframe": 1,
+      "offset": -6,
+      "view": "side"
+    }
+  ],
+  "repName": "pull-apart",
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

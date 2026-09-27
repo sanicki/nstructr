@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bhf-bicep-curl",
+  "name": "Band Bicep Curl",
+  "category": "Strength",
+  "focus": "Arms",
+  "library": "Resistance band",
+  "equipment": [
+    "Resistance band"
+  ],
+  "description": "Strengthens the front of the upper arms: with the band under your feet, curl your hands up to your shoulders, elbows at your sides.",
+  "source": {
+    "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
+    "title": "British Heart Foundation: resistance band exercises",
+    "note": "Standing version. The article also shows each exercise seated on a chair."
+  },
+  "setup": [
+    "Stand with your feet hip-width apart on the middle of the band.",
+    "Hold an end in each hand, arms straight down by your sides."
+  ],
+  "cues": [
+    "Keep your elbows next to your sides.",
+    "Palms face up as you curl.",
+    "Lower slowly.",
+    "Easier: curl one arm at a time."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
+  },
+  "facing": "right",
+  "props": [
+    {
+      "type": "band",
+      "from": "footL",
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": "footR",
+      "to": "handR"
+    }
+  ],
+  "keyframes": [
+    {
+      "name": "Arms down",
+      "cue": "Arms straight by your sides holding the band.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "rep"
+    },
+    {
+      "name": "Curl",
+      "cue": "Curl your hands up to your shoulders, palms up.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -8,
+        "shoulderR": -8,
+        "elbowL": -145,
+        "elbowR": -145
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

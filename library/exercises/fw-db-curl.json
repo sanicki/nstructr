@@ -1,0 +1,83 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-db-curl",
+  "name": "Dumbbell Biceps Curl",
+  "category": "Strength",
+  "focus": "Front of the upper arms",
+  "library": "Free weights",
+  "equipment": [
+    "Dumbbells"
+  ],
+  "description": "With your arms by your sides, curl the dumbbells up to your shoulders by bending your elbows, then lower slowly.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
+    "title": "NHS: strength exercises (biceps curls)",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Stand with your feet hip-width apart, a light dumbbell in each hand (filled water bottles work too), palms facing forward."
+  ],
+  "cues": [
+    "Keep your elbows by your sides.",
+    "Don't swing your body to lift.",
+    "Lower slowly. You can also do this sitting down."
+  ],
+  "prescription": {
+    "reps": "3 sets of 5 each arm",
+    "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Arms down",
+      "cue": "Weights by your sides.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "rep"
+    },
+    {
+      "name": "Curl",
+      "cue": "Bend your elbows to bring the weights to your shoulders.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -6,
+        "shoulderR": -6,
+        "elbowL": -140,
+        "elbowR": -140
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  },
+  "repName": "rep"
+}

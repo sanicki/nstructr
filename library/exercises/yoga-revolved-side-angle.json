@@ -1,0 +1,80 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-revolved-side-angle",
+  "name": "Revolved Side Angle Pose",
+  "sanskrit": "Parivrtta Parsvakonasana",
+  "category": "Standing",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Lunging twist with the opposite elbow hooked outside the front knee.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/revolved-side-angle-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "phase": "setup"
+    },
+    {
+      "name": "Revolved Side Angle",
+      "cue": "Lunge on the right leg, hook the left elbow outside the knee, and twist.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleR",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": 60,
+        "hipR": -85,
+        "kneeR": 85,
+        "hipL": 55,
+        "shoulderL": -30,
+        "shoulderR": -30,
+        "elbowL": -110,
+        "elbowR": -110
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Keep the front knee over the ankle.",
+    "Lengthen before each twist."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "anchorX": 40,
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

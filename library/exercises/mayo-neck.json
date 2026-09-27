@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-neck",
+  "name": "Neck Stretch",
+  "category": "Stretch",
+  "focus": "Neck",
+  "library": "Stretches",
+  "equipment": [],
+  "description": "Gentle neck stretch: tip your head forward and slightly to one side, and let that hand add a light pull.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Sit or stand tall with your shoulders relaxed."
+  ],
+  "cues": [
+    "Pull gently; it should feel easy.",
+    "You'll feel it along the back of the opposite side of your neck.",
+    "Keep your shoulders down."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit or stand tall",
+      "cue": "Shoulders relaxed.",
+      "view": "front",
+      "durationMs": 1600,
+      "holdMs": 800,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -4,
+        "shoulderR": 4
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Tilt and pull gently",
+      "cue": "Bend your head forward and slightly right, right hand gently drawing it down.",
+      "view": "front",
+      "durationMs": 2000,
+      "holdMs": 30000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "neck": -28,
+        "shoulderL": -4,
+        "shoulderR": 120
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": -10,
+          "dy": -12
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side of neck",
+      "R": "Right side of neck"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

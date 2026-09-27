@@ -1,0 +1,92 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-side-crow",
+  "name": "Side Crow Pose",
+  "sanskrit": "Parsva Bakasana",
+  "category": "Arm Balance",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Twisted arm balance with both knees stacked on one arm.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/side-crane-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Squat",
+      "cue": "Squat low with the hands on the floor in front.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 900,
+      "anchor": "handR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "torso": 55,
+        "hipL": -110,
+        "hipR": -110,
+        "kneeL": 140,
+        "kneeR": 140,
+        "shoulderL": -55,
+        "shoulderR": -55
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Side Crow",
+      "cue": "Twist, set the knees on one arm, and lean forward to lift the feet.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "handR",
+      "pose": {
+        "torso": 73,
+        "neck": -20,
+        "shoulderL": -53,
+        "shoulderR": -53,
+        "elbowL": -28,
+        "elbowR": -28,
+        "hipL": -87,
+        "hipR": -87,
+        "kneeL": 160,
+        "kneeR": 160,
+        "ankleL": 60,
+        "ankleR": 60
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Look forward.",
+    "Keep the elbows hugging in."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

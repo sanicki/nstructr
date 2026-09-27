@@ -1,0 +1,74 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-hundred",
+  "name": "The Hundred",
+  "category": "Pilates",
+  "focus": "Deep core",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "The classic Pilates warm-up: head and shoulders curled up, legs raised, pump your straight arms up and down in small beats while you breathe.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie on your back and draw your knees in.",
+    "Curl your head and shoulders off the mat and extend your legs to about 45°.",
+    "Reach your arms long by your hips, just off the mat."
+  ],
+  "cues": [
+    "Breathe in for 5 pumps and out for 5; ten breaths makes 100.",
+    "Keep your lower back on the mat; raise your legs higher if it lifts.",
+    "Easier: keep your knees bent over your hips."
+  ],
+  "prescription": {
+    "reps": "100 pumps (10 breaths)",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Pump up",
+      "cue": "Small beat up.",
+      "view": "side",
+      "durationMs": 450,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "hipL": -45,
+        "hipR": -45,
+        "shoulderL": -40,
+        "shoulderR": -40
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Pump down",
+      "cue": "Small beat down.",
+      "view": "side",
+      "durationMs": 450,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "chest": 32,
+        "neck": 44,
+        "hipL": -45,
+        "hipR": -45,
+        "shoulderL": -30,
+        "shoulderR": -30
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 100
+  },
+  "repName": "pump"
+}

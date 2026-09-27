@@ -1,0 +1,118 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-half-roll-back",
+  "name": "Half Roll-Back",
+  "category": "Pilates",
+  "focus": "Abdominals and spine",
+  "library": "Pilates",
+  "equipment": [
+    "Mat",
+    "Resistance band"
+  ],
+  "description": "Sitting tall with knees bent, curve your spine into a C and roll back part-way until your arms straighten, then scoop your abs to come back up.",
+  "source": {
+    "note": "From your full-body routine, described in our own words. Stick-figure approximation."
+  },
+  "setup": [
+    "Sit tall with your knees bent and feet flat.",
+    "Hold a band wrapped behind your thighs (or your thighs themselves) for light support."
+  ],
+  "cues": [
+    "Tuck your tailbone and make a smooth C shape.",
+    "Roll back only until your arms are straight.",
+    "Use your stomach, not your arms, to come back up."
+  ],
+  "prescription": {
+    "reps": "8–10",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Knees bent, feet flat, band around your thighs.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 300,
+      "anchor": "pelvis",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "torso": 2,
+        "hipL": -120,
+        "hipR": -120,
+        "kneeL": 112,
+        "kneeR": 112
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dx": -26,
+          "dy": 10
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": -26,
+          "dy": 10
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Roll back",
+      "cue": "Curve into a C and roll back until your arms straighten.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 600,
+      "anchor": "pelvis",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "root": -34,
+        "torso": -6,
+        "chest": 34,
+        "neck": 30,
+        "hipL": -86,
+        "hipR": -86,
+        "kneeL": 112,
+        "kneeR": 112
+      },
+      "keep": [
+        "ankleL",
+        "ankleR"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "handR",
+      "to": "kneeR",
+      "restLength": 34,
+      "layer": "front"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

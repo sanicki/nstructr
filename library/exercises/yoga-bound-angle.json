@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-bound-angle",
+  "name": "Bound Angle Pose",
+  "sanskrit": "Baddha Konasana",
+  "category": "Forward Bend",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Seated hip opener with the soles of the feet together and the knees dropping out to the sides.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/bound-angle-pose-2/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": 270,
+        "shoulderL": 20,
+        "shoulderR": 20,
+        "kneeR": -360
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Bound Angle Pose",
+      "cue": "Bring the soles together and let the knees fall open.",
+      "view": "front",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -100,
+        "hipR": 100,
+        "kneeL": -185,
+        "kneeR": -175,
+        "shoulderL": -14,
+        "shoulderR": 14,
+        "elbowL": 6,
+        "elbowR": -6
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Hold the feet and sit up tall.",
+    "Let the knees release without forcing them down."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

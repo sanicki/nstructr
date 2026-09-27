@@ -1,0 +1,91 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-bb-press",
+  "name": "Barbell Overhead Press",
+  "category": "Strength",
+  "focus": "Shoulders and arms",
+  "library": "Free weights",
+  "equipment": [
+    "Barbell"
+  ],
+  "description": "Press the bar from the front of your shoulders to straight overhead, moving your head back slightly to let it pass.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand with the bar resting across the front of your shoulders, hands just outside shoulder-width.",
+    "Feet hip-width apart, stomach braced."
+  ],
+  "cues": [
+    "Squeeze your glutes so your back doesn't arch.",
+    "Press straight up, then bring your head through.",
+    "Lower to your shoulders with control."
+  ],
+  "prescription": {
+    "reps": "5–8",
+    "note": "Warm up with lighter sets first. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Bar at your shoulders",
+      "cue": "Elbows slightly in front of the bar.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 14,
+          "dy": 4
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": 14,
+          "dy": 4
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Press",
+      "cue": "Press the bar straight overhead.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -178,
+        "shoulderR": -178,
+        "elbowL": -2,
+        "elbowR": -2
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "barbell",
+      "from": "handL",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,92 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-marichi-3",
+  "name": "Pose Dedicated to the Sage Marichi III",
+  "sanskrit": "Marichyasana III",
+  "category": "Hip-Opening",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Seated twist with one knee up and the torso turning toward it.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/marichi-s-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Marichyasana III",
+      "cue": "Bend the right knee, hook the left elbow outside it, and twist right.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "plant": [
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -140,
+        "kneeR": 140,
+        "shoulderL": -45,
+        "elbowL": -90,
+        "shoulderR": 40
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Sit tall on both sit bones.",
+    "Twist on the exhale."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

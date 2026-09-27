@@ -1,0 +1,79 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-forearm-balance",
+  "name": "Feathered Peacock Pose",
+  "sanskrit": "Pincha Mayurasana",
+  "category": "Inversion",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Forearm balance with the legs stacked over the shoulders.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/feathered-peacock-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Dolphin",
+      "cue": "Forearms down, lift the hips high.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 1000,
+      "anchor": "elbowR",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": 135,
+        "shoulderL": 225,
+        "shoulderR": 225,
+        "elbowL": -90,
+        "elbowR": -90,
+        "hipL": 30,
+        "hipR": 30
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Forearm Balance",
+      "cue": "Walk in, kick up, and balance on the forearms.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "pose": {
+        "root": 180,
+        "neck": -70,
+        "shoulderL": 180,
+        "shoulderR": 180,
+        "elbowL": -90,
+        "elbowR": -90
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Press the forearms down.",
+    "Practice near a wall."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

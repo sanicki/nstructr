@@ -1,0 +1,73 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-seated-forward-bend",
+  "name": "Seated Forward Bend",
+  "sanskrit": "Paschimottanasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Seated fold over both straight legs.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/seated-forward-bend/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Seated Forward Bend",
+      "cue": "Hinge from the hips and reach for the feet.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "pelvis",
+      "pose": {
+        "torso": 72,
+        "neck": 15,
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": -152,
+        "shoulderR": -152
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Lead with the chest.",
+    "Bend the knees if the back rounds."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

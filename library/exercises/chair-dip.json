@@ -1,0 +1,118 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "chair-dip",
+  "name": "Chair Dip",
+  "category": "Strength",
+  "focus": "Backs of the arms",
+  "library": "Chair-based",
+  "equipment": [
+    "Chair"
+  ],
+  "description": "Strengthens the triceps: hands on the front edge of a chair seat behind you, bend your elbows to lower your hips, then press back up.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Use a sturdy chair that can't slide, ideally with its back against a wall.",
+    "Sit on the front edge, hands beside your hips gripping the edge.",
+    "Walk your feet forward and slide your hips off the seat."
+  ],
+  "cues": [
+    "Keep your hips close to the chair.",
+    "Lower until your elbows are bent to about 90°, or less if that's too much.",
+    "Press through your palms to straighten your arms.",
+    "Easier: keep your feet closer to the chair."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Arms straight",
+      "cue": "Hips just in front of the seat, arms straight.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 300,
+      "anchor": "handR",
+      "anchorX": -30,
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": 4,
+        "hipL": -90,
+        "hipR": -90,
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderL": 6,
+        "shoulderR": 6
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Lower",
+      "cue": "Bend your elbows and lower your hips.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "handR",
+      "anchorX": -30,
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "torso": 4,
+        "hipL": -110,
+        "hipR": -110,
+        "kneeL": 150,
+        "kneeR": 150,
+        "shoulderL": 86,
+        "shoulderR": 86,
+        "elbowL": -90,
+        "elbowR": -90
+      },
+      "keep": [
+        "ankleL",
+        "ankleR"
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "x": -60,
+      "back": "left"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

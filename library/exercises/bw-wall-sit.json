@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "bw-wall-sit",
+  "name": "Wall Sit",
+  "category": "Strength",
+  "focus": "Thighs",
+  "library": "Bodyweight",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "An isometric leg exercise: with your back flat against a wall, slide down until your thighs are about level with the floor and hold.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Stand with your back against a wall and walk your feet about two feet forward."
+  ],
+  "cues": [
+    "Knees stay over your ankles, not past your toes.",
+    "Keep your whole back against the wall.",
+    "Go only as low as is comfortable; a higher sit is still useful."
+  ],
+  "prescription": {
+    "reps": "Hold 20–30 s, 2–3 times",
+    "note": "Breathe steadily throughout; don't hold your breath."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Back to the wall",
+      "cue": "Feet forward, back flat on the wall.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 500,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "hipL": -30,
+        "hipR": -30
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Slide down and hold",
+      "cue": "Slide down until your thighs are about level, then hold.",
+      "view": "side",
+      "durationMs": 2500,
+      "holdMs": 20000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "kneeL": 90,
+        "kneeR": 90
+      },
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "backL",
+      "keyframe": 1,
+      "offset": -6
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 20
+  },
+  "repName": "rep"
+}

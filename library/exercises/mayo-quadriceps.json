@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "mayo-quadriceps",
+  "name": "Quadriceps Stretch",
+  "category": "Stretch",
+  "focus": "Front of thigh",
+  "library": "Stretches",
+  "equipment": [
+    "Wall"
+  ],
+  "description": "Stretches the front of the thigh standing: hold one ankle and draw the heel up and back, a hand on a wall for balance.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
+    "title": "Mayo Clinic: A guide to basic stretches",
+    "note": "Stick-figure approximation."
+  },
+  "setup": [
+    "Stand near a wall or sturdy support."
+  ],
+  "cues": [
+    "Keep your knees close together.",
+    "Tighten your stomach so it doesn't sag forward.",
+    "Pull gently until you feel it in the front of the thigh."
+  ],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Hand on the wall",
+      "cue": "Stand tall with your left hand on the wall.",
+      "view": "side",
+      "durationMs": 1600,
+      "holdMs": 800,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -90
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Hold your ankle",
+      "cue": "Grasp your right ankle and draw the heel up and back.",
+      "view": "side",
+      "durationMs": 2200,
+      "holdMs": 30000,
+      "anchor": "ankleL",
+      "plant": [
+        "L"
+      ],
+      "pose": {
+        "shoulderL": -90,
+        "hipR": 5,
+        "kneeR": 150,
+        "ankleR": 20,
+        "shoulderR": 40
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR",
+          "bend": 1
+        },
+        {
+          "hand": "handL",
+          "to": "wall"
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right thigh",
+      "R": "Left thigh"
+    }
+  },
+  "props": [
+    {
+      "type": "wall",
+      "at": "handL",
+      "keyframe": 0
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

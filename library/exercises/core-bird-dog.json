@@ -1,0 +1,94 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "core-bird-dog",
+  "name": "Bird Dog",
+  "category": "Core",
+  "focus": "Core and lower back",
+  "library": "Core",
+  "equipment": [],
+  "description": "A stability exercise on hands and knees: reach one arm forward and the opposite leg back, hold, and return without twisting.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Start on hands and knees: hands under shoulders, knees under hips."
+  ],
+  "cues": [
+    "Keep your back flat and hips level.",
+    "Reach long rather than high.",
+    "Move slowly; pause at the top."
+  ],
+  "prescription": {
+    "reps": "6–10 each side",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Hands and knees",
+      "cue": "Back flat.",
+      "view": "side",
+      "durationMs": 1800,
+      "holdMs": 400,
+      "anchor": "handL",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": 75,
+        "hipL": -75,
+        "hipR": -75,
+        "kneeL": 90,
+        "kneeR": 90,
+        "ankleL": 90,
+        "ankleR": 90,
+        "shoulderL": -75,
+        "shoulderR": -75
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Reach and extend",
+      "cue": "Reach your right arm forward and your left leg back.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 2000,
+      "anchor": "handL",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "root": 75,
+        "hipL": 15,
+        "hipR": -75,
+        "kneeR": 90,
+        "ankleR": 90,
+        "shoulderL": -75,
+        "shoulderR": -165
+      },
+      "phase": "rep"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right arm, left leg",
+      "R": "Left arm, right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  },
+  "repName": "rep"
+}

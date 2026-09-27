@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-wide-standing-forward-bend",
+  "name": "Wide-Legged Standing Forward Bend",
+  "sanskrit": "Prasarita Padottanasana",
+  "category": "Beginner",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Wide stance folding forward with the hands on the floor.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/wide-legged-forward-bend/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "view": "side",
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "shoulderL": -360,
+        "shoulderR": -360
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Wide-Legged Forward Bend",
+      "cue": "Step the feet wide and fold forward, hands to the floor.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": 165,
+        "neck": 10,
+        "shoulderL": -180,
+        "shoulderR": -180
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Feet wide, toes turned slightly in.",
+    "Draw the shoulders away from the ears."
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,106 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "fw-goblet-squat",
+  "name": "Goblet Squat",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "library": "Free weights",
+  "equipment": [
+    "Dumbbell"
+  ],
+  "description": "A squat holding one dumbbell upright against your chest, which helps keep your chest up and your balance forward.",
+  "source": {
+    "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Hold one end of a dumbbell with both hands, upright against your chest.",
+    "Feet a little wider than hip-width."
+  ],
+  "cues": [
+    "Sit your hips back and down between your heels.",
+    "Keep your chest up and the weight close.",
+    "Knees follow your toes."
+  ],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Dumbbell at your chest.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 300,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {},
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": 24
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": 24
+        }
+      ],
+      "phase": "rep"
+    },
+    {
+      "name": "Squat",
+      "cue": "Lower as far as is comfortable.",
+      "view": "side",
+      "durationMs": 2000,
+      "holdMs": 400,
+      "anchor": "ankleL",
+      "plant": [
+        "L",
+        "R"
+      ],
+      "pose": {
+        "torso": 26,
+        "hipL": -92,
+        "hipR": -92,
+        "kneeL": 108,
+        "kneeR": 108
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": 24
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": 24
+        }
+      ],
+      "phase": "rep"
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "ud"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

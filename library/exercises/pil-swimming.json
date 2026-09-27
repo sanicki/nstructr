@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "pil-swimming",
+  "name": "Swimming",
+  "category": "Pilates",
+  "focus": "Back and glutes",
+  "library": "Pilates",
+  "equipment": [
+    "Mat"
+  ],
+  "description": "Lying face down with arms and legs lifted, flutter opposite arm and leg up and down as if swimming.",
+  "source": {
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": [
+    "Lie face down with your arms reaching overhead and legs long.",
+    "Lift your head, chest, arms and legs slightly off the mat."
+  ],
+  "cues": [
+    "Reach long through your fingers and toes.",
+    "Keep your neck long, looking down.",
+    "Small, quick beats with steady breathing."
+  ],
+  "prescription": {
+    "reps": "20–30 beats",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Right arm, left leg up",
+      "cue": "Lift your right arm and left leg.",
+      "view": "side",
+      "durationMs": 500,
+      "holdMs": 50,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "torso": -12,
+        "neck": -12,
+        "shoulderR": -168,
+        "shoulderL": -180,
+        "hipL": 14,
+        "hipR": 4,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "rep"
+    },
+    {
+      "name": "Left arm, right leg up",
+      "cue": "Switch.",
+      "view": "side",
+      "durationMs": 500,
+      "holdMs": 50,
+      "anchor": "pelvis",
+      "pose": {
+        "root": 90,
+        "torso": -12,
+        "neck": -12,
+        "shoulderL": -168,
+        "shoulderR": -180,
+        "hipR": 14,
+        "hipL": 4,
+        "ankleL": 90,
+        "ankleR": 90
+      },
+      "phase": "rep"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 20
+  },
+  "repName": "rep"
+}

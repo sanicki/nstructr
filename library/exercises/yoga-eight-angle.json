@@ -1,0 +1,79 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 1,
+  "id": "yoga-eight-angle",
+  "name": "Eight-Angle Pose",
+  "sanskrit": "Astavakrasana",
+  "category": "Arm Balance",
+  "library": "Yoga poses",
+  "equipment": [
+    "Yoga mat"
+  ],
+  "description": "Arm balance with the legs crossed and extended to one side of the bent arms.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/eight-angle-pose/",
+    "title": "Yoga Journal Pose Library",
+    "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
+  },
+  "facing": "right",
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall with the legs straight out in front.",
+      "view": "side",
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "hipL": -90,
+        "hipR": -90,
+        "shoulderL": 20,
+        "shoulderR": 20
+      },
+      "phase": "setup"
+    },
+    {
+      "name": "Eight-Angle Pose",
+      "cue": "Hook the legs over one arm, lean forward, and lift.",
+      "view": "side",
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "pose": {
+        "torso": 80,
+        "shoulderL": -10,
+        "shoulderR": -10,
+        "elbowL": -70,
+        "elbowR": -70,
+        "hipL": -85,
+        "hipR": -85
+      },
+      "phase": "rep"
+    }
+  ],
+  "cues": [
+    "Squeeze the legs around the arm.",
+    "Lean forward to lift the hips."
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

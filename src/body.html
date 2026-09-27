@@ -1,0 +1,308 @@
+<body>
+<div class="shell">
+  <!-- Navigation rail (wide screens) -->
+  <nav class="rail" aria-label="Main">
+    <svg class="brand-mark" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="5" r="3.2" fill="var(--md-primary)"/><path d="M14 9v8M14 17l-5 8M14 17l6 7M14 11l-6 4M14 11l6-3" stroke="var(--md-primary)" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>
+    <div class="rail-items">
+      <a class="nav-item" href="#/workouts" data-nav="workouts"><span class="pill"><span class="icon">fitness_center</span></span><span class="label">Workouts</span></a>
+      <a class="nav-item" href="#/explore" data-nav="explore"><span class="pill"><span class="icon">explore</span></span><span class="label">Explore</span></a>
+    <a class="nav-item" href="#/saved" data-nav="saved"><span class="pill"><span class="icon">bookmarks</span></span><span class="label">Saved</span></a>
+      <a class="nav-item" href="#/create" data-nav="create"><span class="pill"><span class="icon">edit_note</span></span><span class="label">Create</span></a>
+    </div>
+    <button class="icon-btn stateful theme-btn" title="Switch theme" aria-label="Switch theme"><span class="icon">dark_mode</span></button>
+  </nav>
+
+  <div class="main">
+    <header class="top-app-bar" id="appBar">
+      <button class="icon-btn stateful" id="backBtn" aria-label="Back" hidden><span class="icon">arrow_back</span></button>
+      <svg class="brand-mark bar-brand" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="5" r="3.2" fill="var(--md-primary)"/><path d="M14 9v8M14 17l-5 8M14 17l6 7M14 11l-6 4M14 11l6-3" stroke="var(--md-primary)" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>
+      <h1 class="title-large" id="barTitle">NstructR</h1>
+      <button class="icon-btn stateful" id="saveBtn" aria-label="Save to my exercises" title="Save" hidden><span class="icon">bookmark_add</span></button>
+      <button class="icon-btn stateful theme-btn bar-theme" title="Switch theme" aria-label="Switch theme"><span class="icon">dark_mode</span></button>
+    </header>
+
+    <!-- ===== Explore ===== -->
+    <section class="view" id="view-explore" aria-label="Explore exercises">
+      <div class="explore-head">
+        <label class="search"><span class="icon">search</span>
+          <input id="search" type="search" placeholder="Search exercises, muscles, equipment" autocomplete="off" aria-label="Search exercises">
+          <button class="icon-btn stateful" id="clearSearch" aria-label="Clear search" hidden><span class="icon">close</span></button></label>
+        <div class="filters" id="fCollection" role="group" aria-label="Collection"></div>
+        <div class="filters" id="fMore" role="group" aria-label="Type and equipment"></div>
+      </div>
+      <div id="exploreBody"></div>
+    </section>
+
+    <!-- ===== Saved ===== -->
+    <section class="view" id="view-saved" aria-label="Saved exercises">
+      <div class="page-head">
+        <p class="body-medium muted" id="savedCount" style="margin:0"></p>
+        <div class="row"><button class="btn tonal stateful" data-act="import"><span class="icon">upload_file</span>Import</button></div>
+      </div>
+      <ul class="item-list" id="savedList"></ul>
+    </section>
+
+    <!-- ===== Create ===== -->
+    <section class="view" id="view-create" aria-label="Create exercises">
+      <div class="create-grid">
+        <article class="card">
+          <span class="icon big">upload_file</span>
+          <h2 class="title-medium">Import a file</h2>
+          <p class="muted">Add exercises or workouts from a JSON file. You can also drop a file anywhere on this page.</p>
+          <div class="row"><button class="btn filled stateful" data-act="import"><span class="icon">upload_file</span>Choose file</button>
+          <button class="btn text stateful" data-act="paste">Paste JSON</button></div>
+        </article>
+        <article class="card">
+          <span class="icon big">auto_awesome</span>
+          <h2 class="title-medium">Make one from a video</h2>
+          <p class="muted">Copy this prompt into an AI model that can watch videos (such as Gemini), add a video link, and import the JSON it writes.</p>
+          <div class="row"><button class="btn filled stateful" data-act="copyPrompt"><span class="icon">content_copy</span>Copy prompt</button>
+          <button class="btn text stateful" data-act="showPrompt">Read it</button></div>
+        </article>
+        <article class="card">
+          <span class="icon big">playlist_add</span>
+          <h2 class="title-medium">Turn a written routine into a workout</h2>
+          <p class="muted">Copy this prompt into an AI model, paste your routine where it says, and import the workout it writes. The prompt lists every exercise in the library so it can match them.</p>
+          <div class="row"><button class="btn filled stateful" data-act="copyRoutinePrompt"><span class="icon">content_copy</span>Copy prompt</button>
+          <button class="btn text stateful" data-act="showRoutinePrompt">Read it</button></div>
+        </article>
+        <article class="card">
+          <span class="icon big">download</span>
+          <h2 class="title-medium">Export your exercises</h2>
+          <p class="muted">Get the JSON for everything in Saved, to back it up or share it.</p>
+          <div class="row"><button class="btn tonal stateful" data-act="exportAll"><span class="icon">data_object</span>Show JSON</button></div>
+        </article>
+      </div>
+      <details class="card format-card"><summary class="stateful"><span class="icon">menu_book</span><span class="title-medium">JSON format reference</span><span class="icon chev">expand_more</span></summary>
+        <div class="body body-small" id="formatRef"></div></details>
+    </section>
+
+    <!-- ===== Workouts ===== -->
+    <section class="view" id="view-workouts" aria-label="Workouts">
+      <div id="resumeSlot"></div>
+      <div class="page-head">
+        <p class="body-medium muted" id="wkCount" style="margin:0"></p>
+        <div class="row"><button class="btn text stateful" data-act="import"><span class="icon">upload_file</span>Import</button>
+          <button class="btn filled stateful" data-wact="new"><span class="icon">add</span>New workout</button></div>
+      </div>
+      <div class="wk-grid" id="wkList"></div>
+      <section class="section" aria-labelledby="histTitle">
+        <div class="section-head"><h2 class="title-medium" id="histTitle">History</h2>
+          <div class="row" id="historyActions"><button class="btn text stateful" data-wact="exportLog"><span class="icon">data_object</span>Export</button><button class="btn text stateful" data-wact="clearLog">Clear</button></div></div>
+        <ul class="item-list" id="historyList"></ul>
+      </section>
+    </section>
+
+    <!-- ===== Workout editor ===== -->
+    <section class="view" id="view-workout" aria-label="Edit workout">
+      <div class="wk-head">
+        <label class="field"><span class="field-label">Workout name</span><input id="wkName" type="text" maxlength="80" autocomplete="off"></label>
+        <div class="wk-summary" id="wkSummary"></div>
+        <div class="row">
+          <button class="btn filled stateful" data-wact="start"><span class="icon fill">play_arrow</span>Start</button>
+          <button class="btn tonal stateful" data-wact="addBlock"><span class="icon">add</span>Add block</button>
+          <button class="btn text stateful" data-wact="share"><span class="icon">share</span>Share</button>
+          <button class="btn text stateful" data-wact="export"><span class="icon">data_object</span>JSON</button>
+          <button class="btn text stateful" data-wact="duplicateWorkout"><span class="icon">content_copy</span>Duplicate</button>
+          <button class="btn text stateful danger" data-wact="deleteWorkout"><span class="icon">delete</span>Delete</button>
+        </div>
+      </div>
+      <div id="wkBlocks"></div>
+    </section>
+
+    <!-- ===== Workout player: full screen, readable from the floor, gesture controlled ===== -->
+    <section class="view" id="view-wplay" aria-label="Workout player">
+      <div class="fs" id="wpRoot">
+        <div id="wpStageSlot"></div>
+        <div class="ov-top">
+          <div class="ov-title"><span class="ov-block" id="wpBlock"></span><span class="ov-name" id="wpName"></span><span class="ov-set" id="wpSet"></span></div>
+          <div class="ov-count" id="wpCount" aria-live="polite"></div>
+        </div>
+        <div class="ov-caption" id="wpCaption" aria-live="polite"></div>
+        <div class="ov-progress" id="wpSegs" aria-hidden="true"></div>
+        <div class="ov-controls" id="wpControls">
+          <button class="ov-btn ov-exit" id="wpExit" aria-label="Hold to exit the workout"><span class="icon">close</span><span class="ov-hold"></span></button>
+          <button class="ov-btn ov-sound" data-wact="sound" id="wpSound" aria-label="Sound"><span class="icon">volume_up</span><span class="ov-sound-label" id="wpSoundLabel"></span></button>
+          <div class="ov-mid">
+            <button class="ov-btn" data-wact="prevItem" aria-label="Previous exercise"><span class="icon">skip_previous</span></button>
+            <button class="ov-btn ov-play" data-wact="pause" id="wpPlay" aria-label="Pause"><span class="icon fill">pause</span></button>
+            <button class="ov-btn" data-wact="nextItem" aria-label="Next exercise"><span class="icon">skip_next</span></button>
+          </div>
+        </div>
+        <div class="ov-toast" id="wpToast"></div>
+        <div class="wp-rest" id="wpRest" hidden>
+          <p class="ov-block" id="wpRestLabel">Rest</p>
+          <p class="wp-big" id="wpRestTime">0:15</p>
+          <p class="ov-next" id="wpRestNext"></p>
+          <div class="ov-rest-btns"><button class="ov-pill" data-wact="restMore">+15 s</button><button class="ov-pill primary" data-wact="restSkip">Skip</button></div>
+        </div>
+        <div class="wp-done" id="wpDone" hidden>
+          <span class="icon big">celebration</span>
+          <p class="wp-done-title">Workout complete</p>
+          <p class="ov-next" id="wpDoneText"></p>
+          <button class="ov-pill primary" data-wact="finish">Done</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Player ===== -->
+    <section class="view" id="view-player" aria-label="Exercise player">
+      <div class="player">
+        <div class="stage-col">
+          <div class="stage" id="stageBox">
+            <svg class="scene" id="scene" viewBox="0 0 400 400" role="img" aria-label="Stick figure demonstrating the exercise"></svg>
+            <div class="stage-chips">
+              <span class="stage-chip" id="holdChip" hidden><span class="icon">timer</span><span id="holdText"></span></span>
+              <span class="stage-chip" id="repChip"><span class="icon">replay</span><span id="repText">Rep 1</span></span>
+            </div>
+            <div class="guide" id="guide" hidden>
+              <svg id="guideSvg" viewBox="-60 -60 120 120" aria-hidden="true"></svg>
+              <span class="body-small" id="guideLabel"></span>
+            </div>
+            <div class="legend body-small" aria-hidden="true">
+              <span><i style="background:var(--md-primary)"></i>Right</span><span><i style="background:var(--md-tertiary)"></i>Left</span>
+            </div>
+          </div>
+          <div class="now">
+            <span class="step" id="stepNum">1</span>
+            <div><h2 class="title-medium" id="stepName"></h2><p class="cue" id="stepCue"></p></div>
+          </div>
+          <div class="progress" role="progressbar" aria-label="Progress through the sequence"><div id="progressBar"></div></div>
+          <div class="controls">
+            <button class="icon-btn stateful" id="prevBtn" aria-label="Previous step" title="Previous step (←)"><span class="icon">skip_previous</span></button>
+            <button class="play-btn stateful" id="playBtn" aria-label="Pause" title="Play or pause (space)"><span class="icon fill">pause</span></button>
+            <button class="icon-btn stateful" id="nextBtn" aria-label="Next step" title="Next step (→)"><span class="icon">skip_next</span></button>
+          </div>
+          <div class="controls-row">
+            <div class="segmented" id="sideSeg" role="group" aria-label="Side" hidden>
+              <button class="stateful" data-side="L" aria-pressed="true"><span class="icon">check</span><span class="lbl">Left</span></button>
+              <button class="stateful" data-side="R" aria-pressed="false"><span class="icon">check</span><span class="lbl">Right</span></button>
+            </div>
+            <div class="segmented" id="dirSeg" role="group" aria-label="Direction" hidden>
+              <button class="stateful" data-dir="A" aria-pressed="true"><span class="icon">check</span><span class="lbl">Forward</span></button>
+              <button class="stateful" data-dir="B" aria-pressed="false"><span class="icon">check</span><span class="lbl">Backward</span></button>
+            </div>
+            <div class="segmented" id="speedSeg" role="group" aria-label="Speed">
+              <button class="stateful" data-speed="0.5" aria-pressed="false"><span class="icon">check</span>0.5×</button>
+              <button class="stateful" data-speed="1" aria-pressed="true"><span class="icon">check</span>1×</button>
+              <button class="stateful" data-speed="2" aria-pressed="false"><span class="icon">check</span>2×</button>
+            </div>
+          </div>
+        </div>
+        <div class="info-col">
+          <div class="ex-head">
+            <p class="overline" id="exKicker"></p>
+            <h2 class="headline-small" id="exName"></h2>
+            <p class="subtitle muted" id="exSub"></p>
+            <div class="chips" id="exChips"></div>
+          </div>
+          <div class="tabs" role="tablist" aria-label="Exercise details">
+            <button role="tab" class="tab stateful" data-tab="steps" aria-selected="true">Steps</button>
+            <button role="tab" class="tab stateful" data-tab="how" aria-selected="false">How to</button>
+            <button role="tab" class="tab stateful" data-tab="about" aria-selected="false">About</button>
+            <button role="tab" class="tab stateful" data-tab="adjust" aria-selected="false">Adjust</button>
+          </div>
+          <div class="tab-panel" data-panel="steps" role="tabpanel"><ol class="list" id="stepList"></ol></div>
+          <div class="tab-panel" data-panel="how" role="tabpanel" hidden id="howPanel"></div>
+          <div class="tab-panel" data-panel="about" role="tabpanel" hidden id="aboutPanel"></div>
+          <div class="tab-panel" data-panel="adjust" role="tabpanel" hidden><div id="editor"></div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Navigation bar (narrow screens) -->
+  <nav class="navbar" aria-label="Main">
+    <a class="nav-item" href="#/workouts" data-nav="workouts"><span class="pill"><span class="icon">fitness_center</span></span><span class="label">Workouts</span></a>
+    <a class="nav-item" href="#/explore" data-nav="explore"><span class="pill"><span class="icon">explore</span></span><span class="label">Explore</span></a>
+    <a class="nav-item" href="#/saved" data-nav="saved"><span class="pill"><span class="icon">bookmarks</span></span><span class="label">Saved</span></a>
+    <a class="nav-item" href="#/create" data-nav="create"><span class="pill"><span class="icon">edit_note</span></span><span class="label">Create</span></a>
+  </nav>
+</div>
+
+<input type="file" id="fileInput" accept=".json,application/json" class="vh" multiple>
+<dialog id="pasteDialog" aria-labelledby="pasteTitle">
+  <h2 class="headline-small" id="pasteTitle">Paste exercise JSON</h2>
+  <textarea id="pasteArea" spellcheck="false" placeholder='{ "format": "nstructr/exercise", "exercises": [ ... ] }'></textarea>
+  <div class="actions"><button class="btn text stateful" data-close>Cancel</button><button class="btn filled stateful" id="pasteImport">Import</button></div>
+</dialog>
+<dialog id="jsonDialog" aria-labelledby="jsonTitle">
+  <h2 class="headline-small" id="jsonTitle">JSON</h2>
+  <textarea id="jsonArea" spellcheck="false" readonly></textarea>
+  <div class="actions"><button class="btn text stateful" data-close>Close</button><button class="btn filled stateful" id="copyJson"><span class="icon">content_copy</span>Copy</button></div>
+</dialog>
+<dialog id="itemDialog" aria-labelledby="itemTitle">
+  <h2 class="headline-small" id="itemTitle">Exercise settings</h2>
+  <div id="itemForm"></div>
+  <div class="actions"><button class="btn text stateful" data-close>Cancel</button><button class="btn filled stateful" id="itemSave">Save</button></div>
+</dialog>
+<dialog id="pickDialog" class="library" aria-labelledby="pickTitle">
+  <div class="lib-head">
+    <button class="icon-btn stateful" data-close aria-label="Close"><span class="icon">close</span></button>
+    <h2 class="title-large" id="pickTitle">Add exercises</h2>
+    <button class="btn filled stateful" id="pickAdd" disabled>Add</button>
+  </div>
+  <div class="lib-tools"><label class="search"><span class="icon">search</span><input id="pickSearch" type="search" placeholder="Search exercises" autocomplete="off" aria-label="Search exercises"></label></div>
+  <ul class="pick-list" id="pickList"></ul>
+</dialog>
+<dialog id="startDialog" aria-labelledby="startTitle">
+  <h2 class="headline-small" id="startTitle">Before you start</h2>
+  <div class="actions actions-top"><button class="btn text stateful" data-close>Cancel</button><button class="btn filled stateful" id="startGo"><span class="icon fill">play_arrow</span>Start</button></div>
+  <div id="startBody"></div>
+</dialog>
+<div class="menu" id="menu" hidden role="menu"></div>
+<div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>
+<div class="drop" id="drop"><div><span class="icon">file_download</span><p class="title-medium">Drop JSON to import</p></div></div>
+
+<template id="aiPrompt">Watch this video and convert the exercise it demonstrates into JSON for my exercise animator: [VIDEO URL]
+
+Output ONLY valid JSON (no markdown fences, no commentary).
+
+FILE
+{ "format": "nstructr/exercise", "version": 1, "exercises": [ {
+  "id": "kebab-case", "name": "...", "category": "Strength | Stretch | Balance | Mobility | Cardio | Yoga pose type",
+  "focus": "main body area", "equipment": ["..."], "description": "1-2 sentences in your own words",
+  "source": { "url": "...", "title": "...", "note": "anything approximated" },
+  "setup": ["..."], "cues": ["..."],
+  "prescription": { "reps": "8-12", "rounds": 3, "note": "..." },
+  "facing": "right",
+  "bilateral": { "labels": { "L": "Right side", "R": "Left side" } },   // only if done on each side; write keyframes for ONE side
+  "props": [ ... ],                                                    // equipment drawn with the figure (see EQUIPMENT)
+  "keyframes": [ ... ] } ] }
+
+KEYFRAME
+{ "name": "Short step name", "cue": "One instruction", "view": "side" | "front",
+  "durationMs": 1500, "holdMs": 500,          // time to move into the pose, time held (30000 for a 30 s stretch hold)
+  "anchor": "ankleL",                         // point pinned to the floor (keeps feet/hands/seat from sliding)
+  "plant": ["L"],                             // feet kept flat
+  "touch": [{ "point": "toeR", "adjust": "hipR" }],     // turn "adjust" until "point" touches the floor
+  "reach": [{ "hand": "handR", "to": "ankleR" }],       // put a hand on a body point (or "to": "wall"); optional dx, dy, bend (1/-1)
+  "pose": { joint angles } }
+
+FIGURE: torso 100 (lower back + upper back), upper arm 55, forearm 50, thigh 80, shin 80, foot 22.
+Joints: root, torso, chest, neck, shoulderL/R, elbowL/R, hipL/R, kneeL/R, ankleL/R, armDepthL/R, forearmDepthL/R, thighDepthL/R, shinDepthL/R.
+Angles in degrees, relative to the parent bone, positive = CLOCKWISE on screen. At 0 the spine points up and limbs hang down.
+SIDE VIEW (faces right): limb forward = NEGATIVE, back = positive; knee bend positive; elbow bend negative; lean forward = positive torso.
+FRONT VIEW (figure's right is on screen left): right arm/leg out to the side = POSITIVE, left = NEGATIVE. Knee/hip flexion is not visible from the front.
+armDepth/forearmDepth/thighDepth/shinDepth: 0 = in the picture, 90 = pointing straight at the camera (foreshortened), for limbs moving toward/away from the camera.
+Reference: standing = all 0. Hands on hips (side): shoulder 27.5, elbow -69.4. Arms forward: shoulder -90. Overhead: shoulder 180.
+Plank (head right): root 66, shoulders -66. Lying on the back: root -90, neck 34, anchor "neckBase". Seated: anchor "pelvis".
+
+POINTS: pelvis, spine, neckBase, head, headTop, headLow (forehead), hipL/R, kneeL/R, ankleL/R, toeL/R, footL/R (ball of foot), shoulderL/R, elbowL/R, handL/R, armpitL/R, backL/R.
+
+EQUIPMENT (props)
+Band: { "type": "band", "from": "footL", "to": "handL" }  (optional "via": ["armpitR"], "layer": "front"|"back", "restLength")
+Towel: { "type": "towel", "from": "handR", "to": "handL" }
+Wall: { "type": "wall", "at": "handR", "keyframe": 0 }  (stands where that point is in that keyframe)
+Chair / bench / step: { "type": "chair", "x": -12, "back": "left" }, { "type": "bench", "x": 95 }, { "type": "step", "x": 82 }
+  (x = centre in px from the middle of the stage; seat 80 high, bench 70, step 30). Anything resting over a surface rests ON it:
+  sit with "anchor": "pelvis" (and "anchorX" so the pelvis is over the seat), put a foot on a step with "touch",
+  hold a chair back with "reach": [{ "hand": "handL", "to": "chair" }].
+Weights: { "type": "dumbbell", "hand": "handR", "axis": "lr"|"fb"|"ud" }, { "type": "kettlebell", "hands": ["handL","handR"] }, { "type": "barbell", "from": "handL", "to": "handR" } "keep": ["ankleL","ankleR"] keeps feet where they were in the previous step.
+
+RULES
+1. One keyframe per distinct position; the sequence loops, so the last flows back into the first.
+2. Use side view for forward/back movement, front view for sideways movement.
+3. Use anchor/plant/touch/reach for contact instead of hand-tuning angles.
+4. Take reps and hold times from the video; if not stated, give a default and say so in prescription.note.
+5. Check signs against the conventions above before answering.</template>
