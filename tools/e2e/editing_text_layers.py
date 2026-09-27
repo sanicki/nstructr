@@ -49,49 +49,28 @@ async def main():
         await pg.click('#saveBtn'); await pg.wait_for_timeout(150); asked.clear()
         await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
         print('unbookmark library      ', asked, await pg.evaluate("S.lib.items.map(x=>x.id)"))
-        # crossing legs: the drawing order may only change on a frame where the legs are apart
-        res = await pg.evaluate("""(() => {
-          const out = [];
-          for (const [ex, moves] of [['star-excursion-balance', [[9,10],[10,11],[11,12],[12,13],[13,14],[14,15],[15,16],[16,17]]], ['star-excursion-4-point', [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9]]]])
-            for (const side of ['L','R']) {
-              selectExercise(ex); setPlaying(false); setSide(side);
-              for (const [fr, to] of moves) {
-                S.idx = to; S.prev = fr; let swaps = 0, bad = 0;
-                for (let i = 0; i <= 40; i++) {
-                  S.t = S.resolved[to].dur * i / 40; const before = S.legLayers; draw();
-                  if (S.legLayers !== before) { swaps++; const a = S.resolved[fr], bb = S.resolved[to], raw = S.t / bb.dur, e = bb.ease === 'linear' ? raw : easeInOut(raw), f = frameAt(a, bb, e, S.seg);
-                    if (legsOverlap(fk(f.pose, f.v, S.seg, f.pos.x, f.pos.y))) bad++; }
-                }
-                out.push(`${ex.slice(0,15)} ${side} ${fr}->${to}: ${swaps} swap(s), ${bad} while overlapping, ends ${S.legLayers}`);
-              }
-            }
-          return out;
-        })()""")
-        print('\n'.join(res))
-        # the real thing: play the move, stop on the crossed pose, and look at the pixel where the legs cross.
-        # Crossing behind = the standing leg's colour is on top there.
-        for ex, fr, to in [('star-excursion-balance', 13, 14), ('star-excursion-balance', 11, 12), ('star-excursion-4-point', 7, 8)]:
+        # crossing legs, played for real (both sides, one full round): the drawing order only ever changes on a
+        # frame where the legs are apart, and on every step that says a leg goes behind, it is behind
+        for ex in ['star-excursion-4-point', 'star-excursion-balance']:
             for side in 'LR':
                 q = await b.new_page(viewport={'width': 412, 'height': 860})
                 await q.goto(URL + f'#/play/{ex}', wait_until='domcontentloaded'); await q.wait_for_timeout(400)
-                info = await q.evaluate("""([fr, to, side]) => new Promise(res => {
-                  setPlaying(false); setSide(side); S.idx = fr - 1; S.prev = fr - 2; S.t = 0; S.speed = 0.5; setPlaying(true); hideExControls();
-                  const tick = () => { if (S.idx === to && S.t >= S.resolved[to].dur) { setPlaying(false); hideExControls(); setTimeout(() => {
-                    const P = fk(...(f => [f.pose, f.v, S.seg, f.pos.x + S.shiftX, f.pos.y])(frameAt(S.resolved[fr], S.resolved[to], 1, S.seg)));
-                    const mov = side === 'L' ? 'R' : 'L', stand = side, ch = s => ['hip', 'knee', 'ankle', 'toe'].map(k => P[k + s]);
-                    let pt = null; const A = ch(stand), B = ch(mov);
-                    for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { const p = A[i], q = A[i + 1], r = B[j], t = B[j + 1], d = (q.x - p.x) * (t.y - r.y) - (q.y - p.y) * (t.x - r.x); if (!d) continue;
-                      const u = ((r.x - p.x) * (t.y - r.y) - (r.y - p.y) * (t.x - r.x)) / d, w = ((r.x - p.x) * (q.y - p.y) - (r.y - p.y) * (q.x - p.x)) / d;
-                      if (u > .05 && u < .95 && w > .05 && w < .95) pt = new DOMPoint(p.x + u * (q.x - p.x), p.y + u * (q.y - p.y)).matrixTransform($('#scene').getScreenCTM()); }
-                    res(pt && { x: pt.x, y: pt.y, stand: getComputedStyle($('#leg-' + stand + ' line')).stroke, mov: getComputedStyle($('#leg-' + mov + ' line')).stroke }); }, 100); }
-                    else requestAnimationFrame(tick); }; requestAnimationFrame(tick); })""", [fr, to, side])
-                if not info: print(f'{ex[:22]} {side} {fr}->{to}: legs don\'t cross in the picture'); await q.close(); continue
-                path = '/tmp/_cross.png'; await q.screenshot(path=path)
-                from PIL import Image
-                px = Image.open(path).convert('RGB').getpixel((round(info['x']), round(info['y'])))
-                rgb = lambda c: tuple(int(v) for v in c[4:-1].split(','))
-                near = min((sum((a - b) ** 2 for a, b in zip(px, rgb(info[k]))), k) for k in ('stand', 'mov'))[1]
-                print(f'{ex[:22]} {side} {fr}->{to}: on top where they cross = {"standing leg (moving leg behind)" if near == "stand" else "MOVING LEG (in front!)"}')
+                r = await q.evaluate("""(side) => new Promise(res => {
+                  setPlaying(false); setSide(side); S.idx = 0; S.prev = null; S.t = 0; S.rep = 1; S.speed = 2; setPlaying(true); hideExControls();
+                  const order = () => [...$('#figRoot').children].map(g => g.id).join(' ');
+                  let last = order(), swaps = 0, bad = [], wrong = [], seen = new Set();
+                  const tick = () => {
+                    const b = S.resolved[S.idx], a = S.prev != null ? S.resolved[S.prev] : b, raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
+                    const f = frameAt(a, b, b.ease === 'linear' ? raw : easeInOut(raw), S.seg), now = order();
+                    if (now !== last) { swaps++; if (legsOverlap(fk(f.pose, f.v, S.seg, f.pos.x, f.pos.y))) bad.push(S.idx + ':' + b.name); last = now; }
+                    // arrived on a step that puts a leg behind: that leg must be drawn before the other one
+                    if (raw >= 1 && b.layers && !seen.has(S.idx)) { seen.add(S.idx);
+                      for (const [leg, where] of Object.entries(b.layers)) { const kids = [...$('#figRoot').children].map(g => g.id), me = kids.indexOf('leg-' + leg.slice(-1)), other = kids.indexOf('leg-' + (leg.endsWith('L') ? 'R' : 'L'));
+                        if ((where === 'back') !== (me < other)) wrong.push(S.idx + ':' + b.name + ' ' + leg + ' ' + where); } }
+                    if (S.rep > 1) { setPlaying(false); res({ swaps, bad, wrong, steps: seen.size }); } else requestAnimationFrame(tick);
+                  };
+                  requestAnimationFrame(tick); })""", side)
+                print(f'{ex[:22]:<22} {side}: {r["swaps"]} order changes, {len(r["bad"])} while legs overlap {r["bad"]}, crossing steps checked {r["steps"]}, wrong {r["wrong"]}')
                 await q.close()
         print('errors', errs); await b.close()
 asyncio.run(main())
