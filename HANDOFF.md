@@ -287,7 +287,7 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   is ≤ 900 characters (`src/vendor/qrcode.js`, qrcode-generator, MIT, vendored), then four equal buttons: **Share QR
   code** (filled = recommended; disabled without a QR code), **Share link** (tonal; filled when there's no QR code;
   the phone's share sheet, or copies the link where there's none), **Export workout/exercise** (a `.json` file),
-  **Submit suggestion** (disabled until submissions exist, step 7). No link field or Copy link since Sep 2026. Share
+  **Submit suggestion** (disabled until submissions exist, step 8). No link field or Copy link since Sep 2026. Share
   buttons: workout editor, each workout card, the exercise page's top bar and About. `<site>` is the page's own
   address, or `https://sanicki.github.io/nstructr/` when opened from a file. Typical sizes: library workout
   62 chars; the 24-item routine customised ≈ 770; a workout with one own exercise ≈ 1200 (no QR).
@@ -689,7 +689,17 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    read or written. See `docs/3d-skeleton.md`. **Follow-up done (Sep 2026): the problem poses** —
    the 34 exercises past what a flexible body can do after the conversion were fixed (see `docs/3d-skeleton.md`,
    "The range check"), and the build now rejects poses past "flexible".
-7. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`
+7. **CI tests** (owner, Sep 2026): today CI runs `node tools/build.mjs` (schemas, animation checks, range of motion) on
+   every pull request, but the browser tests (`tools/e2e/*.py`) and `tools/audit.py` are only run by hand. Plan:
+   - make each e2e test **assert**: today they print results for a person to read; give each an expected outcome and a
+     non-zero exit code on failure (keep the printout for diagnosis);
+   - a workflow job on pull requests: build, serve `_site/`, install Python Playwright with its Chromium, run every
+     e2e test (in parallel where they don't share state) and `tools/audit.py` (axe, 48 px targets, text size, sideways
+     scroll), uploading screenshots and output as artifacts on failure;
+   - keep flaky, network-dependent checks (source links) manual; decide whether `tools/perf.py` gets a budget (CI
+     machines vary) or stays informational;
+   - before the submission pipeline (next), so contributions are checked end to end.
+8. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`
    forms YAML; if the JSON is too long for the URL, copy to clipboard and ask to paste) → an Action validates
    with `tools/build.mjs` logic, renders a preview (headless browser → GIF/PNG), comments, and opens a PR. Prompt
    and form require original wording + source link + license checkbox.
@@ -699,12 +709,12 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    **Owner's requirement:** editing exercises and workouts in the app is easy on purpose, so submitting must be a
    **deliberate, user-triggered action** on something the user chooses (e.g. "Submit this exercise"), ideally
    batching several items into one submission — never a PR per edit or anything automatic.
-8. **Content**: exercise machines (cable stations first — a fixed anchor + rigid cable, close to bands; then
+9. **Content**: exercise machines (cable stations first — a fixed anchor + rigid cable, close to bands; then
    leg press, lat pulldown; then cardio machines). Two small open choices in §14.
-9. **Experiments**: Flex mode layout (viewport segments; figure on the top half), voice commands (optional;
+10. **Experiments**: Flex mode layout (viewport segments; figure on the top half), voice commands (optional;
    browser speech recognition is flaky/online-only).
 
-10. **Later / ideas**:
+11. **Later / ideas**:
     - **AI with API keys**: the Create with AI screen calling the provider directly (the user's own key, kept on the
       device): Gemini for YouTube links and videos, the others with photos (videos as still frames); feed the
       animation checks' errors back to the model to fix its JSON. **Self-hosted models** (an OpenAI-compatible

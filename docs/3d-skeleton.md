@@ -95,7 +95,7 @@ Done by a one-off script (in git history: `tools/v1/convert.cjs`, removed with t
 - **The pose editor** has three steppers per ball joint (forward, side, turn), one per hinge, and a camera row.
   Easier to reason about than the old signs, because they don't depend on the view.
 - **AI prompts** are simpler: one angle convention, no per-step view juggling.
-- **Submissions** (step 7) only ever see one format, which is why this went first.
+- **Submissions** (step 8) only ever see one format, which is why this went first.
 
 ## Risks and costs
 
@@ -203,5 +203,5 @@ stretches). How it measures, and why:
 
 ## Decisions for the owner
 
-- ~~Go / no-go, and timing~~: **go**, as v2, before step 7 (owner, Sep 2026).
+- ~~Go / no-go, and timing~~: **go**, as v2, before the submission pipeline (owner, Sep 2026).
 - ~~Keep a v1 export?~~ No; and v1 import stops as soon as everything is v2 (owner, Sep 2026).
