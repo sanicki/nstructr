@@ -24,15 +24,21 @@ const AI_KINDS = [
 const aiApp = () => AI_APPS.find(a => a.id === pref(AI_KEY, 'gemini')) || AI_APPS.find(a => a.id === 'gemini');   // the last one picked
 let AI_KIND = 'name';
 
-/* the library, one line per exercise, so the AI can use what's already there */
+/* the library, one line per exercise, so the AI can use what's already there; grouped by equipment (a mat doesn't
+   count), so a band or dumbbell version isn't matched to the bodyweight one, with one heading per group (shorter than
+   a tag on every line: the prompt has to fit in a link) */
 function libraryLines() {
-  return allExercises().map(ex => {
+  const groups = new Map();
+  for (const ex of allExercises()) {
     const bits = [];
     if (ex.measure === 'time') bits.push('time');
     if (ex.bilateral) bits.push('sides');
     if (ex.direction) bits.push(`dir A=${ex.direction.labels.A}/B=${ex.direction.labels.B}`);
-    return ex.id + (bits.length ? ` (${bits.join(', ')})` : '');
-  }).join('\n');
+    const k = SIMILAR_EX.equipKinds(ex.equipment).join(', ');
+    if (!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(ex.id + (bits.length ? ` (${bits.join(', ')})` : ''));
+  }
+  return [...groups.keys()].sort().map(k => `[${k || 'no equipment'}]\n${groups.get(k).join('\n')}`).join('\n');
 }
 function aiPrompt(kind = AI_KIND, input = '') {
   const what = input.trim();
@@ -54,14 +60,14 @@ WHICH FILE
 - ONE exercise that is not in the LIBRARY: an exercise file (EXERCISE FORMAT).
 - A ROUTINE of several exercises: a workout file:
   {"format":"nstructr/workout","version":2,"workouts":[WORKOUT],"exercises":[new exercises, if any]}
-  Use LIBRARY ids where an exercise matches by movement (not just by name). For any exercise with no reasonable match, write it in "exercises" (EXERCISE FORMAT, id starting "u-") and use that id in the workout.
+  Use LIBRARY ids where an exercise matches by movement AND equipment, not just by name: a squat with a band, dumbbells or a chair is not the plain squat. For any exercise with no match, write it in "exercises" (EXERCISE FORMAT, id starting "u-", with its "equipment") and use that id in the workout.
 
 WORKOUT
 {"version":2,"id":"kebab-case-name","name":"...","description":"one sentence","blocks":[
   {"name":"Warm-up","rounds":1,"roundRest":30,"items":[
-    {"ex":"<exercise id>","calledInSource":"Hip Raise","sets":1,"reps":10,"sides":"both","dir":"both","tempo":1},
-    {"ex":"<exercise id>","calledInSource":"...","seconds":30,"sides":"both"}]}]}
-- "calledInSource" on every item: the name the source uses for that exercise, as it says it (any language). When you use a LIBRARY id for an exercise the source calls something else, the app suggests the source's name as another name for it.
+    {"ex":"<exercise id>","calledInSource":"Hip Raise","equipmentInSource":[],"sets":1,"reps":10,"sides":"both","dir":"both","tempo":1},
+    {"ex":"<exercise id>","calledInSource":"...","equipmentInSource":["Resistance band"],"seconds":30,"sides":"both"}]}]}
+- On every item: "calledInSource", the source's name for it (any language), and "equipmentInSource", the equipment the source uses for it ([] for none; a mat doesn't count).
 - Rep-based exercises get "reps"; time-based ones get "seconds". Use the routine's numbers; for a range, use the lower end.
 - "sides" (only for exercises marked sides): "L", "R", "both" (one side then the other) or "alternate". Reps count per side.
 - "dir" (only for exercises marked dir): "A", "B", "both" or "alternate".
@@ -72,7 +78,7 @@ WORKOUT
 ${aiPromptText()}
 8. Write "description", "setup" and "cues" in your own words; short, plain directions. Put where it came from in "source".
 
-LIBRARY (exercise ids; "time" = measured in seconds, otherwise reps; "sides"/"dir" = takes those options)
+LIBRARY (exercise ids under the [equipment] they use; "time" = measured in seconds, otherwise reps; "sides"/"dir" = takes those options)
 ${libraryLines()}`;
 }
 function aiPromptText() { return $('#aiPrompt').innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/(\S) {2,}/g, '$1 '); }   // alignment spaces cost link length

@@ -603,12 +603,19 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   those four are only copied; "Other LLM" just copies. 3: paste
   the answer: `extractJson()` takes the JSON out of ``` fences or surrounding sentences; `{"inLibrary": "<id>"}`
   opens that library exercise; anything else goes through the normal import (exercise, or a workout file bringing
-  its own `u-` exercises). The prompt asks for `"calledInSource"` on every workout item (the source's own name for
-  it); the import takes it out of the workout and keeps it for the library check.
+  its own `u-` exercises). The prompt's LIBRARY list is grouped under `[equipment]` headings (kinds from
+  `SIMILAR_EX.equipKinds`: band, dumbbell, chair…; a mat doesn't count), and it says a match needs the same movement
+  **and** equipment (models matched "band squat" to the plain squat when they only saw ids). It asks for
+  `"calledInSource"` (the source's own name) and `"equipmentInSource"` on every workout item; the import takes both
+  out of the workout and keeps them for the library check. The prompt must stay under `AI_Q_MAX` for the link-filled
+  apps: about 14.4k characters as a ChatGPT link (Sep 2026).
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;
   not a backup): a new own exercise (not one the user had, not a `basedOn` copy) that is a **duplicate** of a
   library one (`src/similar.js`) gets "Use <library exercise> instead" (on by default: **Done** points the imported
-  workouts at it and removes the new one unless another workout uses it; **Keep as imported** changes nothing), and
+  workouts at it and removes the new one unless another workout uses it; **Keep as imported** changes nothing); an
+  item whose `equipmentInSource` kinds differ from the library exercise the AI chose gets the library's version with
+  that equipment (same equipment kinds; a name word in common, else motion within 8°; the closest) or else the
+  user's own copy with that equipment (`basedOn`, named from `calledInSource`), both on by default; and
   each name the library doesn't know (a duplicate's name, and `calledInSource` names of library exercises), unless
   another library exercise already has it, gets **Suggest it** (the Submit to library issue, kind `name`). No
   dialog when there's nothing to say.
