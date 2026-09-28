@@ -1,0 +1,105 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bench-dip",
+  "name": "Bench Dip",
+  "otherNames": ["Triceps Bench Dip"],
+  "category": "Strength",
+  "focus": "Backs of the arms",
+  "collections": ["Bodyweight"],
+  "equipment": ["Bench"],
+  "description": "Hands on the edge of a bench behind you and feet on the floor, bend your elbows to lower your hips, then press back up.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/bench-dips",
+    "title": "NASM Exercise Library: Bench Dips"
+  },
+  "setup": ["Sit on the edge of a bench, hands beside your hips, fingers forward.", "Walk your feet out and lift your hips off the bench."],
+  "cues": ["Keep your back close to the bench.", "Lower until your elbows are at about 90°.", "Press back up."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Arms straight",
+      "cue": "Hips just in front of the bench, arms straight.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorZ": -30,
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": [4, 0, 0],
+        "shoulderL": [-6, 0, 0],
+        "shoulderR": [-6, 0, 0],
+        "hipL": [84.2, 0, 0],
+        "kneeL": 90,
+        "ankleL": -5.8,
+        "hipR": [84.2, 0, 0],
+        "kneeR": 90,
+        "ankleR": -5.8
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Bend your elbows and lower your hips.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorZ": -30,
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "keep": ["ankleL", "ankleR"],
+      "pose": {
+        "torso": [4, 0, 0],
+        "shoulderL": [-86, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-86, 0, 0],
+        "elbowR": 90,
+        "hipL": [117.7, 0, 0],
+        "kneeL": 144.5,
+        "ankleL": -26.8,
+        "hipR": [117.7, 0, 0],
+        "kneeR": 144.5,
+        "ankleR": -26.8
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "bench",
+      "z": -60,
+      "width": 70,
+      "depth": 200,
+      "height": 80
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

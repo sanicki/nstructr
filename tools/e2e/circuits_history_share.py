@@ -40,7 +40,7 @@ async def main():
         log=await pg.evaluate("loadLog()"); print('after early stop:', len(log), {k:log[-1][k] for k in ['completed','exercisesDone','exercisesTotal']})
         print('history UI:', (await pg.inner_text('#historyList'))[:160].replace('\n',' | '))
         # routine prompt
-        pr=await pg.evaluate("aiPrompt('routine', 'Squats 3x10')"); print('prompt chars', len(pr), '| has ids:', 'wu-arm-circles (dir' in pr, '| lines:', pr.count('\n'))
+        pr=await pg.evaluate("aiPrompt('routine', 'Squats 3x10')"); print('prompt chars', len(pr), '| has ids:', 'wu-arm-circles dir' in pr, '| lines:', pr.count('\n'))
         # share falls back to a download here
         await pg.goto(URL + '#/workout/circ', wait_until='domcontentloaded'); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="@edit"]'); await pg.wait_for_timeout(300)

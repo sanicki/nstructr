@@ -3,6 +3,7 @@
   "version": 2,
   "id": "pil-half-roll-back",
   "name": "Half Roll-Back",
+  "otherNames": ["Half Roll-Down"],
   "category": "Pilates",
   "focus": "Abdominals and spine",
   "collections": ["Pilates"],

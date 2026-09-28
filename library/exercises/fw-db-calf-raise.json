@@ -1,0 +1,70 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-calf-raise",
+  "name": "Dumbbell Calf Raise",
+  "otherNames": ["Standing Dumbbell Calf Raise"],
+  "category": "Strength",
+  "focus": "Calves",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "A calf raise holding a dumbbell in each hand: rise up onto the balls of your feet, pause, and lower your heels slowly.",
+  "source": {
+    "url": "https://exrx.net/WeightExercises/Gastrocnemius/DBStandingCalfRaise",
+    "title": "ExRx: Dumbbell Standing Calf Raise"
+  },
+  "setup": ["Stand tall with feet hip-width apart.", "Hold a dumbbell in each hand at your sides."],
+  "cues": ["Rise onto the balls of your feet.", "Knees straight, body tall.", "Lower your heels slowly."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Pick weights you can hold for every rep. Rise and lower slowly, without bouncing."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet flat, dumbbells at your sides.",
+      "camera": 90,
+      "durationMs": 3000,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0]
+      }
+    },
+    {
+      "name": "Rise onto your toes",
+      "cue": "Rise onto the balls of your feet.",
+      "camera": 90,
+      "durationMs": 3000,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "toeL",
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0],
+        "ankleL": 38,
+        "ankleR": 38
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "fb"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "fb"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

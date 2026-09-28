@@ -3,6 +3,7 @@
   "version": 2,
   "id": "mayo-neck",
   "name": "Neck Stretch",
+  "otherNames": ["Upper Trapezius Stretch"],
   "category": "Stretch",
   "focus": "Neck",
   "collections": ["Stretches"],

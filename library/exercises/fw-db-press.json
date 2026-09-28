@@ -3,6 +3,7 @@
   "version": 2,
   "id": "fw-db-press",
   "name": "Dumbbell Shoulder Press",
+  "otherNames": ["Dumbbell Overhead Press"],
   "category": "Strength",
   "focus": "Shoulders",
   "collections": ["Free weights"],

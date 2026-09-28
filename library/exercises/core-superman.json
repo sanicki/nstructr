@@ -3,6 +3,7 @@
   "version": 2,
   "id": "core-superman",
   "name": "Superman",
+  "otherNames": ["Superman Hold", "Prone Back Extension"],
   "category": "Core",
   "focus": "Lower back and glutes",
   "collections": ["Core"],

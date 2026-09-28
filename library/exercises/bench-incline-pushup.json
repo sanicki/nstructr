@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bench-incline-pushup",
   "name": "Incline Push-Up",
+  "otherNames": ["Incline Press-Up", "Bench Push-Up"],
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
   "collections": ["Bodyweight"],

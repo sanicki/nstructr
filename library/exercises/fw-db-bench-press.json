@@ -3,6 +3,7 @@
   "version": 2,
   "id": "fw-db-bench-press",
   "name": "Dumbbell Bench Press",
+  "otherNames": ["Dumbbell Chest Press"],
   "category": "Strength",
   "focus": "Chest",
   "collections": ["Free weights"],

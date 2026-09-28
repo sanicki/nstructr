@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-overhead-triceps",
+  "name": "Dumbbell Overhead Triceps Extension",
+  "otherNames": ["Two-Arm Dumbbell Overhead Extension"],
+  "category": "Core",
+  "focus": "Backs of the arms",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbell"],
+  "description": "Holding one dumbbell overhead with both hands, bend your elbows to lower it behind your head, then straighten your arms.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/74/triceps-extension/",
+    "title": "ACE Exercise Library: Triceps Extension"
+  },
+  "setup": ["Stand with feet shoulder-width apart.", "Hold one dumbbell overhead with both hands around the handle."],
+  "cues": ["Elbows point up, close to your head.", "Lower the weight behind your head.", "Straighten your arms."],
+  "prescription": {
+    "reps": "12–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Weight behind your head",
+      "cue": "Elbows up, both hands on the dumbbell.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": [170, -6, 0],
+        "elbowL": 150,
+        "shoulderR": [170, -6, 0],
+        "elbowR": 150,
+        "hipL": [14, 0, 0],
+        "ankleL": 14,
+        "hipR": [-14, 0, 0],
+        "ankleR": -14
+      }
+    },
+    {
+      "name": "Extend",
+      "cue": "Straighten your arms overhead.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": [176, -6, 0],
+        "elbowL": 2,
+        "shoulderR": [176, -6, 0],
+        "elbowR": 2,
+        "hipL": [14, 0, 0],
+        "ankleL": 14,
+        "hipR": [-14, 0, 0],
+        "ankleR": -14
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "ud"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  },
+  "repName": "rep"
+}

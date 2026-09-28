@@ -23,22 +23,22 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **137 exercises, 1 workout**.
+Library today: **155 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 52 | Yoga Journal pose list |
-| Bodyweight | 16 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell… |
-| Resistance band | 15 | 10 BHF standing exercises + seated row + routine additions |
-| Free weights | 13 | dumbbell, kettlebell, barbell |
+| Bodyweight | 18 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning… |
+| Resistance band | 20 | 10 BHF standing exercises + seated row + routine additions + banded versions (bridge, clamshell, kickback, row, triceps kickback) |
+| Free weights | 23 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
 | Stretches | 11 | Mayo Clinic basic stretches + routine additions |
 | Pilates | 12 | classic mat exercises (Leg Circles: Side and Direction, with a compass) |
 | Core | 7 | planks, bird dog, dead bug, crunch… |
-| Chair-based | 7 | NHS chair/sitting exercises, chair dip, chair push-up, heels-on-chair bridge |
+| Chair-based | 8 | NHS chair/sitting exercises, chair dip, chair push-up, feet-elevated bridge, chair-supported calf raise |
 | Warm-up | 2 | arm circles, hip circles (both have directions) |
 | Balance | 2 | Star Excursion (8-point and 4-point) |
 
-71 are rep-based, 65 timed; 49 are two-sided (`bilateral`); 2 have `direction`.
+90 are rep-based, 65 timed; 54 are two-sided (`bilateral`); 3 have `direction`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
 
@@ -197,6 +197,9 @@ The schemas in `schema/` are authoritative for structure. This section is the me
   "id": "bw-reverse-lunge",            // kebab-case, = file name; users' own start with "u-"
   "name": "Reverse Lunge",
   "otherNames": ["…"],                 // other names it's known by (Sanskrit, other languages); the first is shown under the name
+                                       // naming (Sep 2026 review): "name" is the most common name (Plank, Downward Dog,
+                                       // Chaturanga, Deadlift); the formal or older one is another name; yoga lists
+                                       // its Sanskrit name first; no name belongs to two exercises
   "collections": ["Bodyweight"],       // library only: where the Exercises tab shows it (can be several); users' own have none
   "category": "Strength", "focus": "Thighs and glutes",
   "equipment": ["Wall"],               // free text, used for filters and the "You'll need" list
@@ -419,7 +422,7 @@ representations that rotate the short, natural way) over adding a known issue; i
   coach/spotter notes on barbell lifts) and shown on the workout card (when expanded) and in the workout editor.
 
 ### 8.2 Reps
-- One loop of an exercise's rep steps is one rep. Nested reps (Wall Sit + Pull-Apart) are modelled with
+- One loop of an exercise's rep steps is one rep. Nested reps (Wall Sit with Band Pull-Apart) are modelled with
   `phase`: setup once (slide down), rep = one pull-apart, finish once (stand up); the wall sit lasts as long as
   the pull-aparts take and never resets.
 - Single-Leg Stretch: 1 rep = left + right. Arm Circles: 1 rep = one full circle; backward is generated.
@@ -608,7 +611,10 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   **and** equipment (models matched "band squat" to the plain squat when they only saw ids). It asks for
   `"calledInSource"` (the source's own name) and `"equipmentInSource"` on every workout item; the import takes both
   out of the workout and keeps them for the library check. The prompt must stay under `AI_Q_MAX` for the link-filled
-  apps: about 14.4k characters as a ChatGPT link (Sep 2026).
+  apps (ChatGPT, Claude, Copilot; over it they fall back to copying): the LIBRARY list uses plain words and spaces
+  (`WITH band`, `bw-reverse-lunge sides`, `dir A-Forward B-Backward`) because brackets, commas, `=` and `/` take 3
+  characters each in a link. With 155 exercises it's about 14.3k as a ChatGPT link (Sep 2026), so roughly 30 more
+  exercises (the library's, or a user's own, which are listed too) fit before the next trim.
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;
   not a backup): a new own exercise (not one the user had, not a `basedOn` copy) that is a **duplicate** of a
   library one (`src/similar.js`) gets "Use <library exercise> instead" (on by default: **Done** points the imported

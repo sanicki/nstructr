@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-clamshell",
+  "name": "Banded Clamshell",
+  "otherNames": ["Resistance Band Clamshell"],
+  "category": "Strength",
+  "focus": "Outer hips (glute medius)",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "The clamshell with a loop band just above your knees: lying on your side with feet together, open the top knee against the band.",
+  "source": {
+    "url": "https://blog.nasm.org/banded-clamshell-workout",
+    "title": "NASM: The Banded Clamshell"
+  },
+  "setup": ["Lie on your side, knees bent and stacked, feet together.", "Put a loop band just above your knees."],
+  "cues": ["Keep your feet together.", "Open the top knee without rolling back.", "Close slowly."],
+  "prescription": {
+    "reps": "12–15 each leg",
+    "note": "A light band is plenty. Move slowly and keep your hips still."
+  },
+  "keyframes": [
+    {
+      "name": "Knees together",
+      "cue": "Lying on your left side, knees bent, heels together.",
+      "camera": 0,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "pose": {
+        "root": [0, -90, 0],
+        "neck": [0, 8, 0],
+        "shoulderL": [0, -180, 0],
+        "hipL": [45, 0, 0],
+        "ankleL": 44.3,
+        "hipR": [45, 0, 90],
+        "ankleR": 44.3
+      }
+    },
+    {
+      "name": "Open",
+      "cue": "Lift your top knee toward the ceiling.",
+      "camera": 0,
+      "durationMs": 1400,
+      "holdMs": 700,
+      "phase": "rep",
+      "pose": {
+        "root": [0, -90, 0],
+        "neck": [0, 8, 0],
+        "shoulderL": [0, -180, 0],
+        "hipL": [45, 0, 0],
+        "ankleL": 44.3,
+        "hipR": [34.9, 29, 90],
+        "kneeR": 57.9,
+        "ankleR": 61
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "kneeL",
+      "to": "kneeR"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right knee opens",
+      "R": "Left knee opens"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  },
+  "repName": "rep"
+}

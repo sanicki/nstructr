@@ -1,0 +1,127 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-reverse-lunge",
+  "name": "Dumbbell Reverse Lunge",
+  "otherNames": ["Dumbbell Rear Lunge"],
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "A reverse lunge holding a dumbbell in each hand: step one foot back, lower until both knees bend to about 90°, then step back in.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/dumbbell-rear-lunge.html",
+    "title": "Muscle & Strength: Dumbbell Rear Lunge"
+  },
+  "setup": ["Stand tall with feet hip-width apart.", "Hold a dumbbell in each hand at your sides."],
+  "cues": ["Step back onto the ball of your foot.", "Lower straight down, chest tall.", "Push through the front heel to come back."],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Dumbbells at your sides.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0]
+      }
+    },
+    {
+      "name": "Lift the foot",
+      "cue": "Shift onto your left leg and lift your right foot.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0],
+        "hipL": [8, 0, 0],
+        "kneeL": 10,
+        "ankleL": -2,
+        "hipR": [-10, 0, 0],
+        "kneeR": 55,
+        "ankleR": 20
+      }
+    },
+    {
+      "name": "Step back and lower",
+      "cue": "Step back and bend both knees, arms hanging.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0],
+        "hipL": [85, 0, 0],
+        "kneeL": 88,
+        "ankleL": -3,
+        "hipR": [4.1, 0, 0],
+        "kneeR": 100,
+        "ankleR": 40
+      }
+    },
+    {
+      "name": "Push back up",
+      "cue": "Drive through your front heel and step back in.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0],
+        "hipL": [8, 0, 0],
+        "kneeL": 10,
+        "ankleL": -2,
+        "hipR": [-10, 0, 0],
+        "kneeR": 55,
+        "ankleR": 20
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "fb"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "fb"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg back",
+      "R": "Left leg back"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

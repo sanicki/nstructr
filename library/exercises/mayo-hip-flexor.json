@@ -3,6 +3,7 @@
   "version": 2,
   "id": "mayo-hip-flexor",
   "name": "Hip Flexor Stretch",
+  "otherNames": ["Kneeling Hip Flexor Stretch", "Half-Kneeling Hip Flexor Stretch"],
   "category": "Stretch",
   "focus": "Hip flexors",
   "collections": ["Stretches"],

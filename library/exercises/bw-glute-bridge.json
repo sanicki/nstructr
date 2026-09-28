@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bw-glute-bridge",
   "name": "Glute Bridge",
+  "otherNames": ["Hip Raise", "Floor Glute Bridge"],
   "category": "Strength",
   "focus": "Glutes and hamstrings",
   "collections": ["Bodyweight"],

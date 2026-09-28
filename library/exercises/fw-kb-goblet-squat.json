@@ -1,0 +1,105 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-kb-goblet-squat",
+  "name": "Kettlebell Goblet Squat",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Free weights"],
+  "equipment": ["Kettlebell"],
+  "description": "A squat holding one kettlebell close to your chest by its handle: sit your hips down between your heels, then stand up.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/kettlebell-goblet-squat",
+    "title": "Muscle & Strength: Kettlebell Goblet Squat"
+  },
+  "setup": ["Stand with feet about shoulder-width apart.", "Hold the kettlebell by the handle at your chest, elbows tucked in."],
+  "cues": ["Elbows in, chest up.", "Sit down between your heels.", "Push through your heels to stand."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Kettlebell at your chest.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": -24,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -22,
+          "dy": -24,
+          "dz": 22
+        }
+      ],
+      "pose": {
+        "shoulderL": [-16.8, 0, 0],
+        "elbowL": 147.5,
+        "shoulderR": [-16.8, 0, 0],
+        "elbowR": 147.5
+      }
+    },
+    {
+      "name": "Squat",
+      "cue": "Sit down between your heels.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": -24,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -22,
+          "dy": -24,
+          "dz": 22
+        }
+      ],
+      "pose": {
+        "torso": [26, 0, 0],
+        "shoulderL": [11.3, 0, 0],
+        "elbowL": 145.7,
+        "shoulderR": [11.3, 0, 0],
+        "elbowR": 145.7,
+        "hipL": [92, 0, 0],
+        "kneeL": 108,
+        "ankleL": -16,
+        "hipR": [92, 0, 0],
+        "kneeR": 108,
+        "ankleR": -16
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hands": ["handL", "handR"]
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

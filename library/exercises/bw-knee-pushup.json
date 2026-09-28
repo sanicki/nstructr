@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bw-knee-pushup",
   "name": "Knee Push-Up",
+  "otherNames": ["Modified Push-Up", "Kneeling Push-Up"],
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
   "collections": ["Bodyweight"],

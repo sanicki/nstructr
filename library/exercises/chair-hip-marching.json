@@ -3,6 +3,7 @@
   "version": 2,
   "id": "chair-hip-marching",
   "name": "Seated Hip Marching",
+  "otherNames": ["Seated Marching"],
   "category": "Strength",
   "focus": "Hips and thighs",
   "collections": ["Chair-based"],

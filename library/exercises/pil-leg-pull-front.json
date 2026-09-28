@@ -3,6 +3,7 @@
   "version": 2,
   "id": "pil-leg-pull-front",
   "name": "Leg Pull Front",
+  "otherNames": ["Leg Pull Front Support"],
   "category": "Pilates",
   "focus": "Core and shoulders",
   "collections": ["Pilates"],

@@ -3,6 +3,7 @@
   "version": 2,
   "id": "chair-ankle-stretch",
   "name": "Seated Ankle Stretch",
+  "otherNames": ["Ankle Point and Flex"],
   "category": "Mobility",
   "focus": "Ankles",
   "collections": ["Chair-based"],

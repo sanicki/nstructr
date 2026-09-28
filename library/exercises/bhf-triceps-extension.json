@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bhf-triceps-extension",
   "name": "Band Triceps Extension",
+  "otherNames": ["Resistance Band Triceps Extension"],
   "category": "Strength",
   "focus": "Arms",
   "collections": ["Resistance band"],

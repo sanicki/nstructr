@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-bent-over-row",
+  "name": "Resistance Band Bent-Over Row",
+  "otherNames": ["Band Bent-Over Row"],
+  "category": "Strength",
+  "focus": "Upper back",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "Standing on the middle of a band and hinged forward with a flat back, pull the ends toward your lower ribs, then lower them.",
+  "source": {
+    "url": "https://workoutlabs.com/exercise-guide/resistance-band-bent-over-rows/",
+    "title": "WorkoutLabs: Resistance Band Bent Over Rows"
+  },
+  "setup": ["Stand on the middle of the band, feet shoulder-width apart, holding an end in each hand.", "Soft knees, hinge forward with a flat back."],
+  "cues": ["Pull the ends to your lower ribs.", "Elbows close, squeeze your shoulder blades.", "Lower with control."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Pick a band you can pull for every rep with good form. About 2 seconds to pull and 2 seconds to lower."
+  },
+  "keyframes": [
+    {
+      "name": "Arms hanging",
+      "cue": "Hinged forward, standing on the band.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [58, 0, 0],
+        "shoulderL": [58, 0, 0],
+        "shoulderR": [58, 0, 0],
+        "hipL": [14, 0, 0],
+        "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10
+      }
+    },
+    {
+      "name": "Row",
+      "cue": "Pull the band to your lower ribs.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [58, 0, 0],
+        "shoulderL": [-4, 0, 0],
+        "elbowL": 66,
+        "shoulderR": [-4, 0, 0],
+        "elbowR": 66,
+        "hipL": [14, 0, 0],
+        "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "footL",
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": "footR",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

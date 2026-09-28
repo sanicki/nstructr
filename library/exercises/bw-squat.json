@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bw-squat",
   "name": "Squat",
+  "otherNames": ["Bodyweight Squat", "Air Squat"],
   "category": "Strength",
   "focus": "Thighs and glutes",
   "collections": ["Bodyweight"],

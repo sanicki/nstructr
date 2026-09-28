@@ -3,6 +3,7 @@
   "version": 2,
   "id": "chair-sit-to-stand",
   "name": "Sit-to-Stand",
+  "otherNames": ["Chair Stand"],
   "category": "Strength",
   "focus": "Thighs and glutes",
   "collections": ["Chair-based"],

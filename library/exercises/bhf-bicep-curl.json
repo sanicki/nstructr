@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bhf-bicep-curl",
   "name": "Band Bicep Curl",
+  "otherNames": ["Resistance Band Bicep Curl"],
   "category": "Strength",
   "focus": "Arms",
   "collections": ["Resistance band"],

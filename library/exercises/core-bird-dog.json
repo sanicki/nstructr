@@ -3,6 +3,7 @@
   "version": 2,
   "id": "core-bird-dog",
   "name": "Bird Dog",
+  "otherNames": ["Quadruped Arm and Leg Raise"],
   "category": "Core",
   "focus": "Core and lower back",
   "collections": ["Core"],

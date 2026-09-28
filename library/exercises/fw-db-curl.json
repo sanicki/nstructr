@@ -3,6 +3,7 @@
   "version": 2,
   "id": "fw-db-curl",
   "name": "Dumbbell Biceps Curl",
+  "otherNames": ["Dumbbell Curl"],
   "category": "Strength",
   "focus": "Front of the upper arms",
   "collections": ["Free weights"],

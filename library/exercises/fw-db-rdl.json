@@ -3,6 +3,7 @@
   "version": 2,
   "id": "fw-db-rdl",
   "name": "Dumbbell Romanian Deadlift",
+  "otherNames": ["Dumbbell RDL"],
   "category": "Strength",
   "focus": "Hamstrings and glutes",
   "collections": ["Free weights"],

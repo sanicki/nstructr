@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-kb-deadlift",
+  "name": "Kettlebell Deadlift",
+  "category": "Strength",
+  "focus": "Back, glutes and hamstrings",
+  "collections": ["Free weights"],
+  "equipment": ["Kettlebell"],
+  "description": "A hip hinge lifting one kettlebell from between your feet: push your hips back, grip the handle with both hands, and stand up tall.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/kettlebell-deadlift",
+    "title": "NASM Exercise Library: Kettlebell Deadlift"
+  },
+  "setup": ["Stand with feet a little wider than hip-width, the kettlebell on the floor between them.", "Hinge down and hold the handle with both hands."],
+  "cues": ["Hips back, back flat.", "Drive through your feet and stand tall.", "Squeeze your glutes at the top."],
+  "prescription": {
+    "reps": "3–6",
+    "note": "Warm up with lighter sets first. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Set up",
+      "cue": "Hips back, both hands on the handle.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR",
+          "gap": 20
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL",
+          "gap": 20
+        }
+      ],
+      "pose": {
+        "torso": [66, 0, 0],
+        "shoulderL": [43.1, -12, 0],
+        "shoulderR": [43.1, -12, 0],
+        "hipL": [84, 0, 0],
+        "kneeL": 114,
+        "ankleL": -30,
+        "hipR": [84, 0, 0],
+        "kneeR": 114,
+        "ankleR": -30
+      }
+    },
+    {
+      "name": "Stand up",
+      "cue": "Stand tall and squeeze your glutes.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [4, -12, 0],
+        "shoulderR": [4, -12, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hands": ["handL", "handR"]
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  },
+  "repName": "rep"
+}

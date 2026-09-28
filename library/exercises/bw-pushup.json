@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bw-pushup",
   "name": "Push-Up",
+  "otherNames": ["Press-Up"],
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
   "collections": ["Bodyweight"],
