@@ -25,20 +25,20 @@ const aiApp = () => AI_APPS.find(a => a.id === pref(AI_KEY, 'gemini')) || AI_APP
 let AI_KIND = 'name';
 
 /* the library, one line per exercise, so the AI can use what's already there; grouped by equipment (a mat doesn't
-   count), so a band or dumbbell version isn't matched to the bodyweight one, with one heading per group (shorter than
-   a tag on every line: the prompt has to fit in a link) */
+   count), so a band or dumbbell version isn't matched to the bodyweight one, with one heading per group. Plain words
+   and spaces only: the prompt has to fit in a link, and brackets, commas, "=" and "/" each take 3 characters there. */
 function libraryLines() {
-  const groups = new Map();
+  const groups = new Map(), word = t => String(t).trim().replace(/\s+/g, '-');
   for (const ex of allExercises()) {
     const bits = [];
     if (ex.measure === 'time') bits.push('time');
     if (ex.bilateral) bits.push('sides');
-    if (ex.direction) bits.push(`dir A=${ex.direction.labels.A}/B=${ex.direction.labels.B}`);
-    const k = SIMILAR_EX.equipKinds(ex.equipment).join(', ');
+    if (ex.direction) bits.push(`dir A-${word(ex.direction.labels.A)} B-${word(ex.direction.labels.B)}`);
+    const k = SIMILAR_EX.equipKinds(ex.equipment).join(' and ');
     if (!groups.has(k)) groups.set(k, []);
-    groups.get(k).push(ex.id + (bits.length ? ` (${bits.join(', ')})` : ''));
+    groups.get(k).push([ex.id, ...bits].join(' '));
   }
-  return [...groups.keys()].sort().map(k => `[${k || 'no equipment'}]\n${groups.get(k).join('\n')}`).join('\n');
+  return [...groups.keys()].sort().map(k => `${k ? 'WITH ' + k : 'NO EQUIPMENT'}\n${groups.get(k).join('\n')}`).join('\n');
 }
 function aiPrompt(kind = AI_KIND, input = '') {
   const what = input.trim();
@@ -78,7 +78,7 @@ WORKOUT
 ${aiPromptText()}
 8. Write "description", "setup" and "cues" in your own words; short, plain directions. Put where it came from in "source".
 
-LIBRARY (exercise ids under the [equipment] they use; "time" = measured in seconds, otherwise reps; "sides"/"dir" = takes those options)
+LIBRARY (exercise ids under the equipment they use; after an id: "time" = measured in seconds, otherwise reps; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y)
 ${libraryLines()}`;
 }
 function aiPromptText() { return $('#aiPrompt').innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/(\S) {2,}/g, '$1 '); }   // alignment spaces cost link length
