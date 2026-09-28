@@ -36,10 +36,10 @@
       ],
       "pose": {
         "torso": [135, 0, 0],
-        "shoulderL": [-225, 0, 0],
-        "elbowL": -270,
-        "shoulderR": [-225, 0, 0],
-        "elbowR": -270,
+        "shoulderL": [135, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [135, 0, 0],
+        "elbowR": 90,
         "hipL": [-39.8, 0, 0],
         "ankleL": -39.8,
         "hipR": [-39.8, 0, 0],
@@ -53,11 +53,12 @@
       "durationMs": 2600,
       "holdMs": 5000,
       "phase": "rep",
+      "anchor": "elbowR",
       "pose": {
         "root": [180, 0, 0],
-        "shoulderL": [-155, 0, 180],
+        "shoulderL": [155, 0, 0],
         "elbowL": 115,
-        "shoulderR": [-155, 0, 180],
+        "shoulderR": [155, 0, 0],
         "elbowR": 115
       }
     }

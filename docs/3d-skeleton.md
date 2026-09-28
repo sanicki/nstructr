@@ -1,16 +1,17 @@
 # Design note: a 3D skeleton, still drawn as SVG
 
-Status: **go** (owner, Sep 2026), as exercise format **v2**, before the submission pipeline (roadmap step 6).
-Step 1 of the plan is built (see "Progress" below); the app still draws with the 2D engine.
+Status: **built** (Sep 2026): exercise format **v2**. The app draws and solves every exercise in 3D, the library
+was converted, and format 1 is no longer read or written. What's left is fixing the poses that the range-of-motion
+check flags (see "Progress").
 
 ## Why
 
-The engine (`src/core.js`) is a flat 2D figure that pretends to have depth. Joints turn in the picture
+Until Sep 2026 the engine (`src/core.js`) was a flat 2D figure that pretended to have depth. Joints turn in the picture
 plane; "front" vs "side" view is a blend of two sets of angles (`v` 0 → 1); anything toward or away from the
 camera is faked with the `*Depth` joints (foreshortening by cos). Which leg is in front is a fixed drawing
 order, overridden per step with `layers`.
 
-That has held up for most of the library, but depth keeps leaking through:
+That held up for most of the library, but depth kept leaking through:
 
 - **Crossing legs** (Star Excursions, PRs #6–#10): `layers`, a "swap only while the legs are apart" rule, a
   look-ahead during holds, a moved middle pose and extra "Behind the standing heel" steps, all to fake one
@@ -46,47 +47,55 @@ cost on the cover screen, still works offline, still one file for the single-fil
 ```jsonc
 { "version": 2, …,
   "keyframes": [ {
-      "name": "Reach left", "cue": "…",
-      "camera": 0,                    // degrees around the vertical: 90 = side (facing right), 0 = front
+      "name": "Reach back left", "cue": "…",
+      "camera": 90,                   // degrees around the vertical: 90 = side (facing right), 0 = front
+      "anchor": "ankleL", "anchorX": -40, "anchorZ": 40,   // where the pinned point is (sideways, forward)
+      "touch": [{ "point": "toeR", "adjust": "hipR" }],       // "hipR" = its forward number; "hipR.side", "hipR.turn"
       "pose": {
-        "root":   [0, 0, 0],          // pitch (lean forward +), roll (to the figure's right +), yaw (turn left +)
-        "hipR":   [-25, 20, 0],       // flex (forward +), abduct (out to the side +), rotate (toes out +)
-        "kneeR":  60,                 // hinges stay one number
-        "elbowL": 70,
+        "torso":  [35, 0, 0],         // spine and whole body: forward (bend +), side (lean right +), turn (left +)
+        "hipR":   [-39.5, -25, 0],    // limbs: forward (+), side (out +), turn (out +)
+        "kneeR":  15,                 // hinges stay one number
         …
       } } ] }
 ```
 
-- Hinge joints (knees, elbows) stay a single angle; ball joints (hips, shoulders, spine segments, neck) take
-  three. Unlisted = neutral, as now.
-- Signs follow the body, not the screen: "flex forward is positive" means the same thing from any camera and on
-  either side, which also makes mirroring trivial (negate abduction and rotation, swap L/R).
-- `view` becomes `camera` (a number); `*Depth` joints disappear (they were the missing axis); `layers` is
-  removed.
-- `version: 2`. The app keeps reading version 1 through the converter below (`upgradeFile()` already exists
-  for this), so old exports, shared links and users' own exercises keep working.
+- Hinge joints (knees, elbows, ankles) stay a single angle; ball joints (hips, shoulders, spine segments, neck,
+  whole body) take three. Unlisted = 0.
+- Signs follow the body, not the screen: "forward is positive" means the same thing from any camera and on
+  either side, which also makes mirroring simple (swap L/R; negate the spine's and whole body's side and turn).
+- `view` became `camera` (a number); the `*Depth` joints are gone (they were the missing axis); `layers` is gone;
+  `reach.bend` is gone (a hinge bends one way); positions on the stage are world x (sideways) and z (forward):
+  `anchorX`/`anchorZ`, props' `z`/`x`, a band's fixed spot `{x, y, z}`, a wall `beside` or not.
+- `version: 2`. Format 1 isn't read any more: the owner's call once everything was converted, as there were no
+  other users yet.
 
-## Converting the library (136 exercises)
+## Converting the library (137 exercises, Sep 2026)
 
-- **Side-view steps**: today's angles are flexion in the sagittal plane → the flex component; depth joints →
-  abduction toward the camera side. Mostly mechanical.
-- **Front-view steps**: today's angles are abduction in the frontal plane → the abduct component.
-- **Mixed** (`thighDepth`, `armDepth`… used to fake a limb coming toward the camera): the depth angle plus the
-  in-plane angle give the 3D direction directly.
-- A script (`tools/convert-v2.mjs`) converts every file; the build then runs the animation checks on the v2
-  versions. Where a check fails, the conversion was an approximation that the old picture hid, and gets fixed
-  by hand (expected: a handful — twists, circles, Star Excursions).
-- The optimizer's deliberate angle representations (`540`, `-235`) carry over per component.
-- Side by side comparison page during the change: v1 vs v2 of each exercise, to catch anything that looks
-  different.
+Done by a one-off script (in git history: `tools/v1/convert.cjs`, removed with the v1 engine):
+
+- The v1 engine resolved each step (touch, reach, keep, plant), step 1's 3D skeleton gave its points in 3D, and the
+  v2 angles were **measured** from those points: whole body and spine directly (one angle in the picture plane =
+  lean forward from the side, sideways from the front), limbs as forward/side/turn + bend. Where several angles give
+  the same pose, the one closest to the v1 numbers was kept, so deliberate windings (`540`, `-235`) and the way
+  every move turns carried over.
+- Every converted pose reproduces its v1 picture exactly (0.00 px, from its own camera). Played side by side, 125 of
+  the 137 exercises stay within 2 px of the old animation through every move; the rest differ where the 3D figure
+  moves differently from the 2D blend (the camera turning, a sliding foot's knee bending forward instead of
+  sideways), which was checked by eye.
+- Fixed on the way: side-view left limbs "toward the camera" (across the body in 3D, but meant as out to their own
+  side) read as outward; front-view feet (sideways stubs in 2D) set level; the Star Excursions' reaches given real
+  directions (back-left goes back and across, the crossing leg is behind the standing one because it is) and one
+  standing-foot spot for both cameras; the Supported Headstand's arms, which were the mirror image in depth of
+  Dolphin's (the forearms flipped over between the two); Bound Angle's move gained a quiet knees-up step so the knees
+  don't dip through the floor.
 
 ## What changes for people
 
-- **Nothing visible** at first, except that crossings, twists and camera turns look right.
-- **The pose editor** gets three steppers per ball joint (e.g. hip: forward/back, out/in, turn), and a camera
-  stepper. Easier to reason about than today's signs, because they don't depend on the view.
-- **AI prompts** get simpler: one angle convention, no per-step view juggling.
-- **Submissions** (step 7) only ever see one format, which is why this goes first.
+- **Nearly nothing visible** at first, except that crossings, twists and camera turns look right.
+- **The pose editor** has three steppers per ball joint (forward, side, turn), one per hinge, and a camera row.
+  Easier to reason about than the old signs, because they don't depend on the view.
+- **AI prompts** are simpler: one angle convention, no per-step view juggling.
+- **Submissions** (step 7) only ever see one format, which is why this went first.
 
 ## Risks and costs
 
@@ -100,11 +109,12 @@ cost on the cover screen, still works offline, still one file for the single-fil
 
 ## Plan
 
-1. ✅ 3D FK + projection + depth-sorted SVG drawing behind the existing API, fed by converted v1 poses: prove the
-   picture matches (comparison page), and that crossings/turns are fixed.
-2. Contact solving (anchor, touch, plant, reach, keep, surfaces) on 3D points; checks on v2.
-3. Schema v2, converter, `upgradeFile()` for v1 → v2, convert the library, fix the failures.
-4. Pose editor, format reference and AI prompts for v2; remove `layers` and depth joints.
+1. ✅ 3D FK + projection + depth-sorted SVG drawing, fed by converted v1 poses: the picture matches.
+2. ✅ Contact solving (anchor, touch, plant, reach, keep, surfaces) on 3D points; checks on v2.
+3. ✅ Schema v2, converter, library converted, failures fixed (or listed as known issues, with why).
+4. ✅ Pose editor, format reference and AI prompts for v2; `layers` and depth joints removed; format 1 no longer
+   read or written.
+5. **Next**: the problem poses (below), then make the build reject poses past "flexible".
 
 ## Joint model
 
@@ -148,13 +158,13 @@ limit, to be tightened if it lets through poses that look wrong.
 
 ### The range check
 
-`S3D.joints()` measures each joint from the 3D points, in the body's own frame (the same numbers from any view);
-`S3D.outOfRange(points, 'normal' | 'flexible')` compares them with the table, and `tools/check3d.cjs` reports both
-for the whole library (informational for now: it doesn't fail the build).
+v2 poses are joint angles, so `tools/rom.cjs` reads them directly (after touch, reach and keep are solved, both
+sides, both directions) and compares them with the table, plus the turn of hips and shoulders (normal −40…45 and
+−70…90; flexible −60…90 and −90…110). The build prints the summary; it doesn't fail the build yet.
 
 - **Past normal** is expected for yoga and deep stretches: the report only counts exercises per joint.
-- **Past flexible** is listed step by step; these are the poses to fix when converting. As of Sep 2026 (21
-  exercises):
+- **Past flexible** is listed step by step (`node tools/rom.cjs`); these are the poses to fix. After the
+  conversion: 88 joints in 34 exercises. Most are the same poses the 2D check found:
   - **Knees folded completely flat** (170–180°: sitting cross-legged, kneeling, Crow, Pigeon, Marichyasana…): the
     stick figure folds the shin onto the thigh; a real knee stops around 155–160°. In v2 the shin sits beside the
     thigh.
@@ -165,34 +175,22 @@ for the whole library (informational for now: it doesn't fail the build).
   - **Swan's elbows** folded to 171° (hands under the shoulders): a real elbow stops around 150°.
   - A few hip readings in deep folds and twists (Extended Side Angle, Revolved Head-to-Knee, Half Moon), to look at
     in the comparison page.
-- Two things can't be judged until v2 adds the shoulder's twist: which way an elbow bends, and an arm raised
-  *behind* the body (flexion over the top, or out to the side and twisted, like hands behind the head). The check
-  skips both rather than guess.
+- New with v2's turn numbers: **arms turned half round** (shoulder turn −180) in Crunch, Swan, Overhead Triceps,
+  Half-Kneeling Hip Flexor and the towel stretch. The 2D pictures bent those elbows backwards; the conversion kept the
+  picture by turning the arm round. A body would reach the same place with the arm out to the side and turned a
+  little: to redo by hand.
 - Once v2 poses are written directly as joint angles, the same limits apply at the source: the pose editor clamps
   to them and the build rejects poses past "flexible", including ones written by AI.
 
 ## Progress
 
-**Step 1 (built).** `src/skeleton3d.js` gives every body point the coordinate the 2D figure leaves out: the hips' and
-shoulders' width, and `*Depth` angles (a limb turned toward the camera by d goes L·sin d toward it; the picture shows
-L·cos d). `project(points, yaw)` is the camera; `drawOrder()` sorts the parts far to near.
-- `tools/check3d.cjs` (run by the build): from each step's own view the 3D figure is today's picture, **0.0000 px
-  apart on all 545 steps** of the library (both sides, both directions). Front-view feet are the one deliberate
-  difference: the 2D engine draws them as sideways stubs; the 3D foot points forward.
-- `tools/compare3d.html` (serve the repo root; open `/tools/compare3d.html?ex=<id>`): today's figure beside the 3D one,
-  with a camera slider. Between steps the 3D bones turn (slerp), so limbs keep their length through camera turns.
-- What it found, for step 3 (converting the library):
-  - **Crossing legs.** 8 Star Excursion steps tell the 2D engine which leg is behind (`layers`). In 2 of them the
-    pose's own depth agrees; in 6 the pose doesn't hold the fact at all (front-view reaches with no depth, and two
-    side-view reaches whose diagonal behind the standing leg is missing). Converting them means writing the reach
-    as a real direction (back and across), after which `layers` can go.
-  - **Limbs straight in 2D but bent in 3D.** A knee or elbow at 0° whose two halves turn toward the camera by
-    different amounts is bent in 3D. 22 such limbs remain: some intended (a bench-press elbow bending toward the
-    camera), some not (Arm Circles' elbows, the Wall Sit + Pull-Apart knees). Leg Circles had this and is fixed.
-  - The check prints both lists.
+- Step 1 (Sep 2026): a 3D skeleton fed by v1 poses matched the 2D picture on all 545 steps (0.0000 px), and found
+  what the conversion would have to fix (crossing legs known only to `layers`, limbs straight in 2D but bent in 3D).
+- Steps 2–4 (Sep 2026): `src/core.js` is the 3D engine (joints, FK, camera, placement, touch/reach/keep/slide in
+  3D); the app draws each bone by depth; the library, schema, editor, format reference, AI prompt and tests are v2.
+  `tools/viewer3d.html` plays any exercise from any camera.
 
 ## Decisions for the owner
 
 - ~~Go / no-go, and timing~~: **go**, as v2, before step 7 (owner, Sep 2026).
-- Whether to keep a v1 export for a while (for anyone with tools built on v1), or read-only v1 support is
-  enough. Needed by step 3.
+- ~~Keep a v1 export?~~ No; and v1 import stops as soon as everything is v2 (owner, Sep 2026).

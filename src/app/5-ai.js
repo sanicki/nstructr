@@ -53,11 +53,11 @@ WHICH FILE
 - ONE exercise that is in the LIBRARY below: answer {"inLibrary":"<its id>"}.
 - ONE exercise that is not in the LIBRARY: an exercise file (EXERCISE FORMAT).
 - A ROUTINE of several exercises: a workout file:
-  {"format":"nstructr/workout","version":1,"workouts":[WORKOUT],"exercises":[new exercises, if any]}
+  {"format":"nstructr/workout","version":2,"workouts":[WORKOUT],"exercises":[new exercises, if any]}
   Use LIBRARY ids where an exercise matches by movement (not just by name). For any exercise with no reasonable match, write it in "exercises" (EXERCISE FORMAT, id starting "u-") and use that id in the workout.
 
 WORKOUT
-{"version":1,"id":"kebab-case-name","name":"...","description":"one sentence","blocks":[
+{"version":2,"id":"kebab-case-name","name":"...","description":"one sentence","blocks":[
   {"name":"Warm-up","rounds":1,"roundRest":30,"items":[
     {"ex":"<exercise id>","sets":1,"reps":10,"sides":"both","dir":"both","tempo":1},
     {"ex":"<exercise id>","seconds":30,"sides":"both"}]}]}

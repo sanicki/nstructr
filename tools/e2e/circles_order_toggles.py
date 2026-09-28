@@ -22,7 +22,7 @@ async def main():
         print('▶ through the steps     ', seen)
         await pg.evaluate("jumpTo(4)"); await pg.wait_for_timeout(50)
         print('on a quiet point        ', await pg.evaluate("[S.idx, S.resolved[4].quiet, $('#stepNum').textContent, $('#stepName').textContent, document.querySelector('#stepList [aria-current=step]').textContent.trim().slice(0,10)]"))
-        print('circle radius (hip/depth)', await pg.evaluate("S.ex.keyframes.slice(2,10).map(k=>[k.pose.hipR, k.pose.thighDepthR])"))
+        print('circle (hip forward, side)', await pg.evaluate("S.ex.keyframes.slice(2,10).map(k=>k.pose.hipR.slice(0,2))"))
         # workout order
         await pg.evaluate(FAKE)
         await pg.evaluate("WK.list.push({id:'o',name:'O',blocks:[{id:'b',name:'B',items:[{...newItem(exById('pil-leg-circles')),reps:1}]}]}); saveWorkouts(); go('#/workout/o')"); await pg.wait_for_timeout(300)

@@ -269,7 +269,8 @@ function reachTip(pose, seg, pos, ch, T, weight = 1, fade = true) {
   if (V3.len(p) < 1e-3) { pole = V3.mul({ x: Mp[2], y: Mp[5], z: Mp[8] }, arm ? -1 : 1); p = V3.sub(pole, V3.mul(n, V3.dot(n, pole))); }
   if (V3.len(p) < 1e-3) p = { x: Mp[1], y: Mp[4], z: Mp[7] };
   p = V3.unit(p);
-  const K = V3.add(J, V3.add(V3.mul(n, along), V3.mul(p, h))), Tt = V3.add(J, d);
+  const K = V3.add(J, V3.add(V3.mul(n, along), V3.mul(p, h)));
+  const Tt = V3.add(J, d);
   const sol = limbAngles(mtv(Mp, V3.sub(K, J)), mtv(Mp, V3.sub(Tt, K)), s, arm, { ball: pose[rootK], bend: pose[midK] });
   const oldMid = pose[midK];
   pose[rootK] = [0, 1, 2].map(i => lerp(pose[rootK][i], sol.ball[i], w));
@@ -278,23 +279,25 @@ function reachTip(pose, seg, pos, ch, T, weight = 1, fade = true) {
   return true;
 }
 
-/* 1-D solver: the value of x nearest x0 (within ±range) where f(x) = 0, or null */
+/* 1-D solver: the value of x nearest x0 (within ±range) where f(x) = 0, or null. Searches outward from x0 in both
+   directions and stops at the first sign change, then bisects it. */
 function root1D(f, x0, range = 80, step = 1) {
-  let prevX = null, prevF = null, best = null;
-  const brackets = [];
-  for (let d = -range; d <= range; d += step) {
-    const x = x0 + d, y = f(x);
-    if (Math.abs(y) < 1e-9) brackets.push([x, x]);
-    else if (prevF !== null && Math.sign(y) !== Math.sign(prevF)) brackets.push([prevX, x]);
-    prevX = x; prevF = y;
+  const f0 = f(x0);
+  if (Math.abs(f0) < 1e-9) return x0;
+  let lo = null, hi = null;
+  let pp = f0, pm = f0;
+  for (let d = step; d <= range + 1e-9 && lo === null; d += step) {
+    const yp = f(x0 + d);
+    if (Math.sign(yp) !== Math.sign(pp)) { lo = x0 + d - step; hi = x0 + d; break; }
+    pp = yp;
+    const ym = f(x0 - d);
+    if (Math.sign(ym) !== Math.sign(pm)) { lo = x0 - d + step; hi = x0 - d; break; }
+    pm = ym;
   }
-  if (!brackets.length) return null;
-  brackets.sort((p, q) => Math.min(Math.abs(p[0] - x0), Math.abs(p[1] - x0)) - Math.min(Math.abs(q[0] - x0), Math.abs(q[1] - x0)));
-  let [lo, hi] = brackets[0];
-  if (lo === hi) return lo;
+  if (lo === null) return null;
   let flo = f(lo);
-  for (let i = 0; i < 40; i++) { const mid = (lo + hi) / 2, fm = f(mid); if (Math.sign(fm) === Math.sign(flo)) { lo = mid; flo = fm; } else hi = mid; }
-  best = (lo + hi) / 2; f(best);
+  for (let i = 0; i < 24; i++) { const mid = (lo + hi) / 2, fm = f(mid); if (Math.sign(fm) === Math.sign(flo)) { lo = mid; flo = fm; } else hi = mid; }
+  const best = (lo + hi) / 2; f(best);
   return best;
 }
 
@@ -313,6 +316,7 @@ function slideContacts(a, b, e, pose, seg, pos, pinned) {
   for (const ch of CHAINS) {
     const tip = ch.tip + ch.s;
     if (pinned.includes(tip)) continue;
+    if (a.cam !== b.cam && ch.root === 'hip') continue;                // legs don't step while the camera turns between views
     const sa = supportAt(A[tip]), sb = supportAt(B[tip]);
     if (A[tip].y - sa > 3 || B[tip].y - sb > 3) continue;             // only limbs resting on a surface at both ends
     if (Math.abs(b.pose[ch.mid + ch.s] - a.pose[ch.mid + ch.s]) > 160) continue;   // a leg folding right over swings, it doesn't step
@@ -669,6 +673,6 @@ function mirrorKeyframe(kf) {
 if (typeof module !== 'undefined') module.exports = {
   phaseInfo, reverseReps, weightSVG, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
   propRoute, propPoint, resolveSequence, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
-  slideContacts, clampTips, reachTip, CHAINS, worldOf, sharedPin, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
+  normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
 };

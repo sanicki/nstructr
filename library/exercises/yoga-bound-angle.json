@@ -37,14 +37,51 @@
         "shoulderL": [-23.9, 0, 0],
         "shoulderR": [-23.9, 0, 0],
         "hipL": [90, 0, 0],
-        "hipR": [-270, 0, 0]
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Bend the knees",
+      "cue": "Draw the heels in toward you.",
+      "camera": 45,
+      "durationMs": 1200,
+      "holdMs": 0,
+      "phase": "setup",
+      "quiet": true,
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [125, 25, 25],
+        "kneeL": 125,
+        "hipR": [125, 25, 25],
+        "kneeR": 125
       }
     },
     {
       "name": "Bound Angle Pose",
       "cue": "Bring the soles together and let the knees fall open.",
       "camera": 0,
-      "durationMs": 2600,
+      "durationMs": 1600,
       "holdMs": 5000,
       "phase": "rep",
       "anchor": "pelvis",
@@ -75,7 +112,7 @@
         "hipL": [0, 100, 90],
         "kneeL": 180,
         "ankleL": -80,
-        "hipR": [-360, 100, 90],
+        "hipR": [0, 100, 90],
         "kneeR": 180,
         "ankleR": -80
       }
