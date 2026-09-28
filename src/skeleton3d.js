@@ -69,6 +69,73 @@
     return Math.abs(l - r) < 1 ? null : l < r ? 'L' : 'R';
   }
 
-  const api = { pose3d, project, drawOrder, backLeg, PARTS };
+  /* ---------- Joint model (docs/3d-skeleton.md, "Joint model") ----------
+     Modelled on an artist's mannequin: ball joints at the hips, shoulders, spine and neck; hinges at the knees and
+     elbows. Measured here from the 3D points, in the body's own frame (so the numbers mean the same from any view),
+     and compared with normal human range of motion (AAOS values). */
+  const V = { sub: (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z }), dot: (a, b) => a.x * b.x + a.y * b.y + a.z * b.z,
+    cross: (a, b) => ({ x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x }),
+    unit: a => { const l = Math.hypot(a.x, a.y, a.z) || 1; return { x: a.x / l, y: a.y / l, z: a.z / l }; } };
+  const deg = r => r * 180 / Math.PI;
+  /* the frame of a body part: right (hip to hip, or shoulder to shoulder), up (along the spine), forward */
+  function frame(P, left, rightPt, low, high) {
+    const up = V.unit(V.sub(P[high], P[low]));
+    let r = V.sub(P[rightPt], P[left]); r = V.unit(V.sub(r, { x: up.x * V.dot(r, up), y: up.y * V.dot(r, up), z: up.z * V.dot(r, up) }));
+    return { r, up, f: V.cross(r, up) };
+  }
+  /* a limb's direction as forward/back and out/in angles from hanging straight down, in a frame */
+  function swing(F, dir, s) {
+    const d = V.unit(dir), fwd = V.dot(d, F.f), down = -V.dot(d, F.up), out = V.dot(d, F.r) * (s === 'R' ? 1 : -1);
+    return { flex: deg(Math.atan2(fwd, down)), abd: deg(Math.atan2(out, Math.hypot(fwd, down))), up: down < 0 };
+  }
+  /* a hinge's bend (0 = straight) and whether it bends the wrong way: a knee folds the shin back, an elbow folds the
+     forearm forward, both around the part's left-right axis */
+  function hinge(F, a, b, backward) {
+    const u = V.unit(a), w = V.unit(b), bend = deg(Math.acos(Math.max(-1, Math.min(1, V.dot(u, w)))));
+    const side = V.dot(V.cross(u, w), F.r);
+    return { bend, wrongWay: bend > 15 && (backward ? side < -0.2 : side > 0.2) };
+  }
+  function joints(P) {
+    const pelvis = frame(P, 'hipL', 'hipR', 'pelvis', 'spine'), chest = frame(P, 'shoulderL', 'shoulderR', 'spine', 'neckBase'), J = {};
+    for (const s of ['L', 'R']) {
+      const thigh = V.sub(P['knee' + s], P['hip' + s]), shin = V.sub(P['ankle' + s], P['knee' + s]);
+      const arm = V.sub(P['elbow' + s], P['shoulder' + s]), fore = V.sub(P['hand' + s], P['elbow' + s]);
+      J['hip' + s] = swing(pelvis, thigh, s);
+      J['knee' + s] = hinge(pelvis, thigh, shin, true);
+      J['shoulder' + s] = swing(chest, arm, s);
+      J['elbow' + s] = hinge(chest, arm, fore, false);
+    }
+    const low = V.sub(P.spine, P.pelvis), high = V.sub(P.neckBase, P.spine);
+    J.spine = { bend: deg(Math.acos(Math.max(-1, Math.min(1, V.dot(V.unit(low), V.unit(high)))))) };
+    return J;
+  }
+  /* Range of motion, in degrees, measured from hanging straight down (flex + = forward, abd + = out to the side).
+     NORMAL: typical adults (AAOS). FLEXIBLE: what a trained, flexible person reaches (yoga, Pilates), with the pelvis
+     and spine helping; past it, the pose is one no body makes. The stick figure folds at single points, so deep
+     positions land a little past normal by design; only "past flexible" needs fixing. */
+  const ROM = {
+    normal:   { hipFlex: [-30, 120], hipAbd: [-30, 45], knee: [0, 135], shoulderFlex: [-60, 180], elbow: [0, 150] },
+    flexible: { hipFlex: [-60, 170], hipAbd: [-45, 95], knee: [-10, 165], shoulderFlex: [-80, 180], elbow: [-10, 170] }
+  };
+  /* joints outside a range: [{ joint, value, range }] */
+  function outOfRange(P, which = 'normal') {
+    const J = joints(P), L = ROM[which], out = [];
+    const chk = (joint, val, [lo, hi]) => { if (val < lo || val > hi) out.push({ joint, value: Math.round(val), range: [lo, hi] }); };
+    for (const s of ['L', 'R']) {
+      const h = J['hip' + s], k = J['knee' + s], sh = J['shoulder' + s], e = J['elbow' + s];
+      // forward/back is only measured while the leg (arm) isn't mostly out to the side, where it has no meaning
+      // a hip can't extend 120° back: a reading past that is a deep fold measured round the other way
+      if (Math.abs(h.abd) < 45) chk(`hip${s} forward/back`, h.flex < -120 ? h.flex + 360 : h.flex, L.hipFlex);
+      chk(`hip${s} out/in`, h.abd, L.hipAbd);
+      chk(`knee${s}`, k.wrongWay ? -k.bend : k.bend, L.knee);   // bending the wrong way counts as negative
+      // an arm raised behind the body can be flexion over the top, or abduction with a twist (hands behind the head):
+      // without the shoulder's twist (v2) it can't be told, so only an arm behind and *below* the shoulder is judged
+      if (Math.abs(sh.abd) < 45 && !(sh.up && sh.flex < 0)) chk(`shoulder${s} forward/back`, sh.flex, L.shoulderFlex);
+      chk(`elbow${s}`, e.bend, L.elbow);    // which way an elbow bends needs the shoulder's twist: v2 has it, v1 doesn't
+    }
+    return out;
+  }
+
+  const api = { pose3d, project, drawOrder, backLeg, joints, outOfRange, ROM, PARTS };
   if (typeof module !== 'undefined') module.exports = api; else root.S3D = api;
 })(typeof window !== 'undefined' ? window : globalThis);
