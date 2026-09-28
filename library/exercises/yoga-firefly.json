@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Squat with your feet a little narrower than hip-width.",
+    "Work your shoulders behind your knees and plant your hands behind your heels."
+  ],
   "facing": "right",
   "keyframes": [
     {

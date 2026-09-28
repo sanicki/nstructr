@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Sit tall and open your legs wide, kneecaps and toes pointing up.",
+    "Put your hands on the floor in front of you."
+  ],
   "facing": "right",
   "keyframes": [
     {

@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Lie on your belly with your legs straight and the tops of your feet on the floor.",
+    "Place your hands beside your lower ribs, elbows close to your body."
+  ],
   "facing": "right",
   "keyframes": [
     {

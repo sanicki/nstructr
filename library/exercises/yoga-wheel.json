@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Lie on your back with your knees bent and your feet flat, hip-width apart, near your hips.",
+    "Place your hands beside your ears, fingers pointing toward your shoulders, elbows up."
+  ],
   "facing": "right",
   "keyframes": [
     {

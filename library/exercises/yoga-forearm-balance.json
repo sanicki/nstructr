@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Kneel facing a wall and set your forearms down, parallel and shoulder-width apart.",
+    "Tuck your toes and lift your hips into Dolphin, walking your feet in."
+  ],
   "facing": "right",
   "keyframes": [
     {

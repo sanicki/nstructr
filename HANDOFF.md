@@ -503,9 +503,11 @@ steps or the joint will windmill; the jump check will catch it.
   own (imported/made), which exist only there.
 - **Exercise player**: the figure with a **tap-for-controls overlay** (previous step / play-pause / next step;
   same rules as the workout player: the first tap only shows them, they stay up while paused, fade while
-  playing; mouse hover shows them), progress, current step, then the selectors labelled **Side**, **Direction**,
-  **Speed**. The details are part of the page, below the controls (on screens ≥ 840 px a right-hand column):
-  **About** (description, chips), the time estimate ("About N s per round, each side"), **How to do it**,
+  playing; mouse hover shows them), progress, current step, then the selectors labelled **Side** and
+  **Direction** (no Speed selector or collection name since Sep 2026: exercises play at 1×). The details are part of
+  the page, below the controls (on screens ≥ 840 px a right-hand column): **About** (description, chips), **How to
+  do it** (setup, form, then the time estimate "About N s per round, each side", the source link and note, and the
+  prescription note),
   **Steps (n)** (collapsed), and the editor when open.
   - **Sound** follows the Sound setting: Silent / Beeps say nothing; Voice / Coach read each step's cue on the
     first pass (the step waits for it: `S.canAdvance`), then count reps (not for timed exercises). Pausing,
@@ -586,7 +588,7 @@ steps or the joint will windmill; the jump check will catch it.
 | `motion-guide-log-v1` | history sessions (capped at 500) |
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
 | `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |
-| `nstructr-speed-v1` | the exercise player's last-used speed (`0.5`, `1`, `2`), where the next exercise starts |
+| `nstructr-speed-v1` | no longer used (the exercise page's Speed selector was removed in Sep 2026; exercises play at 1×). Left in place; nothing reads it |
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
 | `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end) |
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
@@ -692,7 +694,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    exercises moved to Settings, Half Roll-Back without the band.
 6. ✅ **Audits**: Material Design 3, UI consistency, accessibility, layout, security, performance, library
    content. Report and what was fixed: `docs/audit-2026-09.md`. Re-run with `tools/audit.py` (axe-core + touch
-   targets + text size + sideways scroll) and `tools/perf.py`. Follow-ups: Setup for the 52 yoga poses, source
+   targets + text size + sideways scroll) and `tools/perf.py`. Follow-ups: ~~Setup for the 52 yoga poses~~ (done), source
    links for 52 exercises, a TalkBack pass on the Flip7.
 
 ---

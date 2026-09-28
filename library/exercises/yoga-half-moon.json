@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Start in Triangle Pose, or a wide stance with the front foot turned out.",
+    "Bend your front knee and place your lower hand on the floor or a block ahead of your front foot."
+  ],
   "facing": "right",
   "keyframes": [
     {

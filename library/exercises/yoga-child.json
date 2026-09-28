@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Kneel and sit your hips back toward your heels, big toes touching.",
+    "Bring your knees together or wide, then walk your hands forward."
+  ],
   "facing": "right",
   "keyframes": [
     {

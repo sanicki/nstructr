@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Sit with your knees bent and feet flat, hands lightly behind your thighs.",
+    "Lean back a little until you balance just behind your sit bones, then lift your feet."
+  ],
   "facing": "right",
   "keyframes": [
     {

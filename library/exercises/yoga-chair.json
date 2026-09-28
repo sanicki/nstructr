@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Stand with your feet together or hip-width apart.",
+    "Reach your arms up beside your ears before you bend your knees."
+  ],
   "facing": "right",
   "keyframes": [
     {

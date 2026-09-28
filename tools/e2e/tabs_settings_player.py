@@ -27,11 +27,9 @@ async def main():
         await pg.click('[data-settheme="dark"]'); await pg.click('[data-setsound="voice"]')
         print('no speed setting        ', await pg.evaluate("!document.querySelector('[data-setspeed]')"))
         await pg.click('#setAuthoring'); await pg.click('#setFullscreen'); await pg.wait_for_timeout(100)
-        # the exercise player remembers the speed you pick: it's where the next exercise starts
-        await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(300); await pg.click('#speedSeg [data-speed="0.5"]')
         await pg.evaluate("go('#/settings')"); await pg.wait_for_timeout(200)
         await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
-        print('settings after reload   ', await pg.evaluate("[document.documentElement.dataset.theme, defaultSpeed(), WK.sound, authoring(), wantFullscreen()]"),
+        print('settings after reload   ', await pg.evaluate("[document.documentElement.dataset.theme, WK.sound, authoring(), wantFullscreen()]"),
               await pg.evaluate("[...document.querySelectorAll('#view-settings [aria-pressed=true]')].map(x=>x.textContent)"))
         # exercise player
         await pg.evaluate("go('#/play/bw-reverse-lunge')"); await pg.wait_for_timeout(500)
@@ -52,8 +50,8 @@ async def main():
         print('tap figure while playing', await pg.evaluate(st), '<- hides')
         await pg.keyboard.press('Space'); await pg.wait_for_timeout(200)
         print('Space pauses            ', await pg.evaluate(st))
-        # the details are part of the page, in order: speed selector, About, time, How to do it, Steps, (Edit)
-        order = "[...document.querySelectorAll('#speedSeg, #aboutTitle, #exTime, #howTitle, #stepsPanel')].map(e=>Math.round(e.getBoundingClientRect().top))"
+        # the details are part of the page, in order: Side, About, How to do it (with the time), Steps, (Edit)
+        order = "[...document.querySelectorAll('#sideSeg, #aboutTitle, #howTitle, #exTime, #stepsPanel')].map(e=>Math.round(e.getBoundingClientRect().top))"
         tops = await pg.evaluate(order)
         print('page order (tops)       ', tops, '<- increasing' if tops == sorted(tops) else '<- OUT OF ORDER')
         print('labels                  ', await pg.evaluate("[...document.querySelectorAll('.controls-row .ctl:not([hidden]) .ctl-label')].map(x=>x.textContent)"))

@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Lie on your belly with your arms by your sides, palms down or up.",
+    "Rest your forehead on the floor and keep your legs straight and together."
+  ],
   "facing": "right",
   "keyframes": [
     {

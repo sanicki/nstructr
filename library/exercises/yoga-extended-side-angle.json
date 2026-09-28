@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Stand with your feet wide apart; turn your front foot out and your back foot slightly in.",
+    "Bend your front knee over the ankle, arms out to the sides."
+  ],
   "facing": "right",
   "keyframes": [
     {

@@ -41,7 +41,6 @@ function showJson(title, text) {
 function renderPlayerInfo() {
   const ex = S.ex; if (!ex) return;
   const pr = ex.prescription || {};
-  $('#exKicker').textContent = ex.library || (isOwn(ex.id) ? 'My exercises' : '');
   $('#exName').textContent = ex.name;
   $('#exSub').textContent = ex.sanskrit || '';
   const chips = [];
@@ -50,7 +49,6 @@ function renderPlayerInfo() {
   if (ex.category && ex.category !== ex.focus) c('category', ex.category);
   (ex.equipment || []).forEach(q => c(/band/i.test(q) ? 'fitness_center' : /towel/i.test(q) ? 'dry_cleaning' : /wall|door/i.test(q) ? 'door_front' : 'handyman', q));
   if (pr.reps) c('tag', /\d\s*$/.test(pr.reps) ? `${pr.reps} ${ex.repName && ex.repName !== 'rep' ? ex.repName + 's' : 'reps'}` : pr.reps);
-  $('#exTime').innerHTML = `<span class="icon">timer</span>About ${Math.round(S.total / 1000)} s per round${ex.bilateral ? ', each side' : ''}`;
   $('#stepsTitle').textContent = `Steps (${S.resolved.length})`;
   // steps
   const phaseTag = i => { const ph = (S.ex.keyframes[i] || {}).phase; return ph === 'setup' ? ' <span class="tag">Setup</span>' : ph === 'finish' ? ' <span class="tag">Finish</span>' : ''; };
@@ -61,14 +59,17 @@ function renderPlayerInfo() {
   let how = '';
   if (ex.setup) how += `<h3 class="title-small">Setup</h3><ol>${ex.setup.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`;
   if (ex.cues) how += `<h3 class="title-small">Form</h3><ul>${ex.cues.map(s => `<li>${esc(s)}</li>`).join('')}</ul>`;
-  if (pr.note) how += `<div class="note"><span class="icon">info</span><span class="body-medium">${esc(pr.note)}</span></div>`;
-  $('#howPanel').innerHTML = how || '<p class="muted">No instructions for this exercise.</p>';
-  // about
+  if (!how) how = '<p class="muted">No instructions for this exercise.</p>';
+  // then: how long a round takes, where it comes from, and the note on reps
   const src = ex.source || {};
+  how += `<p class="ex-time body-medium" id="exTime"><span class="icon">timer</span>About ${Math.round(S.total / 1000)} s per round${ex.bilateral ? ', each side' : ''}</p>`;
+  if (/^https?:\/\//i.test(src.url || '')) how += `<p class="ex-src"><a class="source" href="${esc(src.url)}" target="_blank" rel="noopener"><span class="icon" style="font-size:18px">${/youtu/.test(src.url) ? 'play_circle' : 'open_in_new'}</span>${esc(src.title || 'Source')}</a></p>`;   // only web links: a shared file could carry javascript:
+  if (src.note) how += `<p class="body-small muted">${esc(src.note)}</p>`;
+  if (pr.note) how += `<div class="note"><span class="icon">info</span><span class="body-medium">${esc(pr.note)}</span></div>`;
+  $('#howPanel').innerHTML = how;
+  // about
   $('#aboutPanel').innerHTML = `${ex.description ? `<p class="body-large">${esc(ex.description)}</p>` : ''}
     ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
-    ${/^https?:\/\//i.test(src.url || '') ? `<p><a class="source" href="${esc(src.url)}" target="_blank" rel="noopener"><span class="icon" style="font-size:18px">${/youtu/.test(src.url) ? 'play_circle' : 'open_in_new'}</span>${esc(src.title || 'Source')}</a></p>` : ''}
-    ${src.note ? `<p class="body-small muted">${esc(src.note)}</p>` : ''}
     <div class="row" style="margin-top:12px">${findInDb(ex.id) ? '' : `<button class="btn tonal stateful" data-act="shareEx"><span class="icon">share</span>Share</button>`}
     <button class="btn text stateful authoring-only" data-act="json"><span class="icon">data_object</span>Show JSON</button>
     ${isOwn(ex.id) ? `<button class="btn text stateful danger" data-del="${esc(ex.id)}"><span class="icon">delete</span>Delete</button>` : ''}</div>`;
@@ -162,7 +163,6 @@ function applyAuthoring() {
 }
 /* exercises start playing when opened, unless turned off (or the system asks for reduced motion) */
 const autoplay = () => pref(AUTOPLAY_KEY, 'on') !== 'off' && !matchMedia('(prefers-reduced-motion: reduce)').matches;
-const defaultSpeed = () => +pref(SPEED_KEY, '1') || 1;
 /* seconds of rest between exercises, in every workout (a setting since Sep 2026; workout files' "restBetween" is ignored) */
 /* − / + buttons: one step per tap, hold to keep going (the tap that ends a hold adds nothing) */
 function holdRepeat(box, sel, nudge) {

@@ -15,6 +15,10 @@
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
+  "setup": [
+    "Step one foot back into a long lunge, back heel lifted, front knee over the ankle.",
+    "Bring your palms together at your chest."
+  ],
   "facing": "right",
   "keyframes": [
     {
