@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-humble-warrior",
+  "name": "Humble Warrior",
+  "otherNames": ["Baddha Virabhadrasana", "Bound Warrior"],
+  "category": "Standing",
+  "focus": "Legs, hips and shoulders",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "From a Warrior 1 stance, clasp your hands behind your back and fold the chest inside the front knee, arms lifting away from your back.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/humble-warrior/",
+    "title": "Yoga Journal: Humble Warrior"
+  },
+  "setup": ["Start in Warrior 1 with the right foot forward.", "Interlace your fingers behind your back."],
+  "cues": ["Bow inside the front knee.", "Let your arms lift away from your back.", "Keep the back heel down."],
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall, feet together.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Humble Warrior",
+      "cue": "Hands clasped behind you, bow inside the right knee.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": [70, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [-70, -10, 0],
+        "shoulderR": [-70, -10, 0],
+        "hipL": [-60, 0, 0],
+        "ankleL": -60,
+        "hipR": [90, 10, 0],
+        "kneeR": 90
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-lizard",
+  "name": "Lizard Pose",
+  "otherNames": ["Utthan Pristhasana", "Lizard Lunge"],
+  "category": "Hip opener",
+  "focus": "Hips and hip flexors",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "A deep lunge with both hands inside the front foot: back knee down, hips sinking low to open the hips.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/lizard-pose/",
+    "title": "Yoga Journal: Lizard Pose"
+  },
+  "setup": ["From a low lunge with the right foot forward, bring both hands inside the right foot."],
+  "cues": ["Let your hips sink.", "Chest long, not collapsing.", "Come onto the forearms only if it's easy."],
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall, feet together.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Lizard Pose",
+      "cue": "Right foot forward, hands inside it, back knee down.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": [60, 0, 0],
+        "neck": [-20, 0, 0],
+        "shoulderL": [30, 0, 0],
+        "shoulderR": [30, 0, 0],
+        "hipR": [110, 20, 20],
+        "kneeR": 110,
+        "hipL": [-35, 0, 0],
+        "kneeL": 60,
+        "ankleL": 60
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

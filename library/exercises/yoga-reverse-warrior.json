@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-reverse-warrior",
+  "name": "Reverse Warrior",
+  "otherNames": ["Viparita Virabhadrasana", "Peaceful Warrior"],
+  "category": "Standing",
+  "focus": "Legs and side body",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "From Warrior 2, keep the front knee bent and arc the front arm up and back while the back hand rests on the back leg.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/reverse-warrior/",
+    "title": "Yoga Journal: Reverse Warrior"
+  },
+  "setup": ["Start in Warrior 2 with the right knee bent."],
+  "cues": ["Keep the front knee over the ankle.", "Lift through the side body, don't sink into the back hand.", "Breathe into your ribs."],
+  "keyframes": [
+    {
+      "name": "Warrior 2",
+      "cue": "Right knee bent, arms wide.",
+      "camera": 0,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "shoulderL": [0, 90, 0],
+        "shoulderR": [0, 90, 0],
+        "hipL": [0, 60, 0],
+        "hipR": [0, 90, 90],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Reverse Warrior",
+      "cue": "Right arm up and back, left hand slides down the back leg.",
+      "camera": 0,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "torso": [0, -18, 0],
+        "chest": [0, -12, 0],
+        "neck": [0, -8, 0],
+        "shoulderL": [0, 20, 0],
+        "shoulderR": [0, 160, 0],
+        "hipL": [0, 60, 0],
+        "hipR": [0, 90, 90],
+        "kneeR": 90
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

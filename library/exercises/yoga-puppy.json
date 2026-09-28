@@ -1,0 +1,93 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-puppy",
+  "name": "Puppy Pose",
+  "otherNames": ["Uttana Shishosana", "Extended Puppy Pose"],
+  "category": "Stretch",
+  "focus": "Shoulders and upper back",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "Between Child's Pose and Downward Dog: hips stay over the knees while the arms walk forward and the chest melts toward the floor.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/extended-puppy-pose/",
+    "title": "Yoga Journal: Extended Puppy Pose"
+  },
+  "setup": ["Start on hands and knees."],
+  "cues": ["Hips over your knees.", "Melt your chest down.", "Arms long, elbows off the floor."],
+  "keyframes": [
+    {
+      "name": "Tabletop",
+      "cue": "Hands under shoulders, knees under hips.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Puppy Pose",
+      "cue": "Hips over your knees, walk the hands forward, chest down.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "kneeR",
+      "touch": [
+        {
+          "point": "headLow",
+          "adjust": "torso"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": [95, 0, 0],
+        "chest": [20, 0, 0],
+        "neck": [-10, 0, 0],
+        "shoulderL": [175, 0, 0],
+        "shoulderR": [175, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

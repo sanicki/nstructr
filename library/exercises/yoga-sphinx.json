@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-sphinx",
+  "name": "Sphinx Pose",
+  "otherNames": ["Salamba Bhujangasana"],
+  "category": "Backbend",
+  "focus": "Lower back and chest",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "A gentle backbend on your forearms: lying face down with elbows under your shoulders, lift your chest and look ahead.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/sphinx-pose/",
+    "title": "Yoga Journal: Sphinx Pose"
+  },
+  "setup": ["Lie face down, legs long.", "Forearms on the mat, elbows under your shoulders."],
+  "cues": ["Press your forearms down.", "Lengthen your tailbone toward your heels.", "Neck long, gaze ahead."],
+  "keyframes": [
+    {
+      "name": "Lie on your belly",
+      "cue": "Lie face down, arms reaching forward along the mat.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Forearms down",
+      "cue": "Slide your forearms forward, elbows under your shoulders.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "torso": [-18, 0, 0],
+        "neck": [-10, 0, 0],
+        "shoulderL": [140, 0, 0],
+        "elbowL": 30,
+        "shoulderR": [140, 0, 0],
+        "elbowR": 30,
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Sphinx Pose",
+      "cue": "Forearms down, elbows under your shoulders, chest up.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "torso": [-36, 0, 0],
+        "neck": [6, 0, 0],
+        "shoulderL": [54, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [54, 0, 0],
+        "elbowR": 90,
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 2,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

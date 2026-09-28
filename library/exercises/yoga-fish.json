@@ -1,0 +1,58 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-fish",
+  "name": "Fish Pose",
+  "otherNames": ["Matsyasana"],
+  "category": "Backbend",
+  "focus": "Chest and throat",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "A backbend lying on your back: lift your chest and let the crown of your head rest lightly on the floor, arms along your sides.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/fish-pose/",
+    "title": "Yoga Journal: Fish Pose"
+  },
+  "setup": ["Lie on your back, legs long, arms by your sides."],
+  "cues": ["Press your forearms and elbows down to lift your chest.", "Keep the weight off your head.", "Legs stay active."],
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Legs long, arms by your sides.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0]
+      }
+    },
+    {
+      "name": "Fish Pose",
+      "cue": "Lift your chest, crown of the head light on the floor.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "torso": [25, 0, 0],
+        "neck": [-80, 0, 0],
+        "shoulderL": [5, 0, 0],
+        "shoulderR": [5, 0, 0]
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

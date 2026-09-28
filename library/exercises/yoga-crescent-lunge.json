@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-crescent-lunge",
+  "name": "Crescent Lunge",
+  "otherNames": ["Ashta Chandrasana", "High Lunge"],
+  "category": "Standing",
+  "focus": "Legs and hip flexors",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "A high lunge on the ball of the back foot: front knee bent over the ankle, back leg long, arms reaching up.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/high-lunge-crescent-variation/",
+    "title": "Yoga Journal: High Lunge, Crescent Variation"
+  },
+  "setup": ["From standing, step your left foot back and rise onto its ball."],
+  "cues": ["Front knee over the ankle.", "Back leg strong and long.", "Ribs down as your arms reach up."],
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall, feet together.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Crescent Lunge",
+      "cue": "Right knee bent, back heel lifted, arms up.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-180, 0, 0],
+        "shoulderR": [-180, 0, 0],
+        "hipR": [85, 0, 0],
+        "kneeR": 90,
+        "hipL": [-40, 0, 0],
+        "kneeL": 12,
+        "ankleL": 30
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}
