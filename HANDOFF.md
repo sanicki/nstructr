@@ -23,11 +23,11 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **225 exercises, 1 workout**.
+Library today: **226 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
-| Yoga | 74 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess…) |
+| Yoga | 75 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) |
 | Free weights | 30 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
 | Bodyweight | 21 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning… |
 | Resistance band | 26 | 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |

@@ -22,7 +22,7 @@
   "keyframes": [
     {
       "name": "Stand on your left leg",
-      "cue": "Right foot just off the floor.",
+      "cue": "Lift your right foot, knee bent.",
       "camera": 0,
       "durationMs": 1500,
       "holdMs": 300,
@@ -30,8 +30,8 @@
       "anchor": "ankleL",
       "plant": ["L"],
       "pose": {
-        "hipR": [20, 0, 0],
-        "kneeR": 45
+        "hipR": [30, 0, 0],
+        "kneeR": 90
       }
     },
     {
@@ -44,8 +44,8 @@
       "anchor": "ankleL",
       "plant": ["L"],
       "pose": {
-        "hipR": [20, 0, 0],
-        "kneeR": 45,
+        "hipR": [30, 0, 0],
+        "kneeR": 90,
         "shoulderR": [0, 170, 90]
       }
     },
@@ -59,8 +59,8 @@
       "anchor": "ankleL",
       "plant": ["L"],
       "pose": {
-        "hipR": [20, 0, 0],
-        "kneeR": 45,
+        "hipR": [30, 0, 0],
+        "kneeR": 90,
         "shoulderR": [0, 90, 0]
       }
     },
@@ -74,8 +74,8 @@
       "anchor": "ankleL",
       "plant": ["L"],
       "pose": {
-        "hipR": [20, 0, 0],
-        "kneeR": 45,
+        "hipR": [30, 0, 0],
+        "kneeR": 90,
         "shoulderR": [-40, 20, 0]
       }
     },
@@ -89,8 +89,8 @@
       "anchor": "ankleL",
       "plant": ["L"],
       "pose": {
-        "hipR": [20, 0, 0],
-        "kneeR": 45
+        "hipR": [30, 0, 0],
+        "kneeR": 90
       }
     }
   ],

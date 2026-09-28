@@ -20,6 +20,8 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
     matches under each collection they're in;
   - **off**: one list of everything that matches, A–Z.
 - Inside one collection, and in Bookmarked and My exercises, exercises are listed A–Z.
+- **My exercises** has a **Create with AI** button (as on Workouts) to make a new exercise with an AI app; see
+  [Create with AI](Create-with-AI.md).
 
 <img src="images/exercises-collection.png" width="300" alt="A collection with its type and equipment filters">
 

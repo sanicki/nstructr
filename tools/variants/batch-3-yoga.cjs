@@ -108,7 +108,7 @@ module.exports = [
     cues: ['Press your forearms and elbows down to lift your chest.', 'Keep the weight off your head.', 'Legs stay active.'], source: YJ('fish-pose', 'Fish Pose') }),
   pose('yoga-reclined-bound-angle', 'Reclined Bound Angle Pose', 'Supta Baddha Konasana', ['Reclining Butterfly'], { category: 'Restorative', focus: 'Inner thighs and hips',
     edit: ex => { ex.keyframes = [SUPINE, K('Reclined Bound Angle Pose', 'Soles together, knees fall open, arms relaxed.',
-      { root: [-90, 0, 0], neck: [34, 0, 0], shoulderL: [0, 40, 0], shoulderR: [0, 40, 0], hipL: [50, 55, 90], kneeL: 130, hipR: [50, 55, 90], kneeR: 130 },
+      { root: [-90, 0, 0], neck: [34, 0, 0], shoulderL: [0, 40, 0], shoulderR: [0, 40, 0], hipL: [5, 60, 90], kneeL: 150, hipR: [5, 60, 90], kneeR: 150 },
       { ...HOLD, anchor: 'neckBase', camera: 25 })]; },
     description: 'Lying on your back with the soles of your feet together, let your knees fall open to the sides and rest.',
     setup: ['Lie on your back, knees bent, feet flat.'],
