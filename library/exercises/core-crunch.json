@@ -3,6 +3,7 @@
   "version": 2,
   "id": "core-crunch",
   "name": "Crunch",
+  "otherNames": ["Abdominal Curl"],
   "category": "Core",
   "focus": "Abdominals",
   "collections": ["Core"],
