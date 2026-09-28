@@ -1,0 +1,64 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-side-kick",
+  "name": "Side Kick",
+  "otherNames": ["Side Kick Front and Back", "Side-Lying Leg Kick"],
+  "category": "Core",
+  "focus": "Hips and core",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying on your side with legs slightly forward, kick the top leg forward with a double pulse, then sweep it back behind you, body still.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-side-kicks/",
+    "title": "Online Pilates Classes: Side Kicks on the Mat"
+  },
+  "setup": ["Lie on your side, head propped on your hand or arm, legs slightly forward of your hips."],
+  "cues": ["Keep your body still.", "Top leg at hip height.", "Long through the leg."],
+  "prescription": {
+    "reps": "8–10 each leg",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  },
+  "keyframes": [
+    {
+      "name": "Kick forward",
+      "cue": "Lying on your side, kick the top leg forward twice.",
+      "camera": 40,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "rep",
+      "pose": {
+        "root": [0, -90, 0],
+        "neck": [0, 8, 0],
+        "shoulderL": [0, -180, 0],
+        "hipL": [20, 0, 0],
+        "hipR": [80, 5, 0]
+      }
+    },
+    {
+      "name": "Sweep back",
+      "cue": "Sweep it back behind you.",
+      "camera": 40,
+      "durationMs": 1100,
+      "holdMs": 0,
+      "phase": "rep",
+      "pose": {
+        "root": [0, -90, 0],
+        "neck": [0, 8, 0],
+        "shoulderL": [0, -180, 0],
+        "hipL": [20, 0, 0],
+        "hipR": [-25, 5, 0]
+      }
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right knee opens",
+      "R": "Left knee opens"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

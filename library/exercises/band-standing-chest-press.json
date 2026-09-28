@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-standing-chest-press",
+  "name": "Standing Band Chest Press",
+  "otherNames": ["Band Chest Press (Door Anchor)"],
+  "category": "Strength",
+  "focus": "Chest and front of the shoulders",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band", "Door anchor"],
+  "description": "With a band anchored behind you at chest height, press both hands forward from your chest until your arms are nearly straight, then return.",
+  "source": {
+    "url": "https://tribelifting.com/blogs/news/how-door-straps-enhance-your-upper-body-training",
+    "title": "Tribe Lifting: Door anchor exercises"
+  },
+  "setup": ["Anchor the band at chest height on a closed door behind you.", "Face away, one foot in front, hands at your chest."],
+  "cues": ["Staggered stance.", "Press straight ahead.", "Return slowly."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Pick a band you can control for every rep; about 2 seconds each way."
+  },
+  "keyframes": [
+    {
+      "name": "Hands at your chest",
+      "cue": "Back to the door, hands by your chest, elbows back.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipR": [18, 0, 0],
+        "hipL": [-8, 0, 0],
+        "shoulderL": [-15, 45, 0],
+        "elbowL": 110,
+        "shoulderR": [-15, 45, 0],
+        "elbowR": 110
+      }
+    },
+    {
+      "name": "Press",
+      "cue": "Press both hands straight forward.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipR": [18, 0, 0],
+        "hipL": [-8, 0, 0],
+        "shoulderL": [85, 5, 0],
+        "shoulderR": [85, 5, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "z": -150
+    },
+    {
+      "type": "band",
+      "from": {
+        "z": -150,
+        "y": 240
+      },
+      "to": "handL",
+      "via": ["armpitL"]
+    },
+    {
+      "type": "band",
+      "from": {
+        "z": -150,
+        "y": 240
+      },
+      "to": "handR",
+      "via": ["armpitR"]
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

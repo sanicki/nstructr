@@ -13,7 +13,7 @@ ANSWER = """(() => {
   Object.assign(odd, { id: 'u-knee-arms', name: 'Knee Arm Windmill' }); delete odd.collections;
   return JSON.stringify({ format: 'nstructr/workout', version: 2, workouts: [{ name: 'From a video', blocks: [{ name: 'Main', items: [
     { ex: 'bw-squat', calledInSource: 'Squats', equipmentInSource: [], reps: 10 },
-    { ex: 'yoga-bridge', calledInSource: 'Shoulder Bridge', equipmentInSource: ['Yoga mat'], seconds: 30 },
+    { ex: 'yoga-bridge', calledInSource: 'Bridge Lift', equipmentInSource: ['Yoga mat'], seconds: 30 },
     { ex: 'bw-squat', calledInSource: 'Resistance Band Squat', equipmentInSource: ['Resistance band'], reps: 12 },
     { ex: 'bw-glute-bridge', calledInSource: 'Dumbbell Hip Thrust', equipmentInSource: ['Dumbbells', 'Bench'], reps: 10 },
     { ex: 'u-hip-raise', calledInSource: 'Hip Raise', reps: 12 },

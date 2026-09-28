@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-face-pull",
+  "name": "Band Face Pull",
+  "otherNames": ["Face Pull", "Resistance Band Face Pull"],
+  "category": "Strength",
+  "focus": "Upper back and rear shoulders",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band", "Door anchor"],
+  "description": "With a band anchored at face height on a door, pull it toward your face with elbows high and wide, squeezing your shoulder blades, then return.",
+  "source": {
+    "url": "https://aerobis.com/blogs/fitness/face-pulls-with-resistance-bands",
+    "title": "Aerobis: Face pulls with a resistance band"
+  },
+  "setup": ["Anchor the band at eye to forehead height on a closed door.", "Face the door, holding an end in each hand, arms straight."],
+  "cues": ["Elbows high and wide.", "Squeeze your shoulder blades.", "Don't shrug."],
+  "prescription": {
+    "reps": "12–15",
+    "note": "Pick a band you can control for every rep; about 2 seconds each way."
+  },
+  "keyframes": [
+    {
+      "name": "Arms forward",
+      "cue": "Facing the door, arms straight toward the anchor.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "shoulderL": [100, 0, 0],
+        "shoulderR": [100, 0, 0]
+      }
+    },
+    {
+      "name": "Pull to your face",
+      "cue": "Pull toward your face, elbows high and wide, hands by your ears.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "shoulderL": [0, 90, 90],
+        "elbowL": 100,
+        "shoulderR": [0, 90, 90],
+        "elbowR": 100
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "z": 170
+    },
+    {
+      "type": "band",
+      "from": {
+        "z": 170,
+        "y": 290
+      },
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": {
+        "z": 170,
+        "y": 290
+      },
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

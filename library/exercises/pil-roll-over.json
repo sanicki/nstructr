@@ -1,0 +1,79 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-roll-over",
+  "name": "Roll-Over",
+  "otherNames": ["Rollover"],
+  "category": "Core",
+  "focus": "Abs and spine",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying on your back, lift your straight legs and roll them over your head toward the floor behind you, then roll down slowly with control.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Lie on your back, arms long by your sides, palms down."],
+  "cues": ["Press your arms into the mat.", "Roll over, don't swing.", "Keep the weight off your neck."],
+  "prescription": {
+    "reps": "3–5",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  },
+  "keyframes": [
+    {
+      "name": "Legs up",
+      "cue": "Lying down, lift your legs straight up.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Roll over",
+      "cue": "Roll your legs over your head, toes toward the floor.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-170, 0, 0],
+        "neck": [114, 0, 0],
+        "shoulderL": [-75, 0, 0],
+        "shoulderR": [-75, 0, 0],
+        "hipL": [110, 0, 0],
+        "hipR": [110, 0, 0]
+      }
+    },
+    {
+      "name": "Roll down",
+      "cue": "Roll down one vertebra at a time, legs lowering.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [60, 0, 0],
+        "hipR": [60, 0, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  }
+}

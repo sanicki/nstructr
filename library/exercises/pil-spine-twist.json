@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-spine-twist",
+  "name": "Spine Twist",
+  "otherNames": ["Pilates Spine Twist"],
+  "category": "Core",
+  "focus": "Spine and obliques",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Sitting tall with legs together and arms out wide, twist your upper body to one side with a double pulse, return to center, then twist to the other side.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Sit tall, legs straight and together, feet flexed, arms out to the sides."],
+  "cues": ["Grow taller as you twist.", "Hips stay still.", "Breathe out as you turn."],
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Legs together, arms out to the sides.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0],
+        "torso": [0, 0, 0],
+        "chest": [0, 0, 0],
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0]
+      }
+    },
+    {
+      "name": "Twist right",
+      "cue": "Turn to the right, pulse twice.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0],
+        "torso": [0, 0, -40],
+        "chest": [0, 0, -28],
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0]
+      }
+    },
+    {
+      "name": "Center",
+      "cue": "Back to the middle.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0],
+        "torso": [0, 0, 0],
+        "chest": [0, 0, 0],
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0]
+      }
+    },
+    {
+      "name": "Twist left",
+      "cue": "Turn to the left, pulse twice.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0],
+        "torso": [0, 0, 40],
+        "chest": [0, 0, 28],
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  },
+  "prescription": {
+    "reps": "3–5 each side",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  }
+}

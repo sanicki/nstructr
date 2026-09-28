@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-side-bend",
+  "name": "Side Bend",
+  "otherNames": ["Pilates Side Bend"],
+  "category": "Core",
+  "focus": "Obliques and shoulders",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "From a side plank on one hand, reach the top arm up and over your head as the hips lift, making an arc, then return.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-side-bend/",
+    "title": "Online Pilates Classes: Side Bend on the Mat"
+  },
+  "setup": ["Sit on one hip, legs straight and stacked, supporting hand on the mat under your shoulder."],
+  "cues": ["Press the floor away.", "Reach long through the top arm.", "Hips lift, don't sag."],
+  "keyframes": [
+    {
+      "name": "Side plank",
+      "cue": "Lift into a side plank on your left hand.",
+      "camera": 90,
+      "durationMs": 1300,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "handL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR.side"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "root": [0, -66, -90],
+        "shoulderL": [0, 66, 0],
+        "shoulderR": [0, 114, 0],
+        "hipL": [0, 4, 0],
+        "hipR": [0, -13.3, 0]
+      }
+    },
+    {
+      "name": "Arc over",
+      "cue": "Reach your top arm over your head, hips lifting higher.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "handL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR.side"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "root": [0, -66, -90],
+        "shoulderL": [0, 66, 0],
+        "shoulderR": [0, 180, 0],
+        "hipL": [0, 4, 0],
+        "hipR": [0, -13.3, 0],
+        "torso": [0, -10, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  },
+  "bilateral": {
+    "labels": {
+      "L": "On the left hand",
+      "R": "On the right hand"
+    }
+  },
+  "prescription": {
+    "reps": "3–5 each side",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  }
+}

@@ -23,18 +23,18 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **208 exercises, 1 workout**.
+Library today: **225 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 74 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess…) |
 | Free weights | 30 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
 | Bodyweight | 21 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning… |
-| Resistance band | 20 | 10 BHF standing exercises + seated row + routine additions + banded versions |
+| Resistance band | 26 | 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
 | Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
 | Stretches | 17 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway |
-| Core | 14 | planks, bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold… |
-| Pilates | 12 | classic mat exercises (Leg Circles: Side and Direction, with a compass) |
+| Core | 16 | planks, bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
+| Pilates | 23 | classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
 | Balance | 8 | Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, clock reach, single-leg RDL |
 | Warm-up | 6 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks |
 
@@ -243,7 +243,7 @@ The schemas in `schema/` are authoritative for structure. This section is the me
 
 | type | fields | notes |
 |---|---|---|
-| `band` | `from`, `to` (body point or fixed spot `{x, y, z}` in the world), `via[]`, `restLength` | Stretch (measured in 3D) shown by thickness/opacity. Rest length defaults to the shortest distance over the sequence. Drawn in front of or behind the body by its depth. |
+| `band` | `from`, `to` (body point or fixed spot `{x, y, z}` in the world), `via[]`, `restLength` | Stretch (measured in 3D) shown by thickness/opacity. Rest length defaults to the shortest distance over the sequence. Drawn in front of or behind the body by its depth. A fixed end is drawn as a small anchor block (`bandAnchors`, `anchorSVG` in `src/core.js`): a door anchor is a `wall` plus a band from a spot on it (equipment "Door anchor", its own kind in `src/similar.js`). |
 | `towel` | `from`, `to` | Rigid, doesn't stretch. |
 | `wall` | `at` + `keyframe` (+`offset`) **or** `z`; `beside` (then `x`) | A plane in front of or behind the figure (at that z), or with `beside: true` at its side (at that x). Stands where that body point is in that step, then stays. A line when seen edge-on; fades as the camera turns to face it. |
 | `chair` | `z` (centre, forward of the stage centre), `width` 70 (front to back), `depth` 80 (side to side), `x`, `height` 80 (= shin, so seated thighs are level), `back` behind/ahead, `backHeight` 85 | A **surface** (a box): anything above it rests on it. |
@@ -618,8 +618,8 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   apps (ChatGPT, Claude, Copilot; over it they fall back to copying). Three things keep it short: the LIBRARY list uses
   plain words and spaces (`WITH band`, `bw-reverse-lunge sides`, `dir A-Forward B-Backward`); the exercise and keyframe
   formats are field lists, not commented JSON; and `aiLink` escapes less than `URLSearchParams` (`: , / ; @ $ ?` stay
-  as they are, spaces are `+`: allowed in a query and read back identically). With 208 exercises the ChatGPT link is
-  about 13.2k (Sep 2026; 163 exercises made 12.2k), room for roughly 70 more exercises (the library's, or a
+  as they are, spaces are `+`: allowed in a query and read back identically). With 225 exercises the Claude link is
+  about 13.8k (Sep 2026; 163 exercises made 12.2k), room for roughly 50 more exercises (the library's, or a
   user's own, which are listed too). Base64 or other encodings don't help: non-ASCII is escaped in a link, and the
   AI has to read plain text.
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;

@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-triceps-pushdown",
+  "name": "Band Triceps Pushdown",
+  "otherNames": ["Resistance Band Triceps Pushdown", "Band Pushdown"],
+  "category": "Strength",
+  "focus": "Triceps",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band", "Door anchor"],
+  "description": "With a band anchored high on a door, keep your elbows by your sides and push your hands down until your arms are straight, then let them come back up.",
+  "source": {
+    "url": "https://www.fitbudd.com/academy/resistance-band-tricep-pushdown",
+    "title": "FitBudd: Resistance band tricep pushdown"
+  },
+  "setup": ["Anchor the band high on a closed door.", "Face the door, elbows tucked in, forearms level."],
+  "cues": ["Elbows stay pinned to your sides.", "Squeeze at the bottom.", "Control it back up."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Pick a band you can control for every rep; about 2 seconds each way."
+  },
+  "keyframes": [
+    {
+      "name": "Elbows bent",
+      "cue": "Elbows by your sides, forearms level.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [8, 0, 0],
+        "shoulderL": [0, 5, 0],
+        "elbowL": 90,
+        "shoulderR": [0, 5, 0],
+        "elbowR": 90
+      }
+    },
+    {
+      "name": "Push down",
+      "cue": "Straighten your arms down.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [8, 0, 0],
+        "shoulderL": [0, 5, 0],
+        "elbowL": 5,
+        "shoulderR": [0, 5, 0],
+        "elbowR": 5
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "z": 110
+    },
+    {
+      "type": "band",
+      "from": {
+        "z": 110,
+        "y": 330
+      },
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": {
+        "z": 110,
+        "y": 330
+      },
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

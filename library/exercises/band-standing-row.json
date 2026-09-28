@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-standing-row",
+  "name": "Standing Band Row",
+  "otherNames": ["Standing Resistance Band Row", "Band Row (Door Anchor)"],
+  "category": "Strength",
+  "focus": "Upper back",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band", "Door anchor"],
+  "description": "With a band anchored at chest height on a door, pull your elbows straight back past your ribs, squeezing your shoulder blades, then return.",
+  "source": {
+    "url": "https://tribelifting.com/blogs/news/how-door-straps-enhance-your-upper-body-training",
+    "title": "Tribe Lifting: Door anchor exercises"
+  },
+  "setup": ["Anchor the band at chest height on a closed door.", "Face the door, an end in each hand, arms straight; step back until the band is taut."],
+  "cues": ["Chest tall.", "Elbows close to your sides.", "Squeeze, then return slowly."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Pick a band you can control for every rep; about 2 seconds each way."
+  },
+  "keyframes": [
+    {
+      "name": "Arms forward",
+      "cue": "Facing the door, arms straight at chest height.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Row",
+      "cue": "Pull your elbows back past your ribs.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "shoulderL": [-20, 8, 0],
+        "elbowL": 100,
+        "shoulderR": [-20, 8, 0],
+        "elbowR": 100
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "z": 170
+    },
+    {
+      "type": "band",
+      "from": {
+        "z": 170,
+        "y": 235
+      },
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": {
+        "z": 170,
+        "y": 235
+      },
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

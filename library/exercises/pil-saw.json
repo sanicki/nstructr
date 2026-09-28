@@ -1,0 +1,92 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-saw",
+  "name": "Saw",
+  "otherNames": ["Pilates Saw"],
+  "category": "Core",
+  "focus": "Spine, hamstrings and obliques",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Sitting tall with legs wide and arms out, twist to one side and reach forward past the opposite foot as if sawing off the little toe, then sit up and switch.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Sit tall, legs a little wider than your mat, arms out to the sides."],
+  "cues": ["Twist first, then reach.", "Opposite hip stays down.", "Back arm reaches back."],
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Legs wide, arms out to the sides.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": [90, 30, 0],
+        "hipR": [90, 30, 0],
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0]
+      }
+    },
+    {
+      "name": "Saw to the right",
+      "cue": "Twist right and reach your left hand past your right little toe.",
+      "camera": 30,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": [90, 30, 0],
+        "hipR": [90, 30, 0],
+        "torso": [30, 0, -35],
+        "chest": [25, 0, -15],
+        "shoulderL": [120, 0, 0],
+        "shoulderR": [-30, 60, 0]
+      }
+    },
+    {
+      "name": "Sit tall",
+      "cue": "Roll up, arms wide.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": [90, 30, 0],
+        "hipR": [90, 30, 0],
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0]
+      }
+    },
+    {
+      "name": "Saw to the left",
+      "cue": "Twist left and reach your right hand past your left little toe.",
+      "camera": 30,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "hipL": [90, 30, 0],
+        "hipR": [90, 30, 0],
+        "torso": [30, 0, 35],
+        "chest": [25, 0, 15],
+        "shoulderR": [120, 0, 0],
+        "shoulderL": [-30, 60, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  },
+  "prescription": {
+    "reps": "3–5 each side",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  }
+}

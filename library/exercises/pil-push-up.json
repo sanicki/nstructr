@@ -1,0 +1,177 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-push-up",
+  "name": "Pilates Push-Up",
+  "otherNames": ["Push-Up (Pilates)"],
+  "category": "Core",
+  "focus": "Chest, arms and core",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "From standing, roll down to put your hands on the floor, walk out to a plank, do a push-up with elbows by your sides, walk back and roll up.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Stand tall, feet together."],
+  "cues": ["Roll down one vertebra at a time.", "Elbows hug your sides.", "Walk back and roll up slowly."],
+  "prescription": {
+    "reps": "2–3 rounds",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Arms by your sides.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Roll down",
+      "cue": "Roll down until your hands reach the floor.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": [140, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [185, 0, 0],
+        "shoulderR": [185, 0, 0],
+        "kneeL": 12,
+        "kneeR": 12
+      }
+    },
+    {
+      "name": "Walk out",
+      "cue": "Walk your hands out to a plank.",
+      "camera": 90,
+      "durationMs": 2500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "toeL",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "root"
+        }
+      ],
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24
+      }
+    },
+    {
+      "name": "Push-up",
+      "cue": "Elbows by your sides, lower and press up.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [79, 0, 0],
+        "shoulderL": [-11, 40, 0],
+        "elbowL": 90,
+        "shoulderR": [-11, 40, 0],
+        "elbowR": 90,
+        "hipL": [-7.5, 0, 0],
+        "ankleL": 11,
+        "hipR": [-7.5, 0, 0],
+        "ankleR": 11
+      }
+    },
+    {
+      "name": "Plank",
+      "cue": "Press back up.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24
+      }
+    },
+    {
+      "name": "Walk back",
+      "cue": "Walk your hands back and roll up to standing.",
+      "camera": 90,
+      "durationMs": 2500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": [140, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [185, 0, 0],
+        "shoulderR": [185, 0, 0],
+        "kneeL": 12,
+        "kneeR": 12
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 2
+  }
+}

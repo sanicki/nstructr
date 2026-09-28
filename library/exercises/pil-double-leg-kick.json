@@ -1,0 +1,68 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-double-leg-kick",
+  "name": "Double-Leg Kick",
+  "otherNames": ["Double Leg Kick"],
+  "category": "Core",
+  "focus": "Back, hamstrings and shoulders",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying face down with your hands clasped behind your back, kick both heels toward your seat, then straighten your legs and arms and lift your chest.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Lie face down, head turned to one side, hands clasped high on your back."],
+  "cues": ["Elbows toward the floor as you kick.", "Reach your hands toward your feet to lift.", "Legs stay on the mat as you lift."],
+  "keyframes": [
+    {
+      "name": "Kick",
+      "cue": "Face down, hands clasped behind your back, kick both heels toward your seat.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
+        "shoulderL": [-30, 20, 180],
+        "elbowL": 110,
+        "shoulderR": [-30, 20, 180],
+        "elbowR": 110,
+        "kneeL": 120,
+        "kneeR": 120,
+        "ankleL": 60,
+        "ankleR": 60
+      }
+    },
+    {
+      "name": "Extend",
+      "cue": "Straighten your arms toward your feet and lift your chest.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "torso": [-24, 0, 0],
+        "chest": [-10, 0, 0],
+        "neck": [-10, 0, 0],
+        "shoulderL": [-40, 0, 180],
+        "shoulderR": [-40, 0, 180],
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  },
+  "prescription": {
+    "reps": "3–5 each side",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  }
+}

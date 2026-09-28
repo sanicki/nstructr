@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-single-leg-kick",
+  "name": "Single-Leg Kick",
+  "otherNames": ["Single Leg Kick"],
+  "category": "Core",
+  "focus": "Hamstrings and back",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying face down propped on your forearms, chest lifted, kick one heel toward your seat and then the other.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Lie face down, propped on your forearms, elbows under your shoulders."],
+  "cues": ["Chest lifted, belly drawn in.", "Quick double pulse with each kick.", "Legs together."],
+  "prescription": {
+    "reps": "5–8 each leg",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  },
+  "keyframes": [
+    {
+      "name": "Kick right",
+      "cue": "On your forearms, kick your right heel toward your seat.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "torso": [-36, 0, 0],
+        "neck": [6, 0, 0],
+        "shoulderL": [54, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [54, 0, 0],
+        "elbowR": 90,
+        "ankleL": 90,
+        "ankleR": 90,
+        "kneeR": 120
+      }
+    },
+    {
+      "name": "Switch",
+      "cue": "Straighten it and kick the left.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "torso": [-36, 0, 0],
+        "neck": [6, 0, 0],
+        "shoulderL": [54, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [54, 0, 0],
+        "elbowR": 90,
+        "ankleL": 90,
+        "ankleR": 90,
+        "kneeL": 120
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  },
+  "repName": "pair"
+}
