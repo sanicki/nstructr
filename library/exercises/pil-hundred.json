@@ -11,6 +11,8 @@
   ],
   "description": "The classic Pilates warm-up: head and shoulders curled up, legs raised, pump your straight arms up and down in small beats while you breathe.",
   "source": {
+    "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-hundred/",
+    "title": "Hundred on the Mat (Online Pilates Classes)",
     "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
   },
   "setup": [

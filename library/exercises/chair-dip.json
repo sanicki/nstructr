@@ -11,6 +11,8 @@
   ],
   "description": "Strengthens the triceps: hands on the front edge of a chair seat behind you, bend your elbows to lower your hips, then press back up.",
   "source": {
+    "url": "https://www.healthline.com/health/chair-dips",
+    "title": "Chair Dips (Healthline)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
   "setup": [

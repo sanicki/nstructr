@@ -7,6 +7,8 @@
   "equipment": [],
   "description": "A simpler star excursion: balancing on one leg, reach the other foot forward, out to the side, straight back and across behind, tapping the floor lightly and coming back to the middle each time.",
   "source": {
+    "url": "https://youtu.be/UoMSMdMKfBY",
+    "title": "Star Excursion Balance Exercise",
     "note": "Four-direction version of the Star Excursion Balance exercise in this library. In clinical terms the reaches are anterior, medial, posterior and lateral."
   },
   "setup": [

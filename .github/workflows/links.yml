@@ -1,0 +1,15 @@
+name: Check source links
+# Run by hand (Actions → Check source links → Run workflow): opens every exercise's source link and lists the
+# ones that don't answer. Not run on every PR: some sites refuse automated requests now and then.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node tools/check-links.mjs

@@ -694,8 +694,9 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    exercises moved to Settings, Half Roll-Back without the band.
 6. ✅ **Audits**: Material Design 3, UI consistency, accessibility, layout, security, performance, library
    content. Report and what was fixed: `docs/audit-2026-09.md`. Re-run with `tools/audit.py` (axe-core + touch
-   targets + text size + sideways scroll) and `tools/perf.py`. Follow-ups: ~~Setup for the 52 yoga poses~~ (done), source
-   links for 52 exercises, a TalkBack pass on the Flip7.
+   targets + text size + sideways scroll) and `tools/perf.py`. Follow-ups: ~~Setup for the 52 yoga poses~~ (done), ~~source
+   links for 52 exercises~~ (done: every exercise now links a reputable page; `tools/check-links.mjs`, or the manual
+   "Check source links" workflow, reports any that stop answering), a TalkBack pass on the Flip7.
 
 ---
 
@@ -711,4 +712,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    Customize makes a copy. Existing installs keep their first-run copy.
 7. ~~Does the app run on the cover screen?~~ Installed as an app, it runs there (owner, Sep 2026).
 9. **3D skeleton** (`docs/3d-skeleton.md`): go / no-go and timing; keep a v1 export for a while or not.
+10. **Status bar flicker on the back gesture** (owner report, Sep 2026, installed app on the Flip7): the status bar
+   appears and disappears. Not reproduced. Likely Android's own behaviour in `display: fullscreen` (an edge swipe
+   briefly reveals the system bars); the app doesn't touch full screen outside a workout. Nothing to do unless it
+   can be reproduced; if it matters, the option is `display: standalone` with full screen only during workouts.
 8. Machines: which machines matter to the owner first?
