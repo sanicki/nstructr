@@ -651,14 +651,21 @@ function runCurrent(announce) {
   S.canAdvance = i => !(S.planMeta[i] && S.planMeta[i].guided && WP.speaking);
   onWorkStep(0);
 }
+/* Coach's words, varied when words of encouragement are on: a random "Begin" and "Last one", and now and then a word of
+   encouragement in place of a count (never the first or last) or every 10 s of a hold (never at halfway or in the
+   last 10 s). WP.random can be replaced (tests). */
+const COACH_WORDS = { begin: ['Begin', 'Ready', 'Go'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
+const coachRandom = () => (WP.random || Math.random)();
+const coachWord = kind => (encourageOn() ? COACH_WORDS[kind][Math.floor(coachRandom() * COACH_WORDS[kind].length)] : COACH_WORDS[kind][0]);
+const cheerChance = p => encourageOn() && coachRandom() < p;
 function onWorkStep(i) {
   const m = S.planMeta[i] || {};
   if (m.say) speakGuided(m.say);
   if (m.repNo && m.alt !== 1) {
     WP.rep = m.repNo;
     // coach counts the reps: "Begin", 2, 3 … "Last one". Numbers are skipped if it's already talking; "Begin" never is
-    const first = WP.rep === 1;
-    say(first ? 'Begin' : WP.rep === m.repOf ? 'Last one' : String(WP.rep), true, { dropIfBusy: !first });
+    const first = WP.rep === 1, last = WP.rep === m.repOf;
+    say(first ? coachWord('begin') : last ? coachWord('last') : cheerChance(0.2) ? coachWord('cheer') : String(WP.rep), true, { dropIfBusy: !first });
   }
   renderWpCount();
 }
@@ -854,6 +861,12 @@ function renderWpCount() {
       if (S.t >= r.dur) {
         if (m.seconds >= 30 && left <= Math.round(m.seconds / 2) && left > 10 && !WP.beeped.half) { WP.beeped.half = 1; say('Halfway', true, { dropIfBusy: true }); }
         if (m.seconds >= 20 && left <= 10 && left > 3 && !WP.beeped.ten) { WP.beeped.ten = 1; say('10 seconds', true, { dropIfBusy: true }); }
+        // every 10 s held, a 40% chance of a word of encouragement: not where "Halfway" is said, not in the last 10 s
+        const mark = Math.floor((m.seconds - left) / 10) * 10, half = m.seconds >= 30 ? Math.round(m.seconds / 2) : -1;
+        if (mark >= 10 && left > 10 && !WP.beeped['c' + mark]) {
+          WP.beeped['c' + mark] = 1;
+          if (Math.abs(m.seconds - mark - half) > 5 && cheerChance(0.4)) say(coachWord('cheer'), true, { dropIfBusy: true });
+        }
       }
     } else $('#wpCount').textContent = fmtTime(cur.item.seconds);
   } else {
