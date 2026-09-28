@@ -301,10 +301,12 @@
     <h2 class="title-large" id="aiTitle">Create with AI</h2>
   </div>
   <div class="ai-body">
-    <p class="body-medium muted">An AI app writes the exercise or workout; NstructR gives it the instructions. Nothing is sent from here: you'll see everything in the AI app.</p>
+    <p class="body-medium muted">An AI app writes the exercise or workout, or plans one from the library; NstructR gives it the instructions. Nothing is sent from here: you'll see everything in the AI app.</p>
     <h3 class="title-small ai-step"><span class="ai-num">1</span>What do you have?</h3>
     <div class="chips" id="aiKind" role="group" aria-label="What do you have?"></div>
     <label class="field ai-input" id="aiInputWrap"><span class="field-label" id="aiInputLabel">Name</span><textarea id="aiInput" rows="3"></textarea></label>
+    <div id="aiEquipWrap" hidden><p class="field-label body-small" id="aiEquipLabel">Equipment you have (the AI uses only exercises you can do with it)</p>
+      <div class="chips" id="aiEquip" role="group" aria-labelledby="aiEquipLabel"></div></div>
     <p class="body-small muted" id="aiKindHint"></p>
     <h3 class="title-small ai-step"><span class="ai-num">2</span>Ask the AI</h3>
     <label class="field"><span class="field-label">AI app</span><select id="aiApp"></select></label>

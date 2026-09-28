@@ -628,6 +628,13 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   about 13.8k (Sep 2026; 163 exercises made 12.2k), room for roughly 50 more exercises (the library's, or a
   user's own, which are listed too). Base64 or other encodings don't help: non-ASCII is escaped in a link, and the
   AI has to read plain text.
+  **Plan a workout** (fifth choice, `planPrompt`): a goal ("a 30-minute leg workout") and equipment chips (the kinds
+  `SIMILAR_EX.equipKinds` finds in the library, remembered in `nstructr-ai-equipment-v1`, wall at first). Its prompt
+  is its own, and short: only the workout format (no exercise format: nothing new is written) and only the exercises
+  whose every kind of equipment is picked (`aiCanDo`), each with its pace (`repSeconds`, or "time"), sides/direction,
+  and focus, plus the user's rests (`restGap`, `restSets`): 8.5k with a wall and dumbbells, 11.5k with everything.
+  The import (`planCheck`) refuses a workout naming an exercise the app doesn't have, drops any "exercises" the AI
+  wrote anyway, names the ones needing unpicked equipment, and shows the length (`workoutSeconds`).
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;
   not a backup): a new own exercise (not one the user had, not a `basedOn` copy) that is a **duplicate** of a
   library one (`src/similar.js`) gets "Use <library exercise> instead" (on by default: **Done** points the imported
@@ -695,6 +702,7 @@ must not fill with **duplicates**, and a known exercise under another name shoul
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
 | `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end) |
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
+| `nstructr-ai-equipment-v1` | Create with AI, Plan a workout: the equipment kinds picked, JSON list (`["wall"]` until changed) |
 | `nstructr-loop-v1` | `"off"`: the exercise page plays once through (setup, one rep, finish), then stops (overlay Loop toggle) |
 | `nstructr-exmute-v1` | `"on"`: the exercise page's spoken cues are muted (overlay Mute toggle; the voice also needs Sound = Voice/Coach) |
 | `nstructr-group-collections-v1` | `"off"`: the Exercises tab lists All collections as one A–Z list instead of grouped by collection (the tab's own switch) |

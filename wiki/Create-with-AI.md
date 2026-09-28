@@ -18,9 +18,23 @@ Open it from **Workouts → Create with AI**, or **Settings → Create with AI �
 | **Written routine** | The whole routine: exercises, reps, sets, rests |
 | **Video or web link** | A YouTube or web address. Gemini can watch YouTube videos; most others read the page. |
 | **Photo or video** | Nothing here: attach it in the AI app after it opens (pick an app that accepts pictures or video) |
+| **A goal: plan a workout** | What you want, e.g. *a 30-minute leg workout*, and the equipment you have (see below) |
 
 The instructions ask the AI to use what it knows **and to check it with a web search** where it can (how the
 exercise is done, its steps, typical reps and safety notes), and to name the page it relied on as the source.
+
+### Plan a workout
+
+<img src="images/create-with-ai-plan.png" width="300" alt="Plan a workout: what you want and the equipment you have">
+
+Tap the equipment you have (a wall is picked at first; your choice is remembered). The AI may use **only exercises
+already in the app**, from the library or your own, that need nothing more than that equipment. It is told how long
+each rep takes and what each exercise works, so it can fit the length you ask for.
+
+When you add its answer:
+- an exercise that isn't in the app is refused (ask the AI again);
+- an exercise that needs equipment you didn't pick is added anyway, and named, so you can swap it in the workout;
+- you see the workout's length as NstructR times it (rests from your settings included).
 
 ## 2. Ask the AI
 
