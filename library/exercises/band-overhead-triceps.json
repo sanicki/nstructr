@@ -36,9 +36,9 @@
         }
       ],
       "pose": {
-        "shoulderL": [-172, 0, 180],
+        "shoulderL": [170, 0, 0],
         "elbowL": 150,
-        "shoulderR": [-172, 0, 180],
+        "shoulderR": [170, 0, 0],
         "elbowR": 150,
         "hipL": [14, 0, 0],
         "ankleL": 14,
@@ -62,9 +62,9 @@
         }
       ],
       "pose": {
-        "shoulderL": [-176, 0, 180],
+        "shoulderL": [176, 0, 0],
         "elbowL": 2,
-        "shoulderR": [-176, 0, 180],
+        "shoulderR": [176, 0, 0],
         "elbowR": 2,
         "hipL": [14, 0, 0],
         "ankleL": 14,

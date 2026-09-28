@@ -62,10 +62,10 @@
         "shoulderR": [53, 0, 0],
         "elbowR": 28,
         "hipL": [87, 0, 0],
-        "kneeL": 178,
+        "kneeL": 155,
         "ankleL": 60,
         "hipR": [87, 0, 0],
-        "kneeR": 178,
+        "kneeR": 155,
         "ankleR": 60
       }
     }

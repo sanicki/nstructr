@@ -51,10 +51,10 @@
         }
       ],
       "pose": {
-        "shoulderL": [0, -82, -90],
+        "shoulderL": [90, -40, 0],
         "elbowL": 4,
-        "shoulderR": [0, 139.5, -90],
-        "elbowR": 147.8
+        "shoulderR": [60, 0, 0],
+        "elbowR": 90
       }
     }
   ],

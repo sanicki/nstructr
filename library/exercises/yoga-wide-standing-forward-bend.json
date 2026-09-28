@@ -24,10 +24,7 @@
       "phase": "setup",
       "anchor": "ankleL",
       "plant": ["L", "R"],
-      "pose": {
-        "shoulderL": [360, 0, 0],
-        "shoulderR": [360, 0, 0]
-      }
+      "pose": {}
     },
     {
       "name": "Wide-Legged Forward Bend",
@@ -51,8 +48,10 @@
       "pose": {
         "torso": [165, 0, 0],
         "neck": [10, 0, 0],
-        "shoulderL": [215.2, 0, 0],
-        "shoulderR": [215.2, 0, 0]
+        "shoulderL": [150, 0, 0],
+        "shoulderR": [150, 0, 0],
+        "hipL": [0, 25, 0],
+        "hipR": [0, 25, 0]
       }
     }
   ],

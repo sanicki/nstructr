@@ -38,10 +38,10 @@
       "anchorZ": -20,
       "plant": ["L"],
       "pose": {
-        "torso": [90, 0, 0],
+        "root": [90, 0, 0],
         "shoulderL": [180, 0, 0],
         "shoulderR": [180, 0, 0],
-        "hipR": [-90, 0, 0]
+        "hipL": [90, 0, 0]
       }
     }
   ],

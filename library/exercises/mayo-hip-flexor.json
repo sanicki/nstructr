@@ -53,8 +53,8 @@
       "pose": {
         "shoulderL": [33.2, 0, 0],
         "elbowL": 1.6,
-        "shoulderR": [33.1, 0, 180],
-        "elbowR": 70.1,
+        "shoulderR": [-10, 30, 0],
+        "elbowR": 90,
         "hipL": [90, 0, 0],
         "kneeL": 90,
         "kneeR": 90,
@@ -89,8 +89,8 @@
       "pose": {
         "shoulderL": [33.2, 0, 0],
         "elbowL": 1.6,
-        "shoulderR": [33.1, 0, 180],
-        "elbowR": 70.1,
+        "shoulderR": [-10, 30, 0],
+        "elbowR": 90,
         "hipL": [90, 0, 0],
         "kneeL": 118,
         "ankleL": -28,

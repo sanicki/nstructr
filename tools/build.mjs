@@ -61,11 +61,14 @@ if (!args.has('--no-checks') && !errors.length) {
   }
   console.log(n ? `animation checks: ${n} problem(s)` : 'animation checks: all exercises pass');
 }
-// ---------- 2b. range of motion (informational: poses past what a flexible body can do, to fix) ----------
+// ---------- 2b. range of motion: no pose past what a flexible body can do (docs/3d-skeleton.md, "Joint model") ----------
 if (!args.has('--no-checks') && !errors.length) {
-  const { spawnSync } = await import('node:child_process');
-  const r = spawnSync(process.execPath, [path.join(ROOT, 'tools/rom.cjs')], { encoding: 'utf8' });
-  console.log(r.stdout.split('\n')[0] + ' (node tools/rom.cjs for the list)');
+  const { pastFlexible } = require('./rom.cjs');
+  let n = 0;
+  for (const ex of exercises) for (const x of pastFlexible(ex)) {
+    errors.push(`${ex.id}: ${x.label} step ${x.step} "${x.name}": ${x.joint} ${x.value}° is past what a flexible body can do (${x.range[0]}…${x.range[1]})`); n++;
+  }
+  console.log(n ? `range of motion: ${n} joint(s) out of range` : 'range of motion: every pose is within reach of a flexible body');
 }
 if (errors.length) { console.error('\n' + errors.map(e => '✗ ' + e).join('\n')); process.exit(1); }
 if (args.has('--check-only')) process.exit(0);

@@ -258,10 +258,13 @@ function reachTip(pose, seg, pos, ch, T, weight = 1, fade = true) {
   const rootK = ch.root + s, midK = ch.mid + s;
   const J = V3.add(P[rootK], pos), L1 = seg[ch.l1], L2 = seg[ch.l2];
   let d = V3.sub(T, J), dist = V3.len(d);
-  if (dist > L1 + L2 - 0.01) { d = V3.mul(d, (L1 + L2 - 0.01) / dist); dist = L1 + L2 - 0.01; }
   const fold = Math.abs(L1 - L2) + 0.5;
   if (dist < fold + 0.01) return false;
   const w = fade ? weight * Math.min(1, (dist - fold) / 20) : weight;
+  // part-way: aim part-way (from where the tip is now), and solve that exactly. Blending the angles instead would
+  // bend the limb differently depending on which of the equivalent ways of writing the answer came out
+  if (w < 1) { T = V3.lerp(V3.add(P[ch.tip + s], pos), T, w); d = V3.sub(T, J); dist = V3.len(d); if (dist < fold + 0.01) return false; }
+  if (dist > L1 + L2 - 0.01) { d = V3.mul(d, (L1 + L2 - 0.01) / dist); dist = L1 + L2 - 0.01; }
   const n = V3.mul(d, 1 / dist), along = (L1 * L1 - L2 * L2 + dist * dist) / (2 * dist), h = Math.sqrt(Math.max(0, L1 * L1 - along * along));
   const Mu = F[rootK], Mp = arm ? F.chest : F.root;
   let pole = V3.mul({ x: Mu[2], y: Mu[5], z: Mu[8] }, arm ? -1 : 1);
@@ -273,8 +276,8 @@ function reachTip(pose, seg, pos, ch, T, weight = 1, fade = true) {
   const Tt = V3.add(J, d);
   const sol = limbAngles(mtv(Mp, V3.sub(K, J)), mtv(Mp, V3.sub(Tt, K)), s, arm, { ball: pose[rootK], bend: pose[midK] });
   const oldMid = pose[midK];
-  pose[rootK] = [0, 1, 2].map(i => lerp(pose[rootK][i], sol.ball[i], w));
-  pose[midK] = lerp(oldMid, sol.bend, w);
+  pose[rootK] = sol.ball;
+  pose[midK] = sol.bend;
   if (!arm) pose['ankle' + s] -= pose[midK] - oldMid;               // keep the foot's angle to the floor
   return true;
 }

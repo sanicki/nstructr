@@ -32,8 +32,8 @@
         "shoulderL": [80, 0, 0],
         "shoulderR": [80, 0, 0],
         "hipL": [90, 0, 0],
-        "hipR": [90, 0, 0],
-        "kneeR": 180,
+        "hipR": [90, 45, 90],
+        "kneeR": 140,
         "ankleR": 90
       }
     },
@@ -50,8 +50,8 @@
         "shoulderL": [128, 0, 0],
         "shoulderR": [128, 0, 0],
         "hipL": [90, 0, 0],
-        "hipR": [90, 0, 0],
-        "kneeR": 180,
+        "hipR": [90, 45, 90],
+        "kneeR": 140,
         "ankleR": 90
       }
     }

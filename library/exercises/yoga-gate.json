@@ -25,10 +25,10 @@
       "anchor": "kneeL",
       "pose": {
         "hipL": [0, 0, 90],
-        "kneeL": 178,
+        "kneeL": 155,
         "ankleL": -178,
         "hipR": [0, 0, 90],
-        "kneeR": 178,
+        "kneeR": 155,
         "ankleR": -178
       }
     },
@@ -42,10 +42,10 @@
       "anchor": "kneeL",
       "pose": {
         "hipL": [0, 0, 90],
-        "kneeL": 178,
+        "kneeL": 155,
         "ankleL": -178,
         "hipR": [0, 60, 90],
-        "kneeR": 178,
+        "kneeR": 155,
         "ankleR": -118
       }
     },
@@ -66,7 +66,7 @@
       ],
       "pose": {
         "hipL": [0, 0, 90],
-        "kneeL": 178,
+        "kneeL": 155,
         "ankleL": -178,
         "hipR": [0, 89.8, 90],
         "kneeR": 85,
@@ -92,7 +92,7 @@
         "shoulderL": [0, -150, 0],
         "shoulderR": [0, 40, 0],
         "hipL": [0, 0, 90],
-        "kneeL": 178,
+        "kneeL": 155,
         "ankleL": -178,
         "hipR": [0, 60, 90],
         "ankleR": 60
@@ -115,7 +115,7 @@
       ],
       "pose": {
         "hipL": [0, 0, 90],
-        "kneeL": 178,
+        "kneeL": 155,
         "ankleL": -178,
         "hipR": [0, 89.8, 90],
         "kneeR": 85,
@@ -132,10 +132,10 @@
       "anchor": "kneeL",
       "pose": {
         "hipL": [0, 0, 90],
-        "kneeL": 178,
+        "kneeL": 155,
         "ankleL": -178,
         "hipR": [0, 60, 90],
-        "kneeR": 178,
+        "kneeR": 155,
         "ankleR": -118
       }
     }

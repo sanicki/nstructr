@@ -2,7 +2,7 @@
 
 Status: **built** (Sep 2026): exercise format **v2**. The app draws and solves every exercise in 3D, the library
 was converted, and format 1 is no longer read or written. What's left is fixing the poses that the range-of-motion
-check flags (see "Progress").
+check used to flag (all fixed; see "The range check").
 
 ## Why
 
@@ -114,7 +114,7 @@ Done by a one-off script (in git history: `tools/v1/convert.cjs`, removed with t
 3. ✅ Schema v2, converter, library converted, failures fixed (or listed as known issues, with why).
 4. ✅ Pose editor, format reference and AI prompts for v2; `layers` and depth joints removed; format 1 no longer
    read or written.
-5. **Next**: the problem poses (below), then make the build reject poses past "flexible".
+5. ✅ The problem poses (below), and the build rejects poses past "flexible".
 
 ## Joint model
 
@@ -140,47 +140,58 @@ push-away) and more spine segments (Pilates rolling through the back).
 
 ### Range of motion
 
-Degrees from hanging straight down (+ = forward / out to the side). **Normal** is the AAOS reference for typical
-adults. **Flexible** is what a trained, flexible person reaches (yoga, Pilates), with the pelvis and spine helping;
-past it, the pose is one no body makes.
+Degrees. A hip or shoulder is judged by **where the limb points** (how far forward, back, out to its own side, or
+across the middle, from hanging straight down) and **how far it's turned** about its own axis; knees and elbows by their
+bend. **Normal** is the AAOS reference for typical adults. **Flexible** is what a trained, flexible person reaches
+(yoga, Pilates), with the pelvis and spine helping; past it, the pose is one no body makes.
 
 | Joint | Normal (AAOS) | Flexible |
 |---|---|---|
-| Hip, forward (flexion) / back (extension) | 120 / 30 | 170 / 60 |
-| Hip, out (abduction) / in (adduction) | 45 / 30 | 95 / 45 |
+| Hip: forward / back | 120 / 30 | 170 / 60 |
+| Hip: out / across | 45 / 30 | 95 / 45 |
+| Hip: turn in / out | 40 / 45 | 60 / 90 |
 | Knee, bend | 0 – 135 | −10 – 165 |
-| Shoulder, forward (flexion) / back (extension) | 180 / 60 | 180 / 80 |
+| Shoulder: back / across (forward, out and overhead are all reachable) | 60 / 40 | 110 / 60 |
+| Shoulder: turn in / out | 70 / 90 | 90 / 110 |
 | Elbow, bend | 0 – 150 | −10 – 170 |
 
 Sources: AAOS normal values (American Academy of Orthopaedic Surgeons; see e.g. the CDC's Normal Joint Range of Motion
 Study, https://archive.cdc.gov/www_cdc_gov/ncbddd/jointrom/index.html). The "flexible" column is our own working
-limit, to be tightened if it lets through poses that look wrong.
+limit. The figure has no shoulder blades, which give a real arm about 30° more: the shoulder's flexible column
+includes them (without it, no stick figure could reach its heels in Camel).
 
 ### The range check
 
-v2 poses are joint angles, so `tools/rom.cjs` reads them directly (after touch, reach and keep are solved, both
-sides, both directions) and compares them with the table, plus the turn of hips and shoulders (normal −40…45 and
-−70…90; flexible −60…90 and −90…110). The build prints the summary; it doesn't fail the build yet.
+`tools/rom.cjs` checks every step of every exercise (after touch, reach and keep are solved, both sides, both
+directions). **The build fails on any joint past "flexible"**; past normal is only counted (expected for yoga and deep
+stretches). How it measures, and why:
 
-- **Past normal** is expected for yoga and deep stretches: the report only counts exercises per joint.
-- **Past flexible** is listed step by step (`node tools/rom.cjs`); these are the poses to fix. After the
-  conversion: 88 joints in 34 exercises. Most are the same poses the 2D check found:
-  - **Knees folded completely flat** (170–180°: sitting cross-legged, kneeling, Crow, Pigeon, Marichyasana…): the
-    stick figure folds the shin onto the thigh; a real knee stops around 155–160°. In v2 the shin sits beside the
-    thigh.
-  - **Backbends made at the hip** (Wheel, Dancer, Pigeon's back leg): the 2D figure bends at the hip what a body
-    bends mostly in the spine. v2 moves it into the lower and upper back.
-  - **Arms far behind** (Chair Dip, Camel, Plow, Pyramid): shoulder extension past 80°, where a body uses the
-    shoulder blades and a twist.
-  - **Swan's elbows** folded to 171° (hands under the shoulders): a real elbow stops around 150°.
-  - A few hip readings in deep folds and twists (Extended Side Angle, Revolved Head-to-Knee, Half Moon), to look at
-    in the comparison page.
-- New with v2's turn numbers: **arms turned half round** (shoulder turn −180) in Crunch, Swan, Overhead Triceps,
-  Half-Kneeling Hip Flexor and the towel stretch. The 2D pictures bent those elbows backwards; the conversion kept the
-  picture by turning the arm round. A body would reach the same place with the arm out to the side and turned a
-  little: to redo by hand.
-- Once v2 poses are written directly as joint angles, the same limits apply at the source: the pose editor clamps
-  to them and the build rejects poses past "flexible", including ones written by AI.
+- **Where a limb points** is measured from its direction, not from the joint's three numbers one by one: those change
+  meaning near overhead (an arm straight up is forward 180, or out to the side 180, or back −180 turned round), so a
+  check on the numbers flags good poses.
+- **How far a limb is turned** depends on the path its swing is measured along (Codman's paradox). Clinically it's
+  measured after the forward and side swings, which is the order of the joint's own numbers, so the check uses the
+  joint's own turn, in whichever of its two equivalent spellings (`[f, side, turn]` or `[f + 180, 180 − side,
+  turn + 180]`) turns less.
+
+**Fixed (Sep 2026, after the conversion).** The check found 34 exercises past "flexible". All now pass:
+
+- **Knees folded flat** (a real knee stops around 155–160°): seated folds now turn the thigh out so the shin lies on
+  the floor beside it (Seated Hamstring Stretch, Head-to-Knee, Revolved Head-to-Knee, Half Lord of the Fishes); knee-up
+  steps raise the knee instead of folding it flat (Marichyasana I and III); Child's Pose, Crow, Gate, Easy Pose and
+  Lotus bend 155°.
+- **Folds made at the hip that a body makes elsewhere**: Warrior 3 tips the whole body (the back leg is in line, not
+  bent 90° back); Wheel arches the spine (and gained a "hands by your ears" step); Dancer leans the body and lifts the
+  leg with the knee bent, the hand holding the foot; Pigeon tilts the pelvis, with the front shin across the body on
+  the floor; Camel arches the upper back to reach the heels; Revolved Side Angle tilts the pelvis.
+- **Arms turned half round by the conversion** (the 2D pictures bent those elbows backwards): Overhead Triceps (arms
+  forward over the top), Crunch (hands behind the head, elbows out), Half-Kneeling Hip Flexor (hand on the hip), Towel
+  stretch (the lower hand behind the back turned in), Swan (hands under the shoulders), Barbell Squat (hands on the bar,
+  elbows down), Neck and Cross-Body stretches.
+- **Bound Angle** rebuilt: knees out and low, soles together, hands holding the feet. **Side Plank** is a real roll
+  about the body's long axis (a quiet halfway step keeps it a roll), seen from the side, so the camera no longer turns.
+  **Wide-Legged Forward Bend** has its legs apart (the side view never showed them). **Firefly** legs go forward and
+  out.
 
 ## Progress
 

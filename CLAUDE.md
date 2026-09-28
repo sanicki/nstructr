@@ -11,7 +11,7 @@ The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wik
 
 ## Rules
 - `library/exercises/*.json` and `library/workouts/*.json` are the source of truth. File name = `id`. Library ids never start with `u-` (reserved for users).
-- Every exercise must pass `tools/checks.cjs` for all sides/directions. Fix geometry rather than adding to `tools/known-issues.json`; if you add an exception, write why.
+- Every exercise must pass `tools/checks.cjs` for all sides/directions, and every pose must be within a flexible body's range of motion (`tools/rom.cjs`; the build fails otherwise). Fix geometry rather than adding to `tools/known-issues.json`; if you add an exception, write why.
 - Poses are 3D joint angles (format v2): ball joints `[forward, side, turn]`, hinges one number; signs follow the body, not the screen (HANDOFF §4). Angle values like `540` or `-235` are deliberate (they choose the direction a joint turns). Keep continuity with neighbouring steps.
 - Only format v2 is read and written; `tools/format-json.cjs` lays library files out (one line per joint).
 - `durationMs: 0` means instant, not "unset".

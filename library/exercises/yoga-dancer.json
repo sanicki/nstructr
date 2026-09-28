@@ -36,12 +36,20 @@
       "anchor": "ankleL",
       "plant": ["L"],
       "pose": {
-        "torso": [45, 0, 0],
-        "shoulderL": [-165, 0, 0],
-        "shoulderR": [-105, 0, 0],
-        "hipR": [-122, 0, 0],
-        "kneeR": 47
-      }
+        "root": [75, 0, 0],
+        "torso": [-20, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [-50, 0, 0],
+        "hipL": [75, 0, 0],
+        "hipR": [-55, 0, 0],
+        "kneeR": 90
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        }
+      ]
     }
   ],
   "cues": ["Kick the foot into the hand.", "Keep the standing leg strong."],
