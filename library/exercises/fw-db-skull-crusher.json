@@ -1,0 +1,110 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-skull-crusher",
+  "name": "Dumbbell Skull Crusher",
+  "otherNames": ["Lying Triceps Extension", "Skull Crusher"],
+  "category": "Strength",
+  "focus": "Triceps",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells", "Bench"],
+  "description": "Lying on a bench with the weights above your shoulders, bend only your elbows to lower them beside your head, then straighten your arms.",
+  "source": {
+    "url": "https://www.strengthlog.com/best-dumbbell-exercises-muscle-strength/",
+    "title": "StrengthLog: The best dumbbell exercises"
+  },
+  "setup": ["Lie on a flat bench, feet on the floor.", "Hold the dumbbells above your shoulders, palms facing each other."],
+  "cues": ["Upper arms stay still.", "Lower slowly beside your head.", "Straighten without locking hard."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Arms up",
+      "cue": "Weights above your shoulders.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 0, -90],
+        "shoulderR": [90, 0, -90],
+        "hipL": [6.8, 0, 0],
+        "kneeL": 90,
+        "ankleL": 6.8,
+        "hipR": [6.8, 0, 0],
+        "kneeR": 90,
+        "ankleR": 6.8
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Bend your elbows to bring the weights beside your head.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [110, 0, -90],
+        "shoulderR": [110, 0, -90],
+        "hipL": [6.8, 0, 0],
+        "kneeL": 90,
+        "ankleL": 6.8,
+        "hipR": [6.8, 0, 0],
+        "kneeR": 90,
+        "ankleR": 6.8,
+        "elbowL": 110,
+        "elbowR": 110
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    },
+    {
+      "type": "bench",
+      "z": -30
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

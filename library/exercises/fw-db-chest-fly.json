@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-chest-fly",
+  "name": "Dumbbell Chest Fly",
+  "otherNames": ["Dumbbell Fly", "Chest Fly"],
+  "category": "Strength",
+  "focus": "Chest",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells", "Bench"],
+  "description": "Lying on a bench with dumbbells above your chest, open your arms out wide in an arc with a slight elbow bend, then bring them back together.",
+  "source": {
+    "url": "https://www.strengthlog.com/best-dumbbell-exercises-muscle-strength/",
+    "title": "StrengthLog: The best dumbbell exercises"
+  },
+  "setup": ["Lie on a flat bench, feet on the floor.", "Hold the dumbbells above your chest, palms facing each other."],
+  "cues": ["Soft elbows, fixed bend.", "Open until you feel a chest stretch.", "Hug the weights back up."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Arms up",
+      "cue": "Weights above your chest, palms facing.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 0, -90],
+        "shoulderR": [90, 0, -90],
+        "hipL": [6.8, 0, 0],
+        "kneeL": 90,
+        "ankleL": 6.8,
+        "hipR": [6.8, 0, 0],
+        "kneeR": 90,
+        "ankleR": 6.8,
+        "elbowL": 10,
+        "elbowR": 10
+      }
+    },
+    {
+      "name": "Open",
+      "cue": "Lower the weights out to the sides in a wide arc.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [15, 80, -90],
+        "shoulderR": [15, 80, -90],
+        "hipL": [6.8, 0, 0],
+        "kneeL": 90,
+        "ankleL": 6.8,
+        "hipR": [6.8, 0, 0],
+        "kneeR": 90,
+        "ankleR": 6.8,
+        "elbowL": 20,
+        "elbowR": 20
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    },
+    {
+      "type": "bench",
+      "z": -30
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

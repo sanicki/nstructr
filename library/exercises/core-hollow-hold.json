@@ -1,0 +1,62 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "core-hollow-hold",
+  "name": "Hollow Hold",
+  "otherNames": ["Hollow Body Hold"],
+  "category": "Core",
+  "focus": "Deep abs",
+  "collections": ["Core"],
+  "equipment": [],
+  "description": "Lying on your back, press your lower back into the floor and lift your shoulders, arms and straight legs a little way off it; hold.",
+  "source": {
+    "url": "https://www.hingehealth.com/resources/articles/hollow-body-hold/",
+    "title": "Hinge Health: How to do a hollow body hold"
+  },
+  "setup": ["Lie on your back, arms overhead, legs long."],
+  "cues": ["Lower back stays pressed down.", "Bend your knees or bring your arms forward to make it easier.", "Breathe."],
+  "prescription": {
+    "reps": "hold 20 seconds",
+    "note": "Stop if your lower back lifts or hurts; build the time up gradually."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Legs long, arms overhead.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 800,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [175, 0, 0],
+        "shoulderR": [175, 0, 0]
+      }
+    },
+    {
+      "name": "Hollow Hold",
+      "cue": "Lower back down, lift your shoulders and legs.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [22, 0, 0],
+        "neck": [30, 0, 0],
+        "shoulderL": [160, 0, 0],
+        "shoulderR": [160, 0, 0],
+        "hipL": [22, 0, 0],
+        "hipR": [22, 0, 0]
+      }
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 20
+  },
+  "holdStep": 1
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "core-russian-twist",
+  "name": "Russian Twist",
+  "otherNames": ["Seated Russian Twist"],
+  "category": "Core",
+  "focus": "Obliques",
+  "collections": ["Core"],
+  "equipment": [],
+  "description": "Sitting leaned back in a V with feet lifted, turn your chest and clasped hands from side to side.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/russian-twist",
+    "title": "NASM Exercise Library: Russian Twist"
+  },
+  "setup": ["Sit with knees bent, lean back to about 45°.", "Lift your feet (keep them down to make it easier) and clasp your hands in front."],
+  "cues": ["Chest tall, back long.", "Turn from your ribs.", "Slow and controlled."],
+  "prescription": {
+    "reps": "10–16 (both sides = 2)",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Twist right",
+      "cue": "Leaning back, turn your chest and hands to the right.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-40, 0, 0],
+        "torso": [0, 0, -30],
+        "chest": [0, 0, -20],
+        "shoulderL": [70, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [70, 0, 0],
+        "elbowR": 20,
+        "hipL": [120, 0, 0],
+        "kneeL": 100,
+        "hipR": [120, 0, 0],
+        "kneeR": 100
+      }
+    },
+    {
+      "name": "Twist left",
+      "cue": "Now turn to the left.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-40, 0, 0],
+        "torso": [0, 0, 30],
+        "chest": [0, 0, 20],
+        "shoulderL": [70, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [70, 0, 0],
+        "elbowR": 20,
+        "hipL": [120, 0, 0],
+        "kneeL": 100,
+        "hipR": [120, 0, 0],
+        "kneeR": 100
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  },
+  "repName": "twist"
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-pike-pushup",
+  "name": "Pike Push-Up",
+  "otherNames": ["Pike Press"],
+  "category": "Strength",
+  "focus": "Shoulders and triceps",
+  "collections": ["Bodyweight"],
+  "equipment": [],
+  "description": "From a Downward Dog shape with hips high, bend your elbows to lower the top of your head toward the floor, then press back up.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/pike-push-up",
+    "title": "NASM Exercise Library: Pike Push-Up"
+  },
+  "setup": ["Start in Downward Dog, hands a little wider than your shoulders.", "Walk your feet in to bring your hips higher."],
+  "cues": ["Hips stay high.", "Elbows back, not out wide.", "Head just in front of your hands."],
+  "keyframes": [
+    {
+      "name": "Pike",
+      "cue": "Hips high, arms straight, like Downward Dog.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": [135, 0, 0],
+        "shoulderL": [180, 0, 180],
+        "shoulderR": [180, 0, 180],
+        "hipL": [-27.3, 0, 0],
+        "ankleL": -27.3,
+        "hipR": [-27.3, 0, 0],
+        "ankleR": -27.3
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Bend your elbows, head toward the floor in front of your hands.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": [135, 0, 0],
+        "shoulderL": [150, 0, 180],
+        "shoulderR": [150, 0, 180],
+        "hipL": [-27.3, 0, 0],
+        "ankleL": -27.3,
+        "hipR": [-27.3, 0, 0],
+        "ankleR": -27.3,
+        "elbowL": 90,
+        "elbowR": 90
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "prescription": {
+    "reps": "5–10",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  }
+}

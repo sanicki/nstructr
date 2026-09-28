@@ -1,0 +1,101 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "core-bicycle-crunch",
+  "name": "Bicycle Crunch",
+  "otherNames": ["Bicycle Crunches", "Supine Bicycle Crunch"],
+  "category": "Core",
+  "focus": "Abs and obliques",
+  "collections": ["Core"],
+  "equipment": [],
+  "description": "Lying on your back with hands behind your head, pedal your legs while you twist each elbow toward the opposite knee.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/241/supine-bicycle-crunches/",
+    "title": "ACE Exercise Library: Supine Bicycle Crunches"
+  },
+  "setup": ["Lie on your back, hands lightly behind your head.", "Lift your shoulders and both feet off the floor."],
+  "cues": ["Twist from your ribs, not your elbows.", "Straighten the other leg low.", "Don't pull on your neck."],
+  "prescription": {
+    "reps": "10–20 (both sides = 2)",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Right elbow to left knee",
+      "cue": "Twist and bring your right elbow toward your left knee.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [30, 0, 25],
+        "neck": [40, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipL": [100, 0, 0],
+        "kneeL": 90,
+        "hipR": [25, 0, 0],
+        "kneeR": 10
+      }
+    },
+    {
+      "name": "Left elbow to right knee",
+      "cue": "Switch: left elbow toward your right knee.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [30, 0, -25],
+        "neck": [40, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipR": [100, 0, 0],
+        "kneeR": 90,
+        "hipL": [25, 0, 0],
+        "kneeL": 10
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 16
+  },
+  "repName": "twist"
+}

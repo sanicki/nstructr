@@ -1,0 +1,155 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-renegade-row",
+  "name": "Renegade Row",
+  "otherNames": ["Dumbbell Renegade Row", "Plank Row"],
+  "category": "Strength",
+  "focus": "Back and core",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "In a high plank with your hands on two dumbbells, row one to your hip, lower it, then the other, keeping your hips still.",
+  "source": {
+    "url": "https://www.lyfta.app/exercise/dumbbell-renegade-row--842",
+    "title": "Lyfta: Dumbbell Renegade Row"
+  },
+  "setup": ["Start in a high plank with your hands on two dumbbells, feet a little wide."],
+  "cues": ["Hips square to the floor.", "Elbow close to your side.", "Press the other dumbbell into the floor."],
+  "prescription": {
+    "reps": "6–10 each arm",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Plank",
+      "cue": "High plank, hands on the dumbbells.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handL",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24
+      }
+    },
+    {
+      "name": "Row right",
+      "cue": "Pull the right dumbbell to your hip.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handL",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [-10, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24,
+        "elbowR": 95
+      }
+    },
+    {
+      "name": "Plank",
+      "cue": "Lower it back down.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24
+      }
+    },
+    {
+      "name": "Row left",
+      "cue": "Now pull the left dumbbell to your hip.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [-10, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24,
+        "elbowL": 95
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "pair"
+}

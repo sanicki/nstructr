@@ -1,0 +1,126 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "core-sit-up",
+  "name": "Sit-Up",
+  "otherNames": ["Sit-Ups", "Full Sit-Up"],
+  "category": "Core",
+  "focus": "Abs and hip flexors",
+  "collections": ["Core"],
+  "equipment": [],
+  "description": "Lying on your back with knees bent and feet flat, curl your head, shoulders and back up until you're sitting, then lower with control.",
+  "source": {
+    "url": "https://www.healthline.com/health/sit-ups-benefits",
+    "title": "Healthline: Sit-ups: benefits and how to"
+  },
+  "setup": ["Lie on your back, knees bent, feet flat (hooked under something if you like).", "Hands lightly behind your head or crossed on your chest."],
+  "cues": ["Curl up one vertebra at a time.", "Don't pull on your neck.", "Lower slowly."],
+  "prescription": {
+    "reps": "8–15",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, hands behind your head.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Sit up",
+      "cue": "Curl all the way up until you're sitting.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "torso": [70, 0, 0],
+        "chest": [10, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

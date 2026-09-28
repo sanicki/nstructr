@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "core-flutter-kicks",
+  "name": "Flutter Kicks",
+  "otherNames": ["Flutter Kick"],
+  "category": "Core",
+  "focus": "Lower abs and hip flexors",
+  "collections": ["Core"],
+  "equipment": [],
+  "description": "Lying on your back with legs straight and low, kick them up and down in small alternating movements.",
+  "source": {
+    "url": "https://www.bodi.com/blog/flutter-kicks",
+    "title": "BODi: Flutter kicks"
+  },
+  "setup": ["Lie on your back, legs long, hands by your sides or under your hips."],
+  "cues": ["Lower back pressed down.", "Small, quick kicks.", "Legs higher makes it easier."],
+  "prescription": {
+    "reps": "20–30 (both legs = 2)",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Right leg up",
+      "cue": "Small kicks: right leg up, left leg down.",
+      "camera": 90,
+      "durationMs": 600,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [40, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipR": [30, 0, 0],
+        "hipL": [12, 0, 0]
+      }
+    },
+    {
+      "name": "Left leg up",
+      "cue": "Switch.",
+      "camera": 90,
+      "durationMs": 600,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [40, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [30, 0, 0],
+        "hipR": [12, 0, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 20
+  },
+  "repName": "kick"
+}
