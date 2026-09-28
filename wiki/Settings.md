@@ -18,9 +18,13 @@ going) or type a number, from 0 to 300. Default 10.
 Seconds of rest between the sets of an exercise done in more than one set, in every workout. Same controls.
 Default 20. (Rest between circuit rounds is set on each block.)
 
-### Sound
-**Silent**, **Beeps**, **Voice** or **Coach**: see [Working out → Sound](Working-out.md#sound). Also used by the
-exercise page (Voice and Coach read each step's cue once, then count).
+### Instruction
+**Silent**, **Beeps**, **Voice** or **Coach**: see [Working out → Instruction](Working-out.md#instruction). Also used
+by the exercise page (Voice and Coach read each step's cue once, then count).
+
+### Text-to-speech speed
+How fast Voice and Coach speak, from **0.5×** to **3.0×** in steps of 0.1 (**1.0×** is the voice's normal speed).
+Tap − or +, or hold one to keep going; you hear a short sample at the new speed.
 
 ### Full screen
 Whether a workout in the browser goes full screen. The installed app is always full screen.

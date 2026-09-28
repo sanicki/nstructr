@@ -38,7 +38,7 @@ The **Exercises** tab is the library: over 130 exercises, each animated step by 
 - **The figure** plays the exercise on a loop (it starts by itself unless you turn off
   [Autoplay](Settings.md#autoplay-exercise-videos)). Tap it to show the controls: previous step, play/pause, next step,
   and in the corner **Loop** (off: it plays once through, then stops; Play starts it again) and **Mute** (quiets the
-  spoken cues on this page; they follow Settings → Sound). Both are remembered.
+  spoken cues on this page; they follow Settings → Instruction). Both are remembered.
   The first tap only shows them. They stay up while paused and fade while playing.
 - Under the figure: the **current step**, with its number, name and cue.
 - **Side** (for exercises done one side at a time, such as *Right leg back* / *Left leg back*) and **Direction**
@@ -54,9 +54,9 @@ Scroll down for the details:
   side), where the description comes from, and any note on reps.
 - **Steps**: every step in order (tap one to jump the figure to it).
 
-### Sound on the exercise page
+### Instruction on the exercise page
 
-The exercise page follows your **Sound** setting (see [Settings](Settings.md#sound)):
+The exercise page follows your **Instruction** setting (see [Settings](Settings.md#instruction)):
 
 - **Silent** and **Beeps**: quiet.
 - **Voice** and **Coach**: the first time through, each step's cue is read out and the figure waits until it's

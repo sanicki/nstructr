@@ -32,7 +32,7 @@ function backupData() {
   return {
     format: BACKUP_FORMAT, version: FILE_VERSION, exported: new Date().toISOString(),
     workouts: WK.list || [], exercises: S.lib.items, bookmarks: [...(BOOKMARKS || [])], history: loadLog(),
-    settings: { sound: WK.sound, ...(fullscreen ? { fullscreen } : {}) }
+    settings: { sound: WK.sound, speechRate: speechRate(), ...(fullscreen ? { fullscreen } : {}) }
   };
 }
 async function exportEverything() {
@@ -54,6 +54,7 @@ function restoreBackup(data) {
   saveLog(byId(loadLog(), log).sort((a, b) => String(a.start).localeCompare(String(b.start))));
   const st = data.settings || {};
   if (st.sound && SOUND_MODES.some(m => m[0] === st.sound)) setSound(st.sound);
+  if (typeof st.speechRate === 'number') setRate(st.speechRate, false);
   if (st.fullscreen) { try { localStorage.setItem(FS_KEY, st.fullscreen); } catch (e) { } }
   keepStorage();
   return { workouts: ws.length, exercises: exs.length, sessions: log.length };

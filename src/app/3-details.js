@@ -132,7 +132,7 @@ function closeEditor() {
 $('#editPoseBtn').addEventListener('click', () => (XC.editing ? closeEditor() : openEditor()));
 
 /* ---------- Sound in the exercise player ----------
-   It follows the Sound setting: Silent and Beeps stay quiet (there are no rests or holds to beep for); Voice and
+   It follows the Instruction setting: Silent and Beeps stay quiet (there are no rests or holds to beep for); Voice and
    Coach read each step's cue on the first pass through the exercise (the step waits for its line), then count the
    reps. Pausing stops the voice; a new side or direction starts a new first pass. */
 const XS = { speaking: false, token: 0, last: '' };
@@ -153,7 +153,7 @@ $('#loopBtn').addEventListener('click', () => {
   snack(loopOn() ? 'Loop on: the exercise repeats' : 'Loop off: once through, then it stops');
 });
 $('#muteBtn').addEventListener('click', () => {
-  if (!(WK.sound === 'voice' || WK.sound === 'coach')) { snack('The exercise voice follows Settings → Sound: choose Voice or Coach.', 5000); return; }
+  if (!(WK.sound === 'voice' || WK.sound === 'coach')) { snack('The exercise voice follows Settings → Instruction: choose Voice or Coach.', 5000); return; }
   setPref(EXMUTE_KEY, exMuted() ? 'off' : 'on'); renderExToggles();
   if (exMuted()) exHush(); else if (S.playing) { XS.last = ''; exStepSound(S.idx); }
 });
@@ -171,7 +171,7 @@ function exStepSound(i) {
 function exHush() { XS.token++; XS.speaking = false; XS.last = ''; try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } }
 
 /* ---------- Settings ---------- */
-const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1';
+const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1', SPEECH_RATE_KEY = 'nstructr-speech-rate-v1';
 const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
 const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
@@ -199,6 +199,20 @@ function holdRepeat(box, sel, nudge) {
     nudge(b);
   });
 }
+/* text-to-speech speed (SpeechSynthesisUtterance.rate): 0.5–3 in steps of 0.1, 1 = the voice's normal speed */
+const speechRate = () => { const v = parseFloat(pref(SPEECH_RATE_KEY, '1')); return v >= 0.5 && v <= 3 ? v : 1; };
+let RATE_T = 0;
+function setRate(v, preview = true) {
+  v = Math.min(3, Math.max(0.5, Math.round((+v || 1) * 10) / 10));
+  setPref(SPEECH_RATE_KEY, String(v));
+  $('#setRate').textContent = `${v.toFixed(1)}×`;
+  document.querySelectorAll('[data-rate-delta]').forEach(b => { b.disabled = +b.dataset.rateDelta < 0 ? v <= 0.5 : v >= 3; });
+  // hear it (once the buttons are let go), whatever the Instruction setting
+  clearTimeout(RATE_T);
+  if (preview && 'speechSynthesis' in window) RATE_T = setTimeout(() => {
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance('This is how fast I speak.'); u.rate = speechRate(); speechSynthesis.speak(u); } catch (e) { }
+  }, 400);
+}
 const restGap = () => { const v = parseFloat(pref(REST_KEY, '10')); return v >= 0 ? v : 10; };
 /* seconds of rest between sets of an exercise, in every workout (a setting since Sep 2026; items' "rest" is ignored) */
 const restSets = () => { const v = parseFloat(pref(REST_SETS_KEY, '20')); return v >= 0 ? v : 20; };
@@ -211,7 +225,7 @@ function renderSettings() {
   seg('#setTheme', 'settheme', [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']], pref(THEME_KEY, 'system'));
   $('#setFullscreen').checked = wantFullscreen();
   $('#setAutoplay').checked = pref(AUTOPLAY_KEY, 'on') !== 'off';
-  $('#setRest').value = restGap(); $('#setRestSets').value = restSets();
+  $('#setRest').value = restGap(); $('#setRestSets').value = restSets(); setRate(speechRate(), false);
   $('#setAuthoring').checked = authoring();
   renderPersistNote();
 }
@@ -230,6 +244,7 @@ function setRest(which, v) {
 }
 $('#setRest').addEventListener('change', e => setRest('between', e.target.value));
 $('#setRestSets').addEventListener('change', e => setRest('sets', e.target.value));
+holdRepeat($('#view-settings'), '[data-rate-delta]', b => setRate(speechRate() + +b.dataset.rateDelta / 10));
 holdRepeat($('#view-settings'), '[data-rest-delta]', b => setRest(b.dataset.restKey, (b.dataset.restKey === 'sets' ? restSets() : restGap()) + +b.dataset.restDelta));
 $('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Authoring mode on: the Edit button (pencil) on any exercise now shows the poses and camera too' : 'Authoring mode off', 6000); });
 
