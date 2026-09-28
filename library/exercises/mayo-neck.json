@@ -54,8 +54,8 @@
       "pose": {
         "neck": [0, 28, 0],
         "shoulderL": [0, 4, 0],
-        "shoulderR": [0, 235.4, -90],
-        "elbowR": 130.3
+        "shoulderR": [90, 150, 0],
+        "elbowR": 120
       }
     }
   ],

@@ -32,21 +32,23 @@
         {
           "hand": "handR",
           "to": "shoulderR",
-          "dz": 10
+          "dz": 12,
+          "dy": 4
         },
         {
           "hand": "handL",
           "to": "shoulderL",
-          "dz": 10
+          "dz": 12,
+          "dy": 4
         }
       ],
       "pose": {
         "root": [90, 0, 0],
         "neck": [-34, 0, 0],
-        "shoulderL": [235.4, 0, 180],
-        "elbowL": -189.5,
-        "shoulderR": [235.4, 0, 180],
-        "elbowR": -189.5,
+        "shoulderL": [-40, 15, 0],
+        "elbowL": 110,
+        "shoulderR": [-40, 15, 0],
+        "elbowR": 110,
         "ankleL": 90,
         "ankleR": 90
       }
@@ -65,10 +67,10 @@
         "torso": [-22, 0, 0],
         "chest": [-14, 0, 0],
         "neck": [-20, 0, 0],
-        "shoulderL": [136.4, 0, 180],
-        "elbowL": -237.7,
-        "shoulderR": [136.4, 0, 180],
-        "elbowR": -237.7,
+        "shoulderL": [-40, 15, 0],
+        "elbowL": 110,
+        "shoulderR": [-40, 15, 0],
+        "elbowR": 110,
         "ankleL": 90,
         "ankleR": 90
       }

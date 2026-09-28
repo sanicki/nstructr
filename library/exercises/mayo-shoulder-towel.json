@@ -38,8 +38,8 @@
         }
       ],
       "pose": {
-        "shoulderL": [25.8, 0, 180],
-        "elbowL": 98.8,
+        "shoulderL": [-30, 10, -80],
+        "elbowL": 100,
         "shoulderR": [-185, 0, 0],
         "elbowR": 150
       }
@@ -62,8 +62,8 @@
         }
       ],
       "pose": {
-        "shoulderL": [5.4, 0, 180],
-        "elbowL": 104.9,
+        "shoulderL": [-30, 10, -80],
+        "elbowL": 100,
         "shoulderR": [-180, 0, 0],
         "elbowR": 118
       }

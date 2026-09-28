@@ -38,17 +38,28 @@
       "holdMs": 5000,
       "phase": "rep",
       "pose": {
-        "torso": [-55, 0, 0],
+        "torso": [-30, 0, 0],
+        "chest": [-50, 0, 0],
         "neck": [-30, 0, 0],
-        "shoulderL": [-85, 0, 0],
-        "shoulderR": [-85, 0, 0],
-        "hipL": [-5, 0, 0],
-        "kneeL": 85,
+        "shoulderL": [-70, 0, 0],
+        "shoulderR": [-70, 0, 0],
+        "hipL": [-20, 0, 0],
+        "kneeL": 90,
         "ankleL": 90,
-        "hipR": [-5, 0, 0],
-        "kneeR": 85,
+        "hipR": [-20, 0, 0],
+        "kneeR": 90,
         "ankleR": 90
-      }
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        },
+        {
+          "hand": "handL",
+          "to": "ankleL"
+        }
+      ]
     }
   ],
   "cues": ["Keep the hips over the knees.", "Lift the chest before reaching back."],

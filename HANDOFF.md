@@ -329,7 +329,9 @@ the pelvis so the anchor is pinned (or the lowest point rests on the floor), `pr
 **Two-bone IK** (`reachTip`): the knee (elbow) goes in the plane the limb's turn gives it: a knee always comes out
 in front of the hip–ankle line, an elbow behind the shoulder–hand line, so they never bend the wrong way. The
 answer is read back as joint angles (`limbAngles`), choosing among equivalent angles the one closest to the
-current ones, so a limb never flips.
+current ones, so a limb never flips. A part-way correction (a slide fading in and out) aims part-way from where the
+tip is and solves that exactly: blending angles toward an answer written a different (equivalent) way bends the limb
+differently.
 
 ### 6.2 A frame between two steps (`frameAt`)
 
@@ -377,14 +379,11 @@ no phases. Held poses are checked at the step itself.
 
 Accepted exceptions (`tools/known-issues.json`, per exercise, per check, max px):
 
-- `yoga-downward-dog` planted ≤ 22: the toes swing as the foot pivots from top-down to sole-down (not a slide).
-- `yoga-bound-angle` planted ≤ 18, `yoga-side-plank` planted ≤ 17: moves where the camera turns and the body turns
-  about its own long axis, which a blend of the two poses only approximates. To rebuild (§13, problem poses).
+- `yoga-downward-dog` planted ≤ 21: the toes swing as the foot pivots from top-down to sole-down (not a slide).
 
-All checks are in 3D. **Range of motion** (`tools/rom.cjs`, run by the build, informational): every resolved step
-against normal human range (AAOS) and what a flexible person reaches (the table in `docs/3d-skeleton.md`); the
-build prints how many joints are past the flexible range, `node tools/rom.cjs` lists them. These are the poses to
-fix; once they are, the build should reject poses past "flexible".
+All checks are in 3D. **Range of motion** (`tools/rom.cjs`, run by the build): the build **fails** on any resolved step
+with a joint past what a flexible body can do (the table and how it's measured: `docs/3d-skeleton.md`, "Joint
+model"); `node tools/rom.cjs` lists them and counts what's past normal range.
 
 Other accepted behaviour (not checked, known): seated transitions in Half Lord of the Fishes / Marichyasana /
 Head-to-Knee lift the pelvis ~4 px; when the camera turns, the figure moves across the screen if it isn't standing at
@@ -644,7 +643,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 
 ## 12. Testing
 
-- `node tools/build.mjs` — schema + references + animation checks (3D) + range-of-motion summary (≈ 20 s).
+- `node tools/build.mjs` — schema + references + animation checks (3D) + range of motion (≈ 25 s).
 - `tools/viewer3d.html` (serve the repo root) plays any exercise with a camera you can turn.
 - `tools/e2e/*.py` (Python Playwright; `pip install playwright && playwright install chromium`), against a
   served build via `NSTRUCTR_URL`:
@@ -687,11 +686,9 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 6. ✅ **3D skeleton, still drawn as SVG** — exercise format **v2** (Sep 2026): mannequin-style joints with real 3D
    angles, a real camera, bones drawn in depth order (no `layers`, no depth joints), contacts solved in 3D. The
    library was converted automatically (each step checked against the old picture), and format 1 is no longer
-   read or written. See `docs/3d-skeleton.md`. **Follow-up (next): the problem poses** — the 34 exercises
-   `tools/rom.cjs` lists past what a flexible body can do (knees folded flat, backbends made at the hip, arms
-   turned half round by the conversion), plus the two known issues in §7: fix each, rebuilding from its source
-   where the old pose was wrong (Wheel, Dancer, Pigeon, Camel, Marichyasana I/III…); then make the build reject
-   poses past "flexible".
+   read or written. See `docs/3d-skeleton.md`. **Follow-up done (Sep 2026): the problem poses** —
+   the 34 exercises past what a flexible body can do after the conversion were fixed (see `docs/3d-skeleton.md`,
+   "The range check"), and the build now rejects poses past "flexible".
 7. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`
    forms YAML; if the JSON is too long for the URL, copy to clipboard and ask to paste) → an Action validates
    with `tools/build.mjs` logic, renders a preview (headless browser → GIF/PNG), comments, and opens a PR. Prompt

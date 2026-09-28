@@ -42,26 +42,24 @@
       "reach": [
         {
           "hand": "handR",
-          "to": "neckBase",
-          "dx": 22,
-          "dy": 6,
-          "dz": 18
+          "to": "head",
+          "dx": 28,
+          "dy": -10
         },
         {
           "hand": "handL",
-          "to": "neckBase",
-          "dx": -22,
-          "dy": 6,
-          "dz": 18
+          "to": "head",
+          "dx": -28,
+          "dy": -10
         }
       ],
       "pose": {
         "root": [-90, 0, 0],
         "neck": [34, 0, 0],
-        "shoulderL": [86.3, 0, 180],
-        "elbowL": 164.2,
-        "shoulderR": [86.3, 0, 180],
-        "elbowR": 164.2,
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
         "hipL": [58, 0, 0],
         "kneeL": 116,
         "ankleL": 32,
@@ -92,27 +90,25 @@
       "reach": [
         {
           "hand": "handR",
-          "to": "neckBase",
-          "dx": 22,
-          "dy": 6,
-          "dz": 18
+          "to": "head",
+          "dx": 28,
+          "dy": -10
         },
         {
           "hand": "handL",
-          "to": "neckBase",
-          "dx": -22,
-          "dy": 6,
-          "dz": 18
+          "to": "head",
+          "dx": -28,
+          "dy": -10
         }
       ],
       "pose": {
         "root": [-90, 0, 0],
         "chest": [32, 0, 0],
         "neck": [44, 0, 0],
-        "shoulderL": [125.1, 0, 180],
-        "elbowL": 162.5,
-        "shoulderR": [125.1, 0, 180],
-        "elbowR": 162.5,
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
         "hipL": [58, 0, 0],
         "kneeL": 116,
         "ankleL": 32,

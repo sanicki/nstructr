@@ -62,8 +62,8 @@
         "shoulderR": [-60, 0, 0],
         "elbowR": 60,
         "hipL": [90, 0, 0],
-        "hipR": [140, 0, 0],
-        "kneeR": 180,
+        "hipR": [130, 0, 0],
+        "kneeR": 120,
         "ankleR": -40
       }
     }

@@ -59,11 +59,11 @@
         "neck": [10, 0, 0],
         "shoulderL": [-194.9, 0, 0],
         "shoulderR": [-194.9, 0, 0],
-        "hipL": [78, 0, 0],
-        "kneeL": 170,
+        "hipL": [65, 0, 0],
+        "kneeL": 155,
         "ankleL": 90,
-        "hipR": [78, 0, 0],
-        "kneeR": 170,
+        "hipR": [65, 0, 0],
+        "kneeR": 155,
         "ankleR": 90
       }
     }

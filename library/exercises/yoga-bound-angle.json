@@ -85,37 +85,27 @@
       "holdMs": 5000,
       "phase": "rep",
       "anchor": "pelvis",
-      "plant": ["L", "R"],
-      "touch": [
-        {
-          "point": "ankleR",
-          "adjust": "kneeR"
-        },
-        {
-          "point": "ankleL",
-          "adjust": "kneeL"
-        },
-        {
-          "point": "handR",
-          "adjust": "shoulderR.side"
-        },
-        {
-          "point": "handL",
-          "adjust": "shoulderL.side"
-        }
-      ],
+      "touch": [],
       "pose": {
         "shoulderL": [0, 26.6, -90],
         "elbowL": 6,
         "shoulderR": [0, 26.6, -90],
         "elbowR": 6,
-        "hipL": [0, 100, 90],
-        "kneeL": 180,
-        "ankleL": -80,
-        "hipR": [0, 100, 90],
-        "kneeR": 180,
-        "ankleR": -80
-      }
+        "hipL": [95, 55, 90],
+        "kneeL": 150,
+        "hipR": [95, 55, 90],
+        "kneeR": 150
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "footR"
+        },
+        {
+          "hand": "handL",
+          "to": "footL"
+        }
+      ]
     }
   ],
   "cues": ["Hold the feet and sit up tall.", "Let the knees release without forcing them down."],

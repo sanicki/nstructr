@@ -46,10 +46,10 @@
         }
       ],
       "pose": {
-        "shoulderL": [-126.1, 0, 0],
-        "elbowL": 162.2,
-        "shoulderR": [-126.1, 0, 0],
-        "elbowR": 162.2
+        "shoulderL": [0, 80, 90],
+        "elbowL": 140,
+        "shoulderR": [0, 80, 90],
+        "elbowR": 140
       }
     },
     {
@@ -79,10 +79,10 @@
       ],
       "pose": {
         "torso": [42, 0, 0],
-        "shoulderL": [-118.7, 0, 0],
-        "elbowL": 159.9,
-        "shoulderR": [-118.7, 0, 0],
-        "elbowR": 159.9,
+        "shoulderL": [0, 80, 90],
+        "elbowL": 140,
+        "shoulderR": [0, 80, 90],
+        "elbowR": 140,
         "hipL": [90, 0, 0],
         "kneeL": 104,
         "ankleL": -14,

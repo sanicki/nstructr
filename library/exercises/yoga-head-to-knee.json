@@ -66,8 +66,8 @@
       "pose": {
         "shoulderL": [-23.9, 0, 0],
         "shoulderR": [-23.9, 0, 0],
-        "hipL": [135, 0, 0],
-        "kneeL": 180,
+        "hipL": [130, 0, 0],
+        "kneeL": 120,
         "ankleL": -45,
         "hipR": [90, 0, 0]
       }
@@ -85,8 +85,8 @@
         "neck": [10, 0, 0],
         "shoulderL": [150, 0, 0],
         "shoulderR": [150, 0, 0],
-        "hipL": [90, 0, 0],
-        "kneeL": 180,
+        "hipL": [90, 45, 90],
+        "kneeL": 140,
         "ankleL": 90,
         "hipR": [90, 0, 0]
       }
@@ -117,8 +117,8 @@
       "pose": {
         "shoulderL": [-23.9, 0, 0],
         "shoulderR": [-23.9, 0, 0],
-        "hipL": [135, 0, 0],
-        "kneeL": 180,
+        "hipL": [130, 0, 0],
+        "kneeL": 120,
         "ankleL": -45,
         "hipR": [90, 0, 0]
       }

@@ -44,10 +44,37 @@
       }
     },
     {
+      "name": "Roll onto the left hand",
+      "camera": 90,
+      "durationMs": 1300,
+      "holdMs": 0,
+      "phase": "setup",
+      "anchor": "handL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR.side"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "root": [40, -58, -68],
+        "shoulderL": [33, 33, 0],
+        "shoulderR": [33, 57, 0],
+        "hipL": [-4, 2, 0],
+        "hipR": [-4, -6.65, 0]
+      },
+      "quiet": true
+    },
+    {
       "name": "Side Plank",
       "cue": "Roll onto the left hand, stack the feet, and lift the right arm.",
-      "camera": 0,
-      "durationMs": 2600,
+      "camera": 90,
+      "durationMs": 1300,
       "holdMs": 5000,
       "phase": "rep",
       "anchor": "handL",
@@ -63,7 +90,7 @@
         }
       ],
       "pose": {
-        "root": [0, -66, 0],
+        "root": [0, -66, -90],
         "shoulderL": [0, 66, 0],
         "shoulderR": [0, 114, 0],
         "hipL": [0, 4, 0],

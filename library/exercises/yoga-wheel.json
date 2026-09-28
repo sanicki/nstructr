@@ -47,6 +47,49 @@
       }
     },
     {
+      "name": "Hands by your ears",
+      "cue": "Bend your elbows and put your hands by your ears, fingers toward your shoulders.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 600,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "anchorZ": -30,
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "handR",
+          "adjust": "elbowR"
+        },
+        {
+          "point": "handL",
+          "adjust": "elbowL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [45, 0, 0],
+        "kneeL": 90,
+        "ankleL": 45,
+        "hipR": [45, 0, 0],
+        "kneeR": 90,
+        "ankleR": 45,
+        "shoulderL": [100, 0, 0],
+        "shoulderR": [100, 0, 0],
+        "elbowL": 130,
+        "elbowR": 130
+      }
+    },
+    {
       "name": "Wheel Pose",
       "cue": "Hands by the ears, press up into a full arch.",
       "camera": 90,
@@ -59,24 +102,24 @@
       "touch": [
         {
           "point": "ankleR",
-          "adjust": "hipR"
+          "adjust": "kneeR"
         },
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "kneeL"
         }
       ],
       "pose": {
-        "root": [-120, 0, 0],
-        "neck": [-40, 0, 0],
-        "shoulderL": [-120, 0, 0],
-        "shoulderR": [-120, 0, 0],
-        "hipL": [-96.9, 0, 0],
-        "kneeL": 30,
-        "ankleL": -6.9,
-        "hipR": [-96.9, 0, 0],
-        "kneeR": 30,
-        "ankleR": -6.9
+        "root": [-80, 0, 0],
+        "torso": [-40, 0, 0],
+        "chest": [-40, 0, 0],
+        "neck": [-20, 0, 0],
+        "shoulderL": [160, 0, 0],
+        "shoulderR": [160, 0, 0],
+        "hipL": [-50, 0, 0],
+        "kneeL": 40,
+        "hipR": [-50, 0, 0],
+        "kneeR": 40
       }
     }
   ],
