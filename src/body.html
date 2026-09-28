@@ -271,9 +271,18 @@
     <button class="btn filled stateful" id="shareQrImg"><span class="icon">qr_code_2</span>Share QR code</button>
     <button class="btn tonal stateful" id="shareSend"><span class="icon">share</span>Share link</button>
     <button class="btn tonal stateful" id="shareFile"><span class="icon">download</span><span id="shareFileLabel">Export</span></button>
-    <button class="btn tonal stateful" id="shareSubmit" disabled aria-describedby="shareSoon"><span class="icon">library_add</span>Submit suggestion</button>
+    <button class="btn tonal stateful" id="shareSubmit" aria-describedby="shareSoon"><span class="icon">library_add</span>Submit to library</button>
   </div>
-  <p class="body-small muted" id="shareSoon" style="margin:8px 0 0">Submitting a suggestion to the library is coming soon.</p>
+  <p class="body-small muted" id="shareSoon" style="margin:8px 0 0"></p>
+</dialog>
+<dialog id="submitDialog" aria-labelledby="submitTitle">
+  <div class="dlg-head"><h2 class="headline-small" id="submitTitle">Submit to the library</h2>
+    <button class="icon-btn stateful" data-close aria-label="Close"><span class="icon">close</span></button></div>
+  <div id="submitBody"></div>
+  <fieldset class="choices" id="submitChoices"><legend class="field-label">Suggest</legend></fieldset>
+  <label class="field" id="submitNoteWrap"><span class="field-label" id="submitNoteLabel">Note for the reviewer (optional)</span><textarea id="submitNote" rows="3" maxlength="1000"></textarea></label>
+  <p class="body-small muted" style="margin:12px 0 0">It opens a GitHub issue with your exercise in it (you need a free GitHub account). It's checked automatically, then reviewed. Write in your own words and give your source.</p>
+  <div class="actions"><button class="btn text stateful" data-close>Cancel</button><button class="btn filled stateful" id="submitGo"><span class="icon">open_in_new</span>Continue on GitHub</button></div>
 </dialog>
 <dialog id="linkDialog" aria-labelledby="linkTitle">
   <h2 class="headline-small" id="linkTitle">Shared with you</h2>
