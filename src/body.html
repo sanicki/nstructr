@@ -334,60 +334,52 @@
 <div class="snackbar" id="snackbar" role="status" aria-live="polite"></div>
 <div class="drop" id="drop"><div><span class="icon">file_download</span><p class="title-medium">Drop JSON to import</p></div></div>
 
-<template id="aiPrompt">EXERCISE FORMAT
-{ "version": 2,
-  "id": "u-kebab-case-name",                  // must start with "u-" (marks it as your own exercise)
-  "name": "...", "category": "Strength | Stretch | Balance | Mobility | Cardio | Yoga pose type",
-  "focus": "main body area", "equipment": ["..."], "description": "1-2 sentences in your own words",
-  "source": { "url": "...", "title": "...", "note": "anything approximated" },
-  "setup": ["..."], "cues": ["..."],
-  "prescription": { "reps": "8-12", "note": "..." },   // reps is free text: "8-12", "3 rounds each leg"
-  "measure": "reps" | "time",                 // how a workout counts it: reps, or a timed hold
-  "defaults": { "reps": 10 } | { "seconds": 30 },   // used when it's added to a workout
-  "repName": "rep",                           // what one rep is called ("circle", "pull-apart")
-  "bilateral": { "labels": { "L": "Right side", "R": "Left side" } },   // only if done on each side; write keyframes for ONE side
-  "direction": { "labels": { "A": "Clockwise", "B": "Counter-clockwise" } },   // only if it goes two ways (circles); keyframes are A, B plays the rep steps backwards
-  "props": [ ... ],                                                    // equipment drawn with the figure (see EQUIPMENT)
-  "keyframes": [ ... ] }
+<template id="aiPrompt">EXERCISE: a JSON object (keys and strings in double quotes). Fields:
+version: 2
+id: "u-" and the name in lowercase words joined by hyphens, e.g. "u-banded-pull-apart"
+name; category: Strength, Stretch, Balance, Mobility, Cardio or a yoga pose type; focus: the main body area
+equipment: list; description: 1-2 sentences; setup: list; cues: list
+source: {url, title, note: anything approximated}
+prescription: {reps: free text such as "8-12" or "3 rounds each leg", note}
+measure: "reps" or "time" (a timed hold); defaults: {reps: 10} or {seconds: 30}; repName: what one rep is called ("circle")
+bilateral: {labels: {L: "Right side", R: "Left side"}} only if done on each side; write the keyframes for ONE side
+direction: {labels: {A: "Clockwise", B: "Counter-clockwise"}} only if it goes two ways; keyframes are A, B plays the rep steps backwards
+props: list of EQUIPMENT drawn with the figure; keyframes: list of KEYFRAME
 
-KEYFRAME
-{ "name": "Short step name", "cue": "One instruction", "camera": 90,   // where you watch from: 90 = side, 0 = front
-  "durationMs": 1500, "holdMs": 500,          // time to move into the pose, time held (30000 for a 30 s stretch hold)
-  "phase": "setup" | "rep" | "finish",        // optional: played once first / one rep (or the hold) / once at the end
-  "anchor": "ankleL",                         // point pinned to the floor (keeps feet/hands/seat from sliding)
-  "plant": ["L"],                             // feet kept flat
-  "touch": [{ "point": "toeR", "adjust": "hipR" }],     // turn "adjust" until "point" touches the floor ("hipR.side" for its side number)
-  "reach": [{ "hand": "handR", "to": "ankleR" }],       // put a hand on a body point (or "to": "wall"); optional dx, dy, dz
-  "pose": { joint angles } }
+KEYFRAME fields:
+name: a short step name; cue: one instruction
+camera: where you watch from, 90 = side, 0 = front
+durationMs: time to move into the pose (1500); holdMs: time held (30000 for a 30 s hold)
+phase (optional): "setup" played once first, "rep" one rep or the hold, "finish" once at the end
+anchor: the point pinned to the floor, e.g. "ankleL" (keeps feet, hands or seat from sliding); plant: feet kept flat, e.g. ["L"]
+touch: [{point: "toeR", adjust: "hipR"}] turns "adjust" until "point" touches the floor ("hipR.side" for its side number)
+reach: [{hand: "handR", to: "ankleR"}] puts a hand on a body point, or to: "wall" or "chair"; optional dx, dy, dz
+keep: ["ankleL", "ankleR"] keeps those where they were in the previous step
+pose: {joint: angles}
 
-FIGURE: a 3D mannequin. torso 100 (lower back + upper back), upper arm 55, forearm 50, thigh 80, shin 80, foot 22.
+FIGURE: a 3D mannequin. Torso 100 (lower + upper back), upper arm 55, forearm 50, thigh 80, shin 80, foot 22.
 Ball joints take [forward, side, turn]: root (whole body), torso, chest, neck, shoulderL/R, hipL/R.
-Hinges take one number: elbowL/R, kneeL/R (bend, 0 = straight), ankleL/R (+ = point the toes).
-Angles in degrees, relative to the parent. At 0 the figure stands straight with arms hanging. Signs follow the BODY, not the screen:
-- hip/shoulder: forward + swings the limb forward (90 = straight ahead, 180 = overhead), side + lifts it out to its own side, turn + turns it out.
+Hinges take one number: elbowL/R, kneeL/R (bend; 0 = straight), ankleL/R (+ points the toes).
+Degrees, relative to the parent. At 0 the figure stands straight, arms hanging. Signs follow the BODY, not the screen:
+- hip/shoulder: forward + swings the limb forward (90 ahead, 180 overhead), side + lifts it out to its own side, turn + turns it out.
 - root/torso/chest/neck: forward + bends forward, side + leans to the figure's right, turn + turns to its left.
-Left and right use the same signs (both arms out to the sides = shoulderL [0,90,0] and shoulderR [0,90,0]).
-Reference: standing = all 0. Arms forward: shoulders [90,0,0]. Overhead: [180,0,0]. Out to the sides: [0,90,0].
-Squat: torso [38,0,0], hips [88,0,0], knees 102, ankles -14, "anchor": "ankleL". Plank (side view): root [66,0,0], shoulders [66,0,0], anchor "handR".
-Lying on the back: root [-90,0,0], neck [34,0,0], anchor "neckBase". Seated: anchor "pelvis", hips [90,0,0].
+Left and right use the same signs (both arms out: shoulderL [0,90,0] and shoulderR [0,90,0]).
+Examples: arms forward: shoulders [90,0,0]. Squat: torso [38,0,0], hips [88,0,0], knees 102, ankles -14, anchor "ankleL".
+Plank (side view): root [66,0,0], shoulders [66,0,0], anchor "handR". On the back: root [-90,0,0], neck [34,0,0], anchor "neckBase". Seated: anchor "pelvis", hips [90,0,0].
 
 POINTS: pelvis, spine, neckBase, head, headTop, headLow (forehead), hipL/R, kneeL/R, ankleL/R, toeL/R, footL/R (ball of foot), shoulderL/R, elbowL/R, handL/R, armpitL/R, backL/R.
 
-EQUIPMENT (props)
-Band: { "type": "band", "from": "footL", "to": "handL" }  (optional "via": ["armpitR"], "restLength")
-Towel: { "type": "towel", "from": "handR", "to": "handL" }
-Wall: { "type": "wall", "at": "handR", "keyframe": 0 }  (stands where that point is in that keyframe, in front or behind; "beside": true for one at the side)
-Chair / bench / step: { "type": "chair", "z": -12, "back": "behind" }, { "type": "bench", "z": 95 }, { "type": "step", "z": 82 }
-  (z = centre in px forward of the middle of the stage; seat 80 high, bench 70, step 30). Anything resting over a surface rests ON it:
-  sit with "anchor": "pelvis" (and "anchorZ" so the pelvis is over the seat), put a foot on a step with "touch",
-  hold a chair back with "reach": [{ "hand": "handL", "to": "chair" }].
-Weights: { "type": "dumbbell", "hand": "handR", "axis": "lr"|"fb"|"ud" }, { "type": "kettlebell", "hands": ["handL","handR"] }, { "type": "barbell", "from": "handL", "to": "handR" } "keep": ["ankleL","ankleR"] keeps feet where they were in the previous step.
+EQUIPMENT (props):
+band: {type: "band", from: "footL", to: "handL"}, optional via: ["armpitR"], restLength
+towel: {type: "towel", from: "handR", to: "handL"}
+wall: {type: "wall", at: "handR", keyframe: 0}: where that point is in that step, in front or behind; beside: true for one at the side
+chair, bench, step: {type: "chair", z: -12, back: "behind"}, {type: "bench", z: 95}, {type: "step", z: 82}. z = centre, px forward of the stage middle; seat 80 high, bench 70, step 30. Whatever is over a surface rests on it: sit with anchor "pelvis", a foot on a step with touch, a hand on a chair back with reach to: "chair".
+weights: {type: "dumbbell", hand: "handR", axis: "lr", "fb" or "ud"}, {type: "kettlebell", hands: ["handL", "handR"]}, {type: "barbell", from: "handL", to: "handR"}
 
 RULES
 1. One keyframe per distinct position; the sequence loops, so the last flows back into the first.
-2. Pick the camera that shows the movement best: side (90) for forward/back movement, front (0) for sideways movement. The pose is 3D either way.
-3. Use anchor/plant/touch/reach for contact instead of hand-tuning angles.
-4. Take reps and hold times from the video; if not stated, give a default and say so in prescription.note.
-5. Check the signs against the conventions above before answering; keep knees and elbows between 0 and 150.
-6. "id" starts with "u-", then the exercise name in lowercase words joined by hyphens, e.g. "u-banded-pull-apart".
-7. Timed exercises ("measure": "time") hold one step for the whole time: mark it "phase": "rep", steps before it "setup", after it "finish".</template>
+2. Pick the camera that shows the movement best: side (90) for forward and back, front (0) for sideways. The pose is 3D either way.
+3. Use anchor, plant, touch and reach for contact instead of hand-tuning angles.
+4. Take reps and hold times from the source; if not stated, give a default and say so in prescription.note.
+5. Check the signs against the conventions above; keep knees and elbows between 0 and 150.
+6. Timed exercises (measure "time") hold one step for the whole time: mark it phase "rep", steps before it "setup", after it "finish".</template>

@@ -614,10 +614,13 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   **and** equipment (models matched "band squat" to the plain squat when they only saw ids). It asks for
   `"calledInSource"` (the source's own name) and `"equipmentInSource"` on every workout item; the import takes both
   out of the workout and keeps them for the library check. The prompt must stay under `AI_Q_MAX` for the link-filled
-  apps (ChatGPT, Claude, Copilot; over it they fall back to copying): the LIBRARY list uses plain words and spaces
-  (`WITH band`, `bw-reverse-lunge sides`, `dir A-Forward B-Backward`) because brackets, commas, `=` and `/` take 3
-  characters each in a link. With 163 exercises it's about 14.5k as a ChatGPT link (Sep 2026), so roughly 20 more
-  exercises (the library's, or a user's own, which are listed too) fit before the next trim.
+  apps (ChatGPT, Claude, Copilot; over it they fall back to copying). Three things keep it short: the LIBRARY list uses
+  plain words and spaces (`WITH band`, `bw-reverse-lunge sides`, `dir A-Forward B-Backward`); the exercise and keyframe
+  formats are field lists, not commented JSON; and `aiLink` escapes less than `URLSearchParams` (`: , / ; @ $ ?` stay
+  as they are, spaces are `+`: allowed in a query and read back identically). With 163 exercises the ChatGPT link is
+  about 12.2k (Sep 2026; it was 14.5k before the last two), room for roughly 110 more exercises (the library's, or a
+  user's own, which are listed too). Base64 or other encodings don't help: non-ASCII is escaped in a link, and the
+  AI has to read plain text.
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;
   not a backup): a new own exercise (not one the user had, not a `basedOn` copy) that is a **duplicate** of a
   library one (`src/similar.js`) gets "Use <library exercise> instead" (on by default: **Done** points the imported
