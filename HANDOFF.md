@@ -195,8 +195,9 @@ The schemas in `schema/` are authoritative for structure. This section is the me
 {
   "$schema": "../../schema/exercise.schema.json", "version": 2,
   "id": "bw-reverse-lunge",            // kebab-case, = file name; users' own start with "u-"
-  "name": "Reverse Lunge", "sanskrit": "…",
-  "library": "Bodyweight",             // collection on the Explore tab
+  "name": "Reverse Lunge",
+  "otherNames": ["…"],                 // other names it's known by (Sanskrit, other languages); the first is shown under the name
+  "collections": ["Bodyweight"],       // library only: where the Exercises tab shows it (can be several); users' own have none
   "category": "Strength", "focus": "Thighs and glutes",
   "equipment": ["Wall"],               // free text, used for filters and the "You'll need" list
   "description": "…", "setup": ["…"], "cues": ["…"],   // cues[0] is also spoken by Coach
@@ -287,7 +288,8 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   is ≤ 900 characters (`src/vendor/qrcode.js`, qrcode-generator, MIT, vendored), then four equal buttons: **Share QR
   code** (filled = recommended; disabled without a QR code), **Share link** (tonal; filled when there's no QR code;
   the phone's share sheet, or copies the link where there's none), **Export workout/exercise** (a `.json` file),
-  **Submit suggestion** (disabled until submissions exist, step 8). No link field or Copy link since Sep 2026. Share
+  **Submit to library** (exercises that aren't the library's own; disabled for workouts, which can't be submitted
+  yet; see §8.8). No link field or Copy link since Sep 2026. Share
   buttons: workout editor, each workout card, the exercise page's top bar and About. `<site>` is the page's own
   address, or `https://sanicki.github.io/nstructr/` when opened from a file. Typical sizes: library workout
   62 chars; the 24-item routine customised ≈ 770; a workout with one own exercise ≈ 1200 (no QR).
@@ -500,6 +502,35 @@ steps or the joint will windmill; the jump check will catch it.
 - Maskable icons were made from the 1024 px artwork at 80% on the navy background (the supplied
   `adaptive-foreground.png` put a navy square on transparency, which shows as a square in a white circle).
 
+### 8.8 Submissions (exercises)
+Owner's requirements: submitting is a **deliberate action** on one thing the user picks, never automatic; the library
+must not fill with **duplicates**, and a known exercise under another name should become **another name for it**
+("other names"), not a new exercise. Checking that by hand doesn't scale, so it's automatic, twice:
+- **Similarity** (`src/similar.js`, shared by the app, the build and the Action): each non-quiet step's resolved
+  joint angles (first side, direction A), steps aligned by dynamic time warping, root-mean-square angle difference in
+  degrees. Library pairs that move the same are ≤ 0.6° apart and the next closest ≥ 1.6° (Sep 2026): **same < 1°**,
+  **similar < 2.5°**. Names are compared without case, accents, punctuation, plurals, word order and filler words
+  ("pose", "the"…). Equipment (mat and floor don't count) and measure (reps / time) separate **variants** from
+  **duplicates**: same motion + same equipment + same measure = duplicate. The build fails on a duplicate pair
+  (today: none; 5 variant pairs such as Glute Bridge (reps) / Bridge Pose (held), band / barbell overhead press).
+- **In the app** (Share → Submit to library, `src/app/5-submit.js`): a copy of a library exercise (`basedOn`) that
+  only has a new name → "another name for X"; a changed copy → "changes to X" (or new, when it no longer duplicates
+  X and has its own name); anything else is compared with the library: a duplicate can only be "another name for X"
+  or "changes to X"; a name the library has must be changed first. It opens a prefilled issue form
+  (`.github/ISSUE_TEMPLATE/exercise.yml`: kind, target, note, the exercise as a share link, and a required
+  own-words + MIT checkbox); over 8000 characters the link is copied to paste in instead.
+- **On GitHub** (`.github/workflows/submission.yml` → `tools/submission.mjs`): the issue is read only as data (a
+  file, never the shell). `name` adds to the target's `otherNames`; `update` replaces the target but keeps its id,
+  name (a new name becomes another name) and collections; `new` gets an id from its name and collections from the
+  closest library exercise with the same equipment, else from its equipment. Then the build's gates (schema,
+  animation checks, range of motion, duplicates, a name another exercise has) and `build.mjs --check-only` on the
+  whole library. Result: a comment on the issue, and on success a pull request from `submission/issue-<n>`
+  ("Closes #n"; editing the issue re-runs it and force-pushes that branch). A pull request opened with the workflow's
+  token doesn't start other workflows, which is why the check runs inside it. One-time setup: Settings → Actions →
+  General → "Allow GitHub Actions to create and approve pull requests".
+- Not merged: Glute Bridge and Bridge Pose move the same, but one counts reps and the other is a hold, and an
+  exercise has one `measure`. Merging them needs workouts to be able to hold a rep exercise (or the reverse).
+
 ## 9. Things not visible in the code
 
 - **Flip phone cover screen** (reference: Galaxy Z Flip7): ~360×398 CSS px (948×1048 physical). Camera cutouts and flash along the **bottom**.
@@ -699,16 +730,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    - keep flaky, network-dependent checks (source links) manual; decide whether `tools/perf.py` gets a budget (CI
      machines vary) or stays informational;
    - when picked up again: ideally before submissions grow, so contributions are checked end to end.
-8. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`
-   forms YAML; if the JSON is too long for the URL, copy to clipboard and ask to paste) → an Action validates
-   with `tools/build.mjs` logic, renders a preview (headless browser → GIF/PNG), comments, and opens a PR. Prompt
-   and form require original wording + source link + license checkbox.
-   **The `library` field** (which collection an exercise belongs to: "Bodyweight", "Yoga"…) matters for
-   exercises accepted into the library: the submission form (or review) must set it; users' own exercises don't
-   need it (they live under My Exercises).
-   **Owner's requirement:** editing exercises and workouts in the app is easy on purpose, so submitting must be a
-   **deliberate, user-triggered action** on something the user chooses (e.g. "Submit this exercise"), ideally
-   batching several items into one submission — never a PR per edit or anything automatic.
+8. **Submission pipeline** — **exercises done** (Sep 2026, §8.8); **workouts later** (owner: exercises first). For
+   workouts: the same issue form with a workout link, each of its own exercises going through the exercise rules.
 9. **Content**: exercise machines (cable stations first — a fixed anchor + rigid cable, close to bands; then
    leg press, lat pulldown; then cardio machines). Two small open choices in §14.
 10. **Experiments**: Flex mode layout (viewport segments; figure on the top half), voice commands (optional;

@@ -13,6 +13,8 @@ workouts, the workout player on the cover screen, Create with AI, editing exerci
 settings, and troubleshooting.
 
 Found an exercise that looks wrong, or have an idea? [Open an issue](https://github.com/sanicki/nstructr/issues).
+Made an exercise, or improved one? Submit it from the app: **Share → Submit to library**
+([how](wiki/Sharing-and-backups.md#submit-an-exercise-to-the-library)). It's checked automatically, then reviewed.
 
 ## For developers
 
@@ -36,7 +38,9 @@ the UI. The build deletes and recreates `_site/`, so restart the server after ea
    - Exercises and workouts are `library/exercises/<id>.json` and `library/workouts/<id>.json`; the file name is the
      `id`, and library ids never start with `u-`.
    - Every exercise must pass the animation checks for every side and direction: fix the poses rather than adding
-     an exception to `tools/known-issues.json`.
+     an exception to `tools/known-issues.json`. Every pose must be one a flexible body can do (`tools/rom.cjs`), and
+     no two exercises may move the same with the same equipment and measure (`src/similar.js`): a known exercise
+     under another name goes in its `otherNames`.
    - Exercise text is in your own words, with the source cited. Spoken cues are short, plain directions.
    - Don't rename `localStorage` keys without a migration.
 3. Run `node tools/build.mjs` and make sure it passes.

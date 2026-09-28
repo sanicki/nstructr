@@ -9,14 +9,15 @@ you edit, and **Done** closes the editor.
 
 ## Changing the words (everyone)
 
-- **Name, description and instructions**: the name, other name, focus, category, equipment, description,
+- **Name, description and instructions**: the name, other names (separated by commas), focus, category, equipment, description,
   setup, form cues, suggested reps, note, what a rep is called, side and direction names, and source.
 - **Each step**: its name and the **spoken cue** (the line read out in Voice and Coach modes). Use ‹ › to move
   between steps.
 - Write steps for the first side only; the other side swaps left and right for you.
 
 **Library exercises stay as they are.** Your first real change makes your own copy, "Name (copy)", in
-**My exercises**, and you edit that. Your own exercises are edited in place. Everything saves as you go.
+**My exercises**, and you edit that. Your own exercises are edited in place. Everything saves as you go. To
+suggest your change for everyone's library: **Share → Submit to library** ([how](Sharing-and-backups.md#submit-an-exercise-to-the-library)).
 
 - **Revert this step** undoes your changes to the current step.
 - **Discard all changes** goes back to how the exercise was when you started editing (and removes the copy if

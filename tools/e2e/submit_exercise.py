@@ -8,6 +8,7 @@ from playwright.async_api import async_playwright
 SETUP = """(()=>{ const sq = findInDb('bw-squat');
   const put = x => { S.lib.items = S.lib.items.filter(i => i.id !== x.id); S.lib.items.push(x); };
   put({ ...clone(sq), id: 'u-renamed', name: 'Air Squat', basedOn: 'bw-squat' });
+  put({ ...clone(sq), id: 'u-taken', name: 'Sit to Stand', basedOn: 'bw-squat' });
   put({ ...clone(sq), id: 'u-same', name: sq.name + ' (copy)', basedOn: 'bw-squat' });
   put({ ...clone(sq), id: 'u-changed', name: sq.name + ' (copy)', basedOn: 'bw-squat', cues: ['Sit back.', 'Chest up.'] });
   put({ ...clone(sq), id: 'u-dup', name: 'Chair Squat Thing', collections: undefined });
@@ -38,6 +39,7 @@ async def main():
         # the exercise link inside decodes back to the exercise
         back = await pg.evaluate(f"unpackLink({json.dumps(q['exercise'][0].split('#/link/')[1])}).then(r => [r.kind, r.data.exercises[0].name, r.data.exercises[0].basedOn])")
         print('  decodes to', back)
+        await plan('u-taken'); await pg.click('#submitDialog [data-close]')
         await plan('u-same'); await pg.click('#submitDialog [data-close]')
         await plan('u-changed'); await pg.click('#submitDialog [data-close]')
         await plan('u-dup')

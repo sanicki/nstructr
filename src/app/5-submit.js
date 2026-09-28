@@ -18,23 +18,25 @@ const exBody = e => canonical({ ...e, id: 0, name: 0, basedOn: 0, collections: 0
 function submissionPlan(ex) {
   const name = baseName(ex.name), base = ex.basedOn && findInDb(ex.basedOn);
   if (findInDb(ex.id) && canonical(findInDb(ex.id)) === canonical(ex)) return { intro: '<p>This is the library\'s own exercise.</p>', choices: [], matches: [] };
+  const owner = POSE_DB.exercises.find(x => hasName(x, name));     // a name belongs to one library exercise
   if (base && exBody(ex) === exBody(base)) {
+    if (owner && owner !== base) return { intro: `<p>“${esc(name)}” is already the name of “${esc(owner.name)}” in the library. Give yours another name, or change it first.</p>`, choices: [], matches: [] };
     if (hasName(base, name)) return { intro: `<p>This is the same as “${esc(base.name)}” in the library. Change it first, then submit your change.</p>`, choices: [], matches: [] };
     return { intro: `<p>Only the name is different from “${esc(base.name)}”, so it's suggested as another name for it.</p>`,
       choices: [{ kind: 'name', target: base.id, label: `“${name}” as another name for “${base.name}”` }], matches: [] };
   }
   const matches = SIMILAR_EX.similarTo(ex, POSE_DB.exercises, LIB_PRINTS).slice(0, 4);
-  const dup = matches.find(m => m.verdict === 'duplicate'), clash = matches.find(m => hasName(findInDb(m.id), name));
+  const dup = matches.find(m => m.verdict === 'duplicate');
   const choices = [], after = [];
   if (base) choices.push({ kind: 'update', target: base.id, label: `Changes to “${base.name}”` });
   if (dup && dup.id !== (base && base.id)) {
     const d = findInDb(dup.id);
-    if (!hasName(d, name)) choices.push({ kind: 'name', target: d.id, label: `“${name}” as another name for “${d.name}”` });
+    if (!owner) choices.push({ kind: 'name', target: d.id, label: `“${name}” as another name for “${d.name}”` });
     choices.push({ kind: 'update', target: d.id, label: `Changes to “${d.name}”` });
   }
   // a new exercise can't be a duplicate, or share a name with one in the library
   if (dup) after.push('To submit it as a new exercise, it needs what sets it apart: its equipment (Edit → Equipment), or held instead of repeated.');
-  else if (clash) after.push(`To submit it as a new exercise, give it a name of its own: “${name}” is already in the library.`);
+  else if (owner) after.push(`To submit it as a new exercise, give it a name of its own: “${name}” is already in the library.`);
   else choices.push({ kind: 'new', label: base ? 'A new exercise (it\'s different from the original)' : 'A new exercise' });
   const why = m => ({
     duplicate: `moves the same as <b>${esc(m.name)}</b>, with the same equipment`,
