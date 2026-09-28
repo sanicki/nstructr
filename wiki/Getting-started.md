@@ -24,7 +24,7 @@ Updates arrive by themselves the next time you open the app while online.
 |---|---|
 | **Workouts** | Starting a workout, making your own, your history |
 | **Exercises** | Looking up how to do an exercise, bookmarking favourites |
-| **Settings** | Sound, theme, rest between exercises, Create with AI, backups |
+| **Settings** | Instruction (sound) and speech speed, theme, rest between exercises, Create with AI, backups |
 
 On a phone the tabs are at the bottom. On short screens (the cover screen, or a phone on its side) they move to
 the top bar as icons, to keep clear of the camera cutouts.

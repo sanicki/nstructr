@@ -54,8 +54,12 @@
           <span class="stepper"><button class="icon-btn stateful" data-rest-key="sets" data-rest-delta="-1" aria-label="Less rest between sets"><span class="icon">remove</span></button>
             <input id="setRestSets" class="num-field" type="number" inputmode="numeric" min="0" max="300" step="1" aria-label="Rest between sets, seconds">
             <button class="icon-btn stateful" data-rest-key="sets" data-rest-delta="1" aria-label="More rest between sets"><span class="icon">add</span></button><span class="unit" aria-hidden="true">s</span></span></div>
-        <div class="setting"><div class="txt"><span class="body-large">Sound</span><span class="body-small muted">Voice says each exercise, side switches and rests. Coach also walks you through each exercise once and counts your reps.</span></div>
-          <div class="segmented" id="setSound" role="group" aria-label="Sound"></div></div>
+        <div class="setting"><div class="txt"><span class="body-large">Instruction</span><span class="body-small muted">Voice says each exercise, side switches and rests. Coach also walks you through each exercise once and counts your reps.</span></div>
+          <div class="segmented" id="setSound" role="group" aria-label="Instruction"></div></div>
+        <div class="setting"><span class="txt"><span class="body-large">Text-to-speech speed</span><span class="body-small muted">How fast Voice and Coach speak: 1.0× is the voice's normal speed.</span></span>
+          <span class="stepper"><button class="icon-btn stateful" data-rate-delta="-1" aria-label="Speak slower"><span class="icon">remove</span></button>
+            <output id="setRate" aria-live="polite">1.0×</output>
+            <button class="icon-btn stateful" data-rate-delta="1" aria-label="Speak faster"><span class="icon">add</span></button></span></div>
         <label class="setting"><span class="txt"><span class="body-large">Full screen</span><span class="body-small muted">While working out in the browser. The installed app is always full screen.</span></span>
           <input type="checkbox" class="switch" id="setFullscreen"></label>
       </section>
@@ -142,7 +146,7 @@
         <div class="ov-progress" id="wpSegs" aria-hidden="true"></div>
         <div class="ov-controls" id="wpControls">
           <button class="ov-btn ov-exit" id="wpExit" aria-label="Hold to exit the workout"><span class="icon">close</span><span class="ov-hold"></span></button>
-          <button class="ov-btn ov-sound" data-wact="sound" id="wpSound" aria-label="Sound"><span class="icon">volume_up</span><span class="ov-sound-label" id="wpSoundLabel"></span></button>
+          <button class="ov-btn ov-sound" data-wact="sound" id="wpSound" aria-label="Instruction"><span class="icon">volume_up</span><span class="ov-sound-label" id="wpSoundLabel"></span></button>
           <div class="ov-mid">
             <button class="ov-btn" data-wact="prevItem" aria-label="Previous exercise"><span class="icon">skip_previous</span></button>
             <button class="ov-btn ov-play" data-wact="pause" id="wpPlay" aria-label="Pause"><span class="icon fill">pause</span></button>

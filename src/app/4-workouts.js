@@ -496,9 +496,9 @@ function say(text, coachOnly = false, { dropIfBusy = false } = {}) {
     if (dropIfBusy && (speechSynthesis.speaking || speechSynthesis.pending)) return Promise.resolve();
     return new Promise(res => {
       let done = false; const fin = () => { if (!done) { done = true; res(); } };
-      const u = new SpeechSynthesisUtterance(text); u.rate = 1;
+      const u = new SpeechSynthesisUtterance(text); u.rate = speechRate();
       u.onend = fin; u.onerror = fin;
-      setTimeout(fin, 1500 + text.split(/\s+/).length * 450);      // never wait forever on a voice that doesn't report back
+      setTimeout(fin, 1500 + text.split(/\s+/).length * 450 / Math.min(1, speechRate()));      // never wait forever on a voice that doesn't report back
       try { speechSynthesis.speak(u); } catch (e) { fin(); }        // a throw here would otherwise leave a guided step waiting forever
     });
   } catch (e) { return Promise.resolve(); }
@@ -514,7 +514,7 @@ const SOUND_MODES = [['off', 'volume_off', 'Silent'], ['beeps', 'notifications',
 function setSound(mode) {
   WK.sound = mode; try { localStorage.setItem(SOUND_KEY, mode); } catch (e) { }
   const m = SOUND_MODES.find(x => x[0] === mode) || SOUND_MODES[1];
-  if ($('#wpSound')) { $('#wpSound .icon').textContent = m[1]; $('#wpSoundLabel').textContent = m[2]; $('#wpSound').setAttribute('aria-label', `Sound: ${m[2]}. Tap to change.`); }
+  if ($('#wpSound')) { $('#wpSound .icon').textContent = m[1]; $('#wpSoundLabel').textContent = m[2]; $('#wpSound').setAttribute('aria-label', `Instruction: ${m[2]}. Tap to change.`); }
   if (mode === 'off' && 'speechSynthesis' in window) speechSynthesis.cancel();
 }
 
@@ -892,7 +892,7 @@ function wpAction(act) {
   if (S.view === 'wplay' && WP.phase !== 'done' && act !== 'pause') showControls(isPaused());
   if (act === 'sound') {
     const k = SOUND_MODES.findIndex(x => x[0] === WK.sound), nx = SOUND_MODES[(k + 1) % SOUND_MODES.length];
-    setSound(nx[0]); unlockAudio(); toast(`Sound: ${nx[2]}`); showControls(isPaused()); return;
+    setSound(nx[0]); unlockAudio(); toast(`Instruction: ${nx[2]}`); showControls(isPaused()); return;
   }
   if (act === 'restMore') { WP.restLeft += 15; return; }
   if (act === 'restSkip') { if (WP.phase === 'rest') runCurrent(true); return; }
