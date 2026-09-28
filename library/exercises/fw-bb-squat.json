@@ -11,6 +11,8 @@
   ],
   "description": "The classic barbell lift: with the bar across your upper back, squat down until your thighs are about level, then stand up.",
   "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/11/back-squat/",
+    "title": "Back Squat (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
   "setup": [

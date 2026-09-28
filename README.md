@@ -48,6 +48,8 @@ the UI. The build deletes and recreates `_site/`, so restart the server after ea
    ```
    Check anything the workout player shows at 360×398 (the Flip7 cover screen), with nothing important at the
    bottom of the screen.
+   New or changed exercises need a source link (`source.url`) to a reputable page; `node tools/check-links.mjs`
+   checks that every link still answers.
 5. For UI changes, run `python3 tools/audit.py` (accessibility, 48 px touch targets, text size, sideways
    scrolling, in light and dark; see [`docs/audit-2026-09.md`](docs/audit-2026-09.md)) and fix what it reports.
 6. Update `HANDOFF.md` (and the [user guide](wiki/Home.md) and its screenshots if users will notice) in the

@@ -11,6 +11,8 @@
   ],
   "description": "An isometric leg exercise: with your back flat against a wall, slide down until your thighs are about level with the floor and hold.",
   "source": {
+    "url": "https://health.clevelandclinic.org/wall-sits",
+    "title": "Wall Sits (Cleveland Clinic)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
   "setup": [
