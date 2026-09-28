@@ -114,7 +114,9 @@ const sideVersion = kf => (S.side === 'R' ? { ...mirrorKeyframe(kf), name: swapW
 /* an exercise's steps for a given side and direction */
 function versionOf(ex, side, dir) {
   let kfs = ex.keyframes;
-  if (dir === 'B') kfs = reverseReps(kfs).map(k => ({ ...k, name: swapDirWords(k.name), cue: swapDirWords(k.cue) }));
+  // the other direction plays the rep steps in reverse. Names and cues stay as written: they name positions
+  // ("Forward.", "Out to the side."), which don't change when the circle runs the other way
+  if (dir === 'B') kfs = reverseReps(kfs);
   if (side === 'R') kfs = kfs.map(k => {
     const m = { ...mirrorKeyframe(k), name: swapWords(k.name), cue: swapWords(k.cue) };
     if (m.guide) m.guide = { ...m.guide, label: swapWords(m.guide.label) };      // "Back left" becomes "Back right" too
