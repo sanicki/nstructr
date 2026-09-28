@@ -52,6 +52,7 @@ Tap an exercise in the editor to set how it's done:
 | **Sets** | Do it this many times in a row (the rest between sets is a [setting](Settings.md#rest-between-sets)) |
 | **Sides** | For one-sided exercises: one side only, **Both** (all reps on one side, then the other), or **Alternate** (switch every rep). Reps count per side. |
 | **Direction** | For exercises that go two ways: one way, **Both**, or **Alternate** |
+| **Order** | With both sides and/or both directions: the order they come in, e.g. both directions on the right leg, then the left, or each direction on both legs before the next. Move a line with ↑ ↓. |
 | **Seconds per rep** | How long one rep takes. *Usual* is the exercise's own pace. Type a number or use − / + (0.1 s steps). |
 
 The estimated time updates as you change things.

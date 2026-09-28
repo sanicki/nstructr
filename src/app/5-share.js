@@ -46,6 +46,7 @@ function compactWorkout(w) {
       if (it.sets > 1) x.sets = it.sets;
       if (it.sides) x.sides = it.sides;
       if (it.dir) x.dir = it.dir;
+      if (Array.isArray(it.order)) x.order = it.order;
       if (it.tempo && it.tempo !== 1) x.tempo = it.tempo;
       return x;
     }) };

@@ -101,6 +101,11 @@
                     "both",
                     "alternate"
                   ]
+                },
+                "order": {
+                  "description": "With sides and/or dir set to both: the order of the combinations, e.g. [\"LA\", \"RA\", \"LB\", \"RB\"] (L/R side, A/B direction). Default: every direction on one side, then the other side.",
+                  "type": "array",
+                  "items": { "type": "string", "pattern": "^[LR][AB]$" }
                 }
               },
               "additionalProperties": false

@@ -326,13 +326,35 @@ function openItemSettings(uid_) {
     stepper('sets', 'Sets', 1, 10, 1, '') +
     (bl ? seg('sides', 'Sides', [['L', bl.L || 'Left'], ['R', bl.R || 'Right'], ['both', 'Both'], ['alternate', 'Alternate']]) : '') +
     (dl ? seg('dir', 'Direction', [['A', dl.A], ['B', dl.B], ['both', 'Both'], ['alternate', 'Alternate']]) : '') +
+    '<div class="form-row" id="orderRow" hidden></div>' +
     (ex.measure === 'time' ? '' : `<div class="form-row"><span class="lbl">Seconds per ${esc(ex.repName || 'rep')}<span class="body-small muted" style="display:block">Usual: ${round1(repSeconds(ex))} s</span></span><div class="stepper">
       <button class="icon-btn stateful" data-rep-delta="-0.1" aria-label="Faster"><span class="icon">remove</span></button>
       <input id="st-repSec" class="num-field" type="number" inputmode="decimal" step="0.1" min="${round1(Math.max(0.3, repSeconds(ex) / 4))}" max="${round1(repSeconds(ex) * 4)}" value="${round1(repSeconds(ex) / (ITEM_EDIT.tempo || 1))}" aria-label="Seconds per rep">
       <button class="icon-btn stateful" data-rep-delta="0.1" aria-label="Slower"><span class="icon">add</span></button></div></div>`) +
     `<p class="body-small muted" style="margin:0">${ex.measure === 'time' ? '' : (bl || dl) && (ITEM_EDIT.sides === 'both' || ITEM_EDIT.dir === 'both' || ITEM_EDIT.sides === 'alternate' || ITEM_EDIT.dir === 'alternate') ? 'Reps count for each side or direction. ' : ''}Estimated time: <span id="itemEst">${fmtMin(itemSeconds(ITEM_EDIT))}</span></p>`;
+  renderOrder();
   $('#itemDialog').showModal();
 }
+/* with more than one side-and-direction combination, the order they come in (↑ ↓ to move one) */
+function renderOrder() {
+  const row = $('#orderRow'), ex = ITEM_EDIT && exById(ITEM_EDIT.ex); if (!row || !ex) return;
+  const segs = itemSegments(ITEM_EDIT);
+  if (ITEM_EDIT.order && itemSegments({ ...ITEM_EDIT, order: null }).map(x => x.side + x.dir).join() === segs.map(x => x.side + x.dir).join()) ITEM_EDIT.order = null;
+  row.hidden = segs.length < 2;
+  row.innerHTML = segs.length < 2 ? '' : `<span class="lbl">Order</span><ol class="order-list">${segs.map((x, i) => `<li><span class="num">${i + 1}</span><span class="t">${esc(segName(ex, ITEM_EDIT, x))}</span>
+    <button class="icon-btn stateful" data-omove="${i}" data-odelta="-1" aria-label="Move up"${i ? '' : ' disabled'}><span class="icon">arrow_upward</span></button>
+    <button class="icon-btn stateful" data-omove="${i}" data-odelta="1" aria-label="Move down"${i < segs.length - 1 ? '' : ' disabled'}><span class="icon">arrow_downward</span></button></li>`).join('')}</ol>`;
+}
+$('#itemForm').addEventListener('click', e => {
+  const m = e.target.closest('[data-omove]');
+  if (m && ITEM_EDIT) {
+    const keys = itemSegments(ITEM_EDIT).map(x => x.side + x.dir), i = +m.dataset.omove, j = i + +m.dataset.odelta;
+    if (j < 0 || j >= keys.length) return;
+    [keys[i], keys[j]] = [keys[j], keys[i]]; ITEM_EDIT.order = keys; renderOrder();
+    const again = $(`#orderRow [data-omove="${j}"][data-odelta="${m.dataset.odelta}"]`) || $(`#orderRow [data-omove="${j}"]`); if (again) again.focus();
+    return;
+  }
+});
 $('#itemForm').addEventListener('click', e => {
   const s = e.target.closest('[data-step-key]');
   if (s) {
@@ -343,6 +365,7 @@ $('#itemForm').addEventListener('click', e => {
   const g = e.target.closest('[data-seg-key]');
   if (g) {
     const k = g.dataset.segKey; ITEM_EDIT[k] = k === 'tempo' ? +g.dataset.val : g.dataset.val;
+    if (k === 'sides' || k === 'dir') { ITEM_EDIT.order = null; renderOrder(); }
     g.parentElement.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === g)));
   }
   if (s || g) $('#itemEst').textContent = fmtMin(itemSeconds(ITEM_EDIT));
@@ -362,7 +385,8 @@ $('#itemSave').addEventListener('click', () => {
     const b = EDIT.blocks.find(x => x.id === BLOCK_EDIT.id); if (b) { b.rounds = BLOCK_EDIT.rounds; b.roundRest = BLOCK_EDIT.roundRest; }
     $('#itemDialog').dataset.mode = ''; $('#itemDialog').close(); commitEdit(); return;
   }
-  const f = findItem(ITEM_EDIT.uid); if (f) Object.assign(f.item, ITEM_EDIT);
+  if (!ITEM_EDIT.order) delete ITEM_EDIT.order;
+  const f = findItem(ITEM_EDIT.uid); if (f) { Object.assign(f.item, ITEM_EDIT); if (!ITEM_EDIT.order) delete f.item.order; }
   $('#itemDialog').close(); commitEdit();
 });
 
@@ -506,8 +530,17 @@ function itemSegments(item) {
   const sides = item.sides === 'both' ? ['L', 'R'] : [item.sides && item.sides !== 'alternate' ? item.sides : 'L'];
   const dirs = item.dir === 'both' ? ['A', 'B'] : [item.dir && item.dir !== 'alternate' ? item.dir : 'A'];
   const out = [];
-  for (const s of sides) for (const d of dirs) out.push({ side: s, dir: d });
+  for (const s of sides) for (const d of dirs) out.push({ side: s, dir: d });   // default: every direction on one side, then the other side
+  // the user's own order ("order": ["LA", "RA", "LB", "RB"]), when it is exactly these combinations
+  const key = x => x.side + x.dir, o = item.order;
+  if (Array.isArray(o) && o.length === out.length && out.every(x => o.includes(key(x)))) return o.map(k => out.find(x => key(x) === k));
   return out;
+}
+function segName(ex, item, x) {                     // "Right leg, across first"
+  const bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels, bits = [];
+  if (item.sides === 'both') bits.push(bl ? bl[x.side] : x.side === 'L' ? 'First side' : 'Second side');
+  if (item.dir === 'both') bits.push(dl ? dl[x.dir] : x.dir);
+  return bits.join(', ');
 }
 function resolveVersion(ex, seg, side, dir) {
   const props = side === 'R' ? mirrorProps(ex.props) : (ex.props || []);
@@ -621,7 +654,7 @@ function runCurrent(announce) {
   if (announce) {
     const ex = p.ex, bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels;
     const bits = [ex.name];
-    if (segs.length > 1 && WP.seg > 0) bits[0] = cur.item.sides === 'both' && WP.seg > 0 ? 'Switch sides' : 'Switch direction';
+    if (segs.length > 1 && WP.seg > 0) { const prev = segs[WP.seg - 1]; bits[0] = prev.side !== segInfo.side ? (prev.dir !== segInfo.dir ? 'Switch sides and direction' : 'Switch sides') : 'Switch direction'; }   // what actually changed
     if (cur.item.sides && cur.item.sides !== 'alternate' && bl) bits.push(bl[segInfo.side]);
     if (cur.item.dir && cur.item.dir !== 'alternate' && dl) bits.push(dl[segInfo.dir]);
     if (WK.sound !== 'coach') say(bits.join('. ') + '.');

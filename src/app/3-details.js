@@ -49,10 +49,11 @@ function renderPlayerInfo() {
   if (ex.category && ex.category !== ex.focus) c('category', ex.category);
   (ex.equipment || []).forEach(q => c(/band/i.test(q) ? 'fitness_center' : /towel/i.test(q) ? 'dry_cleaning' : /wall|door/i.test(q) ? 'door_front' : 'handyman', q));
   if (pr.reps) c('tag', /\d\s*$/.test(pr.reps) ? `${pr.reps} ${ex.repName && ex.repName !== 'rep' ? ex.repName + 's' : 'reps'}` : pr.reps);
-  $('#stepsTitle').textContent = `Steps (${S.resolved.length})`;
+  const vis = visibleSteps();                               // quiet in-between points (circles) aren't steps of their own
+  $('#stepsTitle').textContent = `Steps (${vis.length})`;
   // steps
   const phaseTag = i => { const ph = (S.ex.keyframes[i] || {}).phase; return ph === 'setup' ? ' <span class="tag">Setup</span>' : ph === 'finish' ? ' <span class="tag">Finish</span>' : ''; };
-  $('#stepList').innerHTML = S.resolved.map((r, i) => `<li><button class="stateful" data-step="${i}"><span class="num">${i + 1}</span>
+  $('#stepList').innerHTML = vis.map((i, n) => [S.resolved[i], i, n]).map(([r, i, n]) => `<li><button class="stateful" data-step="${i}"><span class="num">${n + 1}</span>
     <span class="title-small">${esc(r.name || 'Step ' + (i + 1))}${r.hold >= 3000 ? ` <span class="muted body-small">(hold ${Math.round(r.hold / 1000)} s)</span>` : ''}${phaseTag(i)}</span>
     ${r.cue ? `<span class="sub">${esc(r.cue)}</span>` : ''}</button></li>`).join('');
   // how to
@@ -137,7 +138,27 @@ $('#editPoseBtn').addEventListener('click', () => (XC.editing ? closeEditor() : 
    Coach read each step's cue on the first pass through the exercise (the step waits for its line), then count the
    reps. Pausing stops the voice; a new side or direction starts a new first pass. */
 const XS = { speaking: false, token: 0, last: '' };
-const exVoice = () => WK.sound === 'voice' || WK.sound === 'coach';
+const LOOP_KEY = 'nstructr-loop-v1', EXMUTE_KEY = 'nstructr-exmute-v1';
+const loopOn = () => pref(LOOP_KEY, 'on') !== 'off';             // the exercise page repeats the exercise (off: once through, then stop)
+const exMuted = () => pref(EXMUTE_KEY, 'off') === 'on';          // the overlay's mute: quiets the exercise page only
+const exVoice = () => (WK.sound === 'voice' || WK.sound === 'coach') && !exMuted();
+function renderExToggles() {
+  const l = $('#loopBtn'), m = $('#muteBtn'); if (!l || !m) return;
+  l.setAttribute('aria-pressed', String(loopOn())); l.setAttribute('aria-label', loopOn() ? 'Loop: on' : 'Loop: off');
+  l.querySelector('.icon').textContent = loopOn() ? 'repeat_on' : 'repeat';
+  const soundOn = WK.sound === 'voice' || WK.sound === 'coach', heard = soundOn && !exMuted();
+  m.setAttribute('aria-pressed', String(!heard)); m.setAttribute('aria-label', heard ? 'Mute' : 'Unmute');
+  m.querySelector('.icon').textContent = heard ? 'volume_up' : 'volume_off';
+}
+$('#loopBtn').addEventListener('click', () => {
+  setPref(LOOP_KEY, loopOn() ? 'off' : 'on'); renderExToggles();
+  snack(loopOn() ? 'Loop on: the exercise repeats' : 'Loop off: once through, then it stops');
+});
+$('#muteBtn').addEventListener('click', () => {
+  if (!(WK.sound === 'voice' || WK.sound === 'coach')) { snack('The exercise voice follows Settings → Sound: choose Voice or Coach.', 5000); return; }
+  setPref(EXMUTE_KEY, exMuted() ? 'off' : 'on'); renderExToggles();
+  if (exMuted()) exHush(); else if (S.playing) { XS.last = ''; exStepSound(S.idx); }
+});
 function exStepSound(i) {
   if (S.view !== 'player' || S.mode === 'workout' || !S.playing || !exVoice() || XC.editing) return;
   const r = S.resolved[i]; if (!r) return;
