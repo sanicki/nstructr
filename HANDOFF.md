@@ -656,7 +656,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 5. **Owner decisions before contributions**: ✅ license: **MIT** for everything (Sep 2026; this replaces the earlier
    idea of non-commercial-only with a paid commercial licence: MIT allows commercial use, with the copyright
    notice kept). Submissions are accepted under MIT (the submission checkbox says so). Still open: trademark check.
-6. **3D skeleton, still drawn as SVG** (**go**, as format v2; step 1 of 4 built: `src/skeleton3d.js`, `tools/check3d.cjs`, `tools/compare3d.html`) — see `docs/3d-skeleton.md`: joints with real 3D rotations, a real
+6. **3D skeleton, still drawn as SVG** (**go**, as format v2; step 1 of 4 built: `src/skeleton3d.js`, `tools/check3d.cjs`, `tools/compare3d.html`; joint model and range-of-motion check: mannequin-style joints, AAOS limits) — see `docs/3d-skeleton.md`: joints with real 3D rotations, a real
    camera, bones drawn in depth order (no more `layers`, depth joints or crossing workarounds), exercise format
    v2 with a converter so v1 files keep working. Before submissions, so contributors only ever learn one format.
 7. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`

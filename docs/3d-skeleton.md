@@ -106,6 +106,71 @@ cost on the cover screen, still works offline, still one file for the single-fil
 3. Schema v2, converter, `upgradeFile()` for v1 → v2, convert the library, fix the failures.
 4. Pose editor, format reference and AI prompts for v2; remove `layers` and depth joints.
 
+## Joint model
+
+Modelled on a jointed artist's mannequin (the owner's suggestion, Sep 2026): the same pieces and the same kinds of
+joint, so a pose can only do what a body can. The mannequin sets **which joints exist and how each one moves**; the
+**limits come from human range of motion**, not from the wooden figure (whose limits are mechanical: it can't reach
+fully overhead, and some knees bend slightly backwards).
+
+| Joint | Kind | Moves | v1 today |
+|---|---|---|---|
+| Pelvis (whole body) | free | position + 3 turns | 1 angle, per view |
+| Lower back, upper back | ball | forward/back, side bend, twist | 1 angle each |
+| Neck (head) | ball | nod, tilt, turn | 1 angle |
+| Shoulder | ball | forward/back, out/in, twist | 1 angle + "toward you" |
+| Elbow | hinge | bend only, one way | 1 angle, halves turnable separately |
+| Hip | ball | forward/back, out/in, twist | 1 angle + "toward you" |
+| Knee | hinge | bend only, one way | 1 angle, halves turnable separately |
+| Ankle | 2 axes | up/down, tilt in/out | 1 angle |
+
+Not modelled (the figure is too small to show them, or no exercise needs them yet): wrists, hands, toes, a separate
+head and neck. **Later, if exercises need them:** shoulder blades (shrugging, pulling the shoulders back, a plank's
+push-away) and more spine segments (Pilates rolling through the back).
+
+### Range of motion
+
+Degrees from hanging straight down (+ = forward / out to the side). **Normal** is the AAOS reference for typical
+adults. **Flexible** is what a trained, flexible person reaches (yoga, Pilates), with the pelvis and spine helping;
+past it, the pose is one no body makes.
+
+| Joint | Normal (AAOS) | Flexible |
+|---|---|---|
+| Hip, forward (flexion) / back (extension) | 120 / 30 | 170 / 60 |
+| Hip, out (abduction) / in (adduction) | 45 / 30 | 95 / 45 |
+| Knee, bend | 0 – 135 | −10 – 165 |
+| Shoulder, forward (flexion) / back (extension) | 180 / 60 | 180 / 80 |
+| Elbow, bend | 0 – 150 | −10 – 170 |
+
+Sources: AAOS normal values (American Academy of Orthopaedic Surgeons; see e.g. the CDC's Normal Joint Range of Motion
+Study, https://archive.cdc.gov/www_cdc_gov/ncbddd/jointrom/index.html). The "flexible" column is our own working
+limit, to be tightened if it lets through poses that look wrong.
+
+### The range check
+
+`S3D.joints()` measures each joint from the 3D points, in the body's own frame (the same numbers from any view);
+`S3D.outOfRange(points, 'normal' | 'flexible')` compares them with the table, and `tools/check3d.cjs` reports both
+for the whole library (informational for now: it doesn't fail the build).
+
+- **Past normal** is expected for yoga and deep stretches: the report only counts exercises per joint.
+- **Past flexible** is listed step by step; these are the poses to fix when converting. As of Sep 2026 (21
+  exercises):
+  - **Knees folded completely flat** (170–180°: sitting cross-legged, kneeling, Crow, Pigeon, Marichyasana…): the
+    stick figure folds the shin onto the thigh; a real knee stops around 155–160°. In v2 the shin sits beside the
+    thigh.
+  - **Backbends made at the hip** (Wheel, Dancer, Pigeon's back leg): the 2D figure bends at the hip what a body
+    bends mostly in the spine. v2 moves it into the lower and upper back.
+  - **Arms far behind** (Chair Dip, Camel, Plow, Pyramid): shoulder extension past 80°, where a body uses the
+    shoulder blades and a twist.
+  - **Swan's elbows** folded to 171° (hands under the shoulders): a real elbow stops around 150°.
+  - A few hip readings in deep folds and twists (Extended Side Angle, Revolved Head-to-Knee, Half Moon), to look at
+    in the comparison page.
+- Two things can't be judged until v2 adds the shoulder's twist: which way an elbow bends, and an arm raised
+  *behind* the body (flexion over the top, or out to the side and twisted, like hands behind the head). The check
+  skips both rather than guess.
+- Once v2 poses are written directly as joint angles, the same limits apply at the source: the pose editor clamps
+  to them and the build rejects poses past "flexible", including ones written by AI.
+
 ## Progress
 
 **Step 1 (built).** `src/skeleton3d.js` gives every body point the coordinate the 2D figure leaves out: the hips' and
