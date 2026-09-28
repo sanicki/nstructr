@@ -1,0 +1,136 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-shoulder-bridge",
+  "name": "Shoulder Bridge",
+  "otherNames": ["Pilates Shoulder Bridge"],
+  "category": "Core",
+  "focus": "Glutes, hamstrings and core",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "From a bridge with your hips lifted, kick one straight leg up to the ceiling and lower it long, keeping your hips high and level.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Lie on your back, knees bent, feet flat, arms by your sides."],
+  "cues": ["Hips stay high and level.", "Kick up, lower with control.", "Standing foot pressing down."],
+  "prescription": {
+    "reps": "3–5 each leg",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, feet flat.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Bridge up",
+      "cue": "Lift your hips.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "keep": ["ankleL", "ankleR", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 80.5,
+        "ankleR": 24.6
+      }
+    },
+    {
+      "name": "Kick up",
+      "cue": "Keeping your hips high, lift your right leg straight up.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "keep": ["ankleL", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [60, 0, 0],
+        "kneeR": 0,
+        "ankleR": 30
+      }
+    },
+    {
+      "name": "Lower it",
+      "cue": "Lower it long toward the floor, hips still high.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "keep": ["ankleL", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-20, 0, 0],
+        "kneeR": 0,
+        "ankleR": 30
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  }
+}

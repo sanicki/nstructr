@@ -1,0 +1,157 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-neck-pull",
+  "name": "Neck Pull",
+  "otherNames": ["Pilates Neck Pull"],
+  "category": "Core",
+  "focus": "Abs and spine",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying down with your hands behind your head, curl up to sitting and over your legs, sit up tall, then roll back down one vertebra at a time.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Lie on your back, legs long and together, hands behind your head, elbows wide."],
+  "cues": ["Don't pull on your neck.", "Heels stay on the mat.", "Roll down slowly."],
+  "prescription": {
+    "reps": "3–5",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  },
+  "keyframes": [
+    {
+      "name": "Lie long",
+      "cue": "Hands behind your head, legs long.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120
+      }
+    },
+    {
+      "name": "Roll up",
+      "cue": "Curl up to sitting.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "torso": [80, 0, 0],
+        "chest": [10, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120
+      }
+    },
+    {
+      "name": "Round forward",
+      "cue": "Curl over your legs.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "torso": [20, 0, 0],
+        "chest": [40, 0, 0],
+        "neck": [25, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Sit tall, roll back",
+      "cue": "Stack your spine, then roll back down slowly.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "torso": [60, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  }
+}

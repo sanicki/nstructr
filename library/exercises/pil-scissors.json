@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-scissors",
+  "name": "Scissors",
+  "otherNames": ["Single Straight-Leg Stretch", "Pilates Scissors"],
+  "category": "Core",
+  "focus": "Abs and hamstrings",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying down with your head and shoulders curled up, scissor your straight legs, pulling the top one toward you with a double pulse, then switch.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: Joseph Pilates' 34 mat exercises"
+  },
+  "setup": ["Lie on your back, curl your head and shoulders up, legs straight and lifted."],
+  "cues": ["Shoulders stay lifted.", "Double pulse on each leg.", "Lower leg hovers."],
+  "prescription": {
+    "reps": "8–10 each leg",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  },
+  "keyframes": [
+    {
+      "name": "Right leg up",
+      "cue": "Head up, right leg toward you, left leg low; hold the right ankle.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "kneeR",
+          "dz": 20
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "hipR": [115, 0, 0],
+        "hipL": [20, 0, 0]
+      }
+    },
+    {
+      "name": "Switch",
+      "cue": "Switch legs.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dz": 26
+        },
+        {
+          "hand": "handR",
+          "to": "kneeL",
+          "dz": 20
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "hipL": [115, 0, 0],
+        "hipR": [20, 0, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "pair"
+}

@@ -78,7 +78,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 
 | Exercise | Status |
 |---|---|
-| Roll-Over, Single-Leg Kick, Double-Leg Kick, Neck Pull, Scissors, Bicycle, Shoulder Bridge, Spine Twist, Saw, Side Kick, Side Bend, Push-Up | ready |
+| Roll-Over, Single-Leg Kick, Double-Leg Kick, Neck Pull, Scissors, Shoulder Bridge, Spine Twist, Saw, Side Kick, Side Bend, Pilates Push-Up | ✅ (`tools/variants/batch-6-pilates.cjs`) |
+| Bicycle | done lying down it would duplicate Scissors; the classical version is on the shoulders (like Roll-Over): a later batch |
 | Open-Leg Rocker, Corkscrew, Jackknife, Swan Dive, Hip Twist, Seal, Crab, Rocking, Control Balance, Boomerang, Kneeling Side Kick, Leg Pull (back) | ready (advanced) |
 | Magic circle versions (inner-thigh squeeze, arm presses) | new equipment: **Pilates ring** |
 
