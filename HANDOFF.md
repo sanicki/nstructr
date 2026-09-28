@@ -23,22 +23,22 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **155 exercises, 1 workout**.
+Library today: **163 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
-| Yoga | 52 | Yoga Journal pose list |
+| Yoga | 60 | Yoga Journal pose list + chair and wall versions |
 | Bodyweight | 18 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning… |
 | Resistance band | 20 | 10 BHF standing exercises + seated row + routine additions + banded versions (bridge, clamshell, kickback, row, triceps kickback) |
 | Free weights | 23 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
-| Stretches | 11 | Mayo Clinic basic stretches + routine additions |
+| Stretches | 12 | Mayo Clinic basic stretches + routine additions + wall downward dog |
 | Pilates | 12 | classic mat exercises (Leg Circles: Side and Direction, with a compass) |
 | Core | 7 | planks, bird dog, dead bug, crunch… |
-| Chair-based | 8 | NHS chair/sitting exercises, chair dip, chair push-up, feet-elevated bridge, chair-supported calf raise |
+| Chair-based | 13 | NHS chair/sitting exercises, chair dip, chair push-up, feet-elevated bridge, chair-supported calf raise, chair yoga |
 | Warm-up | 2 | arm circles, hip circles (both have directions) |
-| Balance | 2 | Star Excursion (8-point and 4-point) |
+| Balance | 4 | Star Excursion (8-point and 4-point), Warrior III and Tree at the wall |
 
-90 are rep-based, 65 timed; 54 are two-sided (`bilateral`); 3 have `direction`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
+91 are rep-based, 72 timed; 59 are two-sided (`bilateral`); 3 have `direction`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
 
@@ -613,7 +613,7 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   out of the workout and keeps them for the library check. The prompt must stay under `AI_Q_MAX` for the link-filled
   apps (ChatGPT, Claude, Copilot; over it they fall back to copying): the LIBRARY list uses plain words and spaces
   (`WITH band`, `bw-reverse-lunge sides`, `dir A-Forward B-Backward`) because brackets, commas, `=` and `/` take 3
-  characters each in a link. With 155 exercises it's about 14.3k as a ChatGPT link (Sep 2026), so roughly 30 more
+  characters each in a link. With 163 exercises it's about 14.5k as a ChatGPT link (Sep 2026), so roughly 20 more
   exercises (the library's, or a user's own, which are listed too) fit before the next trim.
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;
   not a backup): a new own exercise (not one the user had, not a `basedOn` copy) that is a **duplicate** of a

@@ -1,0 +1,67 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "wall-warrior-3",
+  "name": "Warrior III at the Wall",
+  "otherNames": ["Wall Warrior III"],
+  "category": "Balancing",
+  "collections": ["Yoga", "Balance"],
+  "equipment": ["Wall"],
+  "description": "Warrior III with your fingertips on a wall: balance on one leg with your body and the other leg level, arms reaching to the wall.",
+  "source": {
+    "url": "https://yogauonline.com/pose-library/warrior-3-yoga-pose-practice-propped-variations-at-the-wall/",
+    "title": "YogaUOnline: Warrior 3 at the wall"
+  },
+  "setup": ["Stand facing a wall, about your leg's length away."],
+  "cues": ["Press your fingertips into the wall.", "Hips level, back leg long.", "Keep a soft standing knee."],
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall facing the wall.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorZ": -20,
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Warrior III at the Wall",
+      "cue": "Tip forward on your left leg, fingertips on the wall.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "anchorZ": -20,
+      "plant": ["L"],
+      "pose": {
+        "root": [90, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
+        "hipL": [90, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "handR",
+      "keyframe": 1
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-yoga-forward-bend",
+  "name": "Chair Forward Bend",
+  "otherNames": ["Seated Forward Fold on a Chair"],
+  "category": "Forward bend",
+  "focus": "Back and hamstrings",
+  "collections": ["Yoga", "Chair-based"],
+  "equipment": ["Chair"],
+  "description": "A relaxed forward fold sitting on a chair: lean forward over your thighs and let your back round, arms and head hanging.",
+  "source": {
+    "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",
+    "title": "Yoga Journal: 13 Chair Yoga Poses You Can Do Anywhere"
+  },
+  "setup": ["Sit toward the front of a sturdy chair, feet flat and wider than your hips."],
+  "cues": ["Let your back round.", "Arms and head hang heavy.", "Come up slowly."],
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; ease out of the pose if anything pinches."
+  },
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Feet wider than your hips.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Chair Forward Bend",
+      "cue": "Fold forward and let your arms and head hang.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "torso": [55, 0, 0],
+        "chest": [20, 0, 0],
+        "neck": [20, 0, 0],
+        "shoulderL": [80, 0, 0],
+        "shoulderR": [80, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 30
+  },
+  "holdStep": 1
+}
