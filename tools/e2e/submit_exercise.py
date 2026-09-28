@@ -4,13 +4,14 @@ URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 # submitting an exercise to the library (src/app/5-submit.js): a copy renamed only -> another name; an unchanged copy
 # -> nothing to submit; a changed copy -> changes to it; one that moves the same as a library exercise -> name /
-# changes / new with a needed note; something new -> new. Continue opens the prefilled GitHub issue form.
+# changes (not new: a duplicate can't be); a changed copy with its own name -> changes or new; something new -> new. Continue opens the prefilled GitHub issue form.
 SETUP = """(()=>{ const sq = findInDb('bw-squat');
   const put = x => { S.lib.items = S.lib.items.filter(i => i.id !== x.id); S.lib.items.push(x); };
   put({ ...clone(sq), id: 'u-renamed', name: 'Air Squat', basedOn: 'bw-squat' });
   put({ ...clone(sq), id: 'u-same', name: sq.name + ' (copy)', basedOn: 'bw-squat' });
   put({ ...clone(sq), id: 'u-changed', name: sq.name + ' (copy)', basedOn: 'bw-squat', cues: ['Sit back.', 'Chest up.'] });
   put({ ...clone(sq), id: 'u-dup', name: 'Chair Squat Thing', collections: undefined });
+  put({ ...clone(sq), id: 'u-wide', name: 'Suitcase Squat', basedOn: 'bw-squat', equipment: ['kettlebell'] });
   const odd = clone(findInDb('wu-arm-circles')); odd.keyframes.forEach((k, i) => { k.pose.kneeL = 20 + 40 * i; k.pose.hipR = [30 * i, 10, 0]; });
   put({ ...odd, id: 'u-new', name: 'Windmill Knee Arms' });
   saveLib(); })()"""
@@ -40,14 +41,10 @@ async def main():
         await plan('u-same'); await pg.click('#submitDialog [data-close]')
         await plan('u-changed'); await pg.click('#submitDialog [data-close]')
         await plan('u-dup')
-        # "new" needs a note when it moves the same as a library exercise
-        await pg.click('#submitChoices .choice:last-child'); await pg.wait_for_timeout(100)
-        print('  new: note label', repr(await pg.inner_text('#submitNoteLabel')))
-        await pg.evaluate('window.OPENED = null'); await pg.click('#submitGo'); await pg.wait_for_timeout(300)
-        print('  without a note: opened', await pg.evaluate('window.OPENED'), '| still open', await pg.evaluate("$('#submitDialog').open"))
-        await pg.fill('#submitNote', 'Feet on a wobble board.'); await pg.click('#submitGo'); await pg.wait_for_timeout(300)
+        await pg.click('#submitChoices .choice:last-child'); await pg.fill('#submitNote', 'Slower, with a pause.'); await pg.click('#submitGo'); await pg.wait_for_timeout(300)
         q = urllib.parse.parse_qs(urllib.parse.urlparse(await pg.evaluate('window.OPENED')).query)
-        print('  with a note:', q['kind'], q.get('target'), q['note'], q['title'])
+        print('  changes:', q['kind'], q.get('target'), q['note'], q['title'])
+        await plan('u-wide'); await pg.click('#submitDialog [data-close]')
         await plan('u-new'); await pg.click('#submitDialog [data-close]')
         # workouts can't be submitted yet
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)

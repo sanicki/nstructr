@@ -1,0 +1,39 @@
+name: Exercise for the library
+description: Opened from the app (Share → Submit to library). Checked automatically, then reviewed.
+title: "Exercise: "
+labels: ["exercise submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Easiest from the app: open your exercise, tap **Share**, then **Submit to library**. It fills this in.
+        A check runs on it within a few minutes and comments here; if it passes, a pull request has the change for review.
+  - type: input
+    id: kind
+    attributes:
+      label: What it is
+      description: "name (another name for a library exercise), update (changes to one), or new"
+    validations: { required: true }
+  - type: input
+    id: target
+    attributes:
+      label: Library exercise
+      description: The id of the library exercise it names or changes (empty for a new one)
+  - type: textarea
+    id: note
+    attributes:
+      label: Note
+      description: Anything the reviewer should know
+  - type: textarea
+    id: exercise
+    attributes:
+      label: Exercise link
+      description: The link the app made (it holds the whole exercise)
+    validations: { required: true }
+  - type: checkboxes
+    id: agree
+    attributes:
+      label: Agreement
+      options:
+        - label: The words are my own (sources cited, nothing copied), and it may be published under the project's MIT license.
+          required: true
