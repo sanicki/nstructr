@@ -1,7 +1,7 @@
 # Equipment equivalents (Sep 2026)
 
 For every library exercise: established versions of the same exercise with the other equipment the library uses
-(the AI prompt's headings: no equipment, band, dumbbell, barbell, kettlebell, chair, bench, wall, step, towel; a mat
+(the AI prompt's headings: no equipment, band, door anchor, dumbbell, barbell, kettlebell, chair, bench, wall, step, towel; a mat
 doesn't count). "Established" means described by a reputable source under that name, not invented here.
 
 - ✅ added (batch 1, or batch 2 where marked; cited in each file's `source`)
@@ -61,6 +61,16 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Dead Bug | ⏳ Dumbbell Dead Bug · ⏳ Band Dead Bug |
 | Bird Dog | ⏳ Banded Bird Dog |
 | Plank, Forearm Side Plank, Superman | ⏳ Plank with feet on a bench; — otherwise |
+
+## Door anchor (batch 7)
+
+| Library exercise | Equivalents |
+|---|---|
+| Band Woodchop | ⏳ Dumbbell Woodchop, Medicine Ball Woodchop (no anchor: the weight is lifted high to low) |
+| Standing Band Row | Resistance Band Seated Row and the bent-over rows (in library) |
+| Standing Band Chest Press | Band Chest Press (band round the back), Dumbbell Bench Press, Bench Press (in library) |
+| Pallof Press | ⏳ Kneeling Pallof Press (the same band, kneeling: a variant, not new equipment) |
+| Band Face Pull, Band Triceps Pushdown | — without a cable machine (the dumbbell versions, rear-delt fly and overhead extension, are other exercises) |
 
 ## Stretches, warm-ups and balance
 

@@ -2,10 +2,10 @@
 
 For each collection: common exercises that reputable sources list for it and the library didn't have (checked
 against every name and other name). **Added** (Sep 2026, `tools/variants/batch-3-yoga.cjs`, `batch-4-strength.cjs`,
-`batch-5-gentle.cjs`) are marked ✅; the rest are still a proposal.
+`batch-5-gentle.cjs`, `batch-6-pilates.cjs`, `batch-7-door-anchor.cjs`) are marked ✅; the rest are still a proposal.
 
-- **ready**: uses equipment the library already tracks (none, band, dumbbell, barbell, kettlebell, chair, bench,
-  wall, step, towel, mat) and the figure can do it in place
+- **ready**: uses equipment the library already tracks (none, band, door anchor, dumbbell, barbell, kettlebell, chair,
+  bench, wall, step, towel, mat) and the figure can do it in place
 - **new equipment**: needs equipment the library doesn't track yet (proposed below)
 - **engine**: needs something the figure doesn't do yet: jumping (both feet off the floor), travelling across the
   floor, or hanging from a bar
@@ -46,7 +46,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 |---|---|
 | Band Front Raise, Band Upright Row, Band Chest Fly (band behind the back) | ready |
 | Lateral Band Walk, Monster Walk | engine: travelling (side-steps) |
-| Face Pull, Pallof Press, Band Woodchop, Standing Band Row, Standing Band Chest Press, Band Triceps Pushdown | new equipment: **door anchor** (the engine can already anchor a band to a fixed point: a door anchor is that point on a door) |
+| Face Pull, Pallof Press, Band Woodchop, Standing Band Row, Standing Band Chest Press, Band Triceps Pushdown | ✅ with the new **door anchor** (`tools/variants/batch-7-door-anchor.cjs`) |
 
 ## Free weights (23)
 ([Breaking Muscle, best kettlebell exercises](https://breakingmuscle.com/best-kettlebell-exercises/), [StrengthLog, dumbbell exercises for beginners](https://www.strengthlog.com/dumbbell-exercises-for-beginners/))
@@ -73,8 +73,8 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Wrist flexor and extensor stretches | ready (the figure has no wrists: hands only; would need a hand joint) |
 | Foam rolling (calves, quads, upper back) | new equipment: **foam roller** |
 
-## Pilates (12)
-Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.com/blog/mat/the-34-pilates-mat-exercises-)); the library has 12:
+## Pilates (12, now 23)
+Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.com/blog/mat/the-34-pilates-mat-exercises-)); the library had 12:
 
 | Exercise | Status |
 |---|---|
@@ -90,7 +90,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 |---|---|
 | Bicycle Crunch, Russian Twist, Hollow Hold, Heel Taps, Flutter Kicks, V-Up, Sit-Up | ✅ |
 | Mountain Climber | engine: the fast leg swap (the driving knee passes the floor at plank height) |
-| Pallof Press | new equipment: **door anchor** |
+| Pallof Press, Band Woodchop | ✅ (door anchor) |
 | Stability-ball crunch, ball pass | new equipment: **stability ball** |
 
 ## Chair-based (13)
@@ -123,7 +123,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 
 | Equipment | For | What it takes |
 |---|---|---|
-| **Door anchor** | band: face pull, Pallof press, woodchop, standing row and chest press, pushdown | the smallest step: a band from a fixed point already exists; add "Door anchor" as equipment (an equipment kind, a prompt heading) and a small drawn anchor on a door edge |
+| **Door anchor** ✅ | band: face pull, Pallof press, woodchop, standing row and chest press, pushdown | done: "Door anchor" is an equipment kind (`src/similar.js`, `tools/research.cjs`) and a line in the prompt's EQUIPMENT; a band's fixed end is drawn as a small anchor block on the door (a wall) |
 | **Yoga block** | supported standing and seated poses | a small box prop the hand rests on (like a step, hand-sized) |
 | **Yoga strap** | reclined hamstring stretch, cow-face arms | drawn like the towel |
 | **Pull-up bar** | pull-up, chin-up, inverted row, hanging knee raise | a bar prop overhead, and the engine holding the figure up by the hands (feet off the floor) |
@@ -139,7 +139,6 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
   farmer carry. Could be shown in place (each rep returns to the start), which the sources accept for home use.
 - **Hanging** from a bar: pull-ups, chin-ups.
 
-Suggested order: the **ready** rows first (about 70 exercises, collection by collection, with
-`.claude/skills/exercise-research/SKILL.md`), then the **door anchor** (one small addition that opens up ~7 common band
-exercises), then yoga block and strap. Adding ~70 exercises also means the Create with AI prompt, which lists every
-exercise, no longer fits in a link as it is (about 20 more fit today): see HANDOFF §10, "Create with AI".
+Done so far: most **ready** rows (batches 3–6) and the **door anchor** (batch 7). Next: the engine work above, then
+yoga block and strap and the other equipment. The Create with AI prompt lists every exercise: at 225 it's about 13.8k
+of the 15k a link takes (HANDOFF §10, "Create with AI"), room for roughly 50 more.

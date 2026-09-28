@@ -31,7 +31,8 @@ async def main():
         ex = await pg.evaluate("JSON.stringify({...findInDb('bw-squat'), id:'u-leg-circles', name:'Leg Circles', collections:undefined})")
         await pg.fill('#aiAnswer', 'Here you go:\n```json\n' + ex + '\n```\nEnjoy!'); await pg.click('#aiImport'); await pg.wait_for_timeout(400)
         print('fenced exercise answer  ', await pg.evaluate("[$('#aiDialog').open, location.hash, S.ex && S.ex.name]"))
-        wk = {'format': 'nstructr/workout', 'version': 1, 'workouts': [{'version': 1, 'name': 'AI Legs', 'blocks': [{'name': 'Main', 'items': [{'ex': 'bw-squat', 'reps': 10}, {'ex': 'u-hops', 'reps': 8}]}]}],
+        await pg.evaluate("$('#checkDialog').open && $('#checkKeep').click()")   # a copy of Squat: the library check asks
+        wk = {'format': 'nstructr/workout', 'version': 2, 'workouts': [{'version': 2, 'name': 'AI Legs', 'blocks': [{'name': 'Main', 'items': [{'ex': 'bw-squat', 'reps': 10}, {'ex': 'u-hops', 'reps': 8}]}]}],
               'exercises': [json.loads(await pg.evaluate("JSON.stringify({...findInDb('calf-raise'), id:'u-hops', name:'Hops'})"))]}
         await pg.evaluate("openAi()"); await pg.fill('#aiAnswer', json.dumps(wk)); await pg.click('#aiImport'); await pg.wait_for_timeout(400)
         print('workout answer          ', await pg.evaluate("[location.hash.slice(0,10), EDIT && EDIT.name, EDIT && EDIT.blocks[0].items.map(i=>i.ex), !!exById('u-hops')]"))

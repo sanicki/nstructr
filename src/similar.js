@@ -31,7 +31,7 @@
   const namesOf = ex => [ex.name, ...(Array.isArray(ex.otherNames) ? ex.otherNames : [])].map(nameKey).filter(Boolean);
   /* equipment, as kinds: "Resistance band" and "band" are one thing, "Dumbbells" and "dumbbell" too; a mat or the
      floor isn't equipment. Also used for the AI's "equipmentInSource" (free text). */
-  const KINDS = [['band', /band|tube/], ['dumbbell', /dumb ?bell/], ['barbell', /barbell/], ['kettlebell', /kettle ?bell/], ['chair', /chair/],
+  const KINDS = [['door anchor', /door/], ['band', /band|tube/], ['dumbbell', /dumb ?bell/], ['barbell', /barbell/], ['kettlebell', /kettle ?bell/], ['chair', /chair/],
     ['bench', /bench/], ['wall', /wall/], ['step', /\bstep|box/], ['towel', /towel/], ['block', /block/], ['strap', /strap/], ['ball', /ball/]];
   const equipKind = e => {
     const t = String(e || '').toLowerCase().trim();

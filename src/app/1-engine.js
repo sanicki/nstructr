@@ -257,6 +257,7 @@ function drawProps(P, Q, pose, cam) {
     // a stretched band thins and deepens in colour as the tension builds
     const svg = `<path class="band" d="${bp.d}" style="stroke-width:${bp.width.toFixed(2)};opacity:${Math.min(1, 0.7 + (bp.stretch - 1) * 0.8).toFixed(2)}"/>`;
     if (far) back += svg; else front += svg;
+    back += bandAnchors(pr, q).map(p => anchorSVG(p, 'anchor')).join('');
   });
   $('#propsBack').innerHTML = back; $('#propsFront').innerHTML = front;
   document.querySelectorAll('#scene .wts').forEach(g => { const v = wts[g.dataset.hand] || ''; if (g.innerHTML !== v) g.innerHTML = v; });

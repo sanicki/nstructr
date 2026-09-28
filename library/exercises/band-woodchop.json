@@ -1,0 +1,86 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-woodchop",
+  "name": "Band Woodchop",
+  "otherNames": ["High-to-Low Woodchop", "Resistance Band Wood Chop"],
+  "category": "Core",
+  "focus": "Obliques and core",
+  "collections": ["Resistance band", "Core"],
+  "equipment": ["Resistance band", "Door anchor"],
+  "description": "Standing side-on to a band anchored high, pull it diagonally down across your body toward the opposite knee, turning through your torso, then return with control.",
+  "source": {
+    "url": "https://www.strengthlog.com/high-to-low-wood-chop-with-band/",
+    "title": "StrengthLog: Banded wood chop (high to low)"
+  },
+  "setup": ["Anchor the band high on a closed door.", "Stand side-on, feet shoulder-width, both hands on the band above your near shoulder."],
+  "cues": ["Turn from your core, arms long.", "Pivot the back foot.", "Control the way back up."],
+  "prescription": {
+    "reps": "8–12 each side",
+    "note": "Pick a band you can control for every rep; about 2 seconds each way."
+  },
+  "keyframes": [
+    {
+      "name": "Reach up",
+      "cue": "Side-on to the door, arms up toward the anchor.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [0, 14, 0],
+        "hipR": [0, 14, 0],
+        "torso": [0, 0, -30],
+        "shoulderL": [140, -20, 0],
+        "shoulderR": [140, -5, 0]
+      }
+    },
+    {
+      "name": "Chop down",
+      "cue": "Rotate and pull the band down across to your left knee.",
+      "camera": 0,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [30, 14, 0],
+        "kneeL": 35,
+        "hipR": [30, 14, 0],
+        "kneeR": 35,
+        "torso": [25, 0, 30],
+        "shoulderL": [60, -10, 0],
+        "shoulderR": [60, -15, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "beside": true,
+      "x": 170
+    },
+    {
+      "type": "band",
+      "from": {
+        "x": 170,
+        "y": 320,
+        "z": 0
+      },
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Door on your right",
+      "R": "Door on your left"
+    }
+  }
+}

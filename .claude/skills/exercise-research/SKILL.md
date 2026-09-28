@@ -15,7 +15,7 @@ node tools/research.cjs report <id...>        # --md for Markdown (a PR descript
 ```
 It lists the exercise's names, any name another exercise also has, a duplicate if there is one, the library's
 versions of it with other equipment, and the equipment headings with no version yet (the AI prompt's headings:
-no equipment, band, dumbbell, barbell, kettlebell, chair, bench, wall, step, towel; a mat doesn't count).
+no equipment, band, door anchor, dumbbell, barbell, kettlebell, chair, bench, wall, step, towel; a mat doesn't count).
 
 ## 2. Names
 Search the web (WebSearch; reputable sources: ACE, NASM, NHS, Mayo Clinic, Cleveland Clinic, Yoga Journal,

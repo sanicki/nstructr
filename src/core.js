@@ -520,6 +520,9 @@ function propRoute(P, pr) {
   const pts = [pr.from, ...(pr.via || []), pr.to].map(end => propPoint(P, end));
   return pts.every(Boolean) ? pts : null;
 }
+/* the fixed ends of a band (a door anchor): screen points to mark with a small strap */
+const bandAnchors = (pr, Q) => [pr.from, pr.to].map((end, i) => (end && typeof end === 'object' ? Q[i ? Q.length - 1 : 0] : null)).filter(Boolean);
+const anchorSVG = (q, cls) => `<rect class="${cls}" x="${(q.x - 5).toFixed(1)}" y="${(q.y - 7).toFixed(1)}" width="10" height="14" rx="2"/>`;
 const routeLength = pts => pts.slice(1).reduce((s, p, i) => s + V3.dist(p, pts[i]), 0);
 function bandRestLengths(props, resolved, seg) {
   return (props || []).map(pr => {
@@ -675,7 +678,7 @@ function mirrorKeyframe(kf) {
 
 if (typeof module !== 'undefined') module.exports = {
   phaseInfo, reverseReps, weightSVG, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
-  propRoute, propPoint, resolveSequence, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
+  propRoute, propPoint, bandAnchors, anchorSVG, resolveSequence, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
 };
