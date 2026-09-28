@@ -7,14 +7,14 @@
   "category": "Strength",
   "focus": "Outer hips (glute medius)",
   "collections": ["Bodyweight"],
-  "equipment": ["Mat", "Wall"],
+  "equipment": ["Mat"],
   "description": "Lying on your side with knees bent and heels together, open your top knee toward the ceiling like a clamshell, then close it with control.",
   "source": {
     "url": "https://www.msdmanuals.com/home/multimedia/video/side-lying-hip-external-rotation-clamshell-exercise",
     "title": "Side-Lying Hip External Rotation (Clamshell) (MSD Manual)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": ["Lie on your side on a mat with your back against a wall to keep your hips from rolling back.", "Bend your knees to about 90°, heels together and against the wall."],
+  "setup": ["Lie on your side on a mat, hips stacked. If your hips roll back, lie with your back against a wall.", "Bend your knees to about 90°, heels together."],
   "cues": ["Keep your heels touching the whole time.", "Open the knee as far as you can without rolling your hips back.", "Pause at the top, then lower slowly."],
   "prescription": {
     "reps": "12–15 each leg",

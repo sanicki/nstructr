@@ -86,6 +86,24 @@ if (!args.has('--no-checks') && !errors.length) {
   const d = errors.length;
   console.log(d ? `duplicates: ${d}` : `duplicates: none (${variants} variant pair(s): same motion, other equipment or measure)`);
 }
+// ---------- 2d. equipment: what's listed is drawn and what's drawn is listed, spelled one way (the Exercises filter) ----------
+if (!args.has('--no-checks') && !errors.length) {
+  const DRAWN = { towel: /towel/, wall: /wall|door/, chair: /chair/, bench: /bench/, step: /step/, band: /band/, dumbbell: /dumbbell/, barbell: /barbell/, kettlebell: /kettlebell/ };
+  const spelled = new Map(), n0 = errors.length;
+  for (const ex of exercises) {
+    const types = new Set((ex.props || []).map(p => p.type)), eq = ex.equipment || [];
+    for (const q of eq) {
+      const k = q.toLowerCase();
+      if (spelled.has(k) && spelled.get(k) !== q) errors.push(`${ex.id}: equipment "${q}" is spelled "${spelled.get(k)}" elsewhere`);
+      spelled.set(k, q);
+      const drawn = Object.entries(DRAWN).filter(([, re]) => re.test(k)).map(([t]) => t);
+      if (drawn.length && !drawn.some(t => types.has(t))) errors.push(`${ex.id}: lists "${q}" but no ${drawn.join(' or ')} is drawn (optional equipment goes in the setup text, not "equipment")`);
+    }
+    for (const t of types) if (DRAWN[t] && !eq.some(q => DRAWN[t].test(q.toLowerCase()))) errors.push(`${ex.id}: draws a ${t} that "equipment" doesn't list`);
+  }
+  const n = errors.length - n0;
+  console.log(n ? `equipment: ${n} problem(s)` : 'equipment: every listed item is drawn, every drawn one listed');
+}
 if (errors.length) { console.error('\n' + errors.map(e => '✗ ' + e).join('\n')); process.exit(1); }
 if (args.has('--check-only')) process.exit(0);
 

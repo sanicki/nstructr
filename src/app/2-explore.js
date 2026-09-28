@@ -70,12 +70,12 @@ function renderExplore() {
   const scope = E.coll === SAVED ? marked : E.coll === MINE ? mine
     : E.coll === 'All' ? [...POSE_DB.exercises, ...mine] : inCollection(E.coll);
   const types = [...new Set(scope.map(typeOf).filter(Boolean))].sort();
-  const equip = [...new Set(scope.flatMap(ex => ex.equipment || []))].sort();
+  const equip = equipNames(scope.flatMap(ex => ex.equipment || [])).sort();
   // type and equipment each get their own row, so neither scrolls out of sight behind the other. Equipment shows
   // whenever it can narrow the list: two kinds, or one kind that only some of the exercises use
   const showType = E.coll !== 'All' && E.coll !== SAVED && E.coll !== MINE && types.length > 1;
   const showEquip = equip.length > 1 || (equip.length === 1 && scope.some(ex => !(ex.equipment || []).length));
-  const eq = equip.includes(E.equip) ? E.equip : 'Any';     // the choice is kept across collections; one without it shows all
+  const eq = equip.find(q => equipKey(q) === equipKey(E.equip)) || 'Any';     // the choice is kept across collections; one without it shows all
   $('#fType').innerHTML = showType ? chip('data-type', 'All', E.type === 'All', 'All types') + types.map(t => chip('data-type', t, E.type === t)).join('') : '';
   $('#fType').hidden = !showType;
   $('#fEquip').innerHTML = showEquip ? chip('data-equip', 'Any', eq === 'Any', 'All equipment') + equip.map(q => chip('data-equip', q, eq === q)).join('') : '';
@@ -84,7 +84,7 @@ function renderExplore() {
 
   const q = E.q.trim().toLowerCase();
   const list = scope.filter(ex => (E.type === 'All' || typeOf(ex) === E.type) &&
-    (eq === 'Any' || (ex.equipment || []).includes(eq)) &&
+    (eq === 'Any' || (ex.equipment || []).some(x => equipKey(x) === equipKey(eq))) &&
     (!q || [ex.name, ...otherNames(ex), ex.category, ex.focus, ...(ex.collections || []), ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q))));
   const body = $('#exploreBody');
   $('#groupWrap').hidden = E.coll !== 'All';

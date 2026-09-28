@@ -88,8 +88,18 @@ function validateExercise(ex, path) {
   const clone = modernize(JSON.parse(JSON.stringify(ex)));
   if (clone.otherNames != null && !(Array.isArray(clone.otherNames) && clone.otherNames.every(n => typeof n === 'string'))) fail(`${path}.otherNames must be a list of names.`);
   clone.id = typeof ex.id === 'string' && ex.id.trim() ? ex.id.trim() : slug(ex.name);
+  if (Array.isArray(clone.equipment)) clone.equipment = equipNames(clone.equipment);
   return clone;
 }
+/* equipment is matched without case or extra spaces: "resistance band" (from an AI or a file) is the library's
+   "Resistance band", so it shows under the same filter */
+const equipKey = q => String(q).trim().replace(/\s+/g, ' ').toLowerCase();
+function equipName(q) {
+  const k = equipKey(q);
+  for (const ex of POSE_DB.exercises) for (const x of ex.equipment || []) if (equipKey(x) === k) return x;
+  return String(q).trim().replace(/\s+/g, ' ');
+}
+const equipNames = list => [...new Map(list.filter(q => typeof q === 'string' && q.trim()).map(q => [equipKey(q), equipName(q)])).values()];
 
 /* Fields renamed since (Sep 2026): "sanskrit" (one text, comma-separated) is "otherNames" (a list), and "library" (one
    collection) is "collections" (a list). Files, links and saved exercises written before are read the new way. */

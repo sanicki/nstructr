@@ -13,7 +13,8 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
   library's collections in A–Z order (Balance, Bodyweight, Chair-based, Pilates, Stretches, Yoga and more).
 - Inside a collection, a second row filters by **type** (what it works, such as Calves or Core).
 - The **equipment** row narrows the list to exercises that use, for example, a resistance band or a chair. Your
-  equipment choice stays when you switch collections.
+  equipment choice stays when you switch collections. Capital letters don't matter: an imported exercise that says
+  "resistance band" is listed under Resistance band.
 - **Group by collection** (under the filters, for *All collections*; on at first, and remembered):
   - **on**: with nothing filtered, a shelf per collection (**See all** opens one); with a search or filter, the
     matches under each collection they're in;
