@@ -5,7 +5,7 @@
   "name": "Wall Chest Stretch",
   "category": "Stretch",
   "focus": "Chest and front of the shoulder",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": ["Wall"],
   "description": "Stretches the chest: forearm flat on a wall beside you with the elbow at shoulder height, step forward and turn your body away from the wall.",
   "source": {

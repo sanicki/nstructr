@@ -5,7 +5,7 @@
   "name": "Barbell Back Squat",
   "category": "Strength",
   "focus": "Thighs and glutes",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Barbell"],
   "description": "The classic barbell lift: with the bar across your upper back, squat down until your thighs are about level, then stand up.",
   "source": {

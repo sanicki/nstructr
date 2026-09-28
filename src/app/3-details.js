@@ -40,7 +40,7 @@ function renderPlayerInfo() {
   const ex = S.ex; if (!ex) return;
   const pr = ex.prescription || {};
   $('#exName').textContent = ex.name;
-  $('#exSub').textContent = ex.sanskrit || '';
+  $('#exSub').textContent = otherNames(ex).join(', ');
   const chips = [];
   const c = (icon, text) => chips.push(`<span class="chip"><span class="icon">${icon}</span>${esc(text)}</span>`);
   if (ex.focus) c('target', ex.focus);

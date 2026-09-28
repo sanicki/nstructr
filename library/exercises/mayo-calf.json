@@ -5,7 +5,7 @@
   "name": "Calf Stretch",
   "category": "Stretch",
   "focus": "Calves",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": ["Wall"],
   "description": "Stretches the calf along the back of the lower leg: hands on a wall, one foot back with the heel down, bend the front knee.",
   "source": {

@@ -5,7 +5,7 @@
   "name": "Dumbbell Lateral Raise",
   "category": "Strength",
   "focus": "Shoulders",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
   "description": "Raise the dumbbells out to your sides to shoulder height with a slight bend in your elbows, then lower slowly.",
   "source": {

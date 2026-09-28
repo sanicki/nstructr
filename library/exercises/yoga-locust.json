@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-locust",
   "name": "Locust Pose",
-  "sanskrit": "Salabhasana",
+  "otherNames": ["Salabhasana"],
   "category": "Backbend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Belly-down backbend lifting the chest, arms, and legs.",
   "source": {

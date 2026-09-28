@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-easy",
   "name": "Easy Pose",
-  "sanskrit": "Sukhasana",
+  "otherNames": ["Sukhasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Simple cross-legged seat with a tall spine.",
   "source": {
@@ -37,7 +37,7 @@
         "shoulderL": [-23.9, 0, 0],
         "shoulderR": [-23.9, 0, 0],
         "hipL": [90, 0, 0],
-        "hipR": [-270, 0, 0]
+        "hipR": [90, 0, 0]
       }
     },
     {
@@ -75,7 +75,7 @@
         "hipL": [90, 90, 180],
         "kneeL": 155,
         "ankleL": 92,
-        "hipR": [-270, 90, 180],
+        "hipR": [90, 90, 180],
         "kneeR": 155,
         "ankleR": 92
       }

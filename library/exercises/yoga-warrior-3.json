@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-warrior-3",
   "name": "Warrior 3 Pose",
-  "sanskrit": "Virabhadrasana III",
+  "otherNames": ["Virabhadrasana III"],
   "category": "Balancing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Balance on one leg with the torso and lifted leg level with the floor.",
   "source": {

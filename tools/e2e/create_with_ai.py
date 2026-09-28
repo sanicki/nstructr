@@ -28,7 +28,7 @@ async def main():
         await pg.click('[data-aikind="media"]'); await pg.wait_for_timeout(100)
         print('photo/video: no input   ', await pg.evaluate("[$('#aiInputWrap').hidden, $('#aiKindHint').textContent.slice(0,40)]"))
         # answers: fenced exercise, a workout with a new exercise, "in the library"
-        ex = await pg.evaluate("JSON.stringify({...findInDb('bw-squat'), id:'u-leg-circles', name:'Leg Circles', library:undefined})")
+        ex = await pg.evaluate("JSON.stringify({...findInDb('bw-squat'), id:'u-leg-circles', name:'Leg Circles', collections:undefined})")
         await pg.fill('#aiAnswer', 'Here you go:\n```json\n' + ex + '\n```\nEnjoy!'); await pg.click('#aiImport'); await pg.wait_for_timeout(400)
         print('fenced exercise answer  ', await pg.evaluate("[$('#aiDialog').open, location.hash, S.ex && S.ex.name]"))
         wk = {'format': 'nstructr/workout', 'version': 1, 'workouts': [{'version': 1, 'name': 'AI Legs', 'blocks': [{'name': 'Main', 'items': [{'ex': 'bw-squat', 'reps': 10}, {'ex': 'u-hops', 'reps': 8}]}]}],

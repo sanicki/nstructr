@@ -5,7 +5,7 @@
   "name": "Overhead Banded Triceps Extension",
   "category": "Core",
   "focus": "Backs of the arms",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "With one end of the band under your back foot, hold the other end behind your head with elbows pointing up, then straighten your arms overhead.",
   "source": {

@@ -5,7 +5,7 @@
   "name": "Mini-Squat with Chair",
   "category": "Strength",
   "focus": "Thighs and glutes",
-  "library": "Chair-based",
+  "collections": ["Chair-based"],
   "equipment": ["Chair"],
   "description": "A supported half squat: holding the back of a chair, bend your knees a little way and come back up, squeezing your buttocks.",
   "source": {

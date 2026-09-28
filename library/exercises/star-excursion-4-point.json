@@ -355,7 +355,7 @@
       }
     }
   ],
-  "library": "Balance",
+  "collections": ["Balance"],
   "focus": "Balance and ankle stability",
   "measure": "reps",
   "defaults": {

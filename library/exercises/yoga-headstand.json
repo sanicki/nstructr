@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-headstand",
   "name": "Supported Headstand",
-  "sanskrit": "Salamba Sirsasana",
+  "otherNames": ["Salamba Sirsasana"],
   "category": "Balancing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Inversion balancing on the forearms and the crown of the head.",
   "source": {

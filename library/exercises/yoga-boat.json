@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-boat",
   "name": "Boat Pose",
-  "sanskrit": "Navasana",
+  "otherNames": ["Navasana"],
   "category": "Core",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Balance on the sit bones with the legs lifted and the torso leaning back, making a V shape.",
   "source": {

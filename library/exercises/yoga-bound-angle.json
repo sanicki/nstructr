@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-bound-angle",
   "name": "Bound Angle Pose",
-  "sanskrit": "Baddha Konasana",
+  "otherNames": ["Baddha Konasana"],
   "category": "Forward Bend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Seated hip opener with the soles of the feet together and the knees dropping out to the sides.",
   "source": {

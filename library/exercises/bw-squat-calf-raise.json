@@ -5,7 +5,7 @@
   "name": "Squat to Calf Raise",
   "category": "Strength",
   "focus": "Thighs, glutes and calves",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": [],
   "description": "A squat that finishes on your toes: sit your hips back into a comfortable squat, stand up through your heels, then rise onto the balls of your feet.",
   "source": {

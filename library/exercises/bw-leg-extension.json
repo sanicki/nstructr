@@ -5,7 +5,7 @@
   "name": "Standing Leg Extension",
   "category": "Strength",
   "focus": "Glutes and hamstrings",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Chair"],
   "description": "Works the back of the thigh and the buttock: holding the back of a chair, lift one straight leg behind you without arching your back.",
   "source": {

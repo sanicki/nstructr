@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-upward-dog",
   "name": "Upward-Facing Dog Pose",
-  "sanskrit": "Urdhva Mukha Svanasana",
+  "otherNames": ["Urdhva Mukha Svanasana"],
   "category": "Backbend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Backbend on straight arms with the chest lifted and the tops of the feet down.",
   "source": {

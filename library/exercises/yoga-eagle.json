@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-eagle",
   "name": "Eagle Pose",
-  "sanskrit": "Garudasana",
+  "otherNames": ["Garudasana"],
   "category": "Balancing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Standing balance with one leg wrapped over the other and the arms wrapped in front.",
   "source": {

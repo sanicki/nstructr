@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-seated-forward-bend",
   "name": "Seated Forward Bend",
-  "sanskrit": "Paschimottanasana",
+  "otherNames": ["Paschimottanasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Seated fold over both straight legs.",
   "source": {

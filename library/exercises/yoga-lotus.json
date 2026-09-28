@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-lotus",
   "name": "Lotus Pose",
-  "sanskrit": "Padmasana",
+  "otherNames": ["Padmasana"],
   "category": "Seated",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Cross-legged seat with each foot resting on the opposite thigh.",
   "source": {
@@ -37,7 +37,7 @@
         "shoulderL": [-23.9, 0, 0],
         "shoulderR": [-23.9, 0, 0],
         "hipL": [90, 0, 0],
-        "hipR": [-270, 0, 0]
+        "hipR": [90, 0, 0]
       }
     },
     {
@@ -49,14 +49,6 @@
       "phase": "rep",
       "anchor": "pelvis",
       "touch": [
-        {
-          "point": "kneeR",
-          "adjust": "hipR.side"
-        },
-        {
-          "point": "kneeL",
-          "adjust": "hipL.side"
-        },
         {
           "point": "handR",
           "adjust": "shoulderR.side"
@@ -71,12 +63,10 @@
         "elbowL": 26,
         "shoulderR": [0, 32.6, -90],
         "elbowR": 26,
-        "hipL": [90, 90, 180],
-        "kneeL": 160,
-        "ankleL": 110,
-        "hipR": [-270, 90, 180],
-        "kneeR": 160,
-        "ankleR": 110
+        "hipL": [100, 20, 90],
+        "kneeL": 135,
+        "hipR": [100, 20, 90],
+        "kneeR": 135
       }
     }
   ],

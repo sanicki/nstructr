@@ -5,7 +5,7 @@
   "name": "Hamstring Stretch",
   "category": "Stretch",
   "focus": "Hamstrings",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": ["Wall"],
   "description": "Stretches the back of the thigh lying down at a doorway: rest one heel up the wall or door frame and gently straighten the knee.",
   "source": {

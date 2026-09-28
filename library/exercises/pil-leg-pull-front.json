@@ -5,7 +5,7 @@
   "name": "Leg Pull Front",
   "category": "Pilates",
   "focus": "Core and shoulders",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "From a straight-arm plank, lift one straight leg a little way and lower it, keeping your hips and shoulders completely still.",
   "source": {

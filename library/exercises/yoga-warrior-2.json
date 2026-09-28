@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-warrior-2",
   "name": "Warrior 2 Pose",
-  "sanskrit": "Virabhadrasana II",
+  "otherNames": ["Virabhadrasana II"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Wide lunge with the torso upright and the arms reaching out to the sides.",
   "source": {

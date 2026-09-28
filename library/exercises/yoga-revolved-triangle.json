@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-revolved-triangle",
   "name": "Revolved Triangle Pose",
-  "sanskrit": "Parivrtta Trikonasana",
+  "otherNames": ["Parivrtta Trikonasana"],
   "category": "Standing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Straight-legged split stance twisting with one hand down and the other up.",
   "source": {

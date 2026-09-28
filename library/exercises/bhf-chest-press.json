@@ -5,7 +5,7 @@
   "name": "Band Chest Press",
   "category": "Strength",
   "focus": "Chest",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Builds the chest muscles and mobilises the shoulders: with the band around your back, press your hands forward until your arms are nearly straight.",
   "source": {

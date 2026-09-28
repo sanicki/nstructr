@@ -5,7 +5,7 @@
   "name": "Half Roll-Back",
   "category": "Pilates",
   "focus": "Abdominals and spine",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Sitting tall with knees bent and arms reaching forward, curve your spine into a C and roll back part-way, then scoop your abs to come back up.",
   "source": {

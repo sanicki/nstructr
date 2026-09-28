@@ -5,7 +5,7 @@
   "name": "Band Squat",
   "category": "Strength",
   "focus": "Legs",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "A harder leg exercise that also mobilises the hips, knees and ankles: squat down and back up with the band under your feet and the ends at your waist.",
   "source": {

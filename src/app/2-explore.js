@@ -1,6 +1,8 @@
 /* ===================== UI: Exercises (the library + Bookmarked) ===================== */
-/* the library's collections (each exercise's "library" field), alphabetically; Bookmarked comes before them */
-const collections = () => [...new Set(POSE_DB.exercises.map(ex => ex.library || 'Other'))].sort((a, b) => a.localeCompare(b));
+/* the library's collections (each exercise's "collections": it can be in several), alphabetically; Bookmarked comes before them */
+const collectionsOf = ex => (ex.collections && ex.collections.length ? ex.collections : ['Other']);
+const collections = () => [...new Set(POSE_DB.exercises.flatMap(collectionsOf))].sort((a, b) => a.localeCompare(b));
+const inCollection = c => POSE_DB.exercises.filter(ex => collectionsOf(ex).includes(c));
 const typeOf = ex => ex.focus || ex.category || '';
 /* Two separate things:
    - My exercises: the user's own (imported, copied, made). They live in S.lib.items (the old "saved" store).
@@ -25,7 +27,7 @@ function migrateSaved() {
     if (canonical(lib) === canonical(ex)) { BOOKMARKS.add(ex.id); return []; }       // just a bookmark
     BOOKMARKS.delete(ex.id);                                                          // the changed version is what they had
     let id = `u-${ex.id}-copy`, n = 2; while (S.lib.items.some(x => x.id === id) || findInDb(id)) id = `u-${ex.id}-copy-${n++}`;
-    const copy = { ...ex, id, name: `${lib.name} (copy)`, basedOn: lib.id }; delete copy.library;
+    const copy = { ...ex, id, name: `${lib.name} (copy)`, basedOn: lib.id }; delete copy.collections;
     BOOKMARKS.add(id);
     return [copy];
   });
@@ -45,7 +47,7 @@ function card(ex) {
   return `<button class="pose-card stateful" data-open="${esc(ex.id)}">
     ${thumbFor(ex)}${isBookmarked(ex.id) ? '<span class="badge" title="Bookmarked"><span class="icon fill">bookmark</span></span>' : ''}
     <span class="t title-small">${esc(ex.name)}</span>
-    <span class="meta body-small">${esc(ex.sanskrit || typeOf(ex))}</span></button>`;
+    <span class="meta body-small">${esc(otherNames(ex)[0] || typeOf(ex))}</span></button>`;
 }
 const chip = (attr, val, on, label = val) =>
   `<button class="filter stateful" ${attr}="${esc(val)}" aria-pressed="${on}"><span class="icon">check</span>${esc(label)}</button>`;
@@ -62,7 +64,7 @@ function renderExplore() {
     chip('data-coll', SAVED, E.coll === SAVED, nSaved ? `${SAVED} (${nSaved})` : SAVED) +
     chip('data-coll', MINE, E.coll === MINE, mine.length ? `${MINE} (${mine.length})` : MINE) + colls.map(c => chip('data-coll', c, E.coll === c)).join('');
   const scope = E.coll === SAVED ? marked : E.coll === MINE ? mine
-    : E.coll === 'All' ? [...POSE_DB.exercises, ...mine] : POSE_DB.exercises.filter(ex => (ex.library || 'Other') === E.coll);
+    : E.coll === 'All' ? [...POSE_DB.exercises, ...mine] : inCollection(E.coll);
   const types = [...new Set(scope.map(typeOf).filter(Boolean))].sort();
   const equip = [...new Set(scope.flatMap(ex => ex.equipment || []))].sort();
   // type and equipment each get their own row, so neither scrolls out of sight behind the other. Equipment shows
@@ -79,7 +81,7 @@ function renderExplore() {
   const q = E.q.trim().toLowerCase();
   const list = scope.filter(ex => (E.type === 'All' || typeOf(ex) === E.type) &&
     (eq === 'Any' || (ex.equipment || []).includes(eq)) &&
-    (!q || [ex.name, ex.sanskrit, ex.category, ex.focus, ex.library, ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q))));
+    (!q || [ex.name, ...otherNames(ex), ex.category, ex.focus, ...(ex.collections || []), ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q))));
   const body = $('#exploreBody');
   if (E.coll === 'All' && E.type === 'All' && eq === 'Any' && !q) {
     // browsing: one shelf per collection, Saved first
@@ -87,7 +89,7 @@ function renderExplore() {
         <h2 class="title-medium">${esc(c)}<span class="count">${items.length}</span></h2>
         <button class="btn text stateful" data-coll="${esc(c)}">See all</button></div>
         <div class="carousel">${items.slice(0, 14).map(card).join('')}</div></section>`;
-    body.innerHTML = (nSaved ? shelf(SAVED, marked) : '') + (mine.length ? shelf(MINE, mine) : '') + colls.map(c => shelf(c, POSE_DB.exercises.filter(ex => (ex.library || 'Other') === c))).join('');
+    body.innerHTML = (nSaved ? shelf(SAVED, marked) : '') + (mine.length ? shelf(MINE, mine) : '') + colls.map(c => shelf(c, inCollection(c))).join('');
     return;
   }
   if (E.coll === SAVED && !nSaved && !q) {

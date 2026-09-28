@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-triangle",
   "name": "Triangle Pose",
-  "sanskrit": "Utthita Trikonasana",
+  "otherNames": ["Utthita Trikonasana"],
   "category": "Standing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Straight-legged wide stance tilting the torso over the front leg, arms in one vertical line.",
   "source": {

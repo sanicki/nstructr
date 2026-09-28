@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-half-lord-fishes",
   "name": "Half Lord of the Fishes Pose",
-  "sanskrit": "Ardha Matsyendrasana",
+  "otherNames": ["Ardha Matsyendrasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Seated twist with one knee up and the opposite elbow hooked outside it.",
   "source": {

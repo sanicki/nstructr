@@ -5,7 +5,7 @@
   "name": "Knee Push-Up",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": [],
   "description": "A push-up from the knees: body straight from knees to head, lower your chest toward the floor and press back up.",
   "source": {

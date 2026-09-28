@@ -420,9 +420,9 @@ function allExercises() {
 }
 function renderPicker() {
   const q = $('#pickSearch').value.trim().toLowerCase();
-  const list = allExercises().filter(ex => !q || [ex.name, ex.sanskrit, ex.focus, ex.category, ex.library, ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q)));
+  const list = allExercises().filter(ex => !q || [ex.name, ...otherNames(ex), ex.focus, ex.category, ...(ex.collections || []), ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q)));
   $('#pickList').innerHTML = list.slice(0, 200).map(ex => `<li><label><input type="checkbox" data-pick="${esc(ex.id)}"${PICK.chosen.has(ex.id) ? ' checked' : ''}>
-    ${thumbFor(ex)}<span class="txt"><span class="title-small">${esc(ex.name)}</span><span class="body-small muted">${esc(ex.library || typeOf(ex))}</span></span></label></li>`).join('');
+    ${thumbFor(ex)}<span class="txt"><span class="title-small">${esc(ex.name)}</span><span class="body-small muted">${esc((ex.collections || [])[0] || typeOf(ex))}</span></span></label></li>`).join('');
   $('#pickAdd').textContent = PICK.chosen.size ? `Add ${PICK.chosen.size}` : 'Add';
   $('#pickAdd').disabled = !PICK.chosen.size;
 }

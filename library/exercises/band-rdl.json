@@ -5,7 +5,7 @@
   "name": "Banded Romanian Deadlift",
   "category": "Core",
   "focus": "Hamstrings and glutes",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "A band hip hinge: standing on the band, hold the ends near your knees, push your hips back until your torso is nearly level, then squeeze your glutes to stand.",
   "source": {

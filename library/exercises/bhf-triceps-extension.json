@@ -5,7 +5,7 @@
   "name": "Band Triceps Extension",
   "category": "Strength",
   "focus": "Arms",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Strengthens the back of the upper arm: one hand anchors the band at the opposite hip while the other arm straightens behind you.",
   "source": {

@@ -5,7 +5,7 @@
   "name": "Barbell Bench Press",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Barbell", "Bench"],
   "description": "The classic upper-body press: lying on a bench, lower the bar to your chest with control, then press it back up to straight arms.",
   "source": {

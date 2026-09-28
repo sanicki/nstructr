@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-tree",
   "name": "Tree Pose",
-  "sanskrit": "Vrksasana",
+  "otherNames": ["Vrksasana"],
   "category": "Balancing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Standing balance with one foot pressed into the opposite inner thigh.",
   "source": {

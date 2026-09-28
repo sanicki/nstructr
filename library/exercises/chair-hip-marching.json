@@ -5,7 +5,7 @@
   "name": "Seated Hip Marching",
   "category": "Strength",
   "focus": "Hips and thighs",
-  "library": "Chair-based",
+  "collections": ["Chair-based"],
   "equipment": ["Chair"],
   "description": "Strengthens the hips and thighs from a chair: sitting tall and holding the sides of the seat, lift one knee, then place the foot down with control.",
   "source": {

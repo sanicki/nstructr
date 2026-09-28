@@ -5,7 +5,7 @@
   "name": "Band Lateral Raise",
   "category": "Strength",
   "focus": "Shoulders",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Shoulder strengthener: with the band under one foot, raise both arms out to the sides up to shoulder height.",
   "source": {

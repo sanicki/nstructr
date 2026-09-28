@@ -689,7 +689,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    read or written. See `docs/3d-skeleton.md`. **Follow-up done (Sep 2026): the problem poses** —
    the 34 exercises past what a flexible body can do after the conversion were fixed (see `docs/3d-skeleton.md`,
    "The range check"), and the build now rejects poses past "flexible".
-7. **CI tests** (owner, Sep 2026): today CI runs `node tools/build.mjs` (schemas, animation checks, range of motion) on
+7. **CI tests** — **deferred** (owner, Sep 2026: the build's checks on every pull request are enough for now). Today CI runs `node tools/build.mjs` (schemas, animation checks, range of motion) on
    every pull request, but the browser tests (`tools/e2e/*.py`) and `tools/audit.py` are only run by hand. Plan:
    - make each e2e test **assert**: today they print results for a person to read; give each an expected outcome and a
      non-zero exit code on failure (keep the printout for diagnosis);
@@ -698,7 +698,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
      scroll), uploading screenshots and output as artifacts on failure;
    - keep flaky, network-dependent checks (source links) manual; decide whether `tools/perf.py` gets a budget (CI
      machines vary) or stays informational;
-   - before the submission pipeline (next), so contributions are checked end to end.
+   - when picked up again: ideally before submissions grow, so contributions are checked end to end.
 8. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`
    forms YAML; if the JSON is too long for the URL, copy to clipboard and ask to paste) → an Action validates
    with `tools/build.mjs` logic, renders a preview (headless browser → GIF/PNG), comments, and opens a PR. Prompt

@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-head-to-knee",
   "name": "Head-to-Knee Pose",
-  "sanskrit": "Janu Sirsasana",
+  "otherNames": ["Janu Sirsasana"],
   "category": "Forward Bend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Seated forward bend over one straight leg with the other foot against the inner thigh.",
   "source": {

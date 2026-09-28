@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-dancer",
   "name": "Dancer Pose",
-  "sanskrit": "Natarajasana",
+  "otherNames": ["Natarajasana"],
   "category": "Backbend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Standing balance holding the back foot and kicking it up while the chest reaches forward.",
   "source": {

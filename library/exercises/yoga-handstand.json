@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-handstand",
   "name": "Handstand",
-  "sanskrit": "Adho Mukha Vrksasana",
+  "otherNames": ["Adho Mukha Vrksasana"],
   "category": "Balancing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Full inversion balancing on the hands with the body vertical.",
   "source": {

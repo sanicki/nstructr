@@ -5,7 +5,7 @@
   "name": "Seated Ankle Stretch",
   "category": "Mobility",
   "focus": "Ankles",
-  "library": "Chair-based",
+  "collections": ["Chair-based"],
   "equipment": ["Chair"],
   "description": "Improves ankle flexibility and helps circulation: with one leg straightened off the floor, point the toes away and then pull them back toward you.",
   "source": {

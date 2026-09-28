@@ -5,7 +5,7 @@
   "name": "Knee-to-Chest Stretch",
   "category": "Stretch",
   "focus": "Lower back",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": [],
   "description": "Stretches the lower back lying down: draw one knee in toward your chest while the other leg stays relaxed.",
   "source": {

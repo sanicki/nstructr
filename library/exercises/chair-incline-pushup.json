@@ -5,7 +5,7 @@
   "name": "Chair Incline Push-Up",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
-  "library": "Chair-based",
+  "collections": ["Chair-based"],
   "equipment": ["Chair", "Wall"],
   "description": "An incline push-up on a chair braced against a wall: hands on the front edge of the seat, lower your chest toward it and press back up.",
   "source": {

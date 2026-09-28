@@ -5,7 +5,7 @@
   "name": "Side-Lying Clamshell",
   "category": "Strength",
   "focus": "Outer hips (glute medius)",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Mat", "Wall"],
   "description": "Lying on your side with knees bent and heels together, open your top knee toward the ceiling like a clamshell, then close it with control.",
   "source": {

@@ -5,7 +5,7 @@
   "name": "Rolling Like a Ball",
   "category": "Pilates",
   "focus": "Core and spine",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Curled into a ball and balanced on your tailbone, roll back to your shoulder blades and back up to balance again.",
   "source": {

@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-cat-cow",
   "name": "Cat-Cow",
-  "sanskrit": "Marjaryasana–Bitilasana",
+  "otherNames": ["Marjaryasana–Bitilasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Flowing spine warm-up on hands and knees, arching and rounding the back with the breath.",
   "source": {

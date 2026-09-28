@@ -5,7 +5,7 @@
   "name": "Band Bicep Curl",
   "category": "Strength",
   "focus": "Arms",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Strengthens the front of the upper arms: with the band under your feet, curl your hands up to your shoulders, elbows at your sides.",
   "source": {

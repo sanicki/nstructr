@@ -5,7 +5,7 @@
   "name": "Iliotibial Band Stretch",
   "category": "Stretch",
   "focus": "Outer hip and thigh",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": ["Wall"],
   "description": "Stretches the band of tissue along the outside of the hip and thigh: cross one ankle over the other and reach that arm overhead toward the other side.",
   "source": {

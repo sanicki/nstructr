@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-pyramid",
   "name": "Pyramid Pose",
-  "sanskrit": "Parsvottanasana",
+  "otherNames": ["Parsvottanasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Straight-legged split stance folding the torso over the front leg.",
   "source": {

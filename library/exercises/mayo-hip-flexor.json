@@ -5,7 +5,7 @@
   "name": "Hip Flexor Stretch",
   "category": "Stretch",
   "focus": "Hip flexors",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": ["Towel"],
   "description": "Stretches the front of the hip: kneel on one knee with the other foot forward, then shift your weight forward with a straight back.",
   "source": {

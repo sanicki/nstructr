@@ -5,7 +5,7 @@
   "name": "Reverse Lunge",
   "category": "Strength",
   "focus": "Thighs and glutes",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": [],
   "description": "Single-leg strength and balance: step one foot back and lower until both knees bend to about 90°, then step back up.",
   "source": {

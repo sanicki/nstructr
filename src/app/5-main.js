@@ -16,7 +16,7 @@ function ensureOwnCopy() {
   const base = 'u-' + S.ex.id.replace(/^u-/, '') + '-copy';
   let id = base, n = 2; while (S.lib.items.some(x => x.id === id) || findInDb(id)) id = `${base}-${n++}`;
   const copy = { ...clone(S.ex), id, name: `${lib.name} (copy)`, basedOn: lib.id };
-  delete copy.library;
+  delete copy.collections;
   S.lib.items.push(copy);
   const origKfs = ED.orig && ED.orig.id === S.ex.id ? ED.orig.keyframes : clone(copy.keyframes);
   S.ex = copy; ED.orig = { id, ex: clone(copy), keyframes: origKfs, madeCopy: lib.id };
@@ -61,7 +61,7 @@ function editPose(change) {
 /* text: the exercise's own fields, and the current step's name and spoken cue */
 const lines = v => v.split('\n').map(x => x.trim()).filter(Boolean);
 const TEXT_FIELDS = [
-  ['name', 'Name', 'input'], ['sanskrit', 'Other names (separate with commas)', 'input'], ['focus', 'Focus', 'input'], ['category', 'Category', 'input'],
+  ['name', 'Name', 'input'], ['otherNames', 'Other names (separate with commas)', 'input', v => v.split(',').map(x => x.trim()).filter(Boolean), v => (v || []).join(', ')], ['focus', 'Focus', 'input'], ['category', 'Category', 'input'],
   ['equipment', 'Equipment (separate with commas)', 'input', v => v.split(',').map(x => x.trim()).filter(Boolean), v => (v || []).join(', ')],
   ['description', 'Description', 'textarea'],
   ['setup', 'Setup (one per line)', 'textarea', lines, v => (v || []).join('\n')],

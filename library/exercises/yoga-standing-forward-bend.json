@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-standing-forward-bend",
   "name": "Standing Forward Bend",
-  "sanskrit": "Uttanasana",
+  "otherNames": ["Uttanasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Standing fold with the torso hanging over the legs.",
   "source": {

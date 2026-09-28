@@ -5,7 +5,7 @@
   "name": "Wall Sit",
   "category": "Strength",
   "focus": "Thighs",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Wall"],
   "description": "An isometric leg exercise: with your back flat against a wall, slide down until your thighs are about level with the floor and hold.",
   "source": {

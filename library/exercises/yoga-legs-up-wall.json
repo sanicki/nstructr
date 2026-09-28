@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-legs-up-wall",
   "name": "Legs Up the Wall Pose",
-  "sanskrit": "Viparita Karani",
+  "otherNames": ["Viparita Karani"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat", "Wall"],
   "description": "Restorative pose lying on the back with the legs straight up a wall.",
   "source": {

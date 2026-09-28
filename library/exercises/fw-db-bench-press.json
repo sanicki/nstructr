@@ -5,7 +5,7 @@
   "name": "Dumbbell Bench Press",
   "category": "Strength",
   "focus": "Chest",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Dumbbells", "Bench"],
   "description": "Lying on a bench, press the dumbbells from beside your chest to straight above it, then lower with control.",
   "source": {

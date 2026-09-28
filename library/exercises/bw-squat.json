@@ -5,7 +5,7 @@
   "name": "Squat",
   "category": "Strength",
   "focus": "Thighs and glutes",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": [],
   "description": "The basic lower-body strength move: sit your hips back and down as if onto a chair, then stand back up.",
   "source": {

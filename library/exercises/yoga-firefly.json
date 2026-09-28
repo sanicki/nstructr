@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-firefly",
   "name": "Firefly Pose",
-  "sanskrit": "Tittibhasana",
+  "otherNames": ["Tittibhasana"],
   "category": "Arm Balance",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Arm balance with the legs extended wide and forward over the arms.",
   "source": {

@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-reverse-plank",
   "name": "Reverse Plank",
-  "sanskrit": "Purvottanasana",
+  "otherNames": ["Purvottanasana"],
   "category": "Hands & wrists",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Face-up plank with the hands under the shoulders and the hips lifted.",
   "source": {

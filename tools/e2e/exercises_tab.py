@@ -16,7 +16,7 @@ async def main():
         # an install from before bookmarks: "Saved" holds an unchanged library copy, one changed with the old pose
         # editor, and an exercise of the user's own; there's no bookmark list yet
         old = await pg.evaluate("""(() => { const same = clone(findInDb('bw-squat')), changed = clone(findInDb('bw-reverse-lunge')); changed.keyframes[0].pose.neck = 20;
-          const own = {...clone(findInDb('calf-raise')), id: 'u-my-raise', name: 'My Raise'}; delete own.library;
+          const own = {...clone(findInDb('calf-raise')), id: 'u-my-raise', name: 'My Raise'}; delete own.collections;
           return JSON.stringify({ items: [same, changed, own] }); })()""")
         await pg.evaluate(f"localStorage.setItem('pose-player-library-v1', {json.dumps(old)}); localStorage.removeItem('nstructr-bookmarks-v1')")
         await pg.goto(URL + '#/exercises', wait_until='domcontentloaded'); await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(600)

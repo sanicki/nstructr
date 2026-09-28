@@ -5,7 +5,7 @@
   "name": "The Hundred",
   "category": "Pilates",
   "focus": "Deep core",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "The classic Pilates warm-up: head and shoulders curled up, legs raised, pump your straight arms up and down in small beats while you breathe.",
   "source": {

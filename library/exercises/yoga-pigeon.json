@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-pigeon",
   "name": "Pigeon Pose",
-  "sanskrit": "Eka Pada Rajakapotasana",
+  "otherNames": ["Eka Pada Rajakapotasana"],
   "category": "Hip-Opening",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Hip opener with the front shin on the floor and the back leg extended behind.",
   "source": {

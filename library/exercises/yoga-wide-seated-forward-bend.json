@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-wide-seated-forward-bend",
   "name": "Wide-Angled Seated Forward Bend",
-  "sanskrit": "Upavistha Konasana",
+  "otherNames": ["Upavistha Konasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Seated with the legs wide, folding forward between them.",
   "source": {

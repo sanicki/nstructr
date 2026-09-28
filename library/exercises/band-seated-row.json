@@ -4,7 +4,7 @@
   "id": "band-seated-row",
   "name": "Seated Row with Resistance Band",
   "category": "Strength",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Seated back exercise: with a band looped around the soles, pull the ends toward your waist, elbows close to your sides, then let the band draw your arms forward again under control.",
   "source": {

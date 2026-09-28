@@ -5,7 +5,7 @@
   "name": "Superman",
   "category": "Core",
   "focus": "Lower back and glutes",
-  "library": "Core",
+  "collections": ["Core"],
   "equipment": [],
   "description": "Strengthens the back of the body: lying face down with arms overhead, lift your arms, chest and legs a little way off the floor.",
   "source": {

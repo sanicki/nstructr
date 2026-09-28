@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-gate",
   "name": "Gate Pose",
-  "sanskrit": "Parighasana",
+  "otherNames": ["Parighasana"],
   "category": "Side bend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Kneeling side bend with one leg extended out to the side.",
   "source": {

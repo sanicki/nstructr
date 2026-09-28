@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-extended-side-angle",
   "name": "Extended Side Angle Pose",
-  "sanskrit": "Utthita Parsvakonasana",
+  "otherNames": ["Utthita Parsvakonasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Wide-legged lunge with the forearm or hand down and the top arm reaching over the ear.",
   "source": {
