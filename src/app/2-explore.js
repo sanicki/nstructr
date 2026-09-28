@@ -34,6 +34,10 @@ function migrateSaved() {
   if (changed) { saveBookmarks(); saveLib(); }
 }
 const E = { coll: 'All', type: 'All', equip: 'Any', q: '' };
+/* All collections: grouped (a row per collection; with filters, a section per collection) or one A–Z list */
+const GROUP_KEY = 'nstructr-group-collections-v1';
+const grouped = () => pref(GROUP_KEY, 'on') !== 'off';
+const byName = list => [...list].sort((a, b) => a.name.localeCompare(b.name));
 const THUMBS = new Map();
 function thumbFor(ex) {
   const key = ex.id + ':' + JSON.stringify(ex.keyframes).length;
@@ -83,7 +87,19 @@ function renderExplore() {
     (eq === 'Any' || (ex.equipment || []).includes(eq)) &&
     (!q || [ex.name, ...otherNames(ex), ex.category, ex.focus, ...(ex.collections || []), ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q))));
   const body = $('#exploreBody');
-  if (E.coll === 'All' && E.type === 'All' && eq === 'Any' && !q) {
+  $('#groupWrap').hidden = E.coll !== 'All';
+  $('#groupColl').checked = grouped();
+  if (E.coll === 'All' && grouped() && list.length && (E.type !== 'All' || eq !== 'Any' || q)) {
+    // filtered, grouped: every match, under each collection it's in
+    const matches = new Set(list);
+    const section = (c, items) => items.length ? `<section class="section"><div class="section-head">
+        <h2 class="title-medium">${esc(c)}<span class="count">${items.length}</span></h2></div>
+        <div class="results">${byName(items).map(card).join('')}</div></section>` : '';
+    body.innerHTML = `<p class="body-small muted" style="margin:12px 0 0">${list.length} ${list.length === 1 ? 'exercise' : 'exercises'}</p>` +
+      section(MINE, mine.filter(ex => matches.has(ex))) + colls.map(c => section(c, inCollection(c).filter(ex => matches.has(ex)))).join('');
+    return;
+  }
+  if (E.coll === 'All' && grouped() && E.type === 'All' && eq === 'Any' && !q) {
     // browsing: one shelf per collection, Saved first
     const shelf = (c, items) => `<section class="section"><div class="section-head">
         <h2 class="title-medium">${esc(c)}<span class="count">${items.length}</span></h2>
@@ -104,7 +120,7 @@ function renderExplore() {
     return;
   }
   body.innerHTML = list.length
-    ? `<p class="body-small muted" style="margin:12px 0 0">${list.length} ${list.length === 1 ? 'exercise' : 'exercises'}</p><div class="results">${list.map(card).join('')}</div>`
+    ? `<p class="body-small muted" style="margin:12px 0 0">${list.length} ${list.length === 1 ? 'exercise' : 'exercises'}</p><div class="results">${byName(list).map(card).join('')}</div>`
     : `<div class="empty-state"><span class="icon">search_off</span><p class="title-medium" style="margin:8px 0 4px">Nothing matches</p>
        <p class="muted" style="margin:0 0 16px">Try a different word, or clear the filters.</p><button class="btn tonal stateful" data-act="clearFilters">Clear filters</button></div>`;
 }

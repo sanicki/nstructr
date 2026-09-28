@@ -4,7 +4,7 @@
 
 The **Exercises** tab is the library: over 130 exercises, each animated step by step, with written instructions.
 
-<img src="images/exercises.png" width="300" alt="The Exercises tab: search, collection and equipment filters, shelves">
+<img src="images/exercises.png" width="300" alt="The Exercises tab: search, collection and equipment filters, Group by collection, shelves">
 
 ## Finding an exercise
 
@@ -14,7 +14,11 @@ The **Exercises** tab is the library: over 130 exercises, each animated step by 
 - Inside a collection, a second row filters by **type** (what it works, such as Calves or Core).
 - The **equipment** row narrows the list to exercises that use, for example, a resistance band or a chair. Your
   equipment choice stays when you switch collections.
-- With nothing filtered, the tab shows a shelf per collection; **See all** opens one.
+- **Group by collection** (under the filters, for *All collections*; on at first, and remembered):
+  - **on**: with nothing filtered, a shelf per collection (**See all** opens one); with a search or filter, the
+    matches under each collection they're in;
+  - **off**: one list of everything that matches, A–Z.
+- Inside one collection, and in Bookmarked and My exercises, exercises are listed A–Z.
 
 <img src="images/exercises-collection.png" width="300" alt="A collection with its type and equipment filters">
 

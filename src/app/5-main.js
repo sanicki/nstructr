@@ -429,6 +429,7 @@ $('#backBtn').addEventListener('click', () => {
 });
 $('#saveBtn').addEventListener('click', toggleSave);
 $('#search').addEventListener('input', e => { E.q = e.target.value; renderExplore(); });
+$('#groupColl').addEventListener('change', e => { setPref(GROUP_KEY, e.target.checked ? 'on' : 'off'); renderExplore(); });
 $('#clearSearch').addEventListener('click', () => { E.q = ''; $('#search').value = ''; renderExplore(); $('#search').focus(); });
 $('#fileInput').addEventListener('change', e => { importFiles([...e.target.files]); e.target.value = ''; });
 $('#pasteImport').addEventListener('click', () => {

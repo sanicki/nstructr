@@ -283,6 +283,8 @@ dialog.library[open]{display:flex;flex-direction:column}
 .search:focus-within{outline:3px solid var(--md-primary);outline-offset:0}
 .filters{display:flex;gap:8px;overflow-x:auto;padding:8px 16px;scrollbar-width:none}   /* 8 px above and below each 32 px chip: room for its 48 px touch target */
 .filters::-webkit-scrollbar{display:none}
+.group-toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:0 16px;cursor:pointer}
+.group-toggle[hidden]{display:none}
 .filter{flex:none;display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 16px;border-radius:var(--shape-s);border:1px solid var(--md-outline-variant);
   color:var(--md-on-surface-variant);font-weight:500;letter-spacing:.1px}
 .filter[aria-pressed="true"]{background:var(--md-secondary-container);color:var(--md-on-secondary-container);border-color:transparent;padding-left:8px}
