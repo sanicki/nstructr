@@ -603,7 +603,15 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   those four are only copied; "Other LLM" just copies. 3: paste
   the answer: `extractJson()` takes the JSON out of ``` fences or surrounding sentences; `{"inLibrary": "<id>"}`
   opens that library exercise; anything else goes through the normal import (exercise, or a workout file bringing
-  its own `u-` exercises).
+  its own `u-` exercises). The prompt asks for `"calledInSource"` on every workout item (the source's own name for
+  it); the import takes it out of the workout and keeps it for the library check.
+- **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;
+  not a backup): a new own exercise (not one the user had, not a `basedOn` copy) that is a **duplicate** of a
+  library one (`src/similar.js`) gets "Use <library exercise> instead" (on by default: **Done** points the imported
+  workouts at it and removes the new one unless another workout uses it; **Keep as imported** changes nothing), and
+  each name the library doesn't know (a duplicate's name, and `calledInSource` names of library exercises), unless
+  another library exercise already has it, gets **Suggest it** (the Submit to library issue, kind `name`). No
+  dialog when there's nothing to say.
   - One prompt (`aiPrompt()`): what the user gave, which file to answer with, the workout rules, the exercise format
     (`<template id="aiPrompt">`, alignment spaces squeezed out), and the library as ids with `time` / `sides` / `dir`
     flags. About 10 000 characters, 12 700 as a link. As the library grows, links will pass the limit and fall back
@@ -743,6 +751,10 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
       device): Gemini for YouTube links and videos, the others with photos (videos as still frames); feed the
       animation checks' errors back to the model to fix its JSON. **Self-hosted models** (an OpenAI-compatible
       address) in the same mode; their server must allow browser requests (CORS).
+    - **Names in the AI prompt's LIBRARY list** (deferred, owner, Sep 2026): today it lists ids only, so a library
+      exercise the source calls by another name is found only when the id says it or the model knows it (the
+      library check after import catches the duplicate that results). With names and other names the list grows
+      from about 2.2k to 5.7k characters; measure the link-filled apps (ChatGPT, Claude, Copilot) against `AI_Q_MAX`.
     - **Linked variations**: an exercise names its easier/harder versions (knee push-up ↔ push-up ↔ decline
       push-up), so a workout can swap one for another.
 

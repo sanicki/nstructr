@@ -287,6 +287,7 @@ function claimIds(list, workouts) {
   for (const w of workouts || []) for (const b of (w && w.blocks) || []) for (const it of (b && b.items) || []) if (it && renamed[it.ex]) it.ex = renamed[it.ex];
   return out;
 }
+const isNewOwn = ex => !findInDb(ex.id) && !ex.basedOn && !S.lib.items.some(it => it.id === ex.id);
 /* an imported exercise: an unchanged library one is just bookmarked; the user's own is added (or replaced) */
 function keepImported(ex) {
   if (findInDb(ex.id)) { BOOKMARKS.add(ex.id); saveBookmarks(); return; }
@@ -309,20 +310,27 @@ function importText(text, label) {
   if (data && Array.isArray(data.workouts)) {                    // a workout file (may bring its own exercises)
     data = { ...data, workouts: JSON.parse(JSON.stringify(data.workouts)) };
     const exs = Array.isArray(data.exercises) && data.exercises.length ? claimIds(normalizeImport({ exercises: data.exercises }), data.workouts) : [];
-    for (const ex of exs) keepImported(ex);
+    for (const ex of exs) { if (isNewOwn(ex)) IMPORT_NEW.push(ex); keepImported(ex); }
+    // what the source calls each exercise (Create with AI): kept for the library check, not in the workout
+    for (const w of data.workouts) for (const b of (w && w.blocks) || []) for (const it of (b && b.items) || []) {
+      if (it && typeof it.calledInSource === 'string' && it.calledInSource.trim()) IMPORT_CALLED.push({ ex: it.ex, name: it.calledInSource.trim().slice(0, 80) });
+      if (it) delete it.calledInSource;
+    }
     const ws = importWorkouts(data);
     IMPORTED_WORKOUTS.push(...ws);
     return [];
   }
   const list = claimIds(normalizeImport(data));
   for (const ex of list) {
+    if (isNewOwn(ex)) IMPORT_NEW.push(ex);
     keepImported(ex);
   }
   return list;
 }
-let IMPORTED_WORKOUTS = [], RESTORED = null;
+/* IMPORT_NEW: the user's own exercises an import added (not ones they had, or copies of library ones: those are on purpose); IMPORT_CALLED: [{ ex, name }] what the source calls them */
+let IMPORTED_WORKOUTS = [], RESTORED = null, IMPORT_NEW = [], IMPORT_CALLED = [];
 function importAndShow(texts) {
-  const added = []; IMPORTED_WORKOUTS = []; RESTORED = null;
+  const added = []; IMPORTED_WORKOUTS = []; RESTORED = null; IMPORT_NEW = []; IMPORT_CALLED = [];
   try { for (const [text, label] of texts) added.push(...importText(text, label)); }
   catch (e) { snack(`Couldn't import: ${e.message}`, 6000); if (!added.length && !IMPORTED_WORKOUTS.length && !RESTORED) return false; }
   saveLib();
@@ -335,10 +343,12 @@ function importAndShow(texts) {
   if (IMPORTED_WORKOUTS.length) {
     snack(IMPORTED_WORKOUTS.length === 1 ? `Imported workout: ${IMPORTED_WORKOUTS[0].name}` : `Imported ${IMPORTED_WORKOUTS.length} workouts`);
     go(`#/workout/${IMPORTED_WORKOUTS[0].id}`);
+    checkImport(IMPORT_NEW, IMPORT_CALLED, IMPORTED_WORKOUTS);
     return true;
   }
   snack(added.length === 1 ? `Imported ${added[0].name}` : `Imported ${added.length} exercises`);
   go(`#/play/${encodeURIComponent(added[0].id)}`);
+  checkImport(IMPORT_NEW, IMPORT_CALLED, []);
   return true;
 }
 async function importFiles(files) {

@@ -78,6 +78,7 @@ async def screens(b, theme, results):
     await pg.evaluate("openAi()"); await audit(pg, T('Create with AI'), results); await pg.evaluate("$('#aiDialog').close()")
     await pg.evaluate("go('#/workouts')"); await pg.click('[data-share-wk="a"]'); await audit(pg, T('Share'), results); await pg.evaluate("$('#shareDialog').close()")
     await pg.evaluate("S.lib.items.push({...clone(findInDb('bw-squat')), id:'u-audit', name:'Air Squat'}); openSubmit(exById('u-audit'))"); await audit(pg, T('Submit to library'), results); await pg.evaluate("$('#submitDialog').close()")
+    await pg.evaluate("checkImport([{...clone(findInDb('bw-glute-bridge')), id:'u-hip', name:'Hip Raise'}], [{ex:'yoga-bridge', name:'Shoulder Bridge'}], [])"); await audit(pg, T('Library check after import'), results); await pg.evaluate("$('#checkDialog').close()")
     await ctx.close()
     # the cover screen
     ctx = await b.new_context(viewport={'width': 360, 'height': 398}, has_touch=True)
