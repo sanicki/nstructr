@@ -555,6 +555,15 @@ steps or the joint will windmill; the jump check will catch it.
 - **Settings**, in order: Documentation (link to the user guide), Workouts (rest between exercises, rest between
   sets, sound, full screen), Exercises (autoplay), Display (theme System/Light/Dark, **Authoring mode**), Create with AI (Create), Import & tools (backup, import file/paste, export your exercises,
   JSON format reference, storage-persistence note).
+- **Quiet steps** (`"quiet": true`, the in-between points of a circle: Hip Circles, Leg Circles) are part of the
+  motion but not steps a person sees: the exercise page's step number, name, Steps list and ◀ ▶ / arrow keys skip them
+  (`visibleSteps()`, `shownStep()`, `stepBy()`); the editor still reaches every keyframe. Leg Circles has 8 points on a
+  true circle (hip −84 ± 16°, thigh depth ± 32°), 4 of them steps.
+- **Order of sides and directions** in a workout item: `"order": ["LA", "RA", "LB", "RB"]` (L/R side, A/B direction),
+  set in the item's settings (↑ ↓) whenever there are 2+ combinations; default is every direction on one side, then the
+  other side. The player announces what actually changes ("Switch sides", "Switch direction", or both); until Sep 2026 it
+  said "Switch sides" for a change of direction on the same side.
+- **Exercise page overlay**: Loop and Mute toggles in the bottom-right corner (see storage keys).
 - **Confirmations** use `ask(title, text, action, danger)` (a Material dialog, `#askDialog`; resolves true/false),
   never the browser's `confirm()`. Tests answer it with an init script (`ASK_JS` in the tests that need it).
 - **Leaving a workout**: hold ✕ (a tap only reminds you); Enter on ✕, **Esc**, or a screen reader's click (no
@@ -592,6 +601,8 @@ steps or the joint will windmill; the jump check will catch it.
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
 | `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end) |
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
+| `nstructr-loop-v1` | `"off"`: the exercise page plays once through (setup, one rep, finish), then stops (overlay Loop toggle) |
+| `nstructr-exmute-v1` | `"on"`: the exercise page's spoken cues are muted (overlay Mute toggle; the voice also needs Sound = Voice/Coach) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 20, 0–300; Settings > Workouts). Workout items' `rest` is ignored |
 | `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 10, 0–300 in 1 s steps; Settings > Workouts). Workout files' `restBetween` is ignored |
@@ -615,7 +626,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback, the dialog's four buttons), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: order changes only while the legs are apart, crossing legs are behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay, page order, labels, Edit with the figure pinned, Done), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `circles_order_toggles` (Leg Circles' 8 points with 4 steps; quiet steps hidden from the step number, list and ◀ ▶; a workout item's order of sides/directions, saved, shared, and the switch announced; Loop off stops at the end, Play restarts; Mute), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /

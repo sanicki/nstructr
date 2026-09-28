@@ -315,6 +315,8 @@ function peekNext(i) {
 }
 function nextIndex(i) {
   if (S.mode === 'workout') return i + 1 < S.resolved.length ? i + 1 : -1;
+  // the exercise page with Loop off: once through (setup, one rep, finish), then it stops
+  if (typeof loopOn === 'function' && !loopOn()) return i + 1 < S.resolved.length ? i + 1 : -1;
   const ph = S.phase || { start: 0, end: S.resolved.length - 1 };
   if (i >= ph.end || i + 1 >= S.resolved.length) { S.rep++; return ph.start; }
   return i + 1;
@@ -364,15 +366,23 @@ function draw() {
   if ($('#repText').textContent !== rep) $('#repText').textContent = rep;
   if (S.shownIdx !== S.idx) { S.shownIdx = S.idx; onStepChange(); }
 }
+/* Steps a person sees: quiet steps (the in-between points of a circle) are part of the motion, not steps of their
+   own. While one plays, the step before it stays up; the Steps list, the numbering and ◀ ▶ skip them. */
+const visibleSteps = () => { const v = S.resolved.map((r, i) => (r.quiet ? -1 : i)).filter(i => i >= 0); return v.length ? v : S.resolved.map((r, i) => i); };
+function shownStep(i) { const v = visibleSteps(); let s = v[0]; for (const j of v) if (j <= i) s = j; return s; }
+function stepBy(delta) {                            // the next or previous step a person sees, from where the figure is
+  const v = visibleSteps(), cur = shownStep(S.idx), k = v.indexOf(cur);
+  jumpTo(v[(k + delta + v.length) % v.length]);
+}
 function onStepChange() {
-  const r = S.resolved[S.idx];
   if (S.mode === 'workout') return;                 // the workout player shows its own info
-  $('#stepNum').textContent = S.idx + 1;
-  $('#stepName').textContent = r.name || `Step ${S.idx + 1}`;
+  const si = shownStep(S.idx), r = S.resolved[si], n = visibleSteps().indexOf(si) + 1;
+  $('#stepNum').textContent = n;
+  $('#stepName').textContent = r.name || `Step ${n}`;
   $('#stepCue').textContent = r.cue || '';
   if (typeof exStepSound === 'function') exStepSound(S.idx);
-  document.querySelectorAll('#stepList button').forEach((btn, i) => {
-    if (i === S.idx) {
+  document.querySelectorAll('#stepList button').forEach(btn => {
+    if (+btn.dataset.step === si) {
       btn.setAttribute('aria-current', 'step');
       const list = btn.closest('.list'), li = btn.parentElement;
       if (list && (li.offsetTop < list.scrollTop || li.offsetTop + li.offsetHeight > list.scrollTop + list.clientHeight))
@@ -383,6 +393,8 @@ function onStepChange() {
   updateEditor();
 }
 function setPlaying(p) {
+  // after a run-through with Loop off, Play starts again from the top
+  if (p && S.planDone && S.mode !== 'workout') { S.planDone = false; S.rep = 1; S.idx = 0; S.prev = null; S.t = 0; if (typeof exHush === 'function') exHush(); }
   S.playing = p;
   const btn = $('#playBtn');
   btn.innerHTML = `<span class="icon fill">${p ? 'pause' : 'play_arrow'}</span>`;

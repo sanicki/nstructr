@@ -198,6 +198,8 @@ function selectExercise(id) {
   $('#editor').dataset.built = '';
   closeEditor(); exHush(); renderPlayerInfo(); draw();
   S.canAdvance = () => !XS.speaking;                          // on the first pass, a step waits for its spoken cue
+  S.onPlanEnd = () => { setPlaying(false); showExControls(true); };   // Loop off: stop at the end, controls up
+  renderExToggles();
   const miss = S.resolved.findIndex(r => r.misses.length);
   if (miss >= 0) {
     const m = S.resolved[miss].misses[0];
@@ -376,7 +378,7 @@ function route() {
   $('#backBtn').hidden = !sub;
   $('#saveBtn').hidden = view !== 'player';
   $('#shareExBtn').hidden = view !== 'player' || !S.ex || !!findInDb(S.ex.id);      // library exercises: everyone has them
-  if (view === 'player') applyAuthoring();
+  if (view === 'player') { applyAuthoring(); renderExToggles(); }
   $('#editPoseBtn').hidden = view !== 'player';
   if (leavingPlayer) exHush();                             // only the exercise page's own voice: a workout starting now has already begun speaking
   if (view !== 'player' && XC.editing) closeEditor();
@@ -395,8 +397,8 @@ addEventListener('hashchange', route);
 
 /* ---------- Wiring ---------- */
 $('#playBtn').addEventListener('click', () => setPlaying(!S.playing));      // (the overlay shows these first: see 3-details.js)
-$('#prevBtn').addEventListener('click', () => jumpTo(S.idx - 1));
-$('#nextBtn').addEventListener('click', () => jumpTo(S.idx + 1));
+$('#prevBtn').addEventListener('click', () => stepBy(-1));
+$('#nextBtn').addEventListener('click', () => stepBy(1));
 $('#sideSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setSide(b.dataset.side); });
 $('#dirSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setDir(b.dataset.dir); });
 $('#backBtn').addEventListener('click', () => {
@@ -441,8 +443,8 @@ document.addEventListener('keydown', e => {
   if (S.view === 'wplay' && e.key === 'Escape' && !document.querySelector('dialog[open]')) { exitWorkout(); return; }   // a keyboard can't "hold
   if (S.view !== 'player' || e.target.closest('input, textarea, dialog') || e.metaKey || e.ctrlKey || e.altKey) return;
   if (e.key === ' ' && !e.target.closest('button')) { e.preventDefault(); setPlaying(!S.playing); }
-  else if (e.key === 'ArrowRight') jumpTo(S.idx + 1);
-  else if (e.key === 'ArrowLeft') jumpTo(S.idx - 1);
+  else if (e.key === 'ArrowRight') stepBy(1);
+  else if (e.key === 'ArrowLeft') stepBy(-1);
 });
 let dragDepth = 0;
 addEventListener('dragenter', e => { if ([...(e.dataTransfer?.types || [])].includes('Files')) { dragDepth++; $('#drop').classList.add('show'); } });

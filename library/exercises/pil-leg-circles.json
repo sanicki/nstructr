@@ -97,10 +97,10 @@
       "phase": "setup"
     },
     {
-      "name": "Across",
-      "cue": "Across your body.",
+      "name": "Up and across",
+      "cue": "",
       "view": "side",
-      "durationMs": 450,
+      "durationMs": 225,
       "holdMs": 0,
       "anchor": "pelvis",
       "pose": {
@@ -110,7 +110,32 @@
         "shoulderR": 0,
         "hipL": 0,
         "ankleL": 20,
-        "hipR": -88,
+        "hipR": -95.3,
+        "thighDepthR": -22.6
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 315,
+        "label": "Up and across"
+      },
+      "phase": "rep",
+      "quiet": true
+    },
+    {
+      "name": "Across",
+      "cue": "Across your body.",
+      "view": "side",
+      "durationMs": 225,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -84,
         "thighDepthR": -32
       },
       "ease": "linear",
@@ -121,10 +146,35 @@
       "phase": "rep"
     },
     {
+      "name": "Across and down",
+      "cue": "",
+      "view": "side",
+      "durationMs": 225,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -72.7,
+        "thighDepthR": -22.6
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 225,
+        "label": "Across and down"
+      },
+      "phase": "rep",
+      "quiet": true
+    },
+    {
       "name": "Down",
       "cue": "Down.",
       "view": "side",
-      "durationMs": 450,
+      "durationMs": 225,
       "holdMs": 0,
       "anchor": "pelvis",
       "pose": {
@@ -145,10 +195,10 @@
       "phase": "rep"
     },
     {
-      "name": "Out",
-      "cue": "Out to the side.",
+      "name": "Down and out",
+      "cue": "",
       "view": "side",
-      "durationMs": 450,
+      "durationMs": 225,
       "holdMs": 0,
       "anchor": "pelvis",
       "pose": {
@@ -158,7 +208,32 @@
         "shoulderR": 0,
         "hipL": 0,
         "ankleL": 20,
-        "hipR": -88,
+        "hipR": -72.7,
+        "thighDepthR": 22.6
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 135,
+        "label": "Down and out"
+      },
+      "phase": "rep",
+      "quiet": true
+    },
+    {
+      "name": "Out",
+      "cue": "Out to the side.",
+      "view": "side",
+      "durationMs": 225,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -84,
         "thighDepthR": 32
       },
       "ease": "linear",
@@ -169,10 +244,35 @@
       "phase": "rep"
     },
     {
+      "name": "Out and up",
+      "cue": "",
+      "view": "side",
+      "durationMs": 225,
+      "holdMs": 0,
+      "anchor": "pelvis",
+      "pose": {
+        "root": -90,
+        "neck": 34,
+        "shoulderL": 0,
+        "shoulderR": 0,
+        "hipL": 0,
+        "ankleL": 20,
+        "hipR": -95.3,
+        "thighDepthR": 22.6
+      },
+      "ease": "linear",
+      "guide": {
+        "direction": 45,
+        "label": "Out and up"
+      },
+      "phase": "rep",
+      "quiet": true
+    },
+    {
       "name": "Up",
       "cue": "Back up, and pause.",
       "view": "side",
-      "durationMs": 450,
+      "durationMs": 225,
       "holdMs": 250,
       "anchor": "pelvis",
       "pose": {
