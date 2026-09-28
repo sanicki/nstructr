@@ -123,8 +123,8 @@ module.exports = [
     setup: ['Stand next to a wall or counter you can touch if needed.'],
     cues: ['Heel to toe, on one line.', 'Look ahead, not down.', 'Arms out if it helps.'], source: { url: 'https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/balance-exercises/art-20546836', title: 'Mayo Clinic: Balance exercises' } }),
   x('bal-clock-reach', 'bw-squat', 'Clock Reach', ['Clock Arm Reach'], { equipment: [], collections: ['Balance'], category: 'Balance', focus: 'Balance and core', props: [],
-    edit: e => { const leg = { hipR: [20, 0, 0], kneeR: 45 }, one = { anchor: 'ankleL', plant: ['L'], camera: 0 };
-      e.keyframes = [K('Stand on your left leg', 'Right foot just off the floor.', { ...leg }, { ...one, phase: 'setup' }),
+    edit: e => { const leg = { hipR: [30, 0, 0], kneeR: 90 }, one = { anchor: 'ankleL', plant: ['L'], camera: 0 };
+      e.keyframes = [K('Stand on your left leg', 'Lift your right foot, knee bent.', { ...leg }, { ...one, phase: 'setup' }),
         K('12 o\'clock', 'Reach your right arm straight up.', { ...leg, shoulderR: [0, 170, 90] }, { ...one }),
         K('3 o\'clock', 'Reach it out to the side.', { ...leg, shoulderR: [0, 90, 0] }, { ...one }),
         K('6 o\'clock', 'Reach it down and back behind you.', { ...leg, shoulderR: [-40, 20, 0] }, { ...one }),

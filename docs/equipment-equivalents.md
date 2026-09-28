@@ -102,6 +102,7 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Mountain, Warrior I and II, Eagle, Chair Pose | ⏳ Seated Mountain, Chair Warrior I and II, Chair Eagle; Chair Pose at the wall is the library's Wall Sit (a duplicate, so not added) |
 | Handstand, Headstand, Forearm Stand | ⏳ at the wall (the same poses with the wall behind: variants) |
 | Pilates mat exercises | ⏳ band versions (Banded Hundred, Band Leg Circles, Roll-Up with a band) |
+| Bound Angle Forward Bend (added Sep 2026, triage) | Chair Forward Bend (in library, a chair version of the fold) · ⏳ Supported Bound Angle Forward Fold (head on a block or bolster: needs a **yoga block**) |
 
 Sources for batch 2: [Yoga Journal, chair yoga poses](https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/),
 [Yoga Journal, wall yoga poses](https://www.yogajournal.com/practice/yoga-wall-poses/),

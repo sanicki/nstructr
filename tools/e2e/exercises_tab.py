@@ -26,6 +26,9 @@ async def main():
         print('shelves                 ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .section-head h2')].slice(0,4).map(x=>x.textContent)"))
         await pg.click('[data-coll="My exercises"]'); await pg.wait_for_timeout(200)
         print('My exercises            ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"))
+        await pg.click('#exploreBody [data-act="ai"]'); await pg.wait_for_timeout(200)
+        print('Create with AI here     ', await pg.evaluate("[$('#aiDialog').open, $('#aiTitle').textContent]"), '<- as on Workouts')
+        await pg.evaluate("$('#aiDialog').close()")
         # the move happens once: a second load changes nothing
         await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         print('second load             ', await pg.evaluate("[S.lib.items.length, BOOKMARKS.size]"))
