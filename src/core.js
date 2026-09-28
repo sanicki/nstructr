@@ -529,8 +529,6 @@ function reverseReps(keyframes) {
   for (const k of out) if (k.keep) k.keep = k.keep.map(x => (typeof x === 'object' && x && Number.isInteger(x.keyframe) ? { ...x, keyframe: moved(x.keyframe) } : x));
   return out;
 }
-const DIR_WORDS = { forward: 'backward', backward: 'forward', Forward: 'Backward', Backward: 'Forward', clockwise: 'counterclockwise', counterclockwise: 'clockwise', Clockwise: 'Counterclockwise', Counterclockwise: 'Clockwise' };
-const swapDirWords = s => (typeof s === 'string' ? s.replace(/\b(forward|backward|Forward|Backward|clockwise|counterclockwise|Clockwise|Counterclockwise)\b/g, m => DIR_WORDS[m]) : s);
 
 /* Right-side version of a left-side keyframe: swap L/R; in front view also flip every angle */
 function swapSide(s) { return typeof s === 'string' ? s.replace(/([LR])$/, m => (m === 'L' ? 'R' : 'L')) : s; }
@@ -550,4 +548,4 @@ function mirrorKeyframe(kf) {
   };
 }
 
-if (typeof module !== 'undefined') module.exports = { phaseInfo, reverseReps, swapDirWords, weightSVG, supportY, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, bandRestLengths, bandPath, bandPathRoute, propRoute, propPoint, resolveSequence, frameAt, groundY, fk, place, resolveKeyframe, mirrorKeyframe, DEFAULT_SEGMENTS, FLOOR, CX, CONTACT_POINTS, JOINT_KEYS };
+if (typeof module !== 'undefined') module.exports = { phaseInfo, reverseReps, weightSVG, supportY, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, bandRestLengths, bandPath, bandPathRoute, propRoute, propPoint, resolveSequence, frameAt, groundY, fk, place, resolveKeyframe, mirrorKeyframe, DEFAULT_SEGMENTS, FLOOR, CX, CONTACT_POINTS, JOINT_KEYS };
