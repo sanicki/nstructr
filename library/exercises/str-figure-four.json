@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "str-figure-four",
+  "name": "Figure-Four Stretch",
+  "otherNames": ["Supine Figure Four", "Reclined Pigeon"],
+  "category": "Stretch",
+  "focus": "Outer hip and glutes",
+  "collections": ["Stretches"],
+  "equipment": [],
+  "description": "Lying on your back, cross one ankle over the opposite knee and draw that thigh toward you to stretch the outer hip of the crossed leg.",
+  "source": {
+    "url": "https://www.hingehealth.com/resources/articles/figure-four/",
+    "title": "Hinge Health: How to do a figure 4 stretch"
+  },
+  "setup": ["Lie on your back, knees bent, feet flat."],
+  "cues": ["Flex the crossed foot.", "Head stays down.", "Pull gently."],
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Ease in until you feel a gentle stretch; no bouncing."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, feet flat.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [45, 0, 0],
+        "kneeL": 90,
+        "ankleL": 45,
+        "hipR": [45, 0, 0],
+        "kneeR": 90,
+        "ankleR": 45
+      }
+    },
+    {
+      "name": "Figure-Four Stretch",
+      "cue": "Right ankle on your left knee, pull the left thigh toward you.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeL",
+          "dz": -26
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dz": -26
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [95, 0, 0],
+        "kneeL": 90,
+        "hipR": [100, 30, 60],
+        "kneeR": 110,
+        "ankleR": 10
+      }
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-reclined-bound-angle",
+  "name": "Reclined Bound Angle Pose",
+  "otherNames": ["Supta Baddha Konasana", "Reclining Butterfly"],
+  "category": "Restorative",
+  "focus": "Inner thighs and hips",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "Lying on your back with the soles of your feet together, let your knees fall open to the sides and rest.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/reclining-bound-angle-pose/",
+    "title": "Yoga Journal: Reclining Bound Angle Pose"
+  },
+  "setup": ["Lie on your back, knees bent, feet flat."],
+  "cues": ["Soles together, knees drop open.", "Support the knees with cushions if needed.", "Let your belly soften."],
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie down, knees bent, feet flat.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [45, 0, 0],
+        "kneeL": 90,
+        "ankleL": 45,
+        "hipR": [45, 0, 0],
+        "kneeR": 90,
+        "ankleR": 45
+      }
+    },
+    {
+      "name": "Reclined Bound Angle Pose",
+      "cue": "Soles together, knees fall open, arms relaxed.",
+      "camera": 25,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [0, 40, 0],
+        "shoulderR": [0, 40, 0],
+        "hipL": [50, 55, 90],
+        "kneeL": 130,
+        "hipR": [50, 55, 90],
+        "kneeR": 130
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

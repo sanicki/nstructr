@@ -1,0 +1,102 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-bb-front-squat",
+  "name": "Front Squat",
+  "otherNames": ["Barbell Front Squat"],
+  "category": "Strength",
+  "focus": "Thighs and core",
+  "collections": ["Free weights"],
+  "equipment": ["Barbell"],
+  "description": "A squat with the barbell resting across the front of your shoulders: elbows high and chest up, sit down between your heels and stand back up.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/22/front-squat/",
+    "title": "ACE Exercise Library: Front Squat"
+  },
+  "setup": ["Rest the bar on the front of your shoulders, fingertips under it, elbows high.", "Feet about shoulder-width apart."],
+  "cues": ["Elbows high the whole time.", "Chest up.", "Drive up through your whole foot."],
+  "prescription": {
+    "reps": "5–8",
+    "note": "Warm up with lighter sets first. Move with control: about 2 seconds down, then drive up."
+  },
+  "keyframes": [
+    {
+      "name": "Bar on your shoulders",
+      "cue": "Bar resting on the front of your shoulders, elbows high.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dz": 14,
+          "dy": 4
+        },
+        {
+          "hand": "handL",
+          "to": "shoulderL",
+          "dz": 14,
+          "dy": 4
+        }
+      ],
+      "pose": {
+        "shoulderL": [95, 10, 0],
+        "elbowL": 150,
+        "shoulderR": [95, 10, 0],
+        "elbowR": 150
+      }
+    },
+    {
+      "name": "Squat",
+      "cue": "Squat down with your chest up and elbows high.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dz": 14,
+          "dy": 4
+        },
+        {
+          "hand": "handL",
+          "to": "shoulderL",
+          "dz": 14,
+          "dy": 4
+        }
+      ],
+      "pose": {
+        "torso": [22, 0, 0],
+        "shoulderL": [95, 10, 0],
+        "elbowL": 150,
+        "shoulderR": [95, 10, 0],
+        "elbowR": 150,
+        "hipL": [90, 0, 0],
+        "kneeL": 104,
+        "ankleL": -14,
+        "hipR": [90, 0, 0],
+        "kneeR": 104,
+        "ankleR": -14
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "barbell",
+      "from": "handL",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bal-tandem-stance",
+  "name": "Tandem Stance",
+  "otherNames": ["Heel-to-Toe Stance", "Semi-Tandem Stance"],
+  "category": "Balance",
+  "focus": "Balance",
+  "collections": ["Balance"],
+  "equipment": [],
+  "description": "Stand with one foot directly in front of the other, heel touching toes, as if on a line, and hold steady.",
+  "source": {
+    "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/balance-exercises/art-20546836",
+    "title": "Mayo Clinic: Balance exercises"
+  },
+  "setup": ["Stand next to a wall or counter you can touch if needed."],
+  "cues": ["Heel to toe, on one line.", "Look ahead, not down.", "Arms out if it helps."],
+  "prescription": {
+    "reps": "hold 20 seconds",
+    "note": "Stand near a wall or counter. Build up to 30 seconds."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet together.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Tandem Stance",
+      "cue": "Right heel right in front of your left toes; hold.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "hipR": [14, -4, 0],
+        "hipL": [-8, 4, 0],
+        "shoulderL": [0, 30, 0],
+        "shoulderR": [0, 30, 0]
+      }
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 20
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Right foot in front",
+      "R": "Left foot in front"
+    }
+  },
+  "holdStep": 1
+}

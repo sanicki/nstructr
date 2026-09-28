@@ -1,0 +1,75 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-cobra",
+  "name": "Cobra Pose",
+  "otherNames": ["Bhujangasana", "Cobra"],
+  "category": "Backbend",
+  "focus": "Spine and chest",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "A gentle backbend lying face down: with hands under your shoulders, lift your chest while your hips and legs stay on the floor.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/cobra-pose/",
+    "title": "Yoga Journal: Cobra Pose"
+  },
+  "setup": ["Lie face down, legs long, tops of the feet on the mat.", "Place your hands flat under your shoulders, elbows hugging your sides."],
+  "cues": ["Lift with your back, not just your arms.", "Shoulders away from your ears.", "Keep your hips down."],
+  "keyframes": [
+    {
+      "name": "Lie on your belly",
+      "cue": "Lie face down, arms by your sides.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Cobra Pose",
+      "cue": "Press into your hands and lift your chest, hips down.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "root": [90, 0, 0],
+        "torso": [-30, 0, 0],
+        "chest": [-10, 0, 0],
+        "neck": [-10, 0, 0],
+        "shoulderL": [-10, 0, 0],
+        "elbowL": 60,
+        "shoulderR": [-10, 0, 0],
+        "elbowR": 60,
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

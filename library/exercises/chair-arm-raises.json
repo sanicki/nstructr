@@ -1,0 +1,143 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-arm-raises",
+  "name": "Seated Arm Raises",
+  "otherNames": ["Chair Arm Raises", "Arm Raises"],
+  "category": "Mobility",
+  "focus": "Shoulders",
+  "collections": ["Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Sitting tall, raise both arms out to the sides and up over your head, then lower them slowly.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
+    "title": "NHS: Sitting exercises"
+  },
+  "setup": ["Sit upright, feet flat on the floor, hands on your thighs."],
+  "cues": ["Palms facing forward.", "Stop before it pinches.", "Breathe out as you lower."],
+  "prescription": {
+    "reps": "5",
+    "note": "Move slowly and smoothly, within a comfortable range."
+  },
+  "keyframes": [
+    {
+      "name": "Arms down",
+      "cue": "Hands on your thighs.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Arms up",
+      "cue": "Raise both arms out to the sides and up.",
+      "camera": 0,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "shoulderL": [0, 165, 90],
+        "shoulderR": [0, 165, 90]
+      }
+    },
+    {
+      "name": "Arms down",
+      "cue": "Lower them slowly.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  }
+}

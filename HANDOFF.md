@@ -23,22 +23,23 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **163 exercises, 1 workout**.
+Library today: **208 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
-| Yoga | 60 | Yoga Journal pose list + chair and wall versions |
-| Bodyweight | 18 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning… |
-| Resistance band | 20 | 10 BHF standing exercises + seated row + routine additions + banded versions (bridge, clamshell, kickback, row, triceps kickback) |
-| Free weights | 23 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
-| Stretches | 12 | Mayo Clinic basic stretches + routine additions + wall downward dog |
+| Yoga | 74 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess…) |
+| Free weights | 30 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
+| Bodyweight | 21 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning… |
+| Resistance band | 20 | 10 BHF standing exercises + seated row + routine additions + banded versions |
+| Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
+| Stretches | 17 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway |
+| Core | 14 | planks, bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold… |
 | Pilates | 12 | classic mat exercises (Leg Circles: Side and Direction, with a compass) |
-| Core | 7 | planks, bird dog, dead bug, crunch… |
-| Chair-based | 13 | NHS chair/sitting exercises, chair dip, chair push-up, feet-elevated bridge, chair-supported calf raise, chair yoga |
-| Warm-up | 2 | arm circles, hip circles (both have directions) |
-| Balance | 4 | Star Excursion (8-point and 4-point), Warrior III and Tree at the wall |
+| Balance | 8 | Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, clock reach, single-leg RDL |
+| Warm-up | 6 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks |
 
-91 are rep-based, 72 timed; 59 are two-sided (`bilateral`); 3 have `direction`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
+115 are rep-based, 93 timed; 74 are two-sided (`bilateral`); 3 have `direction`. Common exercises per collection
+still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
 
@@ -617,8 +618,8 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   apps (ChatGPT, Claude, Copilot; over it they fall back to copying). Three things keep it short: the LIBRARY list uses
   plain words and spaces (`WITH band`, `bw-reverse-lunge sides`, `dir A-Forward B-Backward`); the exercise and keyframe
   formats are field lists, not commented JSON; and `aiLink` escapes less than `URLSearchParams` (`: , / ; @ $ ?` stay
-  as they are, spaces are `+`: allowed in a query and read back identically). With 163 exercises the ChatGPT link is
-  about 12.2k (Sep 2026; it was 14.5k before the last two), room for roughly 110 more exercises (the library's, or a
+  as they are, spaces are `+`: allowed in a query and read back identically). With 208 exercises the ChatGPT link is
+  about 13.2k (Sep 2026; 163 exercises made 12.2k), room for roughly 70 more exercises (the library's, or a
   user's own, which are listed too). Base64 or other encodings don't help: non-ASCII is escaped in a link, and the
   AI has to read plain text.
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;

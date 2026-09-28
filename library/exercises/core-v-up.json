@@ -1,0 +1,62 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "core-v-up",
+  "name": "V-Up",
+  "otherNames": ["V-Ups", "Jackknife Sit-Up"],
+  "category": "Core",
+  "focus": "Abs",
+  "collections": ["Core"],
+  "equipment": [],
+  "description": "Lying flat with arms overhead, lift your chest and straight legs at the same time to meet in a V, balanced on your sit bones, then lower.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/242/v-ups/",
+    "title": "ACE Exercise Library: V-Ups"
+  },
+  "setup": ["Lie on your back, arms overhead, legs straight and together."],
+  "cues": ["Reach for your toes.", "Lower slowly.", "Bend your knees to make it easier."],
+  "prescription": {
+    "reps": "6–12",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Lie long",
+      "cue": "Arms overhead, legs straight.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [175, 0, 0],
+        "shoulderR": [175, 0, 0]
+      }
+    },
+    {
+      "name": "Fold into a V",
+      "cue": "Lift your chest and legs, reach for your toes.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "torso": [55, 0, 0],
+        "chest": [15, 0, 0],
+        "neck": [15, 0, 0],
+        "shoulderL": [100, 0, 0],
+        "shoulderR": [100, 0, 0],
+        "hipL": [60, 0, 0],
+        "hipR": [60, 0, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

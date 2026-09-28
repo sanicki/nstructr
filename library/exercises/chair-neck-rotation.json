@@ -1,0 +1,118 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-neck-rotation",
+  "name": "Seated Neck Rotation",
+  "otherNames": ["Neck Rotation", "Neck Turns"],
+  "category": "Mobility",
+  "focus": "Neck",
+  "collections": ["Chair-based", "Stretches"],
+  "equipment": ["Chair"],
+  "description": "Sitting tall with shoulders down, turn your head slowly to look over one shoulder, then the other.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
+    "title": "NHS: Sitting exercises"
+  },
+  "setup": ["Sit upright, shoulders down, looking straight ahead."],
+  "cues": ["Shoulders stay still.", "Turn only as far as is comfortable.", "Move slowly."],
+  "prescription": {
+    "reps": "5 each side",
+    "note": "Move slowly and smoothly, within a comfortable range."
+  },
+  "keyframes": [
+    {
+      "name": "Look left",
+      "cue": "Slowly turn your head to the left.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "neck": [0, 0, 60]
+      }
+    },
+    {
+      "name": "Look right",
+      "cue": "Now to the right.",
+      "camera": 0,
+      "durationMs": 2500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "neck": [0, 0, -60]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "turn"
+}

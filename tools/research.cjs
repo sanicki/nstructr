@@ -94,7 +94,8 @@ function variants(file, only) {
     const base = JSON.parse(fs.readFileSync(path.join(DIR, `${d.base}.json`), 'utf8'));
     let ex = JSON.parse(JSON.stringify(base));
     ex = (d.edit && d.edit(ex)) || ex;
-    const props = typeof d.props === 'function' ? d.props(base.props || []) : d.props;
+    // no "props" in a definition: the base exercise's (its bench, its weights)
+    const props = d.props === undefined ? base.props : typeof d.props === 'function' ? d.props(base.props || []) : d.props;
     (d.steps || []).forEach(([n, c], i) => { if (n) ex.keyframes[i].name = n; if (c) ex.keyframes[i].cue = c; });
     const { $schema, version, keyframes, prescription, measure, defaults, repName, bilateral, direction, holdStep, floorGuide } = ex;
     const out = { $schema, version, id: d.id, name: d.name, ...(d.otherNames && d.otherNames.length ? { otherNames: d.otherNames } : {}),

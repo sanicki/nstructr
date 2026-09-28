@@ -1,0 +1,97 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "core-heel-taps",
+  "name": "Heel Taps",
+  "otherNames": ["Alternate Heel Touches", "Lying Oblique Reach"],
+  "category": "Core",
+  "focus": "Obliques",
+  "collections": ["Core"],
+  "equipment": [],
+  "description": "Lying on your back with knees bent and shoulders lifted, crunch to each side in turn to reach a hand toward the same-side heel.",
+  "source": {
+    "url": "https://workoutlabs.com/exercise-guide/alternate-heel-touchers/",
+    "title": "WorkoutLabs: Alternate Heel Touches"
+  },
+  "setup": ["Lie on your back, knees bent, feet flat.", "Lift your head and shoulders a little off the floor, arms long by your sides."],
+  "cues": ["Short side crunch, not a swing.", "Shoulders stay up the whole time.", "Chin slightly tucked."],
+  "prescription": {
+    "reps": "10–20 (both sides = 2)",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Reach right",
+      "cue": "Shoulders up, reach your right hand to your right heel.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "torso": [0, 16, 0],
+        "chest": [28, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [30, 0, 0],
+        "shoulderR": [30, 0, 0],
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Reach left",
+      "cue": "Now reach your left hand to your left heel.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "torso": [0, -16, 0],
+        "chest": [28, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [30, 0, 0],
+        "shoulderR": [30, 0, 0],
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 16
+  },
+  "repName": "tap"
+}

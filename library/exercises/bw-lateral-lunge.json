@@ -1,0 +1,79 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-lateral-lunge",
+  "name": "Lateral Lunge",
+  "otherNames": ["Side Lunge"],
+  "category": "Strength",
+  "focus": "Thighs and inner legs",
+  "collections": ["Bodyweight"],
+  "equipment": [],
+  "description": "From a wide stance, bend one knee and sit your hips back over that foot while the other leg stays straight, then push back up.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/50/side-lunge/",
+    "title": "ACE Exercise Library: Side Lunge"
+  },
+  "setup": ["Stand with your feet wide apart, toes pointing forward."],
+  "cues": ["Sit back, as if into a chair.", "Bent knee over your toes.", "Other leg straight, foot flat."],
+  "prescription": {
+    "reps": "8–12 each side",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Stand wide",
+      "cue": "Feet wide, toes forward.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "hipL": [0, 22, 0],
+        "hipR": [0, 22, 0]
+      }
+    },
+    {
+      "name": "Lunge to the right",
+      "cue": "Sit back into your right hip, left leg straight.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "torso": [30, 0, 0],
+        "shoulderL": [60, 0, 0],
+        "shoulderR": [60, 0, 0],
+        "hipR": [70, 25, 0],
+        "kneeR": 90,
+        "ankleR": -20,
+        "hipL": [0, 40, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-front-raise",
+  "name": "Dumbbell Front Raise",
+  "otherNames": ["Front Raise", "Front Deltoid Raise"],
+  "category": "Strength",
+  "focus": "Front of the shoulders",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "Standing tall, lift a dumbbell in each hand straight forward to shoulder height, arms almost straight, then lower slowly.",
+  "source": {
+    "url": "https://www.endomondo.com/exercise/dumbbell-front-raise",
+    "title": "Endomondo: Dumbbell Front Raise"
+  },
+  "setup": ["Stand tall, a dumbbell in each hand in front of your thighs."],
+  "cues": ["Arms nearly straight.", "Stop at shoulder height.", "No swinging."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Arms down",
+      "cue": "Weights in front of your thighs.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0]
+      }
+    },
+    {
+      "name": "Raise",
+      "cue": "Lift the weights straight forward to shoulder height.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [88, 0, 0],
+        "shoulderR": [88, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

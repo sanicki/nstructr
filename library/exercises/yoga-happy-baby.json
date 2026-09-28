@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-happy-baby",
+  "name": "Happy Baby Pose",
+  "otherNames": ["Ananda Balasana", "Happy Baby"],
+  "category": "Hip opener",
+  "focus": "Hips and lower back",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "Lying on your back, draw your knees toward your armpits and hold the outsides of your feet, soles toward the ceiling.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/happy-baby-pose/",
+    "title": "Yoga Journal: Happy Baby Pose"
+  },
+  "setup": ["Lie on your back and bring your knees toward your chest."],
+  "cues": ["Soles face the ceiling.", "Gently draw your knees down toward the floor.", "Back of your head stays down."],
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie down, knees bent, feet flat.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [45, 0, 0],
+        "kneeL": 90,
+        "ankleL": 45,
+        "hipR": [45, 0, 0],
+        "kneeR": 90,
+        "ankleR": 45
+      }
+    },
+    {
+      "name": "Happy Baby Pose",
+      "cue": "Knees toward your armpits, hold the outsides of your feet.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "footR"
+        },
+        {
+          "hand": "handL",
+          "to": "footL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [160, 15, 0],
+        "kneeL": 70,
+        "ankleL": -10,
+        "hipR": [160, 15, 0],
+        "kneeR": 70,
+        "ankleR": -10
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

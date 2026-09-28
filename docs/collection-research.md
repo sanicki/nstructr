@@ -1,7 +1,8 @@
-# Common exercises per collection: proposal (Sep 2026, not added yet)
+# Common exercises per collection (Sep 2026)
 
-For each collection: common exercises that reputable sources list for it and the library doesn't have yet (checked
-against every name and other name). Nothing here is in the library; this is a proposal to pick from.
+For each collection: common exercises that reputable sources list for it and the library didn't have (checked
+against every name and other name). **Added** (Sep 2026, `tools/variants/batch-3-yoga.cjs`, `batch-4-strength.cjs`,
+`batch-5-gentle.cjs`) are marked ✅; the rest are still a proposal.
 
 - **ready**: uses equipment the library already tracks (none, band, dumbbell, barbell, kettlebell, chair, bench,
   wall, step, towel, mat) and the figure can do it in place
@@ -15,11 +16,12 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 
 | Exercise | Status |
 |---|---|
-| Cobra Pose (Bhujangasana), Sphinx Pose | ready |
-| Low Lunge (Anjaneyasana), Crescent Lunge, Lizard Pose | ready |
-| Reverse Warrior, Humble Warrior, Goddess Pose | ready |
-| Happy Baby Pose, Garland Pose (Malasana), Puppy Pose, Thread the Needle | ready |
-| Fish Pose (Matsyasana), Reclined Bound Angle Pose, Supine Twist | ready |
+| Cobra Pose (Bhujangasana), Sphinx Pose | ✅ |
+| Low Lunge (Anjaneyasana), Crescent Lunge, Lizard Pose | ✅ |
+| Reverse Warrior, Humble Warrior, Goddess Pose | ✅ |
+| Happy Baby Pose, Garland Pose (Malasana), Puppy Pose | ✅ |
+| Thread the Needle | ready (the arm threads under the body: a twist that needs more work) |
+| Fish Pose (Matsyasana), Reclined Bound Angle Pose, Supine Twist | ✅ |
 | Supported versions of standing poses (Triangle, Half Moon, Pyramid with hands on blocks) | new equipment: **yoga block** |
 | Strap versions (Reclined Hand-to-Big-Toe Pose with a strap, Cow Face arms) | new equipment: **yoga strap** (drawn like the towel) |
 
@@ -28,8 +30,10 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 
 | Exercise | Status |
 |---|---|
-| Lateral Lunge, Split Squat, Bulgarian Split Squat (rear foot on a bench) | ready |
-| Pike Push-Up, Diamond Push-Up | ready |
+| Lateral Lunge, Split Squat | ✅ |
+| Bulgarian Split Squat (rear foot on a bench) | engine: resting the top of the foot on a raised surface |
+| Pike Push-Up | ✅ |
+| Diamond Push-Up | would count as a duplicate of Push-Up (hand placement doesn't change the joint angles enough) |
 | Walking Lunge | engine: travelling |
 | Burpee, Jump Squat | engine: jumping |
 | Pull-Up, Chin-Up | new equipment: **pull-up bar**; engine: hanging |
@@ -49,9 +53,11 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 
 | Exercise | Status |
 |---|---|
-| Hammer Curl, Front Raise, Arnold Press, Shrug, Dumbbell Chest Fly (bench), Skull Crusher (bench) | ready |
-| Front Squat (barbell), Hip Thrust (bench + barbell) | ready |
-| Renegade Row, Single-Leg Deadlift | ready |
+| Front Raise, Dumbbell Chest Fly (bench), Skull Crusher (bench) | ✅ |
+| Hammer Curl, Arnold Press | the figure has no forearm rotation: a Hammer Curl would be a duplicate of Dumbbell Curl |
+| Shrug | the figure has no shoulder blades |
+| Front Squat (barbell), Hip Thrust (bench + barbell) | ✅ |
+| Renegade Row, Single-Leg Romanian Deadlift | ✅ |
 | Turkish Get-Up | ready (many steps; a big one to animate) |
 | Farmer Carry | engine: travelling |
 | Weighted versions with a medicine ball (Russian Twist, slams) | new equipment: **medicine ball** (drawn like the kettlebell) |
@@ -61,8 +67,9 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 
 | Exercise | Status |
 |---|---|
-| Doorway Chest Stretch | ready (a door frame is a wall edge) |
-| Triceps Stretch (overhead), Figure-Four Stretch (lying), Butterfly Stretch, Lying Spinal Twist, Cobra Stretch | ready |
+| Doorway Chest Stretch | ✅ (two wall edges) |
+| Overhead Triceps Stretch, Figure-Four Stretch | ✅ |
+| Butterfly Stretch, Lying Spinal Twist, Cobra Stretch | the same as Bound Angle Pose, Supine Twist and Cobra Pose: other names, not new exercises |
 | Wrist flexor and extensor stretches | ready (the figure has no wrists: hands only; would need a hand joint) |
 | Foam rolling (calves, quads, upper back) | new equipment: **foam roller** |
 
@@ -80,8 +87,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 
 | Exercise | Status |
 |---|---|
-| Bicycle Crunch, Russian Twist, Hollow Hold, Heel Taps, Flutter Kicks, V-Up, Sit-Up | ready |
-| Mountain Climber | ready (fast, in place) |
+| Bicycle Crunch, Russian Twist, Hollow Hold, Heel Taps, Flutter Kicks, V-Up, Sit-Up | ✅ |
+| Mountain Climber | engine: the fast leg swap (the driving knee passes the floor at plank height) |
 | Pallof Press | new equipment: **door anchor** |
 | Stability-ball crunch, ball pass | new equipment: **stability ball** |
 
@@ -90,14 +97,15 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 
 | Exercise | Status |
 |---|---|
-| Seated Chest Stretch, Seated Upper-Body Twist (NHS), Arm Raises, Neck Rotation, Seated Knee Extension, Seated Leg Raise, Seated Punches | ready |
+| Seated Chest Stretch, Seated Upper-Body Twist, Seated Arm Raises, Seated Neck Rotation | ✅ |
+| Seated Knee Extension, Seated Leg Raise, Seated Punches | ready |
 
 ## Warm-up (2)
 ([dynamic warm-up exercises](https://www.garagegymreviews.com/best-warm-up-exercises))
 
 | Exercise | Status |
 |---|---|
-| Leg Swings (holding a wall), Inchworm, Torso Twists, Butt Kicks (marching version) | ready |
+| Leg Swings (holding a wall), Inchworm, Standing Torso Twists, Butt Kicks (in place) | ✅ |
 | Jumping Jacks, High Knees (running), Butt Kicks (running) | engine: jumping |
 | Walking Lunge | engine: travelling |
 
@@ -106,7 +114,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 
 | Exercise | Status |
 |---|---|
-| Standing on One Leg, Tandem Stance, Single-Leg Deadlift (no weight), Clock Reach | ready |
+| Single-Leg Stand, Tandem Stance, Clock Reach (arm version; the leg version is the Star Excursion) | ✅ |
+| Single-Leg Deadlift | ✅ as Single-Leg Romanian Deadlift (dumbbells), also in Balance |
 | Heel-to-Toe Walk, Side Stepping, Balance Walk | engine: travelling |
 
 ## Proposed equipment

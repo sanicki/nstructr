@@ -1,0 +1,65 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "wu-torso-twists",
+  "name": "Standing Torso Twists",
+  "otherNames": ["Torso Twists", "Trunk Rotations"],
+  "category": "Mobility",
+  "focus": "Spine",
+  "collections": ["Warm-up"],
+  "equipment": [],
+  "description": "Standing with feet shoulder-width apart and arms out at shoulder height, turn your upper body from side to side, hips facing forward.",
+  "source": {
+    "url": "https://www.healthline.com/health/exercise-fitness/dynamic-stretching",
+    "title": "Healthline: Dynamic stretching"
+  },
+  "setup": ["Stand with your feet shoulder-width apart, arms out to the sides at shoulder height."],
+  "cues": ["Hips stay facing forward.", "Turn smoothly, don't fling.", "Breathe."],
+  "prescription": {
+    "reps": "10 each side",
+    "note": "Move slowly and smoothly, within a comfortable range."
+  },
+  "keyframes": [
+    {
+      "name": "Turn left",
+      "cue": "Arms out, turn your upper body to the left.",
+      "camera": 0,
+      "durationMs": 1000,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [0, 0, 30],
+        "chest": [0, 0, 25],
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0],
+        "hipL": [0, 12, 0],
+        "hipR": [0, 12, 0]
+      }
+    },
+    {
+      "name": "Turn right",
+      "cue": "And to the right.",
+      "camera": 0,
+      "durationMs": 1000,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [0, 0, -30],
+        "chest": [0, 0, -25],
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0],
+        "hipL": [0, 12, 0],
+        "hipR": [0, 12, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "twist"
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-supine-twist",
+  "name": "Supine Twist",
+  "otherNames": ["Supta Matsyendrasana", "Reclined Spinal Twist", "Lying Spinal Twist"],
+  "category": "Twist",
+  "focus": "Spine and outer hip",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "Lying on your back, draw one knee across your body toward the floor while your shoulders stay down and your arms reach wide.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/reclining-twist/",
+    "title": "Yoga Journal: Reclined Twist"
+  },
+  "setup": ["Lie on your back and hug your right knee in."],
+  "cues": ["Both shoulders stay down.", "Let gravity bring the knee down.", "Breathe into the twist."],
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, feet flat, arms wide.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 90, 90],
+        "neck": [34, 0, 0],
+        "shoulderL": [0, 80, 0],
+        "shoulderR": [0, 80, 0],
+        "hipL": [45, 0, 0],
+        "kneeL": 90,
+        "ankleL": 45,
+        "hipR": [45, 0, 0],
+        "kneeR": 90,
+        "ankleR": 45
+      }
+    },
+    {
+      "name": "Supine Twist",
+      "cue": "Right knee across to the left, shoulders down.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "backL",
+      "pose": {
+        "root": [-135, 90, 90],
+        "torso": [0, 0, -45],
+        "neck": [34, 0, 0],
+        "shoulderL": [0, 80, 0],
+        "shoulderR": [0, 80, 0],
+        "hipR": [90, -40, 0],
+        "kneeR": 90
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

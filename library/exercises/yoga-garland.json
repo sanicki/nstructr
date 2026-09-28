@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-garland",
+  "name": "Garland Pose",
+  "otherNames": ["Malasana", "Yogi Squat", "Deep Squat"],
+  "category": "Hip opener",
+  "focus": "Hips, ankles and groin",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat"],
+  "description": "A deep squat with heels down and knees wide: palms together at your chest, elbows pressing the knees open.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/garland-pose/",
+    "title": "Yoga Journal: Garland Pose"
+  },
+  "setup": ["Stand with your feet a little wider than your hips, toes turned out."],
+  "cues": ["Heels down (a folded blanket under them helps).", "Chest long.", "Elbows press your knees open."],
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall, feet together.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Garland Pose",
+      "cue": "Squat deep, heels down, elbows inside your knees.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [30, 0, 0],
+        "shoulderL": [20, 10, 0],
+        "elbowL": 120,
+        "shoulderR": [20, 10, 0],
+        "elbowR": 120,
+        "hipL": [115, 30, 30],
+        "kneeL": 140,
+        "ankleL": -35,
+        "hipR": [115, 30, 30],
+        "kneeR": 140,
+        "ankleR": -35
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; come out of the pose if anything pinches."
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-split-squat",
+  "name": "Split Squat",
+  "otherNames": ["Static Lunge"],
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Bodyweight"],
+  "equipment": [],
+  "description": "A lunge with both feet staying put: in a staggered stance, bend both knees to lower straight down, then stand back up.",
+  "source": {
+    "url": "https://barbend.com/lunge-vs-split-squat/",
+    "title": "BarBend: Lunge vs. split squat"
+  },
+  "setup": ["Step one foot forward and the other back, both feet hip-width apart.", "Hands on your hips."],
+  "cues": ["Lower straight down, not forward.", "Front knee over the ankle.", "Chest tall."],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Staggered stance",
+      "cue": "Right foot forward, left foot back on its ball.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "hipR": [25, 0, 0],
+        "hipL": [-25, 0, 0],
+        "kneeL": 10,
+        "ankleL": 20,
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Bend both knees, back knee toward the floor.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "hipR": [85, 0, 0],
+        "kneeR": 90,
+        "ankleR": -5,
+        "hipL": [-5, 0, 0],
+        "kneeL": 95,
+        "ankleL": 40,
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4
+      }
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}
