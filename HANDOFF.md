@@ -253,6 +253,12 @@ The schemas in `schema/` are authoritative for structure. This section is the me
 | `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm. |
 | `barbell` | `from`, `to` (hands) | Projected in 3D: the end plate from the side, the full bar from the front. |
 
+`equipment` must match the props (build check 2d): every listed towel, wall, door anchor, chair, bench, step, band,
+dumbbell, barbell or kettlebell is drawn, every drawn one is listed, and each item is spelled one way across the
+library. Optional aids ("a folded towel under your knee if you like") go in the setup text, not in `equipment`. The
+app matches equipment without case (`equipKey`, `equipName` in `src/app/1-engine.js`): an import's "resistance band"
+takes the library's spelling, and the Exercises filter merges spellings saved before.
+
 Defaults written by the (retired) generator and still expected: `measure`, `holdStep`, `defaults`, `repName`,
 phases. When adding exercises by hand, set them explicitly (the build doesn't infer them). Rule the generator
 used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the hold is part of each rep (e.g.

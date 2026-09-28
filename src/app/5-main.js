@@ -62,7 +62,7 @@ function editPose(change) {
 const lines = v => v.split('\n').map(x => x.trim()).filter(Boolean);
 const TEXT_FIELDS = [
   ['name', 'Name', 'input'], ['otherNames', 'Other names (separate with commas)', 'input', v => v.split(',').map(x => x.trim()).filter(Boolean), v => (v || []).join(', ')], ['focus', 'Focus', 'input'], ['category', 'Category', 'input'],
-  ['equipment', 'Equipment (separate with commas)', 'input', v => v.split(',').map(x => x.trim()).filter(Boolean), v => (v || []).join(', ')],
+  ['equipment', 'Equipment (separate with commas)', 'input', v => equipNames(v.split(',')), v => (v || []).join(', ')],
   ['description', 'Description', 'textarea'],
   ['setup', 'Setup (one per line)', 'textarea', lines, v => (v || []).join('\n')],
   ['cues', 'Form cues (one per line)', 'textarea', lines, v => (v || []).join('\n')],
