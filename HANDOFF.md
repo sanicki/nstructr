@@ -23,22 +23,22 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **137 exercises, 1 workout**.
+Library today: **155 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 52 | Yoga Journal pose list |
-| Bodyweight | 16 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell… |
-| Resistance band | 15 | 10 BHF standing exercises + seated row + routine additions |
-| Free weights | 13 | dumbbell, kettlebell, barbell |
+| Bodyweight | 18 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning… |
+| Resistance band | 20 | 10 BHF standing exercises + seated row + routine additions + banded versions (bridge, clamshell, kickback, row, triceps kickback) |
+| Free weights | 23 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
 | Stretches | 11 | Mayo Clinic basic stretches + routine additions |
 | Pilates | 12 | classic mat exercises (Leg Circles: Side and Direction, with a compass) |
 | Core | 7 | planks, bird dog, dead bug, crunch… |
-| Chair-based | 7 | NHS chair/sitting exercises, chair dip, chair push-up, heels-on-chair bridge |
+| Chair-based | 8 | NHS chair/sitting exercises, chair dip, chair push-up, feet-elevated bridge, chair-supported calf raise |
 | Warm-up | 2 | arm circles, hip circles (both have directions) |
 | Balance | 2 | Star Excursion (8-point and 4-point) |
 
-71 are rep-based, 65 timed; 49 are two-sided (`bilateral`); 2 have `direction`.
+90 are rep-based, 65 timed; 54 are two-sided (`bilateral`); 3 have `direction`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
 

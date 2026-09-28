@@ -1,0 +1,75 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-squat",
+  "name": "Dumbbell Squat",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "A squat holding a dumbbell in each hand at your sides: sit your hips back and down, then stand up tall.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/equipment/dumbbells/",
+    "title": "ACE Exercise Library: dumbbell exercises"
+  },
+  "setup": ["Stand with feet hip-width apart.", "Hold a dumbbell in each hand, arms hanging at your sides, palms facing in."],
+  "cues": ["Sit your hips back and bend your knees.", "Chest up, arms hang straight.", "Push through your heels to stand."],
+  "prescription": {
+    "reps": "8–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Dumbbells at your sides.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 8, 0],
+        "shoulderR": [0, 8, 0]
+      }
+    },
+    {
+      "name": "Squat down",
+      "cue": "Sit back and down, arms hanging.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [38, 0, 0],
+        "shoulderL": [38, 8, 0],
+        "shoulderR": [38, 8, 0],
+        "hipL": [88, 0, 0],
+        "kneeL": 102,
+        "ankleL": -14,
+        "hipR": [88, 0, 0],
+        "kneeR": 102,
+        "ankleR": -14
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "fb"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "fb"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-triceps-kickback",
+  "name": "Resistance Band Triceps Kickback",
+  "otherNames": ["Band Triceps Kickback"],
+  "category": "Strength",
+  "focus": "Backs of the arms",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "Standing on a band and hinged forward, elbows tucked at your sides, straighten your arms back against the band, then bend them again.",
+  "source": {
+    "url": "https://workoutlabs.com/exercise-guide/resistance-band-tricep-kickbacks/",
+    "title": "WorkoutLabs: Resistance Band Tricep Kickbacks"
+  },
+  "setup": ["Stand on the middle of the band, holding an end in each hand.", "Hinge forward, elbows bent and tucked to your sides."],
+  "cues": ["Upper arms stay still.", "Straighten your arms back.", "Bend them slowly."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Pick a band you can straighten your arms against for every rep. About 2 seconds each way."
+  },
+  "keyframes": [
+    {
+      "name": "Elbows bent",
+      "cue": "Upper arms by your sides, standing on the band.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [58, 0, 0],
+        "elbowL": 60,
+        "elbowR": 60,
+        "hipL": [14, 0, 0],
+        "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10
+      }
+    },
+    {
+      "name": "Kick back",
+      "cue": "Straighten your arms behind you.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [58, 0, 0],
+        "hipL": [14, 0, 0],
+        "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "footL",
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": "footR",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

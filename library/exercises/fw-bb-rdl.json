@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-bb-rdl",
+  "name": "Barbell Romanian Deadlift",
+  "otherNames": ["Barbell RDL"],
+  "category": "Strength",
+  "focus": "Hamstrings and glutes",
+  "collections": ["Free weights"],
+  "equipment": ["Barbell"],
+  "description": "A hip hinge with a barbell held in front of your thighs: push your hips back with soft knees until you feel the hamstrings stretch, then stand up.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/romanian-deadlift-barbell",
+    "title": "NASM Exercise Library: Romanian Deadlift (Barbell)"
+  },
+  "setup": ["Stand with feet hip-width apart, the barbell held at your thighs, hands just outside your legs."],
+  "cues": ["Push your hips back, knees soft.", "Keep the bar close to your legs.", "Squeeze your glutes to stand."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Bar in front of your thighs.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0]
+      }
+    },
+    {
+      "name": "Hinge",
+      "cue": "Push your hips back and slide the bar down your legs.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [72, 0, 0],
+        "shoulderL": [80, 0, 0],
+        "shoulderR": [80, 0, 0],
+        "hipL": [18, 0, 0],
+        "kneeL": 22,
+        "ankleL": -4,
+        "hipR": [18, 0, 0],
+        "kneeR": 22,
+        "ankleR": -4
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "barbell",
+      "from": "handL",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

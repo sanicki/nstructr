@@ -1,0 +1,134 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-step-up",
+  "name": "Dumbbell Step-Up",
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Free weights"],
+  "equipment": ["Step", "Dumbbells"],
+  "description": "A step-up holding a dumbbell in each hand: step up onto a sturdy step, stand tall on it, then step back down.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/dumbbell-step-up.html",
+    "title": "Muscle & Strength: Dumbbell Step Up"
+  },
+  "setup": ["Stand facing a sturdy step or low box.", "Hold a dumbbell in each hand at your sides."],
+  "cues": ["Whole foot on the step.", "Push through that heel to stand up.", "Step down with control."],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Stand in front of the step",
+      "cue": "Dumbbells at your sides.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0]
+      }
+    },
+    {
+      "name": "Right foot up",
+      "cue": "Place your right foot flat on the step.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0],
+        "hipR": [49.6, 0, 0],
+        "kneeR": 62,
+        "ankleR": -12.4
+      }
+    },
+    {
+      "name": "Step up",
+      "cue": "Push up and bring your left foot onto the step.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 6, 0]
+      }
+    },
+    {
+      "name": "Right foot down",
+      "cue": "Step your right foot back down to the floor.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "pose": {
+        "torso": [14, 0, 0],
+        "shoulderL": [14, 6, 0],
+        "shoulderR": [14, 6, 0],
+        "hipL": [50, 0, 0],
+        "kneeL": 88,
+        "ankleL": -38,
+        "hipR": [10.1, 0, 0],
+        "kneeR": 44.9,
+        "ankleR": -34.8
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "step",
+      "z": 82
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "fb"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "fb"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right foot leads",
+      "R": "Left foot leads"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

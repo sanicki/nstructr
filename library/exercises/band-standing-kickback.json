@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-standing-kickback",
+  "name": "Banded Standing Kickback",
+  "otherNames": ["Resistance Band Glute Kickback", "Banded Standing Hip Extension"],
+  "category": "Strength",
+  "focus": "Glutes and hamstrings",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band", "Chair"],
+  "description": "Holding a chair for balance with a loop band around your ankles, kick one straight leg back against the band, then bring it back.",
+  "source": {
+    "url": "https://fitbod.me/blog/banded-kickback-variations/",
+    "title": "Fitbod: Banded kickback variations"
+  },
+  "setup": ["Stand behind a sturdy chair, hands on its back.", "Put a loop band around your ankles."],
+  "cues": ["Kick the leg straight back.", "Squeeze your glute, don't arch your back.", "Bring it back slowly."],
+  "prescription": {
+    "reps": "10–15 each leg",
+    "note": "A light loop band. Move slowly and keep your back still."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Hands on the chair, band around your ankles.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ],
+      "pose": {
+        "shoulderL": [9.5, 0, 0],
+        "elbowL": 33.1,
+        "shoulderR": [9.5, 0, 0],
+        "elbowR": 33.1
+      }
+    },
+    {
+      "name": "Kick back",
+      "cue": "Kick your right leg straight back.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 3000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ],
+      "pose": {
+        "shoulderL": [9.5, 0, 0],
+        "elbowL": 33.1,
+        "shoulderR": [9.5, 0, 0],
+        "elbowR": 33.1,
+        "hipR": [-28, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": 78
+    },
+    {
+      "type": "band",
+      "from": "ankleL",
+      "to": "ankleR"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}
