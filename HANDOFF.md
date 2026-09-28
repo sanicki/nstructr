@@ -663,6 +663,7 @@ must not fill with **duplicates**, and a known exercise under another name shoul
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
 | `nstructr-loop-v1` | `"off"`: the exercise page plays once through (setup, one rep, finish), then stops (overlay Loop toggle) |
 | `nstructr-exmute-v1` | `"on"`: the exercise page's spoken cues are muted (overlay Mute toggle; the voice also needs Sound = Voice/Coach) |
+| `nstructr-group-collections-v1` | `"off"`: the Exercises tab lists All collections as one A–Z list instead of grouped by collection (the tab's own switch) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 20, 0–300; Settings > Workouts). Workout items' `rest` is ignored |
 | `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 10, 0–300 in 1 s steps; Settings > Workouts). Workout files' `restBetween` is ignored |
