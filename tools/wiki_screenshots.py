@@ -105,6 +105,14 @@ async def main():
         await pg.evaluate("$('#aiAnswer').value='{ \"version\": 1, \"id\": \"u-leg-circles\", \"name\": \"Leg Circles\", … }'; $('#aiImport').scrollIntoView({block:'end'})")
         await shot(pg, 'create-with-ai-answer')
         await pg.evaluate("$('#aiDialog').close()")
+        # the library check after importing an AI workout
+        await pg.evaluate("""(() => { const hip = { ...clone(findInDb('bw-glute-bridge')), id: 'u-hip-raise', name: 'Hip Raise' }; delete hip.collections; delete hip.otherNames;
+          const wk = { version: 2, name: 'From a video', blocks: [{ name: 'Main', items: [{ ex: 'bw-squat', calledInSource: 'Squats', reps: 10 },
+            { ex: 'yoga-bridge', calledInSource: 'Shoulder Bridge', seconds: 30 }, { ex: 'u-hip-raise', calledInSource: 'Hip Raise', reps: 12 }] }] };
+          importAndShow([[JSON.stringify({ format: 'nstructr/workout', version: 2, workouts: [wk], exercises: [hip] }), 'AI']]); })()""")
+        await pg.wait_for_timeout(500); await shot(pg, 'import-check')
+        await pg.evaluate("""(() => { $('#checkDialog').close(); const w = WK.list.find(w => w.name === 'From a video'); WK.list = WK.list.filter(x => x !== w); saveWorkouts();
+          S.lib.items = S.lib.items.filter(x => x.id !== 'u-hip-raise'); saveLib(); })()""")
         # Share
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="legs"]'); await pg.wait_for_timeout(500); await shot(pg, 'share')

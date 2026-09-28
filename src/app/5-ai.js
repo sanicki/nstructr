@@ -59,8 +59,9 @@ WHICH FILE
 WORKOUT
 {"version":2,"id":"kebab-case-name","name":"...","description":"one sentence","blocks":[
   {"name":"Warm-up","rounds":1,"roundRest":30,"items":[
-    {"ex":"<exercise id>","sets":1,"reps":10,"sides":"both","dir":"both","tempo":1},
-    {"ex":"<exercise id>","seconds":30,"sides":"both"}]}]}
+    {"ex":"<exercise id>","calledInSource":"Hip Raise","sets":1,"reps":10,"sides":"both","dir":"both","tempo":1},
+    {"ex":"<exercise id>","calledInSource":"...","seconds":30,"sides":"both"}]}]}
+- "calledInSource" on every item: the name the source uses for that exercise, as it says it (any language). When you use a LIBRARY id for an exercise the source calls something else, the app suggests the source's name as another name for it.
 - Rep-based exercises get "reps"; time-based ones get "seconds". Use the routine's numbers; for a range, use the lower end.
 - "sides" (only for exercises marked sides): "L", "R", "both" (one side then the other) or "alternate". Reps count per side.
 - "dir" (only for exercises marked dir): "A", "B", "both" or "alternate".
