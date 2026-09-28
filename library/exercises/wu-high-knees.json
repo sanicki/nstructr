@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "wu-high-knees",
+  "name": "High Knees",
+  "otherNames": ["High Knee Run", "Running in Place with High Knees"],
+  "category": "Cardio",
+  "focus": "Hips, legs and core (cardio)",
+  "collections": ["Warm-up"],
+  "equipment": [],
+  "description": "Run in place, driving each knee up to about hip height in turn and pumping the opposite arm, landing lightly on the balls of your feet.",
+  "source": {
+    "url": "https://www.healthline.com/health/fitness/high-knees-benefits",
+    "title": "Healthline: High Knees, benefits and how-to"
+  },
+  "setup": ["Stand tall with your feet hip-width apart.", "Clear, non-slip floor."],
+  "cues": ["Knees up to hip height.", "Opposite arm, opposite knee.", "Land lightly."],
+  "prescription": {
+    "reps": "20–40 each leg",
+    "note": "Stay on the balls of your feet and pump your arms. For less impact, march with high knees instead of running."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet hip-width apart, arms bent at your sides.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [0, 0, 0],
+        "elbowR": 90
+      }
+    },
+    {
+      "name": "Right knee up",
+      "cue": "Drive your right knee up to hip height.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "lift": 6,
+      "pose": {
+        "hipR": [90, 0, 0],
+        "kneeR": 100,
+        "ankleL": 15,
+        "shoulderL": [55, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-30, 0, 0],
+        "elbowR": 90
+      }
+    },
+    {
+      "name": "Left knee up",
+      "cue": "Now the left knee, opposite arm forward.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "anchorX": 24,
+      "lift": 6,
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 100,
+        "ankleR": 15,
+        "shoulderR": [55, 0, 0],
+        "elbowR": 90,
+        "shoulderL": [-30, 0, 0],
+        "elbowL": 90
+      }
+    },
+    {
+      "name": "Stand tall",
+      "cue": "Slow down and stand.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 20
+  }
+}

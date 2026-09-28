@@ -35,7 +35,8 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Pike Push-Up | ✅ |
 | Diamond Push-Up | would count as a duplicate of Push-Up (hand placement doesn't change the joint angles enough) |
 | Walking Lunge | engine: travelling |
-| Burpee, Jump Squat | engine: jumping |
+| Jump Squat | ✅ (`tools/variants/batch-9-jumping.cjs`: the engine's `lift`) |
+| Burpee | jumping works now; a later batch (squat → plank → squat → jump: many contacts) |
 | Pull-Up, Chin-Up | new equipment: **pull-up bar**; engine: hanging |
 | Inverted Row | new equipment: **pull-up bar** (low) or a sturdy table |
 
@@ -107,7 +108,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Exercise | Status |
 |---|---|
 | Leg Swings (holding a wall), Inchworm, Standing Torso Twists, Butt Kicks (in place) | ✅ |
-| Jumping Jacks, High Knees (running), Butt Kicks (running) | engine: jumping |
+| Jumping Jacks, High Knees | ✅ (batch 9, jumping) |
+| Butt Kicks (running) | jumping works now; the in-place version is in the library |
 | Walking Lunge | engine: travelling |
 
 ## Balance (4)
@@ -133,8 +135,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | **Pilates ring** | ring presses and squeezes | a ring between the hands or knees |
 
 ## Engine work this would need
-- **Jumping** (both feet off the floor for a moment): jumping jacks, jump squats, burpees, high knees. Today the checks
-  treat a figure with nothing on the floor as floating.
+- **Jumping** ✅ (Sep 2026): a step's `lift` raises the whole figure, anchor or not, and the checks count it as meant.
+  Jump Squat, Jumping Jacks, High Knees; Burpee next.
 - **Travelling** (the figure moves across the floor from rep to rep): walking lunges, band walks, heel-to-toe walk,
   farmer carry. Could be shown in place (each rep returns to the start), which the sources accept for home use.
 - **Hanging** from a bar: pull-ups, chin-ups.

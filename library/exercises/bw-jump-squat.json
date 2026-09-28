@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-jump-squat",
+  "name": "Jump Squat",
+  "otherNames": ["Squat Jump", "Squat Jumps"],
+  "category": "Strength",
+  "focus": "Thighs, glutes and calves (power)",
+  "collections": ["Bodyweight", "Warm-up"],
+  "equipment": [],
+  "description": "From standing, squat down with your arms swinging back, then swing them up and jump as high as you can, landing softly back into the squat.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/116/squat-jumps/",
+    "title": "ACE Exercise Library: Squat Jumps"
+  },
+  "setup": ["Stand with your feet shoulder-width apart, arms by your sides.", "Clear space above and around you; a firm, non-slip floor."],
+  "cues": ["Knees in line with your toes.", "Land quietly, knees soft.", "Straight into the next squat."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Land softly on the balls of your feet, then heels, with knees bent; rest if your landings get heavy. Learn the plain squat first."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet shoulder-width apart, arms by your sides.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 500,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Squat down",
+      "cue": "Squat down and swing your arms back.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [38, 0, 0],
+        "hipL": [88, 0, 0],
+        "kneeL": 102,
+        "ankleL": -14,
+        "hipR": [88, 0, 0],
+        "kneeR": 102,
+        "ankleR": -14,
+        "shoulderL": [5, 0, 0],
+        "shoulderR": [5, 0, 0]
+      }
+    },
+    {
+      "name": "Jump",
+      "cue": "Swing your arms up and jump.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "lift": 45,
+      "quiet": true,
+      "pose": {
+        "torso": [5, 0, 0],
+        "shoulderL": [165, 0, 0],
+        "shoulderR": [165, 0, 0],
+        "ankleL": 35,
+        "ankleR": 35
+      }
+    },
+    {
+      "name": "Land softly",
+      "cue": "Land softly, knees bent.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "quiet": true,
+      "pose": {
+        "torso": [18, 0, 0],
+        "shoulderL": [40, 0, 0],
+        "shoulderR": [40, 0, 0],
+        "hipL": [40, 0, 0],
+        "kneeL": 50,
+        "ankleL": -10,
+        "hipR": [40, 0, 0],
+        "kneeR": 50,
+        "ankleR": -10
+      }
+    },
+    {
+      "name": "Stand tall",
+      "cue": "Stand up and breathe.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 500,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

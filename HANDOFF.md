@@ -23,20 +23,20 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **226 exercises, 1 workout**.
+Library today: **229 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 75 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) |
 | Free weights | 30 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
-| Bodyweight | 21 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning… |
+| Bodyweight | 23 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat… |
 | Resistance band | 26 | 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
 | Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
 | Stretches | 17 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway |
 | Core | 16 | planks, bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 23 | classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
 | Balance | 8 | Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, clock reach, single-leg RDL |
-| Warm-up | 6 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks |
+| Warm-up | 9 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat |
 
 115 are rep-based, 93 timed; 74 are two-sided (`bilateral`); 3 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
@@ -231,7 +231,7 @@ The schemas in `schema/` are authoritative for structure. This section is the me
 | `phase` | `"setup"` (played once first), `"rep"` (one rep; for timed exercises the hold), `"finish"` (once at the end). No phases = the whole loop is one rep. |
 | `quiet` | Coach doesn't read this step (in-between points of a circle). |
 | `anchor`, `anchorX`, `anchorZ` | Point pinned to the floor/surface at world (anchorX, anchorZ) (sideways, forward; default 0, 0). Without an anchor the pelvis is there and the lowest point rests on the floor. For an exercise whose camera turns, put the point where it looks the same from both (the Star Excursions pin the standing foot at x −40, z 40). |
-| `lift` | Raise the whole figure (airborne); rarely used, untested for real jumps. |
+| `lift` | Airborne (a jump): the whole figure that far above where it would rest, anchor or not; the move into and out of it rises and lands smoothly. The checks count it as meant, not floating. Short steps (300–400 ms): Jump Squat 45, Jumping Jacks 20, High Knees 6 (a hop as the standing foot swaps, with `anchorX` keeping the pelvis still). |
 | `plant` | `["L","R"]`: feet kept flat (ankle computed). |
 | `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). `adjust` is a hinge, or a ball joint's number: `"hipR"` = its forward number, `"hipR.side"`, `"hipR.turn"`. |
 | `reach` | `[{hand, to, dx?, dy?, dz?}]`: two-bone arm IK (3D) to put a hand on a body point (plus the offset: sideways, up, forward), `"wall"` or `"chair"` (the chair back, at the hand's own shoulder width). The elbow bends the way it can, in the plane the arm's turn gives it. |

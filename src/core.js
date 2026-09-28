@@ -206,6 +206,7 @@ function place(pose, seg, rule, keepOffFloor = true) {
       for (const k of CONTACT_POINTS) pen = Math.max(pen, supportY(P[k].x + pos.x, P[k].z + pos.z) - (P[k].y + pos.y));
       pos.y += pen;
     }
+    pos.y += num(rule.lift);     // airborne (a jump): the whole figure that far above where it would rest
     return pos;
   }
   const x = num(rule.x), z = num(rule.z);
