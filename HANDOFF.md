@@ -528,7 +528,10 @@ must not fill with **duplicates**, and a known exercise under another name shoul
   closest library exercise with the same equipment, else from its equipment. Then the build's gates (schema,
   animation checks, range of motion, duplicates, a name another exercise has) and `build.mjs --check-only` on the
   whole library. Result: a comment on the issue, and on success a pull request from `submission/issue-<n>`
-  ("Closes #n"; editing the issue re-runs it and force-pushes that branch). A pull request opened with the workflow's
+  ("Closes #n"; editing the issue re-runs it and force-pushes that branch). The PR body includes the research
+  checklist (`tools/research.cjs report --md`: names, equipment versions in the library, headings with none) to do
+  before merging (`.claude/skills/exercise-research/SKILL.md`). A copy of a library exercise brings that exercise's
+  other names: for a new exercise they're left out (with a note), not refused. A pull request opened with the workflow's
   token doesn't start other workflows, which is why the check runs inside it. One-time setup: Settings → Actions →
   General → "Allow GitHub Actions to create and approve pull requests".
 - Not merged: Glute Bridge and Bridge Pose move the same, but one counts reps and the other is a hold, and an

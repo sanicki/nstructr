@@ -9,6 +9,9 @@ doesn't count). "Established" means described by a reputable source under that n
   animation checks, the range of motion and the duplicate check)
 - — nothing established found for the other equipment
 
+For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.md` (`node tools/research.cjs report
+<id>` lists its names, versions in the library and the equipment with none yet; submission PRs include that list).
+
 ## Strength: legs and hips
 
 | Library exercise | Equivalents |
