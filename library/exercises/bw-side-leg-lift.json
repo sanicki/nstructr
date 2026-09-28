@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bw-side-leg-lift",
   "name": "Standing Side Leg Lift",
+  "otherNames": ["Standing Side Leg Raise", "Standing Hip Abduction"],
   "category": "Strength",
   "focus": "Outer hips",
   "collections": ["Bodyweight"],

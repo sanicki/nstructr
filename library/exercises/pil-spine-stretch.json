@@ -3,6 +3,7 @@
   "version": 2,
   "id": "pil-spine-stretch",
   "name": "Spine Stretch Forward",
+  "otherNames": ["Spine Stretch"],
   "category": "Pilates",
   "focus": "Spine",
   "collections": ["Pilates"],

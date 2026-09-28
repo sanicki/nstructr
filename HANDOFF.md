@@ -197,6 +197,9 @@ The schemas in `schema/` are authoritative for structure. This section is the me
   "id": "bw-reverse-lunge",            // kebab-case, = file name; users' own start with "u-"
   "name": "Reverse Lunge",
   "otherNames": ["…"],                 // other names it's known by (Sanskrit, other languages); the first is shown under the name
+                                       // naming (Sep 2026 review): "name" is the most common name (Plank, Downward Dog,
+                                       // Chaturanga, Deadlift); the formal or older one is another name; yoga lists
+                                       // its Sanskrit name first; no name belongs to two exercises
   "collections": ["Bodyweight"],       // library only: where the Exercises tab shows it (can be several); users' own have none
   "category": "Strength", "focus": "Thighs and glutes",
   "equipment": ["Wall"],               // free text, used for filters and the "You'll need" list
@@ -419,7 +422,7 @@ representations that rotate the short, natural way) over adding a known issue; i
   coach/spotter notes on barbell lifts) and shown on the workout card (when expanded) and in the workout editor.
 
 ### 8.2 Reps
-- One loop of an exercise's rep steps is one rep. Nested reps (Wall Sit + Pull-Apart) are modelled with
+- One loop of an exercise's rep steps is one rep. Nested reps (Wall Sit with Band Pull-Apart) are modelled with
   `phase`: setup once (slide down), rep = one pull-apart, finish once (stand up); the wall sit lasts as long as
   the pull-aparts take and never resets.
 - Single-Leg Stretch: 1 rep = left + right. Arm Circles: 1 rep = one full circle; backward is generated.

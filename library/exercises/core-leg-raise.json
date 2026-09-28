@@ -3,6 +3,7 @@
   "version": 2,
   "id": "core-leg-raise",
   "name": "Lying Leg Raise",
+  "otherNames": ["Leg Raise", "Floor Leg Raise"],
   "category": "Core",
   "focus": "Lower abdominals",
   "collections": ["Core"],

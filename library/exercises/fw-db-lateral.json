@@ -3,6 +3,7 @@
   "version": 2,
   "id": "fw-db-lateral",
   "name": "Dumbbell Lateral Raise",
+  "otherNames": ["Lateral Raise", "Side Lateral Raise"],
   "category": "Strength",
   "focus": "Shoulders",
   "collections": ["Free weights"],

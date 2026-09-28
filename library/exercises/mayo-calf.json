@@ -3,6 +3,7 @@
   "version": 2,
   "id": "mayo-calf",
   "name": "Calf Stretch",
+  "otherNames": ["Standing Calf Stretch", "Wall Calf Stretch"],
   "category": "Stretch",
   "focus": "Calves",
   "collections": ["Stretches"],

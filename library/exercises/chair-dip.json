@@ -3,6 +3,7 @@
   "version": 2,
   "id": "chair-dip",
   "name": "Chair Dip",
+  "otherNames": ["Chair Triceps Dip"],
   "category": "Strength",
   "focus": "Backs of the arms",
   "collections": ["Chair-based"],

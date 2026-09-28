@@ -3,6 +3,7 @@
   "version": 2,
   "id": "fw-db-row",
   "name": "Dumbbell Bent-Over Row",
+  "otherNames": ["Dumbbell Row"],
   "category": "Strength",
   "focus": "Upper back",
   "collections": ["Free weights"],

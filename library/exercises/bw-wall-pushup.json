@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bw-wall-pushup",
   "name": "Wall Push-Up",
+  "otherNames": ["Wall Press-Up"],
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
   "collections": ["Bodyweight"],

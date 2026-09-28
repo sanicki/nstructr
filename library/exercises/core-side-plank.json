@@ -3,6 +3,7 @@
   "version": 2,
   "id": "core-side-plank",
   "name": "Forearm Side Plank",
+  "otherNames": ["Elbow Side Plank"],
   "category": "Core",
   "focus": "Side of the core",
   "collections": ["Core"],

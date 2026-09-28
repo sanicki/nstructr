@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bw-wall-sit",
   "name": "Wall Sit",
+  "otherNames": ["Wall Squat"],
   "category": "Strength",
   "focus": "Thighs",
   "collections": ["Bodyweight"],

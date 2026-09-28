@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bhf-leg-press",
   "name": "Standing Band Leg Press",
+  "otherNames": ["Band Leg Press"],
   "category": "Strength",
   "focus": "Legs",
   "collections": ["Resistance band"],

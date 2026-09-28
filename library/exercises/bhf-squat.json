@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bhf-squat",
   "name": "Band Squat",
+  "otherNames": ["Resistance Band Squat", "Banded Squat"],
   "category": "Strength",
   "focus": "Legs",
   "collections": ["Resistance band"],

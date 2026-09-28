@@ -3,6 +3,7 @@
   "version": 2,
   "id": "bhf-chest-press",
   "name": "Band Chest Press",
+  "otherNames": ["Resistance Band Chest Press"],
   "category": "Strength",
   "focus": "Chest",
   "collections": ["Resistance band"],

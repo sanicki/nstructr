@@ -3,6 +3,7 @@
   "version": 2,
   "id": "chair-mini-squat",
   "name": "Mini-Squat with Chair",
+  "otherNames": ["Chair-Assisted Squat"],
   "category": "Strength",
   "focus": "Thighs and glutes",
   "collections": ["Chair-based"],

@@ -3,6 +3,7 @@
   "version": 2,
   "id": "fw-db-kickback",
   "name": "Dumbbell Triceps Kickback",
+  "otherNames": ["Triceps Kickback"],
   "category": "Strength",
   "focus": "Backs of the arms",
   "collections": ["Free weights"],
