@@ -1,0 +1,69 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "str-triceps-stretch",
+  "name": "Overhead Triceps Stretch",
+  "otherNames": ["Triceps Stretch"],
+  "category": "Stretch",
+  "focus": "Triceps and shoulders",
+  "collections": ["Stretches"],
+  "equipment": [],
+  "description": "Reach one arm up, bend the elbow so the hand drops down your back, and use the other hand on the elbow to ease the stretch deeper.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/174/overhead-triceps-stretch/",
+    "title": "ACE Exercise Library: Overhead Triceps Stretch"
+  },
+  "setup": ["Stand tall, shoulders down and back."],
+  "cues": ["Elbow points up.", "Light pressure only.", "Keep your head up."],
+  "prescription": {
+    "reps": "hold 20 seconds",
+    "note": "Ease in until you feel a gentle stretch; no bouncing."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet hip-width apart.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Overhead Triceps Stretch",
+      "cue": "Right hand down your back, left hand on your right elbow.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "elbowR"
+        }
+      ],
+      "pose": {
+        "neck": [10, 0, 0],
+        "shoulderR": [165, 10, 0],
+        "elbowR": 150,
+        "shoulderL": [150, -30, 0],
+        "elbowL": 110
+      }
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 20
+  }
+}

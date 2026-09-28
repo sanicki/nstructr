@@ -1,0 +1,108 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-chest-stretch",
+  "name": "Seated Chest Stretch",
+  "otherNames": ["Chair Chest Stretch"],
+  "category": "Stretch",
+  "focus": "Chest",
+  "collections": ["Chair-based", "Stretches"],
+  "equipment": ["Chair"],
+  "description": "Sitting tall on a chair, draw your arms back and push your chest forward and up until you feel a stretch across the chest.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
+    "title": "NHS: Sitting exercises"
+  },
+  "setup": ["Sit upright, away from the back of a sturdy chair, feet flat."],
+  "cues": ["Chest forward and up.", "Shoulders down, away from your ears.", "Breathe easily."],
+  "prescription": {
+    "reps": "hold 10 seconds",
+    "note": "Hold 5 to 10 seconds, 3 to 5 times."
+  },
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Sit upright, away from the chair back.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Seated Chest Stretch",
+      "cue": "Arms back, push your chest forward and up.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "chest": [-10, 0, 0],
+        "neck": [-8, 0, 0],
+        "shoulderL": [-35, 25, 0],
+        "elbowL": 15,
+        "shoulderR": [-35, 25, 0],
+        "elbowR": 15
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 10
+  },
+  "holdStep": 1
+}

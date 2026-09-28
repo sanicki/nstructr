@@ -1,0 +1,82 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "str-doorway-chest-stretch",
+  "name": "Doorway Chest Stretch",
+  "otherNames": ["Doorway Pec Stretch"],
+  "category": "Stretch",
+  "focus": "Chest and front of the shoulders",
+  "collections": ["Stretches"],
+  "equipment": ["Wall"],
+  "description": "Standing in a doorway with a forearm on each side of the frame, step one foot through and lean forward until you feel a stretch across the chest.",
+  "source": {
+    "url": "https://www.hingehealth.com/resources/articles/sitting-stretches/",
+    "title": "Hinge Health: Stretches to do after sitting all day"
+  },
+  "setup": ["Stand in a doorway, elbows bent and at about chest height, a forearm on each side of the frame."],
+  "cues": ["Chest leads, not your chin.", "Shoulders down.", "Gentle: no pinching at the front of the shoulder."],
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Ease in until you feel a gentle stretch; no bouncing."
+  },
+  "keyframes": [
+    {
+      "name": "Forearms on the frame",
+      "cue": "Stand in a doorway, forearms on each side, elbows at chest height.",
+      "camera": 45,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 90, 90],
+        "elbowL": 90,
+        "shoulderR": [0, 90, 90],
+        "elbowR": 90
+      }
+    },
+    {
+      "name": "Doorway Chest Stretch",
+      "cue": "Step one foot through and lean your chest forward.",
+      "camera": 45,
+      "durationMs": 1500,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [8, 0, 0],
+        "shoulderL": [-20, 85, 90],
+        "elbowL": 80,
+        "shoulderR": [-20, 85, 90],
+        "elbowR": 80,
+        "hipR": [25, 0, 0],
+        "kneeR": 20,
+        "ankleR": -5,
+        "hipL": [-10, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "elbowR",
+      "keyframe": 0,
+      "offset": 6,
+      "beside": true
+    },
+    {
+      "type": "wall",
+      "at": "elbowL",
+      "keyframe": 0,
+      "offset": 6,
+      "beside": true
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  }
+}

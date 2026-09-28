@@ -1,0 +1,69 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bal-single-leg-stand",
+  "name": "Single-Leg Stand",
+  "otherNames": ["Standing on One Leg", "One-Leg Stand"],
+  "category": "Balance",
+  "focus": "Balance and ankles",
+  "collections": ["Balance"],
+  "equipment": [],
+  "description": "Stand on one foot with the other lifted a little off the floor, and hold steady.",
+  "source": {
+    "url": "https://go4life.nia.nih.gov/sample_workout/3-balance-exercises-older-adults",
+    "title": "NIA Go4Life: 3 balance exercises for older adults"
+  },
+  "setup": ["Stand tall near a sturdy chair or wall you can hold if needed."],
+  "cues": ["Soft standing knee.", "Eyes on a spot ahead.", "Hold on if you wobble."],
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Hold a chair or wall nearby at first. Build up to 30 seconds; closing your eyes makes it harder."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Hands on your hips.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4
+      }
+    },
+    {
+      "name": "Single-Leg Stand",
+      "cue": "Lift your right foot a little and hold.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "hipR": [20, 0, 0],
+        "kneeR": 45
+      }
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Standing on the left leg",
+      "R": "Standing on the right leg"
+    }
+  },
+  "holdStep": 1
+}

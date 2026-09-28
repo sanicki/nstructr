@@ -1,0 +1,116 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-upper-body-twist",
+  "name": "Seated Upper-Body Twist",
+  "otherNames": ["Chair Upper-Body Twist"],
+  "category": "Mobility",
+  "focus": "Spine",
+  "collections": ["Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Sitting tall with your arms crossed on your chest, turn your upper body slowly to one side and then the other, hips still.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",
+    "title": "NHS: Sitting exercises"
+  },
+  "setup": ["Sit upright, feet flat on the floor.", "Cross your arms and reach for your shoulders."],
+  "cues": ["Keep your hips still.", "Turn as far as is comfortable.", "Move slowly."],
+  "prescription": {
+    "reps": "5 each side",
+    "note": "Move slowly and smoothly, within a comfortable range."
+  },
+  "keyframes": [
+    {
+      "name": "Twist left",
+      "cue": "Arms crossed, turn your upper body to the left.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderL",
+          "dz": 8
+        },
+        {
+          "hand": "handL",
+          "to": "shoulderR",
+          "dz": 8
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "torso": [0, 0, 25],
+        "chest": [0, 0, 20]
+      }
+    },
+    {
+      "name": "Twist right",
+      "cue": "Now turn to the right.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderL",
+          "dz": 8
+        },
+        {
+          "hand": "handL",
+          "to": "shoulderR",
+          "dz": 8
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "torso": [0, 0, -25],
+        "chest": [0, 0, -20]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "twist"
+}

@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "wu-leg-swings",
+  "name": "Leg Swings",
+  "otherNames": ["Front-to-Back Leg Swings"],
+  "category": "Mobility",
+  "focus": "Hips",
+  "collections": ["Warm-up"],
+  "equipment": ["Wall"],
+  "description": "Standing side-on to a wall with one hand on it, swing the outside leg forward and back in a smooth, relaxed arc.",
+  "source": {
+    "url": "https://www.healthline.com/health/exercise-fitness/dynamic-stretching",
+    "title": "Healthline: Dynamic stretching"
+  },
+  "setup": ["Stand side-on to a wall, the near hand on it for balance."],
+  "cues": ["Stand tall, don't lean.", "Let the leg swing freely.", "Start small, then go higher."],
+  "prescription": {
+    "reps": "10 each leg",
+    "note": "Move slowly and smoothly, within a comfortable range."
+  },
+  "keyframes": [
+    {
+      "name": "Swing forward",
+      "cue": "Hand on the wall, swing your right leg forward.",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "wall"
+        }
+      ],
+      "pose": {
+        "shoulderL": [0, 99.5, 90],
+        "elbowL": 20,
+        "hipR": [55, 0, 0]
+      }
+    },
+    {
+      "name": "Swing back",
+      "cue": "Let it swing back behind you.",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "wall"
+        }
+      ],
+      "pose": {
+        "shoulderL": [0, 99.5, 90],
+        "elbowL": 20,
+        "hipR": [-30, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "handL",
+      "keyframe": 0,
+      "beside": true
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "swing"
+}
