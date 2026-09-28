@@ -1,76 +1,64 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "fw-db-kickback",
   "name": "Dumbbell Triceps Kickback",
   "category": "Strength",
   "focus": "Backs of the arms",
   "library": "Free weights",
-  "equipment": [
-    "Dumbbells"
-  ],
+  "equipment": ["Dumbbells"],
   "description": "Hinged forward with your upper arms tucked by your sides, straighten your elbows to push the dumbbells back.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/55/triceps-kickback/",
     "title": "Triceps Kickback (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Hold a dumbbell in each hand and hinge forward with a flat back, knees soft.",
-    "Lift your elbows so your upper arms are along your sides."
-  ],
-  "cues": [
-    "Only your forearms move.",
-    "Squeeze at the top, then lower slowly.",
-    "Keep your back flat."
-  ],
+  "setup": ["Hold a dumbbell in each hand and hinge forward with a flat back, knees soft.", "Lift your elbows so your upper arms are along your sides."],
+  "cues": ["Only your forearms move.", "Squeeze at the top, then lower slowly.", "Keep your back flat."],
   "prescription": {
     "reps": "8–12",
     "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Elbows bent",
       "cue": "Upper arms by your sides, forearms hanging.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 58,
-        "hipL": -14,
-        "hipR": -14,
+        "torso": [58, 0, 0],
+        "elbowL": 60,
+        "elbowR": 60,
+        "hipL": [14, 0, 0],
         "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
         "kneeR": 24,
-        "elbowL": -60,
-        "elbowR": -60
-      },
-      "phase": "rep"
+        "ankleR": -10
+      }
     },
     {
       "name": "Kick back",
       "cue": "Straighten your arms behind you.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 500,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 58,
-        "hipL": -14,
-        "hipR": -14,
+        "torso": [58, 0, 0],
+        "hipL": [14, 0, 0],
         "kneeL": 24,
-        "kneeR": 24
-      },
-      "phase": "rep"
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10
+      }
     }
   ],
   "props": [

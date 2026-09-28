@@ -1,67 +1,54 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-chair",
   "name": "Chair Pose",
   "sanskrit": "Utkatasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Standing squat with the hips back and the arms reaching overhead.",
   "source": {
     "url": "https://www.yogajournal.com/poses/chair-pose-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand with your feet together or hip-width apart.",
-    "Reach your arms up beside your ears before you bend your knees."
-  ],
-  "facing": "right",
+  "setup": ["Stand with your feet together or hip-width apart.", "Reach your arms up beside your ears before you bend your knees."],
   "keyframes": [
     {
       "name": "Mountain Pose",
       "cue": "Stand tall with your feet together and arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 1200,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "setup"
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Chair Pose",
       "cue": "Bend the knees, sit the hips back, reach the arms up.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 35,
-        "hipL": -60,
-        "hipR": -60,
+        "torso": [35, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
+        "hipL": [60, 0, 0],
         "kneeL": 75,
+        "ankleL": -15,
+        "hipR": [60, 0, 0],
         "kneeR": 75,
-        "shoulderL": -180,
-        "shoulderR": -180
-      },
-      "phase": "rep"
+        "ankleR": -15
+      }
     }
   ],
-  "cues": [
-    "Keep the weight in the heels.",
-    "Draw the belly in."
-  ],
+  "cues": ["Keep the weight in the heels.", "Draw the belly in."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

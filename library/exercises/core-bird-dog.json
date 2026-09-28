@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "core-bird-dog",
   "name": "Bird Dog",
   "category": "Core",
@@ -13,26 +13,20 @@
     "title": "Bird Dog (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Start on hands and knees: hands under shoulders, knees under hips."
-  ],
-  "cues": [
-    "Keep your back flat and hips level.",
-    "Reach long rather than high.",
-    "Move slowly; pause at the top."
-  ],
+  "setup": ["Start on hands and knees: hands under shoulders, knees under hips."],
+  "cues": ["Keep your back flat and hips level.", "Reach long rather than high.", "Move slowly; pause at the top."],
   "prescription": {
     "reps": "6–10 each side",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Hands and knees",
       "cue": "Back flat.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "handL",
       "touch": [
         {
@@ -45,24 +39,24 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "hipL": -75,
-        "hipR": -75,
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
-        "ankleR": 90,
-        "shoulderL": -75,
-        "shoulderR": -75
-      },
-      "phase": "rep"
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
     },
     {
       "name": "Reach and extend",
       "cue": "Reach your right arm forward and your left leg back.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 2000,
+      "phase": "rep",
       "anchor": "handL",
       "touch": [
         {
@@ -71,15 +65,14 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "hipL": 15,
-        "hipR": -75,
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [165, 0, 0],
+        "hipL": [-15, 0, 0],
+        "hipR": [75, 0, 0],
         "kneeR": 90,
-        "ankleR": 90,
-        "shoulderL": -75,
-        "shoulderR": -165
-      },
-      "phase": "rep"
+        "ankleR": 90
+      }
     }
   ],
   "bilateral": {

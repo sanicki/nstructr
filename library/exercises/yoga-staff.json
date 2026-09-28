@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-staff",
   "name": "Staff Pose",
   "sanskrit": "Dandasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Seated with the legs straight out and the spine tall.",
   "source": {
     "url": "https://www.yogajournal.com/poses/staff-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit on the floor with your legs straight out in front of you and together.",
-    "Put your hands on the floor beside your hips."
-  ],
-  "facing": "right",
+  "setup": ["Sit on the floor with your legs straight out in front of you and together.", "Put your hands on the floor beside your hips."],
   "keyframes": [
     {
       "name": "Sit down",
       "cue": "Sit with the knees bent.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -51,21 +43,23 @@
         }
       ],
       "pose": {
-        "hipL": -120,
-        "hipR": -120,
-        "kneeL": 110,
-        "kneeR": 110,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [120, 0, 0],
+        "kneeL": 60,
+        "ankleL": 60,
+        "hipR": [120, 0, 0],
+        "kneeR": 60,
+        "ankleR": 60
+      }
     },
     {
       "name": "Staff Pose",
       "cue": "Straighten the legs, flex the feet, and press the hands down.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
       "touch": [
         {
@@ -78,18 +72,14 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": -90,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "rep"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Sit on a blanket if the back rounds.",
-    "Lift through the crown."
-  ],
+  "cues": ["Sit on a blanket if the back rounds.", "Lift through the crown."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

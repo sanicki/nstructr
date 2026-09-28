@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-eight-angle",
   "name": "Eight-Angle Pose",
   "sanskrit": "Astavakrasana",
   "category": "Arm Balance",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Arm balance with the legs crossed and extended to one side of the bent arms.",
   "source": {
     "url": "https://www.yogajournal.com/poses/eight-angle-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit with your legs out in front and lift one leg over the same-side upper arm, high toward the shoulder.",
-    "Plant your hands beside your hips, shoulder-width apart."
-  ],
-  "facing": "right",
+  "setup": ["Sit with your legs out in front and lift one leg over the same-side upper arm, high toward the shoulder.", "Plant your hands beside your hips, shoulder-width apart."],
   "keyframes": [
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
@@ -39,35 +34,31 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": -90,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
     },
     {
       "name": "Eight-Angle Pose",
       "cue": "Hook the legs over one arm, lean forward, and lift.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "pose": {
-        "torso": 80,
-        "shoulderL": -10,
-        "shoulderR": -10,
-        "elbowL": -70,
-        "elbowR": -70,
-        "hipL": -85,
-        "hipR": -85
-      },
-      "phase": "rep"
+        "torso": [80, 0, 0],
+        "shoulderL": [10, 0, 0],
+        "elbowL": 70,
+        "shoulderR": [10, 0, 0],
+        "elbowR": 70,
+        "hipL": [85, 0, 0],
+        "hipR": [85, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Squeeze the legs around the arm.",
-    "Lean forward to lift the hips."
-  ],
+  "cues": ["Squeeze the legs around the arm.", "Lean forward to lift the hips."],
   "bilateral": {
     "labels": {
       "L": "Left side",

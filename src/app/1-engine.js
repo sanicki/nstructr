@@ -26,25 +26,29 @@ function validateExercise(ex, path) {
     const p = `${path}.keyframes[${j}]`;
     if (!kf || typeof kf !== 'object') fail(`${p} must be an object.`);
     if (kf.pose != null && (typeof kf.pose !== 'object' || Array.isArray(kf.pose))) fail(`${p}.pose must be an object of joint angles.`);
+    const deg = v => typeof v === 'number' && isFinite(v);
     for (const [k, v] of Object.entries(kf.pose || {})) {
       if (!JOINT_KEYS.includes(k)) fail(`${p}.pose.${k} isn't a known joint. Joints: ${JOINT_KEYS.join(', ')}.`);
-      if (typeof v !== 'number' || !isFinite(v)) fail(`${p}.pose.${k} must be a number of degrees.`);
+      if (BALL.has(k) ? !(Array.isArray(v) && v.length === 3 && v.every(deg)) : !deg(v))
+        fail(BALL.has(k) ? `${p}.pose.${k} must be three numbers of degrees: [forward, side, turn].` : `${p}.pose.${k} must be a number of degrees.`);
     }
-    if (kf.view != null && !['side', 'front'].includes(kf.view)) fail(`${p}.view must be "side" or "front".`);
+    if (kf.view != null || kf.layers != null) fail(`${p} uses "view"/"layers" from the old 2D format; use "camera" (90 side, 0 front) and 3D joint angles.`);
+    if (kf.camera != null && !deg(kf.camera)) fail(`${p}.camera must be a number of degrees (90 = side view, 0 = front).`);
+    for (const f of ['anchorX', 'anchorZ', 'lift']) if (kf[f] != null && !deg(kf[f])) fail(`${p}.${f} must be a number.`);
     if (kf.anchor != null && !POINTS.includes(kf.anchor)) fail(`${p}.anchor must be one of: ${POINTS.join(', ')}.`);
     if (kf.plant != null && (!Array.isArray(kf.plant) || kf.plant.some(s => s !== 'L' && s !== 'R'))) fail(`${p}.plant must be a list of "L" and/or "R".`);
     if (kf.touch != null) {
       if (!Array.isArray(kf.touch)) fail(`${p}.touch must be a list.`);
       kf.touch.forEach((t, k) => {
         if (!t || !POINTS.includes(t.point)) fail(`${p}.touch[${k}].point must be one of: ${POINTS.join(', ')}.`);
-        if (!JOINT_KEYS.includes(t.adjust)) fail(`${p}.touch[${k}].adjust must be a joint name.`);
+        const ref = jointRef(t.adjust || ''), part = String(t.adjust || '').split('.')[1];
+        if (!JOINT_KEYS.includes(ref.j) || (part && (!BALL.has(ref.j) || !COMPONENTS.includes(part))))
+          fail(`${p}.touch[${k}].adjust must be a joint name, or a ball joint's number like "hipR.side" (${COMPONENTS.join(', ')}).`);
       });
     }
     if (kf.keep != null && (!Array.isArray(kf.keep) || kf.keep.some(k => !/^(ankle|hand)[LR]$/.test(typeof k === 'string' ? k : (k && k.point) || '') || (typeof k === 'object' && !(Number.isInteger(k.keyframe) && k.keyframe >= 0 && k.keyframe < ex.keyframes.length)))))
       fail(`${p}.keep must list ankleL/ankleR/handL/handR, or {"point": "ankleR", "keyframe": 0} to return to where it was in that step.`);
     if (kf.quiet != null && typeof kf.quiet !== 'boolean') fail(`${p}.quiet must be true or false.`);
-    if (kf.layers != null && (typeof kf.layers !== 'object' || Object.entries(kf.layers).some(([k, v]) => !['legL', 'legR'].includes(k) || !['front', 'back'].includes(v))))
-      fail(`${p}.layers must look like {"legR": "back"}: legL/legR, "front" or "back".`);
     if (kf.ease != null && !['smooth', 'linear'].includes(kf.ease)) fail(`${p}.ease must be "smooth" or "linear".`);
     if (kf.phase != null && !['setup', 'rep', 'finish'].includes(kf.phase)) fail(`${p}.phase must be "setup", "rep" or "finish".`);
     for (const f of ['durationMs', 'holdMs']) if (kf[f] != null && (typeof kf[f] !== 'number' || kf[f] < 0)) fail(`${p}.${f} must be a positive number of milliseconds.`);
@@ -62,25 +66,23 @@ function validateExercise(ex, path) {
         if (pr.axis != null && !['lr', 'fb', 'ud'].includes(pr.axis)) fail(`${p}.axis must be "lr", "fb" or "ud".`);
         return;
       }
+      for (const f of ['x', 'z']) if (pr[f] != null && !isFinite(pr[f])) fail(`${p}.${f} must be a number.`);
       if (SURFACE_TYPES.includes(pr.type)) {
-        if (!isFinite(pr.x)) fail(`${p} (a ${pr.type}) needs "x": its centre in px from the middle of the stage.`);
-        for (const f of ['width', 'height', 'backHeight']) if (pr[f] != null && !(pr[f] > 0)) fail(`${p}.${f} must be a positive number.`);
-        if (pr.back != null && !['left', 'right'].includes(pr.back)) fail(`${p}.back must be "left" or "right".`);
+        for (const f of ['width', 'depth', 'height', 'backHeight']) if (pr[f] != null && !(pr[f] > 0)) fail(`${p}.${f} must be a positive number.`);
+        if (pr.back != null && !['behind', 'ahead'].includes(pr.back)) fail(`${p}.back must be "behind" or "ahead".`);
         return;
       }
       if (pr.type === 'wall') {
-        if (!((typeof pr.at === 'string' && POINTS.includes(pr.at)) || isFinite(pr.x))) fail(`${p} (a wall) needs "at" (a body point it stands against) or "x".`);
-        if (pr.view != null && !['side', 'front'].includes(pr.view)) fail(`${p}.view must be "side" or "front".`);
+        if (pr.at != null && !(typeof pr.at === 'string' && POINTS.includes(pr.at))) fail(`${p}.at must be a body point the wall stands against.`);
         return;
       }
       for (const end of ['from', 'to']) {
         const v = pr[end];
-        const ok = (typeof v === 'string' && POINTS.includes(v)) || (v && typeof v === 'object' && isFinite(v.x) && isFinite(v.y));
-        if (!ok) fail(`${p}.${end} must be a body point (${POINTS.join(', ')}) or a floor spot like {"x": 120, "y": 40}.`);
+        const ok = (typeof v === 'string' && POINTS.includes(v)) || (v && typeof v === 'object' && ['x', 'y', 'z'].every(c => v[c] == null || isFinite(v[c])));
+        if (!ok) fail(`${p}.${end} must be a body point (${POINTS.join(', ')}) or a fixed spot like {"z": 120, "y": 40}.`);
       }
       if (pr.restLength != null && !(pr.restLength > 0)) fail(`${p}.restLength must be a positive number.`);
       if (pr.via != null && (!Array.isArray(pr.via) || pr.via.some(v => !POINTS.includes(v)))) fail(`${p}.via must be a list of body points.`);
-      if (pr.layer != null && !['front', 'back'].includes(pr.layer)) fail(`${p}.layer must be "front" or "back".`);
     });
   }
   const clone = JSON.parse(JSON.stringify(ex));
@@ -125,6 +127,25 @@ function versionOf(ex, side, dir) {
   return kfs;
 }
 
+/* where a resolved step's body points are on screen (its own camera; dx = the framing shift) */
+function stepScreen(r, seg = S.seg, dx = 0) {
+  SUPPORTS = r.supports || SUPPORTS;
+  const Q = project(fkAt(r.pose, seg, place(r.pose, seg, r.rule)), r.cam);
+  if (dx) for (const k in Q) Q[k].x += dx;
+  return Q;
+}
+/* the screen x range of a sequence: every step's body, walls and surfaces */
+function sequenceSpan(R, seg, dx = 0) {
+  let minX = Infinity, maxX = -Infinity, minY = Infinity;
+  for (const r of R) {
+    const Q = stepScreen(r, seg, dx);
+    for (const k of POINTS) { minX = Math.min(minX, Q[k].x); maxX = Math.max(maxX, Q[k].x); minY = Math.min(minY, Q[k].y); }
+    for (const wl of R.walls || []) if (wl) { const w = wallOnScreen(wl, r.cam); if (w.show > 0.02) { minX = Math.min(minX, w.x + dx - 6); maxX = Math.max(maxX, w.x + dx + 6); } }
+    for (const sh of surfaceShapes(R.supports, r.cam)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); }
+  }
+  for (const s of R.supports || []) minY = Math.min(minY, FLOOR - s.h - (s.backHeight || 0));
+  return { minX, maxX, minY };
+}
 function rebuild() {
   if (!S.ex) { S.resolved = []; return; }
   S.props = S.side === 'R' ? mirrorProps(S.ex.props) : (S.ex.props || []);
@@ -136,86 +157,30 @@ function rebuild() {
   S.total = acc || 1;
   S.bandRest = bandRestLengths(S.props, S.resolved, S.seg);
   // Frame the whole sequence: one constant horizontal shift so every keyframe stays on stage (nothing slides)
-  let minX = Infinity, maxX = -Infinity;
-  for (const r of S.resolved) {
-    const pos = place(r.pose, r.v, S.seg, r.rule), P = fk(r.pose, r.v, S.seg, pos.x, pos.y);
-    for (const k of POINTS) { minX = Math.min(minX, P[k].x); maxX = Math.max(maxX, P[k].x); }
-  }
-  for (const x of S.resolved.walls || []) if (x != null) { minX = Math.min(minX, x - 6); maxX = Math.max(maxX, x + 6); }
-  for (const s of S.resolved.supports || []) { minX = Math.min(minX, s.x0 - 6); maxX = Math.max(maxX, s.x1 + 6); }
+  const { minX, maxX } = sequenceSpan(S.resolved, S.seg);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   S.idx = Math.min(S.idx, S.resolved.length - 1);
   S.shownIdx = -1;
 }
 
-/* ---------- Figure: nested <g> pendulums driven by CSS custom properties ---------- */
+/* ---------- Figure: a 3D skeleton, projected and drawn far to near ----------
+   Each part (the legs, the arms, the body) is a group of lines; every frame moves the lines to the projected points
+   and, when the order by depth changes, re-stacks the groups. A leg crossing behind the other is behind because it is. */
 const scene = $('#scene');
+const FIG = { bones: [], order: [] };
 function buildFigure() {
-  const g = S.seg;
-  const rotG = (tx, ty, varName, inner, cls = '') =>
-    `<g class="${cls}" style="transform: translate(${tx}, ${ty}) rotate(calc(var(--${varName}) * 1deg))">${inner}</g>`;
-  const leg = s => rotG(`calc(var(--hx-${s}) * 1px)`, '0px', 'hip' + s,
-    `<line class="bone" x2="0" y2="${g.thigh}" vector-effect="non-scaling-stroke" style="transform: scale(1, var(--st-${s}))"/>` +
-    rotG('0px', `calc(var(--st-${s}) * ${g.thigh}px)`, 'knee' + s,
-      `<line class="bone" x2="0" y2="${g.shin}" vector-effect="non-scaling-stroke" style="transform: scale(1, var(--ss-${s}))"/>` +
-      rotG('0px', `calc(var(--ss-${s}) * ${g.shin}px)`, 'ankle' + s,
-        `<g style="transform: scale(var(--foot-${s}), 1)"><line class="bone" x2="1" y2="0" vector-effect="non-scaling-stroke"/></g>`)), `side-${s}`);
-  const lower = g.torso / 2, upper = g.torso - lower;
-  const arm = s => rotG(`calc(var(--sx-${s}) * 1px)`, `${-upper + SHOULDER_DROP}px`, 'shoulder' + s,
-    `<line class="bone" x2="0" y2="${g.upperArm}" vector-effect="non-scaling-stroke" style="transform: scale(1, var(--su-${s}))"/>` +
-    rotG('0px', `calc(var(--su-${s}) * ${g.upperArm}px)`, 'elbow' + s,
-      `<line class="bone" x2="0" y2="${g.lowerArm}" vector-effect="non-scaling-stroke" style="transform: scale(1, var(--sf-${s}))"/>` +
-      `<g style="transform: translate(0px, calc(var(--sf-${s}) * ${g.lowerArm}px))"><circle class="hand" r="6.5"/></g>`), `side-${s}`);
-  const facing = S.ex && S.ex.facing === 'left' ? `style="transform: translate(${W}px, 0) scale(-1, 1)"` : '';
+  const cls = { legL: 'side-L', armL: 'side-L', legR: 'side-R', armR: 'side-R', body: 'core' };
+  // each bone in its own group (with the hand at the end of a forearm, the head on the neck), so they can be stacked
+  const extra = { 'elbowL-handL': '<circle class="hand" r="6.5" data-at="handL"/><g class="wts" data-hand="handL"></g>',
+    'elbowR-handR': '<circle class="hand" r="6.5" data-at="handR"/><g class="wts" data-hand="handR"></g>', 'neckBase-head': `<circle class="head" r="${S.seg.head}" data-at="head"/>` };
   scene.innerHTML =
     `<line class="floor-line" x1="${-5 * W}" y1="${FLOOR + 7}" x2="${6 * W}" y2="${FLOOR + 7}"/>` +
-    `<g ${facing}>` +
-    `<g style="transform: translate(calc(var(--root-x) * 1px), 0)"><ellipse class="shadow" cy="${FLOOR + 7}" rx="52" ry="6"/></g>` +
-    `<g id="propsBack"></g>` +
-    `<g id="figRoot" style="transform: translate(calc(var(--root-x) * 1px), calc(var(--root-y) * 1px)) rotate(calc(var(--root) * 1deg))">` +
-      `<g id="leg-L">${leg('L')}</g>` +
-      `<g class="core" id="figCore" style="transform: rotate(calc(var(--torso) * 1deg))">` +
-        `<line class="bone" x2="0" y2="${-lower}"/>` +
-        rotG('0px', `${-lower}px`, 'chest',
-          arm('L') +
-          `<line class="bone" x2="0" y2="${-upper}"/>` +
-          rotG('0px', `${-upper}px`, 'neck', `<line class="bone" x2="0" y2="${-g.neck}"/><circle class="head" cy="${-(g.neck + g.head)}" r="${g.head}"/>`) +
-          arm('R')) +
-      `</g>` +
-      `<g id="leg-R">${leg('R')}</g>` +
-    `</g><g id="propsFront"></g></g>`;
-  S.legLayers = 'back,front,L';
-}
-/* Legs are drawn left behind the body, right in front, unless a step says otherwise ("layers"): a leg crossing
-   behind or in front of the standing leg, for the move into and out of that step. The drawing order only changes
-   on a frame where the two legs don't overlap on screen, so the swap itself is never visible: the leg is seen
-   to travel behind (or in front), instead of flicking there while they still cross. */
-const segsCross = (p, q, r, t) => {
-  const d = (q.x - p.x) * (t.y - r.y) - (q.y - p.y) * (t.x - r.x); if (!d) return false;
-  const u = ((r.x - p.x) * (t.y - r.y) - (r.y - p.y) * (t.x - r.x)) / d, w = ((r.x - p.x) * (q.y - p.y) - (r.y - p.y) * (q.x - p.x)) / d;
-  return u > 0 && u < 1 && w > 0 && w < 1;
-};
-function legsOverlap(P) {
-  const chain = s => ['hip', 'knee', 'ankle', 'toe'].map(k => P[k + s]), L = chain('L'), R = chain('R');
-  for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) if (segsCross(L[i], L[i + 1], R[j], R[j + 1])) return true;
-  return false;
-}
-function layerLegs(a, b, f, e) {
-  // while moving, either end of the move can ask; while holding a step, that step, or else the step that comes
-  // next, so the swap happens during the hold (legs apart) and the leg sets off already on the right side
-  const nx = e >= 1 ? S.resolved[peekNext(S.idx)] : null;
-  const said = s => (b.layers && b.layers['leg' + s]) || (e < 1 ? a.layers && a.layers['leg' + s] : nx && nx.layers && nx.layers['leg' + s]) || null;
-  const want = s => said(s) || (s === 'L' ? 'back' : 'front');
-  // both on the same side of the body: the leg the step names goes outermost (furthest back, or on top), so a
-  // leg crossing behind passes behind the standing leg and one crossing in front passes over it
-  let first = 'L';
-  if (want('L') === want('R')) { const named = said('R') ? 'R' : said('L') ? 'L' : null; if (named) first = (want(named) === 'back') === (named === 'R') ? 'R' : 'L'; }
-  const key = want('L') + ',' + want('R') + ',' + first;
-  if (key === S.legLayers) return;
-  if (legsOverlap(fk(f.pose, f.v, S.seg, f.pos.x, f.pos.y))) return;       // wait until they're apart
-  S.legLayers = key;
-  const root = $('#figRoot'), core = $('#figCore'); if (!root || !core) return;
-  for (const s of first === 'L' ? ['L', 'R'] : ['R', 'L']) { const g = $('#leg-' + s); if (want(s) === 'back') root.insertBefore(g, core); else root.appendChild(g); }
+    `<ellipse class="shadow" id="figShadow" cy="${FLOOR + 7}" rx="52" ry="6"/>` +
+    `<g id="propsBack"></g><g id="figRoot">` +
+    BONES.map(bn => `<g class="${cls[bn.part]}" data-bone="${bn.id}"><line class="bone" vector-effect="non-scaling-stroke"/>${extra[bn.id] || ''}</g>`).join('') +
+    `</g><g id="propsFront"></g>`;
+  FIG.bones = BONES.map(bn => { const g = scene.querySelector(`[data-bone="${bn.id}"]`); return { ...bn, g, line: g.querySelector('line'), dots: [...g.querySelectorAll('[data-at]')] }; });
+  FIG.order = BONES.map(bn => bn.id);
 }
 
 /* keep every bone the same thickness at any zoom: scale the screen-pixel limbs to the scene's current scale */
@@ -228,54 +193,62 @@ function syncLimbWidth() {
 if ('ResizeObserver' in window) new ResizeObserver(syncLimbWidth).observe(scene);
 addEventListener('resize', syncLimbWidth);
 
-function applyPose(pose, v, pos, anchorX) {
-  const st = scene.style, gm = viewGeom(S.seg, v);
-  for (const k of JOINT_KEYS) st.setProperty('--' + k, pose[k].toFixed(3));
-  st.setProperty('--root-x', pos.x.toFixed(2)); st.setProperty('--root-y', pos.y.toFixed(2));
-  st.setProperty('--anchor-x', anchorX.toFixed(2));
-  for (const s of ['L', 'R']) {
-    st.setProperty('--hx-' + s, gm.hx[s].toFixed(2)); st.setProperty('--sx-' + s, gm.sx[s].toFixed(2));
-    st.setProperty('--foot-' + s, gm.foot[s].toFixed(3));
-    st.setProperty('--su-' + s, depthScale(pose['armDepth' + s]).toFixed(4));
-    st.setProperty('--sf-' + s, depthScale(pose['forearmDepth' + s]).toFixed(4));
-    st.setProperty('--st-' + s, depthScale(pose['thighDepth' + s]).toFixed(4));
-    st.setProperty('--ss-' + s, depthScale(pose['shinDepth' + s]).toFixed(4));
+/* draw one frame: Q = screen points */
+function applyPose(Q) {
+  const f = n => n.toFixed(1);
+  for (const bn of FIG.bones) {
+    const a = Q[bn.a], b = Q[bn.b], ln = bn.line;
+    ln.setAttribute('x1', f(a.x)); ln.setAttribute('y1', f(a.y)); ln.setAttribute('x2', f(b.x)); ln.setAttribute('y2', f(b.y));
+    for (const d of bn.dots) { const p = Q[d.dataset.at]; d.setAttribute('cx', f(p.x)); d.setAttribute('cy', f(p.y)); }
+  }
+  $('#figShadow').setAttribute('cx', f(Q.pelvis.x));
+  const order = boneOrder(Q, FIG.order);
+  if (order.join() !== FIG.order.join()) {
+    FIG.order = order;
+    const root = $('#figRoot'), byId = new Map(FIG.bones.map(bn => [bn.id, bn.g]));
+    for (const id of order) root.appendChild(byId.get(id));
   }
 }
 
 /* ---------- Equipment ---------- */
-function drawProps(P) {
+function drawProps(P, Q, pose, cam) {
   let back = '', front = '';
+  const dx = S.shiftX, proj = p => { const q = project({ p }, cam).p; return { x: q.x + dx, y: q.y, d: q.d }; };
   // chairs, benches and steps sit behind the figure
-  for (const sh of surfaceShapes(S.resolved.supports || [])) {
-    back += `<path class="surface${sh.solid ? ' solid' : ''}" transform="translate(${S.shiftX.toFixed(1)} 0)" d="${sh.d}"/>`;
-  }
+  for (const sh of surfaceShapes(S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
+  const M0 = rootM(pose.root), wts = { handL: '', handR: '' };
   S.props.forEach((pr, i) => {
     if (SURFACE_TYPES.includes(pr.type)) return;
-    if (WEIGHT_TYPES.includes(pr.type)) { front += weightSVG(pr, P, S.curV || 0); return; }
+    if (WEIGHT_TYPES.includes(pr.type)) {
+      const svg = weightSVG(pr, P, M0, proj);
+      // a weight in one hand is drawn with that arm (behind the body if the arm is); a barbell in front
+      if (pr.hand && wts[pr.hand] != null) wts[pr.hand] += svg; else front += svg;
+      return;
+    }
     if (pr.type === 'wall') {
-      const x = S.resolved.walls[i] + S.shiftX;
-      // a wall seen from the side is a line; if it only makes sense from one camera, fade it out as the camera turns
-      const op = pr.view === 'side' ? 1 - (S.curV || 0) : pr.view === 'front' ? (S.curV || 0) : 1;
-      if (op < 0.02) return;
-      back += `<line class="wall" style="opacity:${(0.55 * op).toFixed(2)}" x1="${x.toFixed(1)}" y1="${FLOOR + 7}" x2="${x.toFixed(1)}" y2="${FLOOR - 330}"/>`;
+      const wl = S.resolved.walls[i]; if (!wl) return;
+      // a wall seen edge-on is a line; one that faces the camera fades out as it turns
+      const w = wallOnScreen(wl, cam); if (w.show < 0.02) return;
+      back += `<line class="wall" style="opacity:${(0.55 * w.show).toFixed(2)}" x1="${(w.x + dx).toFixed(1)}" y1="${FLOOR + 7}" x2="${(w.x + dx).toFixed(1)}" y2="${FLOOR - 330}"/>`;
       return;
     }
     const pts = propRoute(P, pr);
     if (!pts) return;
+    const q = pts.map(proj);
+    // in front of the body or behind it, by depth
+    const far = q.reduce((s, p) => s + p.d, 0) / q.length < Q.pelvis.d;
     if (pr.type === 'towel') {
-      const svg = `<path class="towel" d="M${pts.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`;
-      if (pr.layer === 'back') back += svg; else front += svg;
+      const svg = `<path class="towel" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`;
+      if (far) back += svg; else front += svg;
       return;
     }
-    if (!pts) return;
-    const bp = bandPathRoute(pts, S.bandRest[i]);
+    const bp = bandPathRoute(pts, q, S.bandRest[i]);
     // a stretched band thins and deepens in colour as the tension builds
     const svg = `<path class="band" d="${bp.d}" style="stroke-width:${bp.width.toFixed(2)};opacity:${Math.min(1, 0.7 + (bp.stretch - 1) * 0.8).toFixed(2)}"/>`;
-    const far = pr.layer ? pr.layer === 'back' : [pr.from, pr.to].some(end => typeof end === 'string' && end.endsWith('L'));
     if (far) back += svg; else front += svg;
   });
   $('#propsBack').innerHTML = back; $('#propsFront').innerHTML = front;
+  document.querySelectorAll('#scene .wts').forEach(g => { const v = wts[g.dataset.hand] || ''; if (g.innerHTML !== v) g.innerHTML = v; });
 }
 
 /* ---------- Floor guide (top-down star) ---------- */
@@ -309,12 +282,6 @@ function drawGuide(a, b, e) {
 /* ---------- Playback ---------- */
 /* Which step comes next. Exploring: setup plays once, then the rep (or hold) loops. In a workout the plan is a
    straight line and the workout controller takes over at its end. */
-/* the step after i, without counting a rep */
-function peekNext(i) {
-  if (S.mode === 'workout') return i + 1 < S.resolved.length ? i + 1 : i;
-  const ph = S.phase || { start: 0, end: S.resolved.length - 1 };
-  return i >= ph.end || i + 1 >= S.resolved.length ? ph.start : i + 1;
-}
 function nextIndex(i) {
   if (S.mode === 'workout') return i + 1 < S.resolved.length ? i + 1 : -1;
   // the exercise page with Loop off: once through (setup, one rep, finish), then it stops
@@ -347,11 +314,11 @@ function draw() {
   // "smooth" steps speed up and slow down; "linear" ones keep a constant speed, so a chain of them flows like a clock hand
   const raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
   const e = b.ease === 'linear' ? raw : easeInOut(raw);
-  const f = frameAt(a, b, e, S.seg);
-  applyPose(f.pose, f.v, { x: f.pos.x + S.shiftX, y: f.pos.y }, CX + lerp(a.rule.anchorX, b.rule.anchorX, e) + S.shiftX);
-  S.curV = f.v;
-  layerLegs(a, b, f, e);
-  if (S.props && S.props.length) drawProps(fk(f.pose, f.v, S.seg, f.pos.x + S.shiftX, f.pos.y));
+  const f = frameAt(a, b, e, S.seg), P = fkAt(f.pose, S.seg, f.pos), Q = project(P, f.cam);
+  for (const k in Q) Q[k].x += S.shiftX;
+  applyPose(Q);
+  S.curCam = f.cam;
+  if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);
   drawGuide(a, b, e);
   if (S.mode !== 'workout') $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';
   // hold countdown for long holds (stretches), in real seconds at the current speed

@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bw-knee-pushup",
   "name": "Knee Push-Up",
   "category": "Strength",
@@ -13,27 +13,20 @@
     "title": "Bent-Knee Push-Up (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Kneel with your hands on the floor just wider than your shoulders.",
-    "Walk your hands forward until your body is a straight line from knees to head."
-  ],
-  "cues": [
-    "Keep your hips in line; don't let them sag or pike.",
-    "Elbows angle back, not straight out.",
-    "Lower until your upper arms are level, then press up."
-  ],
+  "setup": ["Kneel with your hands on the floor just wider than your shoulders.", "Walk your hands forward until your body is a straight line from knees to head."],
+  "cues": ["Keep your hips in line; don't let them sag or pike.", "Elbows angle back, not straight out.", "Lower until your upper arms are level, then press up."],
   "prescription": {
     "reps": "8–12",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Arms straight",
       "cue": "Body straight from knees to head.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -46,22 +39,24 @@
         }
       ],
       "pose": {
-        "root": 53,
+        "root": [53, 0, 0],
+        "shoulderL": [53, 0, 0],
+        "shoulderR": [53, 0, 0],
+        "hipL": [-0.8, 0, 0],
         "kneeL": 37,
-        "kneeR": 37,
         "ankleL": 90,
-        "ankleR": 90,
-        "shoulderL": -53,
-        "shoulderR": -53
-      },
-      "phase": "rep"
+        "hipR": [-0.8, 0, 0],
+        "kneeR": 37,
+        "ankleR": 90
+      }
     },
     {
       "name": "Lower",
       "cue": "Bend your elbows and lower your chest.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -74,17 +69,18 @@
         }
       ],
       "pose": {
-        "root": 73,
+        "root": [73, 0, 0],
+        "shoulderL": [-17, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-17, 0, 0],
+        "elbowR": 90,
+        "hipL": [-1.1, 0, 0],
         "kneeL": 17,
-        "kneeR": 17,
         "ankleL": 90,
-        "ankleR": 90,
-        "shoulderL": 17,
-        "shoulderR": 17,
-        "elbowL": -90,
-        "elbowR": -90
-      },
-      "phase": "rep"
+        "hipR": [-1.1, 0, 0],
+        "kneeR": 17,
+        "ankleR": 90
+      }
     }
   ],
   "measure": "reps",

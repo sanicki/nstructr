@@ -1,42 +1,32 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "chair-incline-pushup",
   "name": "Chair Incline Push-Up",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
   "library": "Chair-based",
-  "equipment": [
-    "Chair",
-    "Wall"
-  ],
+  "equipment": ["Chair", "Wall"],
   "description": "An incline push-up on a chair braced against a wall: hands on the front edge of the seat, lower your chest toward it and press back up.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/incline-push-up",
     "title": "Incline Push-Up (NASM Exercise Library)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Push the chair back against a wall so it can't slide.",
-    "Hands on the front edge of the seat, shoulder-width apart, and step your feet back into a plank."
-  ],
-  "cues": [
-    "Body in one straight line from head to heels.",
-    "Lower your chest toward the seat.",
-    "Press through your palms back to straight arms."
-  ],
+  "setup": ["Push the chair back against a wall so it can't slide.", "Hands on the front edge of the seat, shoulder-width apart, and step your feet back into a plank."],
+  "cues": ["Body in one straight line from head to heels.", "Lower your chest toward the seat.", "Press through your palms back to straight arms."],
   "prescription": {
     "reps": "8–12",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Arms straight",
       "cue": "Hands on the seat edge, body straight.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -49,20 +39,22 @@
         }
       ],
       "pose": {
-        "root": 44,
-        "shoulderL": -44,
-        "shoulderR": -44,
+        "root": [44, 0, 0],
+        "shoulderL": [44, 0, 0],
+        "shoulderR": [44, 0, 0],
+        "hipL": [-9.9, 0, 0],
         "ankleL": 46,
+        "hipR": [-9.9, 0, 0],
         "ankleR": 46
-      },
-      "phase": "rep"
+      }
     },
     {
       "name": "Lower",
       "cue": "Bend your elbows and lower your chest.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -75,26 +67,27 @@
         }
       ],
       "pose": {
-        "root": 57,
-        "shoulderL": -10,
-        "shoulderR": -10,
-        "elbowL": -90,
-        "elbowR": -90,
+        "root": [57, 0, 0],
+        "shoulderL": [10, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [10, 0, 0],
+        "elbowR": 90,
+        "hipL": [-2.1, 0, 0],
         "ankleL": 4,
+        "hipR": [-2.1, 0, 0],
         "ankleR": 4
-      },
-      "phase": "rep"
+      }
     }
   ],
   "props": [
     {
       "type": "chair",
-      "x": 32,
-      "back": "right"
+      "back": "ahead",
+      "z": 32
     },
     {
       "type": "wall",
-      "x": 74
+      "z": 74
     }
   ],
   "measure": "reps",

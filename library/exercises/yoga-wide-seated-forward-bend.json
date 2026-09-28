@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-wide-seated-forward-bend",
   "name": "Wide-Angled Seated Forward Bend",
   "sanskrit": "Upavistha Konasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Seated with the legs wide, folding forward between them.",
   "source": {
     "url": "https://www.yogajournal.com/poses/wide-angle-seated-forward-bend/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit tall and open your legs wide, kneecaps and toes pointing up.",
-    "Put your hands on the floor in front of you."
-  ],
-  "facing": "right",
+  "setup": ["Sit tall and open your legs wide, kneecaps and toes pointing up.", "Put your hands on the floor in front of you."],
   "keyframes": [
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
@@ -39,33 +34,31 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": 270,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [-270, 0, 0]
+      }
     },
     {
       "name": "Wide-Angled Seated Bend",
       "cue": "Open the legs wide and walk the hands forward.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "hipL": -90,
-        "hipR": 90,
-        "shoulderL": -55,
-        "shoulderR": 55
-      },
-      "phase": "rep"
+        "shoulderL": [0, 55, 0],
+        "shoulderR": [0, 55, 0],
+        "hipL": [90, 90, 0],
+        "ankleL": 90,
+        "hipR": [-270, 90, 0],
+        "ankleR": 90
+      }
     }
   ],
-  "cues": [
-    "Keep the knees pointing up.",
-    "Fold only as far as the back stays long."
-  ],
+  "cues": ["Keep the knees pointing up.", "Fold only as far as the back stays long."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

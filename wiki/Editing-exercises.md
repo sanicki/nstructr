@@ -24,14 +24,20 @@ you edit, and **Done** closes the editor.
 
 ## Changing the poses (Authoring mode)
 
-Turn on **Authoring mode** in [Settings](Settings.md#authoring-mode) to also get the pose editor: every joint
-with − / + buttons (hold to repeat; steps of 1°, 5° or 15°), the camera (side or front view), and the exercise's
-JSON.
+Turn on **Authoring mode** in [Settings](Settings.md#authoring-mode) to also get the pose editor: the camera
+(**Side** or **Front**, or any angle in between), every joint with − / + buttons (hold to repeat; steps of 1°, 5° or
+15°), and the exercise's JSON.
+
+The figure is 3D, jointed like an artist's mannequin. Hips, shoulders, the back, the head and the whole body have
+three numbers each: **forward**, **side** (out to the side for an arm or leg; leaning right for the body) and
+**turn**. Knees and elbows **bend**, and ankles **point** the toes. The numbers mean the same from any camera, so you
+can turn the camera to check a pose from the other angle.
 
 <img src="images/edit-poses.png" width="300" alt="The pose editor in Authoring mode">
 
 - Each joint has an undo that appears once it differs from where you started.
 - Joints marked *auto* are placed for you (feet kept flat on the floor, hands reaching a point).
 - Angles are relative to the parent limb; the figure updates as you go.
+- A leg that's behind the other is drawn behind it; there's nothing to set.
 
 Authoring mode also shows JSON views elsewhere (workouts, your exercises) for people making exercises by hand.

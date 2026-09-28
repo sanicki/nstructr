@@ -1,68 +1,59 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "pil-teaser",
   "name": "Teaser",
   "category": "Pilates",
   "focus": "Abdominals",
   "library": "Pilates",
-  "equipment": [
-    "Mat"
-  ],
+  "equipment": ["Mat"],
   "description": "An advanced balance: from lying down, roll up into a V shape with your legs raised and your arms reaching toward your toes, then roll down.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-teaser/",
     "title": "Teaser on the Mat (Online Pilates Classes)",
     "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on your back with your legs raised to about 45° and your arms overhead."
-  ],
-  "cues": [
-    "Lift your arms, head and chest together.",
-    "Balance just behind your sit bones.",
-    "Easier: keep your knees bent, or one foot on the mat."
-  ],
+  "setup": ["Lie on your back with your legs raised to about 45° and your arms overhead."],
+  "cues": ["Lift your arms, head and chest together.", "Balance just behind your sit bones.", "Easier: keep your knees bent, or one foot on the mat."],
   "prescription": {
     "reps": "3–5",
     "note": "Move with your breath, slowly and with control."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Lie long, legs up",
       "cue": "Legs at about 45°, arms overhead.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -45,
-        "hipR": -45,
-        "shoulderL": -180,
-        "shoulderR": -180
-      },
-      "phase": "rep"
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
+        "hipL": [45, 0, 0],
+        "hipR": [45, 0, 0]
+      }
     },
     {
       "name": "Roll up to a V",
       "cue": "Reach toward your toes and balance.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2400,
       "holdMs": 1500,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "root": -40,
-        "chest": 10,
-        "neck": 10,
-        "hipL": -95,
-        "hipR": -95,
-        "shoulderL": -70,
-        "shoulderR": -70
-      },
-      "phase": "rep"
+        "root": [-40, 0, 0],
+        "chest": [10, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [70, 0, 0],
+        "shoulderR": [70, 0, 0],
+        "hipL": [95, 0, 0],
+        "hipR": [95, 0, 0]
+      }
     }
   ],
   "measure": "reps",

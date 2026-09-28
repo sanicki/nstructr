@@ -1,140 +1,146 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-gate",
   "name": "Gate Pose",
   "sanskrit": "Parighasana",
   "category": "Side bend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Kneeling side bend with one leg extended out to the side.",
   "source": {
     "url": "https://www.yogajournal.com/poses/library/gate-pose-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Kneel upright with your knees hip-width apart.",
-    "Stretch one leg out to the side, foot flat, in line with the kneeling knee."
-  ],
-  "facing": "right",
+  "setup": ["Kneel upright with your knees hip-width apart.", "Stretch one leg out to the side, foot flat, in line with the kneeling knee."],
   "keyframes": [
     {
       "name": "Kneel tall",
       "cue": "Kneel with the hips over the knees.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "kneeL",
       "pose": {
+        "hipL": [0, 0, 90],
         "kneeL": 178,
-        "kneeR": -178
-      },
-      "phase": "setup"
+        "ankleL": -178,
+        "hipR": [0, 0, 90],
+        "kneeR": 178,
+        "ankleR": -178
+      }
     },
     {
       "name": "Lift the right knee out",
       "cue": "Keep the left knee down and lift the right knee out to the side.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1200,
       "holdMs": 300,
+      "phase": "setup",
       "anchor": "kneeL",
       "pose": {
+        "hipL": [0, 0, 90],
         "kneeL": 178,
-        "hipR": 60,
-        "kneeR": -178
-      },
-      "phase": "setup"
+        "ankleL": -178,
+        "hipR": [0, 60, 90],
+        "kneeR": 178,
+        "ankleR": -118
+      }
     },
     {
       "name": "Step the right foot out",
       "cue": "Plant the right foot out to the side, knee over the ankle.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1200,
       "holdMs": 400,
+      "phase": "setup",
       "anchor": "kneeL",
-      "plant": [
-        "R"
-      ],
+      "plant": ["R"],
       "touch": [
         {
           "point": "ankleR",
-          "adjust": "hipR"
+          "adjust": "hipR.side"
         }
       ],
       "pose": {
+        "hipL": [0, 0, 90],
         "kneeL": 178,
-        "hipR": 85,
-        "kneeR": -85
-      },
-      "phase": "setup"
+        "ankleL": -178,
+        "hipR": [0, 89.8, 90],
+        "kneeR": 85,
+        "ankleR": 4.8
+      }
     },
     {
       "name": "Gate Pose",
       "cue": "Straighten the right leg, then bend toward it with the left arm overhead.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "kneeL",
       "touch": [
         {
           "point": "ankleR",
-          "adjust": "hipR"
+          "adjust": "hipR.side"
         }
       ],
       "pose": {
+        "torso": [0, 40, 0],
+        "shoulderL": [0, -150, 0],
+        "shoulderR": [0, 40, 0],
+        "hipL": [0, 0, 90],
         "kneeL": 178,
-        "hipR": 50,
-        "torso": -40,
-        "shoulderR": 40,
-        "shoulderL": 150
-      },
-      "phase": "rep"
+        "ankleL": -178,
+        "hipR": [0, 60, 90],
+        "ankleR": 60
+      }
     },
     {
       "name": "Step the right foot out",
       "cue": "Come up and bend the right knee.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1400,
       "holdMs": 300,
+      "phase": "finish",
       "anchor": "kneeL",
-      "plant": [
-        "R"
-      ],
+      "plant": ["R"],
       "touch": [
         {
           "point": "ankleR",
-          "adjust": "hipR"
+          "adjust": "hipR.side"
         }
       ],
       "pose": {
+        "hipL": [0, 0, 90],
         "kneeL": 178,
-        "hipR": 85,
-        "kneeR": -85
-      },
-      "phase": "finish"
+        "ankleL": -178,
+        "hipR": [0, 89.8, 90],
+        "kneeR": 85,
+        "ankleR": 4.8
+      }
     },
     {
       "name": "Lift the right knee out",
       "cue": "Lift the right foot and bring the knee back under the hip.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1200,
       "holdMs": 300,
+      "phase": "finish",
       "anchor": "kneeL",
       "pose": {
+        "hipL": [0, 0, 90],
         "kneeL": 178,
-        "hipR": 60,
-        "kneeR": -178
-      },
-      "phase": "finish"
+        "ankleL": -178,
+        "hipR": [0, 60, 90],
+        "kneeR": 178,
+        "ankleR": -118
+      }
     }
   ],
-  "cues": [
-    "Keep the hips over the kneeling knee.",
-    "Lengthen the side body before bending."
-  ],
+  "cues": ["Keep the hips over the kneeling knee.", "Lengthen the side body before bending."],
   "bilateral": {
     "labels": {
       "L": "Left side",

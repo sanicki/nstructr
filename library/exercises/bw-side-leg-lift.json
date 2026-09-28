@@ -1,78 +1,66 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bw-side-leg-lift",
   "name": "Standing Side Leg Lift",
   "category": "Strength",
   "focus": "Outer hips",
   "library": "Bodyweight",
-  "equipment": [
-    "Wall"
-  ],
+  "equipment": ["Wall"],
   "description": "Strengthens the outer hip for balance: holding a wall, lift one straight leg out to the side and lower it slowly.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
     "title": "NHS: strength exercises (sideways leg lift)",
     "note": "Stick-figure approximation; the NHS version uses a chair for support."
   },
-  "setup": [
-    "Stand tall beside a wall with one hand on it for support."
-  ],
-  "cues": [
-    "Keep your back and hips straight; don't lean away.",
-    "Lift only as far as is comfortable.",
-    "Toes point forward."
-  ],
+  "setup": ["Stand tall beside a wall with one hand on it for support."],
+  "cues": ["Keep your back and hips straight; don't lean away.", "Lift only as far as is comfortable.", "Toes point forward."],
   "prescription": {
     "reps": "5–10 each leg",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Stand tall",
       "cue": "Right hand on the wall.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderR": 80
-      },
-      "phase": "rep"
+        "shoulderR": [0, 80, -90]
+      }
     },
     {
       "name": "Lift out to the side",
       "cue": "Raise your left leg out to the side.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2000,
       "holdMs": 500,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "R"
-      ],
-      "pose": {
-        "shoulderR": 80,
-        "hipL": -30
-      },
+      "plant": ["R"],
       "reach": [
         {
           "hand": "handR",
           "to": "wall"
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "shoulderR": [0, 99.5, -90],
+        "elbowR": 20,
+        "hipL": [0, 30, 0]
+      }
     }
   ],
   "props": [
     {
       "type": "wall",
       "at": "handR",
-      "keyframe": 0
+      "keyframe": 0,
+      "beside": true
     }
   ],
   "bilateral": {

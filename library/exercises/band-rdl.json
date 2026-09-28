@@ -1,73 +1,59 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "band-rdl",
   "name": "Banded Romanian Deadlift",
   "category": "Core",
   "focus": "Hamstrings and glutes",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "A band hip hinge: standing on the band, hold the ends near your knees, push your hips back until your torso is nearly level, then squeeze your glutes to stand.",
   "source": {
     "url": "https://www.girlsgonestrong.com/videos/strength-training/band-resisted-romanian-deadlift/",
     "title": "Band-Resisted Romanian Deadlift (Girls Gone Strong)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Stand on the middle of the band, feet hip-width apart.",
-    "Hold the ends short, near your knees, so there's tension."
-  ],
-  "cues": [
-    "Flat back, soft knees, chest open.",
-    "Push your hips straight back.",
-    "Squeeze your glutes and drive your hips forward to stand."
-  ],
+  "setup": ["Stand on the middle of the band, feet hip-width apart.", "Hold the ends short, near your knees, so there's tension."],
+  "cues": ["Flat back, soft knees, chest open.", "Push your hips straight back.", "Squeeze your glutes and drive your hips forward to stand."],
   "prescription": {
     "reps": "12–15",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Stand tall",
       "cue": "Band taut, hands near your knees.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -6,
-        "shoulderR": -6
-      },
-      "phase": "rep"
+        "shoulderL": [6, 0, 0],
+        "shoulderR": [6, 0, 0]
+      }
     },
     {
       "name": "Hinge",
       "cue": "Push your hips back until your torso is nearly level.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 80,
-        "hipL": -18,
-        "hipR": -18,
+        "torso": [80, 0, 0],
+        "shoulderL": [84, 0, 0],
+        "shoulderR": [84, 0, 0],
+        "hipL": [18, 0, 0],
         "kneeL": 22,
+        "ankleL": -4,
+        "hipR": [18, 0, 0],
         "kneeR": 22,
-        "shoulderL": -84,
-        "shoulderR": -84
-      },
-      "phase": "rep"
+        "ankleR": -4
+      }
     }
   ],
   "props": [

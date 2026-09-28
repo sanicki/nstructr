@@ -1,36 +1,25 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "pil-leg-circles",
   "name": "Leg Circles",
   "sanskrit": "Single-Leg Circles",
   "category": "Pilates",
   "focus": "Hips and deep core",
   "library": "Pilates",
-  "equipment": [
-    "Mat"
-  ],
+  "equipment": ["Mat"],
   "description": "Lying on your back with one leg reaching to the ceiling, draw small, smooth circles with that leg while your pelvis and back stay still on the mat. Then reverse, and switch legs.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-single-leg-circles/",
     "title": "Single Leg Circles on the Mat (Online Pilates Classes)",
     "note": "Classical Pilates mat exercise, described in our own words; also checked against Pilatesology's encyclopedia entry. Stick-figure approximation: from the side you see the leg sweep toward your head and feet, and it looks shorter as it crosses the body or swings out; the compass shows where the foot is."
   },
-  "setup": [
-    "Lie on your back, legs long, arms by your sides with palms down.",
-    "Lift one leg straight up toward the ceiling; keep the other leg long and heavy on the mat."
-  ],
-  "cues": [
-    "Keep the circles small enough that your pelvis doesn't rock.",
-    "Press your arms and the back of your body into the mat.",
-    "Pause at the top of each circle, then reverse after the set.",
-    "Tight hamstrings? Bend the lifted knee a little, or bend the bottom knee with that foot flat."
-  ],
+  "setup": ["Lie on your back, legs long, arms by your sides with palms down.", "Lift one leg straight up toward the ceiling; keep the other leg long and heavy on the mat."],
+  "cues": ["Keep the circles small enough that your pelvis doesn't rock.", "Press your arms and the back of your body into the mat.", "Pause at the top of each circle, then reverse after the set.", "Tight hamstrings? Bend the lifted knee a little, or bend the bottom knee with that foot flat."],
   "prescription": {
     "reps": "5 each direction, each leg",
     "note": "Breathe out as the leg circles down, in as it comes back up."
   },
-  "facing": "right",
   "floorGuide": {
     "type": "star",
     "arms": 4
@@ -56,272 +45,215 @@
     {
       "name": "Lie on your back",
       "cue": "Lie on your back, arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1200,
       "holdMs": 400,
+      "phase": "setup",
       "anchor": "pelvis",
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
         "ankleL": 20,
-        "hipR": 0,
-        "thighDepthR": 0,
-        "ankleR": 20,
-        "shinDepthR": 0
-      },
-      "phase": "setup"
+        "ankleR": 20
+      }
     },
     {
       "name": "Leg up",
       "cue": "Lift your right leg to the ceiling.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1200,
       "holdMs": 400,
+      "phase": "setup",
       "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -100,
-        "thighDepthR": 0,
-        "shinDepthR": 0
-      },
       "guide": {
         "direction": 0,
         "label": "Up"
       },
-      "phase": "setup"
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [100, 0, 0]
+      }
     },
     {
       "name": "Up and across",
       "cue": "",
-      "view": "side",
+      "camera": 90,
       "durationMs": 225,
       "holdMs": 0,
-      "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -95.3,
-        "thighDepthR": -22.6,
-        "shinDepthR": -22.6
-      },
       "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "pelvis",
       "guide": {
         "direction": 315,
         "label": "Up and across"
       },
-      "phase": "rep",
-      "quiet": true
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [95.3, -22.6, 0]
+      }
     },
     {
       "name": "Across",
       "cue": "Across your body.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 225,
       "holdMs": 0,
-      "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -84,
-        "thighDepthR": -32,
-        "shinDepthR": -32
-      },
       "ease": "linear",
+      "phase": "rep",
+      "anchor": "pelvis",
       "guide": {
         "direction": 270,
         "label": "Across"
       },
-      "phase": "rep"
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [84, -32, 0]
+      }
     },
     {
       "name": "Across and down",
       "cue": "",
-      "view": "side",
+      "camera": 90,
       "durationMs": 225,
       "holdMs": 0,
-      "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -72.7,
-        "thighDepthR": -22.6,
-        "shinDepthR": -22.6
-      },
       "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "pelvis",
       "guide": {
         "direction": 225,
         "label": "Across and down"
       },
-      "phase": "rep",
-      "quiet": true
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [72.7, -22.6, 0]
+      }
     },
     {
       "name": "Down",
       "cue": "Down.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 225,
       "holdMs": 0,
-      "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -68,
-        "thighDepthR": 0,
-        "shinDepthR": 0
-      },
       "ease": "linear",
+      "phase": "rep",
+      "anchor": "pelvis",
       "guide": {
         "direction": 180,
         "label": "Down"
       },
-      "phase": "rep"
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [68, 0, 0]
+      }
     },
     {
       "name": "Down and out",
       "cue": "",
-      "view": "side",
+      "camera": 90,
       "durationMs": 225,
       "holdMs": 0,
-      "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -72.7,
-        "thighDepthR": 22.6,
-        "shinDepthR": 22.6
-      },
       "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "pelvis",
       "guide": {
         "direction": 135,
         "label": "Down and out"
       },
-      "phase": "rep",
-      "quiet": true
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [72.7, 22.6, 0]
+      }
     },
     {
       "name": "Out",
       "cue": "Out to the side.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 225,
       "holdMs": 0,
-      "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -84,
-        "thighDepthR": 32,
-        "shinDepthR": 32
-      },
       "ease": "linear",
+      "phase": "rep",
+      "anchor": "pelvis",
       "guide": {
         "direction": 90,
         "label": "Out"
       },
-      "phase": "rep"
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [84, 32, 0]
+      }
     },
     {
       "name": "Out and up",
       "cue": "",
-      "view": "side",
+      "camera": 90,
       "durationMs": 225,
       "holdMs": 0,
-      "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -95.3,
-        "thighDepthR": 22.6,
-        "shinDepthR": 22.6
-      },
       "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "pelvis",
       "guide": {
         "direction": 45,
         "label": "Out and up"
       },
-      "phase": "rep",
-      "quiet": true
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [95.3, 22.6, 0]
+      }
     },
     {
       "name": "Up",
       "cue": "Back up, and pause.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 225,
       "holdMs": 250,
-      "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
-        "ankleL": 20,
-        "hipR": -100,
-        "thighDepthR": 0,
-        "shinDepthR": 0
-      },
       "ease": "linear",
+      "phase": "rep",
+      "anchor": "pelvis",
       "guide": {
         "direction": 0,
         "label": "Up"
       },
-      "phase": "rep"
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [100, 0, 0]
+      }
     },
     {
       "name": "Lower the leg",
       "cue": "Lower the leg to the mat.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1200,
       "holdMs": 300,
+      "phase": "finish",
       "anchor": "pelvis",
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": 0,
-        "shoulderR": 0,
-        "hipL": 0,
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
         "ankleL": 20,
-        "hipR": 0,
-        "thighDepthR": 0,
-        "ankleR": 20,
-        "shinDepthR": 0
-      },
-      "phase": "finish"
+        "ankleR": 20
+      }
     }
   ]
 }

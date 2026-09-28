@@ -25,6 +25,10 @@ It was made with a newer library. Open the app while online so it updates, then 
 The instructions are always copied too: paste them into the chat (long-press → Paste). Some installed AI apps
 ignore the prefilled message that their website accepts.
 
+**"It's in an old format that this version can't read."**
+The file, backup or link was made before September 2026, when the figure became 3D (file version 1). Those can't
+be opened any more; make the exercise again (Create with AI is quickest).
+
 **The AI's answer won't import.**
 Make sure you copied all of it. Ask the AI to "answer with only the JSON file", then paste again.
 

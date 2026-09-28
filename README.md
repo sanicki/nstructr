@@ -1,6 +1,6 @@
 # NstructR
 
-Exercise animations and workouts with a stick figure: 136 exercises (yoga, bodyweight, core, Pilates, bands,
+Exercise animations and workouts with a 3D stick figure: 137 exercises (yoga, bodyweight, core, Pilates, bands,
 free weights, chair-based, stretches, balance) and a workout player built to be used from the floor —
 including on the cover screen of a foldable flip phone — with optional voice coaching.
 
@@ -67,7 +67,7 @@ Read these, in this order, before changing anything:
 |---|---|
 | [`CLAUDE.md`](CLAUDE.md) | Commands, rules and where the code is (short; read first). [`AGENTS.md`](AGENTS.md) points here too. |
 | [`HANDOFF.md`](HANDOFF.md) | The full picture: file formats, engine pipeline, validation rules, UI inventory, storage keys, tests, roadmap, open questions |
-| [`docs/3d-skeleton.md`](docs/3d-skeleton.md) | The proposed 3D skeleton (not built yet) |
+| [`docs/3d-skeleton.md`](docs/3d-skeleton.md) | The 3D figure (exercise format v2): why, the joint model and range of motion, how the library was converted |
 | [`docs/audit-2026-09.md`](docs/audit-2026-09.md) | The Sep 2026 audit: accessibility, Material Design, security, performance |
 | [`wiki/`](wiki/Home.md) | The user guide: how the app behaves from a user's side |
 | `schema/*.schema.json` | JSON Schemas for exercise and workout files |

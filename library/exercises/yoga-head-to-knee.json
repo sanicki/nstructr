@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-head-to-knee",
   "name": "Head-to-Knee Pose",
   "sanskrit": "Janu Sirsasana",
   "category": "Forward Bend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Seated forward bend over one straight leg with the other foot against the inner thigh.",
   "source": {
     "url": "https://www.yogajournal.com/poses/head-to-knee-forward-bend/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit tall with both legs straight out in front of you.",
-    "Bend one knee and rest that foot against the inner thigh of the straight leg."
-  ],
-  "facing": "right",
+  "setup": ["Sit tall with both legs straight out in front of you.", "Bend one knee and rest that foot against the inner thigh of the straight leg."],
   "keyframes": [
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
@@ -39,23 +34,21 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": -90,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
     },
     {
       "name": "Draw the left knee in",
       "cue": "Bend the left knee and bring the foot toward the thigh.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 500,
+      "phase": "setup",
       "anchor": "pelvis",
-      "plant": [
-        "L"
-      ],
+      "plant": ["L"],
       "touch": [
         {
           "point": "ankleL",
@@ -71,43 +64,42 @@
         }
       ],
       "pose": {
-        "hipL": -135,
-        "hipR": -90,
-        "shoulderL": 20,
-        "shoulderR": 20,
-        "kneeL": 135
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [135, 0, 0],
+        "kneeL": 180,
+        "ankleL": -45,
+        "hipR": [90, 0, 0]
+      }
     },
     {
       "name": "Head-to-Knee Pose",
       "cue": "Bend the left knee, then fold over the straight right leg.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "torso": 62,
-        "neck": 10,
-        "hipR": -90,
-        "hipL": -90,
+        "torso": [62, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [150, 0, 0],
+        "shoulderR": [150, 0, 0],
+        "hipL": [90, 0, 0],
         "kneeL": 180,
         "ankleL": 90,
-        "shoulderL": -150,
-        "shoulderR": -150
-      },
-      "phase": "rep"
+        "hipR": [90, 0, 0]
+      }
     },
     {
       "name": "Left knee back up",
       "cue": "Bring the left knee back up, foot planted, before straightening the leg.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 500,
+      "phase": "finish",
       "anchor": "pelvis",
-      "plant": [
-        "L"
-      ],
+      "plant": ["L"],
       "touch": [
         {
           "point": "ankleL",
@@ -123,19 +115,16 @@
         }
       ],
       "pose": {
-        "hipL": -135,
-        "hipR": -90,
-        "shoulderL": 20,
-        "shoulderR": 20,
-        "kneeL": 135
-      },
-      "phase": "finish"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [135, 0, 0],
+        "kneeL": 180,
+        "ankleL": -45,
+        "hipR": [90, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Fold from the hips.",
-    "Keep the straight leg active."
-  ],
+  "cues": ["Fold from the hips.", "Keep the straight leg active."],
   "bilateral": {
     "labels": {
       "L": "Left side",

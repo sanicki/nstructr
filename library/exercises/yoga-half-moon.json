@@ -1,74 +1,60 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-half-moon",
   "name": "Half Moon Pose",
   "sanskrit": "Ardha Chandrasana",
   "category": "Balancing",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Standing balance on one leg with the torso and lifted leg parallel to the floor.",
   "source": {
     "url": "https://www.yogajournal.com/poses/half-moon-pose-3/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Start in Triangle Pose, or a wide stance with the front foot turned out.",
-    "Bend your front knee and place your lower hand on the floor or a block ahead of your front foot."
-  ],
-  "facing": "right",
+  "setup": ["Start in Triangle Pose, or a wide stance with the front foot turned out.", "Bend your front knee and place your lower hand on the floor or a block ahead of your front foot."],
   "keyframes": [
     {
       "name": "Step wide",
       "cue": "Step the feet wide apart, arms out to the sides.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         }
       ],
       "pose": {
-        "shoulderL": -90,
-        "shoulderR": 90,
-        "hipL": -30,
-        "hipR": 30
-      },
-      "phase": "setup"
+        "shoulderL": [0, 90, 0],
+        "shoulderR": [0, 90, 0],
+        "hipL": [0, 30, 0],
+        "hipR": [0, 30, 0]
+      }
     },
     {
       "name": "Half Moon Pose",
       "cue": "Balance on the right leg, lift the left leg, reach the left arm up.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "R"
-      ],
+      "plant": ["R"],
       "pose": {
-        "torso": -100,
-        "hipL": -80,
-        "shoulderR": 100,
-        "shoulderL": -80
-      },
-      "phase": "rep"
+        "torso": [0, 100, 0],
+        "shoulderL": [0, 80, 0],
+        "shoulderR": [0, 100, 0],
+        "hipL": [0, 80, 0]
+      }
     }
   ],
-  "cues": [
-    "Use a block under the lower hand.",
-    "Flex the lifted foot."
-  ],
+  "cues": ["Use a block under the lower hand.", "Flex the lifted foot."],
   "bilateral": {
     "labels": {
       "L": "Left side",

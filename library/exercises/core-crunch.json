@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "core-crunch",
   "name": "Crunch",
   "category": "Core",
@@ -13,32 +13,22 @@
     "title": "Crunch (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on your back with your knees bent and feet flat.",
-    "Cross your arms over your chest."
-  ],
-  "cues": [
-    "Curl up from the upper back; the lower back stays down.",
-    "Don't pull on your neck.",
-    "Breathe out as you curl up."
-  ],
+  "setup": ["Lie on your back with your knees bent and feet flat.", "Cross your arms over your chest."],
+  "cues": ["Curl up from the upper back; the lower back stays down.", "Don't pull on your neck.", "Breathe out as you curl up."],
   "prescription": {
     "reps": "8–15",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Lie on your back",
       "cue": "Knees bent, arms across your chest.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "pelvis",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -49,43 +39,46 @@
           "adjust": "kneeL"
         }
       ],
-      "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -58,
-        "hipR": -58,
-        "kneeL": 125,
-        "kneeR": 125
-      },
       "reach": [
         {
           "hand": "handR",
           "to": "neckBase",
-          "dx": 18,
-          "dy": -6,
-          "bend": 1
+          "dx": 22,
+          "dy": 6,
+          "dz": 18
         },
         {
           "hand": "handL",
           "to": "neckBase",
-          "dx": 18,
-          "dy": -6,
-          "bend": 1
+          "dx": -22,
+          "dy": 6,
+          "dz": 18
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [86.3, 0, 180],
+        "elbowL": 164.2,
+        "shoulderR": [86.3, 0, 180],
+        "elbowR": 164.2,
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
     },
     {
       "name": "Curl up",
       "cue": "Lift your head and shoulders off the floor.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 500,
+      "phase": "rep",
       "anchor": "pelvis",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -96,32 +89,37 @@
           "adjust": "kneeL"
         }
       ],
-      "pose": {
-        "root": -90,
-        "chest": 32,
-        "neck": 44,
-        "hipL": -58,
-        "hipR": -58,
-        "kneeL": 125,
-        "kneeR": 125
-      },
       "reach": [
         {
           "hand": "handR",
           "to": "neckBase",
-          "dx": 18,
-          "dy": -6,
-          "bend": 1
+          "dx": 22,
+          "dy": 6,
+          "dz": 18
         },
         {
           "hand": "handL",
           "to": "neckBase",
-          "dx": 18,
-          "dy": -6,
-          "bend": 1
+          "dx": -22,
+          "dy": 6,
+          "dz": 18
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [125.1, 0, 180],
+        "elbowL": 162.5,
+        "shoulderR": [125.1, 0, 180],
+        "elbowR": 162.5,
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
     }
   ],
   "measure": "reps",

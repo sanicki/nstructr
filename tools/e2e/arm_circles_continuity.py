@@ -12,7 +12,7 @@ async def main():
                 while(S.t>=cur.dur+cur.hold){ const nx=nextIndex(S.idx); if(nx<0) return res; S.t-=cur.dur+cur.hold; S.prev=S.idx; S.idx=nx; cur=S.resolved[S.idx]; }
                 const a=S.resolved[S.prev]||S.from||S.resolved[S.idx], b=S.resolved[S.idx];
                 const raw=b.dur?Math.min(1,S.t/b.dur):1, e=b.ease==='linear'?raw:(raw<.5?4*raw**3:1-Math.pow(-2*raw+2,3)/2);
-                const f=frameAt(a,b,e,S.seg); const P=fk(f.pose,f.v,S.seg,f.pos.x,f.pos.y);
+                const f=frameAt(a,b,e,S.seg); const P=project(fkAt(f.pose,S.seg,f.pos),f.cam);
                 // the hand's clock angle around the shoulder, as drawn
                 res.push(Math.atan2(P.handR.y-P.shoulderR.y, P.handR.x-P.shoulderR.x)*180/Math.PI); }
               return res;})()""")

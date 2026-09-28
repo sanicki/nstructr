@@ -37,13 +37,18 @@ async def main():
             # an unchanged library exercise is just bookmarked (nothing stored); the rest land in My exercises
             print(f'import {label:<30}', await pg.evaluate("[S.lib.items.length ? S.lib.items.slice(-1)[0].id : '(none stored)', [...BOOKMARKS].join(' ')]"))
         # a workout file with its own exercise: the reference follows the rename
-        wk = {"version": 1, "name": "Ref Test", "blocks": [{"name": "B", "items": [{"ex": "bw-reverse-lunge", "reps": 3}, {"ex": "bw-squat-x", "reps": 3}]}]}
+        wk = {"version": 2, "name": "Ref Test", "blocks": [{"name": "B", "items": [{"ex": "bw-reverse-lunge", "reps": 3}, {"ex": "bw-squat-x", "reps": 3}]}]}
         sq = json.loads(lib); sq['id'] = 'bw-squat-x'; sq['name'] = 'Squat X'
-        f = {"format": "nstructr/workout", "version": 1, "workouts": [wk], "exercises": [sq]}
+        f = {"format": "nstructr/workout", "version": 2, "workouts": [wk], "exercises": [sq]}
         await pg.evaluate(f"importAndShow([[{json.dumps(json.dumps(f))}, 'w.json']])"); await pg.wait_for_timeout(200)
         print('workout refs after import            ', await pg.evaluate("WK.list.slice(-1)[0].blocks[0].items.map(i=>i.ex)"))
         # a file from a newer version is refused
-        await pg.evaluate("""importAndShow([['{"version":2,"id":"x","name":"X","keyframes":[{}]}', 'new.json']])"""); await pg.wait_for_timeout(100)
+        await pg.evaluate("""importAndShow([['{"version":3,"id":"x","name":"X","keyframes":[{}]}', 'new.json']])"""); await pg.wait_for_timeout(100)
         print('newer file                           ', await pg.inner_text('#snackbar'))
+        # format 1 (the 2D poses, before Sep 2026) isn't read any more, as a file or in a workout file
+        await pg.evaluate("""importAndShow([['{"version":1,"id":"x","name":"X","keyframes":[{"view":"side","pose":{"hipR":-30}}]}', 'old.json']])"""); await pg.wait_for_timeout(100)
+        print('old (v1) file                        ', await pg.inner_text('#snackbar'))
+        await pg.evaluate("""importAndShow([['{"id":"x","name":"X","keyframes":[{"view":"side","pose":{"hipR":-30}}]}', 'old.json']])"""); await pg.wait_for_timeout(100)
+        print('v1 poses without a version           ', await pg.inner_text('#snackbar'))
         print('errors', errs); await b.close()
 asyncio.run(main())

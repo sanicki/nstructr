@@ -1,49 +1,44 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-child",
   "name": "Child's Pose",
   "sanskrit": "Balasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Resting pose kneeling with the hips on the heels and the forehead toward the floor.",
   "source": {
     "url": "https://www.yogajournal.com/poses/child-s-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Kneel and sit your hips back toward your heels, big toes touching.",
-    "Bring your knees together or wide, then walk your hands forward."
-  ],
-  "facing": "right",
+  "setup": ["Kneel and sit your hips back toward your heels, big toes touching.", "Bring your knees together or wide, then walk your hands forward."],
   "keyframes": [
     {
       "name": "Kneel tall",
       "cue": "Kneel with the hips over the knees.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "kneeL",
       "pose": {
+        "shoulderL": [-360, 0, 0],
+        "shoulderR": [-360, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
-        "ankleR": 90,
-        "shoulderL": 360,
-        "shoulderR": 360
-      },
-      "phase": "setup"
+        "kneeR": 90,
+        "ankleR": 90
+      }
     },
     {
       "name": "Child's Pose",
       "cue": "Sit back on the heels and fold forward, arms reaching ahead.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "kneeL",
       "touch": [
         {
@@ -60,24 +55,20 @@
         }
       ],
       "pose": {
-        "torso": 100,
-        "neck": 10,
-        "hipL": -78,
-        "hipR": -78,
+        "torso": [87, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [-194.9, 0, 0],
+        "shoulderR": [-194.9, 0, 0],
+        "hipL": [78, 0, 0],
         "kneeL": 170,
-        "kneeR": 170,
         "ankleL": 90,
-        "ankleR": 90,
-        "shoulderL": 165,
-        "shoulderR": 165
-      },
-      "phase": "rep"
+        "hipR": [78, 0, 0],
+        "kneeR": 170,
+        "ankleR": 90
+      }
     }
   ],
-  "cues": [
-    "Widen the knees if the belly needs room.",
-    "Breathe into the back."
-  ],
+  "cues": ["Widen the knees if the belly needs room.", "Breathe into the back."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

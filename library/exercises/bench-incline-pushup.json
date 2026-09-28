@@ -1,41 +1,32 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bench-incline-pushup",
   "name": "Incline Push-Up",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
   "library": "Bodyweight",
-  "equipment": [
-    "Bench"
-  ],
+  "equipment": ["Bench"],
   "description": "A step between wall and floor push-ups: hands on a bench or sturdy table, body straight, lower your chest to the edge and press away.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/incline-push-up",
     "title": "Incline Push-Up (NASM Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Put your hands on the edge of a sturdy bench, just wider than your shoulders.",
-    "Walk your feet back until your body is a straight line."
-  ],
-  "cues": [
-    "Keep your body in one line from head to heels.",
-    "Elbows angle back, not straight out.",
-    "Lower your chest toward the edge, then press away."
-  ],
+  "setup": ["Put your hands on the edge of a sturdy bench, just wider than your shoulders.", "Walk your feet back until your body is a straight line."],
+  "cues": ["Keep your body in one line from head to heels.", "Elbows angle back, not straight out.", "Lower your chest toward the edge, then press away."],
   "prescription": {
     "reps": "8–15",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Arms straight",
       "cue": "Hands on the bench, body straight.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -48,20 +39,22 @@
         }
       ],
       "pose": {
-        "root": 47,
-        "shoulderL": -47,
-        "shoulderR": -47,
+        "root": [47, 0, 0],
+        "shoulderL": [47, 0, 0],
+        "shoulderR": [47, 0, 0],
+        "hipL": [-9.7, 0, 0],
         "ankleL": 43,
+        "hipR": [-9.7, 0, 0],
         "ankleR": 43
-      },
-      "phase": "rep"
+      }
     },
     {
       "name": "Lower",
       "cue": "Bend your elbows and lower your chest.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -74,21 +67,22 @@
         }
       ],
       "pose": {
-        "root": 62,
-        "shoulderL": 28,
-        "shoulderR": 28,
-        "elbowL": -90,
-        "elbowR": -90,
+        "root": [62, 0, 0],
+        "shoulderL": [-28, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-28, 0, 0],
+        "elbowR": 90,
+        "hipL": [-8.6, 0, 0],
         "ankleL": 28,
+        "hipR": [-8.6, 0, 0],
         "ankleR": 28
-      },
-      "phase": "rep"
+      }
     }
   ],
   "props": [
     {
       "type": "bench",
-      "x": 95
+      "z": 95
     }
   ],
   "measure": "reps",

@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "mayo-shoulder",
   "name": "Shoulder Stretch",
   "category": "Stretch",
@@ -13,61 +13,49 @@
     "title": "Mayo Clinic: A guide to basic stretches",
     "note": "Stick-figure approximation."
   },
-  "setup": [
-    "Stand or sit tall."
-  ],
-  "cues": [
-    "Hold above or below the elbow, not on the joint.",
-    "Keep your shoulders down and relaxed.",
-    "Helpful if you play golf, tennis or other throwing or overhead sports."
-  ],
+  "setup": ["Stand or sit tall."],
+  "cues": ["Hold above or below the elbow, not on the joint.", "Keep your shoulders down and relaxed.", "Helpful if you play golf, tennis or other throwing or overhead sports."],
   "prescription": {
     "reps": "2–4 each side",
     "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Stand tall",
       "cue": "Arms relaxed.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1600,
       "holdMs": 800,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -4,
-        "shoulderR": 4
-      },
-      "phase": "setup"
+        "shoulderL": [0, 4, -90],
+        "shoulderR": [0, 4, -90]
+      }
     },
     {
       "name": "Arm across",
       "cue": "Bring your left arm across your body and hold it with your right arm.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2000,
       "holdMs": 30000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {
-        "shoulderL": 82,
-        "elbowL": 4,
-        "shoulderR": 30
-      },
+      "plant": ["L", "R"],
       "reach": [
         {
           "hand": "handR",
           "to": "elbowL",
-          "dx": -18
+          "dx": 18
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "shoulderL": [0, -82, -90],
+        "elbowL": 4,
+        "shoulderR": [0, 139.5, -90],
+        "elbowR": 147.8
+      }
     }
   ],
   "bilateral": {

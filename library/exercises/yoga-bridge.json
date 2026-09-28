@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-bridge",
   "name": "Bridge Pose",
   "sanskrit": "Setu Bandha Sarvangasana",
   "category": "Backbend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Lying on the back with the feet planted, lift the hips toward the ceiling.",
   "source": {
     "url": "https://www.yogajournal.com/poses/bridge-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Lie on your back with your knees bent and your feet flat, hip-width apart, heels near your hips.",
-    "Rest your arms by your sides, palms down."
-  ],
-  "facing": "right",
+  "setup": ["Lie on your back with your knees bent and your feet flat, hip-width apart, heels near your hips.", "Rest your arms by your sides, palms down."],
   "keyframes": [
     {
       "name": "Lie on your back",
       "cue": "Knees bent, feet flat and hip-width apart, close to your hips.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,50 +35,44 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -58,
-        "hipR": -58,
-        "kneeL": 125,
-        "kneeR": 125
-      },
-      "phase": "setup"
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
     },
     {
       "name": "Bridge Pose",
       "cue": "Press into the feet and lift the hips.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
+      "keep": ["ankleL", "ankleR", "handL", "handR"],
       "pose": {
-        "root": -150,
-        "chest": 50,
-        "neck": 50,
-        "hipL": -5,
-        "hipR": -5,
-        "kneeL": 115,
-        "kneeR": 115,
-        "shoulderL": 5,
-        "shoulderR": 5
-      },
-      "keep": [
-        "ankleL",
-        "ankleR",
-        "handL",
-        "handR"
-      ],
-      "phase": "rep"
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 80.5,
+        "ankleR": 24.6
+      }
     }
   ],
-  "cues": [
-    "Keep the knees over the ankles.",
-    "Press the arms into the floor."
-  ],
+  "cues": ["Keep the knees over the ankles.", "Press the arms into the floor."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

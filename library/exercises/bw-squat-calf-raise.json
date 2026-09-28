@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bw-squat-calf-raise",
   "name": "Squat to Calf Raise",
   "category": "Strength",
@@ -13,82 +13,68 @@
     "title": "Squat to Calf Raise tutorial (Runna)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Stand with your feet hip- to shoulder-width apart."
-  ],
-  "cues": [
-    "Push your hips back and keep your chest up in the squat.",
-    "Stand up through your heels, then roll up onto your toes.",
-    "Lower your heels with control before the next rep."
-  ],
+  "setup": ["Stand with your feet hip- to shoulder-width apart."],
+  "cues": ["Push your hips back and keep your chest up in the squat.", "Stand up through your heels, then roll up onto your toes.", "Lower your heels with control before the next rep."],
   "prescription": {
     "reps": "12–15",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Stand tall",
       "cue": "Feet hip- to shoulder-width apart.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1200,
       "holdMs": 100,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "rep"
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Squat",
       "cue": "Sit your hips back and down.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 200,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 38,
-        "hipL": -88,
-        "hipR": -88,
+        "torso": [38, 0, 0],
+        "shoulderL": [128, 0, 0],
+        "shoulderR": [128, 0, 0],
+        "hipL": [88, 0, 0],
         "kneeL": 102,
+        "ankleL": -14,
+        "hipR": [88, 0, 0],
         "kneeR": 102,
-        "shoulderL": -128,
-        "shoulderR": -128
-      },
-      "phase": "rep"
+        "ankleR": -14
+      }
     },
     {
       "name": "Stand up",
       "cue": "Drive up through your heels.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 0,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "rep"
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Calf raise",
       "cue": "Rise onto the balls of your feet.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1000,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "toeL",
       "pose": {
         "ankleL": 38,
         "ankleR": 38
-      },
-      "phase": "rep"
+      }
     }
   ],
   "measure": "reps",

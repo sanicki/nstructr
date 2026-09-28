@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-chaturanga",
   "name": "Four-Limbed Staff Pose",
   "sanskrit": "Chaturanga Dandasana",
   "category": "Arm Balance",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Low plank with the elbows bent to 90 degrees and the body in one line.",
   "source": {
     "url": "https://www.yogajournal.com/poses/four-limbed-staff-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Start in a high plank: hands under your shoulders, legs straight, body in one line.",
-    "Shift a little forward onto your toes before you lower."
-  ],
-  "facing": "right",
+  "setup": ["Start in a high plank: hands under your shoulders, legs straight, body in one line.", "Shift a little forward onto your toes before you lower."],
   "keyframes": [
     {
       "name": "Plank",
       "cue": "Hands under shoulders, body in one straight line.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "handR",
       "touch": [
         {
@@ -39,20 +34,22 @@
         }
       ],
       "pose": {
-        "root": 66,
-        "shoulderL": -66,
-        "shoulderR": -66,
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
         "ankleL": 24,
+        "hipR": [-8, 0, 0],
         "ankleR": 24
-      },
-      "phase": "setup"
+      }
     },
     {
       "name": "Chaturanga",
       "cue": "Lower with the elbows hugging in until the upper arms are level.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -65,21 +62,19 @@
         }
       ],
       "pose": {
-        "root": 79,
-        "shoulderL": 11,
-        "shoulderR": 11,
-        "elbowL": -90,
-        "elbowR": -90,
+        "root": [79, 0, 0],
+        "shoulderL": [-11, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-11, 0, 0],
+        "elbowR": 90,
+        "hipL": [-7.5, 0, 0],
         "ankleL": 11,
+        "hipR": [-7.5, 0, 0],
         "ankleR": 11
-      },
-      "phase": "rep"
+      }
     }
   ],
-  "cues": [
-    "Stop when the shoulders reach elbow height.",
-    "Keep the hips level with the shoulders."
-  ],
+  "cues": ["Stop when the shoulders reach elbow height.", "Keep the hips level with the shoulders."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

@@ -1,95 +1,98 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "pil-rolling-ball",
   "name": "Rolling Like a Ball",
   "category": "Pilates",
   "focus": "Core and spine",
   "library": "Pilates",
-  "equipment": [
-    "Mat"
-  ],
+  "equipment": ["Mat"],
   "description": "Curled into a ball and balanced on your tailbone, roll back to your shoulder blades and back up to balance again.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-rolling-like-a-ball/",
     "title": "Rolling Like a Ball on the Mat (Online Pilates Classes)",
     "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Sit and hug your shins, feet off the mat, chin tucked, back rounded like a ball."
-  ],
-  "cues": [
-    "Keep the ball shape the same the whole time.",
-    "Roll only to your shoulder blades, never your neck.",
-    "Use your stomach to stop at the top."
-  ],
+  "setup": ["Sit and hug your shins, feet off the mat, chin tucked, back rounded like a ball."],
+  "cues": ["Keep the ball shape the same the whole time.", "Roll only to your shoulder blades, never your neck.", "Use your stomach to stop at the top."],
   "prescription": {
     "reps": "6–8",
     "note": "Move with your breath, slowly and with control."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Balance",
       "cue": "Curled up, balancing on your tailbone.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1000,
       "holdMs": 400,
-      "pose": {
-        "root": -38,
-        "chest": 32,
-        "neck": 34,
-        "hipL": -110,
-        "hipR": -110,
-        "kneeL": 150,
-        "kneeR": 150
-      },
+      "phase": "rep",
       "reach": [
         {
           "hand": "handR",
           "to": "kneeR",
           "dx": 10,
-          "dy": 22
+          "dy": -22,
+          "dz": 10
         },
         {
           "hand": "handL",
           "to": "kneeL",
-          "dx": 10,
-          "dy": 22
+          "dx": -10,
+          "dy": -22,
+          "dz": 10
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "root": [-38, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [37.7, 0, 0],
+        "elbowL": 46.9,
+        "shoulderR": [37.7, 0, 0],
+        "elbowR": 46.9,
+        "hipL": [110, 0, 0],
+        "kneeL": 150,
+        "hipR": [110, 0, 0],
+        "kneeR": 150
+      }
     },
     {
       "name": "Roll back",
       "cue": "Roll back to your shoulder blades.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1000,
       "holdMs": 100,
-      "pose": {
-        "root": -118,
-        "chest": 32,
-        "neck": 34,
-        "hipL": -110,
-        "hipR": -110,
-        "kneeL": 150,
-        "kneeR": 150
-      },
+      "phase": "rep",
       "reach": [
         {
           "hand": "handR",
           "to": "kneeR",
           "dx": 10,
-          "dy": 22
+          "dy": -22,
+          "dz": 10
         },
         {
           "hand": "handL",
           "to": "kneeL",
-          "dx": 10,
-          "dy": 22
+          "dx": -10,
+          "dy": -22,
+          "dz": 10
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "root": [-118, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "elbowL": 102.6,
+        "shoulderR": [8, 0, 0],
+        "elbowR": 102.6,
+        "hipL": [110, 0, 0],
+        "kneeL": 150,
+        "hipR": [110, 0, 0],
+        "kneeR": 150
+      }
     }
   ],
   "measure": "reps",

@@ -1,66 +1,57 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-bow",
   "name": "Bow Pose",
   "sanskrit": "Dhanurasana",
   "category": "Backbend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Belly-down backbend where the hands hold the ankles and the chest and thighs lift.",
   "source": {
     "url": "https://www.yogajournal.com/poses/bow-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Lie on your belly with your arms by your sides and your forehead down.",
-    "Bend your knees and reach back to hold the outsides of your ankles."
-  ],
-  "facing": "right",
+  "setup": ["Lie on your belly with your arms by your sides and your forehead down.", "Bend your knees and reach back to hold the outsides of your ankles."],
   "keyframes": [
     {
       "name": "Lie on your belly",
       "cue": "Lie face down with the arms along your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
       "pose": {
-        "root": 90,
-        "neck": -34,
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
         "ankleL": 90,
         "ankleR": 90
-      },
-      "phase": "setup"
+      }
     },
     {
       "name": "Bow Pose",
       "cue": "Bend the knees, hold the ankles, and lift the chest and thighs.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "root": 90,
-        "torso": -28,
-        "neck": -10,
-        "hipL": 22,
-        "hipR": 22,
+        "root": [90, 0, 0],
+        "torso": [-28, 0, 0],
+        "neck": [-10, 0, 0],
+        "shoulderL": [-62, 0, 0],
+        "shoulderR": [-62, 0, 0],
+        "hipL": [-22, 0, 0],
         "kneeL": 95,
-        "kneeR": 95,
-        "shoulderL": 62,
-        "shoulderR": 62
-      },
-      "phase": "rep"
+        "hipR": [-22, 0, 0],
+        "kneeR": 95
+      }
     }
   ],
-  "cues": [
-    "Kick the feet into the hands to lift.",
-    "Keep the knees about hip-width."
-  ],
+  "cues": ["Kick the feet into the hands to lift.", "Keep the knees about hip-width."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

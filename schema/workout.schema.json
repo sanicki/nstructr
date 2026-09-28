@@ -14,7 +14,7 @@
       "type": "string"
     },
     "version": {
-      "const": 1
+      "const": 2
     },
     "id": {
       "type": "string",

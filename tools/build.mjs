@@ -61,18 +61,17 @@ if (!args.has('--no-checks') && !errors.length) {
   }
   console.log(n ? `animation checks: ${n} problem(s)` : 'animation checks: all exercises pass');
 }
-// ---------- 2b. the 3D skeleton (step 1) must still draw today's picture from each step's own view ----------
+// ---------- 2b. range of motion (informational: poses past what a flexible body can do, to fix) ----------
 if (!args.has('--no-checks') && !errors.length) {
   const { spawnSync } = await import('node:child_process');
-  const r = spawnSync(process.execPath, [path.join(ROOT, 'tools/check3d.cjs')], { encoding: 'utf8' });
-  console.log(r.stdout.split('\n')[0]);
-  if (r.status !== 0) errors.push('3D skeleton: differs from the 2D picture (node tools/check3d.cjs for details)');
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'tools/rom.cjs')], { encoding: 'utf8' });
+  console.log(r.stdout.split('\n')[0] + ' (node tools/rom.cjs for the list)');
 }
 if (errors.length) { console.error('\n' + errors.map(e => '✗ ' + e).join('\n')); process.exit(1); }
 if (args.has('--check-only')) process.exit(0);
 
 // ---------- 3. bundle ----------
-const bundle = { format: 'nstructr/library', version: 1, generated: new Date().toISOString(), exercises, workouts };
+const bundle = { format: 'nstructr/library', version: 2, generated: new Date().toISOString(), exercises, workouts };
 fs.writeFileSync(path.join(ROOT, 'library/index.json'), JSON.stringify(bundle));
 
 // ---------- 4. assemble the site ----------

@@ -1,40 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bhf-abduction",
   "name": "Standing Band Hip Abduction",
   "category": "Strength",
   "focus": "Legs",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "Strengthens the muscles on the outside of the hips for better balance: with a band around both ankles, lift one straight leg out to the side.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
     "title": "British Heart Foundation: resistance band exercises",
     "note": "Standing version. The article also shows each exercise seated on a chair."
   },
-  "setup": [
-    "Stand with your feet hip-width apart.",
-    "Wrap a looped band, or tie a band, around both ankles."
-  ],
-  "cues": [
-    "Keep the lifting leg straight with the foot pointed.",
-    "Lower it with control.",
-    "Hold a wall or chair back if you feel wobbly."
-  ],
+  "setup": ["Stand with your feet hip-width apart.", "Wrap a looped band, or tie a band, around both ankles."],
+  "cues": ["Keep the lifting leg straight with the foot pointed.", "Lower it with control.", "Hold a wall or chair back if you feel wobbly."],
   "prescription": {
     "reps": "12–16 each leg",
     "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
   },
-  "facing": "right",
   "props": [
     {
       "type": "band",
       "from": "ankleL",
       "to": "ankleR",
-      "layer": "front",
       "restLength": 40
     }
   ],
@@ -42,41 +31,35 @@
     {
       "name": "Stand",
       "cue": "Feet hip-width apart, band around your ankles.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -27.2,
+        "shoulderL": [0, 27.2, -90],
         "elbowL": 65.8,
-        "shoulderR": 27.2,
-        "elbowR": -65.8
-      },
-      "phase": "rep"
+        "shoulderR": [0, 27.2, -90],
+        "elbowR": 65.8
+      }
     },
     {
       "name": "Lift out",
       "cue": "Lift your right leg out to the side, leg straight, foot pointed.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1400,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L"
-      ],
+      "plant": ["L"],
       "pose": {
-        "shoulderL": -27.2,
+        "shoulderL": [0, 27.2, -90],
         "elbowL": 65.8,
-        "shoulderR": 27.2,
-        "elbowR": -65.8,
-        "hipR": 30,
-        "ankleR": -20
-      },
-      "phase": "rep"
+        "shoulderR": [0, 27.2, -90],
+        "elbowR": 65.8,
+        "hipR": [0, 30, 0]
+      }
     }
   ],
   "bilateral": {

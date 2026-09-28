@@ -1,78 +1,63 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bw-wall-pushup",
   "name": "Wall Push-Up",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
   "library": "Bodyweight",
-  "equipment": [
-    "Wall"
-  ],
+  "equipment": ["Wall"],
   "description": "The gentlest push-up: lean into a wall with straight arms, then bend your elbows to bring your chest toward it and push back.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
     "title": "NHS: strength exercises (wall press-up)",
     "note": "Stick-figure approximation."
   },
-  "setup": [
-    "Stand an arm's length from a wall.",
-    "Put your hands flat on the wall at chest height, fingers pointing up."
-  ],
-  "cues": [
-    "Keep your body in a straight line from head to heels.",
-    "Elbows stay close to your sides.",
-    "Close the gap to the wall as far as you comfortably can, then push back slowly."
-  ],
+  "setup": ["Stand an arm's length from a wall.", "Put your hands flat on the wall at chest height, fingers pointing up."],
+  "cues": ["Keep your body in a straight line from head to heels.", "Elbows stay close to your sides.", "Close the gap to the wall as far as you comfortably can, then push back slowly."],
   "prescription": {
     "reps": "3 rounds of 5–10",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Arms straight",
       "cue": "Hands on the wall at chest height, body straight.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "root": 18,
-        "shoulderL": -98,
-        "shoulderR": -98,
-        "elbowL": -4,
-        "elbowR": -4
-      },
-      "phase": "rep"
+        "root": [18, 0, 0],
+        "shoulderL": [98, 0, 0],
+        "elbowL": 4,
+        "shoulderR": [98, 0, 0],
+        "elbowR": 4,
+        "ankleL": -18,
+        "ankleR": -18
+      }
     },
     {
       "name": "Bend your elbows",
       "cue": "Lower your chest toward the wall.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
+      "keep": ["handL", "handR"],
       "pose": {
-        "root": 32,
-        "shoulderL": -98,
-        "shoulderR": -98,
-        "elbowL": -4,
-        "elbowR": -4
-      },
-      "keep": [
-        "handL",
-        "handR"
-      ],
-      "phase": "rep"
+        "root": [32, 0, 0],
+        "shoulderL": [78.5, 0, 0],
+        "elbowL": 124.9,
+        "shoulderR": [78.5, 0, 0],
+        "elbowR": 124.9,
+        "ankleL": -32,
+        "ankleR": -32
+      }
     }
   ],
   "props": [

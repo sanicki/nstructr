@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-forearm-balance",
   "name": "Feathered Peacock Pose",
   "sanskrit": "Pincha Mayurasana",
   "category": "Inversion",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Forearm balance with the legs stacked over the shoulders.",
   "source": {
     "url": "https://www.yogajournal.com/poses/feathered-peacock-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Kneel facing a wall and set your forearms down, parallel and shoulder-width apart.",
-    "Tuck your toes and lift your hips into Dolphin, walking your feet in."
-  ],
-  "facing": "right",
+  "setup": ["Kneel facing a wall and set your forearms down, parallel and shoulder-width apart.", "Tuck your toes and lift your hips into Dolphin, walking your feet in."],
   "keyframes": [
     {
       "name": "Dolphin",
       "cue": "Forearms down, lift the hips high.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "elbowR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,37 +35,35 @@
         }
       ],
       "pose": {
-        "torso": 135,
-        "shoulderL": 225,
-        "shoulderR": 225,
-        "elbowL": -90,
-        "elbowR": -90,
-        "hipL": 30,
-        "hipR": 30
-      },
-      "phase": "setup"
+        "torso": [135, 0, 0],
+        "shoulderL": [-225, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-225, 0, 0],
+        "elbowR": 90,
+        "hipL": [-39.8, 0, 0],
+        "ankleL": -39.8,
+        "hipR": [-39.8, 0, 0],
+        "ankleR": -39.8
+      }
     },
     {
       "name": "Forearm Balance",
       "cue": "Walk in, kick up, and balance on the forearms.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "pose": {
-        "root": 180,
-        "neck": -70,
-        "shoulderL": 180,
-        "shoulderR": 180,
-        "elbowL": -90,
-        "elbowR": -90
-      },
-      "phase": "rep"
+        "root": [180, 0, 0],
+        "neck": [-70, 0, 0],
+        "shoulderL": [-180, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-180, 0, 0],
+        "elbowR": 90
+      }
     }
   ],
-  "cues": [
-    "Press the forearms down.",
-    "Practice near a wall."
-  ],
+  "cues": ["Press the forearms down.", "Practice near a wall."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

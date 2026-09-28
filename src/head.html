@@ -101,11 +101,12 @@ main{display:block;min-width:0}
 .wt{fill:var(--weight);stroke:none}
 .wt-hub{fill:var(--md-surface-container-low)}
 .wt-bar{stroke:var(--weight);stroke-width:4;stroke-linecap:round}
+.wt-plate{stroke:var(--weight);stroke-width:6;stroke-linecap:round}.wt-plate.big{stroke-width:8}
 .band{fill:none;stroke:var(--band);stroke-linecap:round;stroke-linejoin:round}
 .thumb .tb{fill:none;stroke:var(--band);stroke-width:4;stroke-linecap:round}
 .bone{stroke-width:10;stroke-linecap:round;fill:none}
-/* limbs that can point toward the camera are drawn with non-scaling strokes (so foreshortening doesn't squash
-   them); their width is set in screen pixels to match 10 units at the scene's current zoom */
+/* bones are drawn with non-scaling strokes; their width is set in screen pixels to match 10 units at the scene's
+   current zoom */
 .scene line.bone[vector-effect]{stroke-width:var(--limb-px,10px)}
 .core .bone,.core.bone{stroke:var(--md-on-surface)}
 .head{fill:var(--md-on-surface)}

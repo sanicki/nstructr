@@ -1,51 +1,42 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-revolved-triangle",
   "name": "Revolved Triangle Pose",
   "sanskrit": "Parivrtta Trikonasana",
   "category": "Standing",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Straight-legged split stance twisting with one hand down and the other up.",
   "source": {
     "url": "https://www.yogajournal.com/poses/revolved-triangle-pose-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand tall, then step one foot back about a leg's length, back foot turned slightly out.",
-    "Square your hips to the front and reach your arms out to the sides."
-  ],
-  "facing": "right",
+  "setup": ["Stand tall, then step one foot back about a leg's length, back foot turned slightly out.", "Square your hips to the front and reach your arms out to the sides."],
   "keyframes": [
     {
       "name": "Mountain Pose",
       "cue": "Stand tall with your feet together and arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 1200,
+      "phase": "setup",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "setup"
+      "anchorZ": 20,
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Revolved Triangle",
       "cue": "Step back, fold forward, left hand down, right arm up.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": 20,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
@@ -53,26 +44,23 @@
         }
       ],
       "pose": {
-        "torso": 90,
-        "hipR": -25,
-        "hipL": 25,
-        "shoulderL": -90,
-        "shoulderR": 90
-      },
-      "phase": "rep"
+        "torso": [90, 0, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [-90, 0, 0],
+        "hipL": [-25, 0, 0],
+        "ankleL": -25,
+        "hipR": [25, 0, 0],
+        "ankleR": 25
+      }
     }
   ],
-  "cues": [
-    "Use a block under the lower hand.",
-    "Keep the hips level."
-  ],
+  "cues": ["Use a block under the lower hand.", "Keep the hips level."],
   "bilateral": {
     "labels": {
       "L": "Left side",
       "R": "Right side"
     }
   },
-  "anchorX": 20,
   "measure": "time",
   "holdStep": 1,
   "defaults": {

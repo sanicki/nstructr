@@ -1,36 +1,24 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bhf-leg-press",
   "name": "Standing Band Leg Press",
   "category": "Strength",
   "focus": "Legs",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "Leg strength and hip and knee mobility: with the band under one foot, lift the knee, then press the foot back down into the band.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
     "title": "British Heart Foundation: resistance band exercises",
     "note": "Standing version. The article also shows each exercise seated on a chair."
   },
-  "setup": [
-    "Stand with your feet hip-width apart.",
-    "Put the middle of the band under the middle of your right foot.",
-    "Hold both ends tight in front of you at waist height."
-  ],
-  "cues": [
-    "Keep the band under your foot as the knee comes up.",
-    "Press down slowly.",
-    "Easier: hold the ends lower, closer to your feet.",
-    "Hold a wall or chair if you feel wobbly."
-  ],
+  "setup": ["Stand with your feet hip-width apart.", "Put the middle of the band under the middle of your right foot.", "Hold both ends tight in front of you at waist height."],
+  "cues": ["Keep the band under your foot as the knee comes up.", "Press down slowly.", "Easier: hold the ends lower, closer to your feet.", "Hold a wall or chair if you feel wobbly."],
   "prescription": {
     "reps": "12–16 each leg",
     "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
   },
-  "facing": "right",
   "props": [
     {
       "type": "band",
@@ -47,41 +35,36 @@
     {
       "name": "Lift the knee",
       "cue": "Raise your right knee, keeping the band under your foot.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L"
-      ],
+      "plant": ["L"],
       "pose": {
-        "shoulderL": 15,
-        "shoulderR": 15,
-        "elbowL": -95,
-        "elbowR": -95,
-        "hipR": -85,
+        "shoulderL": [-15, 0, 0],
+        "elbowL": 95,
+        "shoulderR": [-15, 0, 0],
+        "elbowR": 95,
+        "hipR": [85, 0, 0],
         "kneeR": 90
-      },
-      "phase": "rep"
+      }
     },
     {
       "name": "Press down",
       "cue": "Push your foot down into the band and back to the floor.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": 15,
-        "shoulderR": 15,
-        "elbowL": -95,
-        "elbowR": -95
-      },
-      "phase": "rep"
+        "shoulderL": [-15, 0, 0],
+        "elbowL": 95,
+        "shoulderR": [-15, 0, 0],
+        "elbowR": 95
+      }
     }
   ],
   "bilateral": {

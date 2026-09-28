@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-firefly",
   "name": "Firefly Pose",
   "sanskrit": "Tittibhasana",
   "category": "Arm Balance",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Arm balance with the legs extended wide and forward over the arms.",
   "source": {
     "url": "https://www.yogajournal.com/poses/firefly-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Squat with your feet a little narrower than hip-width.",
-    "Work your shoulders behind your knees and plant your hands behind your heels."
-  ],
-  "facing": "right",
+  "setup": ["Squat with your feet a little narrower than hip-width.", "Work your shoulders behind your knees and plant your hands behind your heels."],
   "keyframes": [
     {
       "name": "Squat",
       "cue": "Squat low with the hands on the floor in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "handR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,36 +35,36 @@
         }
       ],
       "pose": {
-        "torso": 55,
-        "hipL": -110,
-        "hipR": 250,
-        "kneeL": 140,
-        "kneeR": 140,
-        "shoulderL": -55,
-        "shoulderR": -55
-      },
-      "phase": "setup"
+        "torso": [55, 0, 0],
+        "shoulderL": [55, 0, 0],
+        "shoulderR": [55, 0, 0],
+        "hipL": [110, 0, 0],
+        "kneeL": 124.9,
+        "ankleL": -14.9,
+        "hipR": [-250, 0, 0],
+        "kneeR": 124.9,
+        "ankleR": -374.9
+      }
     },
     {
       "name": "Firefly Pose",
       "cue": "Hands down behind the feet, lift the hips, and straighten the legs.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handR",
       "pose": {
-        "hipL": -100,
-        "hipR": 100,
-        "shoulderL": -8,
-        "shoulderR": 8
-      },
-      "phase": "rep"
+        "shoulderL": [0, 8, 0],
+        "shoulderR": [0, 8, 0],
+        "hipL": [0, 100, 0],
+        "ankleL": -180,
+        "hipR": [-360, 100, 0],
+        "ankleR": -540
+      }
     }
   ],
-  "cues": [
-    "Squeeze the thighs onto the arms.",
-    "Point the toes and straighten the knees."
-  ],
+  "cues": ["Squeeze the thighs onto the arms.", "Point the toes and straighten the knees."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

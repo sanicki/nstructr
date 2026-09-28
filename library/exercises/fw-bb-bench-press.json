@@ -1,49 +1,35 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "fw-bb-bench-press",
   "name": "Barbell Bench Press",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
   "library": "Free weights",
-  "equipment": [
-    "Barbell",
-    "Bench"
-  ],
+  "equipment": ["Barbell", "Bench"],
   "description": "The classic upper-body press: lying on a bench, lower the bar to your chest with control, then press it back up to straight arms.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/5/chest-press/",
     "title": "Chest Press (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on a flat bench with your eyes under the bar and your feet flat on the floor.",
-    "Grip the bar a little wider than your shoulders and lift it off the rack to straight arms over your shoulders."
-  ],
-  "cues": [
-    "Keep your shoulder blades squeezed together and your feet planted.",
-    "Lower the bar to your lower chest, elbows at roughly 45° to your body, not flared straight out.",
-    "Press back up over your shoulders.",
-    "Use a spotter or a rack with safety bars, and learn with light weight first."
-  ],
+  "setup": ["Lie on a flat bench with your eyes under the bar and your feet flat on the floor.", "Grip the bar a little wider than your shoulders and lift it off the rack to straight arms over your shoulders."],
+  "cues": ["Keep your shoulder blades squeezed together and your feet planted.", "Lower the bar to your lower chest, elbows at roughly 45° to your body, not flared straight out.", "Press back up over your shoulders.", "Use a spotter or a rack with safety bars, and learn with light weight first."],
   "prescription": {
     "reps": "5–8",
     "note": "Warm up with lighter sets first. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Arms straight",
       "cue": "Bar over your shoulders, arms straight.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "pelvis",
-      "anchorX": 60,
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": 60,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -55,27 +41,28 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [90, 0, 0],
+        "hipL": [6.8, 0, 0],
         "kneeL": 90,
+        "ankleL": 6.8,
+        "hipR": [6.8, 0, 0],
         "kneeR": 90,
-        "shoulderL": -90,
-        "shoulderR": -90
-      },
-      "phase": "rep"
+        "ankleR": 6.8
+      }
     },
     {
       "name": "Lower to your chest",
       "cue": "Bend your elbows and lower the bar to your chest.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "pelvis",
-      "anchorX": 60,
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": 60,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -87,18 +74,19 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 86, -90],
+        "elbowL": 26,
+        "shoulderR": [90, 86, -90],
+        "elbowR": 26,
+        "hipL": [6.8, 0, 0],
         "kneeL": 90,
+        "ankleL": 6.8,
+        "hipR": [6.8, 0, 0],
         "kneeR": 90,
-        "shoulderL": -90,
-        "shoulderR": -90,
-        "armDepthL": 86,
-        "armDepthR": 86,
-        "forearmDepthL": 60,
-        "forearmDepthR": 60
-      },
-      "phase": "rep"
+        "ankleR": 6.8
+      }
     }
   ],
   "props": [
@@ -109,7 +97,7 @@
     },
     {
       "type": "bench",
-      "x": -30
+      "z": -30
     }
   ],
   "measure": "reps",

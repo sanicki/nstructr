@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-plow",
   "name": "Plow Pose",
   "sanskrit": "Halasana",
   "category": "Inversion",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Inversion on the shoulders with the legs lowered over the head.",
   "source": {
     "url": "https://www.yogajournal.com/poses/plow-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Lie on your back with your arms by your sides, palms down; a folded blanket under your shoulders protects your neck.",
-    "Bend your knees in toward your chest."
-  ],
-  "facing": "right",
+  "setup": ["Lie on your back with your arms by your sides, palms down; a folded blanket under your shoulders protects your neck.", "Bend your knees in toward your chest."],
   "keyframes": [
     {
       "name": "Lie on your back",
       "cue": "Lie down with the knees bent and feet flat.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,21 +35,23 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -45,
-        "hipR": -45,
-        "kneeL": 120,
-        "kneeR": 120
-      },
-      "phase": "setup"
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [45, 0, 0],
+        "kneeL": 90,
+        "ankleL": 45,
+        "hipR": [45, 0, 0],
+        "kneeR": 90,
+        "ankleR": 45
+      }
     },
     {
       "name": "Plow Pose",
       "cue": "Lift the hips over the shoulders and lower the feet behind the head.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "neckBase",
       "touch": [
         {
@@ -70,20 +64,16 @@
         }
       ],
       "pose": {
-        "root": -180,
-        "neck": 124,
-        "hipL": -143,
-        "hipR": -143,
-        "shoulderL": 90,
-        "shoulderR": 90
-      },
-      "phase": "rep"
+        "root": [-180, 0, 0],
+        "neck": [124, 0, 0],
+        "shoulderL": [-90, 0, 0],
+        "shoulderR": [-90, 0, 0],
+        "hipL": [120.4, 0, 0],
+        "hipR": [120.4, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Keep the neck still; don't turn the head.",
-    "Rest the feet on a block if they don't reach."
-  ],
+  "cues": ["Keep the neck still; don't turn the head.", "Rest the feet on a block if they don't reach."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

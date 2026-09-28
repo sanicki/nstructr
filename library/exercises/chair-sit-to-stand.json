@@ -1,47 +1,34 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "chair-sit-to-stand",
   "name": "Sit-to-Stand",
   "category": "Strength",
   "focus": "Thighs and glutes",
   "library": "Chair-based",
-  "equipment": [
-    "Chair"
-  ],
+  "equipment": ["Chair"],
   "description": "Builds the leg strength for everyday life: from sitting on the edge of a chair, lean forward and stand up using your legs, then sit back down slowly.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
     "title": "NHS: strength exercises (sit-to-stand)",
     "note": "Stick-figure approximation."
   },
-  "setup": [
-    "Use a solid chair without wheels or arms.",
-    "Sit on the edge of the seat, feet flat and hip-width apart."
-  ],
-  "cues": [
-    "Lean slightly forward before you rise.",
-    "Stand using your legs, not your arms.",
-    "Look ahead, not down.",
-    "Sit down slowly; the slower the better."
-  ],
+  "setup": ["Use a solid chair without wheels or arms.", "Sit on the edge of the seat, feet flat and hip-width apart."],
+  "cues": ["Lean slightly forward before you rise.", "Stand using your legs, not your arms.", "Look ahead, not down.", "Sit down slowly; the slower the better."],
   "prescription": {
     "reps": "5",
     "note": "Aim for 5 slow repetitions and build up over time. Do these strength exercises at least twice a week."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Sit on the edge",
       "cue": "Feet flat, hip-width apart.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 500,
+      "phase": "rep",
       "anchor": "pelvis",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
@@ -53,27 +40,24 @@
         }
       ],
       "pose": {
-        "torso": 5,
-        "hipL": -90,
-        "hipR": -90,
+        "torso": [5, 0, 0],
+        "shoulderL": [30, 0, 0],
+        "shoulderR": [30, 0, 0],
+        "hipL": [90, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
-        "shoulderL": -30,
-        "shoulderR": -30
-      },
-      "phase": "rep"
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
     },
     {
       "name": "Lean forward",
       "cue": "Lean your chest slightly forward over your feet.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1200,
       "holdMs": 200,
+      "phase": "rep",
       "anchor": "pelvis",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
@@ -85,44 +69,38 @@
         }
       ],
       "pose": {
-        "torso": 35,
-        "hipL": -90,
-        "hipR": -90,
+        "torso": [35, 0, 0],
+        "shoulderL": [70, 0, 0],
+        "shoulderR": [70, 0, 0],
+        "hipL": [90, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
-        "shoulderL": -70,
-        "shoulderR": -70
-      },
-      "phase": "rep"
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
     },
     {
       "name": "Stand up",
       "cue": "Push through your feet and stand up tall.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2400,
       "holdMs": 800,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -8,
-        "shoulderR": -8
-      },
-      "phase": "rep"
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0]
+      }
     },
     {
       "name": "Sit down slowly",
       "cue": "Bend your knees and lower slowly back to the chair.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 100,
+      "phase": "rep",
       "anchor": "pelvis",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
@@ -134,22 +112,21 @@
         }
       ],
       "pose": {
-        "torso": 35,
-        "hipL": -90,
-        "hipR": -90,
+        "torso": [35, 0, 0],
+        "shoulderL": [70, 0, 0],
+        "shoulderR": [70, 0, 0],
+        "hipL": [90, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
-        "shoulderL": -70,
-        "shoulderR": -70
-      },
-      "phase": "rep"
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
     }
   ],
   "props": [
     {
       "type": "chair",
-      "x": -12,
-      "back": "left"
+      "back": "behind",
+      "z": -12
     }
   ],
   "measure": "reps",

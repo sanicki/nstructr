@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-seated-forward-bend",
   "name": "Seated Forward Bend",
   "sanskrit": "Paschimottanasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Seated fold over both straight legs.",
   "source": {
     "url": "https://www.yogajournal.com/poses/seated-forward-bend/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit tall with your legs straight out in front of you, feet flexed.",
-    "Sit on a folded blanket if your back rounds."
-  ],
-  "facing": "right",
+  "setup": ["Sit tall with your legs straight out in front of you, feet flexed.", "Sit on a folded blanket if your back rounds."],
   "keyframes": [
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
@@ -39,35 +34,31 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": -90,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
     },
     {
       "name": "Seated Forward Bend",
       "cue": "Hinge from the hips and reach for the feet.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "torso": 72,
-        "neck": 15,
-        "hipL": -90,
-        "hipR": -90,
-        "shoulderL": -152,
-        "shoulderR": -152
-      },
-      "phase": "rep"
+        "torso": [72, 0, 0],
+        "neck": [15, 0, 0],
+        "shoulderL": [152, 0, 0],
+        "shoulderR": [152, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Lead with the chest.",
-    "Bend the knees if the back rounds."
-  ],
+  "cues": ["Lead with the chest.", "Bend the knees if the back rounds."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

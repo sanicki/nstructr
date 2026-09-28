@@ -1,78 +1,62 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "wall-chest-stretch",
   "name": "Wall Chest Stretch",
   "category": "Stretch",
   "focus": "Chest and front of the shoulder",
   "library": "Stretches",
-  "equipment": [
-    "Wall"
-  ],
+  "equipment": ["Wall"],
   "description": "Stretches the chest: forearm flat on a wall beside you with the elbow at shoulder height, step forward and turn your body away from the wall.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/blog/5657/5-chest-stretch-variations/",
     "title": "5 Chest Stretch Variations (ACE)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Stand side-on to a wall.",
-    "Place your right forearm flat on the wall, elbow bent to 90° at shoulder height."
-  ],
-  "cues": [
-    "Step forward with the foot nearest the wall.",
-    "Turn your chest away from the wall until you feel the stretch.",
-    "Keep your shoulder down and relaxed."
-  ],
+  "setup": ["Stand side-on to a wall.", "Place your right forearm flat on the wall, elbow bent to 90° at shoulder height."],
+  "cues": ["Step forward with the foot nearest the wall.", "Turn your chest away from the wall until you feel the stretch.", "Keep your shoulder down and relaxed."],
   "prescription": {
     "reps": "30 s each side",
     "note": "Hold about 30 seconds and breathe slowly."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Forearm on the wall",
       "cue": "Elbow at shoulder height, forearm up the wall.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1800,
       "holdMs": 600,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderR": 90,
-        "elbowR": 90,
-        "shoulderL": -6
-      },
-      "phase": "setup"
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 90, 90],
+        "elbowR": 90
+      }
     },
     {
       "name": "Turn away",
       "cue": "Step forward and turn your chest away from the wall.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2200,
       "holdMs": 30000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {
-        "shoulderR": 98,
-        "elbowR": 82,
-        "shoulderL": -6,
-        "torso": 8,
-        "chest": 6
-      },
+      "plant": ["L", "R"],
       "keep": [
         {
           "point": "handR",
           "keyframe": 0
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "torso": [0, -8, 0],
+        "chest": [0, -6, 0],
+        "shoulderL": [0, 6, 0],
+        "shoulderR": [0, 76.2, 90],
+        "elbowR": 67.8
+      }
     }
   ],
   "props": [
@@ -80,7 +64,8 @@
       "type": "wall",
       "at": "elbowR",
       "keyframe": 0,
-      "offset": -6
+      "offset": 6,
+      "beside": true
     }
   ],
   "bilateral": {

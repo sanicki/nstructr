@@ -1,81 +1,72 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "band-overhead-press",
   "name": "Banded Overhead Press",
   "category": "Core",
   "focus": "Shoulders and arms",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "Standing on the band with your hands at your shoulders, press straight overhead until your arms are fully extended, then lower with control.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/banded-standing-shoulder-press",
     "title": "Banded Standing Shoulder Press (Muscle & Strength)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Stand on the band, feet set for the tension you want.",
-    "Bring your hands to shoulder level, palms facing forward."
-  ],
-  "cues": [
-    "Keep your core tight and ribs down.",
-    "Press straight up until your arms are straight.",
-    "Lower back to shoulder height slowly."
-  ],
+  "setup": ["Stand on the band, feet set for the tension you want.", "Bring your hands to shoulder level, palms facing forward."],
+  "cues": ["Keep your core tight and ribs down.", "Press straight up until your arms are straight.", "Lower back to shoulder height slowly."],
   "prescription": {
     "reps": "10–12",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Hands at your shoulders",
       "cue": "Palms forward, band taut.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
+      "plant": ["L", "R"],
       "reach": [
         {
           "hand": "handR",
           "to": "neckBase",
-          "dx": 14,
-          "dy": 4
+          "dx": 22,
+          "dy": -4,
+          "dz": 14
         },
         {
           "hand": "handL",
           "to": "neckBase",
-          "dx": 14,
-          "dy": 4
+          "dx": -22,
+          "dy": -4,
+          "dz": 14
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "shoulderL": [27.9, 0, 0],
+        "elbowL": 165.7,
+        "shoulderR": [27.9, 0, 0],
+        "elbowR": 165.7
+      }
     },
     {
       "name": "Press",
       "cue": "Press straight overhead.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -178,
-        "shoulderR": -178,
-        "elbowL": -2,
-        "elbowR": -2
-      },
-      "phase": "rep"
+        "shoulderL": [178, 0, 0],
+        "elbowL": 2,
+        "shoulderR": [178, 0, 0],
+        "elbowR": 2
+      }
     }
   ],
   "props": [

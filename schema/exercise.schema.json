@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "exercise.schema.json",
   "title": "NstructR exercise",
-  "description": "One exercise: metadata, instructions, equipment drawn with the figure, and the keyframes the figure moves through. Angles are in degrees, relative to the parent bone, positive = clockwise on screen.",
+  "description": "One exercise (format v2): metadata, instructions, equipment drawn with the figure, and the keyframes the figure moves through. Poses are 3D joint angles in degrees: ball joints (root, torso, chest, neck, shoulders, hips) take [forward, side, turn]; knees, elbows and ankles one number. See the in-app format reference and docs/3d-skeleton.md.",
   "type": "object",
   "required": [
     "id",
@@ -14,7 +14,7 @@
       "type": "string"
     },
     "version": {
-      "const": 1
+      "const": 2
     },
     "id": {
       "type": "string",
@@ -88,15 +88,6 @@
           "type": "string"
         }
       }
-    },
-    "facing": {
-      "enum": [
-        "right",
-        "left"
-      ]
-    },
-    "anchorX": {
-      "type": "number"
     },
     "measure": {
       "enum": [
@@ -207,11 +198,9 @@
         "cue": {
           "type": "string"
         },
-        "view": {
-          "enum": [
-            "side",
-            "front"
-          ]
+        "camera": {
+          "type": "number",
+          "description": "Camera, in degrees around the vertical: 90 = side view (the figure faces screen-right), 0 = front view. Default 90."
         },
         "durationMs": {
           "type": "number",
@@ -269,7 +258,12 @@
           ]
         },
         "anchorX": {
-          "type": "number"
+          "type": "number",
+          "description": "Where the anchor is pinned, sideways (+ = the figure's right), from the stage centre."
+        },
+        "anchorZ": {
+          "type": "number",
+          "description": "Where the anchor is pinned, forward (+) or back, from the stage centre."
         },
         "lift": {
           "type": "number"
@@ -326,30 +320,7 @@
               },
               "adjust": {
                 "type": "string",
-                "enum": [
-                  "root",
-                  "torso",
-                  "chest",
-                  "neck",
-                  "shoulderL",
-                  "elbowL",
-                  "shoulderR",
-                  "elbowR",
-                  "hipL",
-                  "kneeL",
-                  "ankleL",
-                  "hipR",
-                  "kneeR",
-                  "ankleR",
-                  "armDepthL",
-                  "forearmDepthL",
-                  "armDepthR",
-                  "forearmDepthR",
-                  "thighDepthL",
-                  "shinDepthL",
-                  "thighDepthR",
-                  "shinDepthR"
-                ]
+                "pattern": "^((root|torso|chest|neck|shoulderL|shoulderR|hipL|hipR)(\\.(forward|side|turn))?|elbowL|elbowR|kneeL|ankleL|kneeR|ankleR)$"
               },
               "gap": {
                 "type": "number"
@@ -421,11 +392,8 @@
               "dy": {
                 "type": "number"
               },
-              "bend": {
-                "enum": [
-                  1,
-                  -1
-                ]
+              "dz": {
+                "type": "number"
               }
             },
             "additionalProperties": false
@@ -468,25 +436,6 @@
             ]
           }
         },
-        "layers": {
-          "type": "object",
-          "description": "Draw a leg behind or in front of the body for the move into and out of this step (by default the left leg is behind, the right in front). For crossing behind or in front of the standing leg.",
-          "properties": {
-            "legL": {
-              "enum": [
-                "front",
-                "back"
-              ]
-            },
-            "legR": {
-              "enum": [
-                "front",
-                "back"
-              ]
-            }
-          },
-          "additionalProperties": false
-        },
         "guide": {
           "type": "object",
           "properties": {
@@ -500,35 +449,92 @@
         },
         "pose": {
           "type": "object",
-          "propertyNames": {
-            "enum": [
-              "root",
-              "torso",
-              "chest",
-              "neck",
-              "shoulderL",
-              "elbowL",
-              "shoulderR",
-              "elbowR",
-              "hipL",
-              "kneeL",
-              "ankleL",
-              "hipR",
-              "kneeR",
-              "ankleR",
-              "armDepthL",
-              "forearmDepthL",
-              "armDepthR",
-              "forearmDepthR",
-              "thighDepthL",
-              "shinDepthL",
-              "thighDepthR",
-              "shinDepthR"
-            ]
+          "description": "Joint angles. Ball joints [forward, side, turn]; hinges one number. Missing joints are 0.",
+          "properties": {
+            "root": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "torso": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "chest": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "neck": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "shoulderL": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "elbowL": {
+              "type": "number"
+            },
+            "shoulderR": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "elbowR": {
+              "type": "number"
+            },
+            "hipL": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "kneeL": {
+              "type": "number"
+            },
+            "ankleL": {
+              "type": "number"
+            },
+            "hipR": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "kneeR": {
+              "type": "number"
+            },
+            "ankleR": {
+              "type": "number"
+            }
           },
-          "additionalProperties": {
-            "type": "number"
-          }
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -553,22 +559,54 @@
           ]
         },
         "from": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
         },
         "to": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "x": {
+                  "type": "number"
+                },
+                "y": {
+                  "type": "number"
+                },
+                "z": {
+                  "type": "number"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
         },
         "via": {
           "type": "array",
           "items": {
             "type": "string"
           }
-        },
-        "layer": {
-          "enum": [
-            "front",
-            "back"
-          ]
         },
         "restLength": {
           "type": "number"
@@ -611,12 +649,6 @@
         "offset": {
           "type": "number"
         },
-        "view": {
-          "enum": [
-            "side",
-            "front"
-          ]
-        },
         "x": {
           "type": "number"
         },
@@ -630,8 +662,8 @@
         },
         "back": {
           "enum": [
-            "left",
-            "right"
+            "behind",
+            "ahead"
           ]
         },
         "backHeight": {
@@ -661,6 +693,16 @@
             "fb",
             "ud"
           ]
+        },
+        "z": {
+          "type": "number"
+        },
+        "depth": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "beside": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false

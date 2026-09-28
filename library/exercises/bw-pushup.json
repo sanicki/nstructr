@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bw-pushup",
   "name": "Push-Up",
   "category": "Strength",
@@ -13,26 +13,20 @@
     "title": "Push-Up (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Start in a plank: hands under your shoulders, legs straight, on your toes."
-  ],
-  "cues": [
-    "Brace your stomach so your body stays in one line.",
-    "Lower with control; press the floor away to come up.",
-    "Too hard? Try knee or wall push-ups."
-  ],
+  "setup": ["Start in a plank: hands under your shoulders, legs straight, on your toes."],
+  "cues": ["Brace your stomach so your body stays in one line.", "Lower with control; press the floor away to come up.", "Too hard? Try knee or wall push-ups."],
   "prescription": {
     "reps": "5–15",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Plank",
       "cue": "Arms straight, body in one line.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -45,20 +39,22 @@
         }
       ],
       "pose": {
-        "root": 66,
-        "shoulderL": -66,
-        "shoulderR": -66,
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
         "ankleL": 24,
+        "hipR": [-8, 0, 0],
         "ankleR": 24
-      },
-      "phase": "rep"
+      }
     },
     {
       "name": "Lower",
       "cue": "Bend your elbows until your upper arms are level.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -71,15 +67,16 @@
         }
       ],
       "pose": {
-        "root": 79,
-        "shoulderL": 11,
-        "shoulderR": 11,
-        "elbowL": -90,
-        "elbowR": -90,
+        "root": [79, 0, 0],
+        "shoulderL": [-11, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-11, 0, 0],
+        "elbowR": 90,
+        "hipL": [-7.5, 0, 0],
         "ankleL": 11,
+        "hipR": [-7.5, 0, 0],
         "ankleR": 11
-      },
-      "phase": "rep"
+      }
     }
   ],
   "measure": "reps",

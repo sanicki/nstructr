@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-handstand",
   "name": "Handstand",
   "sanskrit": "Adho Mukha Vrksasana",
   "category": "Balancing",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Full inversion balancing on the hands with the body vertical.",
   "source": {
     "url": "https://www.yogajournal.com/poses/handstand/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Face a wall and put your hands down shoulder-width apart, a hand's length from it.",
-    "Come into Downward-Facing Dog and walk your feet a little closer."
-  ],
-  "facing": "right",
+  "setup": ["Face a wall and put your hands down shoulder-width apart, a hand's length from it.", "Come into Downward-Facing Dog and walk your feet a little closer."],
   "keyframes": [
     {
       "name": "Downward-Facing Dog",
       "cue": "Press the hips up and back into an upside-down V.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "handR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,32 +35,30 @@
         }
       ],
       "pose": {
-        "torso": 135,
-        "shoulderL": 180,
-        "shoulderR": 180,
-        "hipL": 25,
-        "hipR": 25
-      },
-      "phase": "setup"
+        "torso": [135, 0, 0],
+        "shoulderL": [-180, 0, 0],
+        "shoulderR": [-180, 0, 0],
+        "hipL": [-27.3, 0, 0],
+        "ankleL": -27.3,
+        "hipR": [-27.3, 0, 0],
+        "ankleR": -27.3
+      }
     },
     {
       "name": "Handstand",
       "cue": "Kick up and stack the hips and feet over the hands.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "pose": {
-        "root": 180,
-        "shoulderL": 180,
-        "shoulderR": 180
-      },
-      "phase": "rep"
+        "root": [180, 0, 0],
+        "shoulderL": [-180, 0, 0],
+        "shoulderR": [-180, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Spread the fingers wide.",
-    "Practice at a wall."
-  ],
+  "cues": ["Spread the fingers wide.", "Practice at a wall."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

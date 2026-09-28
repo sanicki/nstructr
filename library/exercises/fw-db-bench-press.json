@@ -1,48 +1,35 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "fw-db-bench-press",
   "name": "Dumbbell Bench Press",
   "category": "Strength",
   "focus": "Chest",
   "library": "Free weights",
-  "equipment": [
-    "Dumbbells",
-    "Bench"
-  ],
+  "equipment": ["Dumbbells", "Bench"],
   "description": "Lying on a bench, press the dumbbells from beside your chest to straight above it, then lower with control.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/19/chest-press/",
     "title": "Chest Press with dumbbells (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on a bench with your feet flat on the floor.",
-    "Hold the dumbbells beside your chest, elbows out and a little below the bench."
-  ],
-  "cues": [
-    "Keep your feet down and your back in its natural curve.",
-    "Press up over your chest.",
-    "Lower slowly to the start."
-  ],
+  "setup": ["Lie on a bench with your feet flat on the floor.", "Hold the dumbbells beside your chest, elbows out and a little below the bench."],
+  "cues": ["Keep your feet down and your back in its natural curve.", "Press up over your chest.", "Lower slowly to the start."],
   "prescription": {
     "reps": "8–12",
     "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Weights at your chest",
       "cue": "Elbows out to the sides, forearms upright.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "pelvis",
-      "anchorX": 60,
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": 60,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -54,29 +41,30 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 82, -90],
+        "elbowL": 82,
+        "shoulderR": [90, 82, -90],
+        "elbowR": 82,
+        "hipL": [6.8, 0, 0],
         "kneeL": 90,
+        "ankleL": 6.8,
+        "hipR": [6.8, 0, 0],
         "kneeR": 90,
-        "shoulderL": -90,
-        "shoulderR": -90,
-        "armDepthL": 82,
-        "armDepthR": 82
-      },
-      "phase": "rep"
+        "ankleR": 6.8
+      }
     },
     {
       "name": "Press",
       "cue": "Press the weights straight up.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "pelvis",
-      "anchorX": 60,
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": 60,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -88,14 +76,17 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 0, -90],
+        "shoulderR": [90, 0, -90],
+        "hipL": [6.8, 0, 0],
         "kneeL": 90,
+        "ankleL": 6.8,
+        "hipR": [6.8, 0, 0],
         "kneeR": 90,
-        "shoulderL": -90,
-        "shoulderR": -90
-      },
-      "phase": "rep"
+        "ankleR": 6.8
+      }
     }
   ],
   "props": [
@@ -111,7 +102,7 @@
     },
     {
       "type": "bench",
-      "x": -30
+      "z": -30
     }
   ],
   "measure": "reps",

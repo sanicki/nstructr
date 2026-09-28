@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bw-squat",
   "name": "Squat",
   "category": "Strength",
@@ -13,56 +13,44 @@
     "title": "NHS: strength exercises (mini-squats)",
     "note": "Stick-figure approximation of a full bodyweight squat; the NHS version is a smaller 'mini-squat' holding a chair."
   },
-  "setup": [
-    "Stand with your feet hip-width apart, toes pointing forward."
-  ],
-  "cues": [
-    "Push your hips back first, then bend your knees.",
-    "Keep your chest up and your heels down.",
-    "Knees follow the line of your toes.",
-    "Only go as low as is comfortable; hold a chair back for support if you need it."
-  ],
+  "setup": ["Stand with your feet hip-width apart, toes pointing forward."],
+  "cues": ["Push your hips back first, then bend your knees.", "Keep your chest up and your heels down.", "Knees follow the line of your toes.", "Only go as low as is comfortable; hold a chair back for support if you need it."],
   "prescription": {
     "reps": "8–15",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Stand tall",
       "cue": "Feet hip-width apart.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "rep"
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Squat down",
       "cue": "Sit your hips back and bend your knees, arms reaching forward.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 38,
-        "hipL": -88,
-        "hipR": -88,
+        "torso": [38, 0, 0],
+        "shoulderL": [128, 0, 0],
+        "shoulderR": [128, 0, 0],
+        "hipL": [88, 0, 0],
         "kneeL": 102,
+        "ankleL": -14,
+        "hipR": [88, 0, 0],
         "kneeR": 102,
-        "shoulderL": -128,
-        "shoulderR": -128
-      },
-      "phase": "rep"
+        "ankleR": -14
+      }
     }
   ],
   "measure": "reps",
