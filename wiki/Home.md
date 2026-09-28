@@ -2,7 +2,7 @@
 
 NstructR shows exercises as an animated stick figure and coaches you through workouts, step by step, with
 spoken cues. It runs in your phone's browser, installs like an app, and works offline. It was made for doing
-workouts on the floor with a **Galaxy Z Flip7** folded, using the small **cover screen**, but it works on any phone,
+workouts on the floor with a **foldable flip phone** (such as a Galaxy Z Flip) folded, using the small **cover screen**, but it works on any phone,
 tablet or computer.
 
 **Open it:** <https://sanicki.github.io/nstructr/>

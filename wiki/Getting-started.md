@@ -29,9 +29,9 @@ Updates arrive by themselves the next time you open the app while online.
 On a phone the tabs are at the bottom. On short screens (the cover screen, or a phone on its side) they move to
 the top bar as icons, to keep clear of the camera cutouts.
 
-<img src="images/cover-workouts.png" width="300" alt="The Workouts tab on the Flip7 cover screen, tabs at the top">
+<img src="images/cover-workouts.png" width="300" alt="The Workouts tab on a flip phone's cover screen, tabs at the top">
 
-## On the Galaxy Z Flip7 cover screen
+## On a flip phone's cover screen
 
 NstructR is designed so you can fold the phone, put it on the floor in front of your mat, and follow along on
 the cover screen:

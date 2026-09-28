@@ -69,7 +69,8 @@
         "ankleL": 20,
         "hipR": 0,
         "thighDepthR": 0,
-        "ankleR": 20
+        "ankleR": 20,
+        "shinDepthR": 0
       },
       "phase": "setup"
     },
@@ -88,7 +89,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -100,
-        "thighDepthR": 0
+        "thighDepthR": 0,
+        "shinDepthR": 0
       },
       "guide": {
         "direction": 0,
@@ -111,7 +113,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -95.3,
-        "thighDepthR": -22.6
+        "thighDepthR": -22.6,
+        "shinDepthR": -22.6
       },
       "ease": "linear",
       "guide": {
@@ -136,7 +139,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -84,
-        "thighDepthR": -32
+        "thighDepthR": -32,
+        "shinDepthR": -32
       },
       "ease": "linear",
       "guide": {
@@ -160,7 +164,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -72.7,
-        "thighDepthR": -22.6
+        "thighDepthR": -22.6,
+        "shinDepthR": -22.6
       },
       "ease": "linear",
       "guide": {
@@ -185,7 +190,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -68,
-        "thighDepthR": 0
+        "thighDepthR": 0,
+        "shinDepthR": 0
       },
       "ease": "linear",
       "guide": {
@@ -209,7 +215,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -72.7,
-        "thighDepthR": 22.6
+        "thighDepthR": 22.6,
+        "shinDepthR": 22.6
       },
       "ease": "linear",
       "guide": {
@@ -234,7 +241,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -84,
-        "thighDepthR": 32
+        "thighDepthR": 32,
+        "shinDepthR": 32
       },
       "ease": "linear",
       "guide": {
@@ -258,7 +266,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -95.3,
-        "thighDepthR": 22.6
+        "thighDepthR": 22.6,
+        "shinDepthR": 22.6
       },
       "ease": "linear",
       "guide": {
@@ -283,7 +292,8 @@
         "hipL": 0,
         "ankleL": 20,
         "hipR": -100,
-        "thighDepthR": 0
+        "thighDepthR": 0,
+        "shinDepthR": 0
       },
       "ease": "linear",
       "guide": {
@@ -308,7 +318,8 @@
         "ankleL": 20,
         "hipR": 0,
         "thighDepthR": 0,
-        "ankleR": 20
+        "ankleR": 20,
+        "shinDepthR": 0
       },
       "phase": "finish"
     }

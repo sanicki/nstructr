@@ -15,7 +15,7 @@ A web app (planned installable PWA on GitHub Pages) that shows exercises as an a
 **workouts**: ordered blocks of exercises with reps or hold times, sets, rests, sides and directions, with
 optional voice coaching.
 
-**Primary target:** the **Samsung Galaxy Z Flip7 cover screen**, with the phone lying on the floor in front of the
+**Primary target:** the **cover screen of foldable flip phones** (reference device: the owner's Samsung Galaxy Z Flip7), with the phone lying on the floor in front of the
 user while they exercise. Everything in the workout player is designed for that: readable from ~2 m, usable
 with the fewest possible touches, nothing important at the bottom of the screen (the cover screen's camera
 cutouts and flash sit along the bottom), no accidental skips.
@@ -27,7 +27,7 @@ Library today: **137 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
-| Yoga poses | 52 | Yoga Journal pose list |
+| Yoga | 52 | Yoga Journal pose list |
 | Bodyweight | 16 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell… |
 | Resistance band | 15 | 10 BHF standing exercises + seated row + routine additions |
 | Free weights | 13 | dumbbell, kettlebell, barbell |
@@ -81,12 +81,12 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
 **Step 3 (simpler UI) is built**: three tabs (Workouts, Exercises, Settings), the exercise player's
 tap-for-controls overlay with its details on the page below, Authoring mode. See §10.
 
-**Step 2 (installable app + backup) is built and tested on the Flip7** (installed; bottom margin confirmed) (see §13): manifest, icons, service worker, storage
+**Step 2 (installable app + backup) is built and tested on a foldable flip phone** (installed; bottom margin confirmed) (see §13): manifest, icons, service worker, storage
 persistence, Export everything / Import everything, and a Material theme generated from the icon's blue.
-Still to do there: test on the Flip7 cover screen as an installed app (Good Lock?).
+Still to do there: test on a flip phone's cover screen as an installed app (Good Lock?).
 
 **Still to do in step 1:** merge to `main`, enable Pages (Settings → Pages → Source: GitHub Actions), confirm
-the workflow deploys, test on the Flip7.
+the workflow deploys, test on a foldable flip phone.
 
 Known gap, deliberately left: exercises users saved *before* the `u-` rule keep their old ids (no migration;
 a clash needs the library to add that exact id). (The other old gap, stored copies of library exercises shadowing
@@ -400,7 +400,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 - Single-Leg Stretch: 1 rep = left + right. Arm Circles: 1 rep = one full circle; backward is generated.
 - Circles use `ease: "linear"` and a 0-ms seam step so they flow like a clock hand.
 
-### 8.3 Workout player on the cover screen (all measured on 360×398 CSS px, ≈ Flip7 cover)
+### 8.3 Workout player on the cover screen (all measured on 360×398 CSS px, ≈ a flip phone's cover screen)
 - Full screen, app bars hidden, **follows the theme** (`--wp-*` variables on `.fs`): dark = navy `#0b1422`, body
   `#eef3f1`, right side teal `#57d6c6`, left orange `#f2a65a`; light = `#f8f9ff`, body `#191c20`, teal `#00897b`,
   orange `#d2680f`.
@@ -477,7 +477,7 @@ steps or the joint will windmill; the jump check will catch it.
 
 ## 9. Things not visible in the code
 
-- **Flip7 cover screen**: ~360×398 CSS px (948×1048 physical). Camera cutouts and flash along the **bottom**.
+- **Flip phone cover screen** (reference: Galaxy Z Flip7): ~360×398 CSS px (948×1048 physical). Camera cutouts and flash along the **bottom**.
   Running Chrome/PWAs there may require Samsung **Good Lock → MultiStar** ("Launcher widget"). Unverified which
   apps are allowed by default — test on the device.
 - The sandbox this was built in blocks Google Fonts, so Material Symbols render as their ligature text in
@@ -646,7 +646,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 2. ✅ **Installable PWA + backup**: `manifest.webmanifest` (`display: fullscreen`, any orientation, theme colours,
    icons incl. maskable), service worker (cache the shell and `library/index.json`; update strategy for the
    library), `navigator.storage.persist()`, **Export everything / Import everything** (workouts, history, saved
-   exercises, settings). Then test on the Flip7 cover screen as an installed app (Good Lock).
+   exercises, settings). Then test on a flip phone's cover screen as an installed app (Good Lock).
 3. ✅ **Simplify the UI before going public**: three tabs — Workouts, **Exercises** (Explore + Saved merged, Saved
    as a filter), **Settings** (sound, theme, full screen, speed; "Import & tools" = AI prompts, format
    reference, export; an **Authoring mode** toggle that reveals the pose editor). Exercise player gets the same
@@ -656,14 +656,14 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 5. **Owner decisions before contributions**: ✅ license: **MIT** for everything (Sep 2026; this replaces the earlier
    idea of non-commercial-only with a paid commercial licence: MIT allows commercial use, with the copyright
    notice kept). Submissions are accepted under MIT (the submission checkbox says so). Still open: trademark check.
-6. **3D skeleton, still drawn as SVG** — see `docs/3d-skeleton.md`: joints with real 3D rotations, a real
+6. **3D skeleton, still drawn as SVG** (**go**, as format v2; step 1 of 4 built: `src/skeleton3d.js`, `tools/check3d.cjs`, `tools/compare3d.html`) — see `docs/3d-skeleton.md`: joints with real 3D rotations, a real
    camera, bones drawn in depth order (no more `layers`, depth joints or crossing workarounds), exercise format
    v2 with a converter so v1 files keep working. Before submissions, so contributors only ever learn one format.
 7. **Submission pipeline**: in-app "Submit to NstructR" → prefilled GitHub **issue form** (`.github/ISSUE_TEMPLATE`
    forms YAML; if the JSON is too long for the URL, copy to clipboard and ask to paste) → an Action validates
    with `tools/build.mjs` logic, renders a preview (headless browser → GIF/PNG), comments, and opens a PR. Prompt
    and form require original wording + source link + license checkbox.
-   **The `library` field** (which collection an exercise belongs to: "Bodyweight", "Yoga poses"…) matters for
+   **The `library` field** (which collection an exercise belongs to: "Bodyweight", "Yoga"…) matters for
    exercises accepted into the library: the submission form (or review) must set it; users' own exercises don't
    need it (they live under My Exercises).
    **Owner's requirement:** editing exercises and workouts in the app is easy on purpose, so submitting must be a
@@ -710,7 +710,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    content. Report and what was fixed: `docs/audit-2026-09.md`. Re-run with `tools/audit.py` (axe-core + touch
    targets + text size + sideways scroll) and `tools/perf.py`. Follow-ups: ~~Setup for the 52 yoga poses~~ (done), ~~source
    links for 52 exercises~~ (done: every exercise now links a reputable page; `tools/check-links.mjs`, or the manual
-   "Check source links" workflow, reports any that stop answering), a TalkBack pass on the Flip7.
+   "Check source links" workflow, reports any that stop answering), a TalkBack pass on a flip phone (skipped for now, Sep 2026: ask a user who relies on TalkBack to do it if it matters to them).
 
 ---
 
@@ -721,12 +721,12 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 3. **4-Point Star Excursion**: switch the fourth reach from "left, crossing behind" to the owner's routine's
    cross-behind diagonal?
 4. **Seated band row**: draw the band crossed in an X (as the routine describes)?
-5. ~~Is **22 vh** the right bottom margin on the real cover screen?~~ Confirmed on the Flip7.
+5. ~~Is **22 vh** the right bottom margin on the real cover screen?~~ Confirmed on the owner's flip phone.
 6. ~~Library workouts: copy on first run, or only a library section?~~ Decided: library section only;
    Customize makes a copy. Existing installs keep their first-run copy.
 7. ~~Does the app run on the cover screen?~~ Installed as an app, it runs there (owner, Sep 2026).
-9. **3D skeleton** (`docs/3d-skeleton.md`): go / no-go and timing; keep a v1 export for a while or not.
-10. **Status bar flicker on the back gesture** (owner report, Sep 2026, installed app on the Flip7): the status bar
+9. **3D skeleton** (`docs/3d-skeleton.md`): ~~go / no-go~~ go, as v2 (Sep 2026). Still open: keep a v1 export for a while or not (needed by step 3).
+10. **Status bar flicker on the back gesture** (owner report, Sep 2026, installed app on the owner's flip phone): the status bar
    appears and disappears. Not reproduced. Likely Android's own behaviour in `display: fullscreen` (an edge swipe
    briefly reveals the system bars); the app doesn't touch full screen outside a workout. Nothing to do unless it
    can be reproduced; if it matters, the option is `display: standalone` with full screen only during workouts.

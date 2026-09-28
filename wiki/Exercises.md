@@ -10,7 +10,7 @@ The **Exercises** tab is the library: over 130 exercises, each animated step by 
 
 - **Search** looks through names, other names, muscles and equipment, including your own exercises.
 - **Collections** (the first row of chips): *All collections*, then **Bookmarked**, **My exercises**, and the
-  library's collections in A–Z order (Balance, Bodyweight, Chair-based, Pilates, Stretches, Yoga poses and more).
+  library's collections in A–Z order (Balance, Bodyweight, Chair-based, Pilates, Stretches, Yoga and more).
 - Inside a collection, a second row filters by **type** (what it works, such as Calves or Core).
 - The **equipment** row narrows the list to exercises that use, for example, a resistance band or a chair. Your
   equipment choice stays when you switch collections.

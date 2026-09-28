@@ -1,6 +1,7 @@
 # Design note: a 3D skeleton, still drawn as SVG
 
-Status: **proposed** (roadmap step 6, before the submission pipeline). Nothing here is built yet.
+Status: **go** (owner, Sep 2026), as exercise format **v2**, before the submission pipeline (roadmap step 6).
+Step 1 of the plan is built (see "Progress" below); the app still draws with the 2D engine.
 
 ## Why
 
@@ -99,14 +100,34 @@ cost on the cover screen, still works offline, still one file for the single-fil
 
 ## Plan
 
-1. 3D FK + projection + depth-sorted SVG drawing behind the existing API, fed by converted v1 poses: prove the
+1. ✅ 3D FK + projection + depth-sorted SVG drawing behind the existing API, fed by converted v1 poses: prove the
    picture matches (comparison page), and that crossings/turns are fixed.
 2. Contact solving (anchor, touch, plant, reach, keep, surfaces) on 3D points; checks on v2.
 3. Schema v2, converter, `upgradeFile()` for v1 → v2, convert the library, fix the failures.
 4. Pose editor, format reference and AI prompts for v2; remove `layers` and depth joints.
 
+## Progress
+
+**Step 1 (built).** `src/skeleton3d.js` gives every body point the coordinate the 2D figure leaves out: the hips' and
+shoulders' width, and `*Depth` angles (a limb turned toward the camera by d goes L·sin d toward it; the picture shows
+L·cos d). `project(points, yaw)` is the camera; `drawOrder()` sorts the parts far to near.
+- `tools/check3d.cjs` (run by the build): from each step's own view the 3D figure is today's picture, **0.0000 px
+  apart on all 545 steps** of the library (both sides, both directions). Front-view feet are the one deliberate
+  difference: the 2D engine draws them as sideways stubs; the 3D foot points forward.
+- `tools/compare3d.html` (serve the repo root; open `/tools/compare3d.html?ex=<id>`): today's figure beside the 3D one,
+  with a camera slider. Between steps the 3D bones turn (slerp), so limbs keep their length through camera turns.
+- What it found, for step 3 (converting the library):
+  - **Crossing legs.** 8 Star Excursion steps tell the 2D engine which leg is behind (`layers`). In 2 of them the
+    pose's own depth agrees; in 6 the pose doesn't hold the fact at all (front-view reaches with no depth, and two
+    side-view reaches whose diagonal behind the standing leg is missing). Converting them means writing the reach
+    as a real direction (back and across), after which `layers` can go.
+  - **Limbs straight in 2D but bent in 3D.** A knee or elbow at 0° whose two halves turn toward the camera by
+    different amounts is bent in 3D. 22 such limbs remain: some intended (a bench-press elbow bending toward the
+    camera), some not (Arm Circles' elbows, the Wall Sit + Pull-Apart knees). Leg Circles had this and is fixed.
+  - The check prints both lists.
+
 ## Decisions for the owner
 
-- Go / no-go, and timing (before step 7 as proposed).
+- ~~Go / no-go, and timing~~: **go**, as v2, before step 7 (owner, Sep 2026).
 - Whether to keep a v1 export for a while (for anyone with tools built on v1), or read-only v1 support is
-  enough.
+  enough. Needed by step 3.
