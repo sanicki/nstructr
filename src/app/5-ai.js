@@ -76,7 +76,7 @@ WORKOUT
 - Leave out "sides" and "dir" for exercises that don't list them, and "sets" and "tempo" when they're the defaults.
 
 ${aiPromptText()}
-8. Write "description", "setup" and "cues" in your own words; short, plain directions. Put where it came from in "source".
+7. Write "description", "setup" and "cues" in your own words; short, plain directions. Put where it came from in "source".
 
 LIBRARY (exercise ids under the equipment they use; after an id: "time" = measured in seconds, otherwise reps; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y)
 ${libraryLines()}`;
@@ -112,6 +112,11 @@ function renderAi() {
 }
 function openAi() { renderAi(); $('#aiAnswer').value = ''; $('#aiDialog').showModal(); }
 
+/* the app's link with the instructions filled in. Lighter than URLSearchParams: punctuation a query may carry as it
+   is (: , / ; @ $ ?) stays as it is, spaces are +, and everything else is %-escaped as usual; any server (and
+   URLSearchParams itself) reads it back identically. Saves about 7% of the length. */
+const aiQuery = text => encodeURIComponent(text).replace(/%20/g, '+').replace(/%(3A|2C|2F|3B|40|24|3F)/g, (m, h) => String.fromCharCode(parseInt(h, 16)));
+const aiLink = (app, text) => `${app.url}?${app.q}=${aiQuery(text)}`;
 async function aiCopy(text) { try { await navigator.clipboard.writeText(text); return true; } catch (e) { return false; } }
 function aiCheckInput() {
   if (AI_KIND === 'media' || $('#aiInput').value.trim()) return true;
@@ -121,7 +126,7 @@ $('#aiOpen').addEventListener('click', async () => {
   if (!aiCheckInput()) return;
   const app = aiApp(), text = aiPrompt(AI_KIND, $('#aiInput').value);
   let url = app.url, filled = false;
-  if (app.q) { const u = `${app.url}?${new URLSearchParams({ [app.q]: text })}`; if (u.length <= AI_Q_MAX) { url = u; filled = true; } }
+  if (app.q) { const u = aiLink(app, text); if (u.length <= AI_Q_MAX) { url = u; filled = true; } }
   const copying = aiCopy(text);                               // both inside the tap, before anything is awaited
   if (url) window.open(url, '_blank', 'noopener');
   const copied = await copying;
