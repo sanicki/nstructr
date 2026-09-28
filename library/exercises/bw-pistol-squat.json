@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-pistol-squat",
+  "name": "Pistol Squat",
+  "otherNames": ["Single-Leg Squat", "One-Legged Squat"],
+  "category": "Strength",
+  "focus": "Thighs and glutes, balance",
+  "collections": ["Bodyweight", "Balance"],
+  "equipment": [],
+  "description": "Balancing on one leg with the other held straight out in front, squat down as low as you can control, then stand back up on the same leg.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/single-leg-squat",
+    "title": "NASM Exercise Library: Single-Leg Squat",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand on your left leg, right leg lifted straight in front of you.", "Arms reach forward to help you balance."],
+  "cues": ["Heel stays down.", "Knee tracks over your toes.", "Lower slowly, stand up strong."],
+  "prescription": {
+    "reps": "3–8 each leg",
+    "note": "Advanced. Master the two-leg squat first; to build up, lower to a chair or hold a doorframe, and only go as deep as you control."
+  },
+  "keyframes": [
+    {
+      "name": "Stand on your left leg",
+      "cue": "Right leg straight out in front, arms forward.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 800,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "hipR": [35, 0, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Sit down and back on your left leg, right leg straight out.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "torso": [35, 0, 0],
+        "shoulderL": [125, 0, 0],
+        "shoulderR": [125, 0, 0],
+        "hipL": [115, 0, 0],
+        "kneeL": 135,
+        "ankleL": -30,
+        "hipR": [95, 0, 0]
+      }
+    },
+    {
+      "name": "Stand up",
+      "cue": "Push through your left foot to stand.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "hipR": [35, 0, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Both feet down",
+      "cue": "Lower your right foot and rest.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 500,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep",
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  }
+}

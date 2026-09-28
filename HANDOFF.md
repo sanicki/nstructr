@@ -23,19 +23,19 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **229 exercises, 1 workout**.
+Library today: **230 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 75 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) |
 | Free weights | 30 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
-| Bodyweight | 23 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat… |
+| Bodyweight | 24 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
 | Resistance band | 26 | 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
 | Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
 | Stretches | 17 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway |
 | Core | 16 | planks, bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 23 | classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
-| Balance | 8 | Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, clock reach, single-leg RDL |
+| Balance | 9 | Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 9 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat |
 
 115 are rep-based, 93 timed; 74 are two-sided (`bilateral`); 3 have `direction`. Common exercises per collection
@@ -707,6 +707,7 @@ must not fill with **duplicates**, and a known exercise under another name shoul
 | `nstructr-exmute-v1` | `"on"`: the exercise page's spoken cues are muted (overlay Mute toggle; the voice also needs Sound = Voice/Coach) |
 | `nstructr-group-collections-v1` | `"off"`: the Exercises tab lists All collections as one A–Z list instead of grouped by collection (the tab's own switch) |
 | `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Voice and Coach (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
+| `nstructr-encourage-v1` | Coach's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach; `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; the backup's `settings.encourage`) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 20, 0–300; Settings > Workouts). Workout items' `rest` is ignored |
 | `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 10, 0–300 in 1 s steps; Settings > Workouts). Workout files' `restBetween` is ignored |

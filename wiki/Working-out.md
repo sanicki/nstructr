@@ -39,7 +39,7 @@ on. Beeps count down the last 3 seconds in Beeps, Voice and Coach modes.
 | **Silent** | Nothing. Captions still show what would be said. |
 | **Beeps** | A 3-2-1 before rests and holds end, a chime when switching |
 | **Voice** | The exercise's name, side and direction switches, rests, what's next |
-| **Coach** | Voice, plus a **guided run-through** of each exercise: one slow pass reading every step's cue, then counted reps ("Halfway", "Last one") |
+| **Coach** | Voice, plus a **guided run-through** of each exercise: one slow pass reading every step's cue, then counted reps ("Halfway", "Last one"), with [words of encouragement](Settings.md#words-of-encouragement) |
 
 The voice is your phone's own text-to-speech, so it works offline. It never talks over itself: a count is skipped
 rather than interrupting a sentence. Its speed is a setting ([Text-to-speech speed](Settings.md#text-to-speech-speed)). Pausing stops it; playing again re-reads the current step.

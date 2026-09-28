@@ -56,6 +56,8 @@
             <button class="icon-btn stateful" data-rest-key="sets" data-rest-delta="1" aria-label="More rest between sets"><span class="icon">add</span></button><span class="unit" aria-hidden="true">s</span></span></div>
         <div class="setting"><div class="txt"><span class="body-large">Instruction</span><span class="body-small muted">Voice says each exercise, side switches and rests. Coach also walks you through each exercise once and counts your reps.</span></div>
           <div class="segmented" id="setSound" role="group" aria-label="Instruction"></div></div>
+        <label class="setting" id="setEncourageRow"><span class="txt"><span class="body-large">Words of encouragement</span><span class="body-small muted">Coach varies "Begin" and "Last one", and now and then says "Keep going" or "Breathe" in place of a count or during a hold.</span></span>
+          <input type="checkbox" class="switch" id="setEncourage"></label>
         <div class="setting"><span class="txt"><span class="body-large">Text-to-speech speed</span><span class="body-small muted">How fast Voice and Coach speak: 1.0× is the voice's normal speed.</span></span>
           <span class="stepper"><button class="icon-btn stateful" data-rate-delta="-1" aria-label="Speak slower"><span class="icon">remove</span></button>
             <output id="setRate" aria-live="polite">1.0×</output>

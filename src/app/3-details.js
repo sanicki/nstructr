@@ -171,7 +171,7 @@ function exStepSound(i) {
 function exHush() { XS.token++; XS.speaking = false; XS.last = ''; try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } }
 
 /* ---------- Settings ---------- */
-const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1', SPEECH_RATE_KEY = 'nstructr-speech-rate-v1';
+const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1', SPEECH_RATE_KEY = 'nstructr-speech-rate-v1', ENCOURAGE_KEY = 'nstructr-encourage-v1';
 const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
 const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
@@ -213,6 +213,8 @@ function setRate(v, preview = true) {
     try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance('This is how fast I speak.'); u.rate = speechRate(); speechSynthesis.speak(u); } catch (e) { }
   }, 400);
 }
+/* Coach's words of encouragement (on unless turned off) */
+const encourageOn = () => pref(ENCOURAGE_KEY, 'on') !== 'off';
 const restGap = () => { const v = parseFloat(pref(REST_KEY, '10')); return v >= 0 ? v : 10; };
 /* seconds of rest between sets of an exercise, in every workout (a setting since Sep 2026; items' "rest" is ignored) */
 const restSets = () => { const v = parseFloat(pref(REST_SETS_KEY, '20')); return v >= 0 ? v : 20; };
@@ -227,16 +229,18 @@ function renderSettings() {
   $('#setAutoplay').checked = pref(AUTOPLAY_KEY, 'on') !== 'off';
   $('#setRest').value = restGap(); $('#setRestSets').value = restSets(); setRate(speechRate(), false);
   $('#setAuthoring').checked = authoring();
+  $('#setEncourage').checked = encourageOn(); $('#setEncourageRow').hidden = WK.sound !== 'coach';
   renderPersistNote();
 }
 $('#view-settings').addEventListener('click', e => {
   const b = e.target.closest('[data-setsound], [data-settheme]'); if (!b) return;
   const d = b.dataset;
-  if (d.setsound) setSound(d.setsound);
+  if (d.setsound) { setSound(d.setsound); $('#setEncourageRow').hidden = d.setsound !== 'coach'; }
   if (d.settheme) { setPref(THEME_KEY, d.settheme); applyTheme(d.settheme); }
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
+$('#setEncourage').addEventListener('change', e => setPref(ENCOURAGE_KEY, e.target.checked ? 'on' : 'off'));
 $('#setAutoplay').addEventListener('change', e => setPref(AUTOPLAY_KEY, e.target.checked ? 'on' : 'off'));
 function setRest(which, v) {
   v = Math.min(300, Math.max(0, Math.round(+v || 0)));
