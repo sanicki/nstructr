@@ -2,7 +2,7 @@
 
 Exercise animations and workouts with a stick figure: 136 exercises (yoga, bodyweight, core, Pilates, bands,
 free weights, chair-based, stretches, balance) and a workout player built to be used from the floor —
-including on a Samsung Galaxy Z Flip cover screen — with optional voice coaching.
+including on the cover screen of a foldable flip phone — with optional voice coaching.
 
 **Use it:** https://sanicki.github.io/nstructr/ (install it from the browser menu to use it offline and full screen).
 
@@ -46,7 +46,7 @@ the UI. The build deletes and recreates `_site/`, so restart the server after ea
    pip install playwright pillow && playwright install chromium
    NSTRUCTR_URL=http://127.0.0.1:8000/nstructr.html python3 tools/e2e/<test>.py
    ```
-   Check anything the workout player shows at 360×398 (the Flip7 cover screen), with nothing important at the
+   Check anything the workout player shows at 360×398 (a foldable flip phone's cover screen), with nothing important at the
    bottom of the screen.
    New or changed exercises need a source link (`source.url`) to a reputable page; `node tools/check-links.mjs`
    checks that every link still answers.

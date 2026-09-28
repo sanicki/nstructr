@@ -16,7 +16,7 @@ The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wik
 - `durationMs: 0` means instant, not "unset".
 - Write bilateral exercises for one side; the other is mirrored (names/cues/guide labels have left/right swapped automatically).
 - Exercise text: our own words, cite the source, never copy. Spoken cues: short, plain directions.
-- Workout player targets the Galaxy Z Flip7 **cover screen on the floor**: nothing important at the bottom (camera cutouts), first tap only shows controls, hold ✕ to exit, test at 360×398.
+- Workout player targets the **cover screen of foldable flip phones, on the floor**: nothing important at the bottom (camera cutouts), first tap only shows controls, hold ✕ to exit, test at 360×398.
 - Don't rename localStorage keys without a migration (see HANDOFF §11).
 - UI changes: run `tools/audit.py` (axe, 48 px targets, sideways scroll); confirmations use `ask()`, never `confirm()`.
 - User-visible changes: update the README / `wiki/` and retake screenshots (`tools/wiki_screenshots.py`).
@@ -25,4 +25,4 @@ The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wik
 - Don't run `pkill -f http.server` from a shell whose command line contains that text (it kills itself).
 
 ## Where things are
-Engine: `src/core.js` · App: `src/app/1-engine.js` (state, drawing, playback) · `2-explore.js` (Exercises tab) · `3-details.js` (exercise page info, overlay, Edit, its sound, Settings) · `5-main.js` (routing, boot) · `5-ai.js` (Create with AI) · `5-share.js` (share links, QR) · `6-pwa.js` (service worker, backup; calls `boot()`) · PWA: `manifest.webmanifest`, `icons/`, `src/sw.js` (template; the build writes `_site/sw.js`) · Workouts & player: `src/app/4-workouts.js` · CSS: `src/head.html` · Markup: `src/body.html`
+Engine: `src/core.js` · 3D skeleton (v2, in progress): `src/skeleton3d.js`, `tools/check3d.cjs`, `tools/compare3d.html` · App: `src/app/1-engine.js` (state, drawing, playback) · `2-explore.js` (Exercises tab) · `3-details.js` (exercise page info, overlay, Edit, its sound, Settings) · `5-main.js` (routing, boot) · `5-ai.js` (Create with AI) · `5-share.js` (share links, QR) · `6-pwa.js` (service worker, backup; calls `boot()`) · PWA: `manifest.webmanifest`, `icons/`, `src/sw.js` (template; the build writes `_site/sw.js`) · Workouts & player: `src/app/4-workouts.js` · CSS: `src/head.html` · Markup: `src/body.html`

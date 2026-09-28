@@ -61,6 +61,13 @@ if (!args.has('--no-checks') && !errors.length) {
   }
   console.log(n ? `animation checks: ${n} problem(s)` : 'animation checks: all exercises pass');
 }
+// ---------- 2b. the 3D skeleton (step 1) must still draw today's picture from each step's own view ----------
+if (!args.has('--no-checks') && !errors.length) {
+  const { spawnSync } = await import('node:child_process');
+  const r = spawnSync(process.execPath, [path.join(ROOT, 'tools/check3d.cjs')], { encoding: 'utf8' });
+  console.log(r.stdout.split('\n')[0]);
+  if (r.status !== 0) errors.push('3D skeleton: differs from the 2D picture (node tools/check3d.cjs for details)');
+}
 if (errors.length) { console.error('\n' + errors.map(e => '✗ ' + e).join('\n')); process.exit(1); }
 if (args.has('--check-only')) process.exit(0);
 
