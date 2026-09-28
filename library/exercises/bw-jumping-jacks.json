@@ -1,0 +1,118 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-jumping-jacks",
+  "name": "Jumping Jacks",
+  "otherNames": ["Star Jumps", "Jumping Jack"],
+  "category": "Cardio",
+  "focus": "Whole body (cardio)",
+  "collections": ["Warm-up", "Bodyweight"],
+  "equipment": [],
+  "description": "Jump your feet apart while swinging your arms overhead, then jump them back together as your arms come down, in a steady rhythm.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/jumping-jacks",
+    "title": "NASM Exercise Library: Jumping Jacks"
+  },
+  "setup": ["Stand tall with your feet together and your arms by your sides.", "A firm, non-slip floor with room to your sides."],
+  "cues": ["Land softly on the balls of your feet.", "Knees slightly bent.", "Keep a steady rhythm."],
+  "prescription": {
+    "reps": "20–40",
+    "note": "Stay light on the balls of your feet. For less impact, step one foot out at a time instead of jumping."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet together, arms by your sides.",
+      "camera": 0,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "setup",
+      "pose": {
+        "kneeL": 5,
+        "kneeR": 5
+      }
+    },
+    {
+      "name": "Jump out",
+      "cue": "Jump your feet apart and swing your arms up.",
+      "camera": 0,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "lift": 20,
+      "quiet": true,
+      "pose": {
+        "hipL": [0, 10, 0],
+        "hipR": [0, 10, 0],
+        "ankleL": 30,
+        "ankleR": 30,
+        "shoulderL": [0, 110, 0],
+        "shoulderR": [0, 110, 0]
+      }
+    },
+    {
+      "name": "Feet wide, arms up",
+      "cue": "Land with feet wide, arms overhead.",
+      "camera": 0,
+      "durationMs": 300,
+      "holdMs": 50,
+      "phase": "rep",
+      "pose": {
+        "hipL": [0, 18, 0],
+        "kneeL": 12,
+        "ankleL": -6,
+        "hipR": [0, 18, 0],
+        "kneeR": 12,
+        "ankleR": -6,
+        "shoulderL": [0, 170, 0],
+        "shoulderR": [0, 170, 0]
+      }
+    },
+    {
+      "name": "Jump in",
+      "cue": "Jump your feet back together, arms down.",
+      "camera": 0,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "lift": 20,
+      "quiet": true,
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "ankleL": 30,
+        "ankleR": 30,
+        "shoulderL": [0, 90, 0],
+        "shoulderR": [0, 90, 0]
+      }
+    },
+    {
+      "name": "Feet together",
+      "cue": "Land with feet together, arms by your sides.",
+      "camera": 0,
+      "durationMs": 300,
+      "holdMs": 50,
+      "phase": "rep",
+      "pose": {
+        "kneeL": 12,
+        "ankleL": -6,
+        "kneeR": 12,
+        "ankleR": -6
+      }
+    },
+    {
+      "name": "Stand tall",
+      "cue": "Stand still and breathe.",
+      "camera": 0,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "finish",
+      "pose": {}
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 20
+  },
+  "repName": "jack"
+}
