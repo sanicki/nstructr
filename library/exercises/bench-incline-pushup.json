@@ -5,7 +5,7 @@
   "name": "Incline Push-Up",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Bench"],
   "description": "A step between wall and floor push-ups: hands on a bench or sturdy table, body straight, lower your chest to the edge and press away.",
   "source": {

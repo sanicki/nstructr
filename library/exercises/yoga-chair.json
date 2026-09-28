@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-chair",
   "name": "Chair Pose",
-  "sanskrit": "Utkatasana",
+  "otherNames": ["Utkatasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Standing squat with the hips back and the arms reaching overhead.",
   "source": {

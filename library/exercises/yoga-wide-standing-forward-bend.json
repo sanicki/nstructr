@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-wide-standing-forward-bend",
   "name": "Wide-Legged Standing Forward Bend",
-  "sanskrit": "Prasarita Padottanasana",
+  "otherNames": ["Prasarita Padottanasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Wide stance folding forward with the hands on the floor.",
   "source": {

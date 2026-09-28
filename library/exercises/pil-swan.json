@@ -5,7 +5,7 @@
   "name": "Swan Prep",
   "category": "Pilates",
   "focus": "Back extensors",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Lying on your front with hands under your shoulders, lengthen and lift your chest into a gentle back extension, then lower.",
   "source": {

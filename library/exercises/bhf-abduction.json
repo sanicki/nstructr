@@ -5,7 +5,7 @@
   "name": "Standing Band Hip Abduction",
   "category": "Strength",
   "focus": "Legs",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Strengthens the muscles on the outside of the hips for better balance: with a band around both ankles, lift one straight leg out to the side.",
   "source": {

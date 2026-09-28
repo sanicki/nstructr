@@ -45,6 +45,7 @@ for (const w of workouts) w.blocks.forEach((b, bi) => b.items.forEach((it, ii) =
 for (const ex of exercises) ex.keyframes.forEach((k, i) => (k.keep || []).forEach(x => {
   if (typeof x === 'object' && x.keyframe >= ex.keyframes.length) errors.push(`${ex.id}: keyframes[${i}].keep points at step ${x.keyframe}, which doesn't exist`);
 }));
+for (const ex of exercises) if (!(ex.collections || []).length) errors.push(`${ex.id}: a library exercise needs "collections" (where the app shows it: Bodyweight, Yoga...)`);
 console.log(`validated ${exercises.length} exercises, ${workouts.length} workouts`);
 
 // ---------- 2. animation checks ----------
@@ -70,6 +71,21 @@ if (!args.has('--no-checks') && !errors.length) {
   }
   console.log(n ? `range of motion: ${n} joint(s) out of range` : 'range of motion: every pose is within reach of a flexible body');
 }
+// ---------- 2c. no duplicates: two library exercises may not move the same with the same equipment and measure (src/similar.js) ----------
+if (!args.has('--no-checks') && !errors.length) {
+  const { similarTo } = require('../src/similar.js');
+  const prints = new Map(), seen = new Set();
+  let variants = 0;
+  for (const ex of exercises) for (const m of similarTo(ex, exercises, prints)) {
+    const pair = [ex.id, m.id].sort().join(' ~ ');
+    if (seen.has(pair)) continue;
+    seen.add(pair);
+    if (m.verdict === 'duplicate') errors.push(`${pair}: move the same (${m.motion}°) with the same equipment and measure; make one exercise (add the other's name to "otherNames")`);
+    if (m.verdict === 'variant') variants++;
+  }
+  const d = errors.length;
+  console.log(d ? `duplicates: ${d}` : `duplicates: none (${variants} variant pair(s): same motion, other equipment or measure)`);
+}
 if (errors.length) { console.error('\n' + errors.map(e => '✗ ' + e).join('\n')); process.exit(1); }
 if (args.has('--check-only')) process.exit(0);
 
@@ -85,7 +101,7 @@ copy('src'); copy('library'); copy('schema'); copy('icons'); copy('manifest.webm
 fs.rmSync(path.join(SITE, 'src/sw.js'));
 const appFiles = fs.readdirSync(path.join(ROOT, 'src/app')).filter(f => f.endsWith('.js')).sort();
 const head = rd('src/head.html'), body = rd('src/body.html');
-const scripts = ['src/core.js', 'src/thumb.js', 'src/vendor/qrcode.js', ...appFiles.map(f => `src/app/${f}`)];
+const scripts = ['src/core.js', 'src/similar.js', 'src/thumb.js', 'src/vendor/qrcode.js', ...appFiles.map(f => `src/app/${f}`)];
 // the installable app: manifest, icons, and a service worker that caches everything it needs
 const pwaHead = head.replace('</title>', `</title>
 <link rel="manifest" href="manifest.webmanifest">

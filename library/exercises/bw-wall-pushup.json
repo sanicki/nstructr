@@ -5,7 +5,7 @@
   "name": "Wall Push-Up",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Wall"],
   "description": "The gentlest push-up: lean into a wall with straight arms, then bend your elbows to bring your chest toward it and push back.",
   "source": {

@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-revolved-head-to-knee",
   "name": "Revolved Head-to-Knee Pose",
-  "sanskrit": "Parivrtta Janu Sirsasana",
+  "otherNames": ["Parivrtta Janu Sirsasana"],
   "category": "Seated",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Seated side bend over one straight leg with the top arm reaching overhead.",
   "source": {

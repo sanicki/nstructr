@@ -5,7 +5,7 @@
   "name": "Dumbbell Biceps Curl",
   "category": "Strength",
   "focus": "Front of the upper arms",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
   "description": "With your arms by your sides, curl the dumbbells up to your shoulders by bending your elbows, then lower slowly.",
   "source": {

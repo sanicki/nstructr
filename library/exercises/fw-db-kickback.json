@@ -5,7 +5,7 @@
   "name": "Dumbbell Triceps Kickback",
   "category": "Strength",
   "focus": "Backs of the arms",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
   "description": "Hinged forward with your upper arms tucked by your sides, straighten your elbows to push the dumbbells back.",
   "source": {

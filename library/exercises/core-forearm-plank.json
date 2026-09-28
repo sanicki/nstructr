@@ -5,7 +5,7 @@
   "name": "Forearm Plank",
   "category": "Core",
   "focus": "Core",
-  "library": "Core",
+  "collections": ["Core"],
   "equipment": [],
   "description": "The classic core hold: on your forearms and toes, keep your body in a straight line from head to heels.",
   "source": {

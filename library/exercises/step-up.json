@@ -5,7 +5,7 @@
   "name": "Step-Up",
   "category": "Strength",
   "focus": "Thighs and glutes",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Step"],
   "description": "Leg strength and balance: step up onto a low step with one foot, bring the other foot up, then step back down one foot at a time.",
   "source": {

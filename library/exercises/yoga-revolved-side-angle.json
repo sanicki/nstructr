@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-revolved-side-angle",
   "name": "Revolved Side Angle Pose",
-  "sanskrit": "Parivrtta Parsvakonasana",
+  "otherNames": ["Parivrtta Parsvakonasana"],
   "category": "Standing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Lunging twist with the opposite elbow hooked outside the front knee.",
   "source": {

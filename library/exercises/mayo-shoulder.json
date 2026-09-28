@@ -5,7 +5,7 @@
   "name": "Shoulder Stretch",
   "category": "Stretch",
   "focus": "Back of the shoulder",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": [],
   "description": "Stretches the back of the shoulder: bring one arm across your body and hold it with the other arm, above or below the elbow.",
   "source": {

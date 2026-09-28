@@ -5,7 +5,7 @@
   "name": "Shoulder Stretch with Towel",
   "category": "Stretch",
   "focus": "Shoulder rotators",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": ["Towel"],
   "description": "Stretches the shoulder's internal rotators: a rolled towel held behind your back, top hand pulls up so the lower hand slides up your back.",
   "source": {

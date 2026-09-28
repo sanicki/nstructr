@@ -5,7 +5,7 @@
   "name": "Banded Overhead Press",
   "category": "Core",
   "focus": "Shoulders and arms",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Standing on the band with your hands at your shoulders, press straight overhead until your arms are fully extended, then lower with control.",
   "source": {

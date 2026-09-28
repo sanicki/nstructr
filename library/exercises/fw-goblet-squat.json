@@ -5,7 +5,7 @@
   "name": "Goblet Squat",
   "category": "Strength",
   "focus": "Thighs and glutes",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Dumbbell"],
   "description": "A squat holding one dumbbell upright against your chest, which helps keep your chest up and your balance forward.",
   "source": {

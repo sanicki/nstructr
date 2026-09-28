@@ -5,7 +5,7 @@
   "name": "Wall Sit + Pull-Apart",
   "category": "Strength",
   "focus": "Thighs, upper back and shoulders",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band", "Wall"],
   "description": "A combination hold: sit in a 90° squat against a wall, and while you hold it, do band pull-aparts at chest height, squeezing your shoulder blades.",
   "source": {

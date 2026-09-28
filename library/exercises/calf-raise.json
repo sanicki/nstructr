@@ -5,7 +5,7 @@
   "name": "Calf Raises",
   "category": "Strength",
   "focus": "Calves",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Wall"],
   "description": "Strengthens the calf muscles: holding a wall for balance, rise slowly onto the balls of both feet and lower back down.",
   "source": {

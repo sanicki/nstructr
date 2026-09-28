@@ -5,7 +5,7 @@
   "name": "Push-Up",
   "category": "Strength",
   "focus": "Chest, shoulders and arms",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": [],
   "description": "The full push-up: from a straight-arm plank on your toes, lower your chest until your elbows are bent to 90°, then press back up.",
   "source": {
@@ -68,9 +68,9 @@
       ],
       "pose": {
         "root": [79, 0, 0],
-        "shoulderL": [-11, 0, 0],
+        "shoulderL": [-11, 40, 0],
         "elbowL": 90,
-        "shoulderR": [-11, 0, 0],
+        "shoulderR": [-11, 40, 0],
         "elbowR": 90,
         "hipL": [-7.5, 0, 0],
         "ankleL": 11,

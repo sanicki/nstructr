@@ -25,12 +25,22 @@
       "type": "string",
       "minLength": 1
     },
-    "sanskrit": {
-      "type": "string"
+    "otherNames": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Other names people use for it (a Sanskrit name, a gym name). Search finds them; the first is shown under the name."
     },
-    "library": {
-      "type": "string",
-      "description": "Collection shown in the app (Bodyweight, Stretches, ...)."
+    "collections": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "description": "Collections it is shown in (Bodyweight, Yoga, ...). Library exercises only; one or more."
     },
     "category": {
       "type": "string"

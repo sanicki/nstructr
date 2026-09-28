@@ -5,7 +5,7 @@
   "name": "Sit-to-Stand",
   "category": "Strength",
   "focus": "Thighs and glutes",
-  "library": "Chair-based",
+  "collections": ["Chair-based"],
   "equipment": ["Chair"],
   "description": "Builds the leg strength for everyday life: from sitting on the edge of a chair, lean forward and stand up using your legs, then sit back down slowly.",
   "source": {

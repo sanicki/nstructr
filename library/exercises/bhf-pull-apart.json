@@ -5,7 +5,7 @@
   "name": "Band Pull Apart",
   "category": "Strength",
   "focus": "Back",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Upper-back exercise for posture: hold the band at shoulder height with straight arms and pull it apart until your shoulder blades squeeze, which also opens the chest.",
   "source": {

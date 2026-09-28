@@ -5,7 +5,7 @@
   "name": "Roll-Up",
   "category": "Pilates",
   "focus": "Abdominals and spine",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Roll up from lying down one vertebra at a time, reach forward over your legs, then roll back down with control.",
   "source": {

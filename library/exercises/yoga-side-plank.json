@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-side-plank",
   "name": "Side Plank Pose",
-  "sanskrit": "Vasisthasana",
+  "otherNames": ["Vasisthasana"],
   "category": "Arm Balance",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Balance on one hand and the edge of the foot with the body in one line.",
   "source": {

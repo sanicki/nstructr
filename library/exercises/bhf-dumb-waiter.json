@@ -5,7 +5,7 @@
   "name": "Dumb Waiter",
   "category": "Strength",
   "focus": "Shoulders",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Rotator-cuff exercise to keep the shoulders stable: elbows stay tucked at 90° while the hands swing out to the sides against the band.",
   "source": {

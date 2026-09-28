@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-crow",
   "name": "Crow Pose",
-  "sanskrit": "Bakasana",
+  "otherNames": ["Bakasana"],
   "category": "Arm Balance",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Arm balance with the knees resting high on the upper arms and the feet lifted.",
   "source": {

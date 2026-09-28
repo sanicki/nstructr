@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-chaturanga",
   "name": "Four-Limbed Staff Pose",
-  "sanskrit": "Chaturanga Dandasana",
+  "otherNames": ["Chaturanga Dandasana"],
   "category": "Arm Balance",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Low plank with the elbows bent to 90 degrees and the body in one line.",
   "source": {
@@ -62,11 +62,11 @@
         }
       ],
       "pose": {
-        "root": [79, 0, 0],
-        "shoulderL": [-11, 0, 0],
-        "elbowL": 90,
-        "shoulderR": [-11, 0, 0],
-        "elbowR": 90,
+        "root": [84, 0, 0],
+        "shoulderL": [-35, 0, 0],
+        "elbowL": 95,
+        "shoulderR": [-35, 0, 0],
+        "elbowR": 95,
         "hipL": [-7.5, 0, 0],
         "ankleL": 11,
         "hipR": [-7.5, 0, 0],

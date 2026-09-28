@@ -5,7 +5,7 @@
   "name": "Band Lat Pull Down",
   "category": "Strength",
   "focus": "Back",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Works the large muscles of the back (the lats): pull the band apart and down from overhead until it passes below your chin.",
   "source": {

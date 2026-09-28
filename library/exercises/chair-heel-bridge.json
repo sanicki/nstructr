@@ -5,7 +5,7 @@
   "name": "Heels-on-Chair Bridge",
   "category": "Strength",
   "focus": "Hamstrings and glutes",
-  "library": "Chair-based",
+  "collections": ["Chair-based"],
   "equipment": ["Chair", "Mat"],
   "description": "A bridge with your heels up on a chair seat, which works the hamstrings harder: press your heels down and lift your hips until shoulders, hips and knees line up.",
   "source": {

@@ -5,7 +5,7 @@
   "name": "Spine Stretch Forward",
   "category": "Pilates",
   "focus": "Spine",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Sitting tall with your legs apart, round forward from the top of your head as if over a ball, reaching forward, then stack back up.",
   "source": {

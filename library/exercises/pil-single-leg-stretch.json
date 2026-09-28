@@ -5,7 +5,7 @@
   "name": "Single-Leg Stretch",
   "category": "Pilates",
   "focus": "Deep core",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Head and shoulders curled up, draw one knee in toward your chest while the other leg reaches long, then switch.",
   "source": {

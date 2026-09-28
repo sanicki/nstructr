@@ -5,7 +5,7 @@
   "name": "Standing Band Leg Press",
   "category": "Strength",
   "focus": "Legs",
-  "library": "Resistance band",
+  "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "description": "Leg strength and hip and knee mobility: with the band under one foot, lift the knee, then press the foot back down into the band.",
   "source": {

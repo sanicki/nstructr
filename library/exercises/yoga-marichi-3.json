@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-marichi-3",
   "name": "Pose Dedicated to the Sage Marichi III",
-  "sanskrit": "Marichyasana III",
+  "otherNames": ["Marichyasana III"],
   "category": "Hip-Opening",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Seated twist with one knee up and the torso turning toward it.",
   "source": {

@@ -110,6 +110,10 @@ async def main():
         await pg.click('[data-share-wk="legs"]'); await pg.wait_for_timeout(500); await shot(pg, 'share')
         await pg.evaluate("$('#shareDialog').close()")
         link = await pg.evaluate("SHARING.url")
+        # Submit to library: an own exercise that moves the same as a library one
+        await pg.evaluate("S.lib.items.push({...clone(findInDb('bw-squat')), id:'u-chair-squat', name:'Air Squat'}); saveLib(); go('#/play/u-chair-squat')")
+        await pg.wait_for_timeout(500); await pg.click('#shareExBtn'); await pg.click('#shareSubmit'); await shot(pg, 'submit')
+        await pg.evaluate("$('#submitDialog').close(); S.lib.items = S.lib.items.filter(x => x.id !== 'u-chair-squat'); saveLib(); go('#/workouts')")
         # the other phone opens the link
         pg2 = await page(b, 412, 860)
         await pg2.goto(link.replace('#', '?r#'), wait_until='domcontentloaded'); await pg2.wait_for_timeout(1200)

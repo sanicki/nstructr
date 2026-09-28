@@ -5,7 +5,7 @@
   "name": "Dead Bug",
   "category": "Core",
   "focus": "Deep core",
-  "library": "Core",
+  "collections": ["Core"],
   "equipment": [],
   "description": "A core exercise on your back: arms up and knees over hips, lower one arm and the opposite leg toward the floor while your back stays flat.",
   "source": {

@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-side-crow",
   "name": "Side Crow Pose",
-  "sanskrit": "Parsva Bakasana",
+  "otherNames": ["Parsva Bakasana"],
   "category": "Arm Balance",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Twisted arm balance with both knees stacked on one arm.",
   "source": {
@@ -55,18 +55,19 @@
       "phase": "rep",
       "anchor": "handR",
       "pose": {
-        "torso": [73, 0, 0],
+        "torso": [73, 0, 40],
         "neck": [-20, 0, 0],
         "shoulderL": [53, 0, 0],
         "elbowL": 28,
         "shoulderR": [53, 0, 0],
         "elbowR": 28,
-        "hipL": [87, 0, 0],
+        "hipL": [87, 25, 0],
         "kneeL": 160,
         "ankleL": 60,
-        "hipR": [87, 0, 0],
+        "hipR": [87, -25, 0],
         "kneeR": 160,
-        "ankleR": 60
+        "ankleR": 60,
+        "chest": [0, 0, 20]
       }
     }
   ],

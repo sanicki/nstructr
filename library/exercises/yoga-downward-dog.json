@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-downward-dog",
   "name": "Downward-Facing Dog Pose",
-  "sanskrit": "Adho Mukha Svanasana",
+  "otherNames": ["Adho Mukha Svanasana"],
   "category": "Forward Bend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Upside-down V shape pressing the hips up and back from the hands and feet.",
   "source": {

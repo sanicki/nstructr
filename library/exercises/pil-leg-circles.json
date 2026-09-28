@@ -3,10 +3,10 @@
   "version": 2,
   "id": "pil-leg-circles",
   "name": "Leg Circles",
-  "sanskrit": "Single-Leg Circles",
+  "otherNames": ["Single-Leg Circles"],
   "category": "Pilates",
   "focus": "Hips and deep core",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Lying on your back with one leg reaching to the ceiling, draw small, smooth circles with that leg while your pelvis and back stay still on the mat. Then reverse, and switch legs.",
   "source": {

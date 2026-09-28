@@ -5,7 +5,7 @@
   "name": "Lying Leg Raise",
   "category": "Core",
   "focus": "Lower abdominals",
-  "library": "Core",
+  "collections": ["Core"],
   "equipment": [],
   "description": "Works the lower stomach: lying on your back with legs straight, lift both legs toward the ceiling and lower them slowly.",
   "source": {

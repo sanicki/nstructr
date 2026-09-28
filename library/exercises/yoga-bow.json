@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-bow",
   "name": "Bow Pose",
-  "sanskrit": "Dhanurasana",
+  "otherNames": ["Dhanurasana"],
   "category": "Backbend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Belly-down backbend where the hands hold the ankles and the chest and thighs lift.",
   "source": {

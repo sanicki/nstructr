@@ -5,7 +5,7 @@
   "name": "Barbell Overhead Press",
   "category": "Strength",
   "focus": "Shoulders and arms",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Barbell"],
   "description": "Press the bar from the front of your shoulders to straight overhead, moving your head back slightly to let it pass.",
   "source": {

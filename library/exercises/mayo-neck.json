@@ -5,7 +5,7 @@
   "name": "Neck Stretch",
   "category": "Stretch",
   "focus": "Neck",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": [],
   "description": "Gentle neck stretch: tip your head forward and slightly to one side, and let that hand add a light pull.",
   "source": {

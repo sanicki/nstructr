@@ -5,7 +5,7 @@
   "name": "Crunch",
   "category": "Core",
   "focus": "Abdominals",
-  "library": "Core",
+  "collections": ["Core"],
   "equipment": [],
   "description": "Works the stomach muscles: lying on your back with knees bent, curl your head and shoulders up off the floor and lower slowly.",
   "source": {

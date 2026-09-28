@@ -5,7 +5,7 @@
   "name": "Double-Leg Stretch",
   "category": "Pilates",
   "focus": "Deep core",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Hug both knees in with your head curled up, then reach your arms overhead and your legs away at the same time, and circle back in.",
   "source": {

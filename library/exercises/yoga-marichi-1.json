@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-marichi-1",
   "name": "Pose Dedicated to the Sage Marichi I",
-  "sanskrit": "Marichyasana I",
+  "otherNames": ["Marichyasana I"],
   "category": "Binding",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Seated forward bend with one knee up and the arms binding behind the back.",
   "source": {

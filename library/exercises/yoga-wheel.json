@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-wheel",
   "name": "Wheel Pose",
-  "sanskrit": "Urdhva Dhanurasana",
+  "otherNames": ["Urdhva Dhanurasana"],
   "category": "Backbend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Full backbend pressing up onto the hands and feet.",
   "source": {

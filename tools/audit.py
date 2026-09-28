@@ -25,7 +25,8 @@ EXTRA = r"""(() => {
     if (a.content !== 'none' && a.position === 'absolute') r = { width: Math.max(r0.width, parseFloat(a.width) || 0, parseFloat(a.minWidth) || 0), height: Math.max(r0.height, parseFloat(a.height) || 0) };
     const clip = [...(function* (n) { while ((n = n.parentElement)) yield n; })(el)].find(n => getComputedStyle(n).overflowY !== 'visible');
     if (clip && clip !== document.body && clip !== document.documentElement && !clip.matches('dialog, .ai-body, .pick-list, main, .view')) { const c = clip.getBoundingClientRect(); r = { width: Math.min(r.width, c.width), height: Math.min(r.height, c.height) }; }
-    if (el.type === 'checkbox' || el.matches('input[type=search], textarea')) continue;
+    // a checkbox, or a radio button in its label: the whole row (the label, 48 px tall) is the target
+    if (el.type === 'checkbox' || (el.type === 'radio' && el.closest('label')) || el.matches('input[type=search], textarea')) continue;
     // an inline link in a sentence is exempt (WCAG 2.5.8); M3 asks 48 x 48 for everything else
     if ((Math.round(r.width) < 48 || Math.round(r.height) < 48) && !(el.tagName === 'A' && getComputedStyle(el).display === 'inline')) {
       const k = 'target ' + sel(el); if (!seen.has(k)) { seen.add(k); out.push({kind: 'small target', el: sel(el), size: `${Math.round(r.width)}x${Math.round(r.height)}`, text: (el.textContent || el.getAttribute('aria-label') || '').trim().slice(0, 30)}); }
@@ -76,6 +77,7 @@ async def screens(b, theme, results):
     await pg.evaluate("go('#/settings')"); await audit(pg, T('Settings'), results)
     await pg.evaluate("openAi()"); await audit(pg, T('Create with AI'), results); await pg.evaluate("$('#aiDialog').close()")
     await pg.evaluate("go('#/workouts')"); await pg.click('[data-share-wk="a"]'); await audit(pg, T('Share'), results); await pg.evaluate("$('#shareDialog').close()")
+    await pg.evaluate("S.lib.items.push({...clone(findInDb('bw-squat')), id:'u-audit', name:'Air Squat'}); openSubmit(exById('u-audit'))"); await audit(pg, T('Submit to library'), results); await pg.evaluate("$('#submitDialog').close()")
     await ctx.close()
     # the cover screen
     ctx = await b.new_context(viewport={'width': 360, 'height': 398}, has_touch=True)

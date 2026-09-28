@@ -5,7 +5,7 @@
   "name": "Kettlebell Swing",
   "category": "Strength",
   "focus": "Glutes, hamstrings and back",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
   "description": "A powerful hip hinge: swing the kettlebell back between your legs, then snap your hips forward so it floats up to chest height.",
   "source": {

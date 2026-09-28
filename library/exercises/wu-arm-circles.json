@@ -5,7 +5,7 @@
   "name": "Standing Arm Circles",
   "category": "Mobility",
   "focus": "Shoulders",
-  "library": "Warm-up",
+  "collections": ["Warm-up"],
   "equipment": [],
   "description": "A shoulder warm-up: arms straight out to your sides at shoulder height, make controlled circles forward, then reverse.",
   "source": {

@@ -5,7 +5,7 @@
   "name": "Swimming",
   "category": "Pilates",
   "focus": "Back and glutes",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "Lying face down with arms and legs lifted, flutter opposite arm and leg up and down as if swimming.",
   "source": {

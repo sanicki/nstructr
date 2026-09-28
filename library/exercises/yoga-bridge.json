@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-bridge",
   "name": "Bridge Pose",
-  "sanskrit": "Setu Bandha Sarvangasana",
+  "otherNames": ["Setu Bandha Sarvangasana"],
   "category": "Backbend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Lying on the back with the feet planted, lift the hips toward the ceiling.",
   "source": {

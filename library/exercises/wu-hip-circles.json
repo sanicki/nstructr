@@ -5,7 +5,7 @@
   "name": "Standing Hip Circles",
   "category": "Mobility",
   "focus": "Hips and lower back",
-  "library": "Warm-up",
+  "collections": ["Warm-up"],
   "equipment": [],
   "description": "A hip and lower-back warm-up: hands on your hips, circle your hips in a wide, smooth loop one way, then the other.",
   "source": {

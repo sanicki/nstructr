@@ -5,7 +5,7 @@
   "name": "Bird Dog",
   "category": "Core",
   "focus": "Core and lower back",
-  "library": "Core",
+  "collections": ["Core"],
   "equipment": [],
   "description": "A stability exercise on hands and knees: reach one arm forward and the opposite leg back, hold, and return without twisting.",
   "source": {

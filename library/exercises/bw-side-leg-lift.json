@@ -5,7 +5,7 @@
   "name": "Standing Side Leg Lift",
   "category": "Strength",
   "focus": "Outer hips",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Wall"],
   "description": "Strengthens the outer hip for balance: holding a wall, lift one straight leg out to the side and lower it slowly.",
   "source": {

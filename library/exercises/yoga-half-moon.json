@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-half-moon",
   "name": "Half Moon Pose",
-  "sanskrit": "Ardha Chandrasana",
+  "otherNames": ["Ardha Chandrasana"],
   "category": "Balancing",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Standing balance on one leg with the torso and lifted leg parallel to the floor.",
   "source": {

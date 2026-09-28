@@ -5,7 +5,7 @@
   "name": "Seated Hamstring Stretch",
   "category": "Stretch",
   "focus": "Hamstrings and calves",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": ["Mat"],
   "description": "Sitting with one leg straight and the other foot against its inner thigh, hinge forward from your hips with a flat back and reach toward your ankle.",
   "source": {

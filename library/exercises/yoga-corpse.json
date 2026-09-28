@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-corpse",
   "name": "Corpse Pose",
-  "sanskrit": "Savasana",
+  "otherNames": ["Savasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Final relaxation lying flat on the back.",
   "source": {

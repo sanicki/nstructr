@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-forearm-balance",
   "name": "Feathered Peacock Pose",
-  "sanskrit": "Pincha Mayurasana",
+  "otherNames": ["Pincha Mayurasana"],
   "category": "Inversion",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Forearm balance with the legs stacked over the shoulders.",
   "source": {

@@ -5,7 +5,7 @@
   "name": "Single-Leg Calf Raises",
   "category": "Strength",
   "focus": "Calves",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": ["Wall"],
   "description": "A harder calf raise: with one foot lifted and a hand on the wall, rise slowly onto the ball of the standing foot.",
   "source": {

@@ -85,16 +85,27 @@ function validateExercise(ex, path) {
       if (pr.via != null && (!Array.isArray(pr.via) || pr.via.some(v => !POINTS.includes(v)))) fail(`${p}.via must be a list of body points.`);
     });
   }
-  const clone = JSON.parse(JSON.stringify(ex));
+  const clone = modernize(JSON.parse(JSON.stringify(ex)));
+  if (clone.otherNames != null && !(Array.isArray(clone.otherNames) && clone.otherNames.every(n => typeof n === 'string'))) fail(`${path}.otherNames must be a list of names.`);
   clone.id = typeof ex.id === 'string' && ex.id.trim() ? ex.id.trim() : slug(ex.name);
   return clone;
 }
+
+/* Fields renamed since (Sep 2026): "sanskrit" (one text, comma-separated) is "otherNames" (a list), and "library" (one
+   collection) is "collections" (a list). Files, links and saved exercises written before are read the new way. */
+function modernize(ex) {
+  if (!ex || typeof ex !== 'object') return ex;
+  if (ex.sanskrit != null) { if (!ex.otherNames) ex.otherNames = String(ex.sanskrit).split(/\s*,\s*/).filter(Boolean); delete ex.sanskrit; }
+  if (ex.library != null) { if (!ex.collections) ex.collections = [String(ex.library)]; delete ex.library; }
+  return ex;
+}
+const otherNames = ex => (Array.isArray(ex.otherNames) ? ex.otherNames : []);
 
 /* ---------- Library persistence ---------- */
 const findInDb = id => POSE_DB.exercises.find(it => it.id === id);
 const clone = o => JSON.parse(JSON.stringify(o));
 function loadLib() {
-  try { const raw = localStorage.getItem(STORE_KEY); if (raw) { const d = JSON.parse(raw); if (Array.isArray(d.items)) return d; } } catch (e) { }
+  try { const raw = localStorage.getItem(STORE_KEY); if (raw) { const d = JSON.parse(raw); if (Array.isArray(d.items)) { d.items.forEach(modernize); return d; } } } catch (e) { }
   return { items: [] };
 }
 let saveTimer = 0;

@@ -5,7 +5,7 @@
   "name": "Forearm Side Plank",
   "category": "Core",
   "focus": "Side of the core",
-  "library": "Core",
+  "collections": ["Core"],
   "equipment": [],
   "description": "Works the obliques: propped on one forearm with your legs stacked, lift your hips so your body makes a straight line.",
   "source": {

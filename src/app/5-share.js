@@ -73,7 +73,13 @@ async function openShare(what) {
     desc = lib && url.includes('#/play/') ? 'A library exercise: the link opens it.' : 'Your own exercise: the link carries all of it.';
     file = [JSON.stringify({ format: 'nstructr/exercise', version: FILE_VERSION, exercises: [ex] }, null, 2), (ex.id || 'exercise') + '.json'];
   }
-  SHARING = { url, name, file };
+  SHARING = { url, name, file, exercise: what.exercise };
+  // submitting to the library: exercises that aren't the library's own (workouts later)
+  const libOwn = what.exercise && findInDb(what.exercise.id) && canonical(findInDb(what.exercise.id)) === canonical(what.exercise);
+  $('#shareSubmit').disabled = !what.exercise || !!libOwn;
+  $('#shareSoon').textContent = what.workout ? 'Workouts can\'t be submitted to the library yet.'
+    : libOwn ? 'Already in the library. To suggest a change, edit it (that makes your copy), then submit the copy.'
+    : 'Submit to library: suggest it (or your change) for everyone\'s library.';
   $('#shareTitle').textContent = `Share "${name}"`;
   $('#shareWhat').textContent = desc;
   $('#shareQr').innerHTML = url.length <= QR_MAX ? qrSvg(url)

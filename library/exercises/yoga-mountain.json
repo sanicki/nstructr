@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-mountain",
   "name": "Mountain Pose",
-  "sanskrit": "Tadasana",
+  "otherNames": ["Tadasana"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "The foundational standing pose: feet grounded, spine tall, arms by the sides.",
   "source": {

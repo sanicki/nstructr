@@ -1,0 +1,63 @@
+name: Exercise submission
+# An issue from the exercise form (.github/ISSUE_TEMPLATE/exercise.yml, filled in by the app): tools/submission.mjs
+# checks it like the build does and writes the library file; then the whole library is checked, and a pull request
+# (branch submission/issue-<n>) has the change for review. The result is commented on the issue. Editing the issue
+# runs it again. The issue is anyone's text: it only reaches the script as a file, never the shell.
+# One-time setup: Settings → Actions → General → "Allow GitHub Actions to create and approve pull requests".
+on:
+  issues: { types: [opened, edited] }
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+concurrency: { group: "submission-${{ github.event.issue.number }}", cancel-in-progress: true }
+jobs:
+  submission:
+    if: github.event.issue.state == 'open' && contains(github.event.issue.body, '### Exercise link')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+      - name: Check the submission
+        id: check
+        env:
+          BODY: ${{ github.event.issue.body }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          printf '%s' "$BODY" > "$RUNNER_TEMP/issue.md"
+          out="$RUNNER_TEMP/out"
+          if ! node tools/submission.mjs "$RUNNER_TEMP/issue.md" "$NUMBER" "$out"; then echo "ok=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          # and the whole library with it in, as the build checks every pull request (this one's CI doesn't run by itself)
+          if node tools/build.mjs --check-only > "$RUNNER_TEMP/build.log" 2>&1; then echo "ok=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+          echo "ok=false" >> "$GITHUB_OUTPUT"
+          { printf '### ❌ The library check failed with this change\n\n```\n'; grep '✗' "$RUNNER_TEMP/build.log" | head -20 | tr -d '`'; printf '```\n'; } > "$out/report.md"
+      - name: Open or update the pull request
+        if: steps.check.outputs.ok == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          TITLE: ${{ github.event.issue.title }}
+        run: |
+          branch="submission/issue-$NUMBER"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add library/exercises
+          git commit -q -m "Exercise submission (#$NUMBER)"
+          git push -f origin "$branch"
+          if [ -z "$(gh pr list --head "$branch" --state open --json number --jq '.[].number')" ]; then
+            gh pr create --head "$branch" --title "$TITLE" --body-file "$RUNNER_TEMP/out/pr.md"
+          else
+            gh pr edit "$branch" --body-file "$RUNNER_TEMP/out/pr.md"
+          fi
+      - name: Comment on the issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+        run: |
+          f="$RUNNER_TEMP/out/report.md"
+          [ -f "$f" ] || printf '### ❌ The check did not finish\n\nA maintainer will look at it.\n' > "$f"
+          gh issue comment "$NUMBER" --body-file "$f"

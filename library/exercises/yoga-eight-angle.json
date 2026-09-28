@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-eight-angle",
   "name": "Eight-Angle Pose",
-  "sanskrit": "Astavakrasana",
+  "otherNames": ["Astavakrasana"],
   "category": "Arm Balance",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Arm balance with the legs crossed and extended to one side of the bent arms.",
   "source": {

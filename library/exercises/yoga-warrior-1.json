@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-warrior-1",
   "name": "Warrior 1 Pose",
-  "sanskrit": "Virabhadrasana I",
+  "otherNames": ["Virabhadrasana I"],
   "category": "Beginner",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Lunge with the back heel down, the hips facing forward, and the arms overhead.",
   "source": {

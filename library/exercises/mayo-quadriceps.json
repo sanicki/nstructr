@@ -5,7 +5,7 @@
   "name": "Quadriceps Stretch",
   "category": "Stretch",
   "focus": "Front of thigh",
-  "library": "Stretches",
+  "collections": ["Stretches"],
   "equipment": ["Wall"],
   "description": "Stretches the front of the thigh standing: hold one ankle and draw the heel up and back, a hand on a wall for balance.",
   "source": {

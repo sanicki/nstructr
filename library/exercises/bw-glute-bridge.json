@@ -5,7 +5,7 @@
   "name": "Glute Bridge",
   "category": "Strength",
   "focus": "Glutes and hamstrings",
-  "library": "Bodyweight",
+  "collections": ["Bodyweight"],
   "equipment": [],
   "description": "Strengthens the glutes: lying on your back with knees bent, squeeze your buttocks and lift your hips until your body is straight from knees to shoulders.",
   "source": {

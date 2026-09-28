@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-plow",
   "name": "Plow Pose",
-  "sanskrit": "Halasana",
+  "otherNames": ["Halasana"],
   "category": "Inversion",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Inversion on the shoulders with the legs lowered over the head.",
   "source": {

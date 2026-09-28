@@ -3,9 +3,9 @@
   "version": 2,
   "id": "yoga-camel",
   "name": "Camel Pose",
-  "sanskrit": "Ustrasana",
+  "otherNames": ["Ustrasana"],
   "category": "Backbend",
-  "library": "Yoga",
+  "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
   "description": "Kneeling backbend reaching the hands back toward the heels.",
   "source": {

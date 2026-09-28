@@ -5,7 +5,7 @@
   "name": "Dumbbell Bent-Over Row",
   "category": "Strength",
   "focus": "Upper back",
-  "library": "Free weights",
+  "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
   "description": "Hinged forward with a flat back, pull the dumbbells up toward your hips, squeezing your shoulder blades, then lower.",
   "source": {

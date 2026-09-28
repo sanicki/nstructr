@@ -5,7 +5,7 @@
   "name": "Teaser",
   "category": "Pilates",
   "focus": "Abdominals",
-  "library": "Pilates",
+  "collections": ["Pilates"],
   "equipment": ["Mat"],
   "description": "An advanced balance: from lying down, roll up into a V shape with your legs raised and your arms reaching toward your toes, then roll down.",
   "source": {
