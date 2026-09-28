@@ -29,8 +29,17 @@
   const nameKey = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, ' ')
     .split(' ').filter(t => t && !FILLER.has(t)).map(singular).sort().join(' ');
   const namesOf = ex => [ex.name, ...(Array.isArray(ex.otherNames) ? ex.otherNames : [])].map(nameKey).filter(Boolean);
-  const NO_EQUIPMENT = new Set(['mat', 'yoga mat', 'exercise mat', 'floor']);
-  const equipKey = ex => [...new Set((ex.equipment || []).map(e => singular(String(e).toLowerCase().trim())).filter(e => e && !NO_EQUIPMENT.has(e)))].sort().join('|');
+  /* equipment, as kinds: "Resistance band" and "band" are one thing, "Dumbbells" and "dumbbell" too; a mat or the
+     floor isn't equipment. Also used for the AI's "equipmentInSource" (free text). */
+  const KINDS = [['band', /band|tube/], ['dumbbell', /dumb ?bell/], ['barbell', /barbell/], ['kettlebell', /kettle ?bell/], ['chair', /chair/],
+    ['bench', /bench/], ['wall', /wall/], ['step', /\bstep|box/], ['towel', /towel/], ['block', /block/], ['strap', /strap/], ['ball', /ball/]];
+  const equipKind = e => {
+    const t = String(e || '').toLowerCase().trim();
+    if (!t || /\bmat\b|floor|none|bodyweight|body weight/.test(t)) return '';
+    const k = KINDS.find(([, re]) => re.test(t)); return k ? k[0] : singular(t);
+  };
+  const equipKinds = list => [...new Set((list || []).map(equipKind).filter(Boolean))].sort();
+  const equipKey = ex => equipKinds(ex.equipment).join('|');
   const measureOf = ex => ex.measure || 'reps';
   /* How ex compares with each library exercise, closest first: [{ id, name, motion, sameName, sameEquipment,
      sameMeasure, verdict }]. verdict: "duplicate" (moves the same, same equipment and measure), "variant" (moves the
@@ -50,6 +59,6 @@
     const rank = { duplicate: 0, variant: 1, name: 2, similar: 3 };
     return out.sort((a, b) => rank[a.verdict] - rank[b.verdict] || a.motion - b.motion);
   }
-  const api = { fingerprint, motionDistance, similarTo, nameKey, SAME, SIMILAR };
+  const api = { fingerprint, motionDistance, similarTo, nameKey, equipKinds, SAME, SIMILAR };
   if (typeof module !== 'undefined') module.exports = api; else root.SIMILAR_EX = api;
 })(typeof window !== 'undefined' ? window : globalThis);

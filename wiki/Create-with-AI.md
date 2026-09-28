@@ -46,11 +46,14 @@ When the AI has answered, copy its whole reply, come back, tap **Paste** (or lon
 - If the exercise **is already in the library**, that exercise opens instead.
 - **Already in the library under another name?** If a new exercise moves the same as a library one (same
   equipment, reps or hold), you're asked whether to use the library's instead (it's ticked; **Done** swaps it in
-  the workout, **Keep as imported** keeps yours). Names the library doesn't know yet, such as what the video
+  the workout, **Keep as imported** keeps yours).
+- **Different equipment?** If the AI picked a library exercise but the source uses other equipment (a band squat
+  matched to the plain squat), you're offered the library's version with that equipment (Band Squat), or, when
+  the library has none, your own copy with that equipment in My exercises. Names the library doesn't know yet, such as what the video
   calls an exercise, can be sent as suggestions with **Suggest it**
   (see [Submit to library](Sharing-and-backups.md#submit-an-exercise-to-the-library)).
 
-<img src="images/import-check.png" width="300" alt="Already in the library: use Glute Bridge instead of your new Hip Raise; names the library doesn't know yet, each with Suggest it">
+<img src="images/import-check.png" width="300" alt="Check against the library: use Glute Bridge instead of your new Hip Raise; use Band Squat for a resistance band squat; names the library doesn't know yet, each with Suggest it">
 - If the answer isn't usable, you're told why; ask the AI to try again or to "answer with only the JSON".
 
 AI apps make mistakes. Watch a new exercise before you use it, and fix the words or poses if needed (see

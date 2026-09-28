@@ -311,11 +311,15 @@ function importText(text, label) {
     data = { ...data, workouts: JSON.parse(JSON.stringify(data.workouts)) };
     const exs = Array.isArray(data.exercises) && data.exercises.length ? claimIds(normalizeImport({ exercises: data.exercises }), data.workouts) : [];
     for (const ex of exs) { if (isNewOwn(ex)) IMPORT_NEW.push(ex); keepImported(ex); }
-    // what the source calls each exercise (Create with AI): kept for the library check, not in the workout
-    for (const w of data.workouts) for (const b of (w && w.blocks) || []) for (const it of (b && b.items) || []) {
-      if (it && typeof it.calledInSource === 'string' && it.calledInSource.trim()) IMPORT_CALLED.push({ ex: it.ex, name: it.calledInSource.trim().slice(0, 80) });
-      if (it) delete it.calledInSource;
-    }
+    // what the source calls each exercise and the equipment it uses (Create with AI): for the library check, not kept in the workout
+    // (at: where the item lands in IMPORTED_WORKOUTS, so the check can change it)
+    data.workouts.forEach((w, wi) => ((w && w.blocks) || []).forEach((b, bi) => ((b && b.items) || []).forEach((it, ii) => {
+      if (!it) return;
+      const name = typeof it.calledInSource === 'string' ? it.calledInSource.trim().slice(0, 80) : '';
+      const equipment = Array.isArray(it.equipmentInSource) ? it.equipmentInSource.filter(q => typeof q === 'string').map(q => q.trim().slice(0, 40)).slice(0, 8) : null;
+      if (name || equipment) IMPORT_CALLED.push({ ex: it.ex, name, equipment, at: [IMPORTED_WORKOUTS.length + wi, bi, ii] });
+      delete it.calledInSource; delete it.equipmentInSource;
+    })));
     const ws = importWorkouts(data);
     IMPORTED_WORKOUTS.push(...ws);
     return [];
@@ -327,7 +331,7 @@ function importText(text, label) {
   }
   return list;
 }
-/* IMPORT_NEW: the user's own exercises an import added (not ones they had, or copies of library ones: those are on purpose); IMPORT_CALLED: [{ ex, name }] what the source calls them */
+/* IMPORT_NEW: the user's own exercises an import added (not ones they had, or copies of library ones: those are on purpose); IMPORT_CALLED: [{ ex, name, equipment, at }] what the source calls them and uses */
 let IMPORTED_WORKOUTS = [], RESTORED = null, IMPORT_NEW = [], IMPORT_CALLED = [];
 function importAndShow(texts) {
   const added = []; IMPORTED_WORKOUTS = []; RESTORED = null; IMPORT_NEW = []; IMPORT_CALLED = [];
