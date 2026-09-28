@@ -1,0 +1,120 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-yoga-side-bend",
+  "name": "Seated Side Bend",
+  "otherNames": ["Chair Side Stretch"],
+  "category": "Side bend",
+  "focus": "Side of the body",
+  "collections": ["Yoga", "Chair-based"],
+  "equipment": ["Chair"],
+  "description": "A side stretch sitting on a chair: reach one arm up and over your head and lean to the other side.",
+  "source": {
+    "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",
+    "title": "Yoga Journal: 13 Chair Yoga Poses You Can Do Anywhere"
+  },
+  "setup": ["Sit tall on a sturdy chair, feet flat and hip-width apart."],
+  "cues": ["Reach up before you lean.", "Both hips stay on the seat.", "Breathe into your ribs."],
+  "prescription": {
+    "reps": "hold 20 seconds",
+    "note": "Breathe slowly and evenly; ease out of the pose if anything pinches."
+  },
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Feet flat, hands on your thighs.",
+      "camera": 0,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Seated Side Bend",
+      "cue": "Right arm up and over, lean to the left.",
+      "camera": 0,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -26,
+          "dz": 6
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "torso": [0, -14, 0],
+        "chest": [0, -12, 0],
+        "shoulderR": [0, 165, 90],
+        "elbowR": 10
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "defaults": {
+    "seconds": 20
+  },
+  "holdStep": 1
+}

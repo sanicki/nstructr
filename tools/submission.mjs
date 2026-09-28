@@ -90,8 +90,11 @@ if (kind === 'name') {
   summary = `Adds “${md(name)}” as another name for “${md(target.name)}”`;
 } else {
   const renamed = kind === 'update' && !hasName(target, name);
-  const otherNamesList = [...new Set([...(ex.otherNames || []), ...(renamed ? [name] : [])])].filter(n => !(kind === 'update' && nameKey(n) === nameKey(target.name)));
-  for (const n of [name, ...otherNamesList]) { const other = elsewhere(n); if (other && !(kind === 'update' && other === target)) problems.push(`“${md(n)}” is already a name of \`${other.id}\` (${md(other.name)}): name how yours is different.`); }
+  let otherNamesList = [...new Set([...(ex.otherNames || []), ...(renamed ? [name] : [])])].filter(n => !(kind === 'update' && nameKey(n) === nameKey(target.name)));
+  // a copy of a library exercise brings that exercise's other names along: for a new one they're dropped, not refused
+  const taken = otherNamesList.filter(n => { const o = elsewhere(n); return o && !(kind === 'update' && o === target); });
+  if (kind === 'new' && taken.length) { otherNamesList = otherNamesList.filter(n => !taken.includes(n)); notes.push(`Other names left out, already the names of library exercises: ${taken.map(md).join(', ')}.`); }
+  for (const n of kind === 'new' ? [name] : [name, ...otherNamesList]) { const other = elsewhere(n); if (other && !(kind === 'update' && other === target)) problems.push(`“${md(n)}” is already a name of \`${other.id}\` (${md(other.name)}): name how yours is different.`); }
   if (kind === 'update') {
     const { $schema, version, id, name: n, collections } = target;
     const { name: _, otherNames: __, ...rest } = ex;
@@ -141,4 +144,6 @@ if (problems.length) finish(false, `Can't go in yet: ${summary.charAt(0).toLower
 fs.writeFileSync(path.join(DIR, out.id + '.json'), formatJson(out));
 notes.unshift(`File: \`library/exercises/${out.id}.json\` · try it after merging: ${SITE}#/play/${out.id}`);
 if (note) notes.push(`Note from the submitter: ${md(note.slice(0, 1000))}`);
-finish(true, summary, out.id, `${summary}, from #${number}.`);
+// the research to do before merging (names, equipment versions): .claude/skills/exercise-research/SKILL.md
+const research = require('./research.cjs').report([out.id], true);
+finish(true, summary, out.id, `${summary}, from #${number}.\n\n#### Before merging: names and equipment versions\n${research}\n\nCheck the name is the most common one and add other common names; look for established versions with the missing equipment (\`.claude/skills/exercise-research/SKILL.md\`).`);

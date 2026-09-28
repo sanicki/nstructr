@@ -1,0 +1,118 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-yoga-pigeon",
+  "name": "Chair Pigeon",
+  "otherNames": ["Seated Figure Four", "Seated Pigeon"],
+  "category": "Hip opener",
+  "focus": "Outer hip",
+  "collections": ["Yoga", "Chair-based"],
+  "equipment": ["Chair"],
+  "description": "A seated hip stretch on a chair: rest one ankle on the opposite knee and sit tall, the lifted knee dropping out to the side.",
+  "source": {
+    "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",
+    "title": "Yoga Journal: 13 Chair Yoga Poses You Can Do Anywhere"
+  },
+  "setup": ["Sit on a sturdy chair, feet flat.", "Lift one ankle onto the opposite knee."],
+  "cues": ["Flex the lifted foot.", "Sit tall, lean in a little for more.", "Keep it gentle on the knee."],
+  "prescription": {
+    "reps": "hold 30 seconds",
+    "note": "Breathe slowly and evenly; ease out of the pose if anything pinches."
+  },
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Feet flat, hands on your thighs.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Chair Pigeon",
+      "cue": "Right ankle on your left knee, sit tall.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dz": -10
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [108, 22, 62],
+        "kneeR": 118,
+        "ankleR": 10
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "defaults": {
+    "seconds": 30
+  },
+  "holdStep": 1
+}

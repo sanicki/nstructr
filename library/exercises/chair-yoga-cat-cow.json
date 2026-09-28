@@ -1,0 +1,160 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-yoga-cat-cow",
+  "name": "Seated Cat-Cow",
+  "otherNames": ["Chair Cat-Cow"],
+  "category": "Mobility",
+  "focus": "Spine",
+  "collections": ["Yoga", "Chair-based"],
+  "equipment": ["Chair"],
+  "description": "The cat-cow spine stretch done sitting on a chair: arch your back and lift your chest, then round your back and tuck your chin.",
+  "source": {
+    "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",
+    "title": "Yoga Journal: 13 Chair Yoga Poses You Can Do Anywhere"
+  },
+  "setup": ["Sit toward the front of a sturdy chair, feet flat and hip-width apart.", "Rest your hands on your thighs."],
+  "cues": ["Arch as you breathe in.", "Round as you breathe out.", "Keep your feet grounded."],
+  "prescription": {
+    "reps": "5–10 slow rounds",
+    "note": "Move with your breath: arch as you breathe in, round as you breathe out."
+  },
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Feet flat, hands on your thighs.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Cow",
+      "cue": "Breathe in, lift your chest and gently arch your back.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "chest": [-22, 0, 0],
+        "neck": [-22, 0, 0]
+      }
+    },
+    {
+      "name": "Cat",
+      "cue": "Breathe out, round your back and tuck your chin.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "torso": [-6, 0, 0],
+        "chest": [22, 0, 0],
+        "neck": [22, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

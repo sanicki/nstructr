@@ -4,10 +4,13 @@ For every library exercise: established versions of the same exercise with the o
 (the AI prompt's headings: no equipment, band, dumbbell, barbell, kettlebell, chair, bench, wall, step, towel; a mat
 doesn't count). "Established" means described by a reputable source under that name, not invented here.
 
-- ✅ added (batch 1, cited in each file's `source`)
+- ✅ added (batch 1, or batch 2 where marked; cited in each file's `source`)
 - ⏳ found, not added yet: a later batch (each one needs its own poses, props, words and source, and must pass the
   animation checks, the range of motion and the duplicate check)
 - — nothing established found for the other equipment
+
+For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.md` (`node tools/research.cjs report
+<id>` lists its names, versions in the library and the equipment with none yet; submission PRs include that list).
 
 ## Strength: legs and hips
 
@@ -76,8 +79,20 @@ doesn't count). "Established" means described by a reputable source under that n
 
 ## Pilates and yoga
 
-Pilates mat exercises have established band and small-apparatus versions (⏳ Banded Hundred, Band Leg Circles,
-Roll-Up with a band), and most standing and seated yoga poses have established **chair yoga** versions (⏳ Chair
-Mountain, Chair Cat-Cow, Chair Forward Bend, Chair Warrior I and II, Chair Twist, Chair Pigeon (figure-four), Chair
-Eagle arms) and some **wall** versions (⏳ Wall Downward Dog, Wall-supported Handstand and Tree, Wall Chair Pose).
-They are the biggest group left: a batch of their own.
+| Library exercise | Equivalents |
+|---|---|
+| Cat-Cow | ✅ Seated Cat-Cow (chair, batch 2) |
+| Half Lord of the Fishes / Marichyasana III | ✅ Chair Twist (batch 2) |
+| Seated Forward Bend / Standing Forward Bend | ✅ Chair Forward Bend (batch 2) |
+| Pigeon Pose | ✅ Chair Pigeon, or Seated Figure Four (batch 2) |
+| Gate Pose / Triangle (side bends) | ✅ Seated Side Bend (chair, batch 2) |
+| Downward Dog | ✅ Wall Downward Dog (batch 2) |
+| Warrior III | ✅ Warrior III at the Wall (batch 2) |
+| Tree Pose | ✅ Tree Pose at the Wall (batch 2) |
+| Mountain, Warrior I and II, Eagle, Chair Pose | ⏳ Seated Mountain, Chair Warrior I and II, Chair Eagle; Chair Pose at the wall is the library's Wall Sit (a duplicate, so not added) |
+| Handstand, Headstand, Forearm Stand | ⏳ at the wall (the same poses with the wall behind: variants) |
+| Pilates mat exercises | ⏳ band versions (Banded Hundred, Band Leg Circles, Roll-Up with a band) |
+
+Sources for batch 2: [Yoga Journal, chair yoga poses](https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/),
+[Yoga Journal, wall yoga poses](https://www.yogajournal.com/practice/yoga-wall-poses/),
+[YogaUOnline, Warrior 3 at the wall](https://yogauonline.com/pose-library/warrior-3-yoga-pose-practice-propped-variations-at-the-wall/).
