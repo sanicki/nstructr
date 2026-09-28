@@ -1,129 +1,121 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-revolved-head-to-knee",
   "name": "Revolved Head-to-Knee Pose",
   "sanskrit": "Parivrtta Janu Sirsasana",
   "category": "Seated",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Seated side bend over one straight leg with the top arm reaching overhead.",
   "source": {
     "url": "https://www.yogajournal.com/poses/revolved-head-to-knee-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit with your legs wide apart.",
-    "Bend one knee and bring that foot to the inner thigh of the straight leg."
-  ],
-  "facing": "right",
+  "setup": ["Sit with your legs wide apart.", "Bend one knee and bring that foot to the inner thigh of the straight leg."],
   "keyframes": [
     {
       "name": "Sit with legs wide",
       "cue": "Sit tall with both legs stretched out to the sides.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
           "point": "handR",
-          "adjust": "shoulderR"
+          "adjust": "shoulderR.side"
         },
         {
           "point": "handL",
-          "adjust": "shoulderL"
+          "adjust": "shoulderL.side"
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": 90,
-        "shoulderL": -20,
-        "shoulderR": 20,
-        "kneeL": 360
-      },
-      "phase": "setup"
+        "shoulderL": [0, 23.9, 0],
+        "shoulderR": [0, 23.9, 0],
+        "hipL": [0, 90, 90],
+        "kneeL": 360,
+        "ankleL": -360,
+        "hipR": [0, 90, 0]
+      }
     },
     {
       "name": "Fold the left leg in",
       "cue": "Bend the left knee and bring the foot to the inner right thigh.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 600,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
           "point": "handR",
-          "adjust": "shoulderR"
+          "adjust": "shoulderR.side"
         },
         {
           "point": "handL",
-          "adjust": "shoulderL"
+          "adjust": "shoulderL.side"
         }
       ],
       "pose": {
-        "hipR": 90,
-        "hipL": -90,
+        "shoulderL": [0, 23.9, 0],
+        "shoulderR": [0, 23.9, 0],
+        "hipL": [0, 90, 90],
         "kneeL": 180,
-        "ankleL": 90,
-        "shoulderL": -20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "ankleL": -90,
+        "hipR": [0, 90, 0]
+      }
     },
     {
       "name": "Revolved Head-to-Knee",
       "cue": "Side-bend toward the right leg and reach the left arm overhead.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "hipR": 90,
-        "hipL": -90,
+        "torso": [0, 60, 0],
+        "shoulderL": [0, 160, 0],
+        "shoulderR": [0, 150, 0],
+        "hipL": [0, 90, 90],
         "kneeL": 180,
-        "ankleL": 90,
-        "torso": -60,
-        "shoulderR": 150,
-        "shoulderL": -160
-      },
-      "phase": "rep"
+        "ankleL": -90,
+        "hipR": [0, 90, 0]
+      }
     },
     {
       "name": "Fold the left leg in",
       "cue": "Come back up to sitting tall.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 600,
+      "phase": "finish",
       "anchor": "pelvis",
       "touch": [
         {
           "point": "handR",
-          "adjust": "shoulderR"
+          "adjust": "shoulderR.side"
         },
         {
           "point": "handL",
-          "adjust": "shoulderL"
+          "adjust": "shoulderL.side"
         }
       ],
       "pose": {
-        "hipR": 90,
-        "hipL": -90,
+        "shoulderL": [0, 23.9, 0],
+        "shoulderR": [0, 23.9, 0],
+        "hipL": [0, 90, 90],
         "kneeL": 180,
-        "ankleL": 90,
-        "shoulderL": -20,
-        "shoulderR": 20
-      },
-      "phase": "finish"
+        "ankleL": -90,
+        "hipR": [0, 90, 0]
+      }
     }
   ],
-  "cues": [
-    "Turn the chest up toward the ceiling.",
-    "Keep both sit bones down."
-  ],
+  "cues": ["Turn the chest up toward the ceiling.", "Keep both sit bones down."],
   "bilateral": {
     "labels": {
       "L": "Left side",

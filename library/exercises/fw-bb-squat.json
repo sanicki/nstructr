@@ -1,101 +1,95 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "fw-bb-squat",
   "name": "Barbell Back Squat",
   "category": "Strength",
   "focus": "Thighs and glutes",
   "library": "Free weights",
-  "equipment": [
-    "Barbell"
-  ],
+  "equipment": ["Barbell"],
   "description": "The classic barbell lift: with the bar across your upper back, squat down until your thighs are about level, then stand up.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/11/back-squat/",
     "title": "Back Squat (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Set the bar across your upper back, below your neck, hands just outside your shoulders.",
-    "Feet about shoulder-width apart."
-  ],
-  "cues": [
-    "Brace your stomach before each rep.",
-    "Sit down and back; keep your chest up.",
-    "Knees track over your toes.",
-    "Use a rack with safety bars, or learn with a coach."
-  ],
+  "setup": ["Set the bar across your upper back, below your neck, hands just outside your shoulders.", "Feet about shoulder-width apart."],
+  "cues": ["Brace your stomach before each rep.", "Sit down and back; keep your chest up.", "Knees track over your toes.", "Use a rack with safety bars, or learn with a coach."],
   "prescription": {
     "reps": "5–8",
     "note": "Warm up with lighter sets first. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Bar on your back",
       "cue": "Stand tall, stomach braced.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
+      "plant": ["L", "R"],
       "reach": [
         {
           "hand": "handR",
           "to": "backR",
-          "dx": -4,
-          "dy": -2,
-          "bend": -1
+          "dx": 8.8,
+          "dy": 2,
+          "dz": -4
         },
         {
           "hand": "handL",
           "to": "backL",
-          "dx": -4,
-          "dy": -2,
-          "bend": -1
+          "dx": -8.8,
+          "dy": 2,
+          "dz": -4
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "shoulderL": [-126.1, 0, 0],
+        "elbowL": 162.2,
+        "shoulderR": [-126.1, 0, 0],
+        "elbowR": 162.2
+      }
     },
     {
       "name": "Squat",
       "cue": "Lower until your thighs are about level.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {
-        "torso": 42,
-        "hipL": -90,
-        "hipR": -90,
-        "kneeL": 104,
-        "kneeR": 104
-      },
+      "plant": ["L", "R"],
       "reach": [
         {
           "hand": "handR",
           "to": "backR",
-          "dx": -4,
-          "dy": -2,
-          "bend": -1
+          "dx": 8.8,
+          "dy": 2,
+          "dz": -4
         },
         {
           "hand": "handL",
           "to": "backL",
-          "dx": -4,
-          "dy": -2,
-          "bend": -1
+          "dx": -8.8,
+          "dy": 2,
+          "dz": -4
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "torso": [42, 0, 0],
+        "shoulderL": [-118.7, 0, 0],
+        "elbowL": 159.9,
+        "shoulderR": [-118.7, 0, 0],
+        "elbowR": 159.9,
+        "hipL": [90, 0, 0],
+        "kneeL": 104,
+        "ankleL": -14,
+        "hipR": [90, 0, 0],
+        "kneeR": 104,
+        "ankleR": -14
+      }
     }
   ],
   "props": [

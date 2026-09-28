@@ -1,66 +1,57 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-camel",
   "name": "Camel Pose",
   "sanskrit": "Ustrasana",
   "category": "Backbend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Kneeling backbend reaching the hands back toward the heels.",
   "source": {
     "url": "https://www.yogajournal.com/poses/camel-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Kneel with your knees hip-width apart and your thighs upright; tuck your toes under if you like.",
-    "Put your hands on your lower back, fingers pointing down."
-  ],
-  "facing": "right",
+  "setup": ["Kneel with your knees hip-width apart and your thighs upright; tuck your toes under if you like.", "Put your hands on your lower back, fingers pointing down."],
   "keyframes": [
     {
       "name": "Kneel tall",
       "cue": "Kneel with the hips over the knees.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "kneeL",
       "pose": {
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
+        "kneeR": 90,
         "ankleR": 90
-      },
-      "phase": "setup"
+      }
     },
     {
       "name": "Camel Pose",
       "cue": "Lift the chest, arch back, and reach for the heels.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "pose": {
-        "torso": -55,
-        "neck": -30,
-        "hipL": 5,
-        "hipR": 5,
+        "torso": [-55, 0, 0],
+        "neck": [-30, 0, 0],
+        "shoulderL": [-85, 0, 0],
+        "shoulderR": [-85, 0, 0],
+        "hipL": [-5, 0, 0],
         "kneeL": 85,
-        "kneeR": 85,
         "ankleL": 90,
-        "ankleR": 90,
-        "shoulderL": 85,
-        "shoulderR": 85
-      },
-      "phase": "rep"
+        "hipR": [-5, 0, 0],
+        "kneeR": 85,
+        "ankleR": 90
+      }
     }
   ],
-  "cues": [
-    "Keep the hips over the knees.",
-    "Lift the chest before reaching back."
-  ],
+  "cues": ["Keep the hips over the knees.", "Lift the chest before reaching back."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

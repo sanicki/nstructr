@@ -1,79 +1,67 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "mayo-quadriceps",
   "name": "Quadriceps Stretch",
   "category": "Stretch",
   "focus": "Front of thigh",
   "library": "Stretches",
-  "equipment": [
-    "Wall"
-  ],
+  "equipment": ["Wall"],
   "description": "Stretches the front of the thigh standing: hold one ankle and draw the heel up and back, a hand on a wall for balance.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
     "title": "Mayo Clinic: A guide to basic stretches",
     "note": "Stick-figure approximation."
   },
-  "setup": [
-    "Stand near a wall or sturdy support."
-  ],
-  "cues": [
-    "Keep your knees close together.",
-    "Tighten your stomach so it doesn't sag forward.",
-    "Pull gently until you feel it in the front of the thigh."
-  ],
+  "setup": ["Stand near a wall or sturdy support."],
+  "cues": ["Keep your knees close together.", "Tighten your stomach so it doesn't sag forward.", "Pull gently until you feel it in the front of the thigh."],
   "prescription": {
     "reps": "2–4 each side",
     "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Hand on the wall",
       "cue": "Stand tall with your left hand on the wall.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 800,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -90
-      },
-      "phase": "setup"
+        "shoulderL": [90, 0, 0]
+      }
     },
     {
       "name": "Hold your ankle",
       "cue": "Grasp your right ankle and draw the heel up and back.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2200,
       "holdMs": 30000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L"
-      ],
-      "pose": {
-        "shoulderL": -90,
-        "hipR": 5,
-        "kneeR": 150,
-        "ankleR": 20,
-        "shoulderR": 40
-      },
+      "plant": ["L"],
       "reach": [
         {
           "hand": "handR",
           "to": "ankleR",
-          "bend": 1
+          "dx": 10
         },
         {
           "hand": "handL",
           "to": "wall"
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "shoulderL": [89.2, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-20.8, 0, 0],
+        "elbowR": 1.6,
+        "hipR": [-5, 0, 0],
+        "kneeR": 150,
+        "ankleR": 20
+      }
     }
   ],
   "bilateral": {

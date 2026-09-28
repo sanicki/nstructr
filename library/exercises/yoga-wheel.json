@@ -1,37 +1,30 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-wheel",
   "name": "Wheel Pose",
   "sanskrit": "Urdhva Dhanurasana",
   "category": "Backbend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Full backbend pressing up onto the hands and feet.",
   "source": {
     "url": "https://www.yogajournal.com/poses/upward-bow-or-wheel-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Lie on your back with your knees bent and your feet flat, hip-width apart, near your hips.",
-    "Place your hands beside your ears, fingers pointing toward your shoulders, elbows up."
-  ],
-  "facing": "right",
+  "setup": ["Lie on your back with your knees bent and your feet flat, hip-width apart, near your hips.", "Place your hands beside your ears, fingers pointing toward your shoulders, elbows up."],
   "keyframes": [
     {
       "name": "Lie on your back",
       "cue": "Lie down with the knees bent and feet flat.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": -30,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,26 +36,26 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -45,
-        "hipR": -45,
-        "kneeL": 120,
-        "kneeR": 120
-      },
-      "phase": "setup"
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [45, 0, 0],
+        "kneeL": 90,
+        "ankleL": 45,
+        "hipR": [45, 0, 0],
+        "kneeR": 90,
+        "ankleR": 45
+      }
     },
     {
       "name": "Wheel Pose",
       "cue": "Hands by the ears, press up into a full arch.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": -30,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -74,23 +67,20 @@
         }
       ],
       "pose": {
-        "root": -120,
-        "neck": -40,
-        "shoulderL": 120,
-        "shoulderR": 120,
-        "hipL": 90,
-        "hipR": 90,
+        "root": [-120, 0, 0],
+        "neck": [-40, 0, 0],
+        "shoulderL": [-120, 0, 0],
+        "shoulderR": [-120, 0, 0],
+        "hipL": [-96.9, 0, 0],
         "kneeL": 30,
-        "kneeR": 30
-      },
-      "phase": "rep"
+        "ankleL": -6.9,
+        "hipR": [-96.9, 0, 0],
+        "kneeR": 30,
+        "ankleR": -6.9
+      }
     }
   ],
-  "cues": [
-    "Keep the knees parallel.",
-    "Warm up with Bridge first."
-  ],
-  "anchorX": -30,
+  "cues": ["Keep the knees parallel.", "Warm up with Bridge first."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

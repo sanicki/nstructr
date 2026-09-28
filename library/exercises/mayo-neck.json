@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "mayo-neck",
   "name": "Neck Stretch",
   "category": "Stretch",
@@ -13,62 +13,50 @@
     "title": "Mayo Clinic: A guide to basic stretches",
     "note": "Stick-figure approximation."
   },
-  "setup": [
-    "Sit or stand tall with your shoulders relaxed."
-  ],
-  "cues": [
-    "Pull gently; it should feel easy.",
-    "You'll feel it along the back of the opposite side of your neck.",
-    "Keep your shoulders down."
-  ],
+  "setup": ["Sit or stand tall with your shoulders relaxed."],
+  "cues": ["Pull gently; it should feel easy.", "You'll feel it along the back of the opposite side of your neck.", "Keep your shoulders down."],
   "prescription": {
     "reps": "2–4 each side",
     "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Sit or stand tall",
       "cue": "Shoulders relaxed.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1600,
       "holdMs": 800,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -4,
-        "shoulderR": 4
-      },
-      "phase": "setup"
+        "shoulderL": [0, 4, 0],
+        "shoulderR": [0, 4, -90]
+      }
     },
     {
       "name": "Tilt and pull gently",
       "cue": "Bend your head forward and slightly right, right hand gently drawing it down.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2000,
       "holdMs": 30000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {
-        "neck": -28,
-        "shoulderL": -4,
-        "shoulderR": 120
-      },
+      "plant": ["L", "R"],
       "reach": [
         {
           "hand": "handR",
           "to": "head",
-          "dx": -10,
-          "dy": -12
+          "dx": 10,
+          "dy": 12
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "neck": [0, 28, 0],
+        "shoulderL": [0, 4, 0],
+        "shoulderR": [0, 235.4, -90],
+        "elbowR": 130.3
+      }
     }
   ],
   "bilateral": {

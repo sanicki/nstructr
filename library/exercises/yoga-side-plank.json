@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-side-plank",
   "name": "Side Plank Pose",
   "sanskrit": "Vasisthasana",
   "category": "Arm Balance",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Balance on one hand and the edge of the foot with the body in one line.",
   "source": {
     "url": "https://www.yogajournal.com/poses/side-plank-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Start in a high plank: hands under your shoulders, body in one line.",
-    "Shift your weight onto one hand and roll onto the outer edge of that foot."
-  ],
-  "facing": "right",
+  "setup": ["Start in a high plank: hands under your shoulders, body in one line.", "Shift your weight onto one hand and roll onto the outer edge of that foot."],
   "keyframes": [
     {
       "name": "Plank",
       "cue": "Hands under shoulders, body in one straight line.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "handL",
       "touch": [
         {
@@ -39,48 +34,44 @@
         }
       ],
       "pose": {
-        "root": 66,
-        "shoulderL": -66,
-        "shoulderR": -66,
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
         "ankleL": 24,
+        "hipR": [-8, 0, 0],
         "ankleR": 24
-      },
-      "phase": "setup"
+      }
     },
     {
       "name": "Side Plank",
       "cue": "Roll onto the left hand, stack the feet, and lift the right arm.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
-          "adjust": "hipR"
+          "adjust": "hipR.side"
         },
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         }
       ],
       "pose": {
-        "root": 66,
-        "shoulderL": -66,
-        "shoulderR": 114
-      },
-      "phase": "rep"
+        "root": [0, -66, 0],
+        "shoulderL": [0, 66, 0],
+        "shoulderR": [0, 114, 0],
+        "hipL": [0, 4, 0],
+        "hipR": [0, -13.3, 0]
+      }
     }
   ],
-  "cues": [
-    "Lift the hips.",
-    "Lower the bottom knee for support.",
-    "Repeat on the other side."
-  ],
+  "cues": ["Lift the hips.", "Lower the bottom knee for support.", "Repeat on the other side."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bw-glute-bridge",
   "name": "Glute Bridge",
   "category": "Strength",
@@ -13,31 +13,22 @@
     "title": "Glute Bridge (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on your back, knees bent, feet flat and hip-width apart, arms by your sides."
-  ],
-  "cues": [
-    "Squeeze your glutes to lift, not your lower back.",
-    "Stop when your knees, hips and shoulders line up.",
-    "Lower one vertebra at a time."
-  ],
+  "setup": ["Lie on your back, knees bent, feet flat and hip-width apart, arms by your sides."],
+  "cues": ["Squeeze your glutes to lift, not your lower back.", "Stop when your knees, hips and shoulders line up.", "Lower one vertebra at a time."],
   "prescription": {
     "reps": "8–15",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Lie on your back",
       "cue": "Knees bent, feet flat, arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -49,44 +40,41 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -58,
-        "hipR": -58,
-        "kneeL": 125,
-        "kneeR": 125
-      },
-      "phase": "rep"
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
     },
     {
       "name": "Lift your hips",
       "cue": "Squeeze your glutes and lift.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 1000,
+      "phase": "rep",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
+      "keep": ["ankleL", "ankleR", "handL", "handR"],
       "pose": {
-        "root": -150,
-        "chest": 50,
-        "neck": 50,
-        "hipL": -5,
-        "hipR": -5,
-        "kneeL": 115,
-        "kneeR": 115,
-        "shoulderL": 5,
-        "shoulderR": 5
-      },
-      "keep": [
-        "ankleL",
-        "ankleR",
-        "handL",
-        "handR"
-      ],
-      "phase": "rep"
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 80.5,
+        "ankleR": 24.6
+      }
     }
   ],
   "measure": "reps",

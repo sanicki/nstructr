@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "core-dead-bug",
   "name": "Dead Bug",
   "category": "Core",
@@ -13,56 +13,49 @@
     "title": "Supine Dead Bug (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on your back, arms pointing at the ceiling, knees bent at 90° over your hips."
-  ],
-  "cues": [
-    "Press your lower back into the floor the whole time.",
-    "Move slowly and breathe out as you extend.",
-    "Only lower as far as you can keep your back down."
-  ],
+  "setup": ["Lie on your back, arms pointing at the ceiling, knees bent at 90° over your hips."],
+  "cues": ["Press your lower back into the floor the whole time.", "Move slowly and breathe out as you extend.", "Only lower as far as you can keep your back down."],
   "prescription": {
     "reps": "6–10 each side",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Arms up, knees up",
       "cue": "Knees over hips, arms to the ceiling.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "neckBase",
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": -90,
-        "shoulderR": -90,
-        "hipL": -90,
-        "hipR": -90,
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [90, 0, 0],
+        "hipL": [90, 0, 0],
         "kneeL": 90,
+        "hipR": [90, 0, 0],
         "kneeR": 90
-      },
-      "phase": "rep"
+      }
     },
     {
       "name": "Extend",
       "cue": "Lower your right arm overhead and straighten your left leg.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2200,
       "holdMs": 500,
+      "phase": "rep",
       "anchor": "neckBase",
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "shoulderL": -90,
-        "shoulderR": -170,
-        "hipR": -90,
-        "kneeR": 90,
-        "hipL": -12
-      },
-      "phase": "rep"
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [170, 0, 0],
+        "hipL": [12, 0, 0],
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
     }
   ],
   "bilateral": {

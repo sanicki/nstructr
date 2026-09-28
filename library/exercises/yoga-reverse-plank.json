@@ -1,33 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-reverse-plank",
   "name": "Reverse Plank",
   "sanskrit": "Purvottanasana",
   "category": "Hands & wrists",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Face-up plank with the hands under the shoulders and the hips lifted.",
   "source": {
     "url": "https://www.yogajournal.com/poses/upward-plank-pose-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit with your legs straight out in front of you.",
-    "Place your hands on the floor behind your hips, fingers pointing toward your feet."
-  ],
-  "facing": "right",
+  "setup": ["Sit with your legs straight out in front of you.", "Place your hands on the floor behind your hips, fingers pointing toward your feet."],
   "keyframes": [
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
+      "anchorZ": -40,
       "touch": [
         {
           "point": "handR",
@@ -39,24 +35,22 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": -90,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
     },
     {
       "name": "Reverse Plank",
       "cue": "Hands behind you, press up, and lift the hips.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": -40,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -68,19 +62,18 @@
         }
       ],
       "pose": {
-        "root": -70,
-        "neck": -20,
-        "shoulderL": 70,
-        "shoulderR": 70
-      },
-      "phase": "rep"
+        "root": [-70, 0, 0],
+        "neck": [-20, 0, 0],
+        "shoulderL": [-70, 0, 0],
+        "shoulderR": [-70, 0, 0],
+        "hipL": [-6.8, 0, 0],
+        "ankleL": 63.2,
+        "hipR": [-6.8, 0, 0],
+        "ankleR": 63.2
+      }
     }
   ],
-  "cues": [
-    "Press through the soles.",
-    "Lift the chest."
-  ],
-  "anchorX": -40,
+  "cues": ["Press through the soles.", "Lift the chest."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

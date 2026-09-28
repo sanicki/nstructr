@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-headstand",
   "name": "Supported Headstand",
   "sanskrit": "Salamba Sirsasana",
   "category": "Balancing",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Inversion balancing on the forearms and the crown of the head.",
   "source": {
     "url": "https://www.yogajournal.com/poses/supported-headstand/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Kneel and set your forearms down, clasping your hands with your elbows shoulder-width apart.",
-    "Rest the crown of your head on the floor with the back of it against your hands. Learn this with a teacher."
-  ],
-  "facing": "right",
+  "setup": ["Kneel and set your forearms down, clasping your hands with your elbows shoulder-width apart.", "Rest the crown of your head on the floor with the back of it against your hands. Learn this with a teacher."],
   "keyframes": [
     {
       "name": "Dolphin",
       "cue": "Forearms down, lift the hips high.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "elbowR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,36 +35,34 @@
         }
       ],
       "pose": {
-        "torso": 135,
-        "shoulderL": 225,
-        "shoulderR": 225,
-        "elbowL": 270,
-        "elbowR": 270,
-        "hipL": 30,
-        "hipR": 30
-      },
-      "phase": "setup"
+        "torso": [135, 0, 0],
+        "shoulderL": [-225, 0, 0],
+        "elbowL": -270,
+        "shoulderR": [-225, 0, 0],
+        "elbowR": -270,
+        "hipL": [-39.8, 0, 0],
+        "ankleL": -39.8,
+        "hipR": [-39.8, 0, 0],
+        "ankleR": -39.8
+      }
     },
     {
       "name": "Supported Headstand",
       "cue": "Interlace the hands behind the head, walk in, and lift the legs.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "pose": {
-        "root": 180,
-        "shoulderL": 155,
-        "shoulderR": 155,
+        "root": [180, 0, 0],
+        "shoulderL": [-155, 0, 180],
         "elbowL": 115,
+        "shoulderR": [-155, 0, 180],
         "elbowR": 115
-      },
-      "phase": "rep"
+      }
     }
   ],
-  "cues": [
-    "Most weight goes in the forearms.",
-    "Learn with a teacher."
-  ],
+  "cues": ["Most weight goes in the forearms.", "Learn with a teacher."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

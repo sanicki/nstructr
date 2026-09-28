@@ -1,51 +1,42 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-pyramid",
   "name": "Pyramid Pose",
   "sanskrit": "Parsvottanasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Straight-legged split stance folding the torso over the front leg.",
   "source": {
     "url": "https://www.yogajournal.com/poses/intense-side-stretch-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand tall, then step one foot back about a leg's length, back foot turned slightly out.",
-    "Square your hips to the front and put your hands on your hips or behind your back."
-  ],
-  "facing": "right",
+  "setup": ["Stand tall, then step one foot back about a leg's length, back foot turned slightly out.", "Square your hips to the front and put your hands on your hips or behind your back."],
   "keyframes": [
     {
       "name": "Mountain Pose",
       "cue": "Stand tall with your feet together and arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 1200,
+      "phase": "setup",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "setup"
+      "anchorZ": 20,
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Pyramid Pose",
       "cue": "Step the left foot back and fold over the straight right leg.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": 20,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
@@ -53,28 +44,25 @@
         }
       ],
       "pose": {
-        "torso": 100,
-        "hipR": -25,
-        "hipL": 25,
-        "shoulderL": 80,
-        "shoulderR": 80,
-        "elbowL": -100,
-        "elbowR": -100
-      },
-      "phase": "rep"
+        "torso": [100, 0, 0],
+        "shoulderL": [-80, 0, 0],
+        "elbowL": 100,
+        "shoulderR": [-80, 0, 0],
+        "elbowR": 100,
+        "hipL": [-25, 0, 0],
+        "ankleL": -25,
+        "hipR": [25, 0, 0],
+        "ankleR": 25
+      }
     }
   ],
-  "cues": [
-    "Square the hips forward.",
-    "Reach the chest toward the front shin."
-  ],
+  "cues": ["Square the hips forward.", "Reach the chest toward the front shin."],
   "bilateral": {
     "labels": {
       "L": "Left side",
       "R": "Right side"
     }
   },
-  "anchorX": 20,
   "measure": "time",
   "holdStep": 1,
   "defaults": {

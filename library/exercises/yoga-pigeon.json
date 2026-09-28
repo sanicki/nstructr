@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-pigeon",
   "name": "Pigeon Pose",
   "sanskrit": "Eka Pada Rajakapotasana",
   "category": "Hip-Opening",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Hip opener with the front shin on the floor and the back leg extended behind.",
   "source": {
     "url": "https://www.yogajournal.com/poses/one-legged-king-pigeon-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Start on your hands and knees.",
-    "Bring one knee forward behind that wrist, with the shin angled across in front of you, and slide the other leg back."
-  ],
-  "facing": "right",
+  "setup": ["Start on your hands and knees.", "Bring one knee forward behind that wrist, with the shin angled across in front of you, and slide the other leg back."],
   "keyframes": [
     {
       "name": "Tabletop",
       "cue": "Come to hands and knees, wrists under shoulders.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "handR",
       "touch": [
         {
@@ -39,24 +34,24 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "shoulderL": -75,
-        "shoulderR": -75,
-        "hipL": -75,
-        "hipR": -75,
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
         "ankleR": 90
-      },
-      "phase": "setup"
+      }
     },
     {
       "name": "Right knee forward",
       "cue": "Slide the right knee forward behind the right wrist.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 500,
+      "phase": "setup",
       "anchor": "handR",
       "touch": [
         {
@@ -69,24 +64,24 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "shoulderL": -75,
-        "shoulderR": -75,
-        "ankleL": 90,
-        "ankleR": 90,
-        "hipL": -75,
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
         "kneeL": 90,
-        "hipR": -130,
-        "kneeR": 130
-      },
-      "phase": "setup"
+        "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 130,
+        "ankleR": 90
+      }
     },
     {
       "name": "Pigeon Pose",
       "cue": "Bring the right knee forward, extend the left leg back, and lift the chest.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
       "touch": [
         {
@@ -99,23 +94,23 @@
         }
       ],
       "pose": {
-        "torso": -8,
-        "hipR": -90,
-        "kneeR": 180,
-        "ankleR": 90,
-        "hipL": 90,
+        "torso": [-8, 0, 0],
+        "shoulderL": [-33.1, 0, 0],
+        "shoulderR": [-33.1, 0, 0],
+        "hipL": [-90, 0, 0],
         "ankleL": 90,
-        "shoulderL": 14,
-        "shoulderR": 14
-      },
-      "phase": "rep"
+        "hipR": [90, 0, 0],
+        "kneeR": 180,
+        "ankleR": 90
+      }
     },
     {
       "name": "Back to hands and knees",
       "cue": "Lift the hips and bring the right knee back.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 500,
+      "phase": "finish",
       "anchor": "handR",
       "touch": [
         {
@@ -128,23 +123,19 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "shoulderL": -75,
-        "shoulderR": -75,
-        "ankleL": 90,
-        "ankleR": 90,
-        "hipL": -75,
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
         "kneeL": 90,
-        "hipR": -130,
-        "kneeR": 130
-      },
-      "phase": "finish"
+        "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 130,
+        "ankleR": 90
+      }
     }
   ],
-  "cues": [
-    "Keep the hips level.",
-    "Support the front hip with a blanket if needed."
-  ],
+  "cues": ["Keep the hips level.", "Support the front hip with a blanket if needed."],
   "bilateral": {
     "labels": {
       "L": "Left side",

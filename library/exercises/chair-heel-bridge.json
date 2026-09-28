@@ -1,68 +1,54 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "chair-heel-bridge",
   "name": "Heels-on-Chair Bridge",
   "category": "Strength",
   "focus": "Hamstrings and glutes",
   "library": "Chair-based",
-  "equipment": [
-    "Chair",
-    "Mat"
-  ],
+  "equipment": ["Chair", "Mat"],
   "description": "A bridge with your heels up on a chair seat, which works the hamstrings harder: press your heels down and lift your hips until shoulders, hips and knees line up.",
   "source": {
     "url": "https://hawkesphysiotherapy.co.uk/exercise/feet-elevated-bridge/",
     "title": "Feet-Elevated Bridge (Hawkes Physiotherapy)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on your back with your knees bent to 90° and your heels on the chair seat.",
-    "Arms rest at your sides."
-  ],
-  "cues": [
-    "Press your heels down into the seat.",
-    "Squeeze your hamstrings and glutes to lift.",
-    "Stop when your shoulders, hips and knees make a straight line; lower with control."
-  ],
+  "setup": ["Lie on your back with your knees bent to 90° and your heels on the chair seat.", "Arms rest at your sides."],
+  "cues": ["Press your heels down into the seat.", "Squeeze your hamstrings and glutes to lift.", "Stop when your shoulders, hips and knees make a straight line; lower with control."],
   "prescription": {
     "reps": "10–12",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Heels on the chair",
       "cue": "Knees at 90°, heels on the seat.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -90,
-        "hipR": -90,
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [90, 0, 0],
         "kneeL": 90,
-        "kneeR": 90
-      },
-      "phase": "rep"
+        "ankleL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
     },
     {
       "name": "Lift your hips",
       "cue": "Press through your heels and lift.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 800,
+      "phase": "rep",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "handR",
@@ -73,29 +59,25 @@
           "adjust": "shoulderL"
         }
       ],
+      "keep": ["ankleL", "ankleR"],
       "pose": {
-        "root": -122,
-        "chest": 32,
-        "neck": 52,
-        "hipL": -60,
-        "hipR": -60,
-        "kneeL": 100,
-        "kneeR": 100,
-        "shoulderL": 4,
-        "shoulderR": 4
-      },
-      "keep": [
-        "ankleL",
-        "ankleR"
-      ],
-      "phase": "rep"
+        "root": [-122, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [52, 0, 0],
+        "hipL": [49.5, 0, 0],
+        "kneeL": 100.1,
+        "ankleL": 71.4,
+        "hipR": [49.5, 0, 0],
+        "kneeR": 100.1,
+        "ankleR": 71.4
+      }
     }
   ],
   "props": [
     {
       "type": "chair",
-      "x": 200,
-      "back": "right"
+      "back": "ahead",
+      "z": 200
     }
   ],
   "measure": "reps",

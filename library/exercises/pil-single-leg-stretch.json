@@ -1,98 +1,100 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "pil-single-leg-stretch",
   "name": "Single-Leg Stretch",
   "category": "Pilates",
   "focus": "Deep core",
   "library": "Pilates",
-  "equipment": [
-    "Mat"
-  ],
+  "equipment": ["Mat"],
   "description": "Head and shoulders curled up, draw one knee in toward your chest while the other leg reaches long, then switch.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-single-leg-stretch/",
     "title": "Single Leg Stretch on the Mat (Online Pilates Classes)",
     "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on your back, curl your head and shoulders up.",
-    "Draw your right knee in and extend your left leg to about 45°."
-  ],
-  "cues": [
-    "Hands on the bent leg: outside hand at the ankle, inside hand at the knee.",
-    "Keep your trunk still as the legs switch.",
-    "Breathe out as you switch."
-  ],
+  "setup": ["Lie on your back, curl your head and shoulders up.", "Draw your right knee in and extend your left leg to about 45°."],
+  "cues": ["Hands on the bent leg: outside hand at the ankle, inside hand at the knee.", "Keep your trunk still as the legs switch.", "Breathe out as you switch."],
   "prescription": {
     "reps": "5–10 each leg",
     "note": "Move with your breath, slowly and with control."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Right knee in",
       "cue": "Draw your right knee in, left leg long.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 900,
       "holdMs": 100,
+      "phase": "rep",
       "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "chest": 32,
-        "neck": 44,
-        "hipR": -112,
-        "kneeR": 118,
-        "hipL": -40,
-        "ankleL": 40
-      },
       "reach": [
         {
           "hand": "handR",
           "to": "kneeR",
-          "dx": 4,
-          "dy": 10
+          "dx": 10,
+          "dy": -10,
+          "dz": 4
         },
         {
           "hand": "handL",
           "to": "kneeR",
-          "dx": 12,
-          "dy": 20
+          "dx": -34,
+          "dy": -20,
+          "dz": 12
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [14.4, 0, 0],
+        "elbowL": 85.7,
+        "shoulderR": [22.1, 0, 0],
+        "elbowR": 89.7,
+        "hipL": [40, 0, 0],
+        "ankleL": 40,
+        "hipR": [112, 0, 0],
+        "kneeR": 118
+      }
     },
     {
       "name": "Left knee in",
       "cue": "Switch: left knee in, right leg long.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 900,
       "holdMs": 100,
+      "phase": "rep",
       "anchor": "pelvis",
-      "pose": {
-        "root": -90,
-        "chest": 32,
-        "neck": 44,
-        "hipL": -112,
-        "kneeL": 118,
-        "hipR": -40,
-        "ankleR": 40
-      },
       "reach": [
         {
           "hand": "handL",
           "to": "kneeL",
-          "dx": 4,
-          "dy": 10
+          "dx": -10,
+          "dy": -10,
+          "dz": 4
         },
         {
           "hand": "handR",
           "to": "kneeL",
-          "dx": 12,
-          "dy": 20
+          "dx": 34,
+          "dy": -20,
+          "dz": 12
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [22.1, 0, 0],
+        "elbowL": 89.7,
+        "shoulderR": [14.4, 0, 0],
+        "elbowR": 85.7,
+        "hipL": [112, 0, 0],
+        "kneeL": 118,
+        "hipR": [40, 0, 0],
+        "ankleR": 40
+      }
     }
   ],
   "measure": "reps",

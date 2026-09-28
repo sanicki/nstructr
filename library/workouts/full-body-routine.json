@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/workout.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "full-body-routine",
   "name": "Straight-Through Full-Body Routine",
   "description": "A full-body routine with no equipment changes mid-block: standing warm-up and balance, standing strength with a band, a chair-and-wall block, floor work, and a cool-down.",

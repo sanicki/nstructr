@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "core-superman",
   "name": "Superman",
   "category": "Core",
@@ -13,56 +13,49 @@
     "title": "Supermans (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie face down with your arms stretched out in front of you."
-  ],
-  "cues": [
-    "Lift only a few centimetres; it's not a backbend.",
-    "Keep your neck long, looking at the floor.",
-    "Squeeze your glutes as your legs lift."
-  ],
+  "setup": ["Lie face down with your arms stretched out in front of you."],
+  "cues": ["Lift only a few centimetres; it's not a backbend.", "Keep your neck long, looking at the floor.", "Squeeze your glutes as your legs lift."],
   "prescription": {
     "reps": "8–12",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Lie face down",
       "cue": "Arms stretched in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "root": 90,
-        "neck": -34,
-        "shoulderL": -180,
-        "shoulderR": -180,
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
         "ankleL": 90,
         "ankleR": 90
-      },
-      "phase": "rep"
+      }
     },
     {
       "name": "Lift",
       "cue": "Raise your arms, chest and legs.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 2000,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "root": 90,
-        "torso": -14,
-        "neck": -8,
-        "shoulderL": -172,
-        "shoulderR": -172,
-        "hipL": 12,
-        "hipR": 12,
+        "root": [90, 0, 0],
+        "torso": [-14, 0, 0],
+        "neck": [-8, 0, 0],
+        "shoulderL": [172, 0, 0],
+        "shoulderR": [172, 0, 0],
+        "hipL": [-12, 0, 0],
         "ankleL": 90,
+        "hipR": [-12, 0, 0],
         "ankleR": 90
-      },
-      "phase": "rep"
+      }
     }
   ],
   "measure": "reps",

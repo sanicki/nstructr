@@ -1,69 +1,56 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-eagle",
   "name": "Eagle Pose",
   "sanskrit": "Garudasana",
   "category": "Balancing",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Standing balance with one leg wrapped over the other and the arms wrapped in front.",
   "source": {
     "url": "https://www.yogajournal.com/poses/eagle-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand tall and bend both knees a little.",
-    "Shift your weight onto one foot, ready to cross the other thigh over it."
-  ],
-  "facing": "right",
+  "setup": ["Stand tall and bend both knees a little.", "Shift your weight onto one foot, ready to cross the other thigh over it."],
   "keyframes": [
     {
       "name": "Mountain Pose",
       "cue": "Stand tall with your feet together and arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 1200,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "setup"
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Eagle Pose",
       "cue": "Bend the knees, cross the right thigh over, and wrap the arms.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L"
-      ],
+      "plant": ["L"],
       "pose": {
-        "torso": 22,
-        "hipL": -40,
-        "hipR": -40,
-        "shoulderL": -112,
-        "shoulderR": -112,
-        "elbowL": -95,
-        "elbowR": -95,
+        "torso": [22, 0, 0],
+        "shoulderL": [112, 0, 0],
+        "elbowL": 95,
+        "shoulderR": [112, 0, 0],
+        "elbowR": 95,
+        "hipL": [40, 0, 0],
         "kneeL": 60,
+        "ankleL": -20,
+        "hipR": [40, 0, 0],
         "kneeR": 85,
         "ankleR": 20
-      },
-      "phase": "rep"
+      }
     }
   ],
-  "cues": [
-    "Sit low as if in Chair Pose.",
-    "Lift the elbows to shoulder height."
-  ],
+  "cues": ["Sit low as if in Chair Pose.", "Lift the elbows to shoulder height."],
   "bilateral": {
     "labels": {
       "L": "Left side",

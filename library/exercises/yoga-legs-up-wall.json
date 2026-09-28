@@ -1,38 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-legs-up-wall",
   "name": "Legs Up the Wall Pose",
   "sanskrit": "Viparita Karani",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat",
-    "Wall"
-  ],
+  "equipment": ["Yoga mat", "Wall"],
   "description": "Restorative pose lying on the back with the legs straight up a wall.",
   "source": {
     "url": "https://www.yogajournal.com/poses/legs-up-the-wall-pose-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit sideways with one hip against a wall.",
-    "Swing your legs up the wall as you lower your back to the floor; put a folded blanket under your hips if you like."
-  ],
-  "facing": "right",
+  "setup": ["Sit sideways with one hip against a wall.", "Swing your legs up the wall as you lower your back to the floor; put a folded blanket under your hips if you like."],
   "keyframes": [
     {
       "name": "Lie on your back",
       "cue": "Lie down with the knees bent and feet flat.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "neckBase",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -44,35 +35,33 @@
         }
       ],
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -45,
-        "hipR": -45,
-        "kneeL": 120,
-        "kneeR": 120
-      },
-      "phase": "setup"
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [45, 0, 0],
+        "kneeL": 90,
+        "ankleL": 45,
+        "hipR": [45, 0, 0],
+        "kneeR": 90,
+        "ankleR": 45
+      }
     },
     {
       "name": "Legs Up the Wall",
       "cue": "Swing the legs up the wall and rest the arms.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 8000,
+      "phase": "rep",
       "anchor": "neckBase",
       "pose": {
-        "root": -90,
-        "neck": 34,
-        "hipL": -90,
-        "hipR": -90
-      },
-      "phase": "rep"
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Move the hips closer to the wall as it feels comfortable.",
-    "Relax the belly."
-  ],
+  "cues": ["Move the hips closer to the wall as it feels comfortable.", "Relax the belly."],
   "props": [
     {
       "type": "wall",

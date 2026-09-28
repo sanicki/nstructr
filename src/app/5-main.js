@@ -34,6 +34,24 @@ function editExercise(change) {
   change(S.ex); saveLib();
   return true;
 }
+/* the editor's rows: the camera, then every joint (ball joints: forward, side, turn; hinges one number) */
+const POSE_ROWS = [{
+  key: 'camera', label: 'Camera (90 side, 0 front)', auto: () => false, resolved: r => r.cam,
+  get: kf => (kf.camera != null ? num(kf.camera) : 90), set: (kf, v) => { kf.camera = v; }
+}].concat(JOINTS.flatMap(([j, name, parts]) => parts.map((part, i) => {
+  const ball = parts.length === 3, key = ball ? `${j}.${i}` : j;
+  return {
+    key, label: ball || parts[0] !== 'Bend' ? `${name}: ${part.toLowerCase()}` : name,
+    auto: r => r.auto.has(j) || (ball && r.auto.has(`${j}.${COMPONENTS[i]}`)),
+    resolved: r => (ball ? r.pose[j][i] : r.pose[j]),
+    get: kf => { const v = kf.pose && kf.pose[j]; return ball ? num(Array.isArray(v) ? v[i] : 0) : num(v); },
+    set: (kf, v) => {
+      kf.pose = kf.pose || {};
+      if (ball) { const a = Array.isArray(kf.pose[j]) ? kf.pose[j].slice() : [0, 0, 0]; a[i] = v; if (a.some(Boolean)) kf.pose[j] = a; else delete kf.pose[j]; }
+      else if (v) kf.pose[j] = v; else delete kf.pose[j];
+    }
+  };
+})));
 function editPose(change) {
   if (S.side !== 'L') return;
   const i = S.idx;
@@ -103,11 +121,11 @@ function updateEditor() {
       <div class="step-text"><label class="field"><span class="field-label">Step name</span><input id="edStepName" data-sfield="name" autocomplete="off"></label>
         <label class="field"><span class="field-label">Spoken cue</span><input id="edStepCue" data-sfield="cue" autocomplete="off"></label></div>
       <p class="body-small muted" id="edNote" style="margin:0 0 8px"></p>
-      <div class="joints authoring-only">${JOINTS.map(([k, label]) => `<div class="joint" data-jrow="${k}"><span class="jl">${label}</span>
-        <button class="icon-btn stateful jbtn" data-jdelta="-1" data-joint="${k}" aria-label="${label}: less"><span class="icon">remove</span></button>
-        <output id="o-${k}"></output>
-        <button class="icon-btn stateful jbtn" data-jdelta="1" data-joint="${k}" aria-label="${label}: more"><span class="icon">add</span></button>
-        <button class="icon-btn stateful jundo" data-jundo="${k}" aria-label="${label}: undo" title="Back to how it was"><span class="icon">undo</span></button></div>`).join('')}</div>
+      <div class="joints authoring-only">${POSE_ROWS.map(({ key, label }) => `<div class="joint" data-jrow="${key}"><span class="jl">${label}</span>
+        <button class="icon-btn stateful jbtn" data-jdelta="-1" data-joint="${key}" aria-label="${label}: less"><span class="icon">remove</span></button>
+        <output id="o-${key.replace('.', '-')}"></output>
+        <button class="icon-btn stateful jbtn" data-jdelta="1" data-joint="${key}" aria-label="${label}: more"><span class="icon">add</span></button>
+        <button class="icon-btn stateful jundo" data-jundo="${key}" aria-label="${label}: undo" title="Back to how it was"><span class="icon">undo</span></button></div>`).join('')}</div>
       <div class="row" style="margin-top:12px;flex-wrap:wrap"><button class="btn tonal stateful" data-act="edRevertStep"><span class="icon">undo</span>Revert this step</button>
         <button class="btn text stateful danger" data-act="edDiscard"><span class="icon">delete_history</span>Discard all changes</button>
         <button class="btn text stateful authoring-only" data-act="json"><span class="icon">data_object</span>Show JSON</button></div>`;
@@ -121,23 +139,24 @@ function updateEditor() {
   $('#edNote').textContent = (findInDb(S.ex.id) ? 'Your first change makes your own copy of this exercise, "(copy)", and leaves the library one as it is. ' : 'Changes are saved as you go. ')
     + (!authoring() ? 'Step words are written for the first side; the other side swaps left and right for you.'
       : locked ? `Switch to ${labels.L || 'the first side'} to change the pose: the other side is mirrored from it.` : 'Joints marked auto are set for you (feet planted, hands reaching).');
-  document.querySelectorAll('#viewSeg button').forEach(b => { b.setAttribute('aria-pressed', String((kf.view || 'side') === b.dataset.view)); b.disabled = locked; });
+  const cam = kf.camera != null ? kf.camera : 90;
+  document.querySelectorAll('#viewSeg button').forEach(b => { b.setAttribute('aria-pressed', String(cam === (b.dataset.view === 'side' ? 90 : 0))); b.disabled = locked; });
   document.querySelectorAll('#edStepSeg button').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.edstep === ED.step)));
   const changed = orig && JSON.stringify(orig) !== JSON.stringify(kf);
   $('#editor [data-act="edRevertStep"]').disabled = locked || !changed;
   $('#editor [data-act="edDiscard"]').disabled = !(ED.orig && ED.orig.id === S.ex.id && (ED.orig.madeCopy || JSON.stringify(ED.orig.ex) !== JSON.stringify(S.ex)));
-  for (const k of JOINT_KEYS) {
-    const auto = r.auto.has(k), val = locked || auto ? r.pose[k] : num(kf.pose && kf.pose[k]);
-    $('#o-' + k).textContent = auto ? 'auto' : `${Math.round(val)}°`;
+  for (const row of POSE_ROWS) {
+    const k = row.key, auto = row.auto(r), val = locked || auto ? row.resolved(r) : row.get(kf);
+    $('#o-' + k.replace('.', '-')).textContent = auto ? 'auto' : `${Math.round(val)}°`;
     document.querySelectorAll(`#editor [data-joint="${k}"]`).forEach(b => (b.disabled = locked || auto));
     const u = $(`#editor [data-jundo="${k}"]`);
-    u.style.visibility = !locked && orig && num(orig.pose && orig.pose[k]) !== num(kf.pose && kf.pose[k]) ? 'visible' : 'hidden';
+    u.style.visibility = !locked && orig && row.get(orig) !== row.get(kf) ? 'visible' : 'hidden';
   }
 }
 /* − / +: one step per tap; hold to keep going */
 (() => {
   const box = $('#editor'); let hold = null;
-  const nudge = b => editPose(kf => { kf.pose = kf.pose || {}; const k = b.dataset.joint; kf.pose[k] = Math.round(num(kf.pose[k]) + +b.dataset.jdelta * ED.step); });
+  const nudge = b => editPose(kf => { const row = POSE_ROWS.find(x => x.key === b.dataset.joint); row.set(kf, Math.round(row.get(kf) + +b.dataset.jdelta * ED.step)); });
   const stop = () => { if (hold) { clearTimeout(hold.t); clearInterval(hold.i); } };
   box.addEventListener('pointerdown', e => {
     const b = e.target.closest('[data-jdelta]'); if (!b || b.disabled) return;
@@ -149,7 +168,7 @@ function updateEditor() {
     const b = e.target.closest('[data-jdelta]');
     if (b) { if (hold && hold.b === b && hold.repeated) { hold = null; return; } nudge(b); return; }
     const u = e.target.closest('[data-jundo]');
-    if (u) { const k = u.dataset.jundo, o = ED.orig.keyframes[S.idx]; editPose(kf => { kf.pose = kf.pose || {}; if (o.pose && k in o.pose) kf.pose[k] = o.pose[k]; else delete kf.pose[k]; }); return; }
+    if (u) { const row = POSE_ROWS.find(x => x.key === u.dataset.jundo), o = ED.orig.keyframes[S.idx]; editPose(kf => row.set(kf, row.get(o))); return; }
     const st = e.target.closest('[data-edstep]'); if (st) { ED.step = +st.dataset.edstep; updateEditor(); }
   });
 })();
@@ -243,7 +262,7 @@ async function removeSaved(id) {
    "u-" ids in library/). An imported exercise keeps its id if it already starts with "u-", if it's an unchanged
    copy of a library exercise (that's just a saved library exercise), or if it updates one of the user's own
    saved exercises. Anything else gets "u-" in front, and workouts in the same file are pointed at the new id. */
-const FILE_VERSION = 1;
+const FILE_VERSION = 2;
 const canonical = o => JSON.stringify(o, (k, v) => (v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.keys(v).filter(x => x !== '$schema' && x !== 'version').sort().map(x => [x, v[x]])) : v));
 /* From a shared link the exercise is someone else's: one with the same id as a different exercise of the user's
    own gets a new id instead of replacing it (LINK_IMPORT, set while a link is imported). */
@@ -277,6 +296,8 @@ function keepImported(ex) {
 function upgradeFile(data) {
   const v = data && typeof data === 'object' && data.version;
   if (typeof v === 'number' && v > FILE_VERSION) throw new Error(`it was made by a newer version of ${APP_NAME} (file version ${v}). Update the app and try again.`);
+  // format 1 (2D poses, before Sep 2026) isn't read any more: its exercises were converted to 3D in the library
+  if (typeof v === 'number' && v < FILE_VERSION) throw new Error(`it's in an old format (file version ${v}) that this version of ${APP_NAME} can't read.`);
   return data;
 }
 function importText(text, label) {
@@ -430,13 +451,13 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.act === 'clearFilters') { Object.assign(E, { coll: 'All', type: 'All', equip: 'Any', q: '' }); $('#search').value = ''; renderExplore(); }
   else if (d.act === 'import') $('#fileInput').click();
   else if (d.act === 'paste') { $('#pasteArea').value = ''; $('#pasteDialog').showModal(); }
-  else if (d.act === 'exportAll') showJson('Your exercises', JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: S.lib.items }, null, 2));
+  else if (d.act === 'exportAll') showJson('Your exercises', JSON.stringify({ format: 'nstructr/exercise', version: FILE_VERSION, exercises: S.lib.items }, null, 2));
   else if (d.act === 'edPrev' || d.act === 'edNext') { setPlaying(false); jumpTo(S.idx + (d.act === 'edNext' ? 1 : -1)); }
   else if (d.act === 'edRevertStep') revertStep();
   else if (d.act === 'edDone') closeEditor();
   else if (d.act === 'edDiscard') discardEdits();
-  else if (d.act === 'json') showJson(S.ex.name, JSON.stringify({ format: 'nstructr/exercise', version: 1, exercises: [S.ex] }, null, 2));
-  else if (d.view && S.side === 'L') editPose(kf => { kf.view = d.view; });
+  else if (d.act === 'json') showJson(S.ex.name, JSON.stringify({ format: 'nstructr/exercise', version: FILE_VERSION, exercises: [S.ex] }, null, 2));
+  else if (d.view && S.side === 'L') editPose(kf => { kf.camera = d.view === 'side' ? 90 : 0; });
 });
 document.addEventListener('keydown', e => {
   if (S.view === 'wplay' && !e.target.closest('input, textarea, dialog') && e.key === ' ') { e.preventDefault(); LAST_DOWN_AT = 0; wpAction('pause'); return; }

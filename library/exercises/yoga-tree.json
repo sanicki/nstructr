@@ -1,68 +1,56 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-tree",
   "name": "Tree Pose",
   "sanskrit": "Vrksasana",
   "category": "Balancing",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Standing balance with one foot pressed into the opposite inner thigh.",
   "source": {
     "url": "https://www.yogajournal.com/poses/tree-pose-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand in Mountain Pose and shift your weight onto one foot.",
-    "Lift the other foot and place its sole on the inner calf or thigh, not the knee."
-  ],
-  "facing": "right",
+  "setup": ["Stand in Mountain Pose and shift your weight onto one foot.", "Lift the other foot and place its sole on the inner calf or thigh, not the knee."],
   "keyframes": [
     {
       "name": "Mountain Pose",
       "cue": "Stand tall, feet together, arms by your sides.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1400,
       "holdMs": 1200,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -6,
-        "shoulderR": 6
-      },
-      "phase": "setup"
+        "shoulderL": [0, 6, 90],
+        "shoulderR": [0, 6, 90],
+        "hipR": [0, 0, 90]
+      }
     },
     {
       "name": "Tree Pose",
       "cue": "Place the right foot on the inner left thigh and reach the arms up.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L"
-      ],
+      "plant": ["L"],
       "pose": {
-        "hipR": 70,
-        "kneeR": -150,
-        "shoulderL": -165,
-        "elbowL": -25,
-        "shoulderR": 165,
-        "elbowR": 25
-      },
-      "phase": "rep"
+        "shoulderL": [0, 165, 90],
+        "elbowL": 25,
+        "shoulderR": [0, 165, 90],
+        "elbowR": 25,
+        "hipR": [0, 70, 90],
+        "kneeR": 150,
+        "ankleR": -80
+      }
     }
   ],
-  "cues": [
-    "Press foot and thigh into each other.",
-    "Avoid pressing into the knee."
-  ],
+  "cues": ["Press foot and thigh into each other.", "Avoid pressing into the knee."],
   "bilateral": {
     "labels": {
       "L": "Left side",

@@ -1,34 +1,24 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "calf-raise-single",
   "name": "Single-Leg Calf Raises",
   "category": "Strength",
   "focus": "Calves",
   "library": "Bodyweight",
-  "equipment": [
-    "Wall"
-  ],
+  "equipment": ["Wall"],
   "description": "A harder calf raise: with one foot lifted and a hand on the wall, rise slowly onto the ball of the standing foot.",
   "source": {
     "url": "https://abuhb.nhs.wales/files/patient-information-leaflets1/foot-care-podiatry/calf-strengthening-guide-piu1441-pdf/",
     "title": "NHS podiatry: calf strengthening guide",
     "note": "Stick-figure approximation; the heel is drawn at the ankle."
   },
-  "setup": [
-    "Stand on a level surface, holding a wall or stable surface.",
-    "Shift your weight onto your left foot and lift your right foot."
-  ],
-  "cues": [
-    "Take about 3 seconds to rise and 3 seconds to lower.",
-    "Keep the standing knee straight but not locked.",
-    "Stay tall; don't lean on the wall."
-  ],
+  "setup": ["Stand on a level surface, holding a wall or stable surface.", "Shift your weight onto your left foot and lift your right foot."],
+  "cues": ["Take about 3 seconds to rise and 3 seconds to lower.", "Keep the standing knee straight but not locked.", "Stay tall; don't lean on the wall."],
   "prescription": {
     "reps": "5 each leg, building to 20",
     "note": "Start with 5 repetitions on each leg 3 times a day and build up to 20 repetitions 5 times a day."
   },
-  "facing": "right",
   "props": [
     {
       "type": "wall",
@@ -40,44 +30,39 @@
     {
       "name": "Stand on your left leg",
       "cue": "Weight on the left foot, right foot lifted behind you.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 3000,
       "holdMs": 500,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L"
-      ],
+      "plant": ["L"],
       "pose": {
-        "shoulderL": -78,
-        "shoulderR": -78,
-        "elbowL": -14,
-        "elbowR": -14,
-        "hipR": 12,
+        "shoulderL": [78, 0, 0],
+        "elbowL": 14,
+        "shoulderR": [78, 0, 0],
+        "elbowR": 14,
+        "hipR": [-12, 0, 0],
         "kneeR": 75
-      },
-      "phase": "rep"
+      }
     },
     {
       "name": "Rise onto your toes",
       "cue": "Slowly lift your left heel until you're on the ball of the foot.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 3000,
       "holdMs": 500,
+      "phase": "rep",
       "anchor": "toeL",
+      "keep": ["handL", "handR"],
       "pose": {
-        "shoulderL": -78,
-        "shoulderR": -78,
-        "elbowL": -14,
-        "elbowR": -14,
-        "hipR": 12,
-        "kneeR": 75,
-        "ankleL": 38
-      },
-      "keep": [
-        "handL",
-        "handR"
-      ],
-      "phase": "rep"
+        "shoulderL": [63.3, 0, 0],
+        "elbowL": 28.4,
+        "shoulderR": [63.3, 0, 0],
+        "elbowR": 28.4,
+        "ankleL": 38,
+        "hipR": [-12, 0, 0],
+        "kneeR": 75
+      }
     }
   ],
   "bilateral": {

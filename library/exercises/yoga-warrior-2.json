@@ -1,83 +1,68 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-warrior-2",
   "name": "Warrior 2 Pose",
   "sanskrit": "Virabhadrasana II",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Wide lunge with the torso upright and the arms reaching out to the sides.",
   "source": {
     "url": "https://www.yogajournal.com/poses/warrior-ii-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand with your feet wide apart; turn your front foot out and your back foot slightly in.",
-    "Line up your front heel with the arch of your back foot."
-  ],
-  "facing": "right",
+  "setup": ["Stand with your feet wide apart; turn your front foot out and your back foot slightly in.", "Line up your front heel with the arch of your back foot."],
   "keyframes": [
     {
       "name": "Step wide",
       "cue": "Step the feet wide apart, arms out to the sides.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         }
       ],
       "pose": {
-        "shoulderL": -90,
-        "shoulderR": 90,
-        "hipL": -30,
-        "hipR": 30
-      },
-      "phase": "setup"
+        "shoulderL": [0, 90, 0],
+        "shoulderR": [0, 90, 0],
+        "hipL": [0, 30, 0],
+        "hipR": [0, 30, 90]
+      }
     },
     {
       "name": "Warrior 2",
       "cue": "Bend the right knee over the ankle and reach the arms wide.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         }
       ],
       "pose": {
-        "hipR": 90,
-        "kneeR": -90,
-        "hipL": -60,
-        "shoulderL": -90,
-        "shoulderR": 90,
-        "neck": -4
-      },
-      "phase": "rep"
+        "neck": [0, 4, 0],
+        "shoulderL": [0, 90, 0],
+        "shoulderR": [0, 90, 0],
+        "hipL": [0, 60, 0],
+        "hipR": [0, 90, 90],
+        "kneeR": 90
+      }
     }
   ],
-  "cues": [
-    "Keep the torso over the hips.",
-    "Look past the front hand."
-  ],
+  "cues": ["Keep the torso over the hips.", "Look past the front hand."],
   "bilateral": {
     "labels": {
       "L": "Left side",

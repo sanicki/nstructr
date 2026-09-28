@@ -1,35 +1,24 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bhf-triceps-extension",
   "name": "Band Triceps Extension",
   "category": "Strength",
   "focus": "Arms",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "Strengthens the back of the upper arm: one hand anchors the band at the opposite hip while the other arm straightens behind you.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
     "title": "British Heart Foundation: resistance band exercises",
     "note": "Standing version. The article also shows each exercise seated on a chair."
   },
-  "setup": [
-    "Stand with your feet hip-width apart.",
-    "Hold one end of the band against your right hip with your left hand.",
-    "Hold the other end in your right hand just behind the hip, elbow pointing back."
-  ],
-  "cues": [
-    "Keep the working elbow still.",
-    "Don't arch your back.",
-    "If you can't straighten all the way, go as far as you can."
-  ],
+  "setup": ["Stand with your feet hip-width apart.", "Hold one end of the band against your right hip with your left hand.", "Hold the other end in your right hand just behind the hip, elbow pointing back."],
+  "cues": ["Keep the working elbow still.", "Don't arch your back.", "If you can't straighten all the way, go as far as you can."],
   "prescription": {
     "reps": "8–12 each side",
     "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
   },
-  "facing": "right",
   "props": [
     {
       "type": "band",
@@ -41,39 +30,33 @@
     {
       "name": "Elbow back",
       "cue": "Right hand just behind your hip, elbow pointing behind you.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -10,
-        "elbowL": -62,
-        "shoulderR": 40,
-        "elbowR": -62
-      },
-      "phase": "rep"
+        "shoulderL": [10, 0, 0],
+        "elbowL": 62,
+        "shoulderR": [-40, 0, 0],
+        "elbowR": 62
+      }
     },
     {
       "name": "Extend",
       "cue": "Straighten your right arm and lift the hand behind you.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -10,
-        "elbowL": -62,
-        "shoulderR": 45
-      },
-      "phase": "rep"
+        "shoulderL": [10, 0, 0],
+        "elbowL": 62,
+        "shoulderR": [-45, 0, 0]
+      }
     }
   ],
   "bilateral": {

@@ -16,7 +16,7 @@ async def main():
                   source={'url': 'javascript:window.PWNED=1', 'title': P('srctitle'), 'note': P('srcnote')},
                   bilateral={'labels': {'L': P('bl'), 'R': P('br')}})
         for k in ex['keyframes']: k['name'] = P('kname'); k['cue'] = P('kcue')
-        wk = {'format':'nstructr/workout','version':1,'workouts':[{'version':1,'name':P('wname'),'description':P('wdesc'),'blocks':[{'name':P('bname'),'items':[{'ex':'u-x','reps':2,'sides':'alternate'}]}]}],'exercises':[ex]}
+        wk = {'format':'nstructr/workout','version':2,'workouts':[{'version':2,'name':P('wname'),'description':P('wdesc'),'blocks':[{'name':P('bname'),'items':[{'ex':'u-x','reps':2,'sides':'alternate'}]}]}],'exercises':[ex]}
         await pg.evaluate(f"importAndShow([[{json.dumps(json.dumps(wk))}, 'x']])"); await pg.wait_for_timeout(500)
         w = await pg.evaluate("WK.list[WK.list.length-1].id")
         for h in ['#/workouts', f'#/workout/{w}', '#/exercises', '#/play/' + (await pg.evaluate("S.lib.items.find(x=>x.name.includes('img')).id")), '#/settings']:

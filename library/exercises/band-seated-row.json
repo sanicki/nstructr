@@ -1,35 +1,23 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "band-seated-row",
   "name": "Seated Row with Resistance Band",
   "category": "Strength",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "Seated back exercise: with a band looped around the soles, pull the ends toward your waist, elbows close to your sides, then let the band draw your arms forward again under control.",
   "source": {
     "url": "https://www.healthline.com/health/seated-row",
     "title": "Healthline: Seated row",
     "note": "Stick-figure approximation. From the side, both bands overlap."
   },
-  "setup": [
-    "Sit on the floor with your legs out in front, knees slightly bent.",
-    "Loop the band around the soles of your feet and hold one end in each hand, palms facing in.",
-    "Sit up tall and brace your core."
-  ],
-  "cues": [
-    "Keep your elbows tucked in close to your body.",
-    "Squeeze your shoulder blades together at the end of the pull.",
-    "Stay tall. Don't lean back to finish the pull.",
-    "Exhale as you pull; inhale and take about three counts to extend."
-  ],
+  "setup": ["Sit on the floor with your legs out in front, knees slightly bent.", "Loop the band around the soles of your feet and hold one end in each hand, palms facing in.", "Sit up tall and brace your core."],
+  "cues": ["Keep your elbows tucked in close to your body.", "Squeeze your shoulder blades together at the end of the pull.", "Stay tall. Don't lean back to finish the pull.", "Exhale as you pull; inhale and take about three counts to extend."],
   "prescription": {
     "reps": "3 rounds of 12–15",
     "note": "Start with a light band and move to a heavier one as it gets easy."
   },
-  "facing": "right",
   "props": [
     {
       "type": "band",
@@ -46,9 +34,10 @@
     {
       "name": "Arms extended",
       "cue": "Sit tall with the band taut and your arms reaching toward your feet. Extend slowly, about three counts.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2800,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "pelvis",
       "touch": [
         {
@@ -61,24 +50,24 @@
         }
       ],
       "pose": {
-        "torso": 3,
-        "shoulderL": -82,
-        "shoulderR": -82,
-        "hipL": -100,
-        "hipR": -100,
+        "torso": [3, 0, 0],
+        "shoulderL": [82, 0, 0],
+        "shoulderR": [82, 0, 0],
+        "hipL": [100, 0, 0],
         "kneeL": 20,
-        "kneeR": 20,
         "ankleL": -10,
+        "hipR": [100, 0, 0],
+        "kneeR": 20,
         "ankleR": -10
-      },
-      "phase": "rep"
+      }
     },
     {
       "name": "Row",
       "cue": "Exhale and pull your hands to your waist, elbows close. Squeeze your shoulder blades and pause.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1200,
       "holdMs": 1000,
+      "phase": "rep",
       "anchor": "pelvis",
       "touch": [
         {
@@ -91,20 +80,19 @@
         }
       ],
       "pose": {
-        "torso": -2,
-        "chest": -6,
-        "shoulderL": 32,
-        "shoulderR": 32,
-        "elbowL": -122,
-        "elbowR": -122,
-        "hipL": -100,
-        "hipR": -100,
+        "torso": [-2, 0, 0],
+        "chest": [-6, 0, 0],
+        "shoulderL": [-32, 0, 0],
+        "elbowL": 122,
+        "shoulderR": [-32, 0, 0],
+        "elbowR": 122,
+        "hipL": [100, 0, 0],
         "kneeL": 20,
-        "kneeR": 20,
         "ankleL": -10,
+        "hipR": [100, 0, 0],
+        "kneeR": 20,
         "ankleR": -10
-      },
-      "phase": "rep"
+      }
     }
   ],
   "measure": "reps",

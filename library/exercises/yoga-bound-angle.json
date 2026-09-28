@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-bound-angle",
   "name": "Bound Angle Pose",
   "sanskrit": "Baddha Konasana",
   "category": "Forward Bend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Seated hip opener with the soles of the feet together and the knees dropping out to the sides.",
   "source": {
     "url": "https://www.yogajournal.com/poses/bound-angle-pose-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit tall with your legs straight out in front of you.",
-    "Bend your knees, bring the soles of your feet together and draw your heels in toward you."
-  ],
-  "facing": "right",
+  "setup": ["Sit tall with your legs straight out in front of you.", "Bend your knees, bring the soles of your feet together and draw your heels in toward you."],
   "keyframes": [
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
@@ -39,25 +34,21 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": 270,
-        "shoulderL": 20,
-        "shoulderR": 20,
-        "kneeR": -360
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [-270, 0, 0]
+      }
     },
     {
       "name": "Bound Angle Pose",
       "cue": "Bring the soles together and let the knees fall open.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -69,30 +60,28 @@
         },
         {
           "point": "handR",
-          "adjust": "shoulderR"
+          "adjust": "shoulderR.side"
         },
         {
           "point": "handL",
-          "adjust": "shoulderL"
+          "adjust": "shoulderL.side"
         }
       ],
       "pose": {
-        "hipL": -100,
-        "hipR": 100,
-        "kneeL": -185,
-        "kneeR": -175,
-        "shoulderL": -14,
-        "shoulderR": 14,
+        "shoulderL": [0, 26.6, -90],
         "elbowL": 6,
-        "elbowR": -6
-      },
-      "phase": "rep"
+        "shoulderR": [0, 26.6, -90],
+        "elbowR": 6,
+        "hipL": [0, 100, 90],
+        "kneeL": 180,
+        "ankleL": -80,
+        "hipR": [-360, 100, 90],
+        "kneeR": 180,
+        "ankleR": -80
+      }
     }
   ],
-  "cues": [
-    "Hold the feet and sit up tall.",
-    "Let the knees release without forcing them down."
-  ],
+  "cues": ["Hold the feet and sit up tall.", "Let the knees release without forcing them down."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

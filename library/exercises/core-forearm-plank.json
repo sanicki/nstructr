@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "core-forearm-plank",
   "name": "Forearm Plank",
   "category": "Core",
@@ -13,27 +13,20 @@
     "title": "Front Plank (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Kneel on all fours, then lower onto your forearms, elbows under your shoulders."
-  ],
-  "cues": [
-    "Squeeze your glutes and brace your stomach.",
-    "Don't let your hips sag or lift.",
-    "Look at the floor to keep your neck long.",
-    "Easier: keep your knees down."
-  ],
+  "setup": ["Kneel on all fours, then lower onto your forearms, elbows under your shoulders."],
+  "cues": ["Squeeze your glutes and brace your stomach.", "Don't let your hips sag or lift.", "Look at the floor to keep your neck long.", "Easier: keep your knees down."],
   "prescription": {
     "reps": "Hold 20–30 s, 2–3 times",
     "note": "Breathe steadily; build up the hold time gradually."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Forearms and knees",
       "cue": "Elbows under your shoulders, knees on the floor.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 800,
+      "phase": "setup",
       "anchor": "elbowR",
       "touch": [
         {
@@ -46,26 +39,26 @@
         }
       ],
       "pose": {
-        "root": 105,
-        "hipL": -105,
-        "hipR": -105,
+        "root": [105, 0, 0],
+        "shoulderL": [105, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [105, 0, 0],
+        "elbowR": 90,
+        "hipL": [101.5, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
-        "ankleR": 90,
-        "shoulderL": -105,
-        "shoulderR": -105,
-        "elbowL": -90,
-        "elbowR": -90
-      },
-      "phase": "setup"
+        "hipR": [101.5, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
     },
     {
       "name": "Plank",
       "cue": "Lift your knees and hold a straight line.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 30000,
+      "phase": "rep",
       "anchor": "elbowR",
       "touch": [
         {
@@ -78,15 +71,16 @@
         }
       ],
       "pose": {
-        "root": 77.6,
+        "root": [77.6, 0, 0],
+        "shoulderL": [77.6, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [77.6, 0, 0],
+        "elbowR": 90,
+        "hipL": [-7.9, 0, 0],
         "ankleL": 12.4,
-        "ankleR": 12.4,
-        "shoulderL": -77.6,
-        "shoulderR": -77.6,
-        "elbowL": -90,
-        "elbowR": -90
-      },
-      "phase": "rep"
+        "hipR": [-7.9, 0, 0],
+        "ankleR": 12.4
+      }
     }
   ],
   "measure": "time",

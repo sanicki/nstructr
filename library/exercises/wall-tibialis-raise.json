@@ -1,64 +1,53 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "wall-tibialis-raise",
   "name": "Wall Tibialis Raise",
   "category": "Strength",
   "focus": "Fronts of the shins",
   "library": "Bodyweight",
-  "equipment": [
-    "Wall"
-  ],
+  "equipment": ["Wall"],
   "description": "Strengthens the muscle on the front of the shin: leaning back against a wall with your heels out in front, lift your toes as high as you can, then lower.",
   "source": {
     "url": "https://hawkesphysiotherapy.co.uk/exercise/tibialis-raises/",
     "title": "Tibialis Raises (Hawkes Physiotherapy)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Stand with your upper back flat against a wall.",
-    "Walk your heels about 30 cm (12 in) out in front of you."
-  ],
-  "cues": [
-    "Keep your legs straight.",
-    "Pull your toes up toward your shins as high as you can.",
-    "Hold for a second, then lower with control."
-  ],
+  "setup": ["Stand with your upper back flat against a wall.", "Walk your heels about 30 cm (12 in) out in front of you."],
+  "cues": ["Keep your legs straight.", "Pull your toes up toward your shins as high as you can.", "Hold for a second, then lower with control."],
   "prescription": {
     "reps": "15–20",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Lean on the wall",
       "cue": "Upper back on the wall, heels forward.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 200,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "root": -12
-      },
-      "phase": "rep"
+        "root": [-12, 0, 0],
+        "ankleL": 12,
+        "ankleR": 12
+      }
     },
     {
       "name": "Toes up",
       "cue": "Lift your toes and the front of your feet.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 900,
       "holdMs": 1000,
+      "phase": "rep",
       "anchor": "ankleL",
       "pose": {
-        "root": -12,
+        "root": [-12, 0, 0],
         "ankleL": -24,
         "ankleR": -24
-      },
-      "phase": "rep"
+      }
     }
   ],
   "props": [

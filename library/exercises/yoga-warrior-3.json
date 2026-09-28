@@ -1,70 +1,57 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-warrior-3",
   "name": "Warrior 3 Pose",
   "sanskrit": "Virabhadrasana III",
   "category": "Balancing",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Balance on one leg with the torso and lifted leg level with the floor.",
   "source": {
     "url": "https://www.yogajournal.com/poses/warrior-iii-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand in Mountain Pose and shift your weight onto one foot.",
-    "Put your hands on your hips or reach your arms forward before you tip."
-  ],
-  "facing": "right",
+  "setup": ["Stand in Mountain Pose and shift your weight onto one foot.", "Put your hands on your hips or reach your arms forward before you tip."],
   "keyframes": [
     {
       "name": "Mountain Pose",
       "cue": "Stand tall with your feet together and arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 1200,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "setup"
+      "anchorZ": -20,
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Warrior 3",
       "cue": "Tip forward on the left leg and lift the right leg back.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L"
-      ],
+      "anchorZ": -20,
+      "plant": ["L"],
       "pose": {
-        "torso": 90,
-        "hipR": 90,
-        "shoulderL": -180,
-        "shoulderR": -180
-      },
-      "phase": "rep"
+        "torso": [90, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
+        "hipR": [-90, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Keep the hips level.",
-    "Reach long through the heel and the fingertips."
-  ],
+  "cues": ["Keep the hips level.", "Reach long through the heel and the fingertips."],
   "bilateral": {
     "labels": {
       "L": "Left side",
       "R": "Right side"
     }
   },
-  "anchorX": -20,
   "measure": "time",
   "holdStep": 1,
   "defaults": {

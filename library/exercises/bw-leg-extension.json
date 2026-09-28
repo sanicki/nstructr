@@ -1,51 +1,34 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bw-leg-extension",
   "name": "Standing Leg Extension",
   "category": "Strength",
   "focus": "Glutes and hamstrings",
   "library": "Bodyweight",
-  "equipment": [
-    "Chair"
-  ],
+  "equipment": ["Chair"],
   "description": "Works the back of the thigh and the buttock: holding the back of a chair, lift one straight leg behind you without arching your back.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",
     "title": "NHS: strength exercises (leg extension)",
     "note": "Stick-figure approximation."
   },
-  "setup": [
-    "Stand behind a sturdy chair with your hands resting on its back."
-  ],
-  "cues": [
-    "Keep the lifting leg straight.",
-    "Don't arch your back as the leg goes back.",
-    "Hold the lift for up to 5 seconds."
-  ],
+  "setup": ["Stand behind a sturdy chair with your hands resting on its back."],
+  "cues": ["Keep the lifting leg straight.", "Don't arch your back as the leg goes back.", "Hold the lift for up to 5 seconds."],
   "prescription": {
     "reps": "5 each leg",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Stand tall",
       "cue": "Hands on the wall.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {
-        "shoulderL": -78,
-        "shoulderR": -78,
-        "elbowL": -14,
-        "elbowR": -14
-      },
+      "plant": ["L", "R"],
       "reach": [
         {
           "hand": "handL",
@@ -56,25 +39,22 @@
           "to": "chair"
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "shoulderL": [9.5, 0, 0],
+        "elbowL": 33.1,
+        "shoulderR": [9.5, 0, 0],
+        "elbowR": 33.1
+      }
     },
     {
       "name": "Lift back",
       "cue": "Raise your right leg straight back and hold.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 3000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L"
-      ],
-      "pose": {
-        "shoulderL": -78,
-        "shoulderR": -78,
-        "elbowL": -14,
-        "elbowR": -14,
-        "hipR": 28
-      },
+      "plant": ["L"],
       "reach": [
         {
           "hand": "handL",
@@ -85,14 +65,20 @@
           "to": "chair"
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "shoulderL": [9.5, 0, 0],
+        "elbowL": 33.1,
+        "shoulderR": [9.5, 0, 0],
+        "elbowR": 33.1,
+        "hipR": [-28, 0, 0]
+      }
     }
   ],
   "props": [
     {
       "type": "chair",
-      "x": 78,
-      "back": "left"
+      "back": "behind",
+      "z": 78
     }
   ],
   "bilateral": {

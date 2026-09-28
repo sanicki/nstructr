@@ -1,83 +1,68 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-extended-side-angle",
   "name": "Extended Side Angle Pose",
   "sanskrit": "Utthita Parsvakonasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Wide-legged lunge with the forearm or hand down and the top arm reaching over the ear.",
   "source": {
     "url": "https://www.yogajournal.com/poses/extended-side-angle-pose-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand with your feet wide apart; turn your front foot out and your back foot slightly in.",
-    "Bend your front knee over the ankle, arms out to the sides."
-  ],
-  "facing": "right",
+  "setup": ["Stand with your feet wide apart; turn your front foot out and your back foot slightly in.", "Bend your front knee over the ankle, arms out to the sides."],
   "keyframes": [
     {
       "name": "Step wide",
       "cue": "Step the feet wide apart, arms out to the sides.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         }
       ],
       "pose": {
-        "shoulderL": 270,
-        "shoulderR": 90,
-        "hipL": -30,
-        "hipR": 30
-      },
-      "phase": "setup"
+        "shoulderL": [0, -270, 0],
+        "shoulderR": [0, 90, 0],
+        "hipL": [0, 30, 0],
+        "hipR": [0, 30, 90]
+      }
     },
     {
       "name": "Extended Side Angle Pose",
       "cue": "Bend the right knee, lower the right hand, reach the left arm overhead.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         }
       ],
       "pose": {
-        "hipR": 90,
-        "kneeR": -90,
-        "hipL": -60,
-        "torso": -60,
-        "shoulderR": 60,
-        "shoulderL": 180
-      },
-      "phase": "rep"
+        "torso": [0, 60, 0],
+        "shoulderL": [0, -180, 0],
+        "shoulderR": [0, 60, 0],
+        "hipL": [0, 60, 0],
+        "hipR": [0, 90, 90],
+        "kneeR": 90
+      }
     }
   ],
-  "cues": [
-    "Keep the front knee over the ankle.",
-    "Make one line from back heel to fingertips."
-  ],
+  "cues": ["Keep the front knee over the ankle.", "Make one line from back heel to fingertips."],
   "bilateral": {
     "labels": {
       "L": "Left side",

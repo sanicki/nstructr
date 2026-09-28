@@ -55,28 +55,31 @@ async def main():
         print('bookmark library        ', await pg.evaluate("[isBookmarked('bw-squat'), S.lib.items.length, !!document.querySelector('#aboutPanel [data-del]')]"))
         await pg.evaluate('window.ASKED = []'); await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
         print('unbookmark library      ', await asked(), await pg.evaluate("[isBookmarked('bw-squat'), S.lib.items.length]"))
-        # crossing legs, played for real (both sides, one full round): the drawing order only ever changes on a
-        # frame where the legs are apart, and on every step that says a leg goes behind, it is behind
+        # crossing legs, played for real (both sides, one full round): in 3D each bone is drawn by its depth, so where
+        # a leg crosses behind the standing leg it is behind. On every reach: the shins are stacked by depth, and in the
+        # front view a reach across the body (behind the standing leg) is drawn behind it
         for ex in ['star-excursion-4-point', 'star-excursion-balance']:
             for side in 'LR':
                 q = await b.new_page(viewport={'width': 412, 'height': 860})
                 await q.goto(URL + f'#/play/{ex}', wait_until='domcontentloaded'); await q.wait_for_timeout(400)
                 r = await q.evaluate("""(side) => new Promise(res => {
                   setPlaying(false); setSide(side); S.idx = 0; S.prev = null; S.t = 0; S.rep = 1; S.speed = 2; setPlaying(true); hideExControls();
-                  const order = () => [...$('#figRoot').children].map(g => g.id).join(' ');
-                  let last = order(), swaps = 0, bad = [], wrong = [], seen = new Set();
+                  const reach = side === 'L' ? 'R' : 'L', stand = side;
+                  let checked = 0, across = 0, wrong = [], seen = new Set();
                   const tick = () => {
-                    const b = S.resolved[S.idx], a = S.prev != null ? S.resolved[S.prev] : b, raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
-                    const f = frameAt(a, b, b.ease === 'linear' ? raw : easeInOut(raw), S.seg), now = order();
-                    if (now !== last) { swaps++; if (legsOverlap(fk(f.pose, f.v, S.seg, f.pos.x, f.pos.y))) bad.push(S.idx + ':' + b.name); last = now; }
-                    // arrived on a step that puts a leg behind: that leg must be drawn before the other one
-                    if (raw >= 1 && b.layers && !seen.has(S.idx)) { seen.add(S.idx);
-                      for (const [leg, where] of Object.entries(b.layers)) { const kids = [...$('#figRoot').children].map(g => g.id), me = kids.indexOf('leg-' + leg.slice(-1)), other = kids.indexOf('leg-' + (leg.endsWith('L') ? 'R' : 'L'));
-                        if ((where === 'back') !== (me < other)) wrong.push(S.idx + ':' + b.name + ' ' + leg + ' ' + where); } }
-                    if (S.rep > 1) { setPlaying(false); res({ swaps, bad, wrong, steps: seen.size }); } else requestAnimationFrame(tick);
+                    const b = S.resolved[S.idx], raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
+                    if (raw >= 1 && b.name.startsWith('Reach') && !seen.has(S.idx)) {
+                      seen.add(S.idx); checked++;
+                      const kids = [...$('#figRoot').children].map(g => g.dataset.bone), me = kids.indexOf(`knee${reach}-ankle${reach}`), other = kids.indexOf(`knee${stand}-ankle${stand}`);
+                      const Q = stepScreen(b), dm = (Q['knee' + reach].d + Q['ankle' + reach].d) / 2, ds = (Q['knee' + stand].d + Q['ankle' + stand].d) / 2;
+                      if (Math.abs(dm - ds) > 2 && (dm < ds) !== (me < other)) wrong.push(S.idx + ':' + b.name + ' (not by depth)');
+                      // "Reach left" on the first side (reaching with the right leg) crosses behind; mirrored on the second
+                      if (b.cam === 0 && b.name === (side === 'L' ? 'Reach left' : 'Reach right')) { across++; if (me > other) wrong.push(S.idx + ':' + b.name + ' (in front)'); }
+                    }
+                    if (S.rep > 1) { setPlaying(false); res({ checked, across, wrong }); } else requestAnimationFrame(tick);
                   };
                   requestAnimationFrame(tick); })""", side)
-                print(f'{ex[:22]:<22} {side}: {r["swaps"]} order changes, {len(r["bad"])} while legs overlap {r["bad"]}, crossing steps checked {r["steps"]}, wrong {r["wrong"]}')
+                print(f'{ex[:22]:<22} {side}: reaches checked {r["checked"]} (across behind, front view: {r["across"]}), wrong {r["wrong"]}')
                 await q.close()
         print('errors', errs); await b.close()
 asyncio.run(main())

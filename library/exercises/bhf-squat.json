@@ -1,34 +1,24 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bhf-squat",
   "name": "Band Squat",
   "category": "Strength",
   "focus": "Legs",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "A harder leg exercise that also mobilises the hips, knees and ankles: squat down and back up with the band under your feet and the ends at your waist.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
     "title": "British Heart Foundation: resistance band exercises",
     "note": "Standing version. The article also shows each exercise seated on a chair."
   },
-  "setup": [
-    "Stand with your feet hip-width apart on the middle of the band.",
-    "Hold the ends at your waist."
-  ],
-  "cues": [
-    "Bend your knees only as far as is comfortable.",
-    "Come back up slowly.",
-    "If standing up is too hard, try the leg press instead."
-  ],
+  "setup": ["Stand with your feet hip-width apart on the middle of the band.", "Hold the ends at your waist."],
+  "cues": ["Bend your knees only as far as is comfortable.", "Come back up slowly.", "If standing up is too hard, try the leg press instead."],
   "prescription": {
     "reps": "12–16",
     "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
   },
-  "facing": "right",
   "props": [
     {
       "type": "band",
@@ -45,45 +35,41 @@
     {
       "name": "Stand",
       "cue": "Band under both feet, ends at your waist.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": 15,
-        "shoulderR": 15,
-        "elbowL": -95,
-        "elbowR": -95
-      },
-      "phase": "rep"
+        "shoulderL": [-15, 0, 0],
+        "elbowL": 95,
+        "shoulderR": [-15, 0, 0],
+        "elbowR": 95
+      }
     },
     {
       "name": "Squat",
       "cue": "Lower your hips and bend your knees as far as is comfortable.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 32,
-        "hipL": -78,
-        "hipR": -78,
+        "torso": [32, 0, 0],
+        "shoulderL": [17, 0, 0],
+        "elbowL": 95,
+        "shoulderR": [17, 0, 0],
+        "elbowR": 95,
+        "hipL": [78, 0, 0],
         "kneeL": 95,
+        "ankleL": -17,
+        "hipR": [78, 0, 0],
         "kneeR": 95,
-        "shoulderL": -17,
-        "shoulderR": -17,
-        "elbowL": -95,
-        "elbowR": -95
-      },
-      "phase": "rep"
+        "ankleR": -17
+      }
     }
   ],
   "measure": "reps",

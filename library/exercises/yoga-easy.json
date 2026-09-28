@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-easy",
   "name": "Easy Pose",
   "sanskrit": "Sukhasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Simple cross-legged seat with a tall spine.",
   "source": {
     "url": "https://www.yogajournal.com/poses/easy-pose-3/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit on the floor, or on a folded blanket so your hips are above your knees.",
-    "Cross your shins with each foot under the opposite knee."
-  ],
-  "facing": "right",
+  "setup": ["Sit on the floor, or on a folded blanket so your hips are above your knees.", "Cross your shins with each foot under the opposite knee."],
   "keyframes": [
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
@@ -39,59 +34,54 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": 270,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [-270, 0, 0]
+      }
     },
     {
       "name": "Easy Pose",
       "cue": "Cross the shins, rest the hands on the knees, and sit tall.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "kneeR",
-          "adjust": "hipR"
+          "adjust": "hipR.side"
         },
         {
           "point": "kneeL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         },
         {
           "point": "handR",
-          "adjust": "shoulderR"
+          "adjust": "shoulderR.side"
         },
         {
           "point": "handL",
-          "adjust": "shoulderL"
+          "adjust": "shoulderL.side"
         }
       ],
       "pose": {
-        "hipL": -88,
-        "hipR": 88,
-        "kneeL": -178,
-        "kneeR": 178,
-        "shoulderL": -22,
-        "shoulderR": 22,
+        "shoulderL": [0, 30.8, -90],
         "elbowL": 18,
-        "elbowR": -18
-      },
-      "phase": "rep"
+        "shoulderR": [0, 30.8, -90],
+        "elbowR": 18,
+        "hipL": [90, 90, 180],
+        "kneeL": 178,
+        "ankleL": 92,
+        "hipR": [-270, 90, 180],
+        "kneeR": 178,
+        "ankleR": 92
+      }
     }
   ],
-  "cues": [
-    "Sit on a blanket if the knees are high.",
-    "Switch the cross of the legs regularly."
-  ],
+  "cues": ["Sit on a blanket if the knees are high.", "Switch the cross of the legs regularly."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

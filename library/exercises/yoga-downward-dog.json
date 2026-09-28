@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-downward-dog",
   "name": "Downward-Facing Dog Pose",
   "sanskrit": "Adho Mukha Svanasana",
   "category": "Forward Bend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Upside-down V shape pressing the hips up and back from the hands and feet.",
   "source": {
     "url": "https://www.yogajournal.com/poses/downward-facing-dog/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Start on your hands and knees, hands a little ahead of your shoulders.",
-    "Tuck your toes under before you lift your hips."
-  ],
-  "facing": "right",
+  "setup": ["Start on your hands and knees, hands a little ahead of your shoulders.", "Tuck your toes under before you lift your hips."],
   "keyframes": [
     {
       "name": "Tabletop",
       "cue": "Come to hands and knees, wrists under shoulders.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "handR",
       "touch": [
         {
@@ -39,29 +34,26 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "shoulderL": -75,
-        "shoulderR": -75,
-        "hipL": -75,
-        "hipR": -75,
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
         "ankleR": 90
-      },
-      "phase": "setup"
+      }
     },
     {
       "name": "Downward-Facing Dog",
       "cue": "Press the hips up and back into an upside-down V.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -73,19 +65,17 @@
         }
       ],
       "pose": {
-        "torso": 135,
-        "shoulderL": -180,
-        "shoulderR": -180,
-        "hipL": 25,
-        "hipR": 25
-      },
-      "phase": "rep"
+        "torso": [135, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
+        "hipL": [-27.3, 0, 0],
+        "ankleL": -27.3,
+        "hipR": [-27.3, 0, 0],
+        "ankleR": -27.3
+      }
     }
   ],
-  "cues": [
-    "Bend the knees if the back rounds.",
-    "Press the floor away with the hands."
-  ],
+  "cues": ["Bend the knees if the back rounds.", "Press the floor away with the hands."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

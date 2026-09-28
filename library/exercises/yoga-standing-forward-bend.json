@@ -1,54 +1,43 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-standing-forward-bend",
   "name": "Standing Forward Bend",
   "sanskrit": "Uttanasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Standing fold with the torso hanging over the legs.",
   "source": {
     "url": "https://www.yogajournal.com/poses/standing-forward-bend-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand in Mountain Pose with your feet hip-width apart.",
-    "Put your hands on your hips before you fold."
-  ],
-  "facing": "right",
+  "setup": ["Stand in Mountain Pose with your feet hip-width apart.", "Put your hands on your hips before you fold."],
   "keyframes": [
     {
       "name": "Mountain Pose",
       "cue": "Stand tall with your feet together and arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 1200,
+      "phase": "setup",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -360,
-        "shoulderR": -360
-      },
-      "phase": "setup"
+        "shoulderL": [360, 0, 0],
+        "shoulderR": [360, 0, 0]
+      }
     },
     {
       "name": "Standing Forward Bend",
       "cue": "Hinge from the hips and let the torso hang.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "handR",
@@ -60,18 +49,14 @@
         }
       ],
       "pose": {
-        "torso": 150,
-        "neck": 10,
-        "shoulderL": -165,
-        "shoulderR": -165
-      },
-      "phase": "rep"
+        "torso": [150, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [192.9, 0, 0],
+        "shoulderR": [192.9, 0, 0]
+      }
     }
   ],
-  "cues": [
-    "Bend the knees as much as needed.",
-    "Let the head hang."
-  ],
+  "cues": ["Bend the knees as much as needed.", "Let the head hang."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

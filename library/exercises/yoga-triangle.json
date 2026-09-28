@@ -1,82 +1,67 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-triangle",
   "name": "Triangle Pose",
   "sanskrit": "Utthita Trikonasana",
   "category": "Standing",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Straight-legged wide stance tilting the torso over the front leg, arms in one vertical line.",
   "source": {
     "url": "https://www.yogajournal.com/poses/extended-triangle-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand with your feet about a leg's length apart; turn your front foot out and your back foot slightly in.",
-    "Reach your arms out to the sides at shoulder height."
-  ],
-  "facing": "right",
+  "setup": ["Stand with your feet about a leg's length apart; turn your front foot out and your back foot slightly in.", "Reach your arms out to the sides at shoulder height."],
   "keyframes": [
     {
       "name": "Step wide",
       "cue": "Step the feet wide apart, arms out to the sides.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         }
       ],
       "pose": {
-        "shoulderL": -90,
-        "shoulderR": 90,
-        "hipL": -30,
-        "hipR": 30
-      },
-      "phase": "setup"
+        "shoulderL": [0, 90, 0],
+        "shoulderR": [0, 90, 0],
+        "hipL": [0, 30, 0],
+        "hipR": [0, 30, 0]
+      }
     },
     {
       "name": "Triangle Pose",
       "cue": "Reach over the right leg, lower the right hand, lift the left arm.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         }
       ],
       "pose": {
-        "hipR": 35,
-        "hipL": -35,
-        "torso": -75,
-        "shoulderR": 75,
-        "shoulderL": -105
-      },
-      "phase": "rep"
+        "torso": [0, 75, 0],
+        "shoulderL": [0, 105, 0],
+        "shoulderR": [0, 75, 0],
+        "hipL": [0, 35, 0],
+        "hipR": [0, 35, 0]
+      }
     }
   ],
-  "cues": [
-    "Lengthen both sides of the waist.",
-    "Stack the shoulders."
-  ],
+  "cues": ["Lengthen both sides of the waist.", "Stack the shoulders."],
   "bilateral": {
     "labels": {
       "L": "Left side",

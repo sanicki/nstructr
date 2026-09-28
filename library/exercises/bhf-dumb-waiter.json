@@ -1,82 +1,63 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "bhf-dumb-waiter",
   "name": "Dumb Waiter",
   "category": "Strength",
   "focus": "Shoulders",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "Rotator-cuff exercise to keep the shoulders stable: elbows stay tucked at 90° while the hands swing out to the sides against the band.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",
     "title": "British Heart Foundation: resistance band exercises",
     "note": "Standing version. The article also shows each exercise seated on a chair."
   },
-  "setup": [
-    "Stand with your feet hip-width apart.",
-    "Elbows at your sides, bent to 90°, hands in front holding the band slightly taut."
-  ],
-  "cues": [
-    "Keep your elbows pinned to your sides.",
-    "Squeeze your shoulder blades as your hands move out.",
-    "Next step: straighten your arms out to the sides at the end."
-  ],
+  "setup": ["Stand with your feet hip-width apart.", "Elbows at your sides, bent to 90°, hands in front holding the band slightly taut."],
+  "cues": ["Keep your elbows pinned to your sides.", "Squeeze your shoulder blades as your hands move out.", "Next step: straighten your arms out to the sides at the end."],
   "prescription": {
     "reps": "8–12",
     "note": "Aim for 2 to 3 sessions a week with a rest day between. If you have a heart condition or high blood pressure, check with your doctor or cardiac rehab team first."
   },
-  "facing": "right",
   "props": [
     {
       "type": "band",
       "from": "handL",
-      "to": "handR",
-      "layer": "front"
+      "to": "handR"
     }
   ],
   "keyframes": [
     {
       "name": "Elbows at 90°",
       "cue": "Forearms pointing forward, band slightly taut between your hands.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -4,
-        "shoulderR": 4,
-        "elbowL": -86,
-        "elbowR": 86,
-        "forearmDepthL": 90,
-        "forearmDepthR": 90
-      },
-      "phase": "rep"
+        "shoulderL": [0, 4, 0],
+        "elbowL": 90,
+        "shoulderR": [0, 4, 0],
+        "elbowR": 90
+      }
     },
     {
       "name": "Hands out",
       "cue": "Swing your hands out to the sides, elbows still at your sides.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 1500,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "shoulderL": -4,
-        "shoulderR": 4,
-        "elbowL": -86,
+        "shoulderL": [0, 4, 90],
+        "elbowL": 86,
+        "shoulderR": [0, 4, 90],
         "elbowR": 86
-      },
-      "phase": "rep"
+      }
     }
   ],
   "measure": "reps",

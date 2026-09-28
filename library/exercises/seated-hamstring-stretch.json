@@ -1,68 +1,59 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "seated-hamstring-stretch",
   "name": "Seated Hamstring Stretch",
   "category": "Stretch",
   "focus": "Hamstrings and calves",
   "library": "Stretches",
-  "equipment": [
-    "Mat"
-  ],
+  "equipment": ["Mat"],
   "description": "Sitting with one leg straight and the other foot against its inner thigh, hinge forward from your hips with a flat back and reach toward your ankle.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",
     "title": "A guide to basic stretches (Mayo Clinic)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Sit on a mat with your left leg straight out and your right foot tucked against your left inner thigh."
-  ],
-  "cues": [
-    "Sit tall first, then hinge forward from your hips.",
-    "Keep your back flat; don't round your shoulders.",
-    "Reach toward your ankle or toes until you feel the stretch."
-  ],
+  "setup": ["Sit on a mat with your left leg straight out and your right foot tucked against your left inner thigh."],
+  "cues": ["Sit tall first, then hinge forward from your hips.", "Keep your back flat; don't round your shoulders.", "Reach toward your ankle or toes until you feel the stretch."],
   "prescription": {
     "reps": "30–45 s each side",
     "note": "Hold 30 to 45 seconds and breathe slowly."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Sit tall",
       "cue": "Left leg straight, right foot at your inner thigh.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 500,
+      "phase": "setup",
       "anchor": "pelvis",
       "pose": {
-        "hipL": -90,
-        "hipR": -90,
+        "shoulderL": [80, 0, 0],
+        "shoulderR": [80, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0],
         "kneeR": 180,
-        "ankleR": 90,
-        "shoulderL": -80,
-        "shoulderR": -80
-      },
-      "phase": "setup"
+        "ankleR": 90
+      }
     },
     {
       "name": "Hinge forward",
       "cue": "Hinge forward with a flat back, reaching for your ankle.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2400,
       "holdMs": 30000,
+      "phase": "rep",
       "anchor": "pelvis",
       "pose": {
-        "torso": 42,
-        "hipL": -90,
-        "hipR": -90,
+        "torso": [42, 0, 0],
+        "shoulderL": [128, 0, 0],
+        "shoulderR": [128, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0],
         "kneeR": 180,
-        "ankleR": 90,
-        "shoulderL": -128,
-        "shoulderR": -128
-      },
-      "phase": "rep"
+        "ankleR": 90
+      }
     }
   ],
   "bilateral": {

@@ -1,46 +1,34 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "band-overhead-triceps",
   "name": "Overhead Banded Triceps Extension",
   "category": "Core",
   "focus": "Backs of the arms",
   "library": "Resistance band",
-  "equipment": [
-    "Resistance band"
-  ],
+  "equipment": ["Resistance band"],
   "description": "With one end of the band under your back foot, hold the other end behind your head with elbows pointing up, then straighten your arms overhead.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/overhead-banded-tricep-extension",
     "title": "Overhead Banded Tricep Extension (Muscle & Strength)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": [
-    "Step your right foot back onto one end of the band.",
-    "Hold the other end with both hands behind your head, elbows pointing to the ceiling."
-  ],
-  "cues": [
-    "Keep your elbows pointing up and close to your head.",
-    "Only your forearms move.",
-    "Lower behind your head with control; keep your core tight."
-  ],
+  "setup": ["Step your right foot back onto one end of the band.", "Hold the other end with both hands behind your head, elbows pointing to the ceiling."],
+  "cues": ["Keep your elbows pointing up and close to your head.", "Only your forearms move.", "Lower behind your head with control; keep your core tight."],
   "prescription": {
     "reps": "12–15",
     "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Hands behind your head",
       "cue": "Elbows up, band taut.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -48,26 +36,25 @@
         }
       ],
       "pose": {
-        "hipL": -14,
-        "hipR": 18,
-        "shoulderL": 172,
-        "shoulderR": 172,
+        "shoulderL": [-172, 0, 180],
         "elbowL": 150,
-        "elbowR": 150
-      },
-      "phase": "rep"
+        "shoulderR": [-172, 0, 180],
+        "elbowR": 150,
+        "hipL": [14, 0, 0],
+        "ankleL": 14,
+        "hipR": [-14, 0, 0],
+        "ankleR": -14
+      }
     },
     {
       "name": "Extend",
       "cue": "Straighten your arms overhead.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -75,22 +62,22 @@
         }
       ],
       "pose": {
-        "hipL": -14,
-        "hipR": 18,
-        "shoulderL": 176,
-        "shoulderR": 176,
+        "shoulderL": [-176, 0, 180],
         "elbowL": 2,
-        "elbowR": 2
-      },
-      "phase": "rep"
+        "shoulderR": [-176, 0, 180],
+        "elbowR": 2,
+        "hipL": [14, 0, 0],
+        "ankleL": 14,
+        "hipR": [-14, 0, 0],
+        "ankleR": -14
+      }
     }
   ],
   "props": [
     {
       "type": "band",
       "from": "footR",
-      "to": "handR",
-      "layer": "back"
+      "to": "handR"
     }
   ],
   "measure": "reps",

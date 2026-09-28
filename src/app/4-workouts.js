@@ -438,7 +438,7 @@ $('#pickAdd').addEventListener('click', () => {
 /* export / import */
 function workoutJSON(w) {
   const custom = [...new Set(w.blocks.flatMap(b => b.items).map(i => i.ex))].filter(id => !findInDb(id)).map(exById).filter(Boolean);
-  return JSON.stringify({ format: 'nstructr/workout', version: 1, workouts: [{ ...w, restBetween: undefined }], ...(custom.length ? { exercises: custom } : {}) }, null, 2);
+  return JSON.stringify({ format: 'nstructr/workout', version: FILE_VERSION, workouts: [{ ...w, restBetween: undefined }], ...(custom.length ? { exercises: custom } : {}) }, null, 2);
 }
 function importWorkouts(data) {
   if (!data || !Array.isArray(data.workouts)) return [];
@@ -599,13 +599,7 @@ function stagePlan(p) {
   S.mode = 'workout'; S.ex = p.ex; S.seg = p.seg; S.props = p.props; S.tempo = p.tempo; S.speed = 1;
   S.resolved = p.plan; S.planMeta = p.meta; S.idx = 0; S.prev = null; S.from = prevLast; S.planDone = false; S.t = 0;
   S.bandRest = bandRestLengths(S.props, p.plan, S.seg);
-  let minX = Infinity, maxX = -Infinity;
-  for (const r of p.plan) {
-    const pos = place(r.pose, r.v, S.seg, r.rule), P = fk(r.pose, r.v, S.seg, pos.x, pos.y);
-    for (const k of POINTS) { minX = Math.min(minX, P[k].x); maxX = Math.max(maxX, P[k].x); }
-  }
-  for (const x of p.plan.walls || []) if (x != null) { minX = Math.min(minX, x - 6); maxX = Math.max(maxX, x + 6); }
-  for (const s of p.plan.supports || []) { minX = Math.min(minX, s.x0 - 6); maxX = Math.max(maxX, s.x1 + 6); }
+  const { minX, maxX } = sequenceSpan(p.plan, S.seg);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   if (exChanged) { buildFigure(); buildGuide(); }
   frameScene(p.plan);
@@ -615,13 +609,7 @@ function stagePlan(p) {
 /* In the workout player the camera frames the whole exercise tightly (head to floor, both ends of the move),
    so the figure is as big as the screen allows. The overlays sit in bands above and below it. */
 function frameScene(plan) {
-  let minX = Infinity, maxX = -Infinity, minY = Infinity;
-  for (const r of plan) {
-    const pos = place(r.pose, r.v, S.seg, r.rule), P = fk(r.pose, r.v, S.seg, pos.x + S.shiftX, pos.y);
-    for (const k of POINTS) { minX = Math.min(minX, P[k].x); maxX = Math.max(maxX, P[k].x); minY = Math.min(minY, P[k].y); }
-  }
-  for (const x of plan.walls || []) if (x != null) { minX = Math.min(minX, x + S.shiftX); maxX = Math.max(maxX, x + S.shiftX); }
-  for (const s of plan.supports || []) { minX = Math.min(minX, s.x0 + S.shiftX); maxX = Math.max(maxX, s.x1 + S.shiftX); minY = Math.min(minY, FLOOR - s.h - (s.backHeight || 0)); }
+  const { minX, maxX, minY } = sequenceSpan(plan, S.seg, S.shiftX);
   if (!isFinite(minX)) return;
   const pad = 26, top = minY - 20 - pad, h = FLOOR + 16 - top, wv = Math.max(maxX - minX + pad * 2, 120);
   scene.setAttribute('viewBox', `${(minX + maxX) / 2 - wv / 2} ${top} ${wv} ${h}`);

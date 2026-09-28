@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-upward-dog",
   "name": "Upward-Facing Dog Pose",
   "sanskrit": "Urdhva Mukha Svanasana",
   "category": "Backbend",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Backbend on straight arms with the chest lifted and the tops of the feet down.",
   "source": {
     "url": "https://www.yogajournal.com/poses/upward-facing-dog-2/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Lie on your belly with your legs straight and the tops of your feet on the floor.",
-    "Place your hands beside your lower ribs, elbows close to your body."
-  ],
-  "facing": "right",
+  "setup": ["Lie on your belly with your legs straight and the tops of your feet on the floor.", "Place your hands beside your lower ribs, elbows close to your body."],
   "keyframes": [
     {
       "name": "Plank",
       "cue": "Hands under shoulders, body in one straight line.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "handR",
       "touch": [
         {
@@ -39,20 +34,22 @@
         }
       ],
       "pose": {
-        "root": 66,
-        "shoulderL": -66,
-        "shoulderR": -66,
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
         "ankleL": 24,
+        "hipR": [-8, 0, 0],
         "ankleR": 24
-      },
-      "phase": "setup"
+      }
     },
     {
       "name": "Upward-Facing Dog",
       "cue": "Press into the hands and lift the chest and thighs.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -65,21 +62,19 @@
         }
       ],
       "pose": {
-        "root": 78,
-        "torso": -38,
-        "neck": -10,
-        "shoulderL": -40,
-        "shoulderR": -40,
+        "root": [78, 0, 0],
+        "torso": [-38, 0, 0],
+        "neck": [-10, 0, 0],
+        "shoulderL": [40, 0, 0],
+        "shoulderR": [40, 0, 0],
+        "hipL": [-0.7, 0, 0],
         "ankleL": 101,
+        "hipR": [-0.7, 0, 0],
         "ankleR": 101
-      },
-      "phase": "rep"
+      }
     }
   ],
-  "cues": [
-    "Keep the shoulders away from the ears.",
-    "Lift the thighs off the floor."
-  ],
+  "cues": ["Keep the shoulders away from the ears.", "Lift the thighs off the floor."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

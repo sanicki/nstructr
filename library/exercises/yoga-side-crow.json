@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-side-crow",
   "name": "Side Crow Pose",
   "sanskrit": "Parsva Bakasana",
   "category": "Arm Balance",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Twisted arm balance with both knees stacked on one arm.",
   "source": {
     "url": "https://www.yogajournal.com/poses/side-crane-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Squat with your feet and knees together, then twist to bring one elbow outside the opposite knee.",
-    "Plant both hands shoulder-width apart beside your feet."
-  ],
-  "facing": "right",
+  "setup": ["Squat with your feet and knees together, then twist to bring one elbow outside the opposite knee.", "Plant both hands shoulder-width apart beside your feet."],
   "keyframes": [
     {
       "name": "Squat",
       "cue": "Squat low with the hands on the floor in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "handR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,44 +35,42 @@
         }
       ],
       "pose": {
-        "torso": 55,
-        "hipL": -110,
-        "hipR": -110,
-        "kneeL": 140,
-        "kneeR": 140,
-        "shoulderL": -55,
-        "shoulderR": -55
-      },
-      "phase": "setup"
+        "torso": [55, 0, 0],
+        "shoulderL": [55, 0, 0],
+        "shoulderR": [55, 0, 0],
+        "hipL": [110, 0, 0],
+        "kneeL": 124.9,
+        "ankleL": -14.9,
+        "hipR": [110, 0, 0],
+        "kneeR": 124.9,
+        "ankleR": -14.9
+      }
     },
     {
       "name": "Side Crow",
       "cue": "Twist, set the knees on one arm, and lean forward to lift the feet.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handR",
       "pose": {
-        "torso": 73,
-        "neck": -20,
-        "shoulderL": -53,
-        "shoulderR": -53,
-        "elbowL": -28,
-        "elbowR": -28,
-        "hipL": -87,
-        "hipR": -87,
+        "torso": [73, 0, 0],
+        "neck": [-20, 0, 0],
+        "shoulderL": [53, 0, 0],
+        "elbowL": 28,
+        "shoulderR": [53, 0, 0],
+        "elbowR": 28,
+        "hipL": [87, 0, 0],
         "kneeL": 160,
-        "kneeR": 160,
         "ankleL": 60,
+        "hipR": [87, 0, 0],
+        "kneeR": 160,
         "ankleR": 60
-      },
-      "phase": "rep"
+      }
     }
   ],
-  "cues": [
-    "Look forward.",
-    "Keep the elbows hugging in."
-  ],
+  "cues": ["Look forward.", "Keep the elbows hugging in."],
   "bilateral": {
     "labels": {
       "L": "Left side",

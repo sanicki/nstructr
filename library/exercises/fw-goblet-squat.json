@@ -1,96 +1,95 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "fw-goblet-squat",
   "name": "Goblet Squat",
   "category": "Strength",
   "focus": "Thighs and glutes",
   "library": "Free weights",
-  "equipment": [
-    "Dumbbell"
-  ],
+  "equipment": ["Dumbbell"],
   "description": "A squat holding one dumbbell upright against your chest, which helps keep your chest up and your balance forward.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/362/goblet-squat/",
     "title": "Goblet Squat (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Hold one end of a dumbbell with both hands, upright against your chest.",
-    "Feet a little wider than hip-width."
-  ],
-  "cues": [
-    "Sit your hips back and down between your heels.",
-    "Keep your chest up and the weight close.",
-    "Knees follow your toes."
-  ],
+  "setup": ["Hold one end of a dumbbell with both hands, upright against your chest.", "Feet a little wider than hip-width."],
+  "cues": ["Sit your hips back and down between your heels.", "Keep your chest up and the weight close.", "Knees follow your toes."],
   "prescription": {
     "reps": "8–12",
     "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Stand tall",
       "cue": "Dumbbell at your chest.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
+      "plant": ["L", "R"],
       "reach": [
         {
           "hand": "handR",
           "to": "neckBase",
           "dx": 22,
-          "dy": 24
+          "dy": -24,
+          "dz": 22
         },
         {
           "hand": "handL",
           "to": "neckBase",
-          "dx": 22,
-          "dy": 24
+          "dx": -22,
+          "dy": -24,
+          "dz": 22
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "shoulderL": [-16.8, 0, 0],
+        "elbowL": 147.5,
+        "shoulderR": [-16.8, 0, 0],
+        "elbowR": 147.5
+      }
     },
     {
       "name": "Squat",
       "cue": "Lower as far as is comfortable.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {
-        "torso": 26,
-        "hipL": -92,
-        "hipR": -92,
-        "kneeL": 108,
-        "kneeR": 108
-      },
+      "plant": ["L", "R"],
       "reach": [
         {
           "hand": "handR",
           "to": "neckBase",
           "dx": 22,
-          "dy": 24
+          "dy": -24,
+          "dz": 22
         },
         {
           "hand": "handL",
           "to": "neckBase",
-          "dx": 22,
-          "dy": 24
+          "dx": -22,
+          "dy": -24,
+          "dz": 22
         }
       ],
-      "phase": "rep"
+      "pose": {
+        "torso": [26, 0, 0],
+        "shoulderL": [11.3, 0, 0],
+        "elbowL": 145.7,
+        "shoulderR": [11.3, 0, 0],
+        "elbowR": 145.7,
+        "hipL": [92, 0, 0],
+        "kneeL": 108,
+        "ankleL": -16,
+        "hipR": [92, 0, 0],
+        "kneeR": 108,
+        "ankleR": -16
+      }
     }
   ],
   "props": [

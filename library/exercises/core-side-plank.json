@@ -1,6 +1,6 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "core-side-plank",
   "name": "Forearm Side Plank",
   "category": "Core",
@@ -13,80 +13,69 @@
     "title": "Side Plank (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Lie on your left side, propped on your left forearm, elbow under your shoulder, legs stacked."
-  ],
-  "cues": [
-    "Lift from the bottom hip.",
-    "Keep your head, hips and feet in line.",
-    "Easier: bend your knees and keep them down."
-  ],
+  "setup": ["Lie on your left side, propped on your left forearm, elbow under your shoulder, legs stacked."],
+  "cues": ["Lift from the bottom hip.", "Keep your head, hips and feet in line.", "Easier: bend your knees and keep them down."],
   "prescription": {
     "reps": "Hold 15–30 s each side",
     "note": "Breathe steadily; build up the hold time gradually."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Prop on your forearm",
       "cue": "Elbow under your shoulder, hips on the floor.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2000,
       "holdMs": 600,
+      "phase": "setup",
       "anchor": "elbowL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         },
         {
           "point": "ankleR",
-          "adjust": "hipR"
+          "adjust": "hipR.side"
         }
       ],
       "pose": {
-        "root": 55,
-        "hipL": 35,
-        "hipR": 35,
-        "shoulderL": -55,
-        "forearmDepthL": 90,
-        "shoulderR": -20,
-        "elbowR": -60
-      },
-      "phase": "setup"
+        "root": [0, -55, 0],
+        "shoulderL": [0, 55, 0],
+        "elbowL": 90,
+        "shoulderR": [0, -20, -90],
+        "elbowR": 60,
+        "hipL": [0, -32.1, 0],
+        "hipR": [0, 25, 0]
+      }
     },
     {
       "name": "Lift your hips",
       "cue": "Raise your hips and hold, top arm reaching up.",
-      "view": "front",
+      "camera": 0,
       "durationMs": 2000,
       "holdMs": 20000,
+      "phase": "rep",
       "anchor": "elbowL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
-          "adjust": "hipL"
+          "adjust": "hipL.side"
         },
         {
           "point": "ankleR",
-          "adjust": "hipR"
+          "adjust": "hipR.side"
         }
       ],
       "pose": {
-        "root": 77.6,
-        "shoulderL": -77.6,
-        "forearmDepthL": 90,
-        "shoulderR": 102
-      },
-      "phase": "rep"
+        "root": [0, -77.6, 0],
+        "shoulderL": [0, 77.6, 0],
+        "elbowL": 90,
+        "shoulderR": [0, 102, -90],
+        "hipL": [0, 3.6, 0],
+        "hipR": [0, -12.6, 0]
+      }
     }
   ],
   "bilateral": {

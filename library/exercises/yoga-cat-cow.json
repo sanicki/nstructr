@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-cat-cow",
   "name": "Cat-Cow",
   "sanskrit": "Marjaryasana–Bitilasana",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Flowing spine warm-up on hands and knees, arching and rounding the back with the breath.",
   "source": {
     "url": "https://www.yogajournal.com/poses/cat-pose/",
     "title": "Cat Pose (Yoga Journal)",
     "note": "Not part of the Yoga Journal list; added separately. Stick-figure approximation."
   },
-  "setup": [
-    "Come onto your hands and knees: hands under your shoulders, knees under your hips.",
-    "Start with a flat back and your neck long."
-  ],
-  "facing": "right",
+  "setup": ["Come onto your hands and knees: hands under your shoulders, knees under your hips.", "Start with a flat back and your neck long."],
   "keyframes": [
     {
       "name": "Tabletop",
       "cue": "Hands under shoulders, knees under hips, spine neutral.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 800,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -39,24 +34,24 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "hipL": -75,
-        "hipR": -75,
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
-        "ankleR": 90,
-        "shoulderL": -75,
-        "shoulderR": -75
-      },
-      "phase": "rep"
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
     },
     {
       "name": "Cow",
       "cue": "Inhale: drop the belly, lift the chest and tailbone, look forward.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2800,
       "holdMs": 600,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -69,27 +64,27 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "hipL": -75,
-        "hipR": -75,
+        "root": [75, 0, 0],
+        "torso": [14, 0, 0],
+        "chest": [-30, 0, 0],
+        "neck": [-35, 0, 0],
+        "shoulderL": [59, 0, 0],
+        "shoulderR": [59, 0, 0],
+        "hipL": [75, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
-        "ankleR": 90,
-        "torso": 14,
-        "chest": -30,
-        "neck": -35,
-        "shoulderL": -59,
-        "shoulderR": -59
-      },
-      "phase": "rep"
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
     },
     {
       "name": "Cat",
       "cue": "Exhale: round the back toward the ceiling and drop the head.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 3200,
       "holdMs": 600,
+      "phase": "rep",
       "anchor": "handR",
       "touch": [
         {
@@ -102,27 +97,22 @@
         }
       ],
       "pose": {
-        "root": 75,
-        "hipL": -75,
-        "hipR": -75,
+        "root": [75, 0, 0],
+        "torso": [-14, 0, 0],
+        "chest": [30, 0, 0],
+        "neck": [45, 0, 0],
+        "shoulderL": [91, 0, 0],
+        "shoulderR": [91, 0, 0],
+        "hipL": [75, 0, 0],
         "kneeL": 90,
-        "kneeR": 90,
         "ankleL": 90,
-        "ankleR": 90,
-        "torso": -14,
-        "chest": 30,
-        "neck": 45,
-        "shoulderL": -91,
-        "shoulderR": -91
-      },
-      "phase": "rep"
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
     }
   ],
-  "cues": [
-    "Move with the breath: inhale into Cow, exhale into Cat.",
-    "Keep the arms straight and the hips over the knees.",
-    "Move slowly; let the whole spine take part."
-  ],
+  "cues": ["Move with the breath: inhale into Cow, exhale into Cat.", "Keep the arms straight and the hips over the knees.", "Move slowly; let the whole spine take part."],
   "measure": "reps",
   "defaults": {
     "reps": 10

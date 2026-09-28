@@ -1,51 +1,42 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-warrior-1",
   "name": "Warrior 1 Pose",
   "sanskrit": "Virabhadrasana I",
   "category": "Beginner",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Lunge with the back heel down, the hips facing forward, and the arms overhead.",
   "source": {
     "url": "https://www.yogajournal.com/poses/warrior-i-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Stand tall, then step one foot back about a leg's length.",
-    "Turn the back foot out a little with the heel down, and face your hips forward."
-  ],
-  "facing": "right",
+  "setup": ["Stand tall, then step one foot back about a leg's length.", "Turn the back foot out a little with the heel down, and face your hips forward."],
   "keyframes": [
     {
       "name": "Mountain Pose",
       "cue": "Stand tall with your feet together and arms by your sides.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1400,
       "holdMs": 1200,
+      "phase": "setup",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
-      "pose": {},
-      "phase": "setup"
+      "anchorZ": 40,
+      "plant": ["L", "R"],
+      "pose": {}
     },
     {
       "name": "Warrior 1",
       "cue": "Step the left foot back, bend the right knee, and reach up.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "ankleR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "anchorZ": 40,
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleL",
@@ -53,26 +44,22 @@
         }
       ],
       "pose": {
-        "hipR": -90,
-        "kneeR": 90,
-        "hipL": 50,
-        "shoulderL": 180,
-        "shoulderR": 180
-      },
-      "phase": "rep"
+        "shoulderL": [-180, 0, 0],
+        "shoulderR": [-180, 0, 0],
+        "hipL": [-60, 0, 0],
+        "ankleL": -60,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
     }
   ],
-  "cues": [
-    "Front knee over the ankle.",
-    "Press the back heel down."
-  ],
+  "cues": ["Front knee over the ankle.", "Press the back heel down."],
   "bilateral": {
     "labels": {
       "L": "Left side",
       "R": "Right side"
     }
   },
-  "anchorX": 40,
   "measure": "time",
   "holdStep": 1,
   "defaults": {

@@ -1,32 +1,27 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-marichi-1",
   "name": "Pose Dedicated to the Sage Marichi I",
   "sanskrit": "Marichyasana I",
   "category": "Binding",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Seated forward bend with one knee up and the arms binding behind the back.",
   "source": {
     "url": "https://www.yogajournal.com/poses/pose-dedicated-to-the-sage-marichi-i/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Sit tall with both legs straight out in front of you.",
-    "Bend one knee and plant that foot near the sitting bone, a little out to the side."
-  ],
-  "facing": "right",
+  "setup": ["Sit tall with both legs straight out in front of you.", "Bend one knee and plant that foot near the sitting bone, a little out to the side."],
   "keyframes": [
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 1000,
+      "phase": "setup",
       "anchor": "pelvis",
       "touch": [
         {
@@ -39,23 +34,21 @@
         }
       ],
       "pose": {
-        "hipL": -90,
-        "hipR": -90,
-        "shoulderL": 20,
-        "shoulderR": 20
-      },
-      "phase": "setup"
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
     },
     {
       "name": "Marichyasana I",
       "cue": "Bend the right knee, wrap the arm around it, and fold forward.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "pelvis",
-      "plant": [
-        "R"
-      ],
+      "plant": ["R"],
       "touch": [
         {
           "point": "ankleR",
@@ -63,22 +56,19 @@
         }
       ],
       "pose": {
-        "torso": 45,
-        "hipL": -90,
-        "hipR": -140,
-        "kneeR": 140,
-        "shoulderL": 60,
-        "shoulderR": 60,
-        "elbowL": -60,
-        "elbowR": -60
-      },
-      "phase": "rep"
+        "torso": [45, 0, 0],
+        "shoulderL": [-60, 0, 0],
+        "elbowL": 60,
+        "shoulderR": [-60, 0, 0],
+        "elbowR": 60,
+        "hipL": [90, 0, 0],
+        "hipR": [140, 0, 0],
+        "kneeR": 180,
+        "ankleR": -40
+      }
     }
   ],
-  "cues": [
-    "Lengthen before you fold.",
-    "Use a strap if the hands don't meet."
-  ],
+  "cues": ["Lengthen before you fold.", "Use a strap if the hands don't meet."],
   "bilateral": {
     "labels": {
       "L": "Left side",

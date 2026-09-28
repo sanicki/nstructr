@@ -1,37 +1,29 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "yoga-crow",
   "name": "Crow Pose",
   "sanskrit": "Bakasana",
   "category": "Arm Balance",
   "library": "Yoga",
-  "equipment": [
-    "Yoga mat"
-  ],
+  "equipment": ["Yoga mat"],
   "description": "Arm balance with the knees resting high on the upper arms and the feet lifted.",
   "source": {
     "url": "https://www.yogajournal.com/poses/crane-pose/",
     "title": "Yoga Journal Pose Library",
     "note": "Stick-figure approximation. Twists and binds can't be fully shown in 2D."
   },
-  "setup": [
-    "Squat with your feet close together and your knees wide.",
-    "Plant your hands shoulder-width apart in front of you, fingers spread, elbows slightly bent."
-  ],
-  "facing": "right",
+  "setup": ["Squat with your feet close together and your knees wide.", "Plant your hands shoulder-width apart in front of you, fingers spread, elbows slightly bent."],
   "keyframes": [
     {
       "name": "Squat",
       "cue": "Squat low with the hands on the floor in front.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 1600,
       "holdMs": 900,
+      "phase": "setup",
       "anchor": "handR",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "touch": [
         {
           "point": "ankleR",
@@ -43,44 +35,42 @@
         }
       ],
       "pose": {
-        "torso": 55,
-        "hipL": -110,
-        "hipR": -110,
-        "kneeL": 140,
-        "kneeR": 140,
-        "shoulderL": -55,
-        "shoulderR": -55
-      },
-      "phase": "setup"
+        "torso": [55, 0, 0],
+        "shoulderL": [55, 0, 0],
+        "shoulderR": [55, 0, 0],
+        "hipL": [110, 0, 0],
+        "kneeL": 124.9,
+        "ankleL": -14.9,
+        "hipR": [110, 0, 0],
+        "kneeR": 124.9,
+        "ankleR": -14.9
+      }
     },
     {
       "name": "Crow Pose",
       "cue": "Knees on the upper arms, lean forward, and lift the feet.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2600,
       "holdMs": 5000,
+      "phase": "rep",
       "anchor": "handR",
       "pose": {
-        "torso": 73,
-        "neck": -25,
-        "shoulderL": -53,
-        "shoulderR": -53,
-        "elbowL": -28,
-        "elbowR": -28,
-        "hipL": -87,
-        "hipR": -87,
+        "torso": [73, 0, 0],
+        "neck": [-25, 0, 0],
+        "shoulderL": [53, 0, 0],
+        "elbowL": 28,
+        "shoulderR": [53, 0, 0],
+        "elbowR": 28,
+        "hipL": [87, 0, 0],
         "kneeL": 178,
-        "kneeR": 178,
         "ankleL": 60,
+        "hipR": [87, 0, 0],
+        "kneeR": 178,
         "ankleR": 60
-      },
-      "phase": "rep"
+      }
     }
   ],
-  "cues": [
-    "Look forward, not down.",
-    "Squeeze the knees into the arms."
-  ],
+  "cues": ["Look forward, not down.", "Squeeze the knees into the arms."],
   "measure": "time",
   "holdStep": 1,
   "defaults": {

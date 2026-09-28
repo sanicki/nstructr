@@ -1,80 +1,68 @@
 {
   "$schema": "../../schema/exercise.schema.json",
-  "version": 1,
+  "version": 2,
   "id": "fw-db-row",
   "name": "Dumbbell Bent-Over Row",
   "category": "Strength",
   "focus": "Upper back",
   "library": "Free weights",
-  "equipment": [
-    "Dumbbells"
-  ],
+  "equipment": ["Dumbbells"],
   "description": "Hinged forward with a flat back, pull the dumbbells up toward your hips, squeezing your shoulder blades, then lower.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/12/bent-over-row/",
     "title": "Bent-Over Row (ACE Exercise Library)",
     "note": "Standard exercise, described in our own words for this library. Stick-figure approximation."
   },
-  "setup": [
-    "Hold a dumbbell in each hand.",
-    "Soften your knees and hinge forward from the hips until your back is at about 45° or lower, arms hanging."
-  ],
-  "cues": [
-    "Keep your back flat and your neck in line.",
-    "Lead with your elbows, pulling toward your hips.",
-    "Lower slowly."
-  ],
+  "setup": ["Hold a dumbbell in each hand.", "Soften your knees and hinge forward from the hips until your back is at about 45° or lower, arms hanging."],
+  "cues": ["Keep your back flat and your neck in line.", "Lead with your elbows, pulling toward your hips.", "Lower slowly."],
   "prescription": {
     "reps": "8–12",
     "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
   },
-  "facing": "right",
   "keyframes": [
     {
       "name": "Arms hanging",
       "cue": "Hinged forward, back flat.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 58,
-        "hipL": -14,
-        "hipR": -14,
+        "torso": [58, 0, 0],
+        "shoulderL": [58, 0, 0],
+        "shoulderR": [58, 0, 0],
+        "hipL": [14, 0, 0],
         "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
         "kneeR": 24,
-        "shoulderL": -58,
-        "shoulderR": -58
-      },
-      "phase": "rep"
+        "ankleR": -10
+      }
     },
     {
       "name": "Row",
       "cue": "Pull the weights up toward your hips.",
-      "view": "side",
+      "camera": 90,
       "durationMs": 2000,
       "holdMs": 400,
+      "phase": "rep",
       "anchor": "ankleL",
-      "plant": [
-        "L",
-        "R"
-      ],
+      "plant": ["L", "R"],
       "pose": {
-        "torso": 58,
-        "hipL": -14,
-        "hipR": -14,
+        "torso": [58, 0, 0],
+        "shoulderL": [-4, 0, 0],
+        "elbowL": 66,
+        "shoulderR": [-4, 0, 0],
+        "elbowR": 66,
+        "hipL": [14, 0, 0],
         "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
         "kneeR": 24,
-        "shoulderL": 4,
-        "shoulderR": 4,
-        "elbowL": -66,
-        "elbowR": -66
-      },
-      "phase": "rep"
+        "ankleR": -10
+      }
     }
   ],
   "props": [

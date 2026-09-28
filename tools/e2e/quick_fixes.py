@@ -51,7 +51,7 @@ async def main():
         from PIL import Image
         im = Image.open(path); print('QR picture              ', d.suggested_filename, im.size, im.mode)
         # the chair incline push-up keeps its head in front of the chair back
-        print('incline push-up head    ', await pg.evaluate("""(() => { selectExercise('chair-incline-pushup'); const back = CX + 32 + 35;
-          return S.resolved.map(r => { const pos = place(r.pose, r.v, S.seg, r.rule), P = fk(r.pose, r.v, S.seg, pos.x, pos.y); return Math.round(P.head.x + S.seg.head) + ' < ' + back; }); })()"""))
+        print('incline push-up head    ', await pg.evaluate("""(() => { selectExercise('chair-incline-pushup'); const back = Math.round(surfaceShapes(S.resolved.supports, 90)[0].x1);
+          return S.resolved.map(r => { const Q = stepScreen(r); return Math.round(Q.head.x + S.seg.head) + ' < ' + back; }); })()"""))
         print('errors', errs); await b.close()
 asyncio.run(main())
