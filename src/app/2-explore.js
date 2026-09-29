@@ -36,7 +36,7 @@ function migrateSaved() {
 const E = { coll: 'All', type: 'All', equip: 'Any', q: '' };
 /* All collections: grouped (a row per collection; with filters, a section per collection) or one A–Z list */
 const GROUP_KEY = 'nstructr-group-collections-v1';
-const grouped = () => pref(GROUP_KEY, 'on') !== 'off';
+const grouped = () => pref(GROUP_KEY, 'off') === 'on';                // one A–Z list until turned on (grouped until Sep 2026)
 const byName = list => [...list].sort((a, b) => a.name.localeCompare(b.name));
 const THUMBS = new Map();
 function thumbFor(ex) {

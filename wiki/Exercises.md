@@ -15,7 +15,7 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
 - The **equipment** row narrows the list to exercises that use, for example, a resistance band or a chair. Your
   equipment choice stays when you switch collections. Capital letters don't matter: an imported exercise that says
   "resistance band" is listed under Resistance band.
-- **Group by collection** (under the filters, for *All collections*; on at first, and remembered):
+- **Group by collection** (under the filters, for *All collections*; off at first, and remembered):
   - **on**: with nothing filtered, a shelf per collection (**See all** opens one); with a search or filter, the
     matches under each collection they're in;
   - **off**: one list of everything that matches, A–Z.
@@ -40,8 +40,8 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
 
 - **The figure** plays the exercise on a loop (it starts by itself unless you turn off
   [Autoplay](Settings.md#autoplay-exercise-videos)). Tap it to show the controls: previous step, play/pause, next step,
-  and in the corner **Loop** (off: it plays once through, then stops; Play starts it again) and **Mute** (quiets the
-  spoken cues on this page; they follow Settings → Instruction). Both are remembered.
+  and in the corner **Loop** (off: it plays once through, then stops; Play starts it again) and **Mute** (on at first: quiets the
+  spoken cues on this page; unmuted, they follow Settings → Instruction). Both are remembered.
   The first tap only shows them. They stay up while paused and fade while playing.
 - Under the figure: the **current step**, with its number, name and cue.
 - **Side** (for exercises done one side at a time, such as *Right leg back* / *Left leg back*) and **Direction**

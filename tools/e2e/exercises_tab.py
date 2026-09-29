@@ -12,6 +12,8 @@ async def main():
         b = await p.chromium.launch(); errs = []
         ctx = await b.new_context(viewport={'width': 412, 'height': 860}); pg = await ctx.new_page()
         pg.on('pageerror', lambda e: errs.append(str(e))); await pg.add_init_script(ASK_JS)
+        # checks the shelves: grouped by collection (off by default since Sep 2026)
+        await pg.add_init_script("if (localStorage.getItem('nstructr-group-collections-v1') === null) localStorage.setItem('nstructr-group-collections-v1', 'on')")
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
         # an install from before bookmarks: "Saved" holds an unchanged library copy, one changed with the old pose
         # editor, and an exercise of the user's own; there's no bookmark list yet

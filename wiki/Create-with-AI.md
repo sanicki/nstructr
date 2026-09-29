@@ -27,7 +27,7 @@ exercise is done, its steps, typical reps and safety notes), and to name the pag
 
 <img src="images/create-with-ai-plan.png" width="300" alt="Plan a workout: what you want and the equipment you have">
 
-Tap the equipment you have (a wall is picked at first; your choice is remembered). The AI may use **only exercises
+Tap the equipment you have (nothing is picked at first, which means no equipment; your choice is remembered). The AI may use **only exercises
 already in the app**, from the library or your own, that need nothing more than that equipment. It is told how long
 each rep takes and what each exercise works, so it can fit the length you ask for.
 
