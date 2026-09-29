@@ -775,15 +775,20 @@ function phaseInfo(keyframes) {
   if (!rep.length) rep = keyframes.map((_, i) => i);
   return { setup: idx('setup'), rep, finish: idx('finish'), start: rep[0], end: rep[rep.length - 1] };
 }
-/* The other direction of a circling exercise: the rep steps in reverse order. Each move takes the time of the
-   move it reverses, so the rhythm is the same both ways. */
+/* The other direction of a circling exercise (or walking backward): the rep steps in reverse order. Each move takes
+   the time of the move it reverses, so the rhythm is the same both ways, and holds on to what that move held on to:
+   a step's pin is the foot that stays as the body moves into it, so a reversed step takes the pin of the step that
+   came after it (a walk forward, played backward, keeps the other foot down; the same pin throughout changes nothing). */
+const PIN_KEYS = ['anchor', 'anchorX', 'anchorY', 'anchorZ'];
 function reverseReps(keyframes) {
   const { rep } = phaseInfo(keyframes);
   const n = rep.length, out = keyframes.map(k => ({ ...k }));
   const durOf = pos => keyframes[rep[pos]].durationMs;          // time to move INTO the step at rep position pos
   for (let j = 0; j < n; j++) {
-    const src = keyframes[rep[n - 1 - j]];
-    out[rep[j]] = { ...src, durationMs: durOf((n - j) % n) };
+    const src = keyframes[rep[n - 1 - j]], next = keyframes[rep[(n - j) % n]];
+    const step = { ...src, durationMs: durOf((n - j) % n) };
+    for (const k of PIN_KEYS) { delete step[k]; if (next[k] != null) step[k] = next[k]; }
+    out[rep[j]] = step;
   }
   // a "keep" that points at a step by number must follow that step to its new place
   const movedTo = i => { const pos = rep.indexOf(i); return pos < 0 ? i : rep[n - 1 - pos]; };

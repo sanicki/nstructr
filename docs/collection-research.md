@@ -39,7 +39,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Jump Squat | ✅ (`tools/variants/batch-9-jumping.cjs`: the engine's `lift`) |
 | Burpee | ✅ batch 14 |
 | Pull-Up, Chin-Up | ✅ with the new **pull-up bar** (`tools/variants/batch-11-hanging.cjs`), plus Dead Hang and Hanging Knee Raise |
-| Inverted Row | ✅ batch 14 (a `bar` prop at waist height; equipment "Low bar") |
+| Inverted Row | removed after batch 14 (owner's decision, Sep 2026) |
 
 ## Resistance band (20)
 ([door anchor exercises](https://www.litmethod.com/en-ca/blogs/boltcut-blog/resistance-band-door-anchor-workouts), [WorkoutLabs band exercises](https://workoutlabs.com/exercise-guide/resistance-band-bent-over-rows/))
@@ -132,7 +132,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | **Door anchor** ✅ | band: face pull, Pallof press, woodchop, standing row and chest press, pushdown | done: "Door anchor" is an equipment kind (`src/similar.js`, `tools/research.cjs`) and a line in the prompt's EQUIPMENT; a band's fixed end is drawn as a small anchor block on the door (a wall) |
 | **Yoga block** ✅ | supported standing and seated poses | done: a `block` surface, 41 high on end; a hand rests on it with `touch` |
 | **Yoga strap** ✅ | reclined hamstring stretch, seated forward bend (cow-face arms later) | done: a `strap` prop drawn like the towel |
-| **Pull-up bar** ✅ | pull-up, chin-up, dead hang, hanging knee raise (inverted row: a low bar, batch 14) | done: a `bar` prop, `anchorY` holds a hand at the bar |
+| **Pull-up bar** ✅ | pull-up, chin-up, dead hang, hanging knee raise | done: a `bar` prop, `anchorY` holds a hand at the bar |
 | **Stability ball** ✅ | ball crunch, bridge, seated march (wall squat with a ball, hamstring curl later) | done: a round surface (`ball`) |
 | **Medicine ball** ✅ | Russian twist, slam (chest pass later: a throw) | done: `medball`, held in both hands |
 | **Foam roller** | rolling the calves, quads, upper back | a cylinder surface under the body |
@@ -146,6 +146,6 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 - **Hanging** ✅ (Sep 2026): a hand anchored at a height (`anchorY`) on a `bar` prop. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise.
 
 Done so far: most **ready** rows (batches 3–6), the **door anchor** (batch 7), jumping (batch 9) and travelling
-(batch 10), hanging (batch 11), the yoga block and strap (batch 12), the medicine ball, Pilates ring and stability ball (batch 13), and the deferred exercises (batch 14: Bulgarian Split Squat, Monster Walk, Inverted Row, Mountain Climber, Burpee). Next: the foam roller (a rolling motion). The Create with AI prompt lists every
+(batch 10), hanging (batch 11), the yoga block and strap (batch 12), the medicine ball, Pilates ring and stability ball (batch 13), and the deferred exercises (batch 14: Bulgarian Split Squat, Monster Walk, Mountain Climber, Burpee). Next: the foam roller (a rolling motion). The Create with AI prompt lists every
 exercise and isn't trimmed to fit a link (accuracy first, HANDOFF §10, "Create with AI"): past about 250 exercises,
 ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.
