@@ -1,4 +1,10 @@
 {
   "description": "The order the app lists the library workouts in, before a person reorders them (the build fails if a library workout is missing here or an id isn't one).",
-  "order": ["beginner-yoga-20", "beginner-pilates-20", "beginner-free-weights-20", "beginner-kettlebell-20"]
+  "order": [
+    "beginner-yoga-20",
+    "beginner-pilates-20",
+    "beginner-resistance-band-20",
+    "beginner-free-weights-20",
+    "beginner-kettlebell-20"
+  ]
 }
