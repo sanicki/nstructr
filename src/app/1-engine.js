@@ -338,6 +338,8 @@ function frame(ts) {
   if (n && S.playing && !S.planDone) {
     S.t += dt * S.speed * (S.tempo || 1);
     let cur = S.resolved[S.idx];
+    // a hold can wait to start counting (Coach is still saying how to get into the pose)
+    if (cur.hold && S.t > cur.dur && S.holdWait && S.holdWait(S.idx)) S.t = cur.dur;
     while (S.t >= cur.dur + cur.hold) {
       // a step can wait (the guided run-through waits for its spoken cue to finish)
       if (S.canAdvance && !S.canAdvance(S.idx)) { S.t = cur.dur + cur.hold; break; }

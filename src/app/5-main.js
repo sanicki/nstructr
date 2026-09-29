@@ -199,7 +199,7 @@ function selectExercise(id) {
   if (!S.ex) return false;
   S.seg = { ...DEFAULT_SEGMENTS };
   ED.orig = null;
-  S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.speed = 1;
+  S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.holdWait = null; S.speed = 1;
   const dirs = S.ex.direction && S.ex.direction.labels;
   $('#dirCtl').hidden = !dirs;
   if (dirs) document.querySelectorAll('#dirSeg button').forEach(b => { b.querySelector('.lbl').textContent = dirs[b.dataset.dir]; b.setAttribute('aria-pressed', String(b.dataset.dir === 'A')); });
@@ -383,7 +383,7 @@ function route() {
   if (!['exercises', 'settings', 'player', 'workouts', 'workout', 'wplay'].includes(view)) view = 'workouts';
   const leavingWorkout = S.view === 'wplay' && view !== 'wplay', leavingPlayer = S.view === 'player' && view !== 'player';
   if (leavingWorkout) {                                        // stop the workout, give the stage back
-    S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.playing = false; wakeOff(); leaveFullscreen(); moveStage(false); resetScene(); buildFigure();
+    S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.holdWait = null; S.playing = false; wakeOff(); leaveFullscreen(); moveStage(false); resetScene(); buildFigure();
     if ('speechSynthesis' in window) speechSynthesis.cancel();
     if (WP.phase !== 'done') { writeSession(false); WP.phase = 'idle'; renderWorkouts(); }
     S.ex = null;                                               // the exercise player rebuilds next time

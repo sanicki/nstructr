@@ -499,7 +499,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 - **Coach**: before each exercise (and each side/direction), a **guided run-through** — one pass through every
   step, reading each step's cue; each step waits for **whichever takes longer, its line or its animation**
   (`S.canAdvance`). Then counted reps: counts, "Last one", "Halfway", "10 seconds" are **dropped if something
-  is already being said** (never talk over). Timed exercises: setup steps, then the held step's cue and "Now hold for N seconds" as the hold starts (Sep 2026: before, the held step's cue — how to get into the pose — was never read).
+  is already being said** (never talk over). Timed exercises: setup steps, then the held step's cue and "Now hold for N seconds" as the hold starts; the countdown waits for that line (`S.holdWait`), and the time estimate counts it (~2.5 words a second at the speech rate). (Sep 2026: before, the held step's cue — how to get into the pose — was never read.)
 - Speech is **queued, never cancelled**, except on skip/stop. Routing cancels speech only when *leaving* the exercise
   page (`exHush`) or the workout player: until Sep 2026 any route away from the exercise page's view hushed, which cut
   off every workout's first line as the player opened (`autoplay_first_speech.py`). Each line's promise resolves on `onend`, with a
