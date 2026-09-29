@@ -43,7 +43,7 @@ the top bar as icons, to keep clear of the camera cutouts.
 NstructR is designed so you can fold the phone, put it on the floor in front of your mat, and follow along on
 the cover screen:
 
-- Install the app first (see above). Installed apps run on the cover screen.
+- Install the app first (see above). Add the installed app to your cover screen.
 - Nothing you need to tap sits at the bottom of the screen, where the cameras are.
 - The first tap only shows the controls, so you can't pause or skip by accident. To leave a workout, **hold ✕**.
 - The screen stays on while you work out.
