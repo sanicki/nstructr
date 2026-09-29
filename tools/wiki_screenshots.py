@@ -70,6 +70,11 @@ async def main():
         # Workouts tab
         await pg.click('[data-wtoggle="legs"]'); await pg.evaluate(HIDE_SNACK)
         await shot(pg, 'workouts')
+        # the install tip (Getting started): as Chrome offers it after the first workout (its install event faked)
+        await pg.evaluate("""(()=>{ localStorage.setItem('nstructr-install-hint-v1', 'due'); scrollTo(0, 0);
+          const e = new Event('beforeinstallprompt', { cancelable: true }); e.prompt = () => Promise.resolve(); dispatchEvent(e); })()""")
+        await pg.wait_for_timeout(500); await shot(pg, 'install-tip')
+        await pg.evaluate(HIDE_SNACK + "; INSTALL_EVT = null; renderInstall(); localStorage.setItem('nstructr-install-hint-v1', 'shown')")
         await pg.evaluate("go('#/workout/legs')"); await pg.wait_for_timeout(300); await pg.evaluate(HIDE_SNACK)
         await shot(pg, 'workout-editor')
         uid = await pg.evaluate("WK.list[0].blocks[1].items[0].uid")
