@@ -104,15 +104,18 @@ async function exportEverything() {
   await shareFile(JSON.stringify(d, null, 1), name, `${APP_NAME} backup`);
   keepStorage();
 }
-/* Restoring merges: anything in the backup replaces the item with the same id here, and nothing here is
-   deleted, so importing an older backup never loses newer work. */
-function restoreBackup(data) {
-  const byId = (mine, theirs, key = 'id') => { const m = new Map(mine.map(x => [x[key], x])); for (const x of theirs) if (x && x[key] != null) m.set(x[key], x); return [...m.values()]; };
+/* Restoring, the user's choice each time (askRestore): "merge" (anything in the backup replaces the item with the same
+   id here and nothing here is deleted, so importing an older backup never loses newer work), or "replace" (this device
+   ends up as the backup: workouts, own exercises, bookmarks, history, every setting and the workout to resume). */
+function restoreBackup(data, mode = 'merge') {
+  const rep = mode === 'replace';
+  const byId = (mine, theirs, key = 'id') => { const m = new Map((rep ? [] : mine).map(x => [x[key], x])); for (const x of theirs) if (x && x[key] != null) m.set(x[key], x); return [...m.values()]; };
   const ws = (Array.isArray(data.workouts) ? data.workouts : []).filter(w => w && w.id && typeof w.name === 'string' && Array.isArray(w.blocks));
   const exs = Array.isArray(data.exercises) && data.exercises.length ? normalizeImport({ exercises: data.exercises }) : [];
   const log = (Array.isArray(data.history) ? data.history : []).filter(s => s && s.id && s.start);
   WK.list = byId(WK.list || [], ws); saveWorkouts();
   S.lib.items = byId(S.lib.items, exs); saveLib();
+  if (rep) BOOKMARKS = new Set();
   for (const id of Array.isArray(data.bookmarks) ? data.bookmarks : []) if (typeof id === 'string') BOOKMARKS.add(id);
   saveBookmarks(); migrateSaved();                           // an older backup may hold stored library copies
   saveLog(byId(loadLog(), log).sort((a, b) => String(a.start).localeCompare(String(b.start))));
@@ -120,10 +123,11 @@ function restoreBackup(data) {
   if (st.sound && SOUND_MODES.some(m => m[0] === st.sound)) setSound(st.sound);
   if (typeof st.speechRate === 'number') setRate(st.speechRate, false);
   if (typeof st.encourage === 'boolean') setPref(ENCOURAGE_KEY, st.encourage ? 'on' : 'off');
-  for (const p of BACKUP_PREFS) if (st[p[0]] !== undefined) prefIn(p, st[p[0]]);
+  for (const p of BACKUP_PREFS) if (st[p[0]] !== undefined) prefIn(p, st[p[0]]); else if (rep) try { localStorage.removeItem(p[1]); } catch (e) { }   // (replace: not in an older backup = the default)
   applyTheme(pref(THEME_KEY, 'system')); applyAuthoring(); orderLibrary();
   // an unfinished workout carries on here too, unless one is already waiting to be resumed on this device
   const r = data.resume;
+  if (rep) dropSession();
   if (r && typeof r.wid === 'string' && Number.isInteger(r.i) && !loadSession() && wkById(r.wid)) { try { localStorage.setItem(SESSION_KEY, JSON.stringify({ wid: r.wid, i: r.i })); } catch (e) { } }
   keepStorage();
   return { workouts: ws.length, exercises: exs.length, sessions: log.length };

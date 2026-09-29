@@ -63,8 +63,12 @@ Your data lives only in this browser on this device. **Settings → Import & too
 file with your workouts, history, your own exercises, bookmarks, every setting (rests, Instruction, speech speed,
 theme, full screen, autoplay, advanced exercise editor), the choices the app remembers (the exercise page's Loop and Mute,
 grouping by collection, Create with AI's app and equipment, your order of the library workouts) and an unfinished
-workout to resume. Importing it (**Import → Choose file**) restores it,
-here or on another device.
+workout to resume. Importing it (**Import → Choose file**) restores it, here or on another device. It asks how:
+
+- **Merge**: keep what's on this device and add the backup's workouts, exercises and history (the same ones are
+  updated, not doubled). The backup's settings replace yours.
+- **Replace**: make this device exactly like the backup. Workouts, your own exercises, bookmarks and history that
+  aren't in the backup are deleted.
 
 Make a backup now and then, and before clearing your browser's data or changing phones. Installing the app
 makes it much less likely that the browser clears your data by itself; Settings tells you whether your storage

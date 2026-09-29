@@ -61,7 +61,7 @@ phone is set to reduce motion, exercises wait for Play either way.)
 - **Install app** (only while your browser can install it, and not in the installed app): **Install** puts NstructR
   on your home screen. On an iPhone it says how (Share, then Add to Home Screen).
 - **Backup**: Export everything. See [Backups](Sharing-and-backups.md#back-up-everything).
-- **Import**: Choose file: restore a backup (it restores everything), or add workouts or exercises.
+- **Import**: Choose file: restore a backup (you choose to **Merge** it with what's here or **Replace** what's here), or add workouts or exercises.
 - **Export your exercises** (Advanced exercise editor): the JSON of everything in My exercises.
 - **Advanced exercise editor**: shows the exercise editor on each exercise, for precise modifications: the poses, the camera and JSON views. See
   [Editing exercises](Editing-exercises.md#changing-the-poses-advanced-exercise-editor).

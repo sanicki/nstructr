@@ -41,12 +41,26 @@ async def main():
         print('export                  ', d.suggested_filename, data['format'], data['version'], {k: len(data[k]) for k in ('workouts', 'exercises', 'history')}, data['settings'])
         await pg.evaluate("localStorage.clear()"); await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         print('after wipe              ', await pg.evaluate("[WK.list.length, S.lib.items.length, loadLog().length, WK.sound]"))
-        await pg.set_input_files('#fileInput', path); await pg.wait_for_timeout(600)
-        print('after import            ', await pg.evaluate("[WK.list.map(w=>w.name), S.lib.items.map(x=>x.id), [...BOOKMARKS], loadLog().length, WK.sound, location.hash]"))
+        await pg.set_input_files('#fileInput', path); await pg.wait_for_timeout(400)
+        print('asks: merge or replace  ', await pg.evaluate("[$('#askDialog').open, $('#askTitle').textContent, $('#askNo').textContent, $('#askAlt').textContent, $('#askYes').textContent]"))
+        await pg.click('#askYes'); await pg.wait_for_timeout(600)
+        print('after import (Merge)    ', await pg.evaluate("[WK.list.map(w=>w.name), S.lib.items.map(x=>x.id), [...BOOKMARKS], loadLog().length, WK.sound, location.hash]"))
         print('settings back           ', await pg.evaluate("[restGap(), pref(THEME_KEY,'system'), document.documentElement.dataset.theme, loopOn(), aiApp().id]"), "<- 12, dark, dark, false, claude")
         print('snackbar                ', await pg.inner_text('#snackbar'))
         # importing the same backup again changes nothing (merge by id)
-        await pg.set_input_files('#fileInput', path); await pg.wait_for_timeout(400)
-        print('import again            ', await pg.evaluate("[WK.list.length, S.lib.items.length, loadLog().length]"))
+        await pg.set_input_files('#fileInput', path); await pg.wait_for_timeout(300); await pg.click('#askYes'); await pg.wait_for_timeout(400)
+        print('merge again             ', await pg.evaluate("[WK.list.length, S.lib.items.length, loadLog().length]"), '<- unchanged')
+        # things that aren't in the backup: Merge keeps them, Cancel changes nothing, Replace removes them
+        extra = """(()=>{const c=customizeWorkout(LIB_WK[1]); c.name='Extra'; saveWorkouts(); S.lib.items.push({...clone(findInDb('bw-squat')), id:'u-extra', name:'Extra'}); saveLib();
+          BOOKMARKS.add('pil-hundred'); saveBookmarks(); saveLog([...loadLog(), {id:'s2',name:'Extra',start:'2026-09-02T10:00:00Z',seconds:60,completed:true,exercisesDone:1,exercisesTotal:1}]);
+          setPref(GROUP_KEY,'on'); localStorage.setItem(SESSION_KEY, JSON.stringify({wid:c.id,i:2})); })()"""
+        state = "[WK.list.map(w=>w.name), S.lib.items.map(x=>x.id), [...BOOKMARKS], loadLog().map(x=>x.id), pref(GROUP_KEY,'off'), !!loadSession(), restGap()]"
+        await pg.evaluate(extra)
+        print('with extras             ', await pg.evaluate(state))
+        await pg.set_input_files('#fileInput', path); await pg.wait_for_timeout(300); await pg.click('#askNo'); await pg.wait_for_timeout(400)
+        print('Cancel                  ', await pg.evaluate(state), '<- unchanged')
+        await pg.set_input_files('#fileInput', path); await pg.wait_for_timeout(300); await pg.click('#askAlt'); await pg.wait_for_timeout(600)
+        print('Replace                 ', await pg.evaluate(state), '<- only the backup: Mine, u-mine, bw-lunge, s1, grouping as backed up, no resume, rest 12')
+        print('snackbar                ', await pg.inner_text('#snackbar'))
         print('errors', errs); await b.close()
 asyncio.run(main())

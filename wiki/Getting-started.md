@@ -68,8 +68,7 @@ exercises on a big screen, or following along on a TV or laptop.
   - **One workout or exercise:** open it, tap **Share**, and on the other device scan the **QR code** or open the
     link. It's added when you tap **Add**. A computer's big screen makes the QR code easy to scan with your phone.
   - **Everything:** **Settings → Import & tools → Export everything** on one device, then **Import** that file on
-    the other. It adds the file's workouts, exercises and history to what's there (nothing is deleted) and takes
-    its settings.
+    the other, choosing **Merge** (add to what's there) or **Replace** (make it match).
 
   See [Sharing, importing and backups](Sharing-and-backups.md).
 
