@@ -615,10 +615,15 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 - **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; then type and equipment,
   each on its own row; the equipment choice is kept across collections, one without it shows all), search (covers the user's own exercises too). Saved = bookmarked library exercises + the user's
   own (imported/made), which exist only there.
-- **Exercise player**: the figure with a **tap-for-controls overlay** (previous step / play-pause / next step;
+- **Exercise player**: the figure with a **tap-for-controls overlay** (start again / play-pause / next step;
   same rules as the workout player: the first tap only shows them, they stay up while paused, fade while
-  playing; mouse hover shows them), progress, current step, then the selectors labelled **Side** and
-  **Direction** (no Speed selector or collection name since Sep 2026: exercises play at 1×). The details are part of
+  playing; mouse hover shows them), current step, then the selectors labelled **Side** and
+  **Direction** (no Speed selector or collection name since Sep 2026: exercises play at 1×). ◀ / ← **start again**
+  (`restartExercise()`: setup, rep 1, a travelling exercise back where it began; Sep 2026, owner's decision; it was
+  "previous step"); ▶ / → is the next step. **Hidden, with no way for the user to show them** (owner's decision,
+  Sep 2026): the rep/hold label on the figure (`#repChip` "Rep 3", `#holdChip` "Hold 0:20") and the progress bar under
+  it (`.progress`, `#progressBar`); they're still built, and `EX_SHOW_COUNT` / `EX_SHOW_PROGRESS` in
+  `src/app/1-engine.js` (and the bar's `hidden` in `src/body.html`) bring them back. The details are part of
   the page, below the controls (on screens ≥ 840 px a right-hand column): **About** (description, chips), **How to
   do it** (setup, form, then the time estimate "About N s per round, each side", the source link and note, and the
   prescription note),
@@ -703,7 +708,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   sets, sound, full screen), Exercises (autoplay), Display (theme System/Light/Dark, **Authoring mode**), Create with AI (Create), Import & tools (backup, import file/paste, export your exercises,
   JSON format reference, storage-persistence note).
 - **Quiet steps** (`"quiet": true`, the in-between points of a circle: Hip Circles, Leg Circles) are part of the
-  motion but not steps a person sees: the exercise page's step number, name, Steps list and ◀ ▶ / arrow keys skip them
+  motion but not steps a person sees: the exercise page's step number, name, Steps list and ▶ / → skip them
   (`visibleSteps()`, `shownStep()`, `stepBy()`); the editor still reaches every keyframe. Leg Circles has 8 points on a
   true circle (hip −84 ± 16°, thigh depth ± 32°), 4 of them steps.
 - **Order of sides and directions** in a workout item: `"order": ["LA", "RA", "LB", "RB"]` (L/R side, A/B direction),

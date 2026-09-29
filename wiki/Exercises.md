@@ -39,7 +39,7 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
 <img src="images/exercise-page.png" width="300" alt="An exercise page: the figure, the current step and Side">
 
 - **The figure** plays the exercise on a loop (it starts by itself unless you turn off
-  [Autoplay](Settings.md#autoplay-exercise-videos)). Tap it to show the controls: previous step, play/pause, next step,
+  [Autoplay](Settings.md#autoplay-exercise-videos)). Tap it to show the controls: start again (from the beginning), play/pause, next step,
   and in the corner **Loop** (off: it plays once through, then stops; Play starts it again) and **Mute** (on at first: quiets the
   spoken cues on this page; unmuted, they follow Settings → Instruction). Both are remembered.
   The first tap only shows them. They stay up while paused and fade while playing.

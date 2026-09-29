@@ -432,7 +432,7 @@ addEventListener('hashchange', route);
 
 /* ---------- Wiring ---------- */
 $('#playBtn').addEventListener('click', () => setPlaying(!S.playing));      // (the overlay shows these first: see 3-details.js)
-$('#prevBtn').addEventListener('click', () => stepBy(-1));
+$('#prevBtn').addEventListener('click', () => restartExercise());
 $('#nextBtn').addEventListener('click', () => stepBy(1));
 $('#sideSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setSide(b.dataset.side); });
 $('#dirSeg').addEventListener('click', e => { const b = e.target.closest('button'); if (b) setDir(b.dataset.dir); });
@@ -474,7 +474,7 @@ document.addEventListener('keydown', e => {
   if (S.view !== 'player' || e.target.closest('input, textarea, dialog') || e.metaKey || e.ctrlKey || e.altKey) return;
   if (e.key === ' ' && !e.target.closest('button')) { e.preventDefault(); setPlaying(!S.playing); }
   else if (e.key === 'ArrowRight') stepBy(1);
-  else if (e.key === 'ArrowLeft') stepBy(-1);
+  else if (e.key === 'ArrowLeft') restartExercise();
 });
 let dragDepth = 0;
 addEventListener('dragenter', e => { if ([...(e.dataTransfer?.types || [])].includes('Files')) { dragDepth++; $('#drop').classList.add('show'); } });
