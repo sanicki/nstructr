@@ -12,7 +12,7 @@ async def main():
         pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         # a library-only workout (the library routine, customised)
-        await pg.click('[data-wtoggle="lib:full-body-routine"]'); await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(300)
+        await pg.click('[data-wtoggle="lib:beginner-yoga-20"]'); await pg.click('[data-wcustom="lib:beginner-yoga-20"]'); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="@edit"]'); await pg.wait_for_timeout(400)
         url1 = await pg.evaluate('SHARING.url')
         print('library workout link    ', len(url1), 'chars |', url1[:60] + '…', '| QR:', await pg.evaluate("!!$('#shareQr svg')"))
@@ -20,7 +20,7 @@ async def main():
         # library workouts aren't shared (everyone has them); a link naming one still opens
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
         print('library card share      ', await pg.evaluate("document.querySelectorAll('#libWkList [data-share-wk]').length"), 'buttons')
-        url0 = await pg.evaluate("shareBase() + '#/link/l1.full-body-routine'")
+        url0 = await pg.evaluate("shareBase() + '#/link/l1.beginner-yoga-20'")
         # a workout using an exercise of the sender's own
         own = await pg.evaluate("JSON.stringify({...findInDb('bw-squat'), id:'u-wide-squat', name:'Wide Squat', description:'Squat with feet wide.'})")
         await pg.evaluate(f"""(()=>{{ S.lib.items.push(JSON.parse({json.dumps(own)})); saveLib();

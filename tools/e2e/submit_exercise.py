@@ -7,7 +7,7 @@ from playwright.async_api import async_playwright
 # changes (not new: a duplicate can't be); a changed copy with its own name -> changes or new; something new -> new. Continue opens the prefilled GitHub issue form.
 SETUP = """(()=>{ const sq = findInDb('bw-squat');
   const put = x => { S.lib.items = S.lib.items.filter(i => i.id !== x.id); S.lib.items.push(x); };
-  put({ ...clone(sq), id: 'u-renamed', name: 'Air Squat', basedOn: 'bw-squat' });
+  put({ ...clone(sq), id: 'u-renamed', name: 'Parallel Squat', basedOn: 'bw-squat' });
   put({ ...clone(sq), id: 'u-taken', name: 'Sit to Stand', basedOn: 'bw-squat' });
   put({ ...clone(sq), id: 'u-same', name: sq.name + ' (copy)', basedOn: 'bw-squat' });
   put({ ...clone(sq), id: 'u-changed', name: sq.name + ' (copy)', basedOn: 'bw-squat', cues: ['Sit back.', 'Chest up.'] });
@@ -50,7 +50,7 @@ async def main():
         await plan('u-new'); await pg.click('#submitDialog [data-close]')
         # workouts can't be submitted yet
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
-        await pg.click('[data-wtoggle="lib:full-body-routine"]'); await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(300)
+        await pg.click('[data-wtoggle="lib:beginner-yoga-20"]'); await pg.click('[data-wcustom="lib:beginner-yoga-20"]'); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="@edit"]'); await pg.wait_for_timeout(300)
         print('workout    ', await pg.evaluate("[$('#shareSubmit').disabled, $('#shareSoon').textContent]"))
         # the cover screen

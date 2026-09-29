@@ -45,6 +45,6 @@ See [Working out](Working-out.md) for the controls.
 
 ## Where next
 
-- Try a workout: on **Workouts**, tap ▶ on **Straight-Through Full-Body Routine**.
+- Try a workout: on **Workouts**, tap ▶ on **20-Minute Beginner's Yoga** (or Pilates, Free Weights, Kettlebell).
 - Look up an exercise: open **Exercises** and tap any card.
 - Make your own workout: [Workouts](Workouts.md#make-your-own).

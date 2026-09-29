@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "kb-overhead-press",
+  "name": "Kettlebell Overhead Press",
+  "otherNames": ["Single-Arm Kettlebell Press", "Kettlebell Military Press"],
+  "category": "Strength",
+  "focus": "Shoulders and arms",
+  "collections": ["Free weights"],
+  "equipment": ["Kettlebell"],
+  "description": "Standing, press the kettlebell from your shoulder to straight overhead, then lower it back to your shoulder.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/45/seated-overhead-press/",
+    "title": "Overhead Press (ACE Exercise Library)",
+    "note": "The standing single-arm kettlebell version, described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand tall, feet hip-width apart.", "Hold the bell at your shoulder, handle in your palm, the bell against your forearm."],
+  "cues": ["Squeeze your glutes and stomach; no leaning back.", "Press straight up, biceps by your ear.", "Lower slowly to your shoulder."],
+  "prescription": {
+    "reps": "6–10 each arm",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower. Start with a light bell."
+  },
+  "keyframes": [
+    {
+      "name": "Bell at your shoulder",
+      "cue": "Bell resting at your shoulder, elbow tucked in front.",
+      "camera": 40,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderR": [20, 10, 0],
+        "elbowR": 150,
+        "shoulderL": [0, 8, 0]
+      }
+    },
+    {
+      "name": "Press",
+      "cue": "Press the bell straight up until your arm is straight.",
+      "camera": 40,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderR": [170, 10, 0],
+        "elbowR": 0,
+        "shoulderL": [0, 8, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hand": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep",
+  "bilateral": {
+    "labels": {
+      "L": "Right arm",
+      "R": "Left arm"
+    }
+  }
+}

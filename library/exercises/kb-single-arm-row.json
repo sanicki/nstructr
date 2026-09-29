@@ -1,0 +1,87 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "kb-single-arm-row",
+  "name": "Kettlebell Single-Arm Row",
+  "otherNames": ["One-Arm Kettlebell Row", "Kettlebell Bent-Over Row"],
+  "category": "Strength",
+  "focus": "Upper back and biceps",
+  "collections": ["Free weights"],
+  "equipment": ["Kettlebell"],
+  "description": "Hinged forward with your free hand on your hip, row the kettlebell from below your shoulder up to your hip, then lower it.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/12/bent-over-row/",
+    "title": "Bent-Over Row (ACE Exercise Library)",
+    "note": "The one-arm kettlebell version, described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Feet hip-width apart, knees soft.", "Hinge forward with a flat back; free hand on your hip (or on a bench or your thigh for support)."],
+  "cues": ["Back flat, neck long.", "Lead with the elbow, close to your side.", "Lower all the way."],
+  "prescription": {
+    "reps": "8–12 each arm",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower. Start with a light bell."
+  },
+  "keyframes": [
+    {
+      "name": "Arm hanging",
+      "cue": "Hinge forward, the bell hanging below your shoulder, your other hand on your hip.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [58, 0, 0],
+        "shoulderL": [-27.5, 0, 0],
+        "shoulderR": [58, 0, 0],
+        "hipL": [14, 0, 0],
+        "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10,
+        "elbowL": 69.4
+      }
+    },
+    {
+      "name": "Row",
+      "cue": "Pull the bell to your hip, elbow close to your side.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [58, 0, 0],
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-4, 0, 0],
+        "elbowR": 66,
+        "hipL": [14, 0, 0],
+        "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hand": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep",
+  "bilateral": {
+    "labels": {
+      "L": "Right arm",
+      "R": "Left arm"
+    }
+  }
+}

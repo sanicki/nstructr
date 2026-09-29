@@ -154,7 +154,8 @@ ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.
 Library workouts built from what's here, timed at the default rests (5 s between exercises, 10 s between sets)
 with Coach on (about 15–17 minutes without): **Yoga** (a mat, `beginner-yoga-20`), **Pilates** (a mat; the classical beginner opening, then beginner basics such as glute bridge,
 dead bug, bird dog, clamshell and side kick, `beginner-pilates-20`), **Free weights** (dumbbells only; a new Dumbbell Floor Press for the chest,
-`beginner-free-weights-20`). **Kettlebell**: not yet, only three exercises (Swing, Deadlift, Goblet Squat). A
-20-minute beginner kettlebell class also needs, most commonly: Halo, Around the World, Single-Arm Row, Overhead
-Press, Goblet Reverse Lunge, Sumo Deadlift or Squat, Romanian Deadlift, Suitcase Carry, and a Russian Twist or Dead
-Bug with the bell (Turkish Get-Up and Clean later: many steps). ⏳
+`beginner-free-weights-20`), **Kettlebell** (one bell, `beginner-kettlebell-20`). For it, batch 16
+(`tools/variants/batch-16-kettlebell.cjs`) added ✅ Halo, Single-Arm Row, Overhead Press, Goblet Reverse Lunge, Sumo
+Squat, Romanian Deadlift, Suitcase Carry and Russian Twist. Not yet: Around the World (the bell passes from hand to
+hand, and a prop is held by the same hand or hands all the way through), Turkish Get-Up and Clean (many steps).
+The order the app lists them in: `library/workout-order.json`.

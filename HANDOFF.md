@@ -23,7 +23,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **255 exercises, 4 workouts** (20-minute beginner's yoga, Pilates and free weights, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach; and the full-body routine).
+Library today: **263 exercises, 4 workouts** (20-minute beginner's yoga, Pilates, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -285,7 +285,7 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
 
 ```jsonc
 { "$schema": "../../schema/workout.schema.json", "version": 2,
-  "id": "full-body-routine", "name": "…", "description": "…",
+  "id": "beginner-yoga-20", "name": "…", "description": "…",
   // "restBetween" (seconds between exercises) is ignored since Sep 2026: it is a setting
   "blocks": [ { "name": "Warm-up", "rounds": 1, "roundRest": 30,   // rounds > 1 = circuit
       "items": [ { "ex": "wu-arm-circles", "reps": 10, "dir": "both" },
@@ -741,7 +741,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |
 | `nstructr-speed-v1` | no longer used (the exercise page's Speed selector was removed in Sep 2026; exercises play at 1×). Left in place; nothing reads it |
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
-| `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end) |
+| `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end, in `library/workout-order.json` order) |
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
 | `nstructr-ai-equipment-v1` | Create with AI, Plan a workout: the equipment kinds picked, JSON list (`["wall"]` until changed) |
 | `nstructr-loop-v1` | `"off"`: the exercise page plays once through (setup, one rep, finish), then stops (overlay Loop toggle) |

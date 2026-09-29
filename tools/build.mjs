@@ -38,6 +38,13 @@ const exercises = loadDir('library/exercises', vEx, 'exercise');
 const workouts = loadDir('library/workouts', vWk, 'workout');
 const ids = new Set();
 for (const ex of exercises) { if (ids.has(ex.id)) errors.push(`duplicate exercise id "${ex.id}"`); ids.add(ex.id); }
+// the library workouts' default order (people can reorder them in the app): library/workout-order.json
+{
+  const order = JSON.parse(rd('library/workout-order.json')).order, have = new Set(workouts.map(w => w.id));
+  for (const id of have) if (!order.includes(id)) errors.push(`library/workout-order.json: add "${id}" (every library workout has a place in the order)`);
+  for (const id of order) if (!have.has(id)) errors.push(`library/workout-order.json: "${id}" isn't a library workout`);
+  workouts.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+}
 for (const w of workouts) w.blocks.forEach((b, bi) => b.items.forEach((it, ii) => {
   if (!ids.has(it.ex)) errors.push(`library/workouts/${w.id}.json: blocks[${bi}].items[${ii}] uses "${it.ex}", which isn't in the library`);
 }));

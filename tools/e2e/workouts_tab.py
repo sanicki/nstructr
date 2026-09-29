@@ -29,7 +29,7 @@ async def main():
             await pg.mouse.move(*h); await pg.mouse.down()
             for k in range(1, 11): await pg.mouse.move(h[0], h[1] + (t - h[1]) * k / 10); await pg.wait_for_timeout(20)
             await pg.mouse.up(); await pg.wait_for_timeout(200)
-        await drag('Charlie', 'Alpha'); await drag('lib:second-routine', 'lib:full-body-routine')
+        await drag('Charlie', 'Alpha'); await drag('lib:second-routine', 'lib:beginner-yoga-20')
         print('after dragging          ', await names('#wkList'), await names('#libWkList'))
         await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         await pg.evaluate("LIBRARY_WORKOUTS.push({...LIBRARY_WORKOUTS[0], id:'second-routine', name:'Second Routine'}); hydrateLibrary(); renderWorkouts()")

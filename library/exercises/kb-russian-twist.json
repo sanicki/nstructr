@@ -1,0 +1,79 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "kb-russian-twist",
+  "name": "Kettlebell Russian Twist",
+  "category": "Core",
+  "focus": "Obliques",
+  "collections": ["Free weights", "Core"],
+  "equipment": ["Kettlebell"],
+  "description": "Seated and leaning back with your feet down, hold a kettlebell at your chest and turn it from side to side.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/russian-twist",
+    "title": "NASM Exercise Library: Russian Twist",
+    "note": "With a kettlebell, described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit with knees bent, feet on the floor, leaning back a little.", "Hold the bell by the horns in front of your chest."],
+  "cues": ["Turn your chest, not just your arms.", "Back long; don't slump.", "Breathe out as you turn."],
+  "prescription": {
+    "reps": "10–20 (both sides = 2)",
+    "note": "Keep it slow; feet on the floor to make it easier."
+  },
+  "keyframes": [
+    {
+      "name": "Twist right",
+      "cue": "Turn the ball to your right side.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-40, 0, 0],
+        "torso": [0, 0, -30],
+        "chest": [0, 0, -20],
+        "shoulderL": [70, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [70, 0, 0],
+        "elbowR": 20,
+        "hipL": [120, 0, 0],
+        "kneeL": 100,
+        "hipR": [120, 0, 0],
+        "kneeR": 100
+      }
+    },
+    {
+      "name": "Twist left",
+      "cue": "Turn the ball to your left side.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-40, 0, 0],
+        "torso": [0, 0, 30],
+        "chest": [0, 0, 20],
+        "shoulderL": [70, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [70, 0, 0],
+        "elbowR": 20,
+        "hipL": [120, 0, 0],
+        "kneeL": 100,
+        "hipR": [120, 0, 0],
+        "kneeR": 100
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hands": ["handL", "handR"]
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  },
+  "repName": "twist"
+}

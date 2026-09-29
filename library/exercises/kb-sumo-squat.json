@@ -1,0 +1,83 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "kb-sumo-squat",
+  "name": "Kettlebell Sumo Squat",
+  "otherNames": ["Kettlebell Plié Squat"],
+  "category": "Strength",
+  "focus": "Inner thighs, thighs and glutes",
+  "collections": ["Free weights"],
+  "equipment": ["Kettlebell"],
+  "description": "With your feet wide and toes turned out, hold a kettlebell hanging between your legs and squat down, knees out over your toes, then stand back up.",
+  "source": {
+    "url": "https://www.physitrack.com/exercise-library/how-to-perform-the-kettlebell-sumo-squat-exercise",
+    "title": "Physitrack: Kettlebell sumo squat",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Feet wider than your shoulders, toes turned out.", "Hold the bell by the handle in both hands, arms long."],
+  "cues": ["Knees follow your toes.", "Chest up, back long.", "Push the floor away to stand."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower. Start with a light bell."
+  },
+  "keyframes": [
+    {
+      "name": "Stand wide",
+      "cue": "Feet wide, toes turned out, the bell hanging in both hands.",
+      "camera": 20,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "shoulderL": [0, -10, 0],
+        "shoulderR": [0, -10, 0],
+        "hipL": [0, 22, 35],
+        "hipR": [0, 22, 35]
+      }
+    },
+    {
+      "name": "Squat",
+      "cue": "Bend your knees out over your toes and lower, chest up.",
+      "camera": 20,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "shoulderL": [12, -10, 0],
+        "shoulderR": [12, -10, 0],
+        "torso": [12, 0, 0],
+        "hipL": [0, 55, 70],
+        "kneeL": 85,
+        "hipR": [0, 55, 70],
+        "kneeR": 85
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hands": ["handL", "handR"]
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "rep"
+}
