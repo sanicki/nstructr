@@ -661,7 +661,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   **Open** copies the instructions and opens the app; apps with a message parameter that takes a link this long (`?q=`: ChatGPT, Claude,
   Copilot) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
   URLs over 16 KB); Gemini and DeepSeek have none, and Grok and Vibe answer the long link with "header too large" (owner, Sep 2026), so
-  those four are only copied; so are Qwen (Alibaba; the mainland app, qianwen.com), Doubao (ByteDance) and Kimi (Moonshot),
+  those four are only copied; so are Qwen (Alibaba; `aiUrl()` opens the mainland app, qianwen.com, which needs a Chinese phone number, when `aiInChina()`: a language tagged -CN or a mainland time zone; else chat.qwen.ai), Doubao (ByteDance) and Kimi (Moonshot),
   added Sep 2026 because the Western apps are blocked in mainland China (untested for a filled-in link); "Unspecified" just copies. 3: paste
   the answer: `extractJson()` takes the JSON out of ``` fences or surrounding sentences; `{"inLibrary": "<id>"}`
   opens that library exercise; anything else goes through the normal import (exercise, or a workout file bringing

@@ -47,6 +47,8 @@ app, e.g. **Google (Gemini)**; Gemini at first), e.g. "Open Gemini":
   too long for a link, so they're **copied** as below. Nothing is left out to make them fit.
 - **DeepSeek, Doubao, Gemini, Grok, Kimi, Qwen, Vibe**: can't be opened with a message this long, so the instructions are **copied**. Paste them into the
   chat (long-press → Paste), add your photo or video if you have one, and send.
+- **Qwen** opens Alibaba's app for mainland China (qianwen.com) when your phone is set up for mainland China (its
+  region or time zone), and the international one (chat.qwen.ai) everywhere else.
 - **Unspecified** (last in the list): copies the instructions for you to paste into any AI chat.
 
 The instructions are always copied too, in case the message doesn't show up. **Copy instructions** copies them
