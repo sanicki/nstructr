@@ -15,11 +15,14 @@ const LEGS = { hipL: [8, 0, 0], kneeL: 25, hipR: [8, 0, 0], kneeR: 25 };      //
 const withMount = (ex, arms, cam = {}) => {
   const k = ex.keyframes, stand = k[0], drop = k[k.length - 1];
   const reach = K('Reach up', 'Reach up to the bar, arms overhead.', { ...arms }, { ...STAND(cam), phase: 'setup', durationMs: 900, holdMs: 200 });
+  // a real jump: bend the knees, then spring up to the bar; land deep and soft
+  const crouch = { torso: [15, 0, 0], hipL: [50, 0, 0], kneeL: 75, ankleL: -25, hipR: [50, 0, 0], kneeR: 75, ankleR: -25 };
+  const dip = K('Bend your knees', 'Bend your knees, ready to jump.', { ...arms, ...crouch }, { ...STAND(cam), phase: 'setup', durationMs: 600, holdMs: 100 });
   k[1].durationMs = 450; k[1].name = 'Jump to the bar';
-  const land = K('Drop down', 'Let go and land softly, knees bent.', { ...arms, hipL: [15, 0, 0], kneeL: 30, ankleL: -12, hipR: [15, 0, 0], kneeR: 30, ankleR: -12 },
-    { ...STAND(cam), phase: 'finish', durationMs: 450, holdMs: 150 });
+  const land = K('Drop down', 'Let go and land softly, knees deeply bent.', { ...arms, torso: [20, 0, 0], hipL: [60, 0, 0], kneeL: 85, ankleL: -28, hipR: [60, 0, 0], kneeR: 85, ankleR: -28 },
+    { ...STAND(cam), phase: 'finish', durationMs: 450, holdMs: 250 });
   const down = K(drop.name === 'Drop down' ? 'Lower your arms' : drop.name, 'Stand tall and lower your arms.', {}, { ...STAND(cam), phase: 'finish', durationMs: 900, holdMs: 400 });
-  ex.keyframes = [stand, reach, ...k.slice(1, -1), land, down];
+  ex.keyframes = [stand, reach, dip, ...k.slice(1, -1), land, down];
   return ex;
 };
 const x = (id, name, other, o) => ({ id, base: 'bw-squat', name, otherNames: other, equipment: EQ, props: PROPS, collections: ['Bodyweight'], category: 'Strength', ...o });
@@ -52,7 +55,7 @@ module.exports = [
         K('Stand under the bar', 'Stand under the bar.', {}, { ...STAND(), phase: 'setup', holdMs: 400 }),
         K('Hang', 'Grip the bar and hang with straight arms; breathe.', { ...LEGS, shoulderL: [180, 0, 0], shoulderR: [180, 0, 0] }, { ...HANG(44), durationMs: 1000, holdMs: 20000 }),
         K('Drop down', 'Let go and stand.', {}, { ...STAND(), phase: 'finish', durationMs: 1000, holdMs: 400 })]; return withMount(ex, { shoulderL: [180, 0, 0], shoulderR: [180, 0, 0] }); },
-    over: { bilateral: null, measure: 'time', holdStep: 2, defaults: { seconds: 20 }, repName: null, prescription: { reps: '10–30 seconds, 2–3 times', note: 'Let go before your grip gives out. Feet near a step or the floor to stand on.' } },
+    over: { bilateral: null, measure: 'time', holdStep: 3, defaults: { seconds: 20 }, repName: null, prescription: { reps: '10–30 seconds, 2–3 times', note: 'Let go before your grip gives out. Feet near a step or the floor to stand on.' } },
     description: 'Hang from a bar with straight arms and relaxed shoulders, holding for time to build grip strength and ease the shoulders and spine.',
     setup: ['A sturdy pull-up bar you can reach with a small hop or a step.', 'Grip it shoulder-width, palms forward.'],
     cues: ['Breathe slowly.', 'Relax your legs.', 'Step down before your grip fails.'],

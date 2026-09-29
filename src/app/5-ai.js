@@ -16,11 +16,11 @@ const AI_APPS = [                // A–Z, "other" last. q: the link parameter t
   { id: 'other', name: 'Other LLM' },
 ];
 const AI_KINDS = [                // in the order they're offered; a goal first (it only uses what's in the app)
-  { id: 'plan', label: 'A goal', field: 'What you want', ph: 'e.g. a 30-minute leg workout', hint: 'The AI plans a workout from the library\'s exercises (and your own), using only the equipment you pick.' },
-  { id: 'name', label: 'A missing exercise', field: 'Exercise name', ph: 'e.g. Pilates leg circles', hint: 'One that isn\'t in the library yet. The AI uses what it knows, and looks it up on the web where it can to check it.' },
-  { id: 'routine', label: 'A workout routine', field: 'The routine', ph: 'Paste or type it: exercises, reps, sets, rests…', hint: 'A list of exercises makes a workout; one exercise makes an exercise.' },
-  { id: 'media', label: 'A photo or video', field: '', ph: '', hint: 'Attach your photo or video in the AI app after it opens (a link can\'t carry it). Pick an app that accepts them.' },
-  { id: 'link', label: 'A YouTube link', field: 'YouTube link', ph: 'https://www.youtube.com/watch?v=…', hint: 'Gemini can watch YouTube videos; most other apps only read the page (a web page link works too).' },
+  { id: 'plan', label: 'Workout goal', field: 'What you want', ph: 'e.g. a 30-minute leg workout', hint: 'The AI plans a workout from the library\'s exercises (and your own), using only the equipment you pick.' },
+  { id: 'routine', label: 'Workout routine', field: 'The routine', ph: 'Paste or type it: exercises, reps, sets, rests…', hint: 'A list of exercises makes a workout; one exercise makes an exercise.' },
+  { id: 'name', label: 'Missing exercise', field: 'Exercise name', ph: 'e.g. Pilates leg circles', hint: 'One that isn\'t in the library yet. The AI uses what it knows, and looks it up on the web where it can to check it.' },
+  { id: 'media', label: 'Photo/Video', field: '', ph: '', hint: 'Attach your photo or video in the AI app after it opens (a link can\'t carry it). Pick an app that accepts them.' },
+  { id: 'link', label: 'YouTube link', field: 'YouTube link', ph: 'https://www.youtube.com/watch?v=…', hint: 'Gemini can watch YouTube videos; most other apps only read the page (a web page link works too).' },
 ];
 /* "plan": the equipment the user has, as the kinds src/similar.js uses (a mat doesn't count). Remembered. */
 const AI_EQUIP_KEY = 'nstructr-ai-equipment-v1';
@@ -212,7 +212,7 @@ $('#aiImport').addEventListener('click', () => {
     $('#aiDialog').close(); go(`#/play/${encodeURIComponent(ex.id)}`); snack(`${ex.name} is already in the library`); return;
   }
   let other = [];
-  // (a plan's answer is a workout; an exercise pasted while "A goal" is picked imports as usual)
+  // (a plan's answer is a workout; an exercise pasted while "Workout goal" is picked imports as usual)
   if (AI_KIND === 'plan' && data && data.format === 'nstructr/workout') {
     const p = planCheck(data); if (p.error) { snack(p.error, 8000); return; }
     other = p.other; delete data.exercises;

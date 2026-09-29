@@ -38,7 +38,7 @@ function poseThumbSVG(ex, kf, opts = {}) {
     if (q.reduce((a, p) => a + p.d, 0) / q.length < Q.pelvis.d) return svg;
     over += svg; return '';
   }).join('');
-  const surf = surfaces.map(sh => `<path class="ts${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}" d="${sh.d}"/>`).join('');
+  const surf = surfaces.map(sh => `<path class="ts${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.block ? ' block' : ''}" d="${sh.d}"/>`).join('');
   return `<svg class="thumb" viewBox="${vx.toFixed(1)} ${vy.toFixed(1)} ${s.toFixed(1)} ${s.toFixed(1)}" aria-hidden="true">
     <line x1="${vx}" y1="${FLOOR + 7}" x2="${vx + s}" y2="${FLOOR + 7}" class="tf"/>${surf}${back}${figure}${over}</svg>`;
 }

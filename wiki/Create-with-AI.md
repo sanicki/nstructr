@@ -14,16 +14,16 @@ Open it from **Workouts → Create with AI**, or **Settings → Create with AI �
 
 | Choice | Type or paste |
 |---|---|
-| **A goal** (picked at first) | What you want, e.g. *a 30-minute leg workout*, and the equipment you have: the AI plans a workout from the exercises already in the app (see below) |
-| **A missing exercise** | The name of one that isn't in the library, e.g. *Pilates leg circles* |
-| **A workout routine** | The whole routine: exercises, reps, sets, rests |
-| **A photo or video** | Nothing here: attach it in the AI app after it opens (pick an app that accepts pictures or video) |
-| **A YouTube link** | The video's address (a web page's works too). Gemini can watch YouTube videos; most others read the page. |
+| **Workout goal** (picked at first) | What you want, e.g. *a 30-minute leg workout*, and the equipment you have: the AI plans a workout from the exercises already in the app (see below) |
+| **Workout routine** | The whole routine: exercises, reps, sets, rests |
+| **Missing exercise** | The name of one that isn't in the library, e.g. *Pilates leg circles* |
+| **Photo/Video** | Nothing here: attach it in the AI app after it opens (pick an app that accepts pictures or video) |
+| **YouTube link** | The video's address (a web page's works too). Gemini can watch YouTube videos; most others read the page. |
 
 The instructions ask the AI to use what it knows **and to check it with a web search** where it can (how the
 exercise is done, its steps, typical reps and safety notes), and to name the page it relied on as the source.
 
-### A goal: plan a workout
+### Workout goal: plan a workout
 
 <img src="images/create-with-ai-plan.png" width="300" alt="Plan a workout: what you want and the equipment you have">
 
