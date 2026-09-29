@@ -445,6 +445,15 @@ function frameAt(a, b, e, seg) {
   // hanging (either step holds a hand at a height): only kept out of the floor; otherwise resting on it
   const hang = a.rule.y != null || b.rule.y != null, g = groundY(pose, seg, pos, lift);
   pos.y = hang ? Math.max(pos.y, g - lift) : g;
+  // hanging at both ends: a hand gripping the same spot in both (the one that isn't the anchor) stays on it
+  if (a.rule.y != null && b.rule.y != null && e > 0 && e < 1) {
+    const A = worldOf(a, seg), B = worldOf(b, seg);
+    for (const ch of CHAINS) {
+      const tip = ch.tip + ch.s;
+      if (ch.root !== 'shoulder' || tip === a.rule.anchor || V3.dist(A[tip], B[tip]) > 3) continue;
+      reachTip(pose, seg, pos, ch, A[tip], 1);
+    }
+  }
   return { pose, cam, pos };
 }
 

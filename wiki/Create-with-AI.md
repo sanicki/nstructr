@@ -14,16 +14,16 @@ Open it from **Workouts → Create with AI**, or **Settings → Create with AI �
 
 | Choice | Type or paste |
 |---|---|
-| **The name of the exercise** | e.g. *Pilates leg circles* |
-| **Written routine** | The whole routine: exercises, reps, sets, rests |
-| **Video or web link** | A YouTube or web address. Gemini can watch YouTube videos; most others read the page. |
-| **Photo or video** | Nothing here: attach it in the AI app after it opens (pick an app that accepts pictures or video) |
-| **A goal: plan a workout** | What you want, e.g. *a 30-minute leg workout*, and the equipment you have (see below) |
+| **A goal** (picked at first) | What you want, e.g. *a 30-minute leg workout*, and the equipment you have: the AI plans a workout from the exercises already in the app (see below) |
+| **A missing exercise** | The name of one that isn't in the library, e.g. *Pilates leg circles* |
+| **A workout routine** | The whole routine: exercises, reps, sets, rests |
+| **A photo or video** | Nothing here: attach it in the AI app after it opens (pick an app that accepts pictures or video) |
+| **A YouTube link** | The video's address (a web page's works too). Gemini can watch YouTube videos; most others read the page. |
 
 The instructions ask the AI to use what it knows **and to check it with a web search** where it can (how the
 exercise is done, its steps, typical reps and safety notes), and to name the page it relied on as the source.
 
-### Plan a workout
+### A goal: plan a workout
 
 <img src="images/create-with-ai-plan.png" width="300" alt="Plan a workout: what you want and the equipment you have">
 
@@ -54,7 +54,7 @@ again.
 
 <img src="images/create-with-ai-answer.png" width="300" alt="Paste the AI's answer, then Add">
 
-When the AI has answered, copy its whole reply, come back, tap **Paste** (or long-press the box), then **Add**.
+When the AI has answered, copy its whole reply, come back, long-press the box and choose **Paste**, then tap **Add**.
 
 - **One exercise** is added to **My exercises** and opens so you can watch it.
 - **A routine** becomes a workout in **My workouts**, using library exercises where they match and new ones

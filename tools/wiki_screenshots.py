@@ -102,9 +102,9 @@ async def main():
         await pg.evaluate("document.querySelector('.navbar').style.display=''")
         await pg.evaluate("setSound('beeps')")
         # Create with AI
-        await pg.evaluate("openAi()"); await pg.fill('#aiInput', 'Pilates leg circles'); await shot(pg, 'create-with-ai')
+        await pg.evaluate("AI_KIND = 'name'; openAi()"); await pg.fill('#aiInput', 'Pilates leg circles'); await shot(pg, 'create-with-ai')
         await pg.evaluate("AI_KIND = 'plan'; renderAi()"); await pg.fill('#aiInput', 'a 30-minute leg workout'); await shot(pg, 'create-with-ai-plan')
-        await pg.evaluate("AI_KIND = 'name'; renderAi()")
+        await pg.evaluate("AI_KIND = 'plan'; renderAi()")
         await pg.evaluate("$('#aiAnswer').value='{ \"version\": 1, \"id\": \"u-leg-circles\", \"name\": \"Leg Circles\", … }'; $('#aiImport').scrollIntoView({block:'end'})")
         await shot(pg, 'create-with-ai-answer')
         await pg.evaluate("$('#aiDialog').close()")

@@ -33,10 +33,25 @@
       "pose": {}
     },
     {
-      "name": "Hang",
+      "name": "Reach up",
+      "cue": "Reach up to the bar, arms overhead.",
+      "camera": 0,
+      "durationMs": 900,
+      "holdMs": 200,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 145, 0],
+        "shoulderR": [0, 145, 0]
+      }
+    },
+    {
+      "name": "Jump to the bar",
       "cue": "Grip the bar wider than your shoulders, palms forward; hang with straight arms.",
       "camera": 0,
-      "durationMs": 1000,
+      "durationMs": 450,
       "holdMs": 400,
       "phase": "rep",
       "anchor": "handR",
@@ -76,9 +91,30 @@
     },
     {
       "name": "Drop down",
-      "cue": "Lower to straight arms, then let go and stand.",
+      "cue": "Let go and land softly, knees bent.",
       "camera": 0,
-      "durationMs": 1000,
+      "durationMs": 450,
+      "holdMs": 150,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 145, 0],
+        "shoulderR": [0, 145, 0],
+        "hipL": [15, 0, 0],
+        "kneeL": 30,
+        "ankleL": -12,
+        "hipR": [15, 0, 0],
+        "kneeR": 30,
+        "ankleR": -12
+      }
+    },
+    {
+      "name": "Lower your arms",
+      "cue": "Stand tall and lower your arms.",
+      "camera": 0,
+      "durationMs": 900,
       "holdMs": 400,
       "phase": "finish",
       "anchor": "ankleL",
