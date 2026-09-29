@@ -55,7 +55,7 @@ phone is set to reduce motion, exercises wait for Play either way.)
 ## Import & tools
 
 - **Backup**: Export everything. See [Backups](Sharing-and-backups.md#back-up-everything).
-- **Import**: Choose file: a backup, workouts, or exercises (a backup restores everything).
+- **Import**: Choose file: restore a backup (it restores everything), or add workouts or exercises.
 - **Export your exercises** (Authoring mode): the JSON of everything in My exercises.
 - **Authoring mode**: adds the pose editor and JSON views, for making and fixing exercises. See
   [Editing exercises](Editing-exercises.md#changing-the-poses-authoring-mode).

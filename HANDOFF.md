@@ -23,7 +23,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **255 exercises, 1 workout**.
+Library today: **254 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -38,7 +38,7 @@ Library today: **255 exercises, 1 workout**.
 | Balance | 12 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 9 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat |
 
-115 are rep-based, 93 timed; 74 are two-sided (`bilateral`); 3 have `direction`. Common exercises per collection
+153 are rep-based, 101 timed; 86 are two-sided (`bilateral`); 4 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -396,7 +396,10 @@ differently.
   or direction segment, next set (rest), next item (rest), or done. Rep-based sets **advance by themselves**
   (owner's decision).
 - `direction: B` = `reverseReps`: rep steps in reverse order, each move taking the time of the move it reverses,
-  **and `keep` references remapped** to the steps' new positions (a bug when they weren't).
+  **and `keep` references remapped** to the steps' new positions (a bug when they weren't). Each reversed step
+  takes the **pin** (`anchor`, `anchorX/Y/Z`) of the step that came after it: a step's pin is the foot that stays as
+  the body moves into it, so a walk played backward keeps the other foot down and travels the other way
+  (Heel-to-Toe Walk, Backward, Sep 2026). With one pin throughout (circles) nothing changes.
   Step names and cues are **not** changed: they name positions ("Forward.", "Across your body."), which stay the
   same whichever way the circle runs. (Until Sep 2026 "forward/backward/clockwise" were swapped, so Hip Circles
   counterclockwise said "Backward" at the front.) Write cues on direction exercises as positions, not as the motion.

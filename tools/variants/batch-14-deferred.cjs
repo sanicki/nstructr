@@ -29,19 +29,6 @@ module.exports = [
     setup: ['Loop a band round your ankles (or just above your knees).', 'Feet wider than hip-width, half squat, hands on your hips.'],
     cues: ['Stay low the whole way.', 'Knees out, in line with your toes.', 'Keep the band taut.'],
     source: { url: 'https://www.physitrack.com/exercise-library/how-to-perform-the-monster-walk-with-band-exercise', title: 'Physitrack: Monster walk with band' } },
-  // under a waist-high bar, body straight from heels to head, pulling the chest to the bar
-  { id: 'bar-inverted-row', base: 'bar-pull-up', name: 'Inverted Row', otherNames: ['Bodyweight Row', 'Australian Pull-Up', 'Body Row'],
-    collections: ['Bodyweight'], equipment: ['Low bar'], props: [{ type: 'bar', y: 170, z: 0, width: 190 }], focus: 'Upper back and biceps',
-    edit: ex => { const grip = { anchor: 'handR', anchorY: 170, anchorZ: 0, anchorX: 22, touch: [{ point: 'ankleR', adjust: 'root' }] };
-      const legs = { ankleL: 30, ankleR: 30, neck: [20, 0, 0] };
-      ex.keyframes = [
-        K('Hang', 'Hang under the bar, arms straight, body in one line from heels to head.', { ...legs, root: [-75, 0, 0], shoulderL: [87.5, 0, 0], shoulderR: [87.5, 0, 0] }, { ...grip, durationMs: 1600 }),
-        K('Row', 'Pull your chest up to the bar, squeezing your shoulder blades together.', { ...legs, root: [-50, 0, 0], shoulderL: [-10, 0, 0], elbowL: 120, shoulderR: [-10, 0, 0], elbowR: 120 }, { ...grip, durationMs: 1600 })]; },
-    over: { ...reps('6–12', 8, 'Easier with your knees bent and feet flat, or with a higher bar; harder with a lower bar.') },
-    description: 'Lying under a bar set about waist height, hold it with straight arms and your heels on the floor, then pull your chest up to the bar, keeping your body straight, and lower back down.',
-    setup: ['Set a sturdy bar about waist height (a rack or Smith machine bar).', 'Lie under it and grip it a little wider than your shoulders; heels on the floor, body straight.'],
-    cues: ['Body stays in one line; don\'t let your hips sag.', 'Lead with your chest.', 'Lower slowly until your arms are straight.'],
-    source: { url: 'https://www.acefitness.org/continuing-education/certified/december-2018/7138/ace-sponsored-research-what-is-the-best-back-exercise/', title: 'ACE-sponsored research: What is the best back exercise? (inverted row)' } },
   // from a straight-arm plank, one knee then the other driven in towards the chest, at a run (the hips rise a little and
   // the knee comes in a little wide: a thigh passing straight under a plank-height pelvis would go through the floor)
   { id: 'bw-mountain-climber', base: 'bw-pushup', name: 'Mountain Climber', otherNames: ['Running Plank'],
