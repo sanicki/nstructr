@@ -45,7 +45,7 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Resistance Band Seated Row | ⏳ (the bent-over rows cover the dumbbell and barbell versions) |
 | Dumbbell Lateral Raise | Band Lateral Raise (in library) |
 | Dumbbell Shoulder Press / Overhead Press / Band Overhead Press | all three in library · ✅ Kettlebell Overhead Press |
-| Bench Press / Dumbbell Bench Press / Band Chest Press | all in library · ⏳ Dumbbell Floor Press (no bench) |
+| Bench Press / Dumbbell Bench Press / Band Chest Press | all in library · ✅ Dumbbell Floor Press (no bench) |
 | Band Pull-Apart | ⏳ Dumbbell Reverse Fly |
 | Band Lat Pulldown | — (the dumbbell and barbell versions need a machine or a bar overhead) |
 | Dumb Waiter | ⏳ Side-Lying Dumbbell External Rotation |
