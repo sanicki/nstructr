@@ -34,7 +34,7 @@ function validateExercise(ex, path) {
     }
     if (kf.view != null || kf.layers != null) fail(`${p} uses "view"/"layers" from the old 2D format; use "camera" (90 side, 0 front) and 3D joint angles.`);
     if (kf.camera != null && !deg(kf.camera)) fail(`${p}.camera must be a number of degrees (90 = side view, 0 = front).`);
-    for (const f of ['anchorX', 'anchorZ', 'lift']) if (kf[f] != null && !deg(kf[f])) fail(`${p}.${f} must be a number.`);
+    for (const f of ['anchorX', 'anchorY', 'anchorZ', 'lift']) if (kf[f] != null && !deg(kf[f])) fail(`${p}.${f} must be a number.`);
     if (kf.anchor != null && !POINTS.includes(kf.anchor)) fail(`${p}.anchor must be one of: ${POINTS.join(', ')}.`);
     if (kf.plant != null && (!Array.isArray(kf.plant) || kf.plant.some(s => s !== 'L' && s !== 'R'))) fail(`${p}.plant must be a list of "L" and/or "R".`);
     if (kf.touch != null) {
@@ -67,6 +67,10 @@ function validateExercise(ex, path) {
         return;
       }
       for (const f of ['x', 'z']) if (pr[f] != null && !isFinite(pr[f])) fail(`${p}.${f} must be a number.`);
+      if (pr.type === 'bar') {
+        if (!(num(pr.y) > 0)) fail(`${p} (a pull-up bar) needs "y": its height, e.g. 385.`);
+        return;
+      }
       if (SURFACE_TYPES.includes(pr.type)) {
         for (const f of ['width', 'depth', 'height', 'backHeight']) if (pr[f] != null && !(pr[f] > 0)) fail(`${p}.${f} must be a positive number.`);
         if (pr.back != null && !['behind', 'ahead'].includes(pr.back)) fail(`${p}.back must be "behind" or "ahead".`);
@@ -167,6 +171,7 @@ function sequenceSpan(R, seg, dx = 0, centre = false) {
     for (const sh of surfaceShapes(R.supports, r.cam)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); }
   }
   for (const s of R.supports || []) minY = Math.min(minY, FLOOR - s.h - (s.backHeight || 0));
+  for (const b of R.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 6);
   return { minX, maxX, minY };
 }
 function rebuild() {
@@ -181,8 +186,12 @@ function rebuild() {
   S.bandRest = bandRestLengths(S.props, S.resolved, S.seg);
   S.travel = !!S.ex.travel; S.off = { x: 0, z: 0 };
   // Frame the whole sequence: one constant horizontal shift so every keyframe stays on stage (nothing slides)
-  const { minX, maxX } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
+  const { minX, maxX, minY } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
+  // the stage is 400 square with the floor near the bottom; something higher (a pull-up bar) widens the view, still square
+  // (only when clearly beyond the top: arms overhead just reach it and keep the usual view)
+  const top = isFinite(minY) && minY < -20 ? minY - 16 : 0, side = 400 - top;
+  scene.setAttribute('viewBox', `${(W - side) / 2} ${top} ${side} ${side}`); syncLimbWidth();
   S.idx = Math.min(S.idx, S.resolved.length - 1);
   S.shownIdx = -1;
 }
@@ -249,6 +258,7 @@ function drawProps(P, Q, pose, cam) {
       if (pr.hand && wts[pr.hand] != null) wts[pr.hand] += svg; else front += svg;
       return;
     }
+    if (pr.type === 'bar') { front += barSVG(pr, proj, 'bar'); return; }
     if (pr.type === 'wall') {
       const wl = S.resolved.walls[i]; if (!wl) return;
       // a wall seen edge-on is a line; one that faces the camera fades out as it turns

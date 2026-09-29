@@ -1,0 +1,103 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bar-chin-up",
+  "name": "Chin-Up",
+  "otherNames": ["Chinup", "Underhand Pull-Up"],
+  "category": "Strength",
+  "focus": "Biceps and back (lats)",
+  "collections": ["Bodyweight"],
+  "equipment": ["Pull-up bar"],
+  "description": "Hang from a bar with your hands shoulder-width apart, palms facing you, and pull up until your chin clears the bar, then lower under control.",
+  "source": {
+    "url": "https://www.acefitness.org/continuing-education/certified/february-2025/8800/the-ace-do-it-better-series-chin-ups/",
+    "title": "ACE: The Do It Better series, chin-ups"
+  },
+  "setup": ["A sturdy pull-up bar you can reach with a small hop or a step.", "Grip it shoulder-width, palms facing you."],
+  "cues": ["Chest up toward the bar.", "Elbows close to your body.", "Lower all the way."],
+  "prescription": {
+    "reps": "3–8",
+    "note": "Usually a little easier than the pull-up. Lower all the way each time."
+  },
+  "keyframes": [
+    {
+      "name": "Stand under the bar",
+      "cue": "Stand under the bar.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Hang",
+      "cue": "Grip the bar shoulder-width, palms toward you; hang with straight arms.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 385,
+      "anchorZ": 0,
+      "anchorX": 22,
+      "pose": {
+        "hipL": [8, 0, 0],
+        "kneeL": 25,
+        "hipR": [8, 0, 0],
+        "kneeR": 25,
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0]
+      }
+    },
+    {
+      "name": "Pull up",
+      "cue": "Pull up, elbows forward and down, until your chin clears the bar.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 385,
+      "anchorZ": 0,
+      "anchorX": 22,
+      "pose": {
+        "hipL": [8, 0, 0],
+        "kneeL": 25,
+        "hipR": [8, 0, 0],
+        "kneeR": 25,
+        "torso": [-10, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "elbowL": 145,
+        "shoulderR": [75, 0, 0],
+        "elbowR": 145
+      }
+    },
+    {
+      "name": "Drop down",
+      "cue": "Lower to straight arms, then let go and stand.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {}
+    }
+  ],
+  "props": [
+    {
+      "type": "bar",
+      "y": 385,
+      "z": 0,
+      "width": 190
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  }
+}

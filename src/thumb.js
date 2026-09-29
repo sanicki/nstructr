@@ -14,6 +14,7 @@ function poseThumbSVG(ex, kf, opts = {}) {
   const surfaces = surfaceShapes(seq.supports || [], cam);
   for (const s of surfaces) { minX = Math.min(minX, s.x0 - 8); maxX = Math.max(maxX, s.x1 + 8); }
   let minY = Math.min(...pts.map(p => p.y)) - 26, maxY = FLOOR + 14;
+  for (const b of seq.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 12);
   const w = maxX - minX, h = maxY - minY, s = Math.max(w, h, 150);
   const vx = (minX + maxX) / 2 - s / 2, vy = maxY - s;
   const L = (a, b, c) => `<line x1="${Q[a].x.toFixed(1)}" y1="${Q[a].y.toFixed(1)}" x2="${Q[b].x.toFixed(1)}" y2="${Q[b].y.toFixed(1)}" class="${c}"/>`;
@@ -25,6 +26,7 @@ function poseThumbSVG(ex, kf, opts = {}) {
     (bn.b === 'head' ? `<circle cx="${Q.head.x.toFixed(1)}" cy="${Q.head.y.toFixed(1)}" r="${seg.head}" class="th"/>` : ''); }).join('');
   const back = (ex.props || []).map((pr, i) => {
     if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj); return ''; }
+    if (pr.type === 'bar') { over += barSVG(pr, proj, 'tbar'); return ''; }
     if (pr.type === 'wall') { const wl = walls[i]; return wl && wl.show > 0.5 ? `<line class="tw" x1="${wl.x.toFixed(1)}" y1="${FLOOR + 7}" x2="${wl.x.toFixed(1)}" y2="${(vy - 5).toFixed(1)}"/>` : ''; }
     const route = propRoute(P, pr);
     if (!route) return '';

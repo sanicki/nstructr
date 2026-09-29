@@ -16,7 +16,7 @@ const { formatJson } = require('./format-json.cjs');
 const load = () => fs.readdirSync(DIR).filter(f => f.endsWith('.json')).sort().map(f => JSON.parse(fs.readFileSync(path.join(DIR, f), 'utf8')));
 const save = ex => fs.writeFileSync(path.join(DIR, ex.id + '.json'), formatJson(ex));
 /* the equipment headings of the AI prompt (src/app/5-ai.js), as kinds; '' = no equipment */
-const KINDS = ['', 'band', 'door anchor', 'dumbbell', 'barbell', 'kettlebell', 'chair', 'bench', 'wall', 'step', 'towel'];
+const KINDS = ['', 'band', 'door anchor', 'pull-up bar', 'dumbbell', 'barbell', 'kettlebell', 'chair', 'bench', 'wall', 'step', 'towel'];
 const GEAR = new Set(['door', 'anchor', 'band', 'banded', 'resistance', 'dumbbell', 'barbell', 'kettlebell', 'chair', 'bench', 'wall', 'step', 'towel', 'weighted', 'seated', 'standing', 'supported', 'assisted', 'at']);
 const kindOf = ex => equipKinds(ex.equipment).join(' and ');
 /* each name as its words, without equipment words ("Band Squat" -> squat) */

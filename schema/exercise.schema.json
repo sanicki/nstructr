@@ -271,6 +271,10 @@
             "backR"
           ]
         },
+        "anchorY": {
+          "type": "number",
+          "description": "Hanging: the height the anchor (a hand on a pull-up bar) is held at, instead of on the floor."
+        },
         "anchorX": {
           "type": "number",
           "description": "Where the anchor is pinned, sideways (+ = the figure's right), from the stage centre."
@@ -569,7 +573,8 @@
             "step",
             "dumbbell",
             "kettlebell",
-            "barbell"
+            "barbell",
+            "bar"
           ]
         },
         "from": {
@@ -717,6 +722,10 @@
         },
         "beside": {
           "type": "boolean"
+        },
+        "y": {
+          "type": "number",
+          "description": "Pull-up bar: its height above the floor (385: a doorway bar, just above a standing reach)."
         }
       },
       "additionalProperties": false

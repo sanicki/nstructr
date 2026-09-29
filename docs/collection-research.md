@@ -37,7 +37,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Walking Lunge | ✅ (`tools/variants/batch-10-travel.cjs`: `"travel": true`) |
 | Jump Squat | ✅ (`tools/variants/batch-9-jumping.cjs`: the engine's `lift`) |
 | Burpee | jumping works now; a later batch (squat → plank → squat → jump: many contacts) |
-| Pull-Up, Chin-Up | new equipment: **pull-up bar**; engine: hanging |
+| Pull-Up, Chin-Up | ✅ with the new **pull-up bar** (`tools/variants/batch-11-hanging.cjs`), plus Dead Hang and Hanging Knee Raise |
 | Inverted Row | new equipment: **pull-up bar** (low) or a sturdy table |
 
 ## Resistance band (20)
@@ -130,7 +130,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | **Door anchor** ✅ | band: face pull, Pallof press, woodchop, standing row and chest press, pushdown | done: "Door anchor" is an equipment kind (`src/similar.js`, `tools/research.cjs`) and a line in the prompt's EQUIPMENT; a band's fixed end is drawn as a small anchor block on the door (a wall) |
 | **Yoga block** | supported standing and seated poses | a small box prop the hand rests on (like a step, hand-sized) |
 | **Yoga strap** | reclined hamstring stretch, cow-face arms | drawn like the towel |
-| **Pull-up bar** | pull-up, chin-up, inverted row, hanging knee raise | a bar prop overhead, and the engine holding the figure up by the hands (feet off the floor) |
+| **Pull-up bar** ✅ | pull-up, chin-up, dead hang, hanging knee raise (inverted row: a low bar, later) | done: a `bar` prop, `anchorY` holds a hand at the bar |
 | **Stability ball** | ball crunch, wall squat with a ball, hamstring curl | a round surface to lie or sit on |
 | **Medicine ball** | Russian twist, slams, chest pass | drawn like the kettlebell (a ball) |
 | **Foam roller** | rolling the calves, quads, upper back | a cylinder surface under the body |
@@ -141,9 +141,9 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
   Jump Squat, Jumping Jacks, High Knees; Burpee next.
 - **Travelling** ✅ (Sep 2026): `"travel": true`, each rep carries on from where the last ended; the view follows the
   figure over a floor marked every 60 px. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
-- **Hanging** from a bar: pull-ups, chin-ups.
+- **Hanging** ✅ (Sep 2026): a hand anchored at a height (`anchorY`) on a `bar` prop. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise.
 
 Done so far: most **ready** rows (batches 3–6), the **door anchor** (batch 7), jumping (batch 9) and travelling
-(batch 10). Next: hanging, then yoga block and strap and the other equipment. The Create with AI prompt lists every
+(batch 10) and hanging (batch 11). Next: yoga block and strap and the other equipment. The Create with AI prompt lists every
 exercise and isn't trimmed to fit a link (accuracy first, HANDOFF §10, "Create with AI"): past about 250 exercises,
 ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.

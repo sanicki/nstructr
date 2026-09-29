@@ -361,6 +361,7 @@ touch: [{point: "toeR", adjust: "hipR"}] turns "adjust" until "point" touches th
 reach: [{hand: "handR", to: "ankleR"}] puts a hand on a body point, or to: "wall" or "chair"; optional dx, dy, dz
 keep: ["ankleL", "ankleR"] keeps those where they were in the previous step
 lift: a jump, both feet off the floor: how high the whole figure is (40); short durationMs (350)
+anchorY: hanging from a bar: the anchored hand is held at this height (the bar's y) instead of on the floor; anchorZ: the bar's z
 pose: {joint: angles}
 
 FIGURE: a 3D mannequin. Torso 100 (lower + upper back), upper arm 55, forearm 50, thigh 80, shin 80, foot 22.
@@ -381,6 +382,7 @@ door anchor (a band tied to a door): {type: "wall", z: 150} for the door and a b
 towel: {type: "towel", from: "handR", to: "handL"}
 wall: {type: "wall", at: "handR", keyframe: 0}: where that point is in that step, in front or behind; beside: true for one at the side
 chair, bench, step: {type: "chair", z: -12, back: "behind"}, {type: "bench", z: 95}, {type: "step", z: 82}. z = centre, px forward of the stage middle; seat 80 high, bench 70, step 30. Whatever is over a surface rests on it: sit with anchor "pelvis", a foot on a step with touch, a hand on a chair back with reach to: "chair".
+pull-up bar: {type: "bar", y: 385, z: 0} (y = height; 385 is just above a standing reach); hang with anchor "handR", anchorY: 385, anchorZ: 0; equipment "Pull-up bar"
 weights: {type: "dumbbell", hand: "handR", axis: "lr", "fb" or "ud"}, {type: "kettlebell", hands: ["handL", "handR"]}, {type: "barbell", from: "handL", to: "handR"}
 
 RULES

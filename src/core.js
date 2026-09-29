@@ -199,7 +199,8 @@ function place(pose, seg, rule, keepOffFloor = true) {
   const P = fk(pose, seg);
   if (rule.anchor && P[rule.anchor]) {
     const a = P[rule.anchor], ax = num(rule.x), az = num(rule.z);
-    const pos = { x: ax - a.x, y: supportY(ax, az) - a.y, z: az - a.z };
+    // hanging: the anchor (a hand on a bar) is held at that height, not on the floor
+    const pos = { x: ax - a.x, y: (rule.y != null ? rule.y : supportY(ax, az)) - a.y, z: az - a.z };
     // pin the anchor to whatever it rests on, unless that would push another body part through a surface
     if (keepOffFloor) {
       let pen = 0;
@@ -440,7 +441,9 @@ function frameAt(a, b, e, seg) {
     }
   }
   // anything still below the floor mid-move lifts the whole body smoothly
-  pos.y = groundY(pose, seg, pos, lift);
+  // hanging (either step holds a hand at a height): only kept out of the floor; otherwise resting on it
+  const hang = a.rule.y != null || b.rule.y != null, g = groundY(pose, seg, pos, lift);
+  pos.y = hang ? Math.max(pos.y, g - lift) : g;
   return { pose, cam, pos };
 }
 
@@ -468,7 +471,7 @@ function resolveKeyframe(kf, seg, ex = {}) {
   const auto = new Set();
   const applyPlant = () => { for (const s of plant) { pose['ankle' + s] = flatAnkle(pose, s, seg); auto.add('ankle' + s); } };
   applyPlant();
-  const rule = { anchor: kf.anchor || null, x: num(kf.anchorX), z: num(kf.anchorZ), lift: num(kf.lift) };
+  const rule = { anchor: kf.anchor || null, x: num(kf.anchorX), z: num(kf.anchorZ), lift: num(kf.lift), y: kf.anchor && kf.anchorY != null ? num(kf.anchorY) : null };
   const misses = [];
   for (const t of (kf.touch || [])) { solveTouch(pose, seg, rule, t, applyPlant); auto.add(t.adjust.includes('.') ? t.adjust : t.adjust + '.forward'); }
   // reach: put a hand on another body part (hold the ankle, hand on the knee...)
@@ -495,7 +498,14 @@ function solveReach(pose, seg, rule, r, T) {
 }
 
 /* ---------- Equipment (props) ---------- */
-const PROP_TYPES = ['band', 'towel', 'wall', 'chair', 'bench', 'step', 'dumbbell', 'kettlebell', 'barbell'];
+const PROP_TYPES = ['band', 'towel', 'wall', 'chair', 'bench', 'step', 'dumbbell', 'kettlebell', 'barbell', 'bar'];
+/* a pull-up bar: y high, z forward of the stage centre, width side to side (a doorway bar, 90); seen end-on, a dot */
+function barSVG(pr, proj, cls) {
+  const w = num(pr.width) || 90, a = proj({ x: -w / 2, y: num(pr.y), z: num(pr.z) }), b = proj({ x: w / 2, y: num(pr.y), z: num(pr.z) });
+  // (drawn in front of the hands that hold it; end-on, the round end shows as a dot)
+  return `<line class="${cls}" x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}"/>` +
+    `<circle class="${cls}-end" cx="${((a.x + b.x) / 2).toFixed(1)}" cy="${((a.y + b.y) / 2).toFixed(1)}" r="5"/>`;
+}
 const WEIGHT_TYPES = ['dumbbell', 'kettlebell', 'barbell'];
 /* Hand-held weights, drawn where the hands are. A dumbbell's "axis" is its bar direction relative to the body:
    "lr" left-right (the usual grip), "fb" front-back (neutral grip), "ud" up-down (held upright, like a goblet
@@ -623,9 +633,11 @@ function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
   const R = keyframes.map(kf => resolveKeyframe(kf, seg, ex));
   R.forEach((r, i) => { r.supports = SUPPORTS; r.step = i; });
   R.supports = SUPPORTS;
+  R.bars = (props || []).filter(p => p.type === 'bar');                 // pull-up bars, for framing
   const onFloor = (P, k) => P[k].y - supportAt(P[k]) <= 3;
   for (let i = 1; i < R.length; i++) {
     const a = R[i - 1], b = R[i];
+    if (b.rule.y != null) continue;                                      // hanging: held where it says
     const A = fkAt(a.pose, seg, place(a.pose, seg, a.rule)), B = fkAt(b.pose, seg, place(b.pose, seg, b.rule));
     // the point that stays on the floor through the move: the previous pin if it still touches, else another shared contact
     // (the step's own pin goes first when it was already resting somewhere, e.g. the foot placed on a step)
@@ -639,7 +651,7 @@ function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
   // steps that were re-pinned (say onto a step) re-aim their floor contacts from where they now stand
   R.forEach((r, i) => {
     const kf = keyframes[i];
-    const own = { anchor: kf.anchor || null, x: num(kf.anchorX), z: num(kf.anchorZ) };
+    const own = { anchor: kf.anchor || null, x: num(kf.anchorX), z: num(kf.anchorZ), y: kf.anchor && kf.anchorY != null ? num(kf.anchorY) : null };
     if (!(kf.touch || []).length || (r.rule.anchor === own.anchor && r.rule.x === own.x && r.rule.z === own.z)) return;
     const applyPlant = () => { for (const s of kf.plant || []) r.pose['ankle' + s] = flatAnkle(r.pose, s, seg); };
     for (const t of kf.touch) if (t.point !== r.rule.anchor) solveTouch(r.pose, seg, r.rule, t, applyPlant);   // the pinned point is already down
@@ -728,7 +740,7 @@ function mirrorKeyframe(kf) {
 
 if (typeof module !== 'undefined') module.exports = {
   phaseInfo, reverseReps, weightSVG, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
-  propRoute, propPoint, bandAnchors, anchorSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
+  propRoute, propPoint, bandAnchors, anchorSVG, barSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
 };

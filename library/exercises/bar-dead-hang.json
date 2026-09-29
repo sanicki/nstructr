@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bar-dead-hang",
+  "name": "Dead Hang",
+  "otherNames": ["Bar Hang", "Passive Hang"],
+  "category": "Mobility",
+  "focus": "Grip, shoulders and spine (decompression)",
+  "collections": ["Bodyweight"],
+  "equipment": ["Pull-up bar"],
+  "description": "Hang from a bar with straight arms and relaxed shoulders, holding for time to build grip strength and ease the shoulders and spine.",
+  "source": {
+    "url": "https://www.healthline.com/health/fitness-exercise/dead-hang",
+    "title": "Healthline: Dead hang"
+  },
+  "setup": ["A sturdy pull-up bar you can reach with a small hop or a step.", "Grip it shoulder-width, palms forward."],
+  "cues": ["Breathe slowly.", "Relax your legs.", "Step down before your grip fails."],
+  "prescription": {
+    "reps": "10–30 seconds, 2–3 times",
+    "note": "Let go before your grip gives out. Feet near a step or the floor to stand on."
+  },
+  "keyframes": [
+    {
+      "name": "Stand under the bar",
+      "cue": "Stand under the bar.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Hang",
+      "cue": "Grip the bar and hang with straight arms; breathe.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 20000,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 385,
+      "anchorZ": 0,
+      "anchorX": 22,
+      "pose": {
+        "hipL": [8, 0, 0],
+        "kneeL": 25,
+        "hipR": [8, 0, 0],
+        "kneeR": 25,
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0]
+      }
+    },
+    {
+      "name": "Drop down",
+      "cue": "Let go and stand.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {}
+    }
+  ],
+  "props": [
+    {
+      "type": "bar",
+      "y": 385,
+      "z": 0,
+      "width": 190
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 20
+  },
+  "holdStep": 1
+}

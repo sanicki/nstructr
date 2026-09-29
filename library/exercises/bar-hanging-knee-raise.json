@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bar-hanging-knee-raise",
+  "name": "Hanging Knee Raise",
+  "otherNames": ["Hanging Knee Tuck", "Hanging Knee Lift"],
+  "category": "Strength",
+  "focus": "Core (lower abs) and hip flexors",
+  "collections": ["Core", "Bodyweight"],
+  "equipment": ["Pull-up bar"],
+  "description": "Hanging from a bar, lift your knees to hip height by curling your pelvis up, then lower them slowly without swinging.",
+  "source": {
+    "url": "https://www.strengthlog.com/hanging-knee-raise/",
+    "title": "StrengthLog: Hanging Knee Raise"
+  },
+  "setup": ["A sturdy pull-up bar you can reach with a small hop or a step.", "Grip it shoulder-width, palms forward."],
+  "cues": ["Shoulders active, not shrugged.", "Curl your hips up.", "Lower slowly."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Lower your legs slowly so you don't swing. Easier: one knee at a time."
+  },
+  "keyframes": [
+    {
+      "name": "Stand under the bar",
+      "cue": "Stand under the bar.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Hang",
+      "cue": "Grip the bar and hang, legs straight.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 385,
+      "anchorZ": 0,
+      "anchorX": 22,
+      "pose": {
+        "hipL": [8, 0, 0],
+        "kneeL": 25,
+        "hipR": [8, 0, 0],
+        "kneeR": 25,
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0]
+      }
+    },
+    {
+      "name": "Knees up",
+      "cue": "Bring your knees up to hip height, no swinging.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 385,
+      "anchorZ": 0,
+      "anchorX": 22,
+      "pose": {
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
+        "hipL": [95, 0, 0],
+        "kneeL": 95,
+        "hipR": [95, 0, 0],
+        "kneeR": 95
+      }
+    },
+    {
+      "name": "Drop down",
+      "cue": "Lower your legs, then let go and stand.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {}
+    }
+  ],
+  "props": [
+    {
+      "type": "bar",
+      "y": 385,
+      "z": 0,
+      "width": 190
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}
