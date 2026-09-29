@@ -164,9 +164,12 @@ function renderAi() {
   $('#aiAppHint').textContent = !app.url ? 'Paste the instructions into your AI app\'s chat, then bring its answer back here.'
     : app.q ? `${app.name} opens with the instructions filled in (they're copied too, in case they don't show up). Send them, then copy its answer.`
     : `${app.name} can't take the instructions in a link: they're copied, so paste them into its chat and send them.`;
-  $('#aiAppHint').textContent += ' (Change the AI in Settings › Create with AI.)';
+  $('#aiAppHint').textContent += ' (Change the default provider in Settings.)';
 }
-function openAi() { renderAi(); $('#aiAnswer').value = ''; $('#aiDialog').showModal(); }
+function openAi() { renderAi(); $('#aiAnswer').value = ''; aiAnswerChanged(); $('#aiDialog').showModal(); }
+/* Add stays greyed out until something is pasted */
+function aiAnswerChanged() { $('#aiImport').disabled = !$('#aiAnswer').value.trim(); }
+$('#aiAnswer').addEventListener('input', aiAnswerChanged);
 
 /* the app's link with the instructions filled in. Lighter than URLSearchParams: punctuation a query may carry as it
    is (: , / ; @ $ ?) stays as it is, spaces are +, and everything else is %-escaped as usual; any server (and

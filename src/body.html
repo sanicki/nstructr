@@ -42,7 +42,7 @@
     <section class="view" id="view-settings" aria-label="Settings">
       <section class="settings-group" aria-labelledby="setDocsTitle">
         <h2 class="title-small settings-title" id="setDocsTitle">Documentation</h2>
-        <div class="setting"><span class="txt"><span class="body-medium">A comprehensive user guide can be found <a href="https://github.com/sanicki/nstructr/blob/main/wiki/Home.md" target="_blank" rel="noopener">here</a>. If you discover a bug please <a id="bugLink" href="https://github.com/sanicki/nstructr/issues/new?template=bug.yml" target="_blank" rel="noopener">report it</a>.</span></span></div>
+        <div class="setting"><span class="txt"><span class="body-medium">A comprehensive user guide can be found <a href="https://github.com/sanicki/nstructr/blob/main/wiki/Home.md" target="_blank" rel="noopener">here</a>. If you discover a bug please <a id="bugLink" href="https://github.com/sanicki/nstructr/issues/new?template=bug.yml" target="_blank" rel="noopener">report it</a>. To support my work, make a <a href="https://ko-fi.com/sanicki" target="_blank" rel="noopener">donation</a>.</span></span></div>
       </section>
       <section class="settings-group" aria-labelledby="setWorkoutTitle">
         <h2 class="title-small settings-title" id="setWorkoutTitle">Workouts</h2>
@@ -304,14 +304,14 @@
       <div class="chips" id="aiEquip" role="group" aria-labelledby="aiEquipLabel"></div></div>
     <p class="body-small muted" id="aiKindHint"></p>
     <h3 class="title-small ai-step"><span class="ai-num">2</span>Ask the AI</h3>
-    <p class="body-small muted" id="aiAppHint"></p>
     <div class="row"><button class="btn filled stateful" id="aiOpen"><span class="icon">open_in_new</span><span id="aiOpenLabel">Open</span></button>
       <button class="btn text stateful" id="aiCopy"><span class="icon">content_copy</span>Copy instructions</button>
       <button class="btn text stateful authoring-only" id="aiShow">Read them</button></div>
+    <p class="body-small muted" id="aiAppHint"></p>
     <h3 class="title-small ai-step"><span class="ai-num">3</span>Paste its answer</h3>
     <p class="body-small muted">Copy the whole answer (the JSON) from the AI app and paste it here.</p>
     <textarea id="aiAnswer" spellcheck="false" aria-label="The AI's answer" placeholder='{ ... }'></textarea>
-    <div class="row"><button class="btn filled stateful" id="aiImport"><span class="icon">download</span>Add</button></div>
+    <div class="row"><button class="btn filled stateful" id="aiImport" disabled><span class="icon">download</span>Add</button></div>
   </div>
 </dialog>
 <dialog id="checkDialog" aria-labelledby="checkTitle">
