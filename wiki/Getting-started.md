@@ -13,7 +13,7 @@ Installing puts NstructR on your home screen, lets it run full screen, and lets 
 It also makes your browser much less likely to clear your saved workouts when the phone is short of space.
 
 NstructR offers it once, after your first workout (finished or stopped early), if your browser can install it:
-tap **Install** (or on an iPhone, **How**). You can also install it from **Settings → Import & tools → Install app**,
+"Install NstructR?" Tap **Install** (or on an iPhone, **How**). You can also install it from **Settings → Import & tools → Install app**,
 or from the browser:
 
 - **Android (Chrome):** open the menu (⋮) and tap **Install and create shortcut** (or **Add to Home screen**).

@@ -44,8 +44,7 @@ function installDue() { if (!pref(INSTALL_KEY, '')) setPref(INSTALL_KEY, 'due');
 function maybeInstallHint() {
   if (pref(INSTALL_KEY, '') !== 'due' || S.view === 'wplay' || !canInstall()) return;
   setPref(INSTALL_KEY, 'shown');
-  snack(INSTALL_EVT ? `Install ${APP_NAME}: it works offline, full screen, and your data is safer.` : `Add ${APP_NAME} to your Home Screen: it works offline and your data is safer.`,
-    12000, { label: INSTALL_EVT ? 'Install' : 'How', run: installApp });
+  snack(`Install ${APP_NAME}?`, 12000, { label: INSTALL_EVT ? 'Install' : 'How', run: installApp });   // why: Settings > Install app
 }
 async function installApp() {
   if (!INSTALL_EVT) { if (iosAddable()) snack(IOS_STEPS, 8000); return; }

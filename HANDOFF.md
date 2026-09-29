@@ -548,7 +548,7 @@ steps or the joint will windmill; the jump check will catch it.
   installable; we keep the event (`preventDefault`: no Chrome mini-bar; the menu's Install stays) and offer our own.
   Once, after the first workout that was started (`startWorkout` → `installDue()`: key `due`), when leaving the player
   (finished or left early) or on a later visit (`route` → `maybeInstallHint()`), never during a workout: a snackbar
-  with **Install** (`e.prompt()`, usable once) and ✕ (`snack(msg, ms, {label, run})`). iPhone/iPad Safari (no event)
+  "Install NstructR?" (the why is on the Settings row) with **Install** (`e.prompt()`, usable once) and ✕ (`snack(msg, ms, {label, run})`). iPhone/iPad Safari (no event)
   get **How** (Share > Add to Home Screen). A browser that can't install gets nothing and the tip stays owed.
   Settings › Import & tools has an **Install app** row while installing is possible (`renderInstall`). A page in
   full screen for a workout also matches `display-mode: fullscreen`, so "installed" here is `runningInstalled()`
