@@ -390,9 +390,9 @@ function draw() {
   S.curCam = f.cam;
   if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);
   drawGuide(a, b, e);
-  if (S.mode !== 'workout') $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';
+  if (S.mode !== 'workout' && EX_SHOW_PROGRESS) $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';
   // hold countdown for long holds (stretches), in real seconds at the current speed
-  const holding = b.hold >= 3000 && S.t > b.dur && S.mode !== 'workout';
+  const holding = EX_SHOW_COUNT && b.hold >= 3000 && S.t > b.dur && S.mode !== 'workout';
   const chip = $('#holdChip');
   if (holding) {
     const left = Math.ceil((b.dur + b.hold - S.t) / 1000 / S.speed);
@@ -401,7 +401,7 @@ function draw() {
     if ($('#holdText').textContent !== txt) $('#holdText').textContent = txt;
   } else if (!chip.hidden) chip.hidden = true;
   const rep = S.mode === 'workout' ? '' : `${cap(S.ex && S.ex.repName || 'rep')} ${S.rep}`;
-  $('#repChip').hidden = S.mode === 'workout' || (S.ex && S.ex.measure === 'time');
+  $('#repChip').hidden = !EX_SHOW_COUNT || S.mode === 'workout' || (S.ex && S.ex.measure === 'time');
   if ($('#repText').textContent !== rep) $('#repText').textContent = rep;
   if (S.shownIdx !== S.idx) { S.shownIdx = S.idx; onStepChange(); }
 }
@@ -409,6 +409,17 @@ function draw() {
    own. While one plays, the step before it stays up; the Steps list, the numbering and ◀ ▶ skip them. */
 const visibleSteps = () => { const v = S.resolved.map((r, i) => (r.quiet ? -1 : i)).filter(i => i >= 0); return v.length ? v : S.resolved.map((r, i) => i); };
 function shownStep(i) { const v = visibleSteps(); let s = v[0]; for (const j of v) if (j <= i) s = j; return s; }
+/* The exercise page's rep/hold label ("Rep 3", "Hold 0:20") and its progress bar are built but hidden (owner's
+   decision, Sep 2026; no setting shows them): turn these on to bring them back. The workout player has its own. */
+const EX_SHOW_COUNT = false, EX_SHOW_PROGRESS = false;
+/* the exercise page's ◀: back to the very start (setup, rep 1, where a travelling exercise began); ▶ is the next step */
+function restartExercise() {
+  if (!S.resolved.length) return;
+  if (typeof exHush === 'function') exHush();
+  S.planDone = false; S.rep = 1; S.idx = 0; S.prev = null; S.from = null; S.t = 0; S.shownIdx = null;
+  if (S.travel) S.off = { x: 0, z: 0 };
+  draw();
+}
 function stepBy(delta) {                            // the next or previous step a person sees, from where the figure is
   const v = visibleSteps(), cur = shownStep(S.idx), k = v.indexOf(cur);
   jumpTo(v[(k + delta + v.length) % v.length]);
