@@ -3,6 +3,7 @@ import asyncio, os, json
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 # Create with AI: what you have -> AI app opened with the instructions (filled in, or copied) -> paste the answer.
+# Qwen opens its mainland app only on a phone set up for mainland China (language region or time zone).
 # Also: the AI app and rest between exercises are settings; Half Roll-Back has no band
 async def main():
     async with async_playwright() as p:
@@ -69,5 +70,12 @@ async def main():
         await pg.evaluate("$('#aiDialog').close()")
         # Half Roll-Back: no band
         print('Half Roll-Back          ', await pg.evaluate("[findInDb('pil-half-roll-back').equipment, (findInDb('pil-half-roll-back').props||[]).length]"))
+        # Qwen: which of its two apps, by the phone's language and time zone
+        seen = []
+        for loc, tz in [('en-US', 'America/New_York'), ('zh-CN', 'Asia/Shanghai'), ('en-US', 'Asia/Shanghai'), ('zh-CN', 'Europe/London'), ('zh-TW', 'Asia/Taipei'), ('zh-HK', 'Asia/Hong_Kong')]:
+            c = await b.new_context(locale=loc, timezone_id=tz); q = await c.new_page()
+            await q.goto(URL + '#/workouts', wait_until='domcontentloaded'); await q.wait_for_timeout(300)
+            seen.append((loc, tz, await q.evaluate("aiUrl(AI_APPS.find(a => a.id === 'qwen'))"), await q.evaluate("aiUrl(aiApp())"))); await c.close()
+        for s in seen: print('Qwen                    ', s)
         print('errors', errs); await b.close()
 asyncio.run(main())

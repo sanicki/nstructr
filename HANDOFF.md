@@ -656,12 +656,13 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   dialog in three steps. 1: what you have (Sep 2026, in this order, equal-width buttons: Workout goal, picked at first;
   Workout routine; Missing exercise; Photo/Video; YouTube link. Earlier: the name of the exercise, a written routine, a video or web link, a photo or
   video; the last has no text box: it's attached in the AI app). 2: the AI app, chosen in **Settings › Create with AI › Choose
-  AI provider** (since Sep 2026; it was a list in the dialog), listed "Provider (App)" A–Z by provider with "Other LLM"
-  last (Gemini until the user picks another; kept in `nstructr-ai-app-v1`; `setAiApp()`, `renderAiSetting()`):
+  AI provider** (since Sep 2026; it was a list in the dialog), listed "Provider (App)" A–Z by provider with "Unspecified"
+  last (named "Other LLM" until Sep 2026) (Gemini until the user picks another; kept in `nstructr-ai-app-v1`; `setAiApp()`, `renderAiSetting()`):
   **Open** copies the instructions and opens the app; apps with a message parameter that takes a link this long (`?q=`: ChatGPT, Claude,
   Copilot) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
   URLs over 16 KB); Gemini and DeepSeek have none, and Grok and Vibe answer the long link with "header too large" (owner, Sep 2026), so
-  those four are only copied; "Other LLM" just copies. 3: paste
+  those four are only copied; so are Qwen (Alibaba; `aiUrl()` opens the mainland app, qianwen.com, which needs a Chinese phone number, when `aiInChina()`: a language tagged -CN or a mainland time zone; else chat.qwen.ai), Doubao (ByteDance) and Kimi (Moonshot),
+  added Sep 2026 because the Western apps are blocked in mainland China (untested for a filled-in link); "Unspecified" just copies. 3: paste
   the answer: `extractJson()` takes the JSON out of ``` fences or surrounding sentences; `{"inLibrary": "<id>"}`
   opens that library exercise; anything else goes through the normal import (exercise, or a workout file bringing
   its own `u-` exercises). The prompt's LIBRARY list is grouped under `[equipment]` headings (kinds from
@@ -898,6 +899,9 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
 7. ~~Does the app run on the cover screen?~~ Installed as an app, it runs there (owner, Sep 2026).
 9. ~~**3D skeleton**~~: go, as v2 (Sep 2026), and done; no v1 export, and v1 import stopped once everything was v2
    (owner: there are no other users yet).
+10. ~~**Which languages first?**~~ Decided: Simplified Chinese (`zh-Hans`) first, with mainland China a target
+   (owner, Sep 2026); what that adds to the plan is on [ROADMAP.md](ROADMAP.md). Qwen, Doubao and Kimi were added
+   to Create with AI's providers at the same time.
 
 Still open (seated band row X, which machines first, status bar flicker): see [ROADMAP.md](ROADMAP.md). The status
 bar flicker (owner report, installed app on a flip phone) wasn't reproduced; likely Android's own behaviour in

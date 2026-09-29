@@ -3,7 +3,7 @@ import asyncio, os
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 # a workout's first line is heard (nothing cancels it on the way into the player); Settings > Exercises > Autoplay;
-# Grok and Vibe copy the instructions instead of a link; "Other LLM"
+# Grok and Vibe copy the instructions instead of a link; "Unspecified"
 FAKE = """window.SPOKEN=[]; window.CANCELS=[]; Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{
   speaking:false, pending:false, getVoices(){ return []; }, speak(u){ SPOKEN.push(u.text); this.speaking=true; this._u=u; setTimeout(()=>{ if(this._u===u){ this.speaking=false; this._u=null; u.onend&&u.onend(); } }, 2500); },
   cancel(){ if (this._u) CANCELS.push(this._u.text); this.speaking=false; const u=this._u; this._u=null; u&&u.onend&&u.onend(); }}}); 0"""

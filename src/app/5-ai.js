@@ -6,14 +6,17 @@
 const AI_KEY = 'nstructr-ai-app-v1';
 const AI_Q_MAX = 15000;          // longest link we fill in (Cloudflare, in front of most of these, refuses URLs over 16 KB); longer ones are only copied
 const AI_APPS = [                // A–Z by provider, "other" last. q: the link parameter that fills in the message, where the app has one
+  { id: 'qwen', provider: 'Alibaba', name: 'Qwen', url: 'https://chat.qwen.ai/', cnUrl: 'https://www.qianwen.com/' },   // two apps: see aiUrl(); no filled-in link: copy
   { id: 'claude', provider: 'Anthropic', name: 'Claude', url: 'https://claude.ai/new', q: 'q' },
+  { id: 'doubao', provider: 'ByteDance', name: 'Doubao', url: 'https://www.doubao.com/chat/' }, // copy
   { id: 'deepseek', provider: 'DeepSeek', name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
   { id: 'gemini', provider: 'Google', name: 'Gemini', url: 'https://gemini.google.com/app' },
   { id: 'copilot', provider: 'Microsoft', name: 'Copilot', url: 'https://copilot.microsoft.com/', q: 'q' },
   { id: 'mistral', provider: 'Mistral', name: 'Vibe', url: 'https://chat.mistral.ai/chat' },   // formerly Le Chat; refuses the long link (header too large): copy
+  { id: 'kimi', provider: 'Moonshot', name: 'Kimi', url: 'https://www.kimi.com/' },           // copy
   { id: 'chatgpt', provider: 'OpenAI', name: 'ChatGPT', url: 'https://chatgpt.com/', q: 'q' },
   { id: 'grok', provider: 'xAI', name: 'Grok', url: 'https://grok.com/' },                  // refuses the long link too: copy
-  { id: 'other', name: 'Other LLM' },
+  { id: 'other', name: 'Unspecified' },   // any AI chat: the instructions are copied. To be the default once the app has other languages (ROADMAP.md)
 ];
 /* the list shows "Provider (App)", e.g. "Google (Gemini)"; the button and messages use the app's name ("Open Gemini") */
 const aiAppLabel = a => (!a.provider ? a.name : a.provider === a.name ? a.name : `${a.provider} (${a.name})`);
@@ -34,6 +37,17 @@ function aiEquipChosen() { try { const v = JSON.parse(pref(AI_EQUIP_KEY, '[]'));
 const aiCanDo = (ex, have = aiEquipChosen()) => SIMILAR_EX.equipKinds(ex.equipment).every(k => have.has(k));
 const aiApp = () => AI_APPS.find(a => a.id === pref(AI_KEY, 'gemini')) || AI_APPS.find(a => a.id === 'gemini');   // the last one picked
 let AI_KIND = 'plan';
+/* a phone set up for mainland China: a language with the region CN (zh-CN, en-CN…) or a mainland time zone. A best guess
+   (a web page can't see where the phone is without asking); used for apps with a separate mainland version */
+function aiInChina() {
+  let tz = '';
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+  return /^(Asia\/(Shanghai|Urumqi|Chongqing|Chungking|Harbin|Kashgar)|PRC)$/.test(tz)
+    || (navigator.languages || [navigator.language]).some(l => /-CN$/i.test(String(l)));
+}
+/* where the app opens: Qwen's mainland app (qianwen.com) needs a Chinese phone number to sign up, so everyone else gets
+   the international one (chat.qwen.ai) */
+const aiUrl = app => (app.cnUrl && aiInChina() ? app.cnUrl : app.url);
 
 /* the library, one line per exercise with its names, so the AI can use what's already there; grouped by equipment (a
    mat doesn't count), so a band or dumbbell version isn't matched to the bodyweight one, with one heading per group.
@@ -175,7 +189,7 @@ $('#aiAnswer').addEventListener('input', aiAnswerChanged);
    is (: , / ; @ $ ?) stays as it is, spaces are +, and everything else is %-escaped as usual; any server (and
    URLSearchParams itself) reads it back identically. Saves about 7% of the length. */
 const aiQuery = text => encodeURIComponent(text).replace(/%20/g, '+').replace(/%(3A|2C|2F|3B|40|24|3F)/g, (m, h) => String.fromCharCode(parseInt(h, 16)));
-const aiLink = (app, text) => `${app.url}?${app.q}=${aiQuery(text)}`;
+const aiLink = (app, text) => `${aiUrl(app)}?${app.q}=${aiQuery(text)}`;
 async function aiCopy(text) { try { await navigator.clipboard.writeText(text); return true; } catch (e) { return false; } }
 function aiCheckInput() {
   if (AI_KIND === 'media' || $('#aiInput').value.trim()) return true;
@@ -184,7 +198,7 @@ function aiCheckInput() {
 $('#aiOpen').addEventListener('click', async () => {
   if (!aiCheckInput()) return;
   const app = aiApp(), text = aiPrompt(AI_KIND, $('#aiInput').value);
-  let url = app.url, filled = false;
+  let url = aiUrl(app), filled = false;
   if (app.q) { const u = aiLink(app, text); if (u.length <= AI_Q_MAX) { url = u; filled = true; } }
   const copying = aiCopy(text);                               // both inside the tap, before anything is awaited
   if (url) window.open(url, '_blank', 'noopener');
