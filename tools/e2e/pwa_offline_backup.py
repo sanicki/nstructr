@@ -31,9 +31,10 @@ async def main():
         # storage persistence note on the Create page
         await pg.evaluate("go('#/create')"); await pg.wait_for_timeout(400)
         print('persist note            ', await pg.inner_text('#persistNote'))
-        # backup: make some data, export it, wipe everything, import it back
+        # backup: make some data and change some settings, export it, wipe everything, import it back
         await pg.evaluate("""(()=>{const c=customizeWorkout(LIB_WK[0]); c.name='Mine'; saveWorkouts();
-          S.lib.items.push({...clone(findInDb('bw-squat')), id:'u-mine', name:'Mine'}); saveLib(); BOOKMARKS.add('bw-lunge'); saveBookmarks(); setSound('coach');
+          S.lib.items.push({...clone(findInDb('bw-squat')), id:'u-mine', name:'Mine'}); saveLib(); BOOKMARKS.add('bw-lunge'); saveBookmarks(); setSound('voice');
+          setPref(REST_KEY,'12'); setPref(THEME_KEY,'dark'); setPref(LOOP_KEY,'off'); setPref(AI_KEY,'claude');
           saveLog([{id:'s1',workout:c.id,name:'Mine',start:'2026-09-01T10:00:00Z',end:'2026-09-01T10:30:00Z',seconds:1800,completed:true,exercisesDone:24,exercisesTotal:24,exercises:[]}]);})()""")
         async with pg.expect_download() as dl: await pg.click('[data-act="backup"]')
         d = await dl.value; path = await d.path(); text = open(path).read(); data = json.loads(text)
@@ -42,6 +43,7 @@ async def main():
         print('after wipe              ', await pg.evaluate("[WK.list.length, S.lib.items.length, loadLog().length, WK.sound]"))
         await pg.set_input_files('#fileInput', path); await pg.wait_for_timeout(600)
         print('after import            ', await pg.evaluate("[WK.list.map(w=>w.name), S.lib.items.map(x=>x.id), [...BOOKMARKS], loadLog().length, WK.sound, location.hash]"))
+        print('settings back           ', await pg.evaluate("[restGap(), pref(THEME_KEY,'system'), document.documentElement.dataset.theme, loopOn(), aiApp().id]"), "<- 12, dark, dark, false, claude")
         print('snackbar                ', await pg.inner_text('#snackbar'))
         # importing the same backup again changes nothing (merge by id)
         await pg.set_input_files('#fileInput', path); await pg.wait_for_timeout(400)

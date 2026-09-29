@@ -320,8 +320,13 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   buttons: workout editor, each workout card, the exercise page's top bar and About. `<site>` is the page's own
   address, or `https://sanicki.github.io/nstructr/` when opened from a file. Typical sizes: library workout
   62 chars; the 24-item routine customised ≈ 770; a workout with one own exercise ≈ 1200 (no QR).
-- **Backup** (`nstructr/backup`, Create → Back up everything): `{format, version, exported, workouts, exercises
-  (saved), history, settings: {sound, fullscreen?}}`. Importing it (any import path detects the format)
+- **Backup** (`nstructr/backup`, Settings → Import & tools → Export everything): `{format, version, exported, workouts,
+  exercises (saved), bookmarks, history, settings, resume?}`. `settings` has every setting and remembered choice
+  (`sound`, `speechRate`, `encourage`, then `BACKUP_PREFS` in `src/app/6-pwa.js`: `restBetween`, `restSets`, `theme`,
+  `fullscreen`, `autoplay`, `authoring`, `exerciseLoop`, `exerciseMute`, `groupCollections`, `aiApp`, `aiEquipment`,
+  `libraryOrder?`; switches are true/false). Restoring sets only what the file has, so older backups (three settings,
+  `fullscreen` as "on"/"off") still import. `resume` (`{wid, i}`) carries an unfinished workout over unless one is
+  already waiting here. A new setting goes in `BACKUP_PREFS` too (Sep 2026: before, most weren't backed up). Importing it (any import path detects the format)
   **merges** by id: backup items replace same-id items, nothing is deleted, importing twice changes nothing.
 - Export: exercise JSON from the exercise page; workout JSON / Share (Web Share with a `.json` file, falling back
   to a download) from the editor; "Export your exercises" in Settings (Authoring mode). JSON views (workout
@@ -735,7 +740,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-bookmarks-v1` | ids of bookmarked exercises, library or own (a flag; library ones aren't copied, so library fixes reach them) |
 | `motion-guide-workouts-v1` | `{list: [...]}` user workouts (runtime form with uids) |
 | `motion-guide-session-v1` | `{wid, i}` resume point |
-| `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name) |
+| `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name). Default **coach** (beeps until Sep 2026): the 20-minute workouts are timed with Coach |
 | `motion-guide-log-v1` | history sessions (capped at 500) |
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
 | `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |
