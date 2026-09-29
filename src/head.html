@@ -258,6 +258,9 @@ dialog .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
   min-height:48px;max-width:min(560px,calc(100vw - 32px));display:flex;align-items:center;padding:14px 16px;border-radius:4px;
   background:var(--md-inverse-surface);color:var(--md-inverse-on-surface);box-shadow:var(--elev-3);transition:transform .25s var(--ease-emph),opacity .2s linear}
 .snackbar.show{transform:translate(-50%,0);opacity:1}
+.snackbar.has-act{pointer-events:auto;gap:4px;padding-right:4px;width:min(560px,calc(100vw - 32px))}
+.snackbar .snack-act{color:var(--md-inverse-primary);margin-left:8px;flex:none}
+.snackbar .snack-close{color:var(--md-inverse-on-surface);flex:none}
 .drop{position:fixed;inset:0;z-index:50;display:none;place-items:center;background:color-mix(in srgb,var(--md-primary-container) 85%,transparent);
   color:var(--md-on-primary-container)}
 .drop.show{display:grid}

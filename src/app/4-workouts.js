@@ -632,7 +632,7 @@ function startWorkout(w, fromIndex = 0) {
   WP.w = w; WP.flat = flattenWorkout(w); WP.log = { start: Date.now(), done: [] }; WP.lastLogged = -1;
   if (!WP.flat.length) { snack('Add some exercises first.'); return; }
   WP.i = Math.min(fromIndex, WP.flat.length - 1); WP.set = 0; WP.seg = 0; WP.started = Date.now(); WP.phase = 'work';
-  unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound); keepStorage();
+  unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound); keepStorage(); installDue();
   go(`#/wplay/${encodeURIComponent(w.id)}`);
   runCurrent(true);
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
