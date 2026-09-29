@@ -44,9 +44,14 @@ async def shot(pg, name, sel=None, full=False):
 ANDROID = 'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36'
 PHONE, COVER = (412, 839), (360, 398)
 
+# desktop Chrome, for the guide's section on laptops and desktops
+DESKTOP_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
+DESKTOP = (1280, 800)
+
 async def page(b, size=PHONE):
-    ctx = await b.new_context(viewport={'width': size[0], 'height': size[1]}, device_scale_factor=2, is_mobile=True, has_touch=True,
-                              user_agent=ANDROID, reduced_motion='no-preference')
+    desk = size == DESKTOP
+    ctx = await b.new_context(viewport={'width': size[0], 'height': size[1]}, device_scale_factor=1 if desk else 2, is_mobile=not desk, has_touch=not desk,
+                              user_agent=DESKTOP_UA if desk else ANDROID, reduced_motion='no-preference')
     await ctx.route(re.compile(r'https://fonts\.(googleapis|gstatic)\.com/.*'), fonts)
     pg = await ctx.new_page()
     pg.on('pageerror', lambda e: print('PAGE ERROR', e))
@@ -155,6 +160,15 @@ async def main():
         cv = await page(b, COVER)
         await cv.evaluate("WK.list.length=0; saveWorkouts(); go('#/workouts')"); await cv.wait_for_timeout(300)
         await shot(cv, 'cover-workouts')
+        await cv.evaluate("WK.hinted=true; setSound('voice'); startWorkout(LIB_WK[0], 6)"); await cv.wait_for_timeout(7000)   # into the lunge
+        await cv.evaluate(HIDE_SNACK); await shot(cv, 'cover-player')
+        await cv.context.close()
+        # --- a laptop or desktop (Chrome): the same app in a window ---
+        dk = await page(b, DESKTOP)
+        await dk.evaluate("go('#/play/bw-reverse-lunge')"); await dk.wait_for_timeout(700)
+        await dk.evaluate("setPlaying(false); jumpTo(2); scrollTo(0,0)"); await dk.wait_for_timeout(2600)
+        await dk.evaluate("hideExControls()"); await dk.evaluate(HIDE_SNACK)
+        await shot(dk, 'desktop-exercise')
         await b.close()
 
 asyncio.run(main())

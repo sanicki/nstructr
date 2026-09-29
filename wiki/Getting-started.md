@@ -48,7 +48,30 @@ the cover screen:
 - The first tap only shows the controls, so you can't pause or skip by accident. To leave a workout, **hold ✕**.
 - The screen stays on while you work out.
 
+<img src="images/cover-player.png" width="300" alt="A workout on a flip phone's cover screen: the exercise name and time at the top, the figure above the empty bottom of the screen">
+
 See [Working out](Working-out.md) for the controls.
+
+## On a laptop or desktop
+
+NstructR isn't only for phones. It's a web app, so the same address works in any modern browser, and on a computer
+it spreads out: the figure on one side, the instructions on the other. It's handy for planning workouts, looking up
+exercises on a big screen, or following along on a TV or laptop.
+
+<img src="images/desktop-exercise.png" width="600" alt="NstructR in Chrome on a computer: the tabs down the left, the exercise's figure and its instructions side by side">
+
+- **Install it** there too: in Chrome or Edge, click the install icon at the right of the address bar (or the
+  menu ⋮ → **Cast, save, and share → Install page as app**, in Edge **Apps → Install this site as an app**). In
+  Safari on a Mac, **File → Add to Dock**. It then opens in its own window and works offline.
+- **Your devices don't sync.** Each browser keeps its own workouts, history and settings, with no account. To move
+  things between your phone and your computer:
+  - **One workout or exercise:** open it, tap **Share**, and on the other device scan the **QR code** or open the
+    link. It's added when you tap **Add**. A computer's big screen makes the QR code easy to scan with your phone.
+  - **Everything:** **Settings → Import & tools → Export everything** on one device, then **Import** that file on
+    the other. It adds the file's workouts, exercises and history to what's there (nothing is deleted) and takes
+    its settings.
+
+  See [Sharing, importing and backups](Sharing-and-backups.md).
 
 ## Where next
 
