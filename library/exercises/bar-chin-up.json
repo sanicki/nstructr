@@ -48,6 +48,28 @@
       }
     },
     {
+      "name": "Bend your knees",
+      "cue": "Bend your knees, ready to jump.",
+      "camera": 90,
+      "durationMs": 600,
+      "holdMs": 100,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
+        "torso": [15, 0, 0],
+        "hipL": [50, 0, 0],
+        "kneeL": 75,
+        "ankleL": -25,
+        "hipR": [50, 0, 0],
+        "kneeR": 75,
+        "ankleR": -25
+      }
+    },
+    {
       "name": "Jump to the bar",
       "cue": "Grip the bar shoulder-width, palms toward you; hang with straight arms.",
       "camera": 90,
@@ -92,10 +114,10 @@
     },
     {
       "name": "Drop down",
-      "cue": "Let go and land softly, knees bent.",
+      "cue": "Let go and land softly, knees deeply bent.",
       "camera": 90,
       "durationMs": 450,
-      "holdMs": 150,
+      "holdMs": 250,
       "phase": "finish",
       "anchor": "ankleL",
       "anchorX": -12,
@@ -103,12 +125,13 @@
       "pose": {
         "shoulderL": [180, 0, 0],
         "shoulderR": [180, 0, 0],
-        "hipL": [15, 0, 0],
-        "kneeL": 30,
-        "ankleL": -12,
-        "hipR": [15, 0, 0],
-        "kneeR": 30,
-        "ankleR": -12
+        "torso": [20, 0, 0],
+        "hipL": [60, 0, 0],
+        "kneeL": 85,
+        "ankleL": -28,
+        "hipR": [60, 0, 0],
+        "kneeR": 85,
+        "ankleR": -28
       }
     },
     {

@@ -194,7 +194,7 @@ function surfaceShapes(sup, yaw) {
       return { solid: true, ball: true, d: `M${c - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`, x0: c - r, x1: c + r }; }
     const xs = [sx(k.x0, k.z0), sx(k.x1, k.z0), sx(k.x0, k.z1), sx(k.x1, k.z1)];
     const a = Math.min(...xs), b = Math.max(...xs), top = FLOOR - k.h, f = FLOOR + 7;
-    if (k.type === 'step' || k.type === 'block') return { solid: true, d: `M${a} ${f}L${a} ${top}L${b} ${top}L${b} ${f}Z`, x0: a, x1: b };
+    if (k.type === 'step' || k.type === 'block') return { solid: true, block: k.type === 'block', d: `M${a} ${f}L${a} ${top}L${b} ${top}L${b} ${f}Z`, x0: a, x1: b };
     let d = `M${a} ${top}L${b} ${top}M${a + 5} ${top}L${a + 5} ${f}M${b - 5} ${top}L${b - 5} ${f}`;
     if (k.type === 'chair') { const bx = sx((k.x0 + k.x1) / 2, k.back === 'behind' ? k.z0 : k.z1); d += `M${bx} ${top}L${bx} ${top - k.backHeight}`; }
     return { solid: false, d, x0: a, x1: b };

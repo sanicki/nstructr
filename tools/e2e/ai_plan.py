@@ -2,7 +2,7 @@ import asyncio, json, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
-# Create with AI, "A goal: plan a workout": equipment chips (remembered), a prompt listing only the exercises that
+# Create with AI, "Workout goal" (plan a workout): equipment chips (remembered), a prompt listing only the exercises that
 # equipment allows (no exercise format), and an import that takes only library exercises and names any that need
 # equipment the user didn't pick.
 def wk(items): return json.dumps({'format': 'nstructr/workout', 'version': 2, 'workouts': [{'version': 2, 'name': 'Legs 30', 'blocks': [{'name': 'Main', 'items': items}]}]})
