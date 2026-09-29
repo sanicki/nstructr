@@ -81,7 +81,7 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
   arm-circle continuity tests pass against the served build.
 
 **Step 3 (simpler UI) is built**: three tabs (Workouts, Exercises, Settings), the exercise player's
-tap-for-controls overlay with its details on the page below, Authoring mode. See §10.
+tap-for-controls overlay with its details on the page below, Advanced exercise editor. See §10.
 
 **Step 2 (installable app + backup) is built and tested on a foldable flip phone** (installed; bottom margin confirmed) (see §13): manifest, icons, service worker, storage
 persistence, Backup (Export everything; a backup is imported with Import like any file), and a Material theme generated from the icon's blue.
@@ -329,8 +329,8 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   already waiting here. A new setting goes in `BACKUP_PREFS` too (Sep 2026: before, most weren't backed up). Importing it (any import path detects the format)
   **merges** by id: backup items replace same-id items, nothing is deleted, importing twice changes nothing.
 - Export: exercise JSON from the exercise page; workout JSON / Share (Web Share with a `.json` file, falling back
-  to a download) from the editor; "Export your exercises" in Settings (Authoring mode). JSON views (workout
-  editor "JSON", exercise "Show JSON", "Export your exercises") show only in **Authoring mode** (class
+  to a download) from the editor; "Export your exercises" in Settings (Advanced exercise editor). JSON views (workout
+  editor "JSON", exercise "Show JSON", "Export your exercises") show only in **Advanced exercise editor** (class
   `authoring-only`, hidden unless `body.authoring`).
 - History (`nstructr/log`): `{sessions: [{id, workout, library? (true for a library workout), name, start, end (ISO), seconds, completed,
   exercisesDone, exercisesTotal, exercises: [{ex, name, category, measure, sets, reps|seconds, sides, dir,
@@ -636,7 +636,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 - **Edit** (pencil in the exercise page's top bar, for everyone) pauses playback and opens the editor at the
   end of the page with **Done** at its top; on phones the figure stays pinned at the top while editing
   (`body.ex-editing`). Everyone gets the words (step name and cue; name, description and instructions);
-  **Authoring mode** adds the pose tools (Side/Front, the camera in degrees, every joint's numbers: three rows for a
+  **Advanced exercise editor** (the setting was "Authoring mode", and the exercise editor the "pose editor", until Sep 2026; key `nstructr-authoring-v1` kept) adds the pose tools (Side/Front, the camera in degrees, every joint's numbers: three rows for a
   ball joint (forward, side, turn), one for a hinge; JSON). The editor has its
   own previous/next step buttons, and the figure's overlay controls fade even while paused so they don't cover the
   pose. Each row has **− / +** (hold to repeat) in steps of 1°, 5° or 15°, and an **undo** shown once it differs
@@ -706,7 +706,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   deleting one is its own action (About → Delete), asks first and names the workouts that use it. Backups carry
   `bookmarks` too.
 - **Settings**, in order: Documentation (link to the user guide), Workouts (rest between exercises, rest between
-  sets, sound, full screen), Exercises (autoplay), Display (theme System/Light/Dark, **Authoring mode**), Create with AI (Choose AI provider), Import & tools (backup, import file/paste, export your exercises,
+  sets, sound, full screen), Exercises (autoplay), Display (theme System/Light/Dark), Create with AI (Choose AI provider), Import & tools (backup, import file/paste, export your exercises, **Advanced exercise editor**,
   JSON format reference, storage-persistence note).
 - **Quiet steps** (`"quiet": true`, the in-between points of a circle: Hip Circles, Leg Circles) are part of the
   motion but not steps a person sees: the exercise page's step number, name, Steps list and ▶ / → skip them
@@ -757,7 +757,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
 | `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |
 | `nstructr-speed-v1` | no longer used (the exercise page's Speed selector was removed in Sep 2026; exercises play at 1×). Left in place; nothing reads it |
-| `nstructr-authoring-v1` | `"on"` shows the pose editor |
+| `nstructr-authoring-v1` | `"on"` shows the exercise editor |
 | `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end, in `library/workout-order.json` order) |
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
 | `nstructr-ai-equipment-v1` | Create with AI, Plan a workout: the equipment kinds picked, JSON list (`[]` until changed; `["wall"]` until Sep 2026) |
@@ -788,7 +788,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   delete), `quick_fixes` (Start goes straight in, no Workouts Import, safety note on the card, edit words vs poses, Duplicate, Authoring-only JSON views, collections
   order, QR picture, incline push-up head), `share_links` (library/own workouts and exercises through a link on a
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback, the dialog's four buttons), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
-  both Star Excursions on both sides: the shins are stacked by depth, a front-view reach across the body is behind), `pose_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
+  both Star Excursions on both sides: the shins are stacked by depth, a front-view reach across the body is behind), `exercise_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
   player overlay, page order, labels, Edit with the figure pinned, Done), `direction_cues` (the other direction keeps each step's words, so cues match the compass), `circles_order_toggles` (Leg Circles' 8 points with 4 steps; quiet steps hidden from the step number, list and ◀ ▶; a workout item's order of sides/directions, saved, shared, and the switch announced; Loop off stops at the end, Play restarts; Mute), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Voice reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
@@ -813,7 +813,7 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
    exercises, settings). Then test on a flip phone's cover screen as an installed app (Good Lock).
 3. ✅ **Simplify the UI before going public**: three tabs — Workouts, **Exercises** (Explore + Saved merged, Saved
    as a filter), **Settings** (sound, theme, full screen, speed; "Import & tools" = AI prompts, format
-   reference, export; an **Authoring mode** toggle that reveals the pose editor). Exercise player gets the same
+   reference, export; an **Advanced exercise editor** toggle that reveals the exercise editor). Exercise player gets the same
    tap-for-controls overlay as the workout player, with its details on the page (a pull-up panel until Sep 2026) instead of four tabs.
 4. ✅ **Share links**: workout/exercise compressed into the URL fragment (`CompressionStream` + base64url), no
    server; QR codes for short links (see §5.3).
@@ -872,7 +872,7 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
    exercise needing both Side and Direction: add it, from https://pilatesology.com/pilatesology-encyclopedia-leg-circles/
    described in our own words). The exercise player follows the Sound setting (Silent / Beeps: quiet;
    Voice / Coach: read each step's cue on the first pass, then count reps). **Edit details** (words) for everyone
-   on their own exercises and copies; Authoring mode adds poses and camera. Also: Start goes straight into a workout
+   on their own exercises and copies; Advanced exercise editor adds poses and camera. Also: Start goes straight into a workout
    (no popup; safety notes on the card and in the editor), Import only in Settings. Leg Circles added in the next PR (`pil-leg-circles`).
 5. ✅ **Create with AI** (deep links, no keys): one screen: what it is (a name, a written routine, a YouTube link, a
    photo or video) → provider (default in Settings: Claude, ChatGPT, Gemini, Grok, DeepSeek…) → open it with the

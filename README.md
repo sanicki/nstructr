@@ -89,4 +89,4 @@ To *write* an exercise or workout for a user rather than change the code, use th
 
 [MIT](LICENSE): the engine, the app and the exercise library.
 
-If NstructR is useful to you, you can support it with a [donation on Ko-fi](https://ko-fi.com/sanicki).
+If NstructR is useful to you, you can support it with a [donation](https://ko-fi.com/sanicki).

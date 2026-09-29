@@ -10,7 +10,7 @@ A link to this guide, and **report it** to tell us about a bug: it opens a short
 GitHub account) with your phone and browser already filled in. Say what went wrong in a sentence or two; a
 screenshot helps.
 
-And a link to make a **donation** on Ko-fi, if you'd like to support the work.
+And a link to make a **donation**, if you'd like to support the work.
 
 ## Workouts
 
@@ -60,7 +60,7 @@ phone is set to reduce motion, exercises wait for Play either way.)
 
 - **Backup**: Export everything. See [Backups](Sharing-and-backups.md#back-up-everything).
 - **Import**: Choose file: restore a backup (it restores everything), or add workouts or exercises.
-- **Export your exercises** (Authoring mode): the JSON of everything in My exercises.
-- **Authoring mode**: adds the pose editor and JSON views, for making and fixing exercises. See
-  [Editing exercises](Editing-exercises.md#changing-the-poses-authoring-mode).
-- **JSON format reference** (Authoring mode): the file formats, for people writing exercises by hand.
+- **Export your exercises** (Advanced exercise editor): the JSON of everything in My exercises.
+- **Advanced exercise editor**: shows the exercise editor on each exercise, for precise modifications: the poses, the camera and JSON views. See
+  [Editing exercises](Editing-exercises.md#changing-the-poses-advanced-exercise-editor).
+- **JSON format reference** (Advanced exercise editor): the file formats, for people writing exercises by hand.

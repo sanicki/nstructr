@@ -3,7 +3,7 @@ import asyncio, os
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 # the small fixes: start sheet without sound/full screen, no history export, Duplicate needs exercises, JSON views
-# only in Authoring mode, collections alphabetical after Bookmarked, "Other names", QR picture, incline push-up head
+# only in Advanced exercise editor, collections alphabetical after Bookmarked, "Other names", QR picture, incline push-up head
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
@@ -34,7 +34,7 @@ async def main():
         await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(300)
         await pg.click('#editPoseBtn'); await pg.wait_for_timeout(200)
         print('exercise JSON, on       ', await pg.evaluate(vis + "('#aboutPanel [data-act=json]')"), '| edit: words', await pg.evaluate(vis + "('#edStepName')"), '| poses', await pg.evaluate(vis + "('#editor .joints')"))
-        # turning Authoring mode off while an exercise is open hides the editor when you come back
+        # turning Advanced exercise editor off while an exercise is open hides the editor when you come back
         await pg.evaluate("go('#/settings')"); await pg.wait_for_timeout(200); await pg.click('#setAuthoring'); await pg.wait_for_timeout(100)
         await pg.evaluate("history.back()"); await pg.wait_for_timeout(300)
         print('back, authoring off     ', await pg.evaluate("[S.view, $('#editor .joints').checkVisibility(), !$('#editPoseBtn').hidden]"), '<- poses hidden, Edit still there')

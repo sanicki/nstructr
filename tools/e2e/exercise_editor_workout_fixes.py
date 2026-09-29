@@ -5,7 +5,7 @@ from playwright.async_api import async_playwright
 ASK_JS = """setInterval(() => { const d = document.getElementById('askDialog'); if (!d || !d.open) return;   // answers NstructR's confirm dialog
   (window.ASKED = window.ASKED || []).push(document.getElementById('askTitle').textContent + ' | ' + document.getElementById('askText').textContent.split('\\n').pop());
   document.getElementById(window.ASK_NO ? 'askNo' : 'askYes').click(); }, 40)"""
-# pose editor (−/+ steppers, copy of a library exercise on first change, undo / revert step / discard all, own
+# exercise editor (−/+ steppers, copy of a library exercise on first change, undo / revert step / discard all, own
 # exercises edited in place), and workout fixes (pause stops speech, exit goes to the list, "(copy)" names)
 async def main():
     async with async_playwright() as p:

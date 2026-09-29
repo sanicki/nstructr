@@ -3,7 +3,7 @@ import asyncio, os
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 # Settings > Import & tools: Backup (Export everything), Import (Choose file: a backup, workouts, or exercises), then
-# Authoring mode; with it on, Export your exercises and the JSON format reference show, off they're hidden.
+# Advanced exercise editor; with it on, Export your exercises and the JSON format reference show, off they're hidden.
 ROWS = "[...document.querySelectorAll('#view-settings section[aria-labelledby=setToolsTitle] > *')].filter(x => x.offsetParent !== null).map(x => (x.querySelector('.body-large, .title-medium, h2') || x).textContent.trim())"
 async def main():
     async with async_playwright() as p:

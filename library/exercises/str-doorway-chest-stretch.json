@@ -23,23 +23,23 @@
     {
       "name": "Forearms on the frame",
       "cue": "Stand in a doorway, forearms on each side, elbows at chest height.",
-      "camera": 45,
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 300,
       "phase": "setup",
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
-        "shoulderL": [0, 90, 90],
-        "elbowL": 90,
-        "shoulderR": [0, 90, 90],
-        "elbowR": 90
+        "shoulderL": [90, 69, 1],
+        "elbowL": 91,
+        "shoulderR": [90, 69, 1],
+        "elbowR": 91
       }
     },
     {
       "name": "Doorway Chest Stretch",
-      "cue": "Step one foot through and lean your chest forward.",
-      "camera": 45,
+      "cue": "Step one foot through and lean your chest forward; forearms stay on the frame.",
+      "camera": 90,
       "durationMs": 1500,
       "holdMs": 5000,
       "phase": "rep",
@@ -47,10 +47,10 @@
       "plant": ["L", "R"],
       "pose": {
         "torso": [8, 0, 0],
-        "shoulderL": [-20, 85, 90],
-        "elbowL": 80,
-        "shoulderR": [-20, 85, 90],
-        "elbowR": 80,
+        "shoulderL": [89, 113, 9],
+        "elbowL": 86,
+        "shoulderR": [89, 113, 9],
+        "elbowR": 86,
         "hipR": [15, 0, 0],
         "kneeR": 5,
         "hipL": [-10, 0, 0]
@@ -62,15 +62,7 @@
       "type": "wall",
       "at": "elbowR",
       "keyframe": 0,
-      "offset": 6,
-      "beside": true
-    },
-    {
-      "type": "wall",
-      "at": "elbowL",
-      "keyframe": 0,
-      "offset": 6,
-      "beside": true
+      "offset": 3
     }
   ],
   "measure": "time",

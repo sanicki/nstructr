@@ -1,5 +1,5 @@
 
-/* ---------- Pose editor (Authoring mode) ----------
+/* ---------- Exercise editor: poses and camera (Advanced exercise editor) ----------
    Each joint has − and + buttons (hold to repeat) in steps of 1°, 5° or 15°, and an undo that brings it back to
    how it was when editing started. The first change to a library exercise makes the user's own copy,
    "<name> (copy)", saved like an imported exercise; the user's own exercises are changed in place (saved as you
