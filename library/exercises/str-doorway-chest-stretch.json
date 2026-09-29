@@ -51,9 +51,8 @@
         "elbowL": 80,
         "shoulderR": [-20, 85, 90],
         "elbowR": 80,
-        "hipR": [25, 0, 0],
-        "kneeR": 20,
-        "ankleR": -5,
+        "hipR": [15, 0, 0],
+        "kneeR": 5,
         "hipL": [-10, 0, 0]
       }
     }

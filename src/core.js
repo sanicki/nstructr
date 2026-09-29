@@ -320,9 +320,22 @@ function slideContacts(a, b, e, pose, seg, pos, pinned) {
   for (const ch of CHAINS) {
     const tip = ch.tip + ch.s;
     if (pinned.includes(tip)) continue;
-    if (a.cam !== b.cam && ch.root === 'hip') continue;                // legs don't step while the camera turns between views
     const sa = supportAt(A[tip]), sb = supportAt(B[tip]);
-    if (A[tip].y - sa > 3 || B[tip].y - sb > 3) continue;             // only limbs resting on a surface at both ends
+    const onA = A[tip].y - sa <= 3, onB = B[tip].y - sb <= 3;
+    if (ch.root === 'hip') {
+      // a standing foot lifting off or setting down (toes or heel on the floor at one end only) peels off and sets
+      // down rather than riding along the floor; a seated, kneeling or lying one may slide (Bound Angle, Pigeon)
+      const toe = 'toe' + ch.s, down = W => W[tip].y - supportAt(W[tip]) <= 3 || W[toe].y - supportAt(W[toe]) <= 3;
+      const dA = down(A), dB = down(B), G = dA ? A : B, O = dA ? B : A;
+      // (the other end clearly up: not a foot a few px off as the hips sway)
+      if (dA !== dB && Math.min(O[tip].y - supportAt(O[tip]), O[toe].y - supportAt(O[toe])) > 6) {
+        if (G[ch.root + ch.s].y - supportAt(G[toe]) > 120 && Math.abs(b.pose[ch.mid + ch.s] - a.pose[ch.mid + ch.s]) <= 160) peel(pose, seg, pos, ch, G, dA ? e : 1 - e, dA ? B : A);
+        continue;
+      }
+    }
+    if (onA !== onB) continue;                                         // a heel rising with the toes down; hands swing as they are
+    if (a.cam !== b.cam && ch.root === 'hip') continue;                // legs don't step while the camera turns between views
+    if (!onA) continue;                                                // only limbs resting on a surface at both ends
     if (Math.abs(b.pose[ch.mid + ch.s] - a.pose[ch.mid + ch.s]) > 160) continue;   // a leg folding right over swings, it doesn't step
     // a foot or hand that has somewhere to go is lifted and set down again (a step), not dragged along the floor
     const travel = Math.hypot(B[tip].x - A[tip].x, B[tip].z - A[tip].z), climb = Math.abs(sa - sb);
@@ -330,6 +343,24 @@ function slideContacts(a, b, e, pose, seg, pos, pinned) {
     // fade the slide in and out so the limb meets both keyframes exactly
     reachTip(pose, seg, pos, ch, { x: lerp(A[tip].x, B[tip].x, e), y: lerp(sa, sb, e) + arc, z: lerp(A[tip].z, B[tip].z, e) }, Math.min(1, 4 * e * (1 - e)));
   }
+}
+/* A foot or hand on the floor at one end of a move only (a foot lifting to step back, a hand coming down): it peels
+   off, rising before it travels, and sets down, arriving above its spot and then lowering, instead of riding along
+   the floor while the angles turn. F = its spot on the floor, sup = that floor's height, u = progress away from it
+   (0 on the floor, 1 where the angles put it at the other end, which it then meets exactly). */
+function peel(pose, seg, pos, ch, G, u, O) {
+  if (u <= 0 || u >= 1) return;
+  const tip = ch.tip + ch.s, toe = 'toe' + ch.s, F = G[tip], sup = Math.min(supportAt(G[tip]), supportAt(G[toe]));
+  const Q = fkAt(pose, seg, pos)[tip];
+  // travel waits for the lift; a long swing (a leg sweeping up behind, Dancer) only lifts: held under the body, the knee
+  // would come up in front and snap round
+  const far = Math.hypot(O[tip].x - F.x, O[tip].z - F.z) > 100 || O[tip].y - sup > 90, t = Math.min(1, Math.max(0, (u - 0.2) / 0.6));
+  const h = far ? 1 : t * t * (3 - 2 * t), rise = (far ? 40 : 22) * Math.sin(Math.PI * u);
+  const T = { x: lerp(F.x, Q.x, h), y: Math.max(Q.y, sup + rise), z: lerp(F.z, Q.z, h) };
+  reachTip(pose, seg, pos, ch, T, 1);
+  // the toes clear the floor too (a pointed foot would otherwise drag them)
+  const dip = sup + rise * 0.7 - fkAt(pose, seg, pos)[toe].y;
+  if (dip > 0) reachTip(pose, seg, pos, ch, { ...T, y: T.y + dip }, 1);
 }
 function clampTips(a, b, pose, seg, pos, pinned) {
   // a knee that would sink turns the thigh just enough to rest on the floor; the shin keeps its direction
@@ -367,7 +398,9 @@ function sharedPin(a, b, seg) {
   if (m.has(b)) return m.get(b);
   let rule = null;
   const A = fkAt(a.pose, seg, place(a.pose, seg, a.rule)), B = fkAt(b.pose, seg, place(b.pose, seg, b.rule));
-  const same = k => k && A[k] && B[k] && V3.dist(A[k], B[k]) < 2 && A[k].y - supportAt(A[k]) <= 3;
+  // (an airborne step's "lift" doesn't count: the foot that pushed off lands where it was)
+  const la = num(a.rule.lift), lb = num(b.rule.lift);
+  const same = k => k && A[k] && B[k] && Math.hypot(A[k].x - B[k].x, A[k].z - B[k].z) < 2 && Math.abs(A[k].y - B[k].y) < 2 + Math.abs(la - lb) && A[k].y - supportAt(A[k]) <= 3 + la;
   // same pin name but a different spot (the foot that was on the step is now on the floor) doesn't count as staying put
   if (!(a.rule.anchor === b.rule.anchor && same(a.rule.anchor))) {
     if (same(b.rule.anchor)) rule = b.rule; else if (same(a.rule.anchor)) rule = a.rule;

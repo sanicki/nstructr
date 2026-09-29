@@ -64,7 +64,7 @@ module.exports = [
   x('str-doorway-chest-stretch', 'wall-chest-stretch', 'Doorway Chest Stretch', ['Doorway Pec Stretch'], { equipment: ['Wall'], collections: ['Stretches'], category: 'Stretch', focus: 'Chest and front of the shoulders',
     props: [{ type: 'wall', at: 'elbowR', keyframe: 0, offset: 6, beside: true }, { type: 'wall', at: 'elbowL', keyframe: 0, offset: 6, beside: true }],
     edit: e => { e.keyframes = [K('Forearms on the frame', 'Stand in a doorway, forearms on each side, elbows at chest height.', { shoulderL: [0, 90, 90], elbowL: 90, shoulderR: [0, 90, 90], elbowR: 90 }, { ...STAND, camera: 45, phase: 'setup' }),
-      K('Doorway Chest Stretch', 'Step one foot through and lean your chest forward.', { torso: [8, 0, 0], shoulderL: [-20, 85, 90], elbowL: 80, shoulderR: [-20, 85, 90], elbowR: 80, hipR: [25, 0, 0], kneeR: 20, ankleR: -5, hipL: [-10, 0, 0] }, { anchor: 'ankleL', plant: ['L', 'R'], camera: 45, holdMs: 5000 })]; },
+      K('Doorway Chest Stretch', 'Step one foot through and lean your chest forward.', { torso: [8, 0, 0], shoulderL: [-20, 85, 90], elbowL: 80, shoulderR: [-20, 85, 90], elbowR: 80, hipR: [15, 0, 0], kneeR: 5, hipL: [-10, 0, 0] }, { anchor: 'ankleL', plant: ['L', 'R'], camera: 45, holdMs: 5000 })]; },
     over: { bilateral: null, ...holdT(30) },
     description: 'Standing in a doorway with a forearm on each side of the frame, step one foot through and lean forward until you feel a stretch across the chest.',
     setup: ['Stand in a doorway, elbows bent and at about chest height, a forearm on each side of the frame.'],
