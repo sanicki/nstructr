@@ -45,7 +45,8 @@ function check(ex, opts = {}) {
       const pins = [...new Set(k.anchor ? [r.rule.anchor, k.anchor] : [])];
       const need = [...pins.map(p => [p, 0]), ...(k.touch || []).map(t => [t.point, t.gap || 0])];
       for (const [p, gap] of need) {
-        const d = P[p].y - C.supportAt(P[p]) - gap - (pins.includes(p) ? (k.lift || 0) : 0);   // a jump's "lift" is meant
+        // a jump's "lift" is meant; a hanging step's anchor is held at its anchorY (a hand on a bar), not on the floor
+        const d = k.anchorY != null && p === k.anchor ? P[p].y - k.anchorY : P[p].y - C.supportAt(P[p]) - gap - (pins.includes(p) ? (k.lift || 0) : 0);
         if (Math.abs(d) > tol.rest) issues.push({ kind: 'rest', px: Math.abs(d), msg: `${label} step ${i + 1} "${r.name}": ${p} ${d > 0 ? 'floats' : 'sinks'} ${Math.abs(d).toFixed(0)}px` });
       }
       for (const rc of k.reach || []) {
