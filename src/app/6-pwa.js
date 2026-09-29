@@ -27,12 +27,41 @@ async function renderPersistNote() {
 
 /* ---------- Export everything / Import everything ---------- */
 const BACKUP_FORMAT = 'nstructr/backup';
+/* every setting and remembered choice, by the name it has in a backup: [name, storage key, kind, default]
+   (on/off switches are true/false in the file; the Instruction, speech speed and encouragement are handled on their own) */
+const BACKUP_PREFS = [
+  ['restBetween', REST_KEY, 'seconds', 5], ['restSets', REST_SETS_KEY, 'seconds', 10],
+  ['theme', THEME_KEY, ['system', 'light', 'dark'], 'system'], ['fullscreen', FS_KEY, 'switch', true],
+  ['autoplay', AUTOPLAY_KEY, 'switch', true], ['authoring', AUTHOR_KEY, 'switch', false],
+  ['exerciseLoop', LOOP_KEY, 'switch', true], ['exerciseMute', EXMUTE_KEY, 'switch', false],
+  ['groupCollections', GROUP_KEY, 'switch', true],
+  ['aiApp', AI_KEY, AI_APPS.map(a => a.id), 'gemini'], ['aiEquipment', AI_EQUIP_KEY, 'list', ['wall']],
+  ['libraryOrder', LIB_ORDER_KEY, 'list', null]
+];
+function prefOut([, key, kind, def]) {
+  const raw = pref(key, null);
+  if (raw == null) return def;
+  if (kind === 'switch') return raw !== 'off' && (raw === 'on' || def);
+  if (kind === 'seconds') { const v = parseFloat(raw); return v >= 0 ? v : def; }
+  if (kind === 'list') { try { const v = JSON.parse(raw); return Array.isArray(v) ? v : def; } catch (e) { return def; } }
+  return raw;
+}
+function prefIn([, key, kind], v) {
+  if (kind === 'switch' && typeof v === 'boolean') setPref(key, v ? 'on' : 'off');
+  else if (kind === 'seconds' && typeof v === 'number' && v >= 0 && v <= 300) setPref(key, String(Math.round(v)));
+  else if (kind === 'list' && Array.isArray(v) && v.every(x => typeof x === 'string')) setPref(key, JSON.stringify(v));
+  else if (Array.isArray(kind) && kind.includes(v)) setPref(key, v);
+  // (the Settings strings "on"/"off" of older backups' fullscreen)
+  else if (kind === 'switch' && (v === 'on' || v === 'off')) setPref(key, v);
+}
 function backupData() {
-  let fullscreen = null; try { fullscreen = localStorage.getItem(FS_KEY); } catch (e) { }
+  const settings = { sound: WK.sound, speechRate: speechRate(), encourage: encourageOn() };
+  for (const p of BACKUP_PREFS) { const v = prefOut(p); if (v != null) settings[p[0]] = v; }
+  const resume = loadSession();
   return {
     format: BACKUP_FORMAT, version: FILE_VERSION, exported: new Date().toISOString(),
     workouts: WK.list || [], exercises: S.lib.items, bookmarks: [...(BOOKMARKS || [])], history: loadLog(),
-    settings: { sound: WK.sound, speechRate: speechRate(), encourage: encourageOn(), ...(fullscreen ? { fullscreen } : {}) }
+    settings, ...(resume ? { resume } : {})
   };
 }
 async function exportEverything() {
@@ -56,7 +85,11 @@ function restoreBackup(data) {
   if (st.sound && SOUND_MODES.some(m => m[0] === st.sound)) setSound(st.sound);
   if (typeof st.speechRate === 'number') setRate(st.speechRate, false);
   if (typeof st.encourage === 'boolean') setPref(ENCOURAGE_KEY, st.encourage ? 'on' : 'off');
-  if (st.fullscreen) { try { localStorage.setItem(FS_KEY, st.fullscreen); } catch (e) { } }
+  for (const p of BACKUP_PREFS) if (st[p[0]] !== undefined) prefIn(p, st[p[0]]);
+  applyTheme(pref(THEME_KEY, 'system')); applyAuthoring(); orderLibrary();
+  // an unfinished workout carries on here too, unless one is already waiting to be resumed on this device
+  const r = data.resume;
+  if (r && typeof r.wid === 'string' && Number.isInteger(r.i) && !loadSession() && wkById(r.wid)) { try { localStorage.setItem(SESSION_KEY, JSON.stringify({ wid: r.wid, i: r.i })); } catch (e) { } }
   keepStorage();
   return { workouts: ws.length, exercises: exs.length, sessions: log.length };
 }
