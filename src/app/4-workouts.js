@@ -668,8 +668,17 @@ function runCurrent(announce) {
    last 10 s). WP.random can be replaced (tests). */
 const COACH_WORDS = { begin: ['Begin', 'Ready', 'Go'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
 const coachRandom = () => (WP.random || Math.random)();
-const coachWord = kind => (encourageOn() ? COACH_WORDS[kind][Math.floor(coachRandom() * COACH_WORDS[kind].length)] : COACH_WORDS[kind][0]);
+// a word isn't picked twice in a row for the same moment ("Good. Breathe. Good.", never "Good. Good.")
+const COACH_LAST = {};
+const coachWord = kind => {
+  if (!encourageOn()) return COACH_WORDS[kind][0];
+  const all = COACH_WORDS[kind], pick = all.length > 1 ? all.filter(w => w !== COACH_LAST[kind]) : all;
+  return (COACH_LAST[kind] = pick[Math.floor(coachRandom() * pick.length)]);
+};
 const cheerChance = p => encourageOn() && coachRandom() < p;
+// a count swapped for a cheer: 20%, halved for the rep right after one that cheered (and for as long as they keep cheering)
+const REP_CHEER = 0.2;
+function repCheer() { const hit = cheerChance(WP.cheered ? REP_CHEER / 2 : REP_CHEER); WP.cheered = hit; return hit; }
 function onWorkStep(i) {
   const m = S.planMeta[i] || {};
   if (m.say) speakGuided(m.say);
@@ -677,7 +686,8 @@ function onWorkStep(i) {
     WP.rep = m.repNo;
     // coach counts the reps: "Begin", 2, 3 … "Last one". Numbers are skipped if it's already talking; "Begin" never is
     const first = WP.rep === 1, last = WP.rep === m.repOf;
-    say(first ? coachWord('begin') : last ? coachWord('last') : cheerChance(0.2) ? coachWord('cheer') : String(WP.rep), true, { dropIfBusy: !first });
+    if (first) WP.cheered = false;
+    say(first ? coachWord('begin') : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), true, { dropIfBusy: !first });
   }
   renderWpCount();
 }

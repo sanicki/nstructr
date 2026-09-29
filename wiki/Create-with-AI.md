@@ -38,7 +38,8 @@ When you add its answer:
 
 ## 2. Ask the AI
 
-Pick the AI app (Gemini at first; the app remembers the one you pick) and tap **Open**:
+Pick the AI app, listed by company and app, e.g. **Google (Gemini)** (Gemini at first; the app remembers the one you
+pick), and tap **Open** ("Open Gemini"):
 
 - **ChatGPT, Claude, Copilot**: open with NstructR's instructions already typed in when they fit in a link (planning a
   workout); the instructions for writing an exercise or workout list the whole library with every exercise's names,

@@ -758,7 +758,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-exmute-v1` | the exercise page's spoken cues muted unless `"off"` (default muted since Sep 2026; overlay Mute toggle; the voice also needs Sound = Voice/Coach) |
 | `nstructr-group-collections-v1` | `"on"`: the Exercises tab groups All collections by collection; otherwise one A–Z list (default since Sep 2026; the tab's own switch) |
 | `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Voice and Coach (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
-| `nstructr-encourage-v1` | Coach's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach; `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; the backup's `settings.encourage`) |
+| `nstructr-encourage-v1` | Coach's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach; `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 10, 0–300; Settings > Workouts; 20 until Sep 2026). Workout items' `rest` is ignored |
 | `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 5, 0–300 in 1 s steps; Settings > Workouts; 10 until Sep 2026). Workout files' `restBetween` is ignored |
@@ -838,10 +838,6 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
       device): Gemini for YouTube links and videos, the others with photos (videos as still frames); feed the
       animation checks' errors back to the model to fix its JSON. **Self-hosted models** (an OpenAI-compatible
       address) in the same mode; their server must allow browser requests (CORS).
-    - **Names in the AI prompt's LIBRARY list** (deferred, owner, Sep 2026): today it lists ids only, so a library
-      exercise the source calls by another name is found only when the id says it or the model knows it (the
-      library check after import catches the duplicate that results). With names and other names the list grows
-      from about 2.2k to 5.7k characters; measure the link-filled apps (ChatGPT, Claude, Copilot) against `AI_Q_MAX`.
     - **Linked variations**: an exercise names its easier/harder versions (knee push-up ↔ push-up ↔ decline
       push-up), so a workout can swap one for another.
 
