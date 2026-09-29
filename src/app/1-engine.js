@@ -156,10 +156,12 @@ function stepScreen(r, seg = S.seg, dx = 0) {
   return Q;
 }
 /* the screen x range of a sequence: every step's body, walls and surfaces */
-function sequenceSpan(R, seg, dx = 0) {
+function sequenceSpan(R, seg, dx = 0, centre = false) {
   let minX = Infinity, maxX = -Infinity, minY = Infinity;
   for (const r of R) {
+    // (a travelling exercise is drawn with the view following the pelvis: each step centred on it)
     const Q = stepScreen(r, seg, dx);
+    if (centre) { const d = W / 2 - Q.pelvis.x; for (const k in Q) Q[k].x += d; }
     for (const k of POINTS) { minX = Math.min(minX, Q[k].x); maxX = Math.max(maxX, Q[k].x); minY = Math.min(minY, Q[k].y); }
     for (const wl of R.walls || []) if (wl) { const w = wallOnScreen(wl, r.cam); if (w.show > 0.02) { minX = Math.min(minX, w.x + dx - 6); maxX = Math.max(maxX, w.x + dx + 6); } }
     for (const sh of surfaceShapes(R.supports, r.cam)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); }
@@ -177,8 +179,9 @@ function rebuild() {
   for (const r of S.resolved) { S.offsets.push(acc); acc += r.dur + r.hold; }
   S.total = acc || 1;
   S.bandRest = bandRestLengths(S.props, S.resolved, S.seg);
+  S.travel = !!S.ex.travel; S.off = { x: 0, z: 0 };
   // Frame the whole sequence: one constant horizontal shift so every keyframe stays on stage (nothing slides)
-  const { minX, maxX } = sequenceSpan(S.resolved, S.seg);
+  const { minX, maxX } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   S.idx = Math.min(S.idx, S.resolved.length - 1);
   S.shownIdx = -1;
@@ -196,7 +199,7 @@ function buildFigure() {
     'elbowR-handR': '<circle class="hand" r="6.5" data-at="handR"/><g class="wts" data-hand="handR"></g>', 'neckBase-head': `<circle class="head" r="${S.seg.head}" data-at="head"/>` };
   scene.innerHTML =
     `<line class="floor-line" x1="${-5 * W}" y1="${FLOOR + 7}" x2="${6 * W}" y2="${FLOOR + 7}"/>` +
-    `<ellipse class="shadow" id="figShadow" cy="${FLOOR + 7}" rx="52" ry="6"/>` +
+    `<ellipse class="shadow" id="figShadow" cy="${FLOOR + 7}" rx="52" ry="6"/><g class="floor-ticks" id="floorTicks"></g>` +
     `<g id="propsBack"></g><g id="figRoot">` +
     BONES.map(bn => `<g class="${cls[bn.part]}" data-bone="${bn.id}"><line class="bone" vector-effect="non-scaling-stroke"/>${extra[bn.id] || ''}</g>`).join('') +
     `</g><g id="propsFront"></g>`;
@@ -309,7 +312,12 @@ function nextIndex(i) {
   // the exercise page with Loop off: once through (setup, one rep, finish), then it stops
   if (typeof loopOn === 'function' && !loopOn()) return i + 1 < S.resolved.length ? i + 1 : -1;
   const ph = S.phase || { start: 0, end: S.resolved.length - 1 };
-  if (i >= ph.end || i + 1 >= S.resolved.length) { S.rep++; return ph.start; }
+  if (i >= ph.end || i + 1 >= S.resolved.length) {
+    S.rep++;
+    // travelling: the next rep carries on from where this one ended
+    if (S.travel) { const d = travelOf(S.resolved[ph.end], S.resolved[ph.start], S.seg); S.off = { x: S.off.x + d.x, z: S.off.z + d.z }; }
+    return ph.start;
+  }
   return i + 1;
 }
 function frame(ts) {
@@ -330,14 +338,40 @@ function frame(ts) {
   if (n) draw();
   requestAnimationFrame(frame);
 }
+/* a frame of a travelling exercise (S.travel) is where the step is plus how far the reps so far have gone; the move
+   from a rep's end into the next rep's start begins from the end moved back (travelStep), not a slide to the start */
+function travelFrame(a, b, e) {
+  if (!S.travel) return frameAt(a, b, e, S.seg);
+  const ph = S.phase || {};
+  if (a && a !== b && a !== S.from && a.step === ph.end && b.step === ph.start) a = travelStep(a, b, S.seg);
+  const f = frameAt(a, b, e, S.seg), off = S.mode === 'workout' ? (S.offs && S.offs[S.idx]) || { x: 0, z: 0 } : S.off;
+  f.pos = { ...f.pos, x: f.pos.x + off.x, z: f.pos.z + off.z };
+  return f;
+}
+/* marks on the floor every 60 px along the way it travels, so moving across it reads as moving */
+function drawFloorTicks(P, cam) {
+  const g = $('#floorTicks'); if (!g) return;
+  if (!S.travel) { if (g.firstChild) g.innerHTML = ''; return; }
+  let out = '';
+  for (const ax of ['x', 'z']) {
+    const at = P.pelvis[ax], k0 = Math.floor(at / 60);
+    for (let k = k0 - 8; k <= k0 + 8; k++) {
+      const q = project({ p: { x: ax === 'x' ? k * 60 : P.pelvis.x, y: 0, z: ax === 'z' ? k * 60 : P.pelvis.z } }, cam).p;
+      out += `<line x1="${(q.x + S.shiftX).toFixed(1)}" y1="${FLOOR + 7}" x2="${(q.x + S.shiftX).toFixed(1)}" y2="${FLOOR + 17}"/>`;
+    }
+  }
+  g.innerHTML = out;
+}
 function draw() {
   const n = S.resolved.length, b = S.resolved[S.idx];
   const a = S.prev != null && S.resolved[S.prev] ? S.resolved[S.prev] : (S.from || b);
   // "smooth" steps speed up and slow down; "linear" ones keep a constant speed, so a chain of them flows like a clock hand
   const raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
   const e = b.ease === 'linear' ? raw : easeInOut(raw);
-  const f = frameAt(a, b, e, S.seg), P = fkAt(f.pose, S.seg, f.pos), Q = project(P, f.cam);
+  const f = travelFrame(a, b, e), P = fkAt(f.pose, S.seg, f.pos), Q = project(P, f.cam);
+  if (S.travel) S.shiftX = W / 2 - Q.pelvis.x;                  // the view follows the figure over a marked floor
   for (const k in Q) Q[k].x += S.shiftX;
+  drawFloorTicks(P, f.cam);
   applyPose(Q);
   S.curCam = f.cam;
   if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);

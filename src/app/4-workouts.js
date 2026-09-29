@@ -599,7 +599,14 @@ function stagePlan(p) {
   S.mode = 'workout'; S.ex = p.ex; S.seg = p.seg; S.props = p.props; S.tempo = p.tempo; S.speed = 1;
   S.resolved = p.plan; S.planMeta = p.meta; S.idx = 0; S.prev = null; S.from = prevLast; S.planDone = false; S.t = 0;
   S.bandRest = bandRestLengths(S.props, p.plan, S.seg);
-  const { minX, maxX } = sequenceSpan(p.plan, S.seg);
+  // travelling: how far along each step of the plan is (each rep carries on from where the last one ended)
+  S.travel = !!p.ex.travel; S.phase = phaseInfo(p.ex.keyframes); S.offs = [{ x: 0, z: 0 }];
+  for (let i = 1; i < p.plan.length; i++) {
+    const a = p.plan[i - 1], b = p.plan[i], o = S.offs[i - 1];
+    const d = S.travel && a.step === S.phase.end && b.step === S.phase.start ? travelOf(a, b, S.seg) : { x: 0, z: 0 };
+    S.offs.push({ x: o.x + d.x, z: o.z + d.z });
+  }
+  const { minX, maxX } = sequenceSpan(p.plan, S.seg, 0, S.travel);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   if (exChanged) { buildFigure(); buildGuide(); }
   frameScene(p.plan);
@@ -609,7 +616,7 @@ function stagePlan(p) {
 /* In the workout player the camera frames the whole exercise tightly (head to floor, both ends of the move),
    so the figure is as big as the screen allows. The overlays sit in bands above and below it. */
 function frameScene(plan) {
-  const { minX, maxX, minY } = sequenceSpan(plan, S.seg, S.shiftX);
+  const { minX, maxX, minY } = sequenceSpan(plan, S.seg, S.shiftX, S.travel);
   if (!isFinite(minX)) return;
   const pad = 26, top = minY - 20 - pad, h = FLOOR + 16 - top, wv = Math.max(maxX - minX + pad * 2, 120);
   scene.setAttribute('viewBox', `${(minX + maxX) / 2 - wv / 2} ${top} ${wv} ${h}`);

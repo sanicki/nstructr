@@ -602,10 +602,26 @@ function wallOnScreen(wl, yaw) {
 
 /* Resolve a whole sequence and hand the floor contact over between steps: when a step pins a different point
    (say the hands instead of the feet), that point is pinned exactly where it already was, so nothing slides. */
+/* Travel (an exercise with "travel": true walks, side-steps or carries across the floor): a rep ends further along
+   than it starts, and the next rep carries on from there. travelOf(a, b) is how far: where the rep's first step b
+   pins its point (the foot that stays) is at the end of the rep a, less where it is in b. travelStep(a, b) is a moved
+   back by that much, so the move from the rep's end into its next start is the step it is, not a slide back. */
+function travelOf(a, b, seg) {
+  const k = b.rule.anchor || 'pelvis';
+  SUPPORTS = a.supports || SUPPORTS;
+  const A = fkAt(a.pose, seg, place(a.pose, seg, a.rule))[k], B = fkAt(b.pose, seg, place(b.pose, seg, b.rule))[k];
+  return { x: A.x - B.x, z: A.z - B.z };
+}
+const TRAVEL_CACHE = new WeakMap();
+function travelStep(a, b, seg) {
+  let m = TRAVEL_CACHE.get(a); if (!m) TRAVEL_CACHE.set(a, (m = new Map()));
+  if (!m.has(b)) { const d = travelOf(a, b, seg); m.set(b, { ...a, rule: { ...a.rule, x: num(a.rule.x) - d.x, z: num(a.rule.z) - d.z } }); }
+  return m.get(b);
+}
 function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
   SUPPORTS = surfacesFrom(props);
   const R = keyframes.map(kf => resolveKeyframe(kf, seg, ex));
-  R.forEach(r => (r.supports = SUPPORTS));
+  R.forEach((r, i) => { r.supports = SUPPORTS; r.step = i; });
   R.supports = SUPPORTS;
   const onFloor = (P, k) => P[k].y - supportAt(P[k]) <= 3;
   for (let i = 1; i < R.length; i++) {
@@ -712,7 +728,7 @@ function mirrorKeyframe(kf) {
 
 if (typeof module !== 'undefined') module.exports = {
   phaseInfo, reverseReps, weightSVG, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
-  propRoute, propPoint, bandAnchors, anchorSVG, resolveSequence, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
+  propRoute, propPoint, bandAnchors, anchorSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
 };

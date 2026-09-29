@@ -117,7 +117,7 @@ module.exports = [
     cues: ['Soft standing knee.', 'Eyes on a spot ahead.', 'Hold on if you wobble.'], source: { url: 'https://go4life.nia.nih.gov/sample_workout/3-balance-exercises-older-adults', title: 'NIA Go4Life: 3 balance exercises for older adults' } }),
   x('bal-tandem-stance', 'bw-squat', 'Tandem Stance', ['Heel-to-Toe Stance', 'Semi-Tandem Stance'], { equipment: [], collections: ['Balance'], category: 'Balance', focus: 'Balance', props: [],
     edit: e => { e.keyframes = [K('Stand tall', 'Feet together.', {}, { ...STAND, phase: 'setup' }),
-      K('Tandem Stance', 'Right heel right in front of your left toes; hold.', { hipR: [14, -4, 0], hipL: [-8, 4, 0], shoulderL: [0, 30, 0], shoulderR: [0, 30, 0] }, { anchor: 'ankleL', plant: ['L', 'R'], touch: [{ point: 'ankleR', adjust: 'hipR' }], holdMs: 5000 })]; },
+      K('Tandem Stance', 'Right heel right in front of your left toes; hold.', { hipR: [4, -5.5, 0], hipL: [-6, -3, 0], shoulderL: [0, 30, 0], shoulderR: [0, 30, 0] }, { anchor: 'ankleL', plant: ['L', 'R'], touch: [{ point: 'ankleR', adjust: 'hipR' }], holdMs: 5000 })]; },
     over: { bilateral: { labels: { L: 'Right foot in front', R: 'Left foot in front' } }, ...holdT(20, 'Stand near a wall or counter. Build up to 30 seconds.') },
     description: 'Stand with one foot directly in front of the other, heel touching toes, as if on a line, and hold steady.',
     setup: ['Stand next to a wall or counter you can touch if needed.'],

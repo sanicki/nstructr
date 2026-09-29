@@ -1,0 +1,62 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bal-heel-to-toe-walk",
+  "name": "Heel-to-Toe Walk",
+  "otherNames": ["Tandem Walk", "Tightrope Walk"],
+  "category": "Balance",
+  "focus": "Balance",
+  "collections": ["Balance"],
+  "equipment": [],
+  "description": "Walk in a straight line, putting the heel of each foot just in front of the toes of the other, as if on a tightrope.",
+  "source": {
+    "url": "https://www.nhs.uk/live-well/exercise/balance-exercises/",
+    "title": "NHS: Balance exercises (heel-to-toe walk)"
+  },
+  "setup": ["Stand tall beside a wall or counter you can touch if you need to.", "Arms out to the sides for balance."],
+  "cues": ["Heel to toe with each step.", "Eyes on a point ahead.", "Slow and steady."],
+  "prescription": {
+    "reps": "20 steps, 1–3 times",
+    "note": "Look ahead, not at your feet. Walk beside a wall or counter you can touch if you wobble."
+  },
+  "keyframes": [
+    {
+      "name": "Right foot in front",
+      "cue": "Put your right heel just in front of your left toes.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 30, 0],
+        "shoulderR": [0, 30, 0],
+        "hipR": [4, -5.5, 0],
+        "hipL": [-6, -3, 0]
+      }
+    },
+    {
+      "name": "Left foot in front",
+      "cue": "Now your left heel in front of your right toes.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 30, 0],
+        "shoulderR": [0, 30, 0],
+        "hipL": [4, -5.5, 0],
+        "hipR": [-6, -3, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "travel": true,
+  "repName": "step pair"
+}
