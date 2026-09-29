@@ -740,7 +740,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   is per block.
 - **User guide**: `wiki/*.md` (Home, Getting started, Exercises, Workouts, Working out, Create with AI, Editing
   exercises, Sharing and backups, Settings, Troubleshooting), linked from the README. Screenshots in `wiki/images/`
-  come from `tools/wiki_screenshots.py` (phone 412×860 and cover 360×398, light theme, 2× then 128-colour PNG). It
+  come from `tools/wiki_screenshots.py` (Android Chrome on a typical phone, 412×839 like a Pixel 7, light theme, 2× then 128-colour PNG; the flip phone's cover screen, 360×398, only where the guide is about it: `cover-workouts`, `cover-player`; desktop Chrome at 1280×800 for the laptop/desktop section: `desktop-exercise`). It
   fetches Google Fonts itself (honouring `HTTPS_PROXY`/`SSL_CERT_FILE`) and serves them to the browser, so the icons
   render in sandboxes where the browser can't reach Google. The GitHub Wiki itself isn't used (it's a separate repo
   that can't be reviewed in pull requests); the pages would copy over as they are if that changes.

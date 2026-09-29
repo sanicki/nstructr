@@ -40,9 +40,18 @@ async def shot(pg, name, sel=None, full=False):
     png = await (pg.locator(sel).screenshot() if sel else pg.screenshot(full_page=full))
     save(png, name)
 
-async def page(b, w, h, touch=False):
-    ctx = await b.new_context(viewport={'width': w, 'height': h}, device_scale_factor=2, has_touch=touch,
-                              reduced_motion='no-preference')
+# Android Chrome on a typical phone (Pixel 7: 412 × 839 of page), unless a shot is about the flip phone's cover screen
+ANDROID = 'Mozilla/5.0 (Linux; Android 14; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Mobile Safari/537.36'
+PHONE, COVER = (412, 839), (360, 398)
+
+# desktop Chrome, for the guide's section on laptops and desktops
+DESKTOP_UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
+DESKTOP = (1280, 800)
+
+async def page(b, size=PHONE):
+    desk = size == DESKTOP
+    ctx = await b.new_context(viewport={'width': size[0], 'height': size[1]}, device_scale_factor=1 if desk else 2, is_mobile=not desk, has_touch=not desk,
+                              user_agent=DESKTOP_UA if desk else ANDROID, reduced_motion='no-preference')
     await ctx.route(re.compile(r'https://fonts\.(googleapis|gstatic)\.com/.*'), fonts)
     pg = await ctx.new_page()
     pg.on('pageerror', lambda e: print('PAGE ERROR', e))
@@ -57,7 +66,7 @@ async def main():
     os.makedirs(OUT, exist_ok=True)
     async with async_playwright() as p:
         b = await p.chromium.launch()
-        pg = await page(b, 412, 860)
+        pg = await page(b)
         # --- some content of the user's own, so the pages look lived-in ---
         await pg.evaluate("""(()=>{ WK.list.length = 0;
           WK.list.push({id:'legs', name:'Leg Day', blocks:[
@@ -70,6 +79,11 @@ async def main():
         # Workouts tab
         await pg.click('[data-wtoggle="legs"]'); await pg.evaluate(HIDE_SNACK)
         await shot(pg, 'workouts')
+        # the install tip (Getting started): as Chrome offers it after the first workout (its install event faked)
+        await pg.evaluate("""(()=>{ localStorage.setItem('nstructr-install-hint-v1', 'due'); scrollTo(0, 0);
+          const e = new Event('beforeinstallprompt', { cancelable: true }); e.prompt = () => Promise.resolve(); dispatchEvent(e); })()""")
+        await pg.wait_for_timeout(500); await shot(pg, 'install-tip')
+        await pg.evaluate(HIDE_SNACK + "; INSTALL_EVT = null; renderInstall(); localStorage.setItem('nstructr-install-hint-v1', 'shown')")
         await pg.evaluate("go('#/workout/legs')"); await pg.wait_for_timeout(300); await pg.evaluate(HIDE_SNACK)
         await shot(pg, 'workout-editor')
         uid = await pg.evaluate("WK.list[0].blocks[1].items[0].uid")
@@ -119,7 +133,7 @@ async def main():
           S.lib.items = S.lib.items.filter(x => x.id !== 'u-hip-raise'); saveLib(); })()""")
         # Share
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
-        await pg.click('[data-share-wk="legs"]'); await pg.wait_for_timeout(500); await shot(pg, 'share')
+        await pg.evaluate(HIDE_SNACK); await pg.click('[data-share-wk="legs"]'); await pg.wait_for_timeout(500); await shot(pg, 'share')
         await pg.evaluate("$('#shareDialog').close()")
         link = await pg.evaluate("SHARING.url")
         # Submit to library: an own exercise that moves the same as a library one
@@ -127,27 +141,34 @@ async def main():
         await pg.wait_for_timeout(500); await pg.click('#shareExBtn'); await pg.click('#shareSubmit'); await shot(pg, 'submit')
         await pg.evaluate("$('#submitDialog').close(); S.lib.items = S.lib.items.filter(x => x.id !== 'u-chair-squat'); saveLib(); go('#/workouts')")
         # the other phone opens the link
-        pg2 = await page(b, 412, 860)
+        pg2 = await page(b)
         await pg2.goto(link.replace('#', '?r#'), wait_until='domcontentloaded'); await pg2.wait_for_timeout(1200)
         await shot(pg2, 'link-received')
         await pg2.context.close()
         await pg.context.close()
-        # --- the cover screen: 360 x 398 ---
-        cv = await page(b, 360, 398, touch=True)
+        # --- the workout player, on a phone ---
+        wp = await page(b)
+        await wp.evaluate("WK.hinted=true; setSound('voice'); startWorkout(LIB_WK[0], 6)"); await wp.wait_for_timeout(2500)
+        await wp.evaluate(HIDE_SNACK); await shot(wp, 'player')
+        box = await wp.evaluate("(()=>{const r=document.querySelector('.fs').getBoundingClientRect(); return [r.x+r.width/2, r.y+r.height/2]})()")
+        await wp.touchscreen.tap(*box); await wp.wait_for_timeout(400)
+        await shot(wp, 'player-controls')
+        await wp.evaluate("startRest(20, 'item')"); await wp.wait_for_timeout(1300); await wp.evaluate(HIDE_SNACK)
+        await shot(wp, 'rest')
+        await wp.context.close()
+        # --- the flip phone's cover screen (360 x 398): only where the guide is about it ---
+        cv = await page(b, COVER)
         await cv.evaluate("WK.list.length=0; saveWorkouts(); go('#/workouts')"); await cv.wait_for_timeout(300)
         await shot(cv, 'cover-workouts')
-        await cv.evaluate("WK.hinted=true; setSound('voice'); startWorkout(LIB_WK[0], 6)"); await cv.wait_for_timeout(2500)
+        await cv.evaluate("WK.hinted=true; setSound('voice'); startWorkout(LIB_WK[0], 6)"); await cv.wait_for_timeout(7000)   # into the lunge
         await cv.evaluate(HIDE_SNACK); await shot(cv, 'cover-player')
-        box = await cv.evaluate("(()=>{const r=document.querySelector('.fs').getBoundingClientRect(); return [r.x+r.width/2, r.y+r.height/2]})()")
-        await cv.touchscreen.tap(*box); await cv.wait_for_timeout(400)
-        await shot(cv, 'cover-player-controls')
-        await cv.evaluate("startRest(20, 'item')"); await cv.wait_for_timeout(1300); await cv.evaluate(HIDE_SNACK)
-        await shot(cv, 'cover-rest')
-        await cv.evaluate("exitWorkout()"); await cv.wait_for_timeout(300)
-        await cv.evaluate("go('#/play/star-excursion-4-point')"); await cv.wait_for_timeout(600)
-        await cv.evaluate("setPlaying(false); jumpTo(3); scrollTo(0,0)"); await cv.wait_for_timeout(300)
-        await cv.evaluate("hideExControls()"); await cv.evaluate(HIDE_SNACK)
-        await shot(cv, 'cover-exercise')
+        await cv.context.close()
+        # --- a laptop or desktop (Chrome): the same app in a window ---
+        dk = await page(b, DESKTOP)
+        await dk.evaluate("go('#/play/bw-reverse-lunge')"); await dk.wait_for_timeout(700)
+        await dk.evaluate("setPlaying(false); jumpTo(2); scrollTo(0,0)"); await dk.wait_for_timeout(2600)
+        await dk.evaluate("hideExControls()"); await dk.evaluate(HIDE_SNACK)
+        await shot(dk, 'desktop-exercise')
         await b.close()
 
 asyncio.run(main())

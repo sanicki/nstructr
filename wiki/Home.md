@@ -13,7 +13,7 @@ tablet or computer.
 
 | Page | What's in it |
 |---|---|
-| [Getting started](Getting-started.md) | Opening the app, installing it, the three tabs, the cover screen |
+| [Getting started](Getting-started.md) | Opening the app, installing it, the three tabs, the cover screen, laptops and desktops (moving things between devices) |
 | [Exercises](Exercises.md) | Browsing and searching the library, bookmarks, the exercise page |
 | [Workouts](Workouts.md) | Library workouts, making your own, blocks, circuits, sets, rests, pace |
 | [Working out](Working-out.md) | The workout player: taps, swipes, sound, rests, pausing and resuming |
