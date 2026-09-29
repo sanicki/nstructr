@@ -25,6 +25,41 @@ async function renderPersistNote() {
     : '';
 }
 
+/* ---------- Install the app ----------
+   Chrome, Edge and Samsung Internet say when the app can be installed (beforeinstallprompt): we keep the event (so
+   Chrome doesn't show its own mini-bar; its menu's Install stays) and offer Install ourselves. Safari on iPhone and
+   iPad has no event: Share > Add to Home Screen, told in words. Offered once, after the first workout that was
+   started (finished or left early), never during one; Settings > Import & tools keeps an Install row while it's possible. */
+const INSTALL_KEY = 'nstructr-install-hint-v1';     // "due": a workout was started, the tip is owed; "shown": offered once
+let INSTALL_EVT = null;
+const onIOS = () => /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const iosAddable = () => onIOS() && navigator.standalone !== true;
+// (a page put in full screen for a workout also matches display-mode: fullscreen; an installed app has no fullscreenElement)
+const runningInstalled = () => installedApp() && !document.fullscreenElement;
+const canInstall = () => !runningInstalled() && (!!INSTALL_EVT || iosAddable());
+const IOS_STEPS = 'In Safari, tap Share, then Add to Home Screen.';
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); INSTALL_EVT = e; renderInstall(); maybeInstallHint(); });
+window.addEventListener('appinstalled', () => { INSTALL_EVT = null; setPref(INSTALL_KEY, 'shown'); renderInstall(); });
+function installDue() { if (!pref(INSTALL_KEY, '')) setPref(INSTALL_KEY, 'due'); }
+function maybeInstallHint() {
+  if (pref(INSTALL_KEY, '') !== 'due' || S.view === 'wplay' || !canInstall()) return;
+  setPref(INSTALL_KEY, 'shown');
+  snack(`Install ${APP_NAME}?`, 12000, { label: INSTALL_EVT ? 'Install' : 'How', run: installApp });   // why: Settings > Install app
+}
+async function installApp() {
+  if (!INSTALL_EVT) { if (iosAddable()) snack(IOS_STEPS, 8000); return; }
+  const e = INSTALL_EVT; INSTALL_EVT = null;                  // a prompt can only be used once
+  try { await e.prompt(); } catch (err) { }
+  renderInstall();
+}
+function renderInstall() {
+  const row = $('#installRow'); if (!row) return;
+  row.hidden = !canInstall();
+  $('#installHow').textContent = INSTALL_EVT ? 'Works offline and full screen, and the browser is much less likely to clear your data.' : IOS_STEPS;
+  $('#installBtn').hidden = !INSTALL_EVT;
+}
+renderInstall();
+
 /* ---------- Export everything / Import everything ---------- */
 const BACKUP_FORMAT = 'nstructr/backup';
 /* every setting and remembered choice, by the name it has in a backup: [name, storage key, kind, default]
@@ -109,6 +144,7 @@ async function shareFile(text, name, title) {
 
 document.querySelector('.shell').addEventListener('click', e => {
   const t = e.target.closest('[data-act="backup"]'); if (t) exportEverything();
+  if (e.target.closest('[data-act="install"]')) installApp();
 });
 if (installedApp()) keepStorage();
 

@@ -544,6 +544,15 @@ steps or the joint will windmill; the jump check will catch it.
   (`nstructr-fonts-v1`) the first time they load online.
 - `display: fullscreen` (with `standalone` as fallback): no browser UI and no "exit full screen" notice; the
   app already skips `requestFullscreen` when installed (`installedApp()`).
+- **Install tip** (Sep 2026, `src/app/6-pwa.js`): Chromium browsers fire `beforeinstallprompt` when the app is
+  installable; we keep the event (`preventDefault`: no Chrome mini-bar; the menu's Install stays) and offer our own.
+  Once, after the first workout that was started (`startWorkout` → `installDue()`: key `due`), when leaving the player
+  (finished or left early) or on a later visit (`route` → `maybeInstallHint()`), never during a workout: a snackbar
+  "Install NstructR?" (the why is on the Settings row) with **Install** (`e.prompt()`, usable once) and ✕ (`snack(msg, ms, {label, run})`). iPhone/iPad Safari (no event)
+  get **How** (Share > Add to Home Screen). A browser that can't install gets nothing and the tip stays owed.
+  Settings › Import & tools has an **Install app** row while installing is possible (`renderInstall`). A page in
+  full screen for a workout also matches `display-mode: fullscreen`, so "installed" here is `runningInstalled()`
+  (no `fullscreenElement`). Test: `tools/e2e/install_prompt.py` (a faked event).
 - `navigator.storage.persist()` is requested when a workout starts, after a backup/restore, and at launch in
   the installed app. The Create page's backup card says whether storage is persistent.
 - Colours: Material 3 tonal-spot scheme from seed `#216CAD` (the icon's blue bar), generated with
@@ -772,6 +781,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-encourage-v1` | Coach's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach; `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 10, 0–300; Settings > Workouts; 20 until Sep 2026). Workout items' `rest` is ignored |
+| `nstructr-install-hint-v1` | the install tip: `due` once a workout was started, `shown` once offered (or installed). Per device, not in backups |
 | `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 5, 0–300 in 1 s steps; Settings > Workouts; 10 until Sep 2026). Workout files' `restBetween` is ignored |
 
 The mixed prefixes are historical; renaming them would silently wipe users' data. If you consolidate, migrate

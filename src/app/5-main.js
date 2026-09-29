@@ -361,8 +361,15 @@ async function importFiles(files) {
   if (texts.length) importAndShow(texts);
 }
 let snackTimer = 0;
-function snack(msg, ms = 3500) {
-  const el = $('#snackbar'); el.textContent = msg; el.classList.add('show');
+/* action: { label, run } adds a button (and a close ✕) that stays until it's used, closed or times out */
+function snack(msg, ms = 3500, action) {
+  const el = $('#snackbar'); el.textContent = msg; el.classList.add('show'); el.classList.toggle('has-act', !!action);
+  if (action) {
+    const btn = (cls, html, label, fn) => { const b = document.createElement('button'); b.className = cls; b.innerHTML = html; if (label) b.setAttribute('aria-label', label);
+      b.addEventListener('click', () => { clearTimeout(snackTimer); el.classList.remove('show'); fn && fn(); }); el.appendChild(b); };
+    btn('btn text snack-act stateful', esc(action.label), '', action.run);
+    btn('icon-btn snack-close stateful', '<span class="icon">close</span>', 'Close', null);
+  }
   // shown over an open dialog (Create with AI…): a modal dialog sits above the page, so the message goes inside it
   const host = [...document.querySelectorAll('dialog[open]')].pop() || document.body;
   if (el.parentElement !== host) host.appendChild(el);
@@ -407,6 +414,7 @@ function route() {
     moveStage(true);
   } else lastList = h;
   S.view = view;
+  if (view !== 'wplay') setTimeout(maybeInstallHint, 800);          // the install tip, owed once a workout was started
   if (view === 'player' && S.playing) exStepSound(S.idx);     // it started playing before the view switched: read the first step now
   document.body.dataset.view = view;
   document.querySelectorAll('.view').forEach(v => (v.hidden = v.id !== 'view-' + view));
