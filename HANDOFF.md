@@ -794,7 +794,10 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 
 ---
 
-## 13. Roadmap (agreed order)
+## 13. Roadmap: history and plans
+
+What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list. This section keeps what was done
+(✅) and the detailed plans behind open items.
 
 1. ✅ **Finish the repo split** — the items in §2.
 2. ✅ **Installable PWA + backup**: `manifest.webmanifest` (`display: fullscreen`, any orientation, theme colours,
@@ -877,21 +880,20 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 
 ---
 
-## 14. Open questions for the owner
+## 14. Questions for the owner (decided)
 
 1. ~~**License**~~ Decided: MIT for the engine, the app code and the library content (`LICENSE`).
 2. ~~**Trademark** check on "NstructR"~~ Dropped (owner, Sep 2026).
 3. ~~**4-Point Star Excursion**: straight-left reach or a back-left diagonal?~~ Decided: keep it as it is (owner,
    Sep 2026).
-4. **Seated band row**: draw the band crossed in an X (as the routine describes)?
 5. ~~Is **22 vh** the right bottom margin on the real cover screen?~~ Confirmed on the owner's flip phone.
 6. ~~Library workouts: copy on first run, or only a library section?~~ Decided: library section only;
    Customize makes a copy. Existing installs keep their first-run copy.
 7. ~~Does the app run on the cover screen?~~ Installed as an app, it runs there (owner, Sep 2026).
 9. ~~**3D skeleton**~~: go, as v2 (Sep 2026), and done; no v1 export, and v1 import stopped once everything was v2
    (owner: there are no other users yet).
-10. **Status bar flicker on the back gesture** (owner report, Sep 2026, installed app on the owner's flip phone): the status bar
-   appears and disappears. Not reproduced. Likely Android's own behaviour in `display: fullscreen` (an edge swipe
-   briefly reveals the system bars); the app doesn't touch full screen outside a workout. Nothing to do unless it
-   can be reproduced; if it matters, the option is `display: standalone` with full screen only during workouts.
-8. Machines: which machines matter to the owner first?
+
+Still open (seated band row X, which machines first, status bar flicker): see [ROADMAP.md](ROADMAP.md). The status
+bar flicker (owner report, installed app on a flip phone) wasn't reproduced; likely Android's own behaviour in
+`display: fullscreen` (an edge swipe briefly reveals the system bars). If it matters, the option is
+`display: standalone` with full screen only during workouts.

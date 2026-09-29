@@ -75,6 +75,7 @@ Read these, in this order, before changing anything:
 | [`docs/equipment-equivalents.md`](docs/equipment-equivalents.md) | Equipment versions of every library exercise: what was found, what's in the library, what's next |
 | [`docs/collection-research.md`](docs/collection-research.md) | Common exercises per collection the library doesn't have yet, and equipment to add (a proposal) |
 | [`docs/audit-2026-09.md`](docs/audit-2026-09.md) | The Sep 2026 audit: accessibility, Material Design, security, performance |
+| [`ROADMAP.md`](ROADMAP.md) | What's still to do, and questions waiting on the owner |
 | [`wiki/`](wiki/Home.md) | The user guide: how the app behaves from a user's side |
 | `schema/*.schema.json` | JSON Schemas for exercise and workout files |
 

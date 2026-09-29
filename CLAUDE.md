@@ -1,6 +1,9 @@
 # NstructR — working notes for Claude Code
 
-Read `HANDOFF.md` first: formats, engine pipeline, validation rules, design decisions, roadmap, open questions.
+Read `HANDOFF.md` first: formats, engine pipeline, validation rules, design decisions.
+`ROADMAP.md` is the one to-do list: only open items, short plain lines. Any PR that finishes, adds, defers or decides a
+roadmap item updates it in the same PR (a done item comes off; its history goes in HANDOFF). "Next PR" = its top item
+unless the owner says otherwise.
 The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wiki/images/`); update it with user-visible changes.
 
 ## Commands
