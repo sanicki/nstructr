@@ -305,7 +305,7 @@ function importText(text, label) {
   let data;
   try { data = JSON.parse(text); } catch (e) { throw new Error(`${label ? label + ' is' : "That's"} not valid JSON (${e.message}).`); }
   data = upgradeFile(data);
-  if (data && data.format === BACKUP_FORMAT) { RESTORED = restoreBackup(data); return []; }   // Export everything
+  if (data && data.format === BACKUP_FORMAT) { RESTORED = restoreBackup(data, RESTORE_MODE); return []; }   // Export everything
   if (data && Array.isArray(data.blocks) && !data.workouts) data = { workouts: [data] };   // one workout file
   if (data && Array.isArray(data.workouts)) {                    // a workout file (may bring its own exercises)
     data = { ...data, workouts: JSON.parse(JSON.stringify(data.workouts)) };
@@ -332,15 +332,24 @@ function importText(text, label) {
   return list;
 }
 /* IMPORT_NEW: the user's own exercises an import added (not ones they had, or copies of library ones: those are on purpose); IMPORT_CALLED: [{ ex, name, equipment, at }] what the source calls them and uses */
-let IMPORTED_WORKOUTS = [], RESTORED = null, IMPORT_NEW = [], IMPORT_CALLED = [];
-function importAndShow(texts) {
+let IMPORTED_WORKOUTS = [], RESTORED = null, IMPORT_NEW = [], IMPORT_CALLED = [], RESTORE_MODE = 'merge';
+const isBackupText = t => { try { const d = JSON.parse(t); return !!d && d.format === BACKUP_FORMAT; } catch (e) { return false; } };
+/* a backup: merge it with what's here, or replace what's here with it (the user's choice, each time) */
+async function askRestore() {
+  const a = await ask('Restore this backup?', 'Merge: keep what\'s on this device and add the backup\'s workouts, exercises and history. Its settings replace yours.\n\nReplace: make this device match the backup. Workouts, exercises, bookmarks and history that aren\'t in it are deleted.',
+    'Merge', false, { label: 'Replace', danger: true });
+  return a === 'alt' ? 'replace' : a ? 'merge' : null;
+}
+function importAndShow(texts, restoreMode) {
+  if (!restoreMode && texts.some(([t]) => isBackupText(t))) { askRestore().then(m => { if (m) importAndShow(texts, m); }); return true; }
+  RESTORE_MODE = restoreMode || 'merge';
   const added = []; IMPORTED_WORKOUTS = []; RESTORED = null; IMPORT_NEW = []; IMPORT_CALLED = [];
   try { for (const [text, label] of texts) added.push(...importText(text, label)); }
   catch (e) { snack(`Couldn't import: ${e.message}`, 6000); if (!added.length && !IMPORTED_WORKOUTS.length && !RESTORED) return false; }
   saveLib();
   if (RESTORED) {
     const n = (k, one, many) => plural(RESTORED[k], { one: `# ${one}`, other: `# ${many}` });
-    snack(`Restored ${n('workouts', 'workout', 'workouts')}, ${n('exercises', 'saved exercise', 'saved exercises')} and ${n('sessions', 'history entry', 'history entries')}`, 6000);
+    snack(`${RESTORE_MODE === 'replace' ? 'Replaced with the backup' : 'Restored'}: ${n('workouts', 'workout', 'workouts')}, ${n('exercises', 'saved exercise', 'saved exercises')} and ${n('sessions', 'history entry', 'history entries')}`, 6000);
     if (location.hash === '#/workouts') route(); else go('#/workouts');
     return true;
   }

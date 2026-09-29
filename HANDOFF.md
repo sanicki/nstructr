@@ -328,7 +328,10 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   `libraryOrder?`; switches are true/false). Restoring sets only what the file has, so older backups (three settings,
   `fullscreen` as "on"/"off") still import. `resume` (`{wid, i}`) carries an unfinished workout over unless one is
   already waiting here. A new setting goes in `BACKUP_PREFS` too (Sep 2026: before, most weren't backed up). Importing it (any import path detects the format)
-  **merges** by id: backup items replace same-id items, nothing is deleted, importing twice changes nothing.
+  asks first (`askRestore`, Sep 2026; `ask()` has an optional third button): **Merge** (the default, and the only way
+  until then) by id: backup items replace same-id items, nothing is deleted, importing twice changes nothing; or
+  **Replace** (`restoreBackup(data, 'replace')`): workouts, own exercises, bookmarks and history become the backup's,
+  settings missing from an older backup go back to their defaults, and the workout to resume is the backup's or none.
 - Export: exercise JSON from the exercise page; workout JSON / Share (Web Share with a `.json` file, falling back
   to a download) from the editor; "Export your exercises" in Settings (Advanced exercise editor). JSON views (workout
   editor "JSON", exercise "Show JSON", "Export your exercises") show only in **Advanced exercise editor** (class

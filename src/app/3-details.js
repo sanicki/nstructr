@@ -20,14 +20,16 @@ async function copyText(text, done) {
   catch (e) { showJson('Copy this', text); snack('Select the text and copy it.'); }
 }
 /* a Material dialog instead of the browser's confirm(): resolves true on the action, false on Cancel / Esc / outside */
-function ask(title, text, yes = 'OK', danger = false) {
+/* true (yes), false (cancel), or with alt ({label, danger}) a third answer, "alt" */
+function ask(title, text, yes = 'OK', danger = false, alt = null) {
   const d = $('#askDialog');
   $('#askTitle').textContent = title; $('#askText').textContent = text || ''; $('#askText').hidden = !text;
   $('#askYes').textContent = yes; $('#askYes').classList.toggle('danger-btn', danger);
+  $('#askAlt').hidden = !alt; $('#askAlt').textContent = alt ? alt.label : ''; $('#askAlt').classList.toggle('danger-text', !!(alt && alt.danger));
   return new Promise(res => {
-    const done = v => { d.removeEventListener('close', onClose); $('#askYes').onclick = $('#askNo').onclick = null; if (d.open) d.close(); res(v); };
+    const done = v => { d.removeEventListener('close', onClose); $('#askYes').onclick = $('#askNo').onclick = $('#askAlt').onclick = null; if (d.open) d.close(); res(v); };
     const onClose = () => done(false);
-    $('#askYes').onclick = () => done(true); $('#askNo').onclick = () => done(false);
+    $('#askYes').onclick = () => done(true); $('#askNo').onclick = () => done(false); $('#askAlt').onclick = () => done('alt');
     d.addEventListener('close', onClose); d.showModal(); $('#askNo').focus();
   });
 }
