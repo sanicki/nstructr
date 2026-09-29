@@ -266,8 +266,9 @@ function drawProps(P, Q, pose, cam) {
       back += `<line class="wall" style="opacity:${(0.55 * w.show).toFixed(2)}" x1="${(w.x + dx).toFixed(1)}" y1="${FLOOR + 7}" x2="${(w.x + dx).toFixed(1)}" y2="${FLOOR - 330}"/>`;
       return;
     }
-    const pts = propRoute(P, pr);
+    let pts = propRoute(P, pr);
     if (!pts) return;
+    if (pr.type === 'strap') pts = strapPoints(pts, S.bandRest[i]);
     const q = pts.map(proj);
     // in front of the body or behind it, by depth
     const far = q.reduce((s, p) => s + p.d, 0) / q.length < Q.pelvis.d;

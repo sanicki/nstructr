@@ -17,6 +17,13 @@ async def main():
             print(f'{id:28} hand at {r[0]} (block top 41) | blocks drawn {r[1]}')
         for id in ['yoga-seated-forward-bend-strap', 'yoga-reclining-hand-to-big-toe']:
             await pg.goto(URL + '#/play/' + id, wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
+            # a strap doesn't stretch: route plus hanging ends is the same length in every frame of every move
+            lens = await pg.evaluate("""(() => { const R = S.resolved, i = S.props.findIndex(p => p.type === 'strap'), out = [];
+              for (let a = 0; a < R.length; a++) for (let b = 0; b < R.length; b++) if (a !== b) for (let s = 0; s <= 10; s++) {
+                const f = frameAt(R[a], R[b], s / 10, S.seg), P = fkAt(f.pose, S.seg, f.pos), pts = propRoute(P, S.props[i]);
+                out.push(routeLength(strapPoints(pts, S.bandRest[i]))); }
+              return [Math.min(...out), Math.max(...out), S.bandRest[i]]; })()""")
+            print(f'{id:28} strap length {lens[0]:.1f}–{lens[1]:.1f} (fixed {lens[2]:.1f})')
             print(f'{id:28} strap drawn', await pg.evaluate("document.querySelectorAll('#scene .strap').length"),
                   '| thumbnail', await pg.evaluate(f"poseThumbSVG(exById('{id}'), exById('{id}').keyframes[1]).includes('tst')"))
         await pg.goto(URL + '#/exercises', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)

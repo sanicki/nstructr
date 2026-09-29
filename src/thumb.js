@@ -28,8 +28,9 @@ function poseThumbSVG(ex, kf, opts = {}) {
     if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj); return ''; }
     if (pr.type === 'bar') { over += barSVG(pr, proj, 'tbar'); return ''; }
     if (pr.type === 'wall') { const wl = walls[i]; return wl && wl.show > 0.5 ? `<line class="tw" x1="${wl.x.toFixed(1)}" y1="${FLOOR + 7}" x2="${wl.x.toFixed(1)}" y2="${(vy - 5).toFixed(1)}"/>` : ''; }
-    const route = propRoute(P, pr);
+    let route = propRoute(P, pr);
     if (!route) return '';
+    if (pr.type === 'strap') route = strapPoints(route, rest[i]);
     const q = route.map(proj);
     const svg = pr.type === 'towel' || pr.type === 'strap' ? `<path class="${pr.type === 'strap' ? 'tst' : 'tt'}" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`
       : `<path class="tb" d="${bandPathRoute(route, q, rest[i]).d}"/>` + bandAnchors(pr, q).map(p => anchorSVG(p, 'ta')).join('');

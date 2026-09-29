@@ -580,6 +580,7 @@ const anchorSVG = (q, cls) => `<rect class="${cls}" x="${(q.x - 5).toFixed(1)}" 
 const routeLength = pts => pts.slice(1).reduce((s, p, i) => s + V3.dist(p, pts[i]), 0);
 function bandRestLengths(props, resolved, seg) {
   return (props || []).map(pr => {
+    if (pr.type === 'strap') return strapLength(pr, resolved, seg);
     if (pr.type !== 'band') return null;
     if (pr.restLength) return pr.restLength;
     let min = Infinity;
@@ -590,6 +591,30 @@ function bandRestLengths(props, resolved, seg) {
     }
     return isFinite(min) ? Math.max(min, 10) : 100;
   });
+}
+/* A yoga strap doesn't stretch: its length is its longest route in the exercise plus a hand's grip (or "length"). */
+function strapLength(pr, resolved, seg) {
+  if (pr.length) return pr.length;
+  let max = 0;
+  for (const r of resolved) {
+    SUPPORTS = r.supports || SUPPORTS;
+    const pts = propRoute(fkAt(r.pose, seg, place(r.pose, seg, r.rule)), pr);
+    if (pts) max = Math.max(max, routeLength(pts));
+  }
+  return max + 16;
+}
+/* its route plus what's left over, hanging from the ends (the hands) by half each, so the drawn length never changes */
+function strapPoints(pts, len) {
+  const tail = Math.max(0, len - routeLength(pts)) / 2;
+  // down from the end; what reaches the floor lies along it, on away from the strap's next point
+  const hang = (p, q) => {
+    const drop = Math.min(tail, Math.max(0, p.y - 2)), rest = tail - drop, down = { x: p.x, y: p.y - drop, z: p.z };
+    if (rest <= 0.5) return [down];
+    const dx = p.x - q.x, dz = p.z - q.z, n = Math.hypot(dx, dz) || 1;
+    return [down, { x: down.x + (n > 1 ? dx / n : 1) * rest, y: down.y, z: down.z + (n > 1 ? dz / n : 0) * rest }];
+  };
+  const n = pts.length;
+  return [...hang(pts[0], pts[1]).reverse(), ...pts, ...hang(pts[n - 1], pts[n - 2])];
 }
 /* the band on screen: pts are world points, Q their screen points. Slack bands sag, stretched ones thin */
 function bandPathRoute(pts, Q, rest) {
@@ -750,7 +775,7 @@ function mirrorKeyframe(kf) {
 
 if (typeof module !== 'undefined') module.exports = {
   phaseInfo, reverseReps, weightSVG, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
-  propRoute, propPoint, bandAnchors, anchorSVG, barSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
+  propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
 };
