@@ -143,6 +143,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
   figure over a floor marked every 60 px. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 - **Hanging** from a bar: pull-ups, chin-ups.
 
-Done so far: most **ready** rows (batches 3–6) and the **door anchor** (batch 7). Next: the engine work above, then
-yoga block and strap and the other equipment. The Create with AI prompt lists every exercise: at 225 it's about 13.8k
-of the 15k a link takes (HANDOFF §10, "Create with AI"), room for roughly 50 more.
+Done so far: most **ready** rows (batches 3–6), the **door anchor** (batch 7), jumping (batch 9) and travelling
+(batch 10). Next: hanging, then yoga block and strap and the other equipment. The Create with AI prompt lists every
+exercise and isn't trimmed to fit a link (accuracy first, HANDOFF §10, "Create with AI"): past about 250 exercises,
+ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.
