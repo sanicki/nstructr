@@ -61,7 +61,10 @@ function itemSeconds(item) {
   const work = ex.measure === 'time'
     ? item.seconds + sum(ph.setup) + sum(ph.finish) + (kfs[ex.holdStep || ph.start].durationMs || 0) / 1000 / t
     : sum(ph.setup) + sum(ph.finish) + sum(ph.rep) * item.reps * alt;
-  const guide = WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) : 0;   // + ~2 s of speech a step
+  // + ~2 s of speech a step; a hold also waits for its line (the pose's cue and "Now hold for N seconds", ~2.5 words a second)
+  const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
+  const holdLine = hk ? Math.max(0, `${hk.quiet ? '' : hk.cue || hk.name || ''} Now hold for ${item.seconds} seconds.`.split(/\s+/).filter(Boolean).length / 2.5 / speechRate() - (hk.durationMs || 0) / 1000 / t) : 0;
+  const guide = WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) + holdLine : 0;
   return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
 }
 function blockSeconds(b, w) {
@@ -565,6 +568,8 @@ function buildPlan(item, segInfo) {
   const push = (r, m = {}) => { plan.push(r); meta.push(m); };
   const V0 = versions[0].R, guided = WK.sound === 'coach';
   const cueOf = r => r.cue || r.name || '';
+  const h = ex.measure === 'time' ? (ex.holdStep != null ? ex.holdStep : ph.start) : null;
+  let holdCued = false;                                          // the run-through already read the held step's cue
   if (guided) {
     // walk through the exercise once, step by step: each step waits for both its animation and its spoken cue
     const label = segLabel(ex, item, segInfo);
@@ -572,15 +577,14 @@ function buildPlan(item, segInfo) {
     // an instant step (like the seam where a circle starts again) has nothing to show, so it only carries the title
     const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
     ph.setup.forEach(i => g(V0[i]));
-    if (ex.measure === 'time') {
-      const h = ex.holdStep != null ? ex.holdStep : ph.start;
-      ph.rep.filter(i => i !== h).forEach(i => g(V0[i]));
-    } else versions.forEach(v => ph.rep.forEach(i => g(v.R[i])));
-    if (first) g(V0[ph.start]);
+    if (ex.measure === 'time') ph.rep.filter(i => i !== h).forEach(i => g(V0[i]));
+    else versions.forEach(v => ph.rep.forEach(i => g(v.R[i])));
+    if (first) { g(V0[ph.start]); holdCued = ph.start === h; }
   } else ph.setup.forEach(i => push(V0[i], { phase: 'setup' }));
   if (ex.measure === 'time') {
-    const h = ex.holdStep != null ? ex.holdStep : ph.start;
-    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(guided ? { say: `Now hold for ${item.seconds} seconds.` } : {}) } : { phase: 'rep' }));
+    // Coach reads the held step's own cue (how to get into the pose) as it starts, then the time
+    const holdSay = () => `${holdCued || V0[h].quiet ? '' : cueOf(V0[h]) + ' '}Now hold for ${item.seconds} seconds.`.replace(/([^.!?])\s+Now/, '$1. Now');
+    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(guided ? { say: holdSay() } : {}) } : { phase: 'rep' }));
   } else {
     const total = item.reps * versions.length;
     for (let k = 0; k < total; k++) {
@@ -656,6 +660,7 @@ function runCurrent(announce) {
     else if (WP.seg > 0) say(bits[0] + '.');                  // "Switch sides." then the guided run-through for the new side
   }
   S.canAdvance = i => !(S.planMeta[i] && S.planMeta[i].guided && WP.speaking);
+  S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Now hold for N seconds"
   onWorkStep(0);
 }
 /* Coach's words, varied when words of encouragement are on: a random "Begin" and "Last one", and now and then a word of
@@ -700,7 +705,7 @@ function onWorkEnd() {
 }
 function startRest(seconds, kind) {
   if (seconds <= 0) return runCurrent(true);
-  WP.phase = 'rest'; WP.restLeft = seconds; WP.restLast = performance.now(); WP.beeped = {}; S.canAdvance = null;
+  WP.phase = 'rest'; WP.restLeft = seconds; WP.restLast = performance.now(); WP.beeped = {}; S.canAdvance = null; S.holdWait = null;
   const cur = current(), ex = exById(cur.item.ex);
   $('#wpRest').hidden = false; $('#wpControls').classList.remove('show');
   $('#wpRestLabel').textContent = kind === 'set' ? 'Rest before the next set' : kind === 'round' ? `Rest before round ${cur.round + 1} of ${cur.rounds}` : 'Rest';
@@ -743,7 +748,7 @@ function renderHistory() {
 }
 
 function finishWorkout() {
-  S.canAdvance = null;
+  S.canAdvance = null; S.holdWait = null;
   logItem(current() || WP.flat[WP.flat.length - 1]);
   writeSession(true);
   WP.phase = 'done'; S.playing = false; S.onPlanEnd = null; S.onStep = null;
