@@ -40,7 +40,9 @@ When you add its answer:
 
 Pick the AI app (Gemini at first; the app remembers the one you pick) and tap **Open**:
 
-- **ChatGPT, Claude, Copilot**: open with NstructR's instructions already typed in. Check it, then send it.
+- **ChatGPT, Claude, Copilot**: open with NstructR's instructions already typed in. Check it, then send it. (When
+  the instructions are too long for a link, which happens as the library and your own exercises grow, they're
+  copied instead, as below: nothing is left out to make them fit.)
 - **DeepSeek, Gemini, Grok, Vibe**: can't be opened with a message this long, so the instructions are **copied**. Paste them into the
   chat (long-press → Paste), add your photo or video if you have one, and send.
 - **Other LLM**: copies the instructions for you to paste into any AI chat.

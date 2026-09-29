@@ -642,14 +642,17 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   `SIMILAR_EX.equipKinds`: band, dumbbell, chair…; a mat doesn't count), and it says a match needs the same movement
   **and** equipment (models matched "band squat" to the plain squat when they only saw ids). It asks for
   `"calledInSource"` (the source's own name) and `"equipmentInSource"` on every workout item; the import takes both
-  out of the workout and keeps them for the library check. The prompt must stay under `AI_Q_MAX` for the link-filled
-  apps (ChatGPT, Claude, Copilot; over it they fall back to copying). Three things keep it short: the LIBRARY list uses
-  plain words and spaces (`WITH band`, `bw-reverse-lunge sides`, `dir A-Forward B-Backward`); the exercise and keyframe
-  formats are field lists, not commented JSON; and `aiLink` escapes less than `URLSearchParams` (`: , / ; @ $ ?` stay
-  as they are, spaces are `+`: allowed in a query and read back identically). With 225 exercises the Claude link is
-  about 13.8k (Sep 2026; 163 exercises made 12.2k), room for roughly 50 more exercises (the library's, or a
-  user's own, which are listed too). Base64 or other encodings don't help: non-ASCII is escaped in a link, and the
-  AI has to read plain text.
+  out of the workout and keeps them for the library check. **Accuracy comes first** (owner, Sep 2026): the prompt is
+  never shortened at the cost of what the AI needs (the whole LIBRARY list, the formats, the sign conventions). The
+  link-filled apps (ChatGPT, Claude, Copilot) get it in the link while it's under `AI_Q_MAX`; over it, they open with
+  the instructions copied to paste, like every other app (automatic: nothing to change as the library grows). What
+  keeps it short without losing anything: the LIBRARY list uses plain words and spaces (`WITH band`,
+  `bw-reverse-lunge sides`, `dir A-Forward B-Backward`); the exercise and keyframe formats are field lists, not
+  commented JSON; and `aiLink` escapes less than `URLSearchParams` (`: , / ; @ $ ?` stay as they are, spaces are
+  `+`: allowed in a query and read back identically). With 234 exercises the Claude link is about 14.3k (Sep 2026;
+  163 exercises made 12.2k): about 15 more exercises (the library's, or a user's own, which are listed too) and it
+  becomes copy-only. Base64 or other encodings don't help: non-ASCII is escaped in a link, and the AI has to read
+  plain text.
   **Plan a workout** (fifth choice, `planPrompt`): a goal ("a 30-minute leg workout") and equipment chips (the kinds
   `SIMILAR_EX.equipKinds` finds in the library, remembered in `nstructr-ai-equipment-v1`, wall at first). Its prompt
   is its own, and short: only the workout format (no exercise format: nothing new is written) and only the exercises
