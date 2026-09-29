@@ -603,7 +603,6 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 - The time estimate counts movement and rests only (the owner's routine estimates 28 min vs. the routine's own
   35–40); Coach adds ~2 s per run-through step.
 - Pages from a **private** repo needs a paid GitHub plan (as far as known) — relevant if the owner goes private.
-- Before publishing: trademark/app-store search for "NstructR".
 
 ---
 
@@ -653,11 +652,12 @@ the app fills in the `device` field (user agent, screen size, installed app or b
     exercise's name, other name, focus, category, equipment, description, setup, form cues, suggested reps and
     note, rep name, side and direction labels, and source. The first real change to a library exercise makes the
     copy, as for poses (a typed name replaces "(copy)").
-- **Create with AI** (`src/app/5-ai.js`; Settings > Create with AI, and Workouts next to New workout): a full-screen
+- **Create with AI** (`src/app/5-ai.js`; Workouts next to New workout, and My exercises): a full-screen
   dialog in three steps. 1: what you have (Sep 2026, in this order, equal-width buttons: Workout goal, picked at first;
   Workout routine; Missing exercise; Photo/Video; YouTube link. Earlier: the name of the exercise, a written routine, a video or web link, a photo or
-  video; the last has no text box: it's attached in the AI app). 2: the AI app, A–Z with "Other LLM" last (Gemini
-  until the user picks another; the last one picked is kept in `nstructr-ai-app-v1`; there's no Settings entry):
+  video; the last has no text box: it's attached in the AI app). 2: the AI app, chosen in **Settings › Create with AI › Choose
+  AI provider** (since Sep 2026; it was a list in the dialog), listed "Provider (App)" A–Z by provider with "Other LLM"
+  last (Gemini until the user picks another; kept in `nstructr-ai-app-v1`; `setAiApp()`, `renderAiSetting()`):
   **Open** copies the instructions and opens the app; apps with a message parameter that takes a link this long (`?q=`: ChatGPT, Claude,
   Copilot) get them filled in when the link stays under `AI_Q_MAX` (15 000 characters; Cloudflare refuses
   URLs over 16 KB); Gemini and DeepSeek have none, and Grok and Vibe answer the long link with "header too large" (owner, Sep 2026), so
@@ -705,7 +705,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   deleting one is its own action (About → Delete), asks first and names the workouts that use it. Backups carry
   `bookmarks` too.
 - **Settings**, in order: Documentation (link to the user guide), Workouts (rest between exercises, rest between
-  sets, sound, full screen), Exercises (autoplay), Display (theme System/Light/Dark, **Authoring mode**), Create with AI (Create), Import & tools (backup, import file/paste, export your exercises,
+  sets, sound, full screen), Exercises (autoplay), Display (theme System/Light/Dark, **Authoring mode**), Create with AI (Choose AI provider), Import & tools (backup, import file/paste, export your exercises,
   JSON format reference, storage-persistence note).
 - **Quiet steps** (`"quiet": true`, the in-between points of a circle: Hip Circles, Leg Circles) are part of the
   motion but not steps a person sees: the exercise page's step number, name, Steps list and ▶ / → skip them
@@ -809,7 +809,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
    server; QR codes for short links (see §5.3).
 5. **Owner decisions before contributions**: ✅ license: **MIT** for everything (Sep 2026; this replaces the earlier
    idea of non-commercial-only with a paid commercial licence: MIT allows commercial use, with the copyright
-   notice kept). Submissions are accepted under MIT (the submission checkbox says so). Still open: trademark check.
+   notice kept). Submissions are accepted under MIT (the submission checkbox says so). (A trademark check was dropped: owner, Sep 2026.)
 6. ✅ **3D skeleton, still drawn as SVG** — exercise format **v2** (Sep 2026): mannequin-style joints with real 3D
    angles, a real camera, bones drawn in depth order (no `layers`, no depth joints), contacts solved in 3D. The
    library was converted automatically (each step checked against the old picture), and format 1 is no longer
@@ -876,9 +876,11 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 ## 14. Open questions for the owner
 
 1. ~~**License**~~ Decided: MIT for the engine, the app code and the library content (`LICENSE`).
-2. **Trademark** check on "NstructR".
-3. **4-Point Star Excursion**: switch the fourth reach from "left, crossing behind" to the owner's routine's
-   cross-behind diagonal? (In 3D the diagonals are real now: "back left" goes back and across.)
+2. ~~**Trademark** check on "NstructR"~~ Dropped (owner, Sep 2026).
+3. **4-Point Star Excursion**: its fourth reach goes straight out to the left (for the left leg standing), the foot
+   crossing behind the standing leg (compass 270°). The owner's original routine may have meant a *diagonal* instead:
+   back and across, like the 8-point Star Excursion's "back left" (225°). Keep the straight-across reach, or switch to
+   the diagonal? (Asked Sep 2026; the owner finds the current one fine.)
 4. **Seated band row**: draw the band crossed in an X (as the routine describes)?
 5. ~~Is **22 vh** the right bottom margin on the real cover screen?~~ Confirmed on the owner's flip phone.
 6. ~~Library workouts: copy on first run, or only a library section?~~ Decided: library section only;

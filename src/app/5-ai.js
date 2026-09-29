@@ -158,13 +158,13 @@ function renderAi() {
   $('#aiInput').placeholder = k.ph;
   $('#aiInput').rows = AI_KIND === 'routine' ? 6 : 2;
   $('#aiKindHint').textContent = k.hint;
-  $('#aiApp').innerHTML = AI_APPS.map(a => `<option value="${a.id}"${a.id === app.id ? ' selected' : ''}>${esc(aiAppLabel(a))}</option>`).join('');
   $('#aiOpenLabel').textContent = app.url ? `Open ${app.name}` : 'Copy instructions';
   $('#aiOpen').querySelector('.icon').textContent = app.url ? 'open_in_new' : 'content_copy';
   $('#aiCopy').hidden = !app.url;
   $('#aiAppHint').textContent = !app.url ? 'Paste the instructions into your AI app\'s chat, then bring its answer back here.'
     : app.q ? `${app.name} opens with the instructions filled in (they're copied too, in case they don't show up). Send them, then copy its answer.`
     : `${app.name} can't take the instructions in a link: they're copied, so paste them into its chat and send them.`;
+  $('#aiAppHint').textContent += ' (Change the AI in Settings › Create with AI.)';
 }
 function openAi() { renderAi(); $('#aiAnswer').value = ''; $('#aiDialog').showModal(); }
 
@@ -203,7 +203,11 @@ $('#aiEquip').addEventListener('click', e => {
   setPref(AI_EQUIP_KEY, JSON.stringify([...have].sort())); renderAi();
 });
 $('#aiKind').addEventListener('click', e => { const b = e.target.closest('[data-aikind]'); if (b) { AI_KIND = b.dataset.aikind; renderAi(); } });
-$('#aiApp').addEventListener('change', e => { setPref(AI_KEY, e.target.value); renderAi(); renderSettings(); });
+/* the AI app is chosen in Settings › Create with AI ("Choose AI provider") and remembered */
+function renderAiSetting() { const app = aiApp(); $('#setAiApp').innerHTML = AI_APPS.map(a => `<option value="${a.id}"${a.id === app.id ? ' selected' : ''}>${esc(aiAppLabel(a))}</option>`).join(''); }
+function setAiApp(id) { if (!AI_APPS.some(a => a.id === id)) return; setPref(AI_KEY, id); renderAiSetting(); if ($('#aiDialog').open) renderAi(); }
+$('#setAiApp').addEventListener('change', e => setAiApp(e.target.value));
+renderAiSetting();
 $('#aiImport').addEventListener('click', () => {
   const text = extractJson($('#aiAnswer').value);
   if (!text) { snack('Paste the AI\'s answer first.'); return; }

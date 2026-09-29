@@ -35,7 +35,7 @@ async def main():
         print('Play (Space) plays      ', await pg.evaluate("S.playing"))
         # AI apps
         await pg.evaluate("openAi()"); await pg.wait_for_timeout(200)
-        print('AI apps                 ', await pg.evaluate("[...document.querySelectorAll('#aiApp option')].map(o=>o.textContent)"))
+        print('AI apps                 ', await pg.evaluate("[...document.querySelectorAll('#setAiApp option')].map(o=>o.textContent)"))
         print('copy only               ', await pg.evaluate("AI_APPS.filter(a=>!a.q).map(a=>a.name)"))
         print('errors', errs); await b.close()
 asyncio.run(main())
