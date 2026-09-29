@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "roller-calves",
+  "name": "Foam Roller Calf Roll",
+  "otherNames": ["Foam Roll Calves", "Calf Foam Roll"],
+  "category": "Mobility",
+  "focus": "Calves",
+  "collections": ["Stretches", "Warm-up"],
+  "equipment": ["Foam roller"],
+  "description": "Sitting with a foam roller under your calves and your hands on the floor behind you, lift your hips and roll slowly from just above the ankles to just below the knees and back.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/foam-roll-calves",
+    "title": "NASM Exercise Library: Foam Roll Calves"
+  },
+  "setup": ["Sit with your legs straight, a foam roller under your lower calves.", "Hands on the floor behind you, fingers pointing forward."],
+  "cues": ["Lift your hips and move with your arms.", "Slow, even rolls.", "Cross one leg over the other for more pressure."],
+  "prescription": {
+    "time": "30–60 seconds",
+    "note": "Roll slowly, about 2 seconds each way. Pause on a tender spot for a few breaths; skip anything sharp or painful, and avoid rolling right over a joint."
+  },
+  "keyframes": [
+    {
+      "name": "Roller above your ankles",
+      "cue": "Hands behind you, lift your hips, the roller just above your ankles.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "shinR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "shinL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "root": [-35, 0, 0],
+        "shoulderL": [-18, 0, 0],
+        "shoulderR": [-18, 0, 0],
+        "hipL": [70, 0, 0],
+        "hipR": [70, 0, 0],
+        "ankleL": 20,
+        "ankleR": 20
+      }
+    },
+    {
+      "name": "Roll to below your knees",
+      "cue": "Push with your hands to roll up to just below your knees, then back.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "shinR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "shinL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "root": [-35, 0, 0],
+        "shoulderL": [-48, 0, 0],
+        "shoulderR": [-48, 0, 0],
+        "hipL": [70, 0, 0],
+        "hipR": [70, 0, 0],
+        "ankleL": 20,
+        "ankleR": 20
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "roller",
+      "z": 170
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 45
+  }
+}

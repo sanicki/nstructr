@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "roller-hamstrings",
+  "name": "Foam Roller Hamstring Roll",
+  "otherNames": ["Foam Roll Hamstrings", "Hamstring Foam Roll"],
+  "category": "Mobility",
+  "focus": "Hamstrings (back of the thighs)",
+  "collections": ["Stretches", "Warm-up"],
+  "equipment": ["Foam roller"],
+  "description": "Sitting with a foam roller under the backs of your thighs and your hands behind you, lift your hips and roll slowly from just above the knees toward the hips and back.",
+  "source": {
+    "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",
+    "title": "Healthline: Foam rolling, how to"
+  },
+  "setup": ["Sit with your legs straight, a foam roller under the backs of your thighs.", "Hands on the floor behind you; heels off the floor."],
+  "cues": ["Move with your arms; legs relaxed.", "Slow, even rolls.", "Stop short of the back of the knee."],
+  "prescription": {
+    "time": "30–60 seconds",
+    "note": "Roll slowly, about 2 seconds each way. Pause on a tender spot for a few breaths; skip anything sharp or painful, and avoid rolling right over a joint."
+  },
+  "keyframes": [
+    {
+      "name": "Roller above your knees",
+      "cue": "Hands behind you, lift your hips, the roller just above the backs of your knees.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "thighR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "thighL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "root": [-41, 0, 0],
+        "shoulderL": [-20, 0, 0],
+        "shoulderR": [-20, 0, 0],
+        "hipL": [50, 0, 0],
+        "hipR": [50, 0, 0],
+        "ankleL": 20,
+        "ankleR": 20
+      }
+    },
+    {
+      "name": "Roll toward your hips",
+      "cue": "Push with your hands to roll up toward your hips, then back.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "thighR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "thighL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "root": [-41, 0, 0],
+        "shoulderL": [-45, 0, 0],
+        "shoulderR": [-45, 0, 0],
+        "hipL": [50, 0, 0],
+        "hipR": [50, 0, 0],
+        "ankleL": 20,
+        "ankleR": 20
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "roller",
+      "z": 95
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 45
+  }
+}

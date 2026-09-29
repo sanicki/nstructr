@@ -27,6 +27,9 @@ const BALL = new Set(JOINTS.filter(j => j[2].length === 3).map(j => j[0]));
 const SPINE = new Set(['root', 'torso', 'chest', 'neck']);
 const COMPONENTS = ['forward', 'side', 'turn'];            // "hipR.side": a ball joint's second number
 const POINTS = ['pelvis', 'spine', 'neckBase', 'head', 'headTop', 'headLow', 'hipL', 'hipR', 'kneeL', 'kneeR', 'ankleL', 'ankleR', 'toeL', 'toeR', 'shoulderL', 'shoulderR', 'elbowL', 'elbowR', 'handL', 'handR', 'footL', 'footR', 'armpitL', 'armpitR', 'backL', 'backR'];
+/* body segments (the bone lines as drawn), for what lies across a foam roller: "touch" can name one (it rests where
+   it's lowest over what's under it), and none of them sinks into a roller */
+const SEGMENTS = { thighL: ['hipL', 'kneeL'], thighR: ['hipR', 'kneeR'], shinL: ['kneeL', 'ankleL'], shinR: ['kneeR', 'ankleR'], back: ['pelvis', 'spine', 'neckBase'] };
 /* every point that can rest on the floor: nothing in this list may sink below it */
 const CONTACT_POINTS = ['pelvis', 'spine', 'neckBase', 'headLow', 'headTop', 'hipL', 'hipR', 'kneeL', 'kneeR', 'ankleL', 'ankleR', 'toeL', 'toeR',
   'shoulderL', 'shoulderR', 'elbowL', 'elbowR', 'handL', 'handR'];
@@ -159,7 +162,7 @@ function boneOrder(Q, prev) {
 /* ---------- Surfaces (chair seat, bench, step) ----------
    A box on the floor: "z" is its centre along the figure's forward direction, "width" its length that way, "x" and
    "depth" the same sideways. The "floor" under any point is the highest surface beneath it, or the floor itself. */
-const SURFACE_TYPES = ['chair', 'bench', 'step', 'block', 'ball'];
+const SURFACE_TYPES = ['chair', 'bench', 'step', 'block', 'ball', 'roller'];
 // a yoga block stands on end (23 × 15 × 10 cm at about 5.6 mm a px): 41 high, 27 front to back, 18 side to side
 const SURFACE_DEFAULTS = { chair: { width: 70, depth: 80, height: 80, backHeight: 85 }, bench: { width: 200, depth: 70, height: 70 }, step: { width: 90, depth: 140, height: 30 }, block: { width: 27, depth: 18, height: 41 } };
 let SUPPORTS = [];
@@ -167,6 +170,9 @@ function surfacesFrom(props) {
   return (props || []).filter(p => SURFACE_TYPES.includes(p.type)).map(p => {
     // a stability ball: round, resting on the floor (r 58: a 65 cm ball); what's over it rests on its curve
     if (p.type === 'ball') { const r = num(p.r) || 58, x = num(p.x), z = num(p.z); return { type: 'ball', r, cx: x, cz: z, x0: x - r, x1: x + r, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0 }; }
+    // a foam roller: a cylinder lying on the floor across the figure (side to side), r 14 and 160 long (15 × 90 cm);
+    // what lies over it rests on its curve
+    if (p.type === 'roller') { const r = num(p.r) || 14, len = num(p.length) || 160, x = num(p.x), z = num(p.z); return { type: 'roller', r, cx: x, cz: z, x0: x - len / 2, x1: x + len / 2, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0 }; }
     const d = SURFACE_DEFAULTS[p.type], w = num(p.width) || d.width, dp = num(p.depth) || d.depth, h = num(p.height) || d.height;
     return { type: p.type, z0: num(p.z) - w / 2, z1: num(p.z) + w / 2, x0: num(p.x) - dp / 2, x1: num(p.x) + dp / 2, h,
       back: p.type === 'chair' ? (p.back || 'behind') : null, backHeight: num(p.backHeight) || d.backHeight || 0 };
@@ -176,11 +182,30 @@ function supportY(x, z) {
   let y = 0;
   for (const s of SUPPORTS) {
     if (s.type === 'ball') { const d2 = (x - s.cx) ** 2 + (z - s.cz) ** 2; if (d2 < s.r * s.r) y = Math.max(y, s.r + Math.sqrt(s.r * s.r - d2)); continue; }
+    if (s.type === 'roller') { const d = z - s.cz; if (Math.abs(d) < s.r && x >= s.x0 - 2 && x <= s.x1 + 2) y = Math.max(y, s.r + Math.sqrt(s.r * s.r - d * d)); continue; }
     if (z >= s.z0 - 2 && z <= s.z1 + 2 && x >= s.x0 - 2 && x <= s.x1 + 2) y = Math.max(y, s.h);
   }
   return y;
 }
 const supportAt = p => supportY(p.x, p.z);
+/* points along a body segment (P: body points), ends included */
+function segmentPoints(P, name, n = 12) {
+  const ks = SEGMENTS[name], out = [];
+  for (let i = 0; i + 1 < ks.length; i++) for (let j = i ? 1 : 0; j <= n; j++) out.push(V3.lerp(P[ks[i]], P[ks[i + 1]], j / n));
+  return out;
+}
+/* how far a point, or a segment at its lowest over what's under it, is above what it rests on (below: negative) */
+function clearance(P, name) {
+  if (P[name]) return P[name].y - supportAt(P[name]);
+  return SEGMENTS[name] ? Math.min(...segmentPoints(P, name).map(q => q.y - supportAt(q))) : 0;
+}
+/* how far the body (points P, placed at pos) sinks into a foam roller: its segments aren't just their end points */
+function rollerSink(P, pos) {
+  if (!SUPPORTS.some(s => s.type === 'roller')) return -Infinity;
+  let pen = -Infinity;
+  for (const k in SEGMENTS) for (const q of segmentPoints(P, k, 8)) pen = Math.max(pen, supportY(q.x + pos.x, q.z + pos.z) - (q.y + pos.y));
+  return pen;
+}
 /* the top of a chair's backrest: where hands rest when standing behind it */
 function chairGrip() {
   const s = SUPPORTS.find(k => k.type === 'chair');
@@ -194,6 +219,14 @@ function surfaceShapes(sup, yaw) {
     // where the body rests on it)
     if (k.type === 'ball') { const c = sx(k.cx, k.cz), r = k.r + 3.5, cy = FLOOR + 7 - r;
       return { solid: true, ball: true, d: `M${c - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`, x0: c - r, x1: c + r }; }
+    // a foam roller: seen end-on a circle, from the front a bar, in between a bar with round ends (the near one outlined)
+    if (k.type === 'roller') {
+      const r = k.r + 3.5, cy = FLOOR + 7 - r, e0 = sx(k.x0, k.cz), e1 = sx(k.x1, k.cz), a = Math.min(e0, e1), b = Math.max(e0, e1), rx = Math.max(0.01, r * Math.abs(s));
+      const near = (k.x0 * s + k.cz * c) > (k.x1 * s + k.cz * c) ? e0 : e1;
+      const d = `M${a} ${cy - r}L${b} ${cy - r}A${rx} ${r} 0 0 1 ${b} ${cy + r}L${a} ${cy + r}A${rx} ${r} 0 0 1 ${a} ${cy - r}Z` +
+        `M${near} ${cy - r}A${rx} ${r} 0 0 1 ${near} ${cy + r}A${rx} ${r} 0 0 1 ${near} ${cy - r}`;   // (same winding: stays filled)
+      return { solid: true, roller: true, d, x0: a - rx, x1: b + rx };
+    }
     const xs = [sx(k.x0, k.z0), sx(k.x1, k.z0), sx(k.x0, k.z1), sx(k.x1, k.z1)];
     const a = Math.min(...xs), b = Math.max(...xs), top = FLOOR - k.h, f = FLOOR + 7;
     if (k.type === 'step' || k.type === 'block') return { solid: true, block: k.type === 'block', d: `M${a} ${f}L${a} ${top}L${b} ${top}L${b} ${f}Z`, x0: a, x1: b };
@@ -215,7 +248,7 @@ function place(pose, seg, rule, keepOffFloor = true) {
     if (keepOffFloor) {
       let pen = 0;
       for (const k of CONTACT_POINTS) pen = Math.max(pen, supportY(P[k].x + pos.x, P[k].z + pos.z) - (P[k].y + pos.y));
-      pos.y += pen;
+      pos.y += Math.max(pen, rollerSink(P, pos));
     }
     pos.y += num(rule.lift);     // airborne (a jump): the whole figure that far above where it would rest
     return pos;
@@ -223,6 +256,7 @@ function place(pose, seg, rule, keepOffFloor = true) {
   const x = num(rule.x), z = num(rule.z);
   let y = -Infinity;
   for (const k of CONTACT_POINTS) y = Math.max(y, supportY(P[k].x + x, P[k].z + z) - P[k].y);
+  y = Math.max(y, rollerSink(P, { x, y: 0, z }));
   return { x, y: y + num(rule.lift), z };
 }
 /* Final floor constraint used during playback: the lowest body point always rests on the floor (plus any lift) */
@@ -230,6 +264,7 @@ function groundY(pose, seg, pos, lift = 0) {
   const P = fk(pose, seg);
   let pen = -Infinity;
   for (const k of CONTACT_POINTS) pen = Math.max(pen, supportY(P[k].x + pos.x, P[k].z + pos.z) - (P[k].y + pos.y));
+  pen = Math.max(pen, rollerSink(P, pos));
   return pos.y + pen + lift;
 }
 
@@ -439,6 +474,16 @@ function frameAt(a, b, e, seg) {
   const lift = lerp(num(a.rule.lift), num(b.rule.lift), e);
   const pinned = rule ? [rule.anchor] : [a.rule.anchor, b.rule.anchor];
   if (e > 0 && e < 1) {
+    // rolling on a foam roller: a segment that rests on it at both ends of the move (the same "touch" in both steps)
+    // stays on it the whole way, by the same joint, while the pin holds (in-between angles alone would lift it off)
+    const r0 = rule || (a.rule.anchor === b.rule.anchor ? a.rule : null);
+    const rolls = r0 && SUPPORTS.some(k => k.type === 'roller') ? (a.touch || []).filter(t => SEGMENTS[t.point] && (b.touch || []).some(u => u.point === t.point && u.adjust === t.adjust)) : [];
+    for (const t of rolls) {
+      const a0 = getJ(pose, t.adjust), gap = x => { setJ(pose, t.adjust, x); return clearance(fkAt(pose, seg, place(pose, seg, r0, false)), t.point) - num(t.gap); };
+      const th = root1D(gap, a0, 20, 0.5);
+      setJ(pose, t.adjust, th == null ? a0 : th);
+    }
+    if (rolls.length) Object.assign(pos, rule ? place(pose, seg, rule, false) : V3.lerp(place(pose, seg, a.rule, false), place(pose, seg, b.rule, false), e));
     slideContacts(a, b, e, pose, seg, pos, pinned);
     clampTips(a, b, pose, seg, pos, pinned);
     // a foot that tips its toes into the floor flexes at the ankle instead of pushing the body up
@@ -482,8 +527,7 @@ function frameAt(a, b, e, seg) {
 function solveTouch(pose, seg, rule, t, applyPlant) {
   const f = th => {
     setJ(pose, t.adjust, th); applyPlant();
-    const Q = fkAt(pose, seg, place(pose, seg, rule, false))[t.point];    // raw anchor pin, so the solver sees the true height
-    return Q.y - (supportAt(Q) + num(t.gap));
+    return clearance(fkAt(pose, seg, place(pose, seg, rule, false)), t.point) - num(t.gap);    // raw anchor pin, so the solver sees the true height
   };
   const a0 = getJ(pose, t.adjust);
   let best = root1D(f, a0, 80, 1);
@@ -514,7 +558,7 @@ function resolveKeyframe(kf, seg, ex = {}) {
     auto.add('shoulder' + r.hand.slice(-1)); auto.add('elbow' + r.hand.slice(-1));
   }
   for (const t of (kf.touch || [])) {
-    const Q = fkAt(pose, seg, place(pose, seg, rule, false))[t.point], gap = Q.y - supportAt(Q) - num(t.gap);
+    const gap = clearance(fkAt(pose, seg, place(pose, seg, rule, false)), t.point) - num(t.gap);
     if (Math.abs(gap) > 2) misses.push({ point: t.point, adjust: t.adjust, gap });
   }
   return {
@@ -529,7 +573,7 @@ function solveReach(pose, seg, rule, r, T) {
 }
 
 /* ---------- Equipment (props) ---------- */
-const PROP_TYPES = ['band', 'towel', 'strap', 'ring', 'wall', 'chair', 'bench', 'step', 'block', 'ball', 'dumbbell', 'kettlebell', 'barbell', 'medball', 'bar'];
+const PROP_TYPES = ['band', 'towel', 'strap', 'ring', 'wall', 'chair', 'bench', 'step', 'block', 'ball', 'roller', 'dumbbell', 'kettlebell', 'barbell', 'medball', 'bar'];
 /* a Pilates ring (magic circle) between two points (hands, knees): 68 across (38 cm); pressed together it flattens
    into an oval, the long way across the press, the short way the gap between the points */
 function ringSVG(pr, P, proj, cls) {
@@ -821,6 +865,6 @@ function mirrorKeyframe(kf) {
 if (typeof module !== 'undefined') module.exports = {
   phaseInfo, reverseReps, weightSVG, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
   propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
-  normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
+  SEGMENTS, clearance, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
 };

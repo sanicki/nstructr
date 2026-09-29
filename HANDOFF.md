@@ -23,22 +23,22 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **263 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **267 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 80 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions |
-| Free weights | 33 | dumbbell, kettlebell, barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry |
-| Bodyweight | 30 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
-| Resistance band | 27 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
+| Free weights | 42 | dumbbell, kettlebell, barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry |
+| Bodyweight | 33 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
+| Resistance band | 28 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
 | Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
-| Stretches | 19 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway, strap stretches |
-| Core | 22 | planks, hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
+| Stretches | 23 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway, strap stretches + foam roller (calves, hamstrings, quads, upper back) |
+| Core | 23 | planks, hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 25 | Pilates ring (chest press, inner thigh squeeze); classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
 | Balance | 12 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, clock reach, single-leg RDL, pistol squat |
-| Warm-up | 9 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat |
+| Warm-up | 15 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-153 are rep-based, 101 timed; 86 are two-sided (`bilateral`); 4 have `direction`. Common exercises per collection
+162 are rep-based, 105 timed; 90 are two-sided (`bilateral`); 5 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -244,7 +244,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `lift` | Airborne (a jump): the whole figure that far above where it would rest, anchor or not; the move into and out of it rises and lands smoothly. The checks count it as meant, not floating. Short steps (300–400 ms): Jump Squat 45, Jumping Jacks 20, High Knees 6 (a hop as the standing foot swaps, with `anchorX` keeping the pelvis still). |
 | `anchorY` | Hanging (Sep 2026): the anchor (a hand on a pull-up bar) is held at this height instead of on the floor; a move with a hanging step at either end is only kept out of the floor, not rested on it, and a hanging step isn't re-pinned to a contact it shares with the step before. The checks expect the anchor at anchorY. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise (bar at 385: hands overhead reach 361 standing). Getting on and off (`withMount` in `tools/variants/batch-11-hanging.cjs`): stand, reach up with the arms as they'll hang, bend the knees (a crouch), jump to the bar (450 ms); let go and land deep with the arms still up (knees 85°), then stand and lower them. Between two hanging steps the hand that isn't the anchor is held where it grips (`frameAt`), so it doesn't slide along the bar. |
 | `plant` | `["L","R"]`: feet kept flat (ankle computed). |
-| `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). `adjust` is a hinge, or a ball joint's number: `"hipR"` = its forward number, `"hipR.side"`, `"hipR.turn"`. |
+| `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). `adjust` is a hinge, or a ball joint's number: `"hipR"` = its forward number, `"hipR.side"`, `"hipR.turn"`. `point` can also be a **segment** (Sep 2026, for the foam roller): `thighL/R`, `shinL/R`, `back` (pelvis to neck), which rests where it is lowest over what's under it (`SEGMENTS`, `clearance()`). |
 | `reach` | `[{hand, to, dx?, dy?, dz?}]`: two-bone arm IK (3D) to put a hand on a body point (plus the offset: sideways, up, forward), `"wall"` or `"chair"` (the chair back, at the hand's own shoulder width). The elbow bends the way it can, in the plane the arm's turn gives it. |
 | `keep` | Hands/feet that stay exactly where they were: `"ankleL"` = where it was in the previous step; `{"point":"ankleR","keyframe":0}` = where it was in step 0. Solved with two-bone IK after everything else. |
 | `guide` | `{direction, label}` for the compass: 0 = forward, 90 = the figure's right (for the default side), clockwise from above. |
@@ -263,6 +263,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `step` | `z`, `width` 90, `depth` 140, `height` 30 | Surface. |
 | `block` | `x`, `z`, `width` 27, `depth` 18, `height` 41 | A yoga block on end (23 × 15 × 10 cm), drawn in its own colour (`--block`). Surface: a hand over it rests on its top with `touch`. |
 | `ball` | `x`, `z`, `r` 58 | A stability ball (65 cm), resting on the floor: a round surface, what's over it rests on its curve (`supportY`), drawn as a circle (`--ball`). Sit on it (`anchor: "pelvis"`), lie back on it (`anchor: "spine"`), heels on it (`touch`). |
+| `roller` | `z`, `x` 0, `r` 14, `length` 160 | A foam roller (15 × 90 cm), lying on the floor across the figure (side to side): a cylinder surface (`supportY`), drawn end-on as a circle, from the front as a bar, in between with a round near end (`--roller`). A leg or the back lies across it with a segment `touch` (`{point: "shinR", adjust: "hipR"}`); no segment sinks into a roller (`rollerSink`, in `place` and `groundY`). **Rolling**: the same touch at another spot along the segment in the next step; mid-move the engine holds it on the roller (§6.2). Foam Roller Calf/Hamstring/Quad/Upper Back Roll (`tools/variants/batch-17-foam-roller.cjs`). The roller doesn't turn or move (a real one travels half as far as the body). |
 | `medball` | `hands` (default both) | A medicine ball held in both hands, at their middle (`--medball`). |
 | `ring` | `from`, `to` | A Pilates ring (magic circle) between two points, 68 across; pressed, it flattens (`ringSVG`: a circle across the press line and upright, drawn in 3D). |
 | `dumbbell` | `hand`, `axis` `lr` (bar left–right) / `fb` (front–back) / `ud` (upright), relative to the body | Drawn end-on when the bar points at the camera; drawn with its arm (behind the body when the arm is). |
@@ -383,6 +384,9 @@ differently.
    Reverse Lunge's foot rode along the floor as it stepped back and in.)
 4. `clampTips`: dipping hands/feet are held on the surface via IK; a knee below the surface turns the thigh up
    (legs swinging forward and back only).
+   **Rolling** (Sep 2026): a segment `touch` that both steps share (same point, same joint) on a foam roller is
+   re-solved every frame while the pin holds, so the shin, thigh or back stays on the roller the whole way (angles
+   alone lifted it up to 4 px mid-move).
 5. Toe fix: toes that would sink turn the ankle.
    Toes resting on the same spot of a raised surface at both ends (the back foot on a bench) stay on it: the leg
    reaches so the toe lands back where it was (Sep 2026: Bulgarian Split Squat's rear toe slid 21 px mid-move).
@@ -838,7 +842,8 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
    - when picked up again: ideally before submissions grow, so contributions are checked end to end.
 8. **Submission pipeline** — **exercises done** (Sep 2026, §8.8); **workouts later** (owner: exercises first). For
    workouts: the same issue form with a workout link, each of its own exercises going through the exercise rules.
-9. **Content**: exercise machines (cable stations first — a fixed anchor + rigid cable, close to bands; then
+9. **Content**: ✅ **foam roller** (Sep 2026): a `roller` surface, segment touches and rolling (§5, §6.2); calves,
+   hamstrings, quads and upper back (batch 17). Still open: exercise machines (cable stations first — a fixed anchor + rigid cable, close to bands; then
    leg press, lat pulldown; then cardio machines). Two small open choices in §14.
 10. **Experiments**: Flex mode layout (viewport segments; figure on the top half), voice commands (optional;
    browser speech recognition is flaky/online-only).
