@@ -10,7 +10,7 @@
       "items": [
         {
           "ex": "yoga-easy",
-          "seconds": 90
+          "seconds": 60
         },
         {
           "ex": "yoga-cat-cow",
@@ -43,22 +43,12 @@
           "sides": "both"
         },
         {
-          "ex": "yoga-warrior-1",
-          "seconds": 30,
-          "sides": "both"
-        },
-        {
           "ex": "yoga-warrior-2",
           "seconds": 30,
           "sides": "both"
         },
         {
           "ex": "yoga-triangle",
-          "seconds": 30,
-          "sides": "both"
-        },
-        {
-          "ex": "yoga-extended-side-angle",
           "seconds": 30,
           "sides": "both"
         },
@@ -77,10 +67,6 @@
           "seconds": 30
         },
         {
-          "ex": "yoga-bridge",
-          "seconds": 30
-        },
-        {
           "ex": "yoga-seated-forward-bend",
           "seconds": 45
         },
@@ -88,10 +74,6 @@
           "ex": "yoga-supine-twist",
           "seconds": 30,
           "sides": "both"
-        },
-        {
-          "ex": "yoga-happy-baby",
-          "seconds": 45
         },
         {
           "ex": "yoga-corpse",

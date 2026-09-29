@@ -3,7 +3,7 @@
   "version": 2,
   "id": "beginner-free-weights-20",
   "name": "20-Minute Beginner's Free Weights",
-  "description": "A full-body dumbbell workout for beginners, about 20 minutes: two sets each of squats, rows, hinges, calf raises, presses, lunges and arm work, then a carry. Start light; you should finish each set with two or three reps to spare.",
+  "description": "A full-body dumbbell workout for beginners, about 20 minutes: two sets each of squats, rows, hinges, presses, lunges and arm work, then a carry. Start light; you should finish each set with two or three reps to spare.",
   "blocks": [
     {
       "name": "Legs and back",
@@ -20,11 +20,6 @@
         },
         {
           "ex": "fw-db-rdl",
-          "reps": 10,
-          "sets": 2
-        },
-        {
-          "ex": "fw-db-calf-raise",
           "reps": 10,
           "sets": 2
         }
@@ -66,8 +61,7 @@
         },
         {
           "ex": "fw-farmers-carry",
-          "reps": 20,
-          "sets": 2
+          "reps": 20
         }
       ]
     }

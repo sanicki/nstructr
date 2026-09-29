@@ -3,7 +3,7 @@
   "version": 2,
   "id": "beginner-pilates-20",
   "name": "20-Minute Beginner's Pilates",
-  "description": "A beginner's Pilates mat class, about 20 minutes, with no equipment: warm up the core, the abdominal series and back work twice through, mat basics for the hips and trunk, then a bridge and twist to finish.",
+  "description": "A beginner's Pilates mat class, about 20 minutes, with no equipment: warm up the core, the abdominal series and back work twice through, then a bridge and twist to finish.",
   "blocks": [
     {
       "name": "Warm up the core",
@@ -78,34 +78,6 @@
       ],
       "rounds": 2,
       "roundRest": 15
-    },
-    {
-      "name": "Mat basics",
-      "items": [
-        {
-          "ex": "bw-glute-bridge",
-          "reps": 10
-        },
-        {
-          "ex": "core-dead-bug",
-          "reps": 6,
-          "sides": "alternate"
-        },
-        {
-          "ex": "core-bird-dog",
-          "reps": 6,
-          "sides": "alternate"
-        },
-        {
-          "ex": "side-clamshell",
-          "reps": 12,
-          "sides": "both"
-        },
-        {
-          "ex": "core-forearm-plank",
-          "seconds": 30
-        }
-      ]
     },
     {
       "name": "Finish",
