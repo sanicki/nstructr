@@ -5,7 +5,7 @@
 Tap ▶ on a workout to start. The player fills the screen with the figure, the exercise's name, the count, and a
 caption of what's being said.
 
-<img src="images/cover-player.png" width="300" alt="The workout player on the cover screen">
+<img src="images/player.png" width="300" alt="The workout player: the figure, the exercise, the count and a caption">
 
 ## Controls
 
@@ -21,7 +21,7 @@ caption of what's being said.
 | Leave with a keyboard | Esc (or Tab to ✕ and press Enter) |
 | Leave with a screen reader | Double-tap ✕ (TalkBack and VoiceOver don't need the hold) |
 
-<img src="images/cover-player-controls.png" width="300" alt="The controls: exit, sound, previous, pause, next">
+<img src="images/player-controls.png" width="300" alt="The controls: exit, sound, previous, pause, next">
 
 The chip at the top right shows the **sound** mode; tap it to change it for this workout.
 
@@ -30,7 +30,7 @@ The chip at the top right shows the **sound** mode; tap it to change it for this
 Between exercises (and sets and rounds) a big countdown shows what's next. **+15 s** adds time; **Skip** moves
 on. Beeps count down the last 3 seconds in Beeps, Voice and Coach modes.
 
-<img src="images/cover-rest.png" width="300" alt="A rest: countdown, what's next, +15 s and Skip">
+<img src="images/rest.png" width="300" alt="A rest: countdown, what's next, +15 s and Skip">
 
 ## Instruction
 
