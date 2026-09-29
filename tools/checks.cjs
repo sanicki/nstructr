@@ -3,7 +3,8 @@
    - rest:    a held pose where the pinned point, the step's own anchor or a "touch" point isn't on the floor/surface,
               or a hand misses its reach
    - jump:    a body segment snapping round more than 20° in 1/60 of a move
-   - planted: a hand/foot/knee resting in the same spot before and after a move that wanders during it */
+   - planted: a hand/foot/knee resting in the same spot before and after a move that wanders during it
+   - skid:    a foot on the floor at one end of a move only (lifting off, setting down) sliding along the floor */
 const C = require('../src/core.js');
 const seg = C.DEFAULT_SEGMENTS, V = C.V3;
 const ease = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -31,7 +32,7 @@ function moves(R, kfs) {
   return [...new Map(pairs.map(p => [p.join('>'), p])).values()].filter(([a, b]) => a !== b);
 }
 function check(ex, opts = {}) {
-  const tol = { rest: 7, planted: 6, ...(opts.tolerance || {}) };
+  const tol = { rest: 7, planted: 6, skid: 12, ...(opts.tolerance || {}) };
   const issues = [];
   for (const { label, R, kfs } of versions(ex)) {
     // held poses
@@ -74,6 +75,21 @@ function check(ex, opts = {}) {
         if (V.dist(A, B) > 2 || A.y - C.supportAt(A) > 3) continue;
         let d = 0; for (const P of F) d = Math.max(d, V.dist(P[p], A));
         if (d > tol.planted) issues.push({ kind: 'planted', px: d, msg: `${where}: planted ${p} wanders ${d.toFixed(0)}px` });
+      }
+      for (const s of ['L', 'R']) {
+        const off = P => P['toe' + s].y - C.supportAt(P['toe' + s]) > 3 && P['ankle' + s].y - C.supportAt(P['ankle' + s]) > 3;
+        if (off(F[0]) === off(F[60])) continue;
+        // standing legs only: a seated, kneeling or lying foot may slide along the floor (Bound Angle, Pigeon)
+        const G = off(F[0]) ? F[60] : F[0];
+        if (G['hip' + s].y - C.supportAt(G['toe' + s]) < 120) continue;
+        // how far the toe travels over the floor while it's still (or already) on it
+        let skid = 0, prev = null;
+        for (const P of F) {
+          const T = P['toe' + s], on = T.y - C.supportAt(T) <= 3;
+          if (on && prev) skid += Math.hypot(T.x - prev.x, T.z - prev.z);
+          prev = on ? T : null;
+        }
+        if (skid > tol.skid) issues.push({ kind: 'skid', px: skid, msg: `${where}: toe${s} slides ${skid.toFixed(0)}px along the floor as the foot ${off(F[0]) ? 'sets down' : 'lifts'}` });
       }
     }
   }

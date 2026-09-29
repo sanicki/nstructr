@@ -349,11 +349,16 @@ differently.
 
 1. **`sharedPin`**: if either step's pin — or failing that, any point (ankles, hands, knees, pelvis…) — is
    resting at the same spot in both steps, pin that for the whole move. A pin with the same *name* but a
-   different spot (the foot that was on the step is now on the floor) doesn't count.
+   different spot (the foot that was on the step is now on the floor) doesn't count. An airborne step's `lift`
+   doesn't count either (the foot that pushed off lands where it was).
 2. Interpolate every joint number as written (the values choose the way round) and the camera; blend placements
    (unless shared-pinned).
 3. `slideContacts`: hands/feet on a surface at both ends move in an arc (higher when stepping up/down: clears
-   the edge by `|Δheight| + 14`), unless pinned. Legs don't step while the camera turns.
+   the edge by `|Δheight| + 14`), unless pinned. Legs don't step while the camera turns. A **standing** foot on
+   the floor at one end only (lifting to step back, setting down, a toe tap) **peels** (`peel`): it rises before
+   it travels and arrives above its spot before lowering, the toes clearing the floor too; a long or high swing
+   (Dancer, Warrior III) only lifts. Seated, kneeling and lying feet may slide (Bound Angle, Pigeon). (Sep 2026:
+   Reverse Lunge's foot rode along the floor as it stepped back and in.)
 4. `clampTips`: dipping hands/feet are held on the surface via IK; a knee below the surface turns the thigh up
    (legs swinging forward and back only).
 5. Toe fix: toes that would sink turn the ankle.
@@ -405,7 +410,9 @@ Earlier ad-hoc checks that aren't ported (superseded): "hop" (pinned point lifti
 covers it and hop wrongly flagged legitimate steps), "butt" (seated pelvis leaving the floor).
 
 **Principles behind the checks** (use them when authoring): contacts must be real (nothing floats, nothing
-sinks), planted things stay planted, nothing teleports or windmills, and stepping lifts the foot. If an
+sinks), planted things stay planted, nothing teleports or windmills, and stepping lifts the foot (the **skid**
+check in `tools/checks.cjs`: a standing foot lifting off or setting down may not slide more than 12 px along the
+floor). If an
 exercise needs a deviation, prefer fixing the geometry (use `anchor`/`touch`/`keep`/`reach`, pick angle
 representations that rotate the short, natural way) over adding a known issue; if you must add one, write why.
 
