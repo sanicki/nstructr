@@ -27,7 +27,7 @@ const AI_EQUIP_KEY = 'nstructr-ai-equipment-v1';
 const AI_EQUIP_LABEL = { band: 'Resistance band', 'door anchor': 'Door anchor (for a band)', block: 'Yoga block', strap: 'Yoga strap' };
 const aiEquipLabel = k => AI_EQUIP_LABEL[k] || k.charAt(0).toUpperCase() + k.slice(1);
 const aiEquipKinds = () => [...new Set(allExercises().flatMap(ex => SIMILAR_EX.equipKinds(ex.equipment)))].sort();
-function aiEquipChosen() { try { const v = JSON.parse(pref(AI_EQUIP_KEY, '["wall"]')); return new Set(Array.isArray(v) ? v : []); } catch (e) { return new Set(['wall']); } }
+function aiEquipChosen() { try { const v = JSON.parse(pref(AI_EQUIP_KEY, '[]')); return new Set(Array.isArray(v) ? v : []); } catch (e) { return new Set(); } }   // nothing picked at first (a wall until Sep 2026)
 /* the exercises a plan may use: every piece of their equipment is one the user has */
 const aiCanDo = (ex, have = aiEquipChosen()) => SIMILAR_EX.equipKinds(ex.equipment).every(k => have.has(k));
 const aiApp = () => AI_APPS.find(a => a.id === pref(AI_KEY, 'gemini')) || AI_APPS.find(a => a.id === 'gemini');   // the last one picked

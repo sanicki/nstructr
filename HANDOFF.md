@@ -675,7 +675,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   identically). Base64 or other encodings don't help: non-ASCII is escaped in a link, and the AI has to read plain
   text.
   **Workout goal** (plan a workout, the first choice, `planPrompt`): a goal ("a 30-minute leg workout") and equipment chips (the kinds
-  `SIMILAR_EX.equipKinds` finds in the library, remembered in `nstructr-ai-equipment-v1`, wall at first). Its prompt
+  `SIMILAR_EX.equipKinds` finds in the library, remembered in `nstructr-ai-equipment-v1`, nothing at first). Its prompt
   is its own, and short: only the workout format (no exercise format: nothing new is written) and only the exercises
   whose every kind of equipment is picked (`aiCanDo`), each with its pace (`repSeconds`, or "time"), sides/direction,
   name and focus, plus the user's rests (`restGap`, `restSets`): as a link 12.6k with a wall and dumbbells, 17.1k with everything (then copied).
@@ -748,10 +748,10 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-authoring-v1` | `"on"` shows the pose editor |
 | `nstructr-libwk-order-v1` | the user's order of the library workouts (ids; new ones go at the end, in `library/workout-order.json` order) |
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
-| `nstructr-ai-equipment-v1` | Create with AI, Plan a workout: the equipment kinds picked, JSON list (`["wall"]` until changed) |
+| `nstructr-ai-equipment-v1` | Create with AI, Plan a workout: the equipment kinds picked, JSON list (`[]` until changed; `["wall"]` until Sep 2026) |
 | `nstructr-loop-v1` | `"off"`: the exercise page plays once through (setup, one rep, finish), then stops (overlay Loop toggle) |
-| `nstructr-exmute-v1` | `"on"`: the exercise page's spoken cues are muted (overlay Mute toggle; the voice also needs Sound = Voice/Coach) |
-| `nstructr-group-collections-v1` | `"off"`: the Exercises tab lists All collections as one A–Z list instead of grouped by collection (the tab's own switch) |
+| `nstructr-exmute-v1` | the exercise page's spoken cues muted unless `"off"` (default muted since Sep 2026; overlay Mute toggle; the voice also needs Sound = Voice/Coach) |
+| `nstructr-group-collections-v1` | `"on"`: the Exercises tab groups All collections by collection; otherwise one A–Z list (default since Sep 2026; the tab's own switch) |
 | `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Voice and Coach (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
 | `nstructr-encourage-v1` | Coach's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach; `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; the backup's `settings.encourage`) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |

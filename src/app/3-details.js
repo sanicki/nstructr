@@ -138,7 +138,7 @@ $('#editPoseBtn').addEventListener('click', () => (XC.editing ? closeEditor() : 
 const XS = { speaking: false, token: 0, last: '' };
 const LOOP_KEY = 'nstructr-loop-v1', EXMUTE_KEY = 'nstructr-exmute-v1';
 const loopOn = () => pref(LOOP_KEY, 'on') !== 'off';             // the exercise page repeats the exercise (off: once through, then stop)
-const exMuted = () => pref(EXMUTE_KEY, 'off') === 'on';          // the overlay's mute: quiets the exercise page only
+const exMuted = () => pref(EXMUTE_KEY, 'on') !== 'off';          // the overlay's mute: quiets the exercise page only (muted until unmuted, since Sep 2026)
 const exVoice = () => (WK.sound === 'voice' || WK.sound === 'coach') && !exMuted();
 function renderExToggles() {
   const l = $('#loopBtn'), m = $('#muteBtn'); if (!l || !m) return;
