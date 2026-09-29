@@ -54,13 +54,13 @@ exercise with the same name, the new one gets its own name, so nothing of yours 
 
 ## Import a file
 
-**Settings → Import & tools → Choose file** (or **Paste JSON**) adds exercises, workouts, or a backup. On a
+**Settings → Import & tools → Import → Choose file** adds a backup, workouts, or exercises. On a
 computer you can also drop a file anywhere on the page.
 
 ## Back up everything
 
 Your data lives only in this browser on this device. **Settings → Import & tools → Export everything** saves one
-file with your workouts, history, your own exercises, bookmarks and settings. **Import everything** restores it,
+file with your workouts, history, your own exercises, bookmarks and settings. Importing it (**Import → Choose file**) restores it,
 here or on another device.
 
 Make a backup now and then, and before clearing your browser's data or changing phones. Installing the app

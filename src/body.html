@@ -74,8 +74,6 @@
         <h2 class="title-small settings-title" id="setDisplayTitle">Display</h2>
         <div class="setting"><span class="txt"><span class="body-large">Theme</span></span>
           <div class="segmented" id="setTheme" role="group" aria-label="Theme"></div></div>
-        <label class="setting"><span class="txt"><span class="body-large">Authoring mode</span><span class="body-small muted">Shows the pose editor on each exercise, for making and fixing exercises.</span></span>
-          <input type="checkbox" class="switch" id="setAuthoring"></label>
       </section>
       <section class="settings-group" aria-labelledby="setAiTitle">
         <h2 class="title-small settings-title" id="setAiTitle">Create with AI</h2>
@@ -84,16 +82,16 @@
       </section>
       <section class="settings-group" aria-labelledby="setToolsTitle">
         <h2 class="title-small settings-title" id="setToolsTitle">Import &amp; tools</h2>
-        <div class="setting"><span class="txt"><span class="body-large">Back up everything</span><span class="body-small muted">Your workouts, history, own exercises and settings live only on this device. Save a backup file now and then; import it to restore them here or on another device.</span>
+        <div class="setting"><span class="txt"><span class="body-large">Backup</span><span class="body-small muted">Your workouts, history, own exercises and settings live only on this device. Save a backup file now and then; import it to restore them here or on another device.</span>
             <span class="body-small muted" id="persistNote"></span></span>
-          <span class="row"><button class="btn filled stateful" data-act="backup"><span class="icon">download</span>Export everything</button>
-            <button class="btn text stateful" data-act="import">Import everything</button></span></div>
-        <div class="setting"><span class="txt"><span class="body-large">Import a file</span><span class="body-small muted">Add exercises, workouts or a backup from a JSON file. You can also drop a file anywhere on this page.</span></span>
-          <span class="row"><button class="btn filled stateful" data-act="import"><span class="icon">upload_file</span>Choose file</button>
-            <button class="btn text stateful" data-act="paste">Paste JSON</button></span></div>
+          <button class="btn filled stateful" data-act="backup"><span class="icon">download</span>Export everything</button></div>
+        <div class="setting"><span class="txt"><span class="body-large">Import</span><span class="body-small muted">Add a backup, workouts, or exercises from a JSON file. You can also drop a file anywhere on this page.</span></span>
+          <button class="btn filled stateful" data-act="import"><span class="icon">upload_file</span>Choose file</button></div>
         <div class="setting authoring-only"><span class="txt"><span class="body-large">Export your exercises</span><span class="body-small muted">The JSON for everything in My exercises, to share it or edit it elsewhere.</span></span>
           <button class="btn tonal stateful" data-act="exportAll"><span class="icon">data_object</span>Show JSON</button></div>
-        <details class="card format-card"><summary class="stateful"><span class="icon">menu_book</span><span class="title-medium">JSON format reference</span><span class="icon chev">expand_more</span></summary>
+        <label class="setting"><span class="txt"><span class="body-large">Authoring mode</span><span class="body-small muted">Shows the pose editor on each exercise, for making and fixing exercises.</span></span>
+          <input type="checkbox" class="switch" id="setAuthoring"></label>
+        <details class="card format-card authoring-only"><summary class="stateful"><span class="icon">menu_book</span><span class="title-medium">JSON format reference</span><span class="icon chev">expand_more</span></summary>
           <div class="body body-small" id="formatRef"></div></details>
       </section>
     </section>
@@ -246,11 +244,6 @@
   </nav>
 </div>
 
-<dialog id="pasteDialog" aria-labelledby="pasteTitle">
-  <h2 class="headline-small" id="pasteTitle">Paste JSON</h2>
-  <textarea id="pasteArea" spellcheck="false" placeholder='{ "version": 2, "id": "u-my-exercise", "name": "...", "keyframes": [ ... ] }'></textarea>
-  <div class="actions"><button class="btn text stateful" data-close>Cancel</button><button class="btn filled stateful" id="pasteImport">Import</button></div>
-</dialog>
 <dialog id="jsonDialog" aria-labelledby="jsonTitle">
   <h2 class="headline-small" id="jsonTitle">JSON</h2>
   <textarea id="jsonArea" spellcheck="false" readonly></textarea>

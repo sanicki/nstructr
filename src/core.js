@@ -190,7 +190,9 @@ function chairGrip() {
 function surfaceShapes(sup, yaw) {
   const s = Math.sin(yaw * D2R), c = Math.cos(yaw * D2R), sx = (x, z) => CX + z * s - x * c;
   return (sup || []).map(k => {
-    if (k.type === 'ball') { const c = sx(k.cx, k.cz), cy = FLOOR - k.r, r = k.r;
+    // (the floor line is drawn 7 below the floor the body rests on, for the feet's thickness: the ball reaches it, its top
+    // where the body rests on it)
+    if (k.type === 'ball') { const c = sx(k.cx, k.cz), r = k.r + 3.5, cy = FLOOR + 7 - r;
       return { solid: true, ball: true, d: `M${c - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`, x0: c - r, x1: c + r }; }
     const xs = [sx(k.x0, k.z0), sx(k.x1, k.z0), sx(k.x0, k.z1), sx(k.x1, k.z1)];
     const a = Math.min(...xs), b = Math.max(...xs), top = FLOOR - k.h, f = FLOOR + 7;

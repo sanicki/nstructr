@@ -25,7 +25,7 @@ suggest your change for everyone's library: **Share → Submit to library** ([ho
 
 ## Changing the poses (Authoring mode)
 
-Turn on **Authoring mode** in [Settings](Settings.md#authoring-mode) to also get the pose editor: the camera
+Turn on **Authoring mode** in [Settings → Import & tools](Settings.md#import--tools) to also get the pose editor: the camera
 (**Side** or **Front**, or any angle in between), every joint with − / + buttons (hold to repeat; steps of 1°, 5° or
 15°), and the exercise's JSON.
 
