@@ -3,10 +3,10 @@
   "version": 2,
   "id": "beginner-pilates-20",
   "name": "20-Minute Beginner's Pilates",
-  "description": "A beginner's Pilates mat class, about 20 minutes, with no equipment: warm up the core, the abdominal series and back work twice through, then a bridge and twist to finish.",
+  "description": "A beginner's Pilates mat class, about 20 minutes, with no equipment: the classical beginner opening (Hundred, Roll-Up, Leg Circles, Rolling Like a Ball), the first of the abdominal series and Spine Stretch, then beginner basics for the hips, trunk and back.",
   "blocks": [
     {
-      "name": "Warm up the core",
+      "name": "Classical warm-up",
       "items": [
         {
           "ex": "pil-hundred",
@@ -46,49 +46,48 @@
         {
           "ex": "pil-spine-stretch",
           "reps": 5
-        },
-        {
-          "ex": "pil-saw",
-          "reps": 4
         }
-      ],
-      "rounds": 2,
-      "roundRest": 15
+      ]
     },
     {
-      "name": "Back and sides",
+      "name": "Beginner basics",
       "items": [
         {
-          "ex": "pil-swan",
-          "reps": 5
+          "ex": "bw-glute-bridge",
+          "reps": 10,
+          "sets": 2
         },
         {
-          "ex": "pil-single-leg-kick",
-          "reps": 8
+          "ex": "core-dead-bug",
+          "reps": 6,
+          "sides": "alternate"
+        },
+        {
+          "ex": "core-bird-dog",
+          "reps": 6,
+          "sides": "alternate"
+        },
+        {
+          "ex": "core-heel-taps",
+          "reps": 10
+        },
+        {
+          "ex": "side-clamshell",
+          "reps": 12,
+          "sides": "both"
         },
         {
           "ex": "pil-side-kick",
-          "reps": 10,
+          "reps": 8,
           "sides": "both"
         },
         {
           "ex": "pil-swimming",
           "reps": 30
-        }
-      ],
-      "rounds": 2,
-      "roundRest": 15
-    },
-    {
-      "name": "Finish",
-      "items": [
-        {
-          "ex": "pil-shoulder-bridge",
-          "reps": 4
         },
         {
-          "ex": "pil-spine-twist",
-          "reps": 4
+          "ex": "core-forearm-plank",
+          "seconds": 45
         }
       ]
     }

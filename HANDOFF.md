@@ -23,7 +23,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **254 exercises, 4 workouts** (20-minute beginner's yoga, Pilates and free weights, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach; and the full-body routine).
+Library today: **255 exercises, 4 workouts** (20-minute beginner's yoga, Pilates and free weights, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach; and the full-body routine).
 
 | Collection | Count | Notes |
 |---|---|---|

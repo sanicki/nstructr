@@ -152,8 +152,8 @@ ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.
 
 ## 20-minute beginner's workouts (Sep 2026)
 Library workouts built from what's here, timed at the default rests (5 s between exercises, 10 s between sets)
-with Coach on (about 15–17 minutes without): **Yoga** (a mat, `beginner-yoga-20`), **Pilates** (a mat; the classical beginner mat order,
-`beginner-pilates-20`), **Free weights** (dumbbells only,
+with Coach on (about 15–17 minutes without): **Yoga** (a mat, `beginner-yoga-20`), **Pilates** (a mat; the classical beginner opening, then beginner basics such as glute bridge,
+dead bug, bird dog, clamshell and side kick, `beginner-pilates-20`), **Free weights** (dumbbells only; a new Dumbbell Floor Press for the chest,
 `beginner-free-weights-20`). **Kettlebell**: not yet, only three exercises (Swing, Deadlift, Goblet Squat). A
 20-minute beginner kettlebell class also needs, most commonly: Halo, Around the World, Single-Arm Row, Overhead
 Press, Goblet Reverse Lunge, Sumo Deadlift or Squat, Romanian Deadlift, Suitcase Carry, and a Russian Twist or Dead
