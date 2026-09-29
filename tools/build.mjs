@@ -88,7 +88,7 @@ if (!args.has('--no-checks') && !errors.length) {
 }
 // ---------- 2d. equipment: what's listed is drawn and what's drawn is listed, spelled one way (the Exercises filter) ----------
 if (!args.has('--no-checks') && !errors.length) {
-  const DRAWN = { bar: /pull-?up bar|chin-?up bar|\bbar\b/, block: /block/, strap: /strap/, towel: /towel/, wall: /wall|door/, chair: /chair/, bench: /bench/, step: /step/, band: /band/, dumbbell: /dumbbell/, barbell: /barbell/, kettlebell: /kettlebell/ };
+  const DRAWN = { ball: /stability ball|swiss ball|exercise ball/, medball: /medicine ball|med ball/, ring: /pilates ring|magic circle/, bar: /pull-?up bar|chin-?up bar|\bbar\b/, block: /block/, strap: /strap/, towel: /towel/, wall: /wall|door/, chair: /chair/, bench: /bench/, step: /step/, band: /band/, dumbbell: /dumbbell/, barbell: /barbell/, kettlebell: /kettlebell/ };
   const spelled = new Map(), n0 = errors.length;
   for (const ex of exercises) {
     const types = new Set((ex.props || []).map(p => p.type)), eq = ex.equipment || [];

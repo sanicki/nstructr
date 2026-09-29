@@ -27,6 +27,7 @@ function poseThumbSVG(ex, kf, opts = {}) {
   const back = (ex.props || []).map((pr, i) => {
     if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj); return ''; }
     if (pr.type === 'bar') { over += barSVG(pr, proj, 'tbar'); return ''; }
+    if (pr.type === 'ring') { over += ringSVG(pr, P, proj, 'tring'); return ''; }
     if (pr.type === 'wall') { const wl = walls[i]; return wl && wl.show > 0.5 ? `<line class="tw" x1="${wl.x.toFixed(1)}" y1="${FLOOR + 7}" x2="${wl.x.toFixed(1)}" y2="${(vy - 5).toFixed(1)}"/>` : ''; }
     let route = propRoute(P, pr);
     if (!route) return '';
@@ -37,7 +38,7 @@ function poseThumbSVG(ex, kf, opts = {}) {
     if (q.reduce((a, p) => a + p.d, 0) / q.length < Q.pelvis.d) return svg;
     over += svg; return '';
   }).join('');
-  const surf = surfaces.map(sh => `<path class="ts${sh.solid ? ' solid' : ''}" d="${sh.d}"/>`).join('');
+  const surf = surfaces.map(sh => `<path class="ts${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}" d="${sh.d}"/>`).join('');
   return `<svg class="thumb" viewBox="${vx.toFixed(1)} ${vy.toFixed(1)} ${s.toFixed(1)} ${s.toFixed(1)}" aria-hidden="true">
     <line x1="${vx}" y1="${FLOOR + 7}" x2="${vx + s}" y2="${FLOOR + 7}" class="tf"/>${surf}${back}${figure}${over}</svg>`;
 }

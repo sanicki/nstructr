@@ -1,0 +1,127 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "ball-seated-march",
+  "name": "Stability Ball Seated March",
+  "otherNames": ["Swiss Ball Seated March"],
+  "category": "Balance",
+  "focus": "Core and hips (balance)",
+  "collections": ["Core", "Balance"],
+  "equipment": ["Stability ball"],
+  "description": "Sitting tall on a stability ball with your feet flat, lift one foot a little off the floor and set it down, then the other, keeping the ball still.",
+  "source": {
+    "url": "https://us.physitrack.com/home-exercise-video/seated-marching-on-stability-ball",
+    "title": "Physitrack: Seated marching on a stability ball"
+  },
+  "setup": ["Sit on the middle of the ball, feet flat and hip-width apart.", "Knees over your ankles, hands on your hips or by your sides."],
+  "cues": ["Stay tall; don't lean.", "Keep the ball still.", "Small, slow lifts."],
+  "prescription": {
+    "reps": "5 each leg",
+    "note": "Build up the repetitions gradually. Do these exercises at least twice a week."
+  },
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Sit tall on the ball, feet flat, knees over your ankles.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 12
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 12
+        }
+      ],
+      "pose": {
+        "shoulderL": [-14.6, 0, 0],
+        "elbowL": 45.8,
+        "shoulderR": [-14.6, 0, 0],
+        "elbowR": 45.8,
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Lift your left knee",
+      "cue": "Lift one foot a little off the floor, staying tall.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 12
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 12
+        }
+      ],
+      "pose": {
+        "shoulderL": [-14.6, 0, 0],
+        "elbowL": 45.8,
+        "shoulderR": [-14.6, 0, 0],
+        "elbowR": 45.8,
+        "hipL": [118, 0, 0],
+        "kneeL": 108,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "ball",
+      "x": 0,
+      "z": -6,
+      "r": 48
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

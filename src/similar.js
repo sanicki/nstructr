@@ -32,7 +32,7 @@
   /* equipment, as kinds: "Resistance band" and "band" are one thing, "Dumbbells" and "dumbbell" too; a mat or the
      floor isn't equipment. Also used for the AI's "equipmentInSource" (free text). */
   const KINDS = [['pull-up bar', /pull-?up bar|chin-?up bar|\bbar\b/], ['door anchor', /door/], ['band', /band|tube/], ['dumbbell', /dumb ?bell/], ['barbell', /barbell/], ['kettlebell', /kettle ?bell/], ['chair', /chair/],
-    ['bench', /bench/], ['wall', /wall/], ['step', /\bstep|box/], ['towel', /towel/], ['block', /block/], ['strap', /strap/], ['ball', /ball/]];
+    ['bench', /bench/], ['wall', /wall/], ['step', /\bstep|box/], ['towel', /towel/], ['block', /block/], ['strap', /strap/], ['stability ball', /stability ball|swiss ball|exercise ball/], ['medicine ball', /medicine ball|med ball/], ['pilates ring', /pilates ring|magic circle/], ['ball', /ball/]];
   const equipKind = e => {
     const t = String(e || '').toLowerCase().trim();
     if (!t || /\bmat\b|floor|none|bodyweight|body weight/.test(t)) return '';

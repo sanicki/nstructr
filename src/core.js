@@ -159,12 +159,14 @@ function boneOrder(Q, prev) {
 /* ---------- Surfaces (chair seat, bench, step) ----------
    A box on the floor: "z" is its centre along the figure's forward direction, "width" its length that way, "x" and
    "depth" the same sideways. The "floor" under any point is the highest surface beneath it, or the floor itself. */
-const SURFACE_TYPES = ['chair', 'bench', 'step', 'block'];
+const SURFACE_TYPES = ['chair', 'bench', 'step', 'block', 'ball'];
 // a yoga block stands on end (23 × 15 × 10 cm at about 5.6 mm a px): 41 high, 27 front to back, 18 side to side
 const SURFACE_DEFAULTS = { chair: { width: 70, depth: 80, height: 80, backHeight: 85 }, bench: { width: 200, depth: 70, height: 70 }, step: { width: 90, depth: 140, height: 30 }, block: { width: 27, depth: 18, height: 41 } };
 let SUPPORTS = [];
 function surfacesFrom(props) {
   return (props || []).filter(p => SURFACE_TYPES.includes(p.type)).map(p => {
+    // a stability ball: round, resting on the floor (r 58: a 65 cm ball); what's over it rests on its curve
+    if (p.type === 'ball') { const r = num(p.r) || 58, x = num(p.x), z = num(p.z); return { type: 'ball', r, cx: x, cz: z, x0: x - r, x1: x + r, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0 }; }
     const d = SURFACE_DEFAULTS[p.type], w = num(p.width) || d.width, dp = num(p.depth) || d.depth, h = num(p.height) || d.height;
     return { type: p.type, z0: num(p.z) - w / 2, z1: num(p.z) + w / 2, x0: num(p.x) - dp / 2, x1: num(p.x) + dp / 2, h,
       back: p.type === 'chair' ? (p.back || 'behind') : null, backHeight: num(p.backHeight) || d.backHeight || 0 };
@@ -172,7 +174,10 @@ function surfacesFrom(props) {
 }
 function supportY(x, z) {
   let y = 0;
-  for (const s of SUPPORTS) if (z >= s.z0 - 2 && z <= s.z1 + 2 && x >= s.x0 - 2 && x <= s.x1 + 2) y = Math.max(y, s.h);
+  for (const s of SUPPORTS) {
+    if (s.type === 'ball') { const d2 = (x - s.cx) ** 2 + (z - s.cz) ** 2; if (d2 < s.r * s.r) y = Math.max(y, s.r + Math.sqrt(s.r * s.r - d2)); continue; }
+    if (z >= s.z0 - 2 && z <= s.z1 + 2 && x >= s.x0 - 2 && x <= s.x1 + 2) y = Math.max(y, s.h);
+  }
   return y;
 }
 const supportAt = p => supportY(p.x, p.z);
@@ -185,6 +190,8 @@ function chairGrip() {
 function surfaceShapes(sup, yaw) {
   const s = Math.sin(yaw * D2R), c = Math.cos(yaw * D2R), sx = (x, z) => CX + z * s - x * c;
   return (sup || []).map(k => {
+    if (k.type === 'ball') { const c = sx(k.cx, k.cz), cy = FLOOR - k.r, r = k.r;
+      return { solid: true, ball: true, d: `M${c - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`, x0: c - r, x1: c + r }; }
     const xs = [sx(k.x0, k.z0), sx(k.x1, k.z0), sx(k.x0, k.z1), sx(k.x1, k.z1)];
     const a = Math.min(...xs), b = Math.max(...xs), top = FLOOR - k.h, f = FLOOR + 7;
     if (k.type === 'step' || k.type === 'block') return { solid: true, d: `M${a} ${f}L${a} ${top}L${b} ${top}L${b} ${f}Z`, x0: a, x1: b };
@@ -508,7 +515,21 @@ function solveReach(pose, seg, rule, r, T) {
 }
 
 /* ---------- Equipment (props) ---------- */
-const PROP_TYPES = ['band', 'towel', 'strap', 'wall', 'chair', 'bench', 'step', 'block', 'dumbbell', 'kettlebell', 'barbell', 'bar'];
+const PROP_TYPES = ['band', 'towel', 'strap', 'ring', 'wall', 'chair', 'bench', 'step', 'block', 'ball', 'dumbbell', 'kettlebell', 'barbell', 'medball', 'bar'];
+/* a Pilates ring (magic circle) between two points (hands, knees): 68 across (38 cm); pressed together it flattens
+   into an oval, the long way across the press, the short way the gap between the points */
+function ringSVG(pr, P, proj, cls) {
+  const a = P[pr.from], b = P[pr.to]; if (!a || !b) return '';
+  // a circle in 3D: across the press line (u) and upright (v, the world's up made square to u; forward if the press
+  // is vertical), drawn by its points on screen
+  const gap = Math.max(12, Math.min(68, V3.dist(a, b))), across = Math.min(95, 68 * 68 / gap);
+  const c = V3.lerp(a, b, 0.5), u = V3.dist(a, b) > 1 ? V3.unit(V3.sub(b, a)) : { x: 1, y: 0, z: 0 };
+  let up = { x: 0, y: 1, z: 0 }; if (Math.abs(V3.dot(up, u)) > 0.9) up = { x: 0, y: 0, z: 1 };
+  const v = V3.unit(V3.sub(up, V3.mul(u, V3.dot(up, u))));
+  const pts = [];
+  for (let i = 0; i < 24; i++) { const t = i / 24 * 2 * Math.PI; pts.push(proj(V3.add(c, V3.add(V3.mul(u, Math.cos(t) * gap / 2), V3.mul(v, Math.sin(t) * across / 2))))); }
+  return `<path class="${cls}" d="M${pts.map(q => `${q.x.toFixed(1)} ${q.y.toFixed(1)}`).join('L')}Z"/>`;
+}
 /* a pull-up bar: y high, z forward of the stage centre, width side to side (a doorway bar, 90); seen end-on, a dot */
 function barSVG(pr, proj, cls) {
   const w = num(pr.width) || 90, a = proj({ x: -w / 2, y: num(pr.y), z: num(pr.z) }), b = proj({ x: w / 2, y: num(pr.y), z: num(pr.z) });
@@ -516,7 +537,7 @@ function barSVG(pr, proj, cls) {
   return `<line class="${cls}" x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}"/>` +
     `<circle class="${cls}-end" cx="${((a.x + b.x) / 2).toFixed(1)}" cy="${((a.y + b.y) / 2).toFixed(1)}" r="5"/>`;
 }
-const WEIGHT_TYPES = ['dumbbell', 'kettlebell', 'barbell'];
+const WEIGHT_TYPES = ['dumbbell', 'kettlebell', 'barbell', 'medball'];
 /* Hand-held weights, drawn where the hands are. A dumbbell's "axis" is its bar direction relative to the body:
    "lr" left-right (the usual grip), "fb" front-back (neutral grip), "ud" up-down (held upright, like a goblet
    squat). P: world points; M0: the body's rotation (the whole-body joint); proj: world point -> screen {x, y}. */
@@ -540,6 +561,11 @@ function weightSVG(pr, P, M0, proj) {
     const dir = el ? V3.unit(V3.sub(hc, el)) : { x: 0, y: -1, z: 0 };
     const H = proj(hc), Bl = proj(V3.add(hc, V3.mul(dir, 15)));       // the bell hangs on, in line with the forearm
     return bar(H, Bl) + `<circle class="wt" cx="${f(Bl.x)}" cy="${f(Bl.y)}" r="11"/>`;
+  }
+  if (pr.type === 'medball') {                                          // a medicine ball, held in both hands (r 20: about 23 cm)
+    const hands = (pr.hands || ['handL', 'handR']).map(k => P[k]).filter(Boolean); if (!hands.length) return '';
+    const c = proj(V3.mul(hands.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / hands.length));
+    return `<circle class="wt medball" cx="${f(c.x)}" cy="${f(c.y)}" r="20"/><path class="wt-seam" d="M${f(c.x - 20)} ${f(c.y)}Q${f(c.x)} ${f(c.y - 9)} ${f(c.x + 20)} ${f(c.y)}"/>`;
   }
   if (pr.type === 'barbell') {
     const a = P[pr.from], b = P[pr.to]; if (!a || !b) return '';
@@ -775,7 +801,7 @@ function mirrorKeyframe(kf) {
 
 if (typeof module !== 'undefined') module.exports = {
   phaseInfo, reverseReps, weightSVG, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
-  propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
+  propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
 };

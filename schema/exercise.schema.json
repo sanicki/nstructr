@@ -576,7 +576,10 @@
             "barbell",
             "bar",
             "strap",
-            "block"
+            "block",
+            "ring",
+            "ball",
+            "medball"
           ]
         },
         "from": {
@@ -732,6 +735,10 @@
         "length": {
           "type": "number",
           "description": "Yoga strap: its length (it doesn't stretch); default its longest route in the exercise plus a grip, the rest hanging from the hands."
+        },
+        "r": {
+          "type": "number",
+          "description": "Stability ball: its radius (58: a 65 cm ball)."
         }
       },
       "additionalProperties": false

@@ -61,7 +61,7 @@ function validateExercise(ex, path) {
       const p = `${path}.props[${k}]`;
       if (!pr || !PROP_TYPES.includes(pr.type)) fail(`${p}.type must be one of: ${PROP_TYPES.join(', ')}.`);
       if (WEIGHT_TYPES.includes(pr.type)) {
-        const hands = pr.type === 'barbell' ? [pr.from, pr.to] : (pr.hands || [pr.hand]);
+        const hands = pr.type === 'barbell' ? [pr.from, pr.to] : pr.type === 'medball' ? (pr.hands || ['handL', 'handR']) : (pr.hands || [pr.hand]);
         if (!hands.length || hands.some(h => !['handL', 'handR'].includes(h))) fail(`${p} (a ${pr.type}) needs ${pr.type === 'barbell' ? '"from" and "to" hands' : '"hand"'}: "handL" or "handR".`);
         if (pr.axis != null && !['lr', 'fb', 'ud'].includes(pr.axis)) fail(`${p}.axis must be "lr", "fb" or "ud".`);
         return;
@@ -248,7 +248,7 @@ function drawProps(P, Q, pose, cam) {
   let back = '', front = '';
   const dx = S.shiftX, proj = p => { const q = project({ p }, cam).p; return { x: q.x + dx, y: q.y, d: q.d }; };
   // chairs, benches and steps sit behind the figure
-  for (const sh of surfaceShapes(S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
+  for (const sh of surfaceShapes(S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
   const M0 = rootM(pose.root), wts = { handL: '', handR: '' };
   S.props.forEach((pr, i) => {
     if (SURFACE_TYPES.includes(pr.type)) return;
@@ -259,6 +259,7 @@ function drawProps(P, Q, pose, cam) {
       return;
     }
     if (pr.type === 'bar') { front += barSVG(pr, proj, 'bar'); return; }
+    if (pr.type === 'ring') { front += ringSVG(pr, P, proj, 'ring'); return; }
     if (pr.type === 'wall') {
       const wl = S.resolved.walls[i]; if (!wl) return;
       // a wall seen edge-on is a line; one that faces the camera fades out as it turns

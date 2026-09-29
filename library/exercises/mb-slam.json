@@ -1,0 +1,107 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "mb-slam",
+  "name": "Medicine Ball Slam",
+  "otherNames": ["Med Ball Slam", "Overhead Slam"],
+  "category": "Strength",
+  "focus": "Core, shoulders and legs (power)",
+  "collections": ["Free weights", "Core"],
+  "equipment": ["Medicine ball"],
+  "description": "Reach a medicine ball overhead, then slam it down in front of your feet as hard as you can, bending your hips and knees; pick it up and repeat.",
+  "source": {
+    "url": "https://www.acefitness.org/continuing-education/certified/august-2026/9179/throw-catch-slam-smarter-medicine-ball-training/",
+    "title": "ACE: Throw, catch, slam, smarter medicine-ball training"
+  },
+  "setup": ["Feet shoulder-width apart, the ball at your chest.", "A clear, sturdy floor in front of you."],
+  "cues": ["Reach tall, then slam down hard.", "Hinge and bend your knees as you throw.", "Brace your core."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Use a slam ball or a medicine ball made to be thrown, on a floor that can take it. Pick it up with a squat."
+  },
+  "keyframes": [
+    {
+      "name": "Ball at your chest",
+      "cue": "Feet shoulder-width, the ball at your chest.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [30, 0, 0],
+        "elbowL": 110,
+        "shoulderR": [30, 0, 0],
+        "elbowR": 110
+      }
+    },
+    {
+      "name": "Ball overhead",
+      "cue": "Reach the ball up overhead, arms long.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [170, 0, 0],
+        "shoulderR": [170, 0, 0]
+      }
+    },
+    {
+      "name": "Slam",
+      "cue": "Slam it down in front of your feet, bending hips and knees.",
+      "camera": 90,
+      "durationMs": 450,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "torso",
+          "gap": 20
+        }
+      ],
+      "pose": {
+        "torso": [55, 0, 0],
+        "shoulderL": [80, 0, 0],
+        "shoulderR": [80, 0, 0],
+        "hipL": [70, 0, 0],
+        "kneeL": 70,
+        "ankleL": -15,
+        "hipR": [70, 0, 0],
+        "kneeR": 70,
+        "ankleR": -15
+      }
+    },
+    {
+      "name": "Stand tall",
+      "cue": "Stand up with the ball.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [30, 0, 0],
+        "elbowL": 110,
+        "shoulderR": [30, 0, 0],
+        "elbowR": 110
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "medball"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

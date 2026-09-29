@@ -23,19 +23,19 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **243 exercises, 1 workout**.
+Library today: **250 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 80 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions |
-| Free weights | 31 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves), farmer's carry |
-| Bodyweight | 29 | squats, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
+| Free weights | 33 | dumbbell, kettlebell, barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry |
+| Bodyweight | 30 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
 | Resistance band | 27 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
 | Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
 | Stretches | 19 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway, strap stretches |
-| Core | 17 | planks, hanging knee raise, bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
-| Pilates | 23 | classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
-| Balance | 11 | Half Moon with a block, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, clock reach, single-leg RDL, pistol squat |
+| Core | 22 | planks, hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
+| Pilates | 25 | Pilates ring (chest press, inner thigh squeeze); classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
+| Balance | 12 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 9 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat |
 
 115 are rep-based, 93 timed; 74 are two-sided (`bilateral`); 3 have `direction`. Common exercises per collection
@@ -262,6 +262,9 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `bench` | `z`, `width` 200, `depth` 70, `height` 70 | Surface. |
 | `step` | `z`, `width` 90, `depth` 140, `height` 30 | Surface. |
 | `block` | `x`, `z`, `width` 27, `depth` 18, `height` 41 | A yoga block on end (23 × 15 × 10 cm). Surface: a hand over it rests on its top with `touch`. |
+| `ball` | `x`, `z`, `r` 58 | A stability ball (65 cm), resting on the floor: a round surface, what's over it rests on its curve (`supportY`), drawn as a circle (`--ball`). Sit on it (`anchor: "pelvis"`), lie back on it (`anchor: "spine"`), heels on it (`touch`). |
+| `medball` | `hands` (default both) | A medicine ball held in both hands, at their middle (`--medball`). |
+| `ring` | `from`, `to` | A Pilates ring (magic circle) between two points, 68 across; pressed, it flattens (`ringSVG`: a circle across the press line and upright, drawn in 3D). |
 | `dumbbell` | `hand`, `axis` `lr` (bar left–right) / `fb` (front–back) / `ud` (upright), relative to the body | Drawn end-on when the bar points at the camera; drawn with its arm (behind the body when the arm is). |
 | `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm. |
 | `barbell` | `from`, `to` (hands) | Projected in 3D: the end plate from the side, the full bar from the front. |
