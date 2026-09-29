@@ -242,7 +242,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `quiet` | Coach doesn't read this step (in-between points of a circle). |
 | `anchor`, `anchorX`, `anchorZ` | Point pinned to the floor/surface at world (anchorX, anchorZ) (sideways, forward; default 0, 0). Without an anchor the pelvis is there and the lowest point rests on the floor. For an exercise whose camera turns, put the point where it looks the same from both (the Star Excursions pin the standing foot at x −40, z 40). |
 | `lift` | Airborne (a jump): the whole figure that far above where it would rest, anchor or not; the move into and out of it rises and lands smoothly. The checks count it as meant, not floating. Short steps (300–400 ms): Jump Squat 45, Jumping Jacks 20, High Knees 6 (a hop as the standing foot swaps, with `anchorX` keeping the pelvis still). |
-| `anchorY` | Hanging (Sep 2026): the anchor (a hand on a pull-up bar) is held at this height instead of on the floor; a move with a hanging step at either end is only kept out of the floor, not rested on it, and a hanging step isn't re-pinned to a contact it shares with the step before. The checks expect the anchor at anchorY. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise (bar at 385: hands overhead reach 361 standing, so the figure hops up). |
+| `anchorY` | Hanging (Sep 2026): the anchor (a hand on a pull-up bar) is held at this height instead of on the floor; a move with a hanging step at either end is only kept out of the floor, not rested on it, and a hanging step isn't re-pinned to a contact it shares with the step before. The checks expect the anchor at anchorY. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise (bar at 385: hands overhead reach 361 standing). Getting on and off (`withMount` in `tools/variants/batch-11-hanging.cjs`): stand, reach up with the arms as they'll hang, jump to the bar (450 ms); let go and land with the arms still up, knees soft (450 ms), then lower them. Between two hanging steps the hand that isn't the anchor is held where it grips (`frameAt`), so it doesn't slide along the bar. |
 | `plant` | `["L","R"]`: feet kept flat (ankle computed). |
 | `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). `adjust` is a hinge, or a ball joint's number: `"hipR"` = its forward number, `"hipR.side"`, `"hipR.turn"`. |
 | `reach` | `[{hand, to, dx?, dy?, dz?}]`: two-bone arm IK (3D) to put a hand on a body point (plus the offset: sideways, up, forward), `"wall"` or `"chair"` (the chair back, at the hand's own shoulder width). The elbow bends the way it can, in the plane the arm's turn gives it. |
@@ -633,7 +633,8 @@ the app fills in the `device` field (user agent, screen size, installed app or b
     note, rep name, side and direction labels, and source. The first real change to a library exercise makes the
     copy, as for poses (a typed name replaces "(copy)").
 - **Create with AI** (`src/app/5-ai.js`; Settings > Create with AI, and Workouts next to New workout): a full-screen
-  dialog in three steps. 1: what you have (the name of the exercise, a written routine, a video or web link, a photo or
+  dialog in three steps. 1: what you have (Sep 2026, in this order: a goal, picked at first; a missing exercise; a workout
+  routine; a photo or video; a YouTube link. Earlier: the name of the exercise, a written routine, a video or web link, a photo or
   video; the last has no text box: it's attached in the AI app). 2: the AI app, A–Z with "Other LLM" last (Gemini
   until the user picks another; the last one picked is kept in `nstructr-ai-app-v1`; there's no Settings entry):
   **Open** copies the instructions and opens the app; apps with a message parameter that takes a link this long (`?q=`: ChatGPT, Claude,
@@ -657,7 +658,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   `URLSearchParams` (`: , / ; @ $ ?` stay as they are, spaces are `+`: allowed in a query and read back
   identically). Base64 or other encodings don't help: non-ASCII is escaped in a link, and the AI has to read plain
   text.
-  **Plan a workout** (fifth choice, `planPrompt`): a goal ("a 30-minute leg workout") and equipment chips (the kinds
+  **A goal** (plan a workout, the first choice, `planPrompt`): a goal ("a 30-minute leg workout") and equipment chips (the kinds
   `SIMILAR_EX.equipKinds` finds in the library, remembered in `nstructr-ai-equipment-v1`, wall at first). Its prompt
   is its own, and short: only the workout format (no exercise format: nothing new is written) and only the exercises
   whose every kind of equipment is picked (`aiCanDo`), each with its pace (`repSeconds`, or "time"), sides/direction,

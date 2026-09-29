@@ -60,8 +60,9 @@ const chip = (attr, val, on, label = val) =>
    "Bookmarked" is a collection like the others: bookmarked library exercises plus the user's own (imported or made),
    which exist only there. Searching "All" covers both. */
 const SAVED = 'Bookmarked', MINE = 'My exercises';
-/* My exercises: make one with AI from here too (as on Workouts) */
-const AI_BTN = '<button class="btn tonal stateful" data-act="ai"><span class="icon">auto_awesome</span>Create with AI</button>';
+/* My exercises: make one with AI from here too (as on Workouts), or import one; the two buttons are the same size */
+const MINE_BTNS = '<div class="mine-add"><button class="btn tonal stateful" data-act="ai"><span class="icon">auto_awesome</span>Create with AI</button>' +
+  '<button class="btn tonal stateful" data-act="import"><span class="icon">upload_file</span>Import</button></div>';
 const ownExercises = () => S.lib.items.filter(ex => !findInDb(ex.id));
 function renderExplore() {
   const colls = collections(), marked = bookmarkedExercises(), mine = ownExercises();
@@ -118,10 +119,10 @@ function renderExplore() {
   if (E.coll === MINE && !mine.length && !q) {
     body.innerHTML = `<div class="empty-state"><span class="icon">person</span><p class="title-medium" style="margin:8px 0 4px">No exercises of your own yet</p>
       <p class="muted" style="margin:0 0 16px">Exercises you import, make with AI, or copy by editing a library one show up here.</p>
-      <div class="row" style="justify-content:center">${AI_BTN}<button class="btn tonal stateful" data-act="import"><span class="icon">upload_file</span>Import</button></div></div>`;
+      ${MINE_BTNS}</div>`;
     return;
   }
-  body.innerHTML = (E.coll === MINE ? `<div class="row mine-add">${AI_BTN}</div>` : '') + (list.length
+  body.innerHTML = (E.coll === MINE ? MINE_BTNS : '') + (list.length
     ? `<p class="body-small muted" style="margin:12px 0 0">${list.length} ${list.length === 1 ? 'exercise' : 'exercises'}</p><div class="results">${byName(list).map(card).join('')}</div>`
     : `<div class="empty-state"><span class="icon">search_off</span><p class="title-medium" style="margin:8px 0 4px">Nothing matches</p>
        <p class="muted" style="margin:0 0 16px">Try a different word, or clear the filters.</p><button class="btn tonal stateful" data-act="clearFilters">Clear filters</button></div>`);

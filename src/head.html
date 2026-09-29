@@ -272,7 +272,8 @@ dialog.library[open]{display:flex;flex-direction:column}
 .lib-head{display:flex;align-items:center;gap:4px;padding:8px 12px 0 4px}
 .lib-head h2{flex:1;margin:0}
 .lib-tools{padding:8px 16px 4px}
-.mine-add{display:flex;gap:8px;margin:12px 0 0}
+.mine-add{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px auto 0;max-width:420px}
+.mine-add .btn{width:100%;justify-content:center}
 .ai-body{flex:1;overflow:auto;padding:4px 24px 24px}
 .ai-body>p{margin:0 0 4px}
 .ai-step{display:flex;align-items:center;gap:10px;margin:20px 0 8px}

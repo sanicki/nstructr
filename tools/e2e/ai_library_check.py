@@ -26,6 +26,7 @@ async def main():
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         await pg.evaluate("window.open = u => { window.OPENED = u; }")
         answer = await pg.evaluate(ANSWER)
+        await pg.evaluate("AI_KIND = 'link'")   # (from a video; "A goal" would only take library exercises)
         await pg.evaluate("openAi()"); await pg.fill('#aiAnswer', answer); await pg.click('#aiImport'); await pg.wait_for_timeout(600)
         body = await pg.evaluate("[$('#checkDialog').open, $('#checkTitle').textContent, [...document.querySelectorAll('#checkBody .choice')].map(x => x.innerText), [...document.querySelectorAll('#checkBody .check-name span')].map(x => x.innerText)]")
         print('dialog                  ', body[:2])

@@ -15,22 +15,23 @@ const AI_APPS = [                // A–Z, "other" last. q: the link parameter t
   { id: 'mistral', name: 'Vibe', url: 'https://chat.mistral.ai/chat' },             // Mistral's, formerly Le Chat; refuses the long link too
   { id: 'other', name: 'Other LLM' },
 ];
-const AI_KINDS = [
-  { id: 'name', label: 'The name of the exercise', field: 'Exercise name', ph: 'e.g. Pilates leg circles', hint: 'The AI uses what it knows, and looks it up on the web where it can to check it.' },
-  { id: 'routine', label: 'Written routine', field: 'The routine', ph: 'Paste or type it: exercises, reps, sets, rests…', hint: 'A list of exercises makes a workout; one exercise makes an exercise.' },
-  { id: 'link', label: 'Video or web link', field: 'Link', ph: 'https://www.youtube.com/watch?v=…', hint: 'Gemini can watch YouTube videos; most other apps only read the page.' },
-  { id: 'media', label: 'Photo or video', field: '', ph: '', hint: 'Attach your photo or video in the AI app after it opens (a link can\'t carry it). Pick an app that accepts them.' },  { id: 'plan', label: 'A goal: plan a workout', field: 'What you want', ph: 'e.g. a 30-minute leg workout', hint: 'The AI plans it from the library\'s exercises (and your own), using only the equipment you pick.' },
+const AI_KINDS = [                // in the order they're offered; a goal first (it only uses what's in the app)
+  { id: 'plan', label: 'A goal', field: 'What you want', ph: 'e.g. a 30-minute leg workout', hint: 'The AI plans a workout from the library\'s exercises (and your own), using only the equipment you pick.' },
+  { id: 'name', label: 'A missing exercise', field: 'Exercise name', ph: 'e.g. Pilates leg circles', hint: 'One that isn\'t in the library yet. The AI uses what it knows, and looks it up on the web where it can to check it.' },
+  { id: 'routine', label: 'A workout routine', field: 'The routine', ph: 'Paste or type it: exercises, reps, sets, rests…', hint: 'A list of exercises makes a workout; one exercise makes an exercise.' },
+  { id: 'media', label: 'A photo or video', field: '', ph: '', hint: 'Attach your photo or video in the AI app after it opens (a link can\'t carry it). Pick an app that accepts them.' },
+  { id: 'link', label: 'A YouTube link', field: 'YouTube link', ph: 'https://www.youtube.com/watch?v=…', hint: 'Gemini can watch YouTube videos; most other apps only read the page (a web page link works too).' },
 ];
 /* "plan": the equipment the user has, as the kinds src/similar.js uses (a mat doesn't count). Remembered. */
 const AI_EQUIP_KEY = 'nstructr-ai-equipment-v1';
-const AI_EQUIP_LABEL = { band: 'Resistance band', 'door anchor': 'Door anchor (for a band)' };
+const AI_EQUIP_LABEL = { band: 'Resistance band', 'door anchor': 'Door anchor (for a band)', block: 'Yoga block', strap: 'Yoga strap' };
 const aiEquipLabel = k => AI_EQUIP_LABEL[k] || k.charAt(0).toUpperCase() + k.slice(1);
 const aiEquipKinds = () => [...new Set(allExercises().flatMap(ex => SIMILAR_EX.equipKinds(ex.equipment)))].sort();
 function aiEquipChosen() { try { const v = JSON.parse(pref(AI_EQUIP_KEY, '["wall"]')); return new Set(Array.isArray(v) ? v : []); } catch (e) { return new Set(['wall']); } }
 /* the exercises a plan may use: every piece of their equipment is one the user has */
 const aiCanDo = (ex, have = aiEquipChosen()) => SIMILAR_EX.equipKinds(ex.equipment).every(k => have.has(k));
 const aiApp = () => AI_APPS.find(a => a.id === pref(AI_KEY, 'gemini')) || AI_APPS.find(a => a.id === 'gemini');   // the last one picked
-let AI_KIND = 'name';
+let AI_KIND = 'plan';
 
 /* the library, one line per exercise with its names, so the AI can use what's already there; grouped by equipment (a
    mat doesn't count), so a band or dumbbell version isn't matched to the bodyweight one, with one heading per group.
@@ -201,10 +202,6 @@ $('#aiEquip').addEventListener('click', e => {
 });
 $('#aiKind').addEventListener('click', e => { const b = e.target.closest('[data-aikind]'); if (b) { AI_KIND = b.dataset.aikind; renderAi(); } });
 $('#aiApp').addEventListener('change', e => { setPref(AI_KEY, e.target.value); renderAi(); renderSettings(); });
-$('#aiPaste').addEventListener('click', async () => {
-  try { const t = await navigator.clipboard.readText(); if (t) { $('#aiAnswer').value = t; return; } } catch (e) { }
-  $('#aiAnswer').focus(); snack('Long-press the box and choose Paste.');
-});
 $('#aiImport').addEventListener('click', () => {
   const text = extractJson($('#aiAnswer').value);
   if (!text) { snack('Paste the AI\'s answer first.'); return; }
@@ -215,7 +212,8 @@ $('#aiImport').addEventListener('click', () => {
     $('#aiDialog').close(); go(`#/play/${encodeURIComponent(ex.id)}`); snack(`${ex.name} is already in the library`); return;
   }
   let other = [];
-  if (AI_KIND === 'plan' && data) {
+  // (a plan's answer is a workout; an exercise pasted while "A goal" is picked imports as usual)
+  if (AI_KIND === 'plan' && data && data.format === 'nstructr/workout') {
     const p = planCheck(data); if (p.error) { snack(p.error, 8000); return; }
     other = p.other; delete data.exercises;
   }
