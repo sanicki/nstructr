@@ -1,0 +1,82 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-half-moon-block",
+  "name": "Half Moon Pose with a Block",
+  "otherNames": ["Supported Half Moon", "Ardha Chandrasana with a Block"],
+  "category": "Balancing",
+  "collections": ["Yoga", "Balance"],
+  "equipment": ["Yoga mat", "Yoga block"],
+  "description": "Half Moon Pose with the lower hand on a block in front of the standing foot, for steadier balance while the hips and chest open.",
+  "source": {
+    "url": "https://www.huggermugger.com/blog/2015/half-moon-pose-block/",
+    "title": "Hugger Mugger: Half Moon Pose with a block"
+  },
+  "setup": ["Start in Triangle Pose.", "Stand a block on end about a foot in front of your front foot."],
+  "cues": ["Weight in the standing leg, not the hand.", "Top leg level with your hip.", "Stack the hips and open the chest."],
+  "keyframes": [
+    {
+      "name": "Step wide",
+      "cue": "Step the feet wide apart, arms out to the sides.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "shoulderL": [0, 90, 0],
+        "shoulderR": [0, 90, 0],
+        "hipL": [0, 30, 0],
+        "hipR": [0, 30, 0]
+      }
+    },
+    {
+      "name": "Half Moon Pose",
+      "cue": "Balance on the standing leg with your lower hand on the block, top leg level.",
+      "camera": 0,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "pose": {
+        "torso": [0, 85, 0],
+        "shoulderL": [0, 80, 0],
+        "shoulderR": [0, 75, 0],
+        "hipL": [0, 80, 0]
+      },
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR.side"
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "block",
+      "x": 67,
+      "z": 0
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -22,8 +22,9 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Happy Baby Pose, Garland Pose (Malasana), Puppy Pose | ✅ |
 | Thread the Needle | ready (the arm threads under the body: a twist that needs more work) |
 | Fish Pose (Matsyasana), Reclined Bound Angle Pose, Supine Twist | ✅ |
-| Supported versions of standing poses (Triangle, Half Moon, Pyramid with hands on blocks) | new equipment: **yoga block** |
-| Strap versions (Reclined Hand-to-Big-Toe Pose with a strap, Cow Face arms) | new equipment: **yoga strap** (drawn like the towel) |
+| Supported versions of standing poses (Triangle, Half Moon, Pyramid with hands on blocks) | ✅ with the new **yoga block** (`tools/variants/batch-12-yoga-props.cjs`) |
+| Strap versions: Reclining Hand-to-Big-Toe Pose, Seated Forward Bend with a strap | ✅ with the new **yoga strap** (batch 12) |
+| Cow Face arms with a strap | a later batch (hands behind the back, one up, one down) |
 
 ## Bodyweight (18)
 ([BarBend, 15 best bodyweight exercises](https://barbend.com/best-bodyweight-exercises/), [ACE Exercise Library](https://www.acefitness.org/resources/everyone/exercise-library/))
@@ -128,8 +129,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Equipment | For | What it takes |
 |---|---|---|
 | **Door anchor** ✅ | band: face pull, Pallof press, woodchop, standing row and chest press, pushdown | done: "Door anchor" is an equipment kind (`src/similar.js`, `tools/research.cjs`) and a line in the prompt's EQUIPMENT; a band's fixed end is drawn as a small anchor block on the door (a wall) |
-| **Yoga block** | supported standing and seated poses | a small box prop the hand rests on (like a step, hand-sized) |
-| **Yoga strap** | reclined hamstring stretch, cow-face arms | drawn like the towel |
+| **Yoga block** ✅ | supported standing and seated poses | done: a `block` surface, 41 high on end; a hand rests on it with `touch` |
+| **Yoga strap** ✅ | reclined hamstring stretch, seated forward bend (cow-face arms later) | done: a `strap` prop drawn like the towel |
 | **Pull-up bar** ✅ | pull-up, chin-up, dead hang, hanging knee raise (inverted row: a low bar, later) | done: a `bar` prop, `anchorY` holds a hand at the bar |
 | **Stability ball** | ball crunch, wall squat with a ball, hamstring curl | a round surface to lie or sit on |
 | **Medicine ball** | Russian twist, slams, chest pass | drawn like the kettlebell (a ball) |
@@ -144,6 +145,6 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 - **Hanging** ✅ (Sep 2026): a hand anchored at a height (`anchorY`) on a `bar` prop. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise.
 
 Done so far: most **ready** rows (batches 3–6), the **door anchor** (batch 7), jumping (batch 9) and travelling
-(batch 10) and hanging (batch 11). Next: yoga block and strap and the other equipment. The Create with AI prompt lists every
+(batch 10), hanging (batch 11), and the yoga block and strap (batch 12). Next: stability ball, medicine ball, foam roller, Pilates ring. The Create with AI prompt lists every
 exercise and isn't trimmed to fit a link (accuracy first, HANDOFF §10, "Create with AI"): past about 250 exercises,
 ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.

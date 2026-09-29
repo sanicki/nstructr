@@ -31,7 +31,7 @@ function poseThumbSVG(ex, kf, opts = {}) {
     const route = propRoute(P, pr);
     if (!route) return '';
     const q = route.map(proj);
-    const svg = pr.type === 'towel' ? `<path class="tt" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`
+    const svg = pr.type === 'towel' || pr.type === 'strap' ? `<path class="${pr.type === 'strap' ? 'tst' : 'tt'}" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`
       : `<path class="tb" d="${bandPathRoute(route, q, rest[i]).d}"/>` + bandAnchors(pr, q).map(p => anchorSVG(p, 'ta')).join('');
     if (q.reduce((a, p) => a + p.d, 0) / q.length < Q.pelvis.d) return svg;
     over += svg; return '';

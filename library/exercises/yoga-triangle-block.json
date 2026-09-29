@@ -1,0 +1,87 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-triangle-block",
+  "name": "Triangle Pose with a Block",
+  "otherNames": ["Supported Triangle Pose"],
+  "category": "Standing",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat", "Yoga block"],
+  "description": "Triangle Pose with the lower hand on a block outside the front foot, so you can keep both sides of the waist long and the chest open.",
+  "source": {
+    "url": "https://www.doyogawithme.com/blog/how-use-blocks",
+    "title": "DoYogaWithMe: How to use yoga blocks"
+  },
+  "setup": ["Step your feet wide, front toes forward, back foot turned in slightly.", "Stand a block on end just outside your front foot."],
+  "cues": ["Lengthen out over the front leg before you tip down.", "Press the hand lightly into the block.", "Chest turns up to the ceiling."],
+  "keyframes": [
+    {
+      "name": "Step wide",
+      "cue": "Step the feet wide apart, arms out to the sides.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        }
+      ],
+      "pose": {
+        "shoulderL": [0, 90, 0],
+        "shoulderR": [0, 90, 0],
+        "hipL": [0, 30, 0],
+        "hipR": [0, 30, 0]
+      }
+    },
+    {
+      "name": "Triangle Pose",
+      "cue": "Hinge over the front leg and rest your lower hand on the block, top arm up.",
+      "camera": 0,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        },
+        {
+          "point": "handR",
+          "adjust": "torso.side"
+        }
+      ],
+      "pose": {
+        "torso": [0, 67.5, 0],
+        "shoulderL": [0, 105, 0],
+        "shoulderR": [20, 85, 0],
+        "hipL": [0, 35, 0],
+        "hipR": [0, 35, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "block",
+      "x": 25,
+      "z": 3
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

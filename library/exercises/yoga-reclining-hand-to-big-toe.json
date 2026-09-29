@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-reclining-hand-to-big-toe",
+  "name": "Reclining Hand-to-Big-Toe Pose",
+  "otherNames": ["Supta Padangusthasana", "Supine Hamstring Stretch with a Strap"],
+  "category": "Stretch",
+  "focus": "Hamstrings and calves",
+  "collections": ["Yoga", "Stretches"],
+  "equipment": ["Yoga mat", "Yoga strap"],
+  "description": "Lying on your back with a strap round the arch of one foot, straighten that leg up toward the ceiling to stretch the back of the leg, the other leg long on the floor.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/reclining-big-toe-pose/",
+    "title": "Yoga Journal: Reclining Hand-to-Big-Toe Pose"
+  },
+  "setup": ["Lie on your back with your legs straight.", "Loop a strap round the arch of one foot and hold an end in each hand."],
+  "cues": ["Heel reaches up; other leg presses down.", "Shoulders relaxed on the floor.", "Walk your hands up the strap as the leg straightens."],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Skip this stretch if you have osteoporosis: it can raise the risk of compression fractures in the spine. Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie on your back, legs long.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 800,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0]
+      }
+    },
+    {
+      "name": "Reclining Hand-to-Big-Toe Pose",
+      "cue": "Strap round the arch of your raised foot; straighten the leg up toward the ceiling.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 30000,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [85, 0, 0],
+        "kneeL": 0,
+        "ankleL": -10,
+        "shoulderL": [70, 0, 0],
+        "elbowL": 5,
+        "shoulderR": [70, 0, 0],
+        "elbowR": 5
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "strap",
+      "from": "handL",
+      "via": ["footL"],
+      "to": "handR"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

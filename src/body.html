@@ -379,7 +379,8 @@ POINTS: pelvis, spine, neckBase, head, headTop, headLow (forehead), hipL/R, knee
 EQUIPMENT (props):
 band: {type: "band", from: "footL", to: "handL"}, optional via: ["armpitR"], restLength
 door anchor (a band tied to a door): {type: "wall", z: 150} for the door and a band from a spot on it, {type: "band", from: {z: 150, y: 110}, to: "handR"} (y = height); equipment "Door anchor"
-towel: {type: "towel", from: "handR", to: "handL"}
+towel: {type: "towel", from: "handR", to: "handL"}; yoga strap the same way, {type: "strap", from: "handL", via: ["footL"], to: "handR"} (round a foot)
+yoga block: {type: "block", x: 25, z: 3}: a small surface 41 high on end; a hand rests on it with touch (e.g. {point: "handR", adjust: "torso.side"})
 wall: {type: "wall", at: "handR", keyframe: 0}: where that point is in that step, in front or behind; beside: true for one at the side
 chair, bench, step: {type: "chair", z: -12, back: "behind"}, {type: "bench", z: 95}, {type: "step", z: 82}. z = centre, px forward of the stage middle; seat 80 high, bench 70, step 30. Whatever is over a surface rests on it: sit with anchor "pelvis", a foot on a step with touch, a hand on a chair back with reach to: "chair".
 pull-up bar: {type: "bar", y: 385, z: 0} (y = height; 385 is just above a standing reach); hang with anchor "handR", anchorY: 385, anchorZ: 0; equipment "Pull-up bar"
