@@ -1,0 +1,65 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-seated-forward-bend-strap",
+  "name": "Seated Forward Bend with a Strap",
+  "otherNames": ["Paschimottanasana with a Strap", "Strap Forward Fold"],
+  "category": "Beginner",
+  "collections": ["Yoga", "Stretches"],
+  "equipment": ["Yoga mat", "Yoga strap"],
+  "description": "A seated forward bend with a strap looped round the soles of the feet, so you can fold from the hips with a long back instead of rounding to reach your toes.",
+  "source": {
+    "url": "https://www.yogajournal.com/practice/10-ways-to-use-blocks-to-advance-your-yoga-practice/",
+    "title": "Yoga Journal: Props for forward bends"
+  },
+  "setup": ["Sit with your legs straight out in front, a strap looped round the balls of both feet.", "Hold an end of the strap in each hand."],
+  "cues": ["Sit up tall before you fold.", "Walk your hands down the strap as you lengthen.", "Lead with the chest, not the head."],
+  "keyframes": [
+    {
+      "name": "Sit in Staff Pose",
+      "cue": "Sit tall, legs straight, holding the strap round your feet.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "shoulderL": [55, 0, 0],
+        "shoulderR": [55, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Seated Forward Bend",
+      "cue": "Hold the strap round your feet and fold forward from the hips, back long.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "torso": [45, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [100, 0, 0],
+        "shoulderR": [100, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "strap",
+      "from": "handL",
+      "via": ["footL", "footR"],
+      "to": "handR"
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -271,8 +271,8 @@ function drawProps(P, Q, pose, cam) {
     const q = pts.map(proj);
     // in front of the body or behind it, by depth
     const far = q.reduce((s, p) => s + p.d, 0) / q.length < Q.pelvis.d;
-    if (pr.type === 'towel') {
-      const svg = `<path class="towel" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`;
+    if (pr.type === 'towel' || pr.type === 'strap') {                  // (a yoga strap is drawn like the towel)
+      const svg = `<path class="${pr.type}" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`;
       if (far) back += svg; else front += svg;
       return;
     }

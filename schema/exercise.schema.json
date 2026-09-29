@@ -574,7 +574,9 @@
             "dumbbell",
             "kettlebell",
             "barbell",
-            "bar"
+            "bar",
+            "strap",
+            "block"
           ]
         },
         "from": {

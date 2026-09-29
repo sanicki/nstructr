@@ -159,8 +159,9 @@ function boneOrder(Q, prev) {
 /* ---------- Surfaces (chair seat, bench, step) ----------
    A box on the floor: "z" is its centre along the figure's forward direction, "width" its length that way, "x" and
    "depth" the same sideways. The "floor" under any point is the highest surface beneath it, or the floor itself. */
-const SURFACE_TYPES = ['chair', 'bench', 'step'];
-const SURFACE_DEFAULTS = { chair: { width: 70, depth: 80, height: 80, backHeight: 85 }, bench: { width: 200, depth: 70, height: 70 }, step: { width: 90, depth: 140, height: 30 } };
+const SURFACE_TYPES = ['chair', 'bench', 'step', 'block'];
+// a yoga block stands on end (23 × 15 × 10 cm at about 5.6 mm a px): 41 high, 27 front to back, 18 side to side
+const SURFACE_DEFAULTS = { chair: { width: 70, depth: 80, height: 80, backHeight: 85 }, bench: { width: 200, depth: 70, height: 70 }, step: { width: 90, depth: 140, height: 30 }, block: { width: 27, depth: 18, height: 41 } };
 let SUPPORTS = [];
 function surfacesFrom(props) {
   return (props || []).filter(p => SURFACE_TYPES.includes(p.type)).map(p => {
@@ -186,7 +187,7 @@ function surfaceShapes(sup, yaw) {
   return (sup || []).map(k => {
     const xs = [sx(k.x0, k.z0), sx(k.x1, k.z0), sx(k.x0, k.z1), sx(k.x1, k.z1)];
     const a = Math.min(...xs), b = Math.max(...xs), top = FLOOR - k.h, f = FLOOR + 7;
-    if (k.type === 'step') return { solid: true, d: `M${a} ${f}L${a} ${top}L${b} ${top}L${b} ${f}Z`, x0: a, x1: b };
+    if (k.type === 'step' || k.type === 'block') return { solid: true, d: `M${a} ${f}L${a} ${top}L${b} ${top}L${b} ${f}Z`, x0: a, x1: b };
     let d = `M${a} ${top}L${b} ${top}M${a + 5} ${top}L${a + 5} ${f}M${b - 5} ${top}L${b - 5} ${f}`;
     if (k.type === 'chair') { const bx = sx((k.x0 + k.x1) / 2, k.back === 'behind' ? k.z0 : k.z1); d += `M${bx} ${top}L${bx} ${top - k.backHeight}`; }
     return { solid: false, d, x0: a, x1: b };
@@ -498,7 +499,7 @@ function solveReach(pose, seg, rule, r, T) {
 }
 
 /* ---------- Equipment (props) ---------- */
-const PROP_TYPES = ['band', 'towel', 'wall', 'chair', 'bench', 'step', 'dumbbell', 'kettlebell', 'barbell', 'bar'];
+const PROP_TYPES = ['band', 'towel', 'strap', 'wall', 'chair', 'bench', 'step', 'block', 'dumbbell', 'kettlebell', 'barbell', 'bar'];
 /* a pull-up bar: y high, z forward of the stage centre, width side to side (a doorway bar, 90); seen end-on, a dot */
 function barSVG(pr, proj, cls) {
   const w = num(pr.width) || 90, a = proj({ x: -w / 2, y: num(pr.y), z: num(pr.z) }), b = proj({ x: w / 2, y: num(pr.y), z: num(pr.z) });

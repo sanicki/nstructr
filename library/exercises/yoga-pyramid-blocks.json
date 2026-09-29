@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-pyramid-blocks",
+  "name": "Pyramid Pose with Blocks",
+  "otherNames": ["Supported Pyramid Pose", "Parsvottanasana with Blocks"],
+  "category": "Beginner",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat", "Yoga block"],
+  "description": "Pyramid Pose with a hand on a block either side of the front foot, so you can fold over the front leg with a long back.",
+  "source": {
+    "url": "https://www.doyogawithme.com/blog/how-use-blocks",
+    "title": "DoYogaWithMe: How to use yoga blocks"
+  },
+  "setup": ["Stand with one foot about a leg's length in front of the other, hips square.", "A block on end either side of the front foot."],
+  "cues": ["Hips square to the front.", "Fold from the hips with a long spine.", "Press lightly into the blocks."],
+  "keyframes": [
+    {
+      "name": "Mountain Pose",
+      "cue": "Stand tall with your feet together and arms by your sides.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 1200,
+      "phase": "setup",
+      "anchor": "ankleR",
+      "anchorZ": 20,
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Pyramid Pose",
+      "cue": "Fold over the front leg, a hand on a block either side of the front foot.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "anchorZ": 20,
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": [90, 0, 0],
+        "shoulderL": [85, 10, 0],
+        "shoulderR": [85, 10, 0],
+        "hipL": [-25, 0, 0],
+        "ankleL": -25,
+        "hipR": [25, 0, 0],
+        "ankleR": 25
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "block",
+      "x": 28,
+      "z": 39
+    },
+    {
+      "type": "block",
+      "x": -52,
+      "z": 39
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}
