@@ -46,7 +46,7 @@ function renderPlayerInfo() {
   if (ex.focus) c('target', ex.focus);
   if (ex.category && ex.category !== ex.focus) c('category', ex.category);
   (ex.equipment || []).forEach(q => c(/band/i.test(q) ? 'fitness_center' : /towel/i.test(q) ? 'dry_cleaning' : /wall|door/i.test(q) ? 'door_front' : 'handyman', q));
-  if (pr.reps) c('tag', /\d\s*$/.test(pr.reps) ? `${pr.reps} ${ex.repName && ex.repName !== 'rep' ? ex.repName + 's' : 'reps'}` : pr.reps);
+  if (pr.reps) c('tag', /\d\s*$/.test(pr.reps) ? `${pr.reps} ${repWord(ex, /^\d+$/.test(pr.reps.trim()) ? +pr.reps : null)}` : pr.reps);
   const vis = visibleSteps();                               // quiet in-between points (circles) aren't steps of their own
   $('#stepsTitle').textContent = `Steps (${vis.length})`;
   // steps
@@ -205,12 +205,12 @@ let RATE_T = 0;
 function setRate(v, preview = true) {
   v = Math.min(3, Math.max(0.5, Math.round((+v || 1) * 10) / 10));
   setPref(SPEECH_RATE_KEY, String(v));
-  $('#setRate').textContent = `${v.toFixed(1)}×`;
+  $('#setRate').textContent = `${fmtNum(v, 1)}×`;
   document.querySelectorAll('[data-rate-delta]').forEach(b => { b.disabled = +b.dataset.rateDelta < 0 ? v <= 0.5 : v >= 3; });
   // hear it (once the buttons are let go), whatever the Instruction setting
   clearTimeout(RATE_T);
   if (preview && 'speechSynthesis' in window) RATE_T = setTimeout(() => {
-    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance('This is how fast I speak.'); u.rate = speechRate(); speechSynthesis.speak(u); } catch (e) { }
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance('This is how fast I speak.'); u.lang = LANG; u.rate = speechRate(); speechSynthesis.speak(u); } catch (e) { }
   }, 400);
 }
 /* Coach's words of encouragement (on unless turned off) */

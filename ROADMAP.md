@@ -25,6 +25,14 @@ comes off this list. How things work, and why past decisions were made, is in [H
 - **AI with your own API key**: Create with AI calls the provider directly instead of copy and paste; self-hosted models
   too. The provider list could come from [models.dev](https://models.dev).
 - **Experiments**: a flex-mode layout for folding phones; optional voice commands.
+- **Other languages** (audit Sep 2026; the groundwork is done: `src/app/0-i18n.js`):
+  - The app's own text moves into a catalogue per language, with a Language setting (System, then the languages
+    offered). We translate the app.
+  - Exercises and workouts are translated by the people who add them: a submission in another language must include
+    the English too (the library stays English first). The AI prompts ask for both.
+  - Library text gets a translation file per language; cues say `{side}` / `{other}` instead of swapping the words
+    left and right; equipment and collections become keys with translated names.
+  - Right-to-left layout (Arabic, Hebrew, Persian, Urdu) only if one of those is chosen.
 
 ## Deferred
 
@@ -33,6 +41,7 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## Questions for the owner
 
+- **Which languages first?** (research on the most used phone languages: see the PR that added this.)
 - **Seated band row**: draw the band crossed in an X, as the routine describes?
 - **Machines**: which ones matter first?
 - **Status bar flicker** on the back gesture (installed app): not reproduced; nothing to do unless it comes back.

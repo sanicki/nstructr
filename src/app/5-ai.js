@@ -153,7 +153,7 @@ function renderAi() {
   $('#aiKind').innerHTML = AI_KINDS.map(x => `<button class="filter stateful" data-aikind="${x.id}" aria-pressed="${x.id === AI_KIND}"><span class="icon">check</span>${x.label}</button>`).join('');
   $('#aiInputWrap').hidden = !k.field;
   $('#aiEquipWrap').hidden = AI_KIND !== 'plan';
-  if (AI_KIND === 'plan') { const have = aiEquipChosen(); $('#aiEquip').innerHTML = aiEquipKinds().sort((a, b) => aiEquipLabel(a).localeCompare(aiEquipLabel(b))).map(q => chip('data-aiequip', q, have.has(q), aiEquipLabel(q))).join(''); }
+  if (AI_KIND === 'plan') { const have = aiEquipChosen(); $('#aiEquip').innerHTML = aiEquipKinds().sort((a, b) => aiEquipLabel(a).localeCompare(aiEquipLabel(b), LANG)).map(q => chip('data-aiequip', q, have.has(q), aiEquipLabel(q))).join(''); }
   $('#aiInputLabel').textContent = k.field;
   $('#aiInput').placeholder = k.ph;
   $('#aiInput').rows = AI_KIND === 'routine' ? 6 : 2;

@@ -1,7 +1,7 @@
 /* ===================== UI: Exercises (the library + Bookmarked) ===================== */
 /* the library's collections (each exercise's "collections": it can be in several), alphabetically; Bookmarked comes before them */
 const collectionsOf = ex => (ex.collections && ex.collections.length ? ex.collections : ['Other']);
-const collections = () => [...new Set(POSE_DB.exercises.flatMap(collectionsOf))].sort((a, b) => a.localeCompare(b));
+const collections = () => [...new Set(POSE_DB.exercises.flatMap(collectionsOf))].sort((a, b) => a.localeCompare(b, LANG));
 const inCollection = c => POSE_DB.exercises.filter(ex => collectionsOf(ex).includes(c));
 const typeOf = ex => ex.focus || ex.category || '';
 /* Two separate things:
@@ -37,7 +37,7 @@ const E = { coll: 'All', type: 'All', equip: 'Any', q: '' };
 /* All collections: grouped (a row per collection; with filters, a section per collection) or one A–Z list */
 const GROUP_KEY = 'nstructr-group-collections-v1';
 const grouped = () => pref(GROUP_KEY, 'off') === 'on';                // one A–Z list until turned on (grouped until Sep 2026)
-const byName = list => [...list].sort((a, b) => a.name.localeCompare(b.name));
+const byName = list => [...list].sort((a, b) => a.name.localeCompare(b.name, LANG));
 const THUMBS = new Map();
 function thumbFor(ex) {
   const key = ex.id + ':' + JSON.stringify(ex.keyframes).length;
@@ -98,7 +98,7 @@ function renderExplore() {
     const section = (c, items) => items.length ? `<section class="section"><div class="section-head">
         <h2 class="title-medium">${esc(c)}<span class="count">${items.length}</span></h2></div>
         <div class="results">${byName(items).map(card).join('')}</div></section>` : '';
-    body.innerHTML = `<p class="body-small muted" style="margin:12px 0 0">${list.length} ${list.length === 1 ? 'exercise' : 'exercises'}</p>` +
+    body.innerHTML = `<p class="body-small muted" style="margin:12px 0 0">${plural(list.length, { one: '# exercise', other: '# exercises' })}</p>` +
       section(MINE, mine.filter(ex => matches.has(ex))) + colls.map(c => section(c, inCollection(c).filter(ex => matches.has(ex)))).join('');
     return;
   }
@@ -123,7 +123,7 @@ function renderExplore() {
     return;
   }
   body.innerHTML = (E.coll === MINE ? MINE_BTNS : '') + (list.length
-    ? `<p class="body-small muted" style="margin:12px 0 0">${list.length} ${list.length === 1 ? 'exercise' : 'exercises'}</p><div class="results">${byName(list).map(card).join('')}</div>`
+    ? `<p class="body-small muted" style="margin:12px 0 0">${plural(list.length, { one: '# exercise', other: '# exercises' })}</p><div class="results">${byName(list).map(card).join('')}</div>`
     : `<div class="empty-state"><span class="icon">search_off</span><p class="title-medium" style="margin:8px 0 4px">Nothing matches</p>
        <p class="muted" style="margin:0 0 16px">Try a different word, or clear the filters.</p><button class="btn tonal stateful" data-act="clearFilters">Clear filters</button></div>`);
 }

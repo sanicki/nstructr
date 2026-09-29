@@ -64,7 +64,7 @@ async function openShare(what) {
     const w = what.workout, data = compactWorkout(w);
     url = w.libId ? `${shareBase()}#/link/l1.${w.libId}` : await packLink('w', data); name = w.name;
     const own = (data.exercises || []).length;
-    desc = `${w.blocks.flatMap(b => b.items).length} exercises, about ${fmtMin(workoutSeconds(w))}${own ? `, including ${own} of your own` : ''}.`;
+    desc = `${plural(w.blocks.flatMap(b => b.items).length, { one: '# exercise', other: '# exercises' })}, about ${fmtMin(workoutSeconds(w))}${own ? `, including ${own} of your own` : ''}.`;
     file = [JSON.stringify(data, null, 2), (w.name || 'workout').replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-').toLowerCase() + '.json'];
   } else {
     const ex = what.exercise; name = ex.name;
@@ -140,7 +140,7 @@ async function openSharedLink(payload) {
     const missing = items.filter(it => !exById(it.ex) && !known.has(it.ex)).length;
     $('#linkTitle').textContent = 'A workout was shared with you';
     $('#linkBody').innerHTML = `<p class="title-medium" style="margin:0 0 4px">${esc(w.name || 'Workout')}</p>
-      <p class="body-medium muted" style="margin:0 0 8px">${items.length} exercises in ${(w.blocks || []).length} ${(w.blocks || []).length === 1 ? 'block' : 'blocks'}${known.size ? `, ${known.size} of them made by the sender` : ''}.</p>
+      <p class="body-medium muted" style="margin:0 0 8px">${plural(items.length, { one: '# exercise', other: '# exercises' })} in ${plural((w.blocks || []).length, { one: '# block', other: '# blocks' })}${known.size ? `, ${known.size} of them made by the sender` : ''}.</p>
       <ul class="body-small">${names.slice(0, 12).map(n => `<li>${esc(n)}</li>`).join('')}${names.length > 12 ? `<li>and ${names.length - 12} more</li>` : ''}</ul>
       ${missing ? `<p class="body-small" style="color:var(--md-error)">${missing} of its exercises aren't in this version of the library.</p>` : ''}
       <p class="body-small muted" style="margin:8px 0 0">Add it to your workouts to start it or change it. Nothing is added unless you tap Add.</p>`;

@@ -737,6 +737,12 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 
 ---
 
+- **Language groundwork** (Sep 2026, i18n audit phase 0): `src/app/0-i18n.js` holds what depends on the language:
+  `LANG` (from `<html lang>`, "en"), `plural(n, {one, other…})` for counted phrases (whole phrases, `#` = the number, CLDR
+  plural rules via `Intl.PluralRules`), `repWord(ex, n)` (the only place English adds an "s"), `fmtNum`. Spoken lines set
+  `u.lang = LANG` (before, the phone's default voice read English cues: a Spanish phone read them in Spanish). Dates and
+  A–Z sorting use `LANG`. The manifest says `lang`/`dir`. Write new counted text with `plural()`, never `=== 1 ?`.
+
 ## 11. Storage (localStorage) — do not rename without a migration
 
 | Key | Contents |

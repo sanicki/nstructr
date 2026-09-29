@@ -115,7 +115,7 @@ function applyChecks() {
   }
   saveWorkouts(); saveLib();
   const n = on.length + gear.length - copies;
-  snack([n ? `Using ${n} library ${n === 1 ? 'exercise' : 'exercises'}` : '', copies ? `${copies} ${copies === 1 ? 'copy' : 'copies'} in My exercises` : ''].filter(Boolean).join(', '));
+  snack([n ? plural(n, { one: 'Using # library exercise', other: 'Using # library exercises' }) : '', copies ? plural(copies, { one: '# copy in My exercises', other: '# copies in My exercises' }) : ''].filter(Boolean).join(', '));
   // an imported exercise's page shows the library one instead
   const shown = on.find(s => S.ex && S.ex.id === s.ex.id);
   if (shown) go(`#/play/${encodeURIComponent(shown.lib.id)}`); else route();
