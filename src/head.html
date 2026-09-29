@@ -88,7 +88,7 @@ main{display:block;min-width:0}
 /* ===== Stage ===== */
 .stage{position:relative;background:var(--md-surface-container-low);border-radius:var(--shape-xl);overflow:hidden}
 .stage svg.scene{display:block;width:100%;height:auto;max-height:62vh;margin:0 auto;aspect-ratio:1/1}
-.floor-line{stroke:var(--md-outline-variant);stroke-width:2}
+.floor-line,.floor-ticks line{stroke:var(--md-outline-variant);stroke-width:2}
 .shadow{fill:var(--md-on-surface);opacity:.08}
 .towel{fill:none;stroke:var(--towel);stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
 .surface{fill:none;stroke:var(--md-outline);stroke-width:6;stroke-linecap:round;stroke-linejoin:round;opacity:.6}
@@ -596,7 +596,7 @@ body[data-view="wplay"]{overflow:hidden;background:var(--md-surface)}
 .fs .scene .core .bone,.fs .scene .core.bone,.fs .scene .head{stroke:var(--wp-body);fill:var(--wp-body)}
 .fs .scene .side-R .bone{stroke:var(--wp-right)}.fs .scene .side-R .hand{fill:var(--wp-right)}
 .fs .scene .side-L .bone{stroke:var(--wp-left);opacity:1}.fs .scene .side-L .hand{fill:var(--wp-left)}
-.fs .scene .floor-line{stroke:var(--wp-floor)}
+.fs .scene .floor-line,.fs .scene .floor-ticks line{stroke:var(--wp-floor)}
 .fs .scene .shadow{fill:var(--wp-shadow);opacity:.06}
 .fs .guide{background:var(--wp-soft);top:0;bottom:auto;right:auto;left:8px}     /* top-left of the figure area */
 .fs .guide .body-small{color:var(--ov-dim)}

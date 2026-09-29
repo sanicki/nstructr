@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-lateral-walk",
+  "name": "Lateral Band Walk",
+  "otherNames": ["Banded Lateral Walk", "Band Side Steps", "Banded Side Step"],
+  "category": "Strength",
+  "focus": "Outer hips (glutes)",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "In a half squat with a band round your ankles, step sideways against the band, then bring the other foot in to hip-width, travelling to the side.",
+  "source": {
+    "url": "https://sweat.com/exercises/lateral-band-walk",
+    "title": "Sweat: Lateral Band Walk"
+  },
+  "setup": ["Loop a band round your ankles (or just above your knees).", "Feet hip-width apart, knees bent, chest up."],
+  "cues": ["Stay low the whole way.", "Knees in line with your toes.", "Don't let the band go slack."],
+  "prescription": {
+    "reps": "10–12 steps each way",
+    "note": "Keep the band taut the whole time: bring the trailing foot in only to hip-width. Short of space? Step out and back in place."
+  },
+  "keyframes": [
+    {
+      "name": "Half squat",
+      "cue": "Feet hip-width, knees bent, hands on your hips.",
+      "camera": 0,
+      "durationMs": 900,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "torso": [20, 0, 0],
+        "hipL": [30, 6, 0],
+        "kneeL": 35,
+        "ankleL": -12,
+        "hipR": [30, 6, 0],
+        "kneeR": 35,
+        "ankleR": -12
+      }
+    },
+    {
+      "name": "Step right",
+      "cue": "Step your right foot out to the side against the band.",
+      "camera": 0,
+      "durationMs": 900,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "torso": [20, 0, 0],
+        "hipL": [30, 14, 0],
+        "kneeL": 35,
+        "ankleL": -12,
+        "hipR": [30, 14, 0],
+        "kneeR": 35,
+        "ankleR": -12
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "ankleL",
+      "to": "ankleR"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "To the right",
+      "R": "To the left"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "step",
+  "travel": true
+}

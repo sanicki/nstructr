@@ -167,6 +167,10 @@
         }
       }
     },
+    "travel": {
+      "type": "boolean",
+      "description": "Moves across the floor (walking lunge, band walk): each rep carries on from where the last one ended; the view follows the figure over a marked floor"
+    },
     "floorGuide": {
       "type": "object",
       "properties": {

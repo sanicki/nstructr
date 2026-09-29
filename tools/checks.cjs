@@ -59,8 +59,10 @@ function check(ex, opts = {}) {
       }
     });
     // moves
+    const ph = C.phaseInfo(kfs);
     for (const [ia, ib] of moves(R, kfs)) {
-      const a = R[ia], b = R[ib], F = [];
+      // a travelling exercise's next rep carries on from where this one ended
+      const b = R[ib], a = ex.travel && ia === ph.end && ib === ph.start ? C.travelStep(R[ia], b, seg) : R[ia], F = [];
       for (let s = 0; s <= 60; s++) { const f = C.frameAt(a, b, (b.ease === 'linear' ? s / 60 : ease(s / 60)), seg); F.push(C.fkAt(f.pose, seg, f.pos)); }
       const where = `${label} "${a.name}" → "${b.name}"`;
       let worst = 0, wb = '';

@@ -23,19 +23,19 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **230 exercises, 1 workout**.
+Library today: **234 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 75 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) |
-| Free weights | 30 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves) |
-| Bodyweight | 24 | squats, lunges, push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
-| Resistance band | 26 | 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
+| Free weights | 31 | dumbbell, kettlebell, barbell (incl. equipment versions of bodyweight moves), farmer's carry |
+| Bodyweight | 25 | squats, lunges (incl. walking), push-ups, step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
+| Resistance band | 27 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
 | Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
 | Stretches | 17 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway |
 | Core | 16 | planks, bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 23 | classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
-| Balance | 9 | Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, clock reach, single-leg RDL, pistol squat |
+| Balance | 10 | Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 9 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat |
 
 115 are rep-based, 93 timed; 74 are two-sided (`bilateral`); 3 have `direction`. Common exercises per collection
@@ -214,10 +214,20 @@ The schemas in `schema/` are authoritative for structure. This section is the me
   "bilateral": { "labels": { "L": "Right leg back", "R": "Left leg back" } },
   "direction": { "labels": { "A": "Forward", "B": "Backward" } },   // B = rep steps played in reverse
   "floorGuide": { "type": "star", "arms": 8 },   // top-down compass (Star Excursion, Hip Circles)
+  "travel": true,                       // moves across the floor (Walking Lunge, band walk, Farmer's Carry): below
   "props": [ … ],
   "keyframes": [ … ]
 }
 ```
+
+**Travel** (`"travel": true`, Sep 2026): a rep ends further along than it starts and the next carries on from
+there. Each step anchors the foot that stays (`resolveSequence` then chains the steps forward). How far a rep goes
+is `travelOf(end, start)` (where the start step's pinned point is at the end of the rep, less where it is at the
+start); the move from a rep's end into the next rep's start begins from the end moved back that far
+(`travelStep`), so it's the step it is, not a slide back. The player adds the reps' distance so far (`S.off` on the
+exercise page, `S.offs[i]` per step of a workout plan), keeps the pelvis centred on screen, and draws tick marks on
+the floor every 60 px (`#floorTicks`) so moving over them reads as moving. The checks judge the loop move the same
+way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 
 **Keyframe** (one pose the figure moves into):
 

@@ -1,0 +1,133 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-walking-lunge",
+  "name": "Walking Lunge",
+  "otherNames": ["Forward Walking Lunge", "Walking Lunges"],
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Bodyweight"],
+  "equipment": [],
+  "description": "Step forward into a lunge, stand up bringing the back foot through, then lunge forward with the other leg, moving across the floor.",
+  "source": {
+    "url": "https://www.acefitness.org/about-ace/press-room/in-the-news/8310/how-to-do-walking-lunges-properly-for-all-the-lower-body-benefits-according-to-a-trainer-women-s-health/",
+    "title": "ACE: How to do walking lunges properly"
+  },
+  "setup": ["Stand tall with your feet together and your hands on your hips.", "A clear path in front of you."],
+  "cues": ["Front knee over the ankle.", "Back knee lowers toward the floor.", "Stand tall between steps."],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Needs a clear stretch of floor, about 5 m. Short of space? Do Reverse Lunges in place."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet together, hands on your hips.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4
+      }
+    },
+    {
+      "name": "Step forward with the right",
+      "cue": "Step forward with your right foot and lower until both knees bend.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "toeL",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "hipR": [85, 0, 0],
+        "kneeR": 88,
+        "ankleR": -3,
+        "hipL": [4, 0, 0],
+        "kneeL": 100,
+        "ankleL": 40
+      }
+    },
+    {
+      "name": "Stand up",
+      "cue": "Push up and bring your left foot next to your right.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4
+      }
+    },
+    {
+      "name": "Step forward with the left",
+      "cue": "Now step forward with your left foot and lower.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "toeR",
+      "plant": ["L"],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "hipL": [85, 0, 0],
+        "kneeL": 88,
+        "ankleL": -3,
+        "hipR": [4, 0, 0],
+        "kneeR": 100,
+        "ankleR": 40
+      }
+    },
+    {
+      "name": "Stand up",
+      "cue": "Push up and bring your feet together.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "travel": true
+}

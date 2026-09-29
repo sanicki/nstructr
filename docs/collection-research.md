@@ -34,7 +34,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Bulgarian Split Squat (rear foot on a bench) | engine: resting the top of the foot on a raised surface |
 | Pike Push-Up | ✅ |
 | Diamond Push-Up | would count as a duplicate of Push-Up (hand placement doesn't change the joint angles enough) |
-| Walking Lunge | engine: travelling |
+| Walking Lunge | ✅ (`tools/variants/batch-10-travel.cjs`: `"travel": true`) |
 | Jump Squat | ✅ (`tools/variants/batch-9-jumping.cjs`: the engine's `lift`) |
 | Burpee | jumping works now; a later batch (squat → plank → squat → jump: many contacts) |
 | Pull-Up, Chin-Up | new equipment: **pull-up bar**; engine: hanging |
@@ -46,7 +46,8 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Exercise | Status |
 |---|---|
 | Band Front Raise, Band Upright Row, Band Chest Fly (band behind the back) | ready |
-| Lateral Band Walk, Monster Walk | engine: travelling (side-steps) |
+| Lateral Band Walk | ✅ (batch 10, travelling) |
+| Monster Walk | travelling works now; a later batch |
 | Face Pull, Pallof Press, Band Woodchop, Standing Band Row, Standing Band Chest Press, Band Triceps Pushdown | ✅ with the new **door anchor** (`tools/variants/batch-7-door-anchor.cjs`) |
 
 ## Free weights (23)
@@ -60,7 +61,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Front Squat (barbell), Hip Thrust (bench + barbell) | ✅ |
 | Renegade Row, Single-Leg Romanian Deadlift | ✅ |
 | Turkish Get-Up | ready (many steps; a big one to animate) |
-| Farmer Carry | engine: travelling |
+| Farmer's Carry | ✅ (batch 10, travelling) |
 | Weighted versions with a medicine ball (Russian Twist, slams) | new equipment: **medicine ball** (drawn like the kettlebell) |
 
 ## Stretches (12)
@@ -110,7 +111,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Leg Swings (holding a wall), Inchworm, Standing Torso Twists, Butt Kicks (in place) | ✅ |
 | Jumping Jacks, High Knees | ✅ (batch 9, jumping) |
 | Butt Kicks (running) | jumping works now; the in-place version is in the library |
-| Walking Lunge | engine: travelling |
+| Walking Lunge | ✅ (batch 10) |
 
 ## Balance (4)
 ([NIA Go4Life](https://go4life.nia.nih.gov/sample_workout/3-balance-exercises-older-adults), [Mayo Clinic, balance exercises](https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/balance-exercises/art-20546836))
@@ -119,7 +120,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 |---|---|
 | Single-Leg Stand, Tandem Stance, Clock Reach (arm version; the leg version is the Star Excursion) | ✅ |
 | Single-Leg Deadlift | ✅ as Single-Leg Romanian Deadlift (dumbbells), also in Balance |
-| Heel-to-Toe Walk, Side Stepping, Balance Walk | engine: travelling |
+| Heel-to-Toe Walk | ✅ (batch 10; Tandem Stance's feet now in line too) |
+| Side Stepping, Balance Walk | travelling works now; a later batch |
 
 ## Proposed equipment
 
@@ -137,8 +139,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 ## Engine work this would need
 - **Jumping** ✅ (Sep 2026): a step's `lift` raises the whole figure, anchor or not, and the checks count it as meant.
   Jump Squat, Jumping Jacks, High Knees; Burpee next.
-- **Travelling** (the figure moves across the floor from rep to rep): walking lunges, band walks, heel-to-toe walk,
-  farmer carry. Could be shown in place (each rep returns to the start), which the sources accept for home use.
+- **Travelling** ✅ (Sep 2026): `"travel": true`, each rep carries on from where the last ended; the view follows the
+  figure over a floor marked every 60 px. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 - **Hanging** from a bar: pull-ups, chin-ups.
 
 Done so far: most **ready** rows (batches 3–6) and the **door anchor** (batch 7). Next: the engine work above, then

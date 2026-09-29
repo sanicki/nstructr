@@ -47,6 +47,8 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
 - **Side** (for exercises done one side at a time, such as *Right leg back* / *Left leg back*) and **Direction**
   (for exercises that go two ways, such as arm circles forward and backward) switch what the figure shows.
 - The legend (**Right**, **Left**) tells you which colour is which limb.
+- Exercises that move across the floor (Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry) keep
+  the figure in the middle: the marks on the floor slide past as it goes. You'll need a clear stretch of floor.
 
 Scroll down for the details:
 
