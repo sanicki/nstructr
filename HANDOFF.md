@@ -870,6 +870,17 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
       provider's id, name, API address, docs and its models with input types) is the best fit for this mode;
       LiteLLM's `model_prices_and_context_window.json` is bigger but model/price-centred. Neither lists the *chat apps*
       Create with AI opens (web address, whether a link can fill in the message): that list (`AI_APPS`) stays ours.
+    - **The engine as its own package** (deferred, owner Sep 2026): `src/core.js` + the schema + `tools/checks.cjs`
+      and `tools/rom.cjs`, split out with their history (`git subtree split`) when a second app needs it. Its value
+      beyond exercise: a tiny (one file, no dependencies) MIT figure-posing engine with body-relative 3D angles,
+      contacts (anchors, touch, reach, keep, surfaces, rolling), any camera, SVG output, mirroring, and range and
+      animation checks: poses a person or an AI can write, checked. Strong uses: pose images for AI image generation
+      (OpenPose keypoints for ControlNet: the best first demo), AI-written movement, pictograms and instruction
+      diagrams, biomechanics teaching. **The owner's interest for a follow-up app: choreography and coaching
+      diagrams** (dance, martial arts, sports drills), which needs more than one figure, a timeline, likely hands,
+      and maybe paths on the floor. To split: ES module exports instead of the shared script scope, the stage size
+      (`W`, `CX`, `FLOOR`) as options, the SVG drawing optional (the posing maths alone for a canvas/WebGL
+      renderer), HANDOFF §4–6 and the schema as its README. CLAUDE.md's rule keeps `src/core.js` separable meanwhile.
     - **Linked variations**: an exercise names its easier/harder versions (knee push-up ↔ push-up ↔ decline
       push-up), so a workout can swap one for another.
 

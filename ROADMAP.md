@@ -42,6 +42,9 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 - **Browser tests in CI**: today the build's checks run on every pull request, but the browser tests only print their
   results and are run by hand. Plan in HANDOFF §13.
+- **The engine as its own package** (MIT, browser 3D figure posing): split out when a second app needs it. The owner's
+  interest for a follow-up app: **choreography and coaching diagrams**. A first demo could be pose export for AI
+  image generation. Plan in HANDOFF §13.
 
 ## Questions for the owner
 
