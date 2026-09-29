@@ -25,7 +25,7 @@ async def main():
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         print('resume banner                        ', (await pg.inner_text('#resumeSlot')).replace('\n', ' | '))
         # an old install: a first-run copy under the plain library id stays a separate, editable workout
-        await pg.evaluate("WK.list.push({...hydrateWorkout(LIBRARY_WORKOUTS[0])}); saveWorkouts(); renderWorkouts()")
+        await pg.evaluate("WK.list.push({...hydrateWorkout(LIBRARY_WORKOUTS.find(w => w.id === 'full-body-routine'))}); saveWorkouts(); renderWorkouts()")
         print('old copy + library                   ', await pg.evaluate("[wkById('full-body-routine').libId, wkById('lib:full-body-routine').libId]"))
         # --- ids on import ---
         lib = await pg.evaluate("JSON.stringify(findInDb('bw-reverse-lunge'))")

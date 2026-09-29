@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/workout.schema.json",
+  "version": 2,
+  "id": "beginner-pilates-20",
+  "name": "20-Minute Beginner's Pilates",
+  "description": "A beginner's Pilates mat class, about 20 minutes, with no equipment: the classical beginner opening (Hundred, Roll-Up, Leg Circles, Rolling Like a Ball), the first of the abdominal series and Spine Stretch, then beginner basics for the hips, trunk and back.",
+  "blocks": [
+    {
+      "name": "Classical warm-up",
+      "items": [
+        {
+          "ex": "pil-hundred",
+          "reps": 100
+        },
+        {
+          "ex": "pil-half-roll-back",
+          "reps": 8
+        },
+        {
+          "ex": "pil-roll-up",
+          "reps": 5
+        },
+        {
+          "ex": "pil-leg-circles",
+          "reps": 5,
+          "sides": "both",
+          "dir": "both"
+        },
+        {
+          "ex": "pil-rolling-ball",
+          "reps": 6
+        }
+      ]
+    },
+    {
+      "name": "Abdominal series",
+      "items": [
+        {
+          "ex": "pil-single-leg-stretch",
+          "reps": 10
+        },
+        {
+          "ex": "pil-double-leg-stretch",
+          "reps": 8
+        },
+        {
+          "ex": "pil-spine-stretch",
+          "reps": 5
+        }
+      ]
+    },
+    {
+      "name": "Beginner basics",
+      "items": [
+        {
+          "ex": "bw-glute-bridge",
+          "reps": 10,
+          "sets": 2
+        },
+        {
+          "ex": "core-dead-bug",
+          "reps": 6,
+          "sides": "alternate"
+        },
+        {
+          "ex": "core-bird-dog",
+          "reps": 6,
+          "sides": "alternate"
+        },
+        {
+          "ex": "core-heel-taps",
+          "reps": 10
+        },
+        {
+          "ex": "side-clamshell",
+          "reps": 12,
+          "sides": "both"
+        },
+        {
+          "ex": "pil-side-kick",
+          "reps": 8,
+          "sides": "both"
+        },
+        {
+          "ex": "pil-swimming",
+          "reps": 30
+        },
+        {
+          "ex": "core-forearm-plank",
+          "seconds": 45
+        }
+      ]
+    }
+  ]
+}

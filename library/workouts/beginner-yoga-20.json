@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/workout.schema.json",
+  "version": 2,
+  "id": "beginner-yoga-20",
+  "name": "20-Minute Beginner's Yoga",
+  "description": "A gentle first yoga practice, about 20 minutes, with nothing but a mat: settle in, warm up the spine, a few standing poses held for 30 seconds each side, then floor poses and a rest at the end.",
+  "blocks": [
+    {
+      "name": "Arrive and warm up",
+      "items": [
+        {
+          "ex": "yoga-easy",
+          "seconds": 60
+        },
+        {
+          "ex": "yoga-cat-cow",
+          "reps": 8
+        },
+        {
+          "ex": "yoga-child",
+          "seconds": 45
+        },
+        {
+          "ex": "yoga-downward-dog",
+          "seconds": 30
+        }
+      ]
+    },
+    {
+      "name": "Standing poses",
+      "items": [
+        {
+          "ex": "yoga-mountain",
+          "seconds": 30
+        },
+        {
+          "ex": "yoga-standing-forward-bend",
+          "seconds": 30
+        },
+        {
+          "ex": "yoga-low-lunge",
+          "seconds": 30,
+          "sides": "both"
+        },
+        {
+          "ex": "yoga-warrior-2",
+          "seconds": 30,
+          "sides": "both"
+        },
+        {
+          "ex": "yoga-triangle",
+          "seconds": 30,
+          "sides": "both"
+        },
+        {
+          "ex": "yoga-tree",
+          "seconds": 30,
+          "sides": "both"
+        }
+      ]
+    },
+    {
+      "name": "On the floor",
+      "items": [
+        {
+          "ex": "yoga-sphinx",
+          "seconds": 30
+        },
+        {
+          "ex": "yoga-seated-forward-bend",
+          "seconds": 45
+        },
+        {
+          "ex": "yoga-supine-twist",
+          "seconds": 30,
+          "sides": "both"
+        },
+        {
+          "ex": "yoga-corpse",
+          "seconds": 120
+        }
+      ]
+    }
+  ]
+}

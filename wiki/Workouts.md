@@ -8,7 +8,9 @@ The **Workouts** tab has three parts:
 
 - **My workouts**: the ones you made, customised or received. Tap a card to expand it (time, number of exercises,
   equipment, safety notes, **Edit**, **Share**). Tap ▶ to start.
-- **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy.
+- **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy. There
+  are 20-minute beginner's workouts for yoga and Pilates (a mat, nothing else) and free weights (dumbbells), and a
+  full-body routine. The 20 minutes are with **Coach** (Settings › Instruction); without it they take 15–17.
 - **History**: finished workouts, with the date, how long they took and how many exercises you did. Delete an
   entry with its bin, or **Clear** all of them.
 
@@ -60,5 +62,5 @@ The estimated time updates as you change things.
 ## Rests
 
 - **Rest between exercises** and **rest between sets** are settings for all workouts, in
-  [Settings](Settings.md#rest-between-exercises) (defaults 10 s and 20 s, 1 s steps).
+  [Settings](Settings.md#rest-between-exercises) (defaults 5 s and 10 s, 1 s steps).
 - **Rest between rounds** is set on each block (circuits).

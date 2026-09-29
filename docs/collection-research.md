@@ -149,3 +149,12 @@ Done so far: most **ready** rows (batches 3–6), the **door anchor** (batch 7),
 (batch 10), hanging (batch 11), the yoga block and strap (batch 12), the medicine ball, Pilates ring and stability ball (batch 13), and the deferred exercises (batch 14: Bulgarian Split Squat, Monster Walk, Mountain Climber, Burpee). Next: the foam roller (a rolling motion). The Create with AI prompt lists every
 exercise and isn't trimmed to fit a link (accuracy first, HANDOFF §10, "Create with AI"): past about 250 exercises,
 ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.
+
+## 20-minute beginner's workouts (Sep 2026)
+Library workouts built from what's here, timed at the default rests (5 s between exercises, 10 s between sets)
+with Coach on (about 15–17 minutes without): **Yoga** (a mat, `beginner-yoga-20`), **Pilates** (a mat; the classical beginner opening, then beginner basics such as glute bridge,
+dead bug, bird dog, clamshell and side kick, `beginner-pilates-20`), **Free weights** (dumbbells only; a new Dumbbell Floor Press for the chest,
+`beginner-free-weights-20`). **Kettlebell**: not yet, only three exercises (Swing, Deadlift, Goblet Squat). A
+20-minute beginner kettlebell class also needs, most commonly: Halo, Around the World, Single-Arm Row, Overhead
+Press, Goblet Reverse Lunge, Sumo Deadlift or Squat, Romanian Deadlift, Suitcase Carry, and a Russian Twist or Dead
+Bug with the bell (Turkish Get-Up and Clean later: many steps). ⏳
