@@ -11,6 +11,8 @@ async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
         pg = await b.new_page(viewport={'width': 412, 'height': 860})
+        # checks the exercise page speaking: unmuted (muted by default since Sep 2026)
+        await pg.add_init_script("if (localStorage.getItem('nstructr-exmute-v1') === null) localStorage.setItem('nstructr-exmute-v1', 'off')")
         pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/exercises', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         await pg.evaluate(FAKE)

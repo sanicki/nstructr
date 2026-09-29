@@ -8,6 +8,8 @@ async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
         pg = await b.new_page(viewport={'width': 412, 'height': 860}, has_touch=True)
+        # checks the shelves: grouped by collection (off by default since Sep 2026)
+        await pg.add_init_script("if (localStorage.getItem('nstructr-group-collections-v1') === null) localStorage.setItem('nstructr-group-collections-v1', 'on')")
         pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         print('tabs                    ', await pg.evaluate("[...document.querySelectorAll('.navbar .nav-item .label')].map(x=>x.textContent)"))
