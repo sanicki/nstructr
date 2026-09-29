@@ -363,6 +363,9 @@ async function importFiles(files) {
 let snackTimer = 0;
 function snack(msg, ms = 3500) {
   const el = $('#snackbar'); el.textContent = msg; el.classList.add('show');
+  // shown over an open dialog (Create with AI…): a modal dialog sits above the page, so the message goes inside it
+  const host = [...document.querySelectorAll('dialog[open]')].pop() || document.body;
+  if (el.parentElement !== host) host.appendChild(el);
   clearTimeout(snackTimer); snackTimer = setTimeout(() => el.classList.remove('show'), ms);
 }
 

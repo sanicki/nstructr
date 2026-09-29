@@ -56,7 +56,8 @@ again.
 
 <img src="images/create-with-ai-answer.png" width="300" alt="Paste the AI's answer, then Add">
 
-When the AI has answered, copy its whole reply, come back, long-press the box and choose **Paste**, then tap **Add**.
+When the AI has answered, copy its whole reply, come back, long-press the box and choose **Paste**, then tap **Add**
+(greyed out until something is pasted). If the answer can't be used, the message says why, over this screen.
 
 - **One exercise** is added to **My exercises** and opens so you can watch it.
 - **A routine** becomes a workout in **My workouts**, using library exercises where they match and new ones

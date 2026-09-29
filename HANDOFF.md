@@ -837,7 +837,11 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
     - **AI with API keys**: the Create with AI screen calling the provider directly (the user's own key, kept on the
       device): Gemini for YouTube links and videos, the others with photos (videos as still frames); feed the
       animation checks' errors back to the model to fix its JSON. **Self-hosted models** (an OpenAI-compatible
-      address) in the same mode; their server must allow browser requests (CORS).
+      address) in the same mode; their server must allow browser requests (CORS). Provider list (researched Sep 2026):
+      **models.dev** (github.com/anomalyco/models.dev, MIT, community-maintained; `https://models.dev/api.json`: each
+      provider's id, name, API address, docs and its models with input types) is the best fit for this mode;
+      LiteLLM's `model_prices_and_context_window.json` is bigger but model/price-centred. Neither lists the *chat apps*
+      Create with AI opens (web address, whether a link can fill in the message): that list (`AI_APPS`) stays ours.
     - **Linked variations**: an exercise names its easier/harder versions (knee push-up ↔ push-up ↔ decline
       push-up), so a workout can swap one for another.
 
@@ -877,10 +881,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 
 1. ~~**License**~~ Decided: MIT for the engine, the app code and the library content (`LICENSE`).
 2. ~~**Trademark** check on "NstructR"~~ Dropped (owner, Sep 2026).
-3. **4-Point Star Excursion**: its fourth reach goes straight out to the left (for the left leg standing), the foot
-   crossing behind the standing leg (compass 270°). The owner's original routine may have meant a *diagonal* instead:
-   back and across, like the 8-point Star Excursion's "back left" (225°). Keep the straight-across reach, or switch to
-   the diagonal? (Asked Sep 2026; the owner finds the current one fine.)
+3. ~~**4-Point Star Excursion**: straight-left reach or a back-left diagonal?~~ Decided: keep it as it is (owner,
+   Sep 2026).
 4. **Seated band row**: draw the band crossed in an X (as the routine describes)?
 5. ~~Is **22 vh** the right bottom margin on the real cover screen?~~ Confirmed on the owner's flip phone.
 6. ~~Library workouts: copy on first run, or only a library section?~~ Decided: library section only;

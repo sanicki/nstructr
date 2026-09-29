@@ -10,6 +10,8 @@ A link to this guide, and **report it** to tell us about a bug: it opens a short
 GitHub account) with your phone and browser already filled in. Say what went wrong in a sentence or two; a
 screenshot helps.
 
+And a link to make a **donation** on Ko-fi, if you'd like to support the work.
+
 ## Workouts
 
 ### Rest between exercises

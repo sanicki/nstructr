@@ -34,3 +34,7 @@ Nothing is sent anywhere unless you share it yourself. Make a backup now and the
 The figure is a simplified guide. Read each exercise's **About** and **How to do it**, and the safety notes on a
 workout, before you start. Stop if something hurts, and ask a health professional if you have a condition that
 exercise could affect.
+
+---
+
+<sub>If NstructR is useful to you, you can support it with a [donation on Ko-fi](https://ko-fi.com/sanicki).</sub>
