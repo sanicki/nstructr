@@ -19,5 +19,8 @@ async def main():
         for id, pt, i in [('ball-seated-march', 'pelvis', 0), ('ball-bridge', 'ankleL', 0), ('ball-bridge', 'ankleL', 1)]:
             await pg.goto(URL + '#/play/' + id, wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
             print(f'{id:22} step {i} {pt} to the ball', await pg.evaluate(f"(() => {{ const r = S.resolved[{i}]; SUPPORTS = S.resolved.supports; const P = fkAt(r.pose, S.seg, place(r.pose, S.seg, r.rule)); return Math.round(P.{pt}.y - supportAt(P.{pt})); }})()"), 'px')
+        # the ball stands on the floor line (drawn 7 below where the body rests), its top where the body rests on it
+        await pg.goto(URL + '#/play/ball-seated-march', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
+        print('ball bottom, top         ', await pg.evaluate("(() => { const r = $('#scene .surface.ball').getBBox(), f = +$('#scene .floor-line').getAttribute('y1'); return [Math.round(r.y + r.height - f), Math.round(FLOOR - r.y)]; })()"), '<- [0, 2r = 96]')
         print('errors', errs); await b.close()
 asyncio.run(main())

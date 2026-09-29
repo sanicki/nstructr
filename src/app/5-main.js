@@ -446,11 +446,6 @@ $('#search').addEventListener('input', e => { E.q = e.target.value; renderExplor
 $('#groupColl').addEventListener('change', e => { setPref(GROUP_KEY, e.target.checked ? 'on' : 'off'); renderExplore(); });
 $('#clearSearch').addEventListener('click', () => { E.q = ''; $('#search').value = ''; renderExplore(); $('#search').focus(); });
 $('#fileInput').addEventListener('change', e => { importFiles([...e.target.files]); e.target.value = ''; });
-$('#pasteImport').addEventListener('click', () => {
-  const text = $('#pasteArea').value.trim();
-  if (!text) { snack('Paste some JSON first.'); return; }
-  if (importAndShow([[text, '']])) $('#pasteDialog').close();
-});
 document.querySelectorAll('dialog [data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
 $('#copyJson').addEventListener('click', () => copyText($('#jsonArea').value, 'Copied'));
 // one click handler for everything inside the app
@@ -465,7 +460,6 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.del) removeSaved(d.del);
   else if (d.act === 'clearFilters') { Object.assign(E, { coll: 'All', type: 'All', equip: 'Any', q: '' }); $('#search').value = ''; renderExplore(); }
   else if (d.act === 'import') $('#fileInput').click();
-  else if (d.act === 'paste') { $('#pasteArea').value = ''; $('#pasteDialog').showModal(); }
   else if (d.act === 'exportAll') showJson('Your exercises', JSON.stringify({ format: 'nstructr/exercise', version: FILE_VERSION, exercises: S.lib.items }, null, 2));
   else if (d.act === 'edPrev' || d.act === 'edNext') { setPlaying(false); jumpTo(S.idx + (d.act === 'edNext' ? 1 : -1)); }
   else if (d.act === 'edRevertStep') revertStep();

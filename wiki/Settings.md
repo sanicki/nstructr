@@ -48,17 +48,15 @@ phone is set to reduce motion, exercises wait for Play either way.)
 ### Theme
 **System** (follows your phone), **Light** or **Dark**.
 
-### Authoring mode
-Adds the pose editor and JSON views, for making and fixing exercises. See
-[Editing exercises](Editing-exercises.md#changing-the-poses-authoring-mode).
-
 ## Create with AI
 
 **Create** opens [Create with AI](Create-with-AI.md). The AI app is chosen there, and remembered.
 
 ## Import & tools
 
-- **Back up everything**: Export everything / Import everything. See [Backups](Sharing-and-backups.md#back-up-everything).
-- **Import a file**: Choose file / Paste JSON.
+- **Backup**: Export everything. See [Backups](Sharing-and-backups.md#back-up-everything).
+- **Import**: Choose file: a backup, workouts, or exercises (a backup restores everything).
 - **Export your exercises** (Authoring mode): the JSON of everything in My exercises.
-- **JSON format reference**: the file formats, for people writing exercises by hand.
+- **Authoring mode**: adds the pose editor and JSON views, for making and fixing exercises. See
+  [Editing exercises](Editing-exercises.md#changing-the-poses-authoring-mode).
+- **JSON format reference** (Authoring mode): the file formats, for people writing exercises by hand.

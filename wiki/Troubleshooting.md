@@ -13,7 +13,7 @@ Installing the app avoids both.
 
 **My workouts disappeared.**
 Browsers can clear a website's data when the phone is low on space, or when you clear browsing data. Restore
-your latest backup with **Settings → Import everything**. Installing the app makes this much less likely.
+your latest backup with **Settings → Import → Choose file**. Installing the app makes this much less likely.
 
 **A shared link says it's damaged or incomplete.**
 The link was cut short (some apps shorten long messages). Ask for it again, or ask for the file (**As a file**).

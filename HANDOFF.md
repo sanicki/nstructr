@@ -84,7 +84,7 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
 tap-for-controls overlay with its details on the page below, Authoring mode. See §10.
 
 **Step 2 (installable app + backup) is built and tested on a foldable flip phone** (installed; bottom margin confirmed) (see §13): manifest, icons, service worker, storage
-persistence, Export everything / Import everything, and a Material theme generated from the icon's blue.
+persistence, Backup (Export everything; a backup is imported with Import like any file), and a Material theme generated from the icon's blue.
 Still to do there: test on a flip phone's cover screen as an installed app (Good Lock?).
 
 **Still to do in step 1:** merge to `main`, enable Pages (Settings → Pages → Source: GitHub Actions), confirm
