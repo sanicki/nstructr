@@ -27,6 +27,7 @@ The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wik
 - UI changes: run `tools/audit.py` (axe, 48 px targets, sideways scroll); confirmations use `ask()`, never `confirm()`.
 - User-visible changes: update the README / `wiki/` and retake screenshots (`tools/wiki_screenshots.py`).
 - No framework, no bundler: `src/app/*.js` are classic scripts concatenated in filename order into one global scope.
+- The engine stays separable (it may become its own package): `src/core.js` uses no browser APIs (`document`, `window`, `localStorage`, `navigator`), no app globals and nothing from `src/app/`; it works on plain data (poses, keyframes, props) and returns data or SVG strings, and must keep running under Node (`tools/checks.cjs`, `tools/rom.cjs` load it). App behaviour goes in `src/app/`; the engine gets options, not app knowledge.
 - A build deletes and recreates `_site/`, so restart a server started with `-d _site` after each build.
 - Don't run `pkill -f http.server` from a shell whose command line contains that text (it kills itself).
 
