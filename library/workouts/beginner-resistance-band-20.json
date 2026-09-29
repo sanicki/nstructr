@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schema/workout.schema.json",
+  "version": 2,
+  "id": "beginner-resistance-band-20",
+  "name": "20-Minute Beginner's Resistance Band",
+  "description": "A full-body workout with one resistance band for beginners, about 20 minutes: pull-aparts and side steps to warm up, squats, deadlifts and bridges, rows and presses, then arms. Pick a light band; you should finish each set with two or three reps to spare.",
+  "blocks": [
+    {
+      "name": "Warm up",
+      "items": [
+        {
+          "ex": "bhf-pull-apart",
+          "reps": 12
+        },
+        {
+          "ex": "band-lateral-walk",
+          "reps": 10,
+          "sides": "both"
+        }
+      ]
+    },
+    {
+      "name": "Legs and glutes",
+      "items": [
+        {
+          "ex": "bhf-squat",
+          "reps": 12,
+          "sets": 2
+        },
+        {
+          "ex": "band-rdl",
+          "reps": 12,
+          "sets": 2
+        },
+        {
+          "ex": "band-glute-bridge",
+          "reps": 12,
+          "sets": 2
+        }
+      ]
+    },
+    {
+      "name": "Back, chest and shoulders",
+      "items": [
+        {
+          "ex": "band-seated-row",
+          "reps": 12,
+          "sets": 2
+        },
+        {
+          "ex": "bhf-chest-press",
+          "reps": 10,
+          "sets": 2
+        },
+        {
+          "ex": "band-overhead-press",
+          "reps": 10,
+          "sets": 2
+        }
+      ]
+    },
+    {
+      "name": "Arms",
+      "items": [
+        {
+          "ex": "bhf-bicep-curl",
+          "reps": 10,
+          "sets": 2
+        },
+        {
+          "ex": "band-overhead-triceps",
+          "reps": 10,
+          "sets": 2
+        }
+      ]
+    }
+  ]
+}

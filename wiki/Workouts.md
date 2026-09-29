@@ -9,8 +9,8 @@ The **Workouts** tab has three parts:
 - **My workouts**: the ones you made, customised or received. Tap a card to expand it (time, number of exercises,
   equipment, safety notes, **Edit**, **Share**). Tap ▶ to start.
 - **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy. There
-  are 20-minute beginner's workouts for yoga and Pilates (a mat, nothing else), free weights (dumbbells) and
-  kettlebell (one bell). The 20 minutes are with **Coach** (Settings › Instruction); without it they take 15–17.
+  are 20-minute beginner's workouts for yoga and Pilates (a mat, nothing else), resistance band (one band), free
+  weights (dumbbells) and kettlebell (one bell). The 20 minutes are with **Coach** (Settings › Instruction); without it they take 15–17.
 - **History**: finished workouts, with the date, how long they took and how many exercises you did. Delete an
   entry with its bin, or **Clear** all of them.
 
