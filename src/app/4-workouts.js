@@ -63,7 +63,7 @@ function itemSeconds(item) {
     : sum(ph.setup) + sum(ph.finish) + sum(ph.rep) * item.reps * alt;
   // + ~2 s of speech a step; a hold also waits for its line (the pose's cue and "Now hold for N seconds", ~2.5 words a second)
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
-  const holdLine = hk ? Math.max(0, `${hk.quiet ? '' : hk.cue || hk.name || ''} Now hold for ${item.seconds} seconds.`.split(/\s+/).filter(Boolean).length / 2.5 / speechRate() - (hk.durationMs || 0) / 1000 / t) : 0;
+  const holdLine = hk ? Math.max(0, `${hk.quiet ? '' : hk.cue || hk.name || ''} ${plural(item.seconds, { one: 'Now hold for # second.', other: 'Now hold for # seconds.' })}`.split(/\s+/).filter(Boolean).length / 2.5 / speechRate() - (hk.durationMs || 0) / 1000 / t) : 0;
   const guide = WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) + holdLine : 0;
   return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
 }
@@ -89,8 +89,8 @@ const workoutEquipment = w => [...new Set(w.blocks.flatMap(b => b.items).flatMap
 function itemSummary(item) {
   const ex = exById(item.ex); if (!ex) return 'Missing exercise';
   const parts = [];
-  const n = ex.measure === 'time' ? `${item.seconds} s` : `${item.reps} ${ex.repName && ex.repName !== 'rep' ? ex.repName + 's' : 'reps'}`;
-  parts.push(item.sets > 1 ? `${item.sets} sets of ${n}` : n);
+  const n = ex.measure === 'time' ? `${item.seconds} s` : `${fmtNum(item.reps)} ${repWord(ex, item.reps)}`;
+  parts.push(item.sets > 1 ? plural(item.sets, { one: `# set of ${n}`, other: `# sets of ${n}` }) : n);
   const bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels;
   if (item.sides) parts.push(item.sides === 'both' ? (ex.measure === 'time' ? 'each side' : 'per side') : item.sides === 'alternate' ? 'alternating sides' : `${(bl && bl[item.sides]) || item.sides} only`);
   if (item.dir) parts.push(item.dir === 'both' ? 'each direction' : item.dir === 'alternate' ? 'alternating directions' : `${(dl && dl[item.dir]) || item.dir} only`);
@@ -126,7 +126,7 @@ function wkCard(w) {
       </div>
       <div class="wk-details"${open ? '' : ' hidden'}>
         ${lib && w.description ? `<p class="body-small muted" style="margin:0">${esc(w.description)}</p>` : ''}
-        <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${n} exercises</span><span><span class="icon">view_agenda</span>${w.blocks.length} ${w.blocks.length === 1 ? 'block' : 'blocks'}</span></div>
+        <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${plural(n, { one: '# exercise', other: '# exercises' })}</span><span><span class="icon">view_agenda</span>${plural(w.blocks.length, { one: '# block', other: '# blocks' })}</span></div>
         ${eq.length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(eq.join(', '))}</span></div>` : ''}
         ${safetyHtml(w)}
         <div class="row">${lib ? `<button class="btn tonal stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
@@ -212,10 +212,10 @@ function renderEditor() {
   $('#view-workout [data-wact="duplicateWorkout"]').disabled = !w.blocks.some(b => b.items.length);   // nothing to copy yet
   const eq = workoutEquipment(w);
   $('#wkSummary').innerHTML = `<span class="chip"><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span>
-    <span class="chip"><span class="icon">format_list_numbered</span>${w.blocks.flatMap(b => b.items).length} exercises</span>
+    <span class="chip"><span class="icon">format_list_numbered</span>${plural(w.blocks.flatMap(b => b.items).length, { one: '# exercise', other: '# exercises' })}</span>
     ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}${safetyHtml(w)}`;
   $('#wkBlocks').innerHTML = w.blocks.map((b, bi) => `<section class="block" data-block="${b.id}">
-    <div class="block-head"><input value="${esc(b.name)}" data-bname="${b.id}" aria-label="Block name"><span class="count">${(b.rounds || 1) > 1 ? `<span class="icon" style="font-size:16px;vertical-align:-3px">repeat</span> ${b.rounds} rounds, ` : ''}${b.items.length} exercises, ${fmtMin(blockSeconds(b, w))}</span>
+    <div class="block-head"><input value="${esc(b.name)}" data-bname="${b.id}" aria-label="Block name"><span class="count">${(b.rounds || 1) > 1 ? `<span class="icon" style="font-size:16px;vertical-align:-3px">repeat</span> ${plural(b.rounds, { one: '# round', other: '# rounds' })}, ` : ''}${plural(b.items.length, { one: '# exercise', other: '# exercises' })}, ${fmtMin(blockSeconds(b, w))}</span>
       <button class="icon-btn stateful" data-bmenu="${b.id}" aria-label="Block options"><span class="icon">more_vert</span></button></div>
     <ul class="items" data-items="${b.id}">${b.items.map(it => {
       const ex = exById(it.ex);
@@ -267,7 +267,7 @@ async function blockMenu(btn, id) {
   if (act === 'down' && bi < EDIT.blocks.length - 1) EDIT.blocks.splice(bi + 1, 0, EDIT.blocks.splice(bi, 1)[0]);
   if (act === 'del') {
     const b = EDIT.blocks[bi];
-    if (b.items.length && !(await ask(`Delete "${b.name}"?`, `Its ${b.items.length} ${b.items.length === 1 ? 'exercise goes' : 'exercises go'} too.`, 'Delete', true))) return;
+    if (b.items.length && !(await ask(`Delete "${b.name}"?`, plural(b.items.length, { one: 'Its # exercise goes too.', other: 'Its # exercises go too.' }), 'Delete', true))) return;
     EDIT.blocks.splice(EDIT.blocks.indexOf(b), 1);
   }
   if (act) commitEdit();
@@ -435,7 +435,7 @@ $('#pickList').addEventListener('change', e => { const c = e.target.closest('[da
 $('#pickAdd').addEventListener('click', () => {
   const b = EDIT.blocks.find(x => x.id === PICK.block) || EDIT.blocks[EDIT.blocks.length - 1];
   for (const id of PICK.chosen) { const ex = exById(id); if (ex) b.items.push(newItem(ex)); }
-  $('#pickDialog').close(); commitEdit(); snack(`Added ${PICK.chosen.size} ${PICK.chosen.size === 1 ? 'exercise' : 'exercises'}`);
+  $('#pickDialog').close(); commitEdit(); snack(plural(PICK.chosen.size, { one: 'Added # exercise', other: 'Added # exercises' }));
 });
 
 /* export / import */
@@ -499,7 +499,7 @@ function say(text, coachOnly = false, { dropIfBusy = false } = {}) {
     if (dropIfBusy && (speechSynthesis.speaking || speechSynthesis.pending)) return Promise.resolve();
     return new Promise(res => {
       let done = false; const fin = () => { if (!done) { done = true; res(); } };
-      const u = new SpeechSynthesisUtterance(text); u.rate = speechRate();
+      const u = new SpeechSynthesisUtterance(text); u.lang = LANG; u.rate = speechRate();   // the voice for the text's language, not the phone's
       u.onend = fin; u.onerror = fin;
       setTimeout(fin, 1500 + text.split(/\s+/).length * 450 / Math.min(1, speechRate()));      // never wait forever on a voice that doesn't report back
       try { speechSynthesis.speak(u); } catch (e) { fin(); }        // a throw here would otherwise leave a guided step waiting forever
@@ -583,7 +583,7 @@ function buildPlan(item, segInfo) {
   } else ph.setup.forEach(i => push(V0[i], { phase: 'setup' }));
   if (ex.measure === 'time') {
     // Coach reads the held step's own cue (how to get into the pose) as it starts, then the time
-    const holdSay = () => `${holdCued || V0[h].quiet ? '' : cueOf(V0[h]) + ' '}Now hold for ${item.seconds} seconds.`.replace(/([^.!?])\s+Now/, '$1. Now');
+    const holdSay = () => `${holdCued || V0[h].quiet ? '' : cueOf(V0[h]) + ' '}${plural(item.seconds, { one: 'Now hold for # second.', other: 'Now hold for # seconds.' })}`.replace(/([^.!?])\s+Now/, '$1. Now');
     ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(guided ? { say: holdSay() } : {}) } : { phase: 'rep' }));
   } else {
     const total = item.reps * versions.length;
@@ -725,7 +725,8 @@ function startRest(seconds, kind) {
   S.playing = false; S.t = S.resolved[0].dur; S.planDone = false;
   S.onStep = null; S.onPlanEnd = null;
   renderWpInfo();
-  say(kind === 'set' ? `Rest ${seconds} seconds.` : kind === 'round' ? `Round ${cur.round} done. Rest ${seconds} seconds.` : `Rest ${seconds} seconds. Next: ${ex.name}.`);
+  const rest = plural(seconds, { one: 'Rest # second.', other: 'Rest # seconds.' });
+  say(kind === 'set' ? rest : kind === 'round' ? `Round ${fmtNum(cur.round)} done. ${rest}` : `${rest} Next: ${ex.name}.`);
   beep(520, 200);
 }
 /* ---------- history ---------- */
@@ -751,7 +752,7 @@ function renderHistory() {
   $('#historyList').innerHTML = list.length ? list.slice(0, 50).map(s => {
     const d = new Date(s.start);
     return `<li class="item"><span class="open" style="cursor:default"><span class="icon" style="color:var(--md-primary)">${s.completed ? 'task_alt' : 'timelapse'}</span>
-      <span class="txt"><span class="title-small">${esc(s.name)}</span><span class="body-small muted">${d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}, ${d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}: ${fmtMin(s.seconds)}, ${s.exercisesDone} of ${s.exercisesTotal} exercises${s.completed ? '' : ' (stopped early)'}</span></span></span>
+      <span class="txt"><span class="title-small">${esc(s.name)}</span><span class="body-small muted">${d.toLocaleDateString(LANG, { weekday: 'short', month: 'short', day: 'numeric' })}, ${d.toLocaleTimeString(LANG, { hour: 'numeric', minute: '2-digit' })}: ${fmtMin(s.seconds)}, ${fmtNum(s.exercisesDone)} of ${plural(s.exercisesTotal, { one: '# exercise', other: '# exercises' })}${s.completed ? '' : ' (stopped early)'}</span></span></span>
       <button class="icon-btn stateful" data-logdel="${s.id}" aria-label="Delete this entry"><span class="icon">delete</span></button></li>`;
   }).join('') : '<li class="body-medium muted" style="padding:8px 4px">Finished workouts show up here.</li>';
   $('#historyActions').hidden = !list.length;
@@ -763,7 +764,7 @@ function finishWorkout() {
   writeSession(true);
   WP.phase = 'done'; S.playing = false; S.onPlanEnd = null; S.onStep = null;
   $('#wpRest').hidden = true; $('#wpDone').hidden = false; $('#wpControls').classList.remove('show');
-  $('#wpDoneText').textContent = `${WP.w.name}: ${WP.flat.length} exercises in ${fmtMin((Date.now() - WP.started) / 1000)}.`;
+  $('#wpDoneText').textContent = `${WP.w.name}: ${plural(WP.flat.length, { one: '# exercise', other: '# exercises' })} in ${fmtMin((Date.now() - WP.started) / 1000)}.`;
   dropSession(); wakeOff();
   say('Workout complete. Well done.'); beep(880, 180); setTimeout(() => beep(1175, 260), 200);
   renderWpInfo();
@@ -892,7 +893,7 @@ function renderWpCount() {
       }
     } else $('#wpCount').textContent = fmtTime(cur.item.seconds);
   } else {
-    const name = ex.repName && ex.repName !== 'rep' ? ex.repName + 's' : 'reps';
+    const name = repWord(ex, cur.item.reps);
     const m = S.planMeta[S.idx] || {};
     const html = m.guided ? `<small>run-through</small>` : `${WP.rep || 0}/${cur.item.reps}<small>${name}</small>`;
     if ($('#wpCount').innerHTML !== html) $('#wpCount').innerHTML = html;

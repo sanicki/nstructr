@@ -339,18 +339,18 @@ function importAndShow(texts) {
   catch (e) { snack(`Couldn't import: ${e.message}`, 6000); if (!added.length && !IMPORTED_WORKOUTS.length && !RESTORED) return false; }
   saveLib();
   if (RESTORED) {
-    const n = (k, one, many) => `${RESTORED[k]} ${RESTORED[k] === 1 ? one : many}`;
+    const n = (k, one, many) => plural(RESTORED[k], { one: `# ${one}`, other: `# ${many}` });
     snack(`Restored ${n('workouts', 'workout', 'workouts')}, ${n('exercises', 'saved exercise', 'saved exercises')} and ${n('sessions', 'history entry', 'history entries')}`, 6000);
     if (location.hash === '#/workouts') route(); else go('#/workouts');
     return true;
   }
   if (IMPORTED_WORKOUTS.length) {
-    snack(IMPORTED_WORKOUTS.length === 1 ? `Imported workout: ${IMPORTED_WORKOUTS[0].name}` : `Imported ${IMPORTED_WORKOUTS.length} workouts`);
+    snack(IMPORTED_WORKOUTS.length === 1 ? `Imported workout: ${IMPORTED_WORKOUTS[0].name}` : plural(IMPORTED_WORKOUTS.length, { one: 'Imported # workout', other: 'Imported # workouts' }));
     go(`#/workout/${IMPORTED_WORKOUTS[0].id}`);
     checkImport(IMPORT_NEW, IMPORT_CALLED, IMPORTED_WORKOUTS);
     return true;
   }
-  snack(added.length === 1 ? `Imported ${added[0].name}` : `Imported ${added.length} exercises`);
+  snack(added.length === 1 ? `Imported ${added[0].name}` : plural(added.length, { one: 'Imported # exercise', other: 'Imported # exercises' }));
   go(`#/play/${encodeURIComponent(added[0].id)}`);
   checkImport(IMPORT_NEW, IMPORT_CALLED, []);
   return true;

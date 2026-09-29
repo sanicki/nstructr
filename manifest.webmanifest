@@ -1,4 +1,6 @@
 {
+  "lang": "en",
+  "dir": "ltr",
   "name": "NstructR",
   "short_name": "NstructR",
   "description": "Stick-figure exercise animations and workouts, with voice coaching.",
