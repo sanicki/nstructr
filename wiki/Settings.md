@@ -14,11 +14,11 @@ screenshot helps.
 
 ### Rest between exercises
 Seconds of rest between one exercise and the next, in every workout. Tap − / + (1 s at a time; hold to keep
-going) or type a number, from 0 to 300. Default 10.
+going) or type a number, from 0 to 300. Default 5.
 
 ### Rest between sets
 Seconds of rest between the sets of an exercise done in more than one set, in every workout. Same controls.
-Default 20. (Rest between circuit rounds is set on each block.)
+Default 10. (Rest between circuit rounds is set on each block.)
 
 ### Instruction
 **Silent**, **Beeps**, **Voice** or **Coach**: see [Working out → Instruction](Working-out.md#instruction). Also used

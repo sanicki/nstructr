@@ -215,9 +215,9 @@ function setRate(v, preview = true) {
 }
 /* Coach's words of encouragement (on unless turned off) */
 const encourageOn = () => pref(ENCOURAGE_KEY, 'on') !== 'off';
-const restGap = () => { const v = parseFloat(pref(REST_KEY, '10')); return v >= 0 ? v : 10; };
+const restGap = () => { const v = parseFloat(pref(REST_KEY, '5')); return v >= 0 ? v : 5; };
 /* seconds of rest between sets of an exercise, in every workout (a setting since Sep 2026; items' "rest" is ignored) */
-const restSets = () => { const v = parseFloat(pref(REST_SETS_KEY, '20')); return v >= 0 ? v : 20; };
+const restSets = () => { const v = parseFloat(pref(REST_SETS_KEY, '10')); return v >= 0 ? v : 10; };
 function applyTheme(t) {
   if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
 }

@@ -23,7 +23,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **254 exercises, 4 workouts** (20-minute beginner's yoga, Pilates and free weights, Sep 2026, timed at the default rests without Coach; and the full-body routine).
+Library today: **254 exercises, 4 workouts** (20-minute beginner's yoga, Pilates and free weights, Sep 2026, timed at the default rests (5 s, 10 s) without Coach; and the full-body routine).
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -750,8 +750,8 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Voice and Coach (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
 | `nstructr-encourage-v1` | Coach's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach; `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; the backup's `settings.encourage`) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
-| `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 20, 0–300; Settings > Workouts). Workout items' `rest` is ignored |
-| `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 10, 0–300 in 1 s steps; Settings > Workouts). Workout files' `restBetween` is ignored |
+| `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 10, 0–300; Settings > Workouts; 20 until Sep 2026). Workout items' `rest` is ignored |
+| `nstructr-rest-between-v1` | seconds of rest between exercises, in every workout (default 5, 0–300 in 1 s steps; Settings > Workouts; 10 until Sep 2026). Workout files' `restBetween` is ignored |
 
 The mixed prefixes are historical; renaming them would silently wipe users' data. If you consolidate, migrate
 (read old → write new → keep old until confirmed).

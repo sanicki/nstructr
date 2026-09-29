@@ -62,5 +62,5 @@ The estimated time updates as you change things.
 ## Rests
 
 - **Rest between exercises** and **rest between sets** are settings for all workouts, in
-  [Settings](Settings.md#rest-between-exercises) (defaults 10 s and 20 s, 1 s steps).
+  [Settings](Settings.md#rest-between-exercises) (defaults 5 s and 10 s, 1 s steps).
 - **Rest between rounds** is set on each block (circuits).

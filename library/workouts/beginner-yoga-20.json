@@ -10,7 +10,7 @@
       "items": [
         {
           "ex": "yoga-easy",
-          "seconds": 60
+          "seconds": 90
         },
         {
           "ex": "yoga-cat-cow",
@@ -54,6 +54,11 @@
         },
         {
           "ex": "yoga-triangle",
+          "seconds": 30,
+          "sides": "both"
+        },
+        {
+          "ex": "yoga-extended-side-angle",
           "seconds": 30,
           "sides": "both"
         },
