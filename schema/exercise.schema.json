@@ -728,6 +728,10 @@
         "y": {
           "type": "number",
           "description": "Pull-up bar: its height above the floor (385: a doorway bar, just above a standing reach)."
+        },
+        "length": {
+          "type": "number",
+          "description": "Yoga strap: its length (it doesn't stretch); default its longest route in the exercise plus a grip, the rest hanging from the hands."
         }
       },
       "additionalProperties": false
