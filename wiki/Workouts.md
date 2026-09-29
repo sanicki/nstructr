@@ -8,7 +8,9 @@ The **Workouts** tab has three parts:
 
 - **My workouts**: the ones you made, customised or received. Tap a card to expand it (time, number of exercises,
   equipment, safety notes, **Edit**, **Share**). Tap ▶ to start.
-- **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy.
+- **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy. There
+  are 20-minute beginner's workouts for yoga and Pilates (a mat, nothing else) and free weights (dumbbells), and a
+  full-body routine.
 - **History**: finished workouts, with the date, how long they took and how many exercises you did. Delete an
   entry with its bin, or **Clear** all of them.
 

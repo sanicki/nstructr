@@ -1,0 +1,116 @@
+{
+  "$schema": "../../schema/workout.schema.json",
+  "version": 2,
+  "id": "beginner-pilates-20",
+  "name": "20-Minute Beginner's Pilates",
+  "description": "A beginner's Pilates mat class, about 20 minutes, with no equipment: warm up the core, the abdominal series and back work twice through, mat basics for the hips and trunk, then a bridge and twist to finish.",
+  "blocks": [
+    {
+      "name": "Warm up the core",
+      "items": [
+        {
+          "ex": "pil-hundred",
+          "reps": 100
+        },
+        {
+          "ex": "pil-half-roll-back",
+          "reps": 8
+        },
+        {
+          "ex": "pil-leg-circles",
+          "reps": 5,
+          "sides": "both",
+          "dir": "both"
+        },
+        {
+          "ex": "pil-rolling-ball",
+          "reps": 6
+        }
+      ]
+    },
+    {
+      "name": "Abdominal series",
+      "items": [
+        {
+          "ex": "pil-single-leg-stretch",
+          "reps": 10
+        },
+        {
+          "ex": "pil-double-leg-stretch",
+          "reps": 8
+        },
+        {
+          "ex": "pil-spine-stretch",
+          "reps": 5
+        },
+        {
+          "ex": "pil-saw",
+          "reps": 4
+        }
+      ],
+      "rounds": 2,
+      "roundRest": 15
+    },
+    {
+      "name": "Back and sides",
+      "items": [
+        {
+          "ex": "pil-swan",
+          "reps": 5
+        },
+        {
+          "ex": "pil-single-leg-kick",
+          "reps": 8
+        },
+        {
+          "ex": "pil-side-kick",
+          "reps": 10,
+          "sides": "both"
+        },
+        {
+          "ex": "pil-swimming",
+          "reps": 30
+        }
+      ],
+      "rounds": 2,
+      "roundRest": 15
+    },
+    {
+      "name": "Mat basics",
+      "items": [
+        {
+          "ex": "bw-glute-bridge",
+          "reps": 10
+        },
+        {
+          "ex": "core-dead-bug",
+          "reps": 6,
+          "sides": "alternate"
+        },
+        {
+          "ex": "core-bird-dog",
+          "reps": 6,
+          "sides": "alternate"
+        },
+        {
+          "ex": "side-clamshell",
+          "reps": 12,
+          "sides": "both"
+        }
+      ]
+    },
+    {
+      "name": "Finish",
+      "items": [
+        {
+          "ex": "pil-shoulder-bridge",
+          "reps": 4
+        },
+        {
+          "ex": "pil-spine-twist",
+          "reps": 4
+        }
+      ]
+    }
+  ]
+}
