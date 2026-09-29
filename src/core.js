@@ -449,6 +449,18 @@ function frameAt(a, b, e, seg) {
       const th = root1D(x => { pose['ankle' + s] = x; const Q = fkAt(pose, seg, pos)['toe' + s]; return Q.y - supportAt(Q) - 0.25; }, a0, 120, 2);
       pose['ankle' + s] = th == null ? a0 : th;
     }
+    // toes resting on the same spot of a raised surface at both ends (the back foot on a bench) stay on it: the leg
+    // reaches so the toe lands back where it was (twice, since moving the ankle moves the toe too)
+    const A = worldOf(a, seg), B = worldOf(b, seg);
+    for (const ch of CHAINS) {
+      if (ch.root !== 'hip') continue;
+      const toe = 'toe' + ch.s, T = A[toe];
+      if (pinned.includes(ch.tip + ch.s) || supportAt(T) < 5 || T.y - supportAt(T) > 3 || V3.dist(T, B[toe]) > 3) continue;
+      for (let it = 0; it < 2; it++) {
+        const P = fkAt(pose, seg, pos);
+        reachTip(pose, seg, pos, ch, V3.add(P[ch.tip + ch.s], V3.sub(T, P[toe])), 1);
+      }
+    }
   }
   // anything still below the floor mid-move lifts the whole body smoothly
   // hanging (either step holds a hand at a height): only kept out of the floor; otherwise resting on it

@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-monster-walk",
+  "name": "Monster Walk",
+  "otherNames": ["Band Monster Walk", "Banded Monster Walk"],
+  "category": "Strength",
+  "focus": "Outer hips (glutes)",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "In a half squat with a band round your ankles or knees, walk forward in small steps, each foot going forward and out against the band.",
+  "source": {
+    "url": "https://www.physitrack.com/exercise-library/how-to-perform-the-monster-walk-with-band-exercise",
+    "title": "Physitrack: Monster walk with band"
+  },
+  "setup": ["Loop a band round your ankles (or just above your knees).", "Feet wider than hip-width, half squat, hands on your hips."],
+  "cues": ["Stay low the whole way.", "Knees out, in line with your toes.", "Keep the band taut."],
+  "prescription": {
+    "reps": "10–20 steps",
+    "note": "Keep the band taut; small steps. Walk forward, then backward to come back."
+  },
+  "keyframes": [
+    {
+      "name": "Right foot forward and out",
+      "cue": "Step your right foot forward and out, staying low.",
+      "camera": 60,
+      "durationMs": 900,
+      "holdMs": 150,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "torso": [20, 0, 0],
+        "hipR": [30, 12, 0],
+        "kneeR": 35,
+        "ankleR": -12,
+        "hipL": [0, 12, 0],
+        "kneeL": 30,
+        "ankleL": -12
+      }
+    },
+    {
+      "name": "Left foot forward and out",
+      "cue": "Now the left foot, forward and out.",
+      "camera": 60,
+      "durationMs": 900,
+      "holdMs": 150,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "torso": [20, 0, 0],
+        "hipL": [30, 12, 0],
+        "kneeL": 35,
+        "ankleL": -12,
+        "hipR": [0, 12, 0],
+        "kneeR": 30,
+        "ankleR": -12
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "ankleL",
+      "to": "ankleR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  },
+  "repName": "step pair",
+  "travel": true
+}

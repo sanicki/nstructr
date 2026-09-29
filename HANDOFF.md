@@ -23,7 +23,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **250 exercises, 1 workout**.
+Library today: **255 exercises, 1 workout**.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -379,6 +379,11 @@ differently.
 4. `clampTips`: dipping hands/feet are held on the surface via IK; a knee below the surface turns the thigh up
    (legs swinging forward and back only).
 5. Toe fix: toes that would sink turn the ankle.
+   Toes resting on the same spot of a raised surface at both ends (the back foot on a bench) stay on it: the leg
+   reaches so the toe lands back where it was (Sep 2026: Bulgarian Split Squat's rear toe slid 21 px mid-move).
+   (A thigh swinging straight under the hips needs the pelvis higher than a thigh's length or the knee goes
+   through the floor: Mountain Climber raises the hips a little and brings the knee in a little wide; Burpee
+   goes hips-up in between, on quiet steps.)
 6. `groundY`: if anything still penetrates, lift the whole body.
 
 ### 6.3 Playback

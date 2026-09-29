@@ -1,0 +1,165 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-mountain-climber",
+  "name": "Mountain Climber",
+  "otherNames": ["Running Plank"],
+  "category": "Cardio",
+  "focus": "Core, shoulders and hip flexors (cardio)",
+  "collections": ["Bodyweight", "Warm-up"],
+  "description": "From a straight-arm plank, drive one knee in towards your chest and back, then the other, keeping your hips level, at a steady run.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/258/mountain-climbers/",
+    "title": "ACE Exercise Library: Mountain Climbers"
+  },
+  "setup": ["Start in a straight-arm plank: hands under your shoulders, on your toes, body in one line."],
+  "cues": ["Hips stay low and level.", "Shoulders over your hands.", "Breathe steadily."],
+  "prescription": {
+    "time": "20–45 seconds",
+    "note": "Start slowly with a step in and out; speed up once your hips stay level."
+  },
+  "keyframes": [
+    {
+      "name": "Plank",
+      "cue": "Hands under your shoulders, arms straight, body in one line.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24
+      }
+    },
+    {
+      "name": "Right knee in",
+      "cue": "Drive your right knee in towards your chest.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "root": [85, 0, 0],
+        "shoulderL": [47, 0, 0],
+        "shoulderR": [47, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [120, 25, 0],
+        "ankleR": 30,
+        "kneeR": 145
+      }
+    },
+    {
+      "name": "Back",
+      "cue": "Step it back.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24
+      }
+    },
+    {
+      "name": "Left knee in",
+      "cue": "Now the left knee.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "root": [85, 0, 0],
+        "shoulderL": [47, 0, 0],
+        "shoulderR": [47, 0, 0],
+        "hipL": [120, 25, 0],
+        "ankleL": 30,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24,
+        "kneeL": 145
+      }
+    },
+    {
+      "name": "Back",
+      "cue": "Step it back.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24
+      }
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 30
+  }
+}
