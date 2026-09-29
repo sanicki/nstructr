@@ -74,7 +74,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Overhead Triceps Stretch, Figure-Four Stretch | ✅ |
 | Butterfly Stretch, Lying Spinal Twist, Cobra Stretch | the same as Bound Angle Pose, Supine Twist and Cobra Pose: other names, not new exercises |
 | Wrist flexor and extensor stretches | ready (the figure has no wrists: hands only; would need a hand joint) |
-| Foam rolling (calves, quads, upper back) | new equipment: **foam roller** |
+| Foam rolling (calves, quads, upper back) | ✅ with the new **foam roller**, plus hamstrings (`tools/variants/batch-17-foam-roller.cjs`) |
 
 ## Pilates (12, now 23)
 Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.com/blog/mat/the-34-pilates-mat-exercises-)); the library had 12:
@@ -135,7 +135,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | **Pull-up bar** ✅ | pull-up, chin-up, dead hang, hanging knee raise | done: a `bar` prop, `anchorY` holds a hand at the bar |
 | **Stability ball** ✅ | ball crunch, bridge, seated march (wall squat with a ball, hamstring curl later) | done: a round surface (`ball`) |
 | **Medicine ball** ✅ | Russian twist, slam (chest pass later: a throw) | done: `medball`, held in both hands |
-| **Foam roller** | rolling the calves, quads, upper back | a cylinder surface under the body |
+| **Foam roller** ✅ | rolling the calves, hamstrings, quads, upper back | done: a `roller` surface (a cylinder across the body); a leg or the back rests on it with a segment `touch`, and stays on it while rolling |
 | **Pilates ring** ✅ | chest press, inner thigh squeeze | done: `ring` between two points, flattening as they press |
 
 ## Engine work this would need
@@ -146,7 +146,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 - **Hanging** ✅ (Sep 2026): a hand anchored at a height (`anchorY`) on a `bar` prop. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise.
 
 Done so far: most **ready** rows (batches 3–6), the **door anchor** (batch 7), jumping (batch 9) and travelling
-(batch 10), hanging (batch 11), the yoga block and strap (batch 12), the medicine ball, Pilates ring and stability ball (batch 13), and the deferred exercises (batch 14: Bulgarian Split Squat, Monster Walk, Mountain Climber, Burpee). Next: the foam roller (a rolling motion). The Create with AI prompt lists every
+(batch 10), hanging (batch 11), the yoga block and strap (batch 12), the medicine ball, Pilates ring and stability ball (batch 13), and the deferred exercises (batch 14: Bulgarian Split Squat, Monster Walk, Mountain Climber, Burpee). The foam roller followed (batch 17: rolling calves, hamstrings, quads, upper back). The Create with AI prompt lists every
 exercise and isn't trimmed to fit a link (accuracy first, HANDOFF §10, "Create with AI"): past about 250 exercises,
 ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.
 

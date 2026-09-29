@@ -333,8 +333,14 @@
                   "armpitL",
                   "armpitR",
                   "backL",
-                  "backR"
-                ]
+                  "backR",
+                  "thighL",
+                  "thighR",
+                  "shinL",
+                  "shinR",
+                  "back"
+                ],
+                "description": "A body point, or a segment (thighL/R, shinL/R, back: pelvis to neck) that rests where it is lowest over what's under it, e.g. a shin across a foam roller."
               },
               "adjust": {
                 "type": "string",
@@ -579,6 +585,7 @@
             "block",
             "ring",
             "ball",
+            "roller",
             "medball"
           ]
         },
@@ -734,11 +741,11 @@
         },
         "length": {
           "type": "number",
-          "description": "Yoga strap: its length (it doesn't stretch); default its longest route in the exercise plus a grip, the rest hanging from the hands."
+          "description": "Yoga strap: its length (it doesn't stretch); default its longest route in the exercise plus a grip, the rest hanging from the hands. Foam roller: its length side to side (160: 90 cm)."
         },
         "r": {
           "type": "number",
-          "description": "Stability ball: its radius (58: a 65 cm ball)."
+          "description": "Stability ball: its radius (58: a 65 cm ball). Foam roller: its radius (14: 15 cm across)."
         }
       },
       "additionalProperties": false

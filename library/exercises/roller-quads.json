@@ -1,0 +1,114 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "roller-quads",
+  "name": "Foam Roller Quad Roll",
+  "otherNames": ["Foam Roll Quadriceps", "Quad Foam Roll"],
+  "category": "Mobility",
+  "focus": "Quadriceps (front of the thighs)",
+  "collections": ["Stretches", "Warm-up"],
+  "equipment": ["Foam roller"],
+  "description": "Face down on your forearms with a foam roller under the fronts of your thighs, roll slowly from just above the knees toward the hips and back, moving with your arms.",
+  "source": {
+    "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",
+    "title": "Healthline: Foam rolling, how to"
+  },
+  "setup": ["Lie face down on your forearms, elbows under your shoulders.", "A foam roller under the fronts of your thighs, just above the knees; feet off the floor."],
+  "cues": ["Brace your stomach; hips don't sag.", "Move with your arms.", "Slow, even rolls."],
+  "prescription": {
+    "time": "30–60 seconds",
+    "note": "Roll slowly, about 2 seconds each way. Pause on a tender spot for a few breaths; skip anything sharp or painful, and avoid rolling right over a joint."
+  },
+  "keyframes": [
+    {
+      "name": "Roller above your knees",
+      "cue": "Face down on your forearms, the roller just above your knees.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "elbowR",
+      "touch": [
+        {
+          "point": "thighR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "thighL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handR",
+          "adjust": "elbowR"
+        },
+        {
+          "point": "handL",
+          "adjust": "elbowL"
+        }
+      ],
+      "pose": {
+        "root": [80, 0, 0],
+        "shoulderL": [52, 0, 0],
+        "shoulderR": [52, 0, 0],
+        "elbowL": 90,
+        "elbowR": 90,
+        "hipL": [0, 0, 0],
+        "hipR": [0, 0, 0],
+        "kneeL": 50,
+        "kneeR": 50,
+        "ankleL": 30,
+        "ankleR": 30
+      }
+    },
+    {
+      "name": "Roll toward your hips",
+      "cue": "Pull with your forearms to roll up toward your hips, then back.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "elbowR",
+      "touch": [
+        {
+          "point": "thighR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "thighL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handR",
+          "adjust": "elbowR"
+        },
+        {
+          "point": "handL",
+          "adjust": "elbowL"
+        }
+      ],
+      "pose": {
+        "root": [80, 0, 0],
+        "shoulderL": [108, 0, 0],
+        "shoulderR": [108, 0, 0],
+        "elbowL": 90,
+        "elbowR": 90,
+        "hipL": [0, 0, 0],
+        "hipR": [0, 0, 0],
+        "kneeL": 50,
+        "kneeR": 50,
+        "ankleL": 30,
+        "ankleR": 30
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "roller",
+      "z": -135
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 45
+  }
+}

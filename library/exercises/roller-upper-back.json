@@ -1,0 +1,130 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "roller-upper-back",
+  "name": "Foam Roller Upper Back Roll",
+  "otherNames": ["Thoracic Spine Foam Roll", "Foam Roll Upper Back", "Upper Back Foam Roll"],
+  "category": "Mobility",
+  "focus": "Upper back",
+  "collections": ["Stretches", "Warm-up"],
+  "equipment": ["Foam roller"],
+  "description": "Lying back on a foam roller under your shoulder blades with your feet flat and your hands behind your head, lift your hips a little and push with your legs to roll between your shoulder blades and mid-back.",
+  "source": {
+    "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",
+    "title": "Healthline: Foam rolling, how to"
+  },
+  "setup": ["Sit in front of a foam roller, then lie back so it's under your shoulder blades.", "Knees bent, feet flat; hands behind your head, elbows wide."],
+  "cues": ["Support your head; don't pull on it.", "Stay on your upper back, not your lower back.", "Slow, even rolls."],
+  "prescription": {
+    "time": "30–60 seconds",
+    "note": "Roll slowly, about 2 seconds each way. Keep the roller on your upper and middle back, never your lower back or neck."
+  },
+  "keyframes": [
+    {
+      "name": "Roller under your shoulder blades",
+      "cue": "Lie back on the roller, hands behind your head, feet flat, hips lifted a little.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "back",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-85, 0, 0],
+        "neck": [20, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipL": [30, 0, 0],
+        "hipR": [30, 0, 0],
+        "kneeL": 100,
+        "kneeR": 100,
+        "ankleL": 20,
+        "ankleR": 20
+      }
+    },
+    {
+      "name": "Roll to your mid-back",
+      "cue": "Push with your legs to roll down to your mid-back, then back up.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "back",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-85, 0, 0],
+        "neck": [20, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipL": [30, 0, 0],
+        "hipR": [30, 0, 0],
+        "kneeL": 70,
+        "kneeR": 70,
+        "ankleL": 20,
+        "ankleR": 20
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "roller",
+      "z": -185
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 45
+  }
+}

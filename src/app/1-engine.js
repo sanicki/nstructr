@@ -40,7 +40,7 @@ function validateExercise(ex, path) {
     if (kf.touch != null) {
       if (!Array.isArray(kf.touch)) fail(`${p}.touch must be a list.`);
       kf.touch.forEach((t, k) => {
-        if (!t || !POINTS.includes(t.point)) fail(`${p}.touch[${k}].point must be one of: ${POINTS.join(', ')}.`);
+        if (!t || !(POINTS.includes(t.point) || SEGMENTS[t.point])) fail(`${p}.touch[${k}].point must be one of: ${[...POINTS, ...Object.keys(SEGMENTS)].join(', ')}.`);
         const ref = jointRef(t.adjust || ''), part = String(t.adjust || '').split('.')[1];
         if (!JOINT_KEYS.includes(ref.j) || (part && (!BALL.has(ref.j) || !COMPONENTS.includes(part))))
           fail(`${p}.touch[${k}].adjust must be a joint name, or a ball joint's number like "hipR.side" (${COMPONENTS.join(', ')}).`);
@@ -72,7 +72,7 @@ function validateExercise(ex, path) {
         return;
       }
       if (SURFACE_TYPES.includes(pr.type)) {
-        for (const f of ['width', 'depth', 'height', 'backHeight']) if (pr[f] != null && !(pr[f] > 0)) fail(`${p}.${f} must be a positive number.`);
+        for (const f of ['width', 'depth', 'height', 'backHeight', 'r', 'length']) if (pr[f] != null && !(pr[f] > 0)) fail(`${p}.${f} must be a positive number.`);
         if (pr.back != null && !['behind', 'ahead'].includes(pr.back)) fail(`${p}.back must be "behind" or "ahead".`);
         return;
       }
@@ -248,7 +248,7 @@ function drawProps(P, Q, pose, cam) {
   let back = '', front = '';
   const dx = S.shiftX, proj = p => { const q = project({ p }, cam).p; return { x: q.x + dx, y: q.y, d: q.d }; };
   // chairs, benches and steps sit behind the figure
-  for (const sh of surfaceShapes(S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
+  for (const sh of surfaceShapes(S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
   const M0 = rootM(pose.root), wts = { handL: '', handR: '' };
   S.props.forEach((pr, i) => {
     if (SURFACE_TYPES.includes(pr.type)) return;

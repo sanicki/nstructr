@@ -5,7 +5,7 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## Exercises and equipment
 
-- **Foam roller**: new equipment; the engine needs a rolling motion (the body moves along a cylinder under it).
+- **More foam rolling**: glutes, IT band (lying on your side), lats; the roller turning and travelling under the body.
 - **Kettlebell Around the World**: the bell passes from hand to hand, and a held weight can't change hands yet.
 - **Turkish Get-Up** and **Kettlebell Clean**: many steps to animate.
 - **Moving props**: stability-ball pass and hamstring curl, medicine-ball chest pass (the ball has to move).

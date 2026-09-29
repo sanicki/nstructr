@@ -87,6 +87,14 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Star Excursions | — |
 | Chair-based exercises (Seated Hip Marching, Seated Ankle Stretch) | ⏳ Standing Marching (no equipment) |
 
+## Foam roller (added Sep 2026, batch 17)
+
+| Library exercise | Equivalents |
+|---|---|
+| Foam Roller Calf Roll, Hamstring Roll, Quad Roll, Upper Back Roll | — (the same rolling is done with a massage ball or a roller stick, neither of them library equipment; the stretches for the same muscles are already in the library) |
+
+Names: NASM calls them "Foam Roll Calves" and so on ([NASM Exercise Library](https://www.nasm.org/resource-center/exercise-library/foam-roll-calves)); rolling the upper back is also "thoracic spine" rolling. "Foam Roller Thoracic Extension" is a different exercise (arching back over a still roller), so it isn't an other name.
+
 ## Pilates and yoga
 
 | Library exercise | Equivalents |
