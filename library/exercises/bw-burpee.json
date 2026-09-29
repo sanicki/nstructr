@@ -1,0 +1,220 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-burpee",
+  "name": "Burpee",
+  "otherNames": ["Squat Thrust Jump"],
+  "category": "Cardio",
+  "focus": "Whole body (cardio)",
+  "collections": ["Bodyweight", "Warm-up"],
+  "description": "Squat and put your hands on the floor, jump your feet back to a plank, jump them back in, then jump up with your arms overhead and land softly.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/squat-thrust-burpees",
+    "title": "NASM Exercise Library: Squat Thrust Burpees"
+  },
+  "setup": ["Stand with your feet shoulder-width apart, with room in front of and behind you."],
+  "cues": ["Hands under your shoulders in the plank; hips level.", "Land softly, knees bent.", "Keep a steady rhythm."],
+  "prescription": {
+    "reps": "5–15",
+    "note": "For less impact, step back and in one foot at a time and rise onto your toes instead of jumping. Some versions add a push-up in the plank."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet shoulder-width apart, arms by your sides.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 500,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Squat, hands down",
+      "cue": "Squat down and put your hands on the floor.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "torso": [70, 0, 0],
+        "neck": [-10, 0, 0],
+        "shoulderL": [80, 0, 0],
+        "shoulderR": [80, 0, 0],
+        "hipL": [100, 0, 0],
+        "kneeL": 110,
+        "ankleL": -20,
+        "hipR": [100, 0, 0],
+        "kneeR": 110,
+        "ankleR": -20
+      }
+    },
+    {
+      "name": "Kick back",
+      "cue": "Hips up, feet off the floor.",
+      "camera": 90,
+      "durationMs": 250,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "handR",
+      "quiet": true,
+      "pose": {
+        "root": [85, 0, 0],
+        "shoulderL": [85, 0, 0],
+        "shoulderR": [85, 0, 0],
+        "hipL": [60, 0, 0],
+        "kneeL": 80,
+        "hipR": [60, 0, 0],
+        "kneeR": 80
+      }
+    },
+    {
+      "name": "Jump back",
+      "cue": "Jump your feet back to a plank.",
+      "camera": 90,
+      "durationMs": 250,
+      "holdMs": 150,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [66, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [-8, 0, 0],
+        "ankleL": 24,
+        "hipR": [-8, 0, 0],
+        "ankleR": 24
+      }
+    },
+    {
+      "name": "Hips up",
+      "cue": "Hips up, feet off the floor.",
+      "camera": 90,
+      "durationMs": 250,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "handR",
+      "quiet": true,
+      "pose": {
+        "root": [85, 0, 0],
+        "shoulderL": [85, 0, 0],
+        "shoulderR": [85, 0, 0],
+        "hipL": [60, 0, 0],
+        "kneeL": 80,
+        "hipR": [60, 0, 0],
+        "kneeR": 80
+      }
+    },
+    {
+      "name": "Jump in",
+      "cue": "Jump your feet back in.",
+      "camera": 90,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "torso": [70, 0, 0],
+        "neck": [-10, 0, 0],
+        "shoulderL": [80, 0, 0],
+        "shoulderR": [80, 0, 0],
+        "hipL": [100, 0, 0],
+        "kneeL": 110,
+        "ankleL": -20,
+        "hipR": [100, 0, 0],
+        "kneeR": 110,
+        "ankleR": -20
+      }
+    },
+    {
+      "name": "Jump up",
+      "cue": "Jump up, arms overhead.",
+      "camera": 90,
+      "durationMs": 400,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "lift": 45,
+      "pose": {
+        "torso": [5, 0, 0],
+        "shoulderL": [165, 0, 0],
+        "shoulderR": [165, 0, 0],
+        "ankleL": 35,
+        "ankleR": 35
+      }
+    },
+    {
+      "name": "Land softly",
+      "cue": "Land softly, knees bent.",
+      "camera": 90,
+      "durationMs": 350,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "quiet": true,
+      "pose": {
+        "torso": [18, 0, 0],
+        "shoulderL": [40, 0, 0],
+        "shoulderR": [40, 0, 0],
+        "hipL": [40, 0, 0],
+        "kneeL": 50,
+        "ankleL": -10,
+        "hipR": [40, 0, 0],
+        "kneeR": 50,
+        "ankleR": -10
+      }
+    },
+    {
+      "name": "Stand tall",
+      "cue": "Stand up and breathe.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 500,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {}
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

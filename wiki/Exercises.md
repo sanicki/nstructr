@@ -47,10 +47,11 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
 - **Side** (for exercises done one side at a time, such as *Right leg back* / *Left leg back*) and **Direction**
   (for exercises that go two ways, such as arm circles forward and backward) switch what the figure shows.
 - The legend (**Right**, **Left**) tells you which colour is which limb.
-- Exercises that move across the floor (Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry) keep
+- Exercises that move across the floor (Walking Lunge, Lateral Band Walk, Monster Walk, Heel-to-Toe Walk, Farmer's Carry) keep
   the figure in the middle: the marks on the floor slide past as it goes. You'll need a clear stretch of floor.
 - Pull-up bar exercises (Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise) show the bar above the figure; the view
-  grows a little to fit it.
+  grows a little to fit it. Inverted Row uses a bar at waist height (a *Low bar* in the equipment filter), seen
+  end-on from the side.
 
 Scroll down for the details:
 

@@ -1,0 +1,90 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bar-inverted-row",
+  "name": "Inverted Row",
+  "otherNames": ["Bodyweight Row", "Australian Pull-Up", "Body Row"],
+  "category": "Strength",
+  "focus": "Upper back and biceps",
+  "collections": ["Bodyweight"],
+  "equipment": ["Low bar"],
+  "description": "Lying under a bar set about waist height, hold it with straight arms and your heels on the floor, then pull your chest up to the bar, keeping your body straight, and lower back down.",
+  "source": {
+    "url": "https://www.acefitness.org/continuing-education/certified/december-2018/7138/ace-sponsored-research-what-is-the-best-back-exercise/",
+    "title": "ACE-sponsored research: What is the best back exercise? (inverted row)"
+  },
+  "setup": ["Set a sturdy bar about waist height (a rack or Smith machine bar).", "Lie under it and grip it a little wider than your shoulders; heels on the floor, body straight."],
+  "cues": ["Body stays in one line; don't let your hips sag.", "Lead with your chest.", "Lower slowly until your arms are straight."],
+  "prescription": {
+    "reps": "6–12",
+    "note": "Easier with your knees bent and feet flat, or with a higher bar; harder with a lower bar."
+  },
+  "keyframes": [
+    {
+      "name": "Hang",
+      "cue": "Hang under the bar, arms straight, body in one line from heels to head.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 170,
+      "anchorZ": 0,
+      "anchorX": 22,
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "root"
+        }
+      ],
+      "pose": {
+        "ankleL": 30,
+        "ankleR": 30,
+        "neck": [20, 0, 0],
+        "root": [-75, 0, 0],
+        "shoulderL": [87.5, 0, 0],
+        "shoulderR": [87.5, 0, 0]
+      }
+    },
+    {
+      "name": "Row",
+      "cue": "Pull your chest up to the bar, squeezing your shoulder blades together.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 170,
+      "anchorZ": 0,
+      "anchorX": 22,
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "root"
+        }
+      ],
+      "pose": {
+        "ankleL": 30,
+        "ankleR": 30,
+        "neck": [20, 0, 0],
+        "root": [-50, 0, 0],
+        "shoulderL": [-10, 0, 0],
+        "elbowL": 120,
+        "shoulderR": [-10, 0, 0],
+        "elbowR": 120
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "bar",
+      "y": 170,
+      "z": 0,
+      "width": 190
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

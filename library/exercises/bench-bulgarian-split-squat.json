@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bench-bulgarian-split-squat",
+  "name": "Bulgarian Split Squat",
+  "otherNames": ["Rear-Foot-Elevated Split Squat", "Bulgarian Squat"],
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Bodyweight"],
+  "equipment": ["Bench"],
+  "description": "With the top of your back foot resting on a bench behind you, lower straight down on the front leg until the thigh is level, then push back up.",
+  "source": {
+    "url": "https://www.acefitness.org/education-and-resources/lifestyle/exercise-library/366/bulgarian-split-squat/",
+    "title": "ACE Exercise Library: Bulgarian Split Squat"
+  },
+  "setup": ["Stand about a stride in front of a bench, facing away from it.", "Rest the top of one foot on the bench behind you; hands on your hips."],
+  "cues": ["Front knee over the ankle.", "Chest up, lower straight down.", "Push through the front heel."],
+  "prescription": {
+    "reps": "6–12 each leg",
+    "note": "Start with a lower step or chair seat if the bench is too high. Most of your weight stays on the front foot."
+  },
+  "keyframes": [
+    {
+      "name": "Rear foot on the bench",
+      "cue": "Front foot forward, the top of your back foot on the bench.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "hipR": [15, 0, 0],
+        "kneeR": 10,
+        "hipL": [-20, 0, 0],
+        "kneeL": 65,
+        "ankleL": 50
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Lower straight down until your front thigh is level.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "torso": [10, 0, 0],
+        "hipR": [85, 0, 0],
+        "kneeR": 95,
+        "ankleR": -8,
+        "hipL": [-2.5, 0, 0],
+        "kneeL": 130,
+        "ankleL": 50
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "bench",
+      "z": -198,
+      "width": 120,
+      "height": 60
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}
