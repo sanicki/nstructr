@@ -551,6 +551,11 @@ must not fill with **duplicates**, and a known exercise under another name shoul
 - Not merged: Glute Bridge and Bridge Pose move the same, but one counts reps and the other is a hold, and an
   exercise has one `measure`. Merging them needs workouts to be able to hold a rep exercise (or the reverse).
 
+**Bug reports**: Settings → Documentation → "report it" opens GitHub's bug form (`.github/ISSUE_TEMPLATE/bug.yml`:
+what went wrong, where, and the phone and browser; label `bug`). Kept short for people who've never filed an issue;
+the app fills in the `device` field (user agent, screen size, installed app or browser: `bugDevice()` in
+`src/app/3-details.js`) through the form's query-string prefill.
+
 ## 9. Things not visible in the code
 
 - **Flip phone cover screen** (reference: Galaxy Z Flip7): ~360×398 CSS px (948×1048 physical). Camera cutouts and flash along the **bottom**.

@@ -1,0 +1,25 @@
+name: Bug report
+description: Something in NstructR doesn't work or looks wrong. Opened from the app (Settings → Documentation → report it).
+title: "Bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for telling us. A sentence or two is enough, and a screenshot helps: paste or drag it into a box below.
+  - type: textarea
+    id: what
+    attributes:
+      label: What went wrong?
+      placeholder: "e.g. In Reverse Lunge the foot slides along the floor at the end of each rep."
+    validations: { required: true }
+  - type: textarea
+    id: where
+    attributes:
+      label: Where, and what did you tap?
+      description: The exercise, workout or screen, and what you did just before (optional).
+  - type: input
+    id: device
+    attributes:
+      label: Phone and browser
+      description: Filled in by the app; change it if it's wrong.

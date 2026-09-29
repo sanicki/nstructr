@@ -240,6 +240,13 @@ $('#view-settings').addEventListener('click', e => {
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });
 $('#setFullscreen').addEventListener('change', e => setPref(FS_KEY, e.target.checked ? 'on' : 'off'));
+/* Report a bug: GitHub's bug form (.github/ISSUE_TEMPLATE/bug.yml), with the phone and browser filled in */
+const BUG_URL = 'https://github.com/sanicki/nstructr/issues/new?template=bug.yml';
+function bugDevice() {
+  const installed = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  return `${navigator.userAgent} · screen ${innerWidth}×${innerHeight} · ${installed ? 'installed app' : 'browser'}`.slice(0, 300);
+}
+$('#bugLink').addEventListener('click', e => { e.currentTarget.href = `${BUG_URL}&device=${encodeURIComponent(bugDevice())}`; });
 $('#setEncourage').addEventListener('change', e => setPref(ENCOURAGE_KEY, e.target.checked ? 'on' : 'off'));
 $('#setAutoplay').addEventListener('change', e => setPref(AUTOPLAY_KEY, e.target.checked ? 'on' : 'off'));
 function setRest(which, v) {
