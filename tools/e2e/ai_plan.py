@@ -21,7 +21,7 @@ async def main():
         t = await pg.evaluate("aiPrompt('plan', $('#aiInput').value)")
         print('prompt                  ', len(t), 'chars |', t.splitlines()[0], '| fw-db-squat:', 'fw-db-squat' in t, '| band ones:', 'bhf-squat' in t,
               '| exercise format:', 'EXERCISE:' in t, '| paces:', 'calf-raise 7s: Calf Raise (Calves)' in t)
-        await pg.select_option('#aiApp', 'claude'); await pg.click('#aiOpen'); await pg.wait_for_timeout(200)
+        await pg.evaluate("setAiApp('claude')"); await pg.click('#aiOpen'); await pg.wait_for_timeout(200)
         print('opened                  ', (await pg.evaluate('window.OPENED || ""'))[:60], len(await pg.evaluate('window.OPENED || ""')))
         # answers: a made-up exercise is refused; one needing a band is imported and named; the total time is shown
         await pg.fill('#aiAnswer', wk([{'ex': 'bw-squat', 'reps': 10}, {'ex': 'u-jump-lunge', 'reps': 8}])); await pg.click('#aiImport'); await pg.wait_for_timeout(300)

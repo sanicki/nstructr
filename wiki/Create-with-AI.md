@@ -6,7 +6,8 @@ Have a routine from a class, a physio's sheet, or a video? **Create with AI** ge
 Copilot, DeepSeek, Gemini, Grok, Vibe or any other LLM) to turn it into an exercise or workout for NstructR. You need an
 account with that AI app. NstructR doesn't send anything itself: you see everything in the AI app.
 
-Open it from **Workouts → Create with AI**, or **Settings → Create with AI → Create**.
+Open it from **Workouts → Create with AI** or **Exercises → My exercises → Create with AI**. The AI app it uses is
+chosen in **Settings → Create with AI → Choose AI provider**.
 
 <img src="images/create-with-ai.png" width="300" alt="Create with AI: what you have, the AI app, Open">
 
@@ -38,8 +39,8 @@ When you add its answer:
 
 ## 2. Ask the AI
 
-Pick the AI app, listed by company and app, e.g. **Google (Gemini)** (Gemini at first; the app remembers the one you
-pick), and tap **Open** ("Open Gemini"):
+Tap **Open** with the AI app you chose in **Settings → Create with AI → Choose AI provider** (listed by company and
+app, e.g. **Google (Gemini)**; Gemini at first), e.g. "Open Gemini":
 
 - **ChatGPT, Claude, Copilot**: open with NstructR's instructions already typed in when they fit in a link (planning a
   workout); the instructions for writing an exercise or workout list the whole library with every exercise's names,

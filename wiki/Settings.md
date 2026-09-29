@@ -51,7 +51,8 @@ phone is set to reduce motion, exercises wait for Play either way.)
 
 ## Create with AI
 
-**Create** opens [Create with AI](Create-with-AI.md). The AI app is chosen there, and remembered.
+**Choose AI provider**: the AI app that [Create with AI](Create-with-AI.md) opens, listed by company and app, e.g.
+**Google (Gemini)** (Gemini at first). Create with AI itself is on **Workouts** and **My exercises**.
 
 ## Import & tools
 
