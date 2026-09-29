@@ -92,7 +92,7 @@ Done by a one-off script (in git history: `tools/v1/convert.cjs`, removed with t
 ## What changes for people
 
 - **Nearly nothing visible** at first, except that crossings, twists and camera turns look right.
-- **The pose editor** has three steppers per ball joint (forward, side, turn), one per hinge, and a camera row.
+- **The exercise editor** has three steppers per ball joint (forward, side, turn), one per hinge, and a camera row.
   Easier to reason about than the old signs, because they don't depend on the view.
 - **AI prompts** are simpler: one angle convention, no per-step view juggling.
 - **Submissions** (step 8) only ever see one format, which is why this went first.
@@ -112,7 +112,7 @@ Done by a one-off script (in git history: `tools/v1/convert.cjs`, removed with t
 1. ✅ 3D FK + projection + depth-sorted SVG drawing, fed by converted v1 poses: the picture matches.
 2. ✅ Contact solving (anchor, touch, plant, reach, keep, surfaces) on 3D points; checks on v2.
 3. ✅ Schema v2, converter, library converted, failures fixed (or listed as known issues, with why).
-4. ✅ Pose editor, format reference and AI prompts for v2; `layers` and depth joints removed; format 1 no longer
+4. ✅ Exercise editor, format reference and AI prompts for v2; `layers` and depth joints removed; format 1 no longer
    read or written.
 5. ✅ The problem poses (below), and the build rejects poses past "flexible".
 

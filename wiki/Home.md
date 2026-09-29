@@ -18,7 +18,7 @@ tablet or computer.
 | [Workouts](Workouts.md) | Library workouts, making your own, blocks, circuits, sets, rests, pace |
 | [Working out](Working-out.md) | The workout player: taps, swipes, sound, rests, pausing and resuming |
 | [Create with AI](Create-with-AI.md) | Making an exercise or workout from a name, a routine, a video or a photo |
-| [Editing exercises](Editing-exercises.md) | Changing the words of an exercise, and poses in Authoring mode |
+| [Editing exercises](Editing-exercises.md) | Changing the words of an exercise, and poses in the advanced exercise editor |
 | [Sharing, importing and backups](Sharing-and-backups.md) | Share links and QR codes, files, backing up and restoring |
 | [Settings](Settings.md) | Every setting, explained |
 | [Troubleshooting](Troubleshooting.md) | Sound, full screen, lost data, links that won't open |
@@ -37,4 +37,4 @@ exercise could affect.
 
 ---
 
-<sub>If NstructR is useful to you, you can support it with a [donation on Ko-fi](https://ko-fi.com/sanicki).</sub>
+<sub>If NstructR is useful to you, you can support it with a [donation](https://ko-fi.com/sanicki).</sub>

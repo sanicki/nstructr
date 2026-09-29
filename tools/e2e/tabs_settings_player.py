@@ -61,7 +61,7 @@ async def main():
         # wide screens: the details are a column beside the figure
         await pg.set_viewport_size({'width': 1280, 'height': 800}); await pg.wait_for_timeout(300)
         print('wide: details column    ', await pg.evaluate("Math.round($('#exInfo').getBoundingClientRect().left) > Math.round($('#stageBox').getBoundingClientRect().right)"))
-        # Edit (for everyone): the words; Authoring mode adds the poses. The figure stays pinned while editing
+        # Edit (for everyone): the words; Advanced exercise editor adds the poses. The figure stays pinned while editing
         await pg.set_viewport_size({'width': 412, 'height': 860}); await pg.wait_for_timeout(300)
         await pg.click('#editPoseBtn'); await pg.wait_for_timeout(600)
         print('Edit                    ', await pg.evaluate("[S.playing, !$('#adjustPanel').hidden, $('#exControls').classList.contains('show'), $('#edTitle').textContent, !!$('#edStepName').checkVisibility(), $('#editor .joints').checkVisibility()]"))

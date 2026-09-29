@@ -114,7 +114,7 @@ $('#exControls').addEventListener('focusin', () => showExControls(true));
 
 /* ---------- Editing an exercise ----------
    The Edit button (pencil, top bar) is for everyone: the words (name, description, instructions, each step's name
-   and spoken cue). Authoring mode adds the poses and the camera, and the JSON. While editing, playback pauses and,
+   and spoken cue). Advanced exercise editor adds the poses and the camera, and the JSON. While editing, playback pauses and,
    on narrow screens, the figure stays pinned at the top so the change can be seen; the controls on the figure
    fade even while paused so they don't cover the pose. */
 function openEditor() {
@@ -175,7 +175,7 @@ const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_K
 const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
 const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
-/* Authoring mode shows the tools for making exercises (pose editor, JSON views, exporters) */
+/* Advanced exercise editor shows the tools for making exercises (the poses and camera, JSON views, exporters) */
 function applyAuthoring() {
   document.body.classList.toggle('authoring', authoring());
   if (S.ex) updateEditor();
@@ -257,6 +257,6 @@ $('#setRest').addEventListener('change', e => setRest('between', e.target.value)
 $('#setRestSets').addEventListener('change', e => setRest('sets', e.target.value));
 holdRepeat($('#view-settings'), '[data-rate-delta]', b => setRate(speechRate() + +b.dataset.rateDelta / 10));
 holdRepeat($('#view-settings'), '[data-rest-delta]', b => setRest(b.dataset.restKey, (b.dataset.restKey === 'sets' ? restSets() : restGap()) + +b.dataset.restDelta));
-$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Authoring mode on: the Edit button (pencil) on any exercise now shows the poses and camera too' : 'Authoring mode off', 6000); });
+$('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Advanced exercise editor on: the Edit button (pencil) on any exercise now shows the poses and camera too' : 'Advanced exercise editor off', 6000); });
 
 applyAuthoring();

@@ -74,7 +74,7 @@ function checkImport(newExs, called, workouts) {
         const what = `${g.name ? `“${esc(g.name)}” uses` : 'The source uses'} ${esc(uses(g.equipment))}; <b>${esc(g.lib.name)}</b> uses ${esc(uses(g.lib.equipment))}`;
         return box('data-gear', i, g.alt ? `Use <b>${esc(g.alt.name)}</b>. ${what}.` : `Make your own copy of <b>${esc(g.lib.name)}</b> with ${esc(uses(g.equipment))}. ${what}.`);
       }).join('')}</fieldset>
-      ${gear.some(g => !g.alt) ? '<p class="body-small muted" style="margin:0 0 8px">A copy goes in My exercises. The figure shows the equipment once it\'s added to the poses (Authoring mode).</p>' : ''}` : '') +
+      ${gear.some(g => !g.alt) ? '<p class="body-small muted" style="margin:0 0 8px">A copy goes in My exercises. The figure shows the equipment once it\'s added to the poses (Advanced exercise editor).</p>' : ''}` : '') +
     (names.length ? `<span class="field-label">Names the library doesn't know yet</span>${names.map((n, i) =>
         `<div class="check-name body-medium"><span>“${esc(n.name)}” for <b>${esc(n.lib.name)}</b></span><button class="btn text stateful" data-suggest="${i}">Suggest it</button></div>`).join('')}
       <p class="body-small muted" style="margin:4px 0 0">Suggesting opens a GitHub issue (you need a free account). Once accepted, everyone finds the exercise by that name too.</p>` : '');

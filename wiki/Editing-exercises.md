@@ -23,9 +23,9 @@ suggest your change for everyone's library: **Share → Submit to library** ([ho
 - **Discard all changes** goes back to how the exercise was when you started editing (and removes the copy if
   this edit made it).
 
-## Changing the poses (Authoring mode)
+## Changing the poses (Advanced exercise editor)
 
-Turn on **Authoring mode** in [Settings → Import & tools](Settings.md#import--tools) to also get the pose editor: the camera
+Turn on **Advanced exercise editor** in [Settings → Import & tools](Settings.md#import--tools) to also get the poses: the camera
 (**Side** or **Front**, or any angle in between), every joint with − / + buttons (hold to repeat; steps of 1°, 5° or
 15°), and the exercise's JSON.
 
@@ -34,11 +34,11 @@ three numbers each: **forward**, **side** (out to the side for an arm or leg; le
 **turn**. Knees and elbows **bend**, and ankles **point** the toes. The numbers mean the same from any camera, so you
 can turn the camera to check a pose from the other angle.
 
-<img src="images/edit-poses.png" width="300" alt="The pose editor in Authoring mode">
+<img src="images/edit-poses.png" width="300" alt="The advanced exercise editor: the poses">
 
 - Each joint has an undo that appears once it differs from where you started.
 - Joints marked *auto* are placed for you (feet kept flat on the floor, hands reaching a point).
 - Angles are relative to the parent limb; the figure updates as you go.
 - A leg that's behind the other is drawn behind it; there's nothing to set.
 
-Authoring mode also shows JSON views elsewhere (workouts, your exercises) for people making exercises by hand.
+The advanced exercise editor also shows JSON views elsewhere (workouts, your exercises) for people making exercises by hand.

@@ -61,7 +61,7 @@ computer you can also drop a file anywhere on the page.
 
 Your data lives only in this browser on this device. **Settings → Import & tools → Export everything** saves one
 file with your workouts, history, your own exercises, bookmarks, every setting (rests, Instruction, speech speed,
-theme, full screen, autoplay, authoring mode), the choices the app remembers (the exercise page's Loop and Mute,
+theme, full screen, autoplay, advanced exercise editor), the choices the app remembers (the exercise page's Loop and Mute,
 grouping by collection, Create with AI's app and equipment, your order of the library workouts) and an unfinished
 workout to resume. Importing it (**Import → Choose file**) restores it,
 here or on another device.
