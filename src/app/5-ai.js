@@ -32,9 +32,9 @@ const aiCanDo = (ex, have = aiEquipChosen()) => SIMILAR_EX.equipKinds(ex.equipme
 const aiApp = () => AI_APPS.find(a => a.id === pref(AI_KEY, 'gemini')) || AI_APPS.find(a => a.id === 'gemini');   // the last one picked
 let AI_KIND = 'name';
 
-/* the library, one line per exercise, so the AI can use what's already there; grouped by equipment (a mat doesn't
-   count), so a band or dumbbell version isn't matched to the bodyweight one, with one heading per group. Plain words
-   and spaces only: the prompt has to fit in a link, and brackets, commas, "=" and "/" each take 3 characters there. */
+/* the library, one line per exercise with its names, so the AI can use what's already there; grouped by equipment (a
+   mat doesn't count), so a band or dumbbell version isn't matched to the bodyweight one, with one heading per group.
+   Accuracy first: a prompt too long for a link is copied to paste instead (HANDOFF §10). */
 function libraryLines() {
   const groups = new Map(), word = t => String(t).trim().replace(/\s+/g, '-');
   for (const ex of allExercises()) {
@@ -44,7 +44,9 @@ function libraryLines() {
     if (ex.direction) bits.push(`dir A-${word(ex.direction.labels.A)} B-${word(ex.direction.labels.B)}`);
     const k = SIMILAR_EX.equipKinds(ex.equipment).join(' and ');
     if (!groups.has(k)) groups.set(k, []);
-    groups.get(k).push([ex.id, ...bits].join(' '));
+    // its names too, so a source's name for it (Butterfly, Hip Raise) finds it
+    const names = [ex.name, ...otherNames(ex)].map(n => String(n).replace(/\s+/g, ' ').trim()).filter(Boolean);
+    groups.get(k).push(`${[ex.id, ...bits].join(' ')}: ${[...new Set(names)].join(' / ')}`);
   }
   return [...groups.keys()].sort().map(k => `${k ? 'WITH ' + k : 'NO EQUIPMENT'}\n${groups.get(k).join('\n')}`).join('\n');
 }
@@ -63,7 +65,7 @@ function planLines(have) {
     if (ex.direction) bits.push(`dir A-${word(ex.direction.labels.A)} B-${word(ex.direction.labels.B)}`);
     const k = SIMILAR_EX.equipKinds(ex.equipment).join(' and ');
     if (!groups.has(k)) groups.set(k, []);
-    groups.get(k).push(`${ex.id} ${bits.join(' ')}: ${String(ex.focus || ex.category || '').replace(/\s+/g, ' ').trim()}`);
+    groups.get(k).push(`${ex.id} ${bits.join(' ')}: ${ex.name} (${String(ex.focus || ex.category || '').replace(/\s+/g, ' ').trim()})`);
   }
   return [...groups.keys()].sort().map(k => `${k ? 'WITH ' + k : 'NO EQUIPMENT'}\n${groups.get(k).join('\n')}`).join('\n');
 }
@@ -89,7 +91,7 @@ WORKOUT
 ${aiItemRules}
 - Group the exercises into blocks (Warm-up, Main, Cool-down, or a circuit with "rounds" and "roundRest").
 
-LIBRARY (exercise ids under the equipment they use; after an id: seconds per rep or "time"; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y; after the colon, what it works)
+LIBRARY (exercise ids under the equipment they use; after an id: seconds per rep or "time"; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y; after the colon, its name and what it works)
 ${planLines(have)}`;
 }
 function aiPrompt(kind = AI_KIND, input = '') {
@@ -127,7 +129,7 @@ ${aiItemRules} Use the routine's numbers; for a range, use the lower end.
 ${aiPromptText()}
 7. Write "description", "setup" and "cues" in your own words; short, plain directions. Put where it came from in "source".
 
-LIBRARY (exercise ids under the equipment they use; after an id: "time" = measured in seconds, otherwise reps; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y)
+LIBRARY (exercise ids under the equipment they use; after an id: "time" = measured in seconds, otherwise reps; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y; after the colon, its names, separated by /)
 ${libraryLines()}`;
 }
 function aiPromptText() { return $('#aiPrompt').innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&').replace(/(\S) {2,}/g, '$1 '); }   // alignment spaces cost link length

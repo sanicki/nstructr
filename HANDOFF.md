@@ -645,19 +645,19 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   out of the workout and keeps them for the library check. **Accuracy comes first** (owner, Sep 2026): the prompt is
   never shortened at the cost of what the AI needs (the whole LIBRARY list, the formats, the sign conventions). The
   link-filled apps (ChatGPT, Claude, Copilot) get it in the link while it's under `AI_Q_MAX`; over it, they open with
-  the instructions copied to paste, like every other app (automatic: nothing to change as the library grows). What
-  keeps it short without losing anything: the LIBRARY list uses plain words and spaces (`WITH band`,
-  `bw-reverse-lunge sides`, `dir A-Forward B-Backward`); the exercise and keyframe formats are field lists, not
-  commented JSON; and `aiLink` escapes less than `URLSearchParams` (`: , / ; @ $ ?` stay as they are, spaces are
-  `+`: allowed in a query and read back identically). With 234 exercises the Claude link is about 14.3k (Sep 2026;
-  163 exercises made 12.2k): about 15 more exercises (the library's, or a user's own, which are listed too) and it
-  becomes copy-only. Base64 or other encodings don't help: non-ASCII is escaped in a link, and the AI has to read
-  plain text.
+  the instructions copied to paste, like every other app (automatic: nothing to change as the library grows). Each
+  LIBRARY line has the exercise's names after its id (`yoga-bound-angle time: Bound Angle Pose / Baddha Konasana /
+  Butterfly Pose`), so a source's name finds it: since Sep 2026 that makes the exercise prompt about 23.7k (234
+  exercises), copied to paste in every app. Workout planning's prompt (below) lists only what the equipment allows,
+  each with its name and focus, and fits a link for most picks (12.6k with a wall and dumbbells; everything picked, 17.1k, is copied). `aiLink` escapes less than
+  `URLSearchParams` (`: , / ; @ $ ?` stay as they are, spaces are `+`: allowed in a query and read back
+  identically). Base64 or other encodings don't help: non-ASCII is escaped in a link, and the AI has to read plain
+  text.
   **Plan a workout** (fifth choice, `planPrompt`): a goal ("a 30-minute leg workout") and equipment chips (the kinds
   `SIMILAR_EX.equipKinds` finds in the library, remembered in `nstructr-ai-equipment-v1`, wall at first). Its prompt
   is its own, and short: only the workout format (no exercise format: nothing new is written) and only the exercises
   whose every kind of equipment is picked (`aiCanDo`), each with its pace (`repSeconds`, or "time"), sides/direction,
-  and focus, plus the user's rests (`restGap`, `restSets`): 8.5k with a wall and dumbbells, 11.5k with everything.
+  name and focus, plus the user's rests (`restGap`, `restSets`): as a link 12.6k with a wall and dumbbells, 17.1k with everything (then copied).
   The import (`planCheck`) refuses a workout naming an exercise the app doesn't have, drops any "exercises" the AI
   wrote anyway, names the ones needing unpicked equipment, and shows the length (`workoutSeconds`).
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;
