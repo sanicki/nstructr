@@ -5,16 +5,18 @@
    One prompt: the AI answers with an exercise file or a workout file, whichever fits what the user has. */
 const AI_KEY = 'nstructr-ai-app-v1';
 const AI_Q_MAX = 15000;          // longest link we fill in (Cloudflare, in front of most of these, refuses URLs over 16 KB); longer ones are only copied
-const AI_APPS = [                // A–Z, "other" last. q: the link parameter that fills in the message, where the app has one
-  { id: 'chatgpt', name: 'ChatGPT', url: 'https://chatgpt.com/', q: 'q' },
-  { id: 'claude', name: 'Claude', url: 'https://claude.ai/new', q: 'q' },
-  { id: 'copilot', name: 'Copilot', url: 'https://copilot.microsoft.com/', q: 'q' },
-  { id: 'deepseek', name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
-  { id: 'gemini', name: 'Gemini', url: 'https://gemini.google.com/app' },
-  { id: 'grok', name: 'Grok', url: 'https://grok.com/' },                           // refuses the long link (header too large): copy
-  { id: 'mistral', name: 'Vibe', url: 'https://chat.mistral.ai/chat' },             // Mistral's, formerly Le Chat; refuses the long link too
+const AI_APPS = [                // A–Z by provider, "other" last. q: the link parameter that fills in the message, where the app has one
+  { id: 'claude', provider: 'Anthropic', name: 'Claude', url: 'https://claude.ai/new', q: 'q' },
+  { id: 'deepseek', provider: 'DeepSeek', name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
+  { id: 'gemini', provider: 'Google', name: 'Gemini', url: 'https://gemini.google.com/app' },
+  { id: 'copilot', provider: 'Microsoft', name: 'Copilot', url: 'https://copilot.microsoft.com/', q: 'q' },
+  { id: 'mistral', provider: 'Mistral', name: 'Vibe', url: 'https://chat.mistral.ai/chat' },   // formerly Le Chat; refuses the long link (header too large): copy
+  { id: 'chatgpt', provider: 'OpenAI', name: 'ChatGPT', url: 'https://chatgpt.com/', q: 'q' },
+  { id: 'grok', provider: 'xAI', name: 'Grok', url: 'https://grok.com/' },                  // refuses the long link too: copy
   { id: 'other', name: 'Other LLM' },
 ];
+/* the list shows "Provider (App)", e.g. "Google (Gemini)"; the button and messages use the app's name ("Open Gemini") */
+const aiAppLabel = a => (!a.provider ? a.name : a.provider === a.name ? a.name : `${a.provider} (${a.name})`);
 const AI_KINDS = [                // in the order they're offered; a goal first (it only uses what's in the app)
   { id: 'plan', label: 'Workout goal', field: 'What you want', ph: 'e.g. a 30-minute leg workout', hint: 'The AI plans a workout from the library\'s exercises (and your own), using only the equipment you pick.' },
   { id: 'routine', label: 'Workout routine', field: 'The routine', ph: 'Paste or type it: exercises, reps, sets, rests…', hint: 'A list of exercises makes a workout; one exercise makes an exercise.' },
@@ -156,7 +158,7 @@ function renderAi() {
   $('#aiInput').placeholder = k.ph;
   $('#aiInput').rows = AI_KIND === 'routine' ? 6 : 2;
   $('#aiKindHint').textContent = k.hint;
-  $('#aiApp').innerHTML = AI_APPS.map(a => `<option value="${a.id}"${a.id === app.id ? ' selected' : ''}>${esc(a.name)}</option>`).join('');
+  $('#aiApp').innerHTML = AI_APPS.map(a => `<option value="${a.id}"${a.id === app.id ? ' selected' : ''}>${esc(aiAppLabel(a))}</option>`).join('');
   $('#aiOpenLabel').textContent = app.url ? `Open ${app.name}` : 'Copy instructions';
   $('#aiOpen').querySelector('.icon').textContent = app.url ? 'open_in_new' : 'content_copy';
   $('#aiCopy').hidden = !app.url;
