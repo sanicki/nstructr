@@ -35,3 +35,6 @@ Make sure you copied all of it. Ask the AI to "answer with only the JSON file", 
 **The figure does something odd.**
 It's a simplified figure; the written steps are the reference. If an exercise looks wrong, please report it
 (see the [README](../README.md)).
+
+## Something else
+Report it from **Settings → Documentation → report it**: a short form, with your phone and browser filled in.

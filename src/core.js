@@ -354,8 +354,8 @@ function peel(pose, seg, pos, ch, G, u, O) {
   const Q = fkAt(pose, seg, pos)[tip];
   // travel waits for the lift; a long swing (a leg sweeping up behind, Dancer) only lifts: held under the body, the knee
   // would come up in front and snap round
-  const far = Math.hypot(O[tip].x - F.x, O[tip].z - F.z) > 100 || O[tip].y - sup > 90, t = Math.min(1, Math.max(0, (u - 0.2) / 0.6));
-  const h = far ? 1 : t * t * (3 - 2 * t), rise = (far ? 40 : 22) * Math.sin(Math.PI * u);
+  const far = Math.hypot(O[tip].x - F.x, O[tip].z - F.z) > 100 || O[tip].y - sup > 90, t = Math.min(1, Math.max(0, (u - 0.1) / 0.9));
+  const h = far ? 1 : t, rise = (far ? 40 : 22) * Math.sin(Math.PI * u);
   const T = { x: lerp(F.x, Q.x, h), y: Math.max(Q.y, sup + rise), z: lerp(F.z, Q.z, h) };
   reachTip(pose, seg, pos, ch, T, 1);
   // the toes clear the floor too (a pointed foot would otherwise drag them)

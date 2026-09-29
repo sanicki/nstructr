@@ -6,7 +6,9 @@
 
 ## Documentation
 
-A link to this guide (and, in the README, how to contribute).
+A link to this guide, and **report it** to tell us about a bug: it opens a short form on GitHub (you need a free
+GitHub account) with your phone and browser already filled in. Say what went wrong in a sentence or two; a
+screenshot helps.
 
 ## Workouts
 
