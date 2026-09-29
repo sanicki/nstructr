@@ -53,7 +53,7 @@ async def main():
           speaking:false, pending:false, speak(u){ SPOKEN.push(u.text); this.speaking=true; this._u=u; setTimeout(()=>{ if(this._u===u){ this.speaking=false; u.onend&&u.onend(); } }, 3000); },
           cancel(){ CANCELS++; this.speaking=false; const u=this._u; this._u=null; u&&u.onend&&u.onend(); }}});""")
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(200)
-        await pg.click('[data-wtoggle="lib:full-body-routine"]'); await pg.click('[data-wcustom="lib:full-body-routine"]'); await pg.wait_for_timeout(300)
+        await pg.click('[data-wtoggle="lib:beginner-yoga-20"]'); await pg.click('[data-wcustom="lib:beginner-yoga-20"]'); await pg.wait_for_timeout(300)
         print('Customize name          ', await pg.evaluate("EDIT.name"))
         await pg.evaluate("WK.hinted=true; setSound('coach'); startWorkout(LIB_WK[0], 0)"); await pg.wait_for_timeout(700)
         c0 = await pg.evaluate("CANCELS")

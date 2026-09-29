@@ -27,7 +27,7 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Standing Side Leg Lift (wall) | Standing Band Hip Abduction (in library) |
 | Wall Sit | ⏳ Wall Sit with dumbbells |
 | Deadlift (barbell) | ✅ Kettlebell Deadlift · ⏳ Dumbbell Deadlift |
-| Dumbbell Romanian Deadlift | ✅ Barbell Romanian Deadlift · Band RDL (in library) · ✅ Bodyweight Good Morning (no equipment) · ⏳ Kettlebell Romanian Deadlift |
+| Dumbbell Romanian Deadlift | ✅ Barbell Romanian Deadlift · Band RDL (in library) · ✅ Bodyweight Good Morning (no equipment) · ✅ Kettlebell Romanian Deadlift |
 | Kettlebell Swing | ⏳ Dumbbell Swing |
 | Goblet Squat, Band Squat, Back Squat, Squat to Calf Raise, Mini-Squat with Chair, Sit-to-Stand | see Squat; ⏳ Dumbbell Sit-to-Stand |
 
@@ -44,7 +44,7 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Dumbbell Bent-Over Row | ✅ Barbell Bent-Over Row · ✅ Resistance Band Bent-Over Row |
 | Resistance Band Seated Row | ⏳ (the bent-over rows cover the dumbbell and barbell versions) |
 | Dumbbell Lateral Raise | Band Lateral Raise (in library) |
-| Dumbbell Shoulder Press / Overhead Press / Band Overhead Press | all three in library · ⏳ Kettlebell Overhead Press |
+| Dumbbell Shoulder Press / Overhead Press / Band Overhead Press | all three in library · ✅ Kettlebell Overhead Press |
 | Bench Press / Dumbbell Bench Press / Band Chest Press | all in library · ⏳ Dumbbell Floor Press (no bench) |
 | Band Pull-Apart | ⏳ Dumbbell Reverse Fly |
 | Band Lat Pulldown | — (the dumbbell and barbell versions need a machine or a bar overhead) |

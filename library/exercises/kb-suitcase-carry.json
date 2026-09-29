@@ -1,0 +1,76 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "kb-suitcase-carry",
+  "name": "Kettlebell Suitcase Carry",
+  "otherNames": ["Suitcase Carry", "Single-Arm Farmer's Carry"],
+  "category": "Strength",
+  "focus": "Grip, core and shoulders",
+  "collections": ["Free weights"],
+  "equipment": ["Kettlebell"],
+  "description": "Holding one kettlebell at your side like a suitcase, walk tall without leaning, then change hands.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/359/farmer-s-carry/",
+    "title": "Farmer's Carry (ACE Exercise Library)",
+    "note": "The one-handed (suitcase) version, described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand tall with the bell in one hand at your side.", "A clear stretch of floor to walk on."],
+  "cues": ["Shoulders level; don't lean.", "Tight stomach.", "Small, steady steps."],
+  "prescription": {
+    "reps": "20–40 steps each hand",
+    "note": "Stand tall; don't lean towards the bell. Put it down and change hands."
+  },
+  "keyframes": [
+    {
+      "name": "Right foot forward",
+      "cue": "Walk tall: step with your right foot, weights by your sides.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 20, 0],
+        "shoulderR": [0, 8, 0],
+        "hipR": [15, 0, 0],
+        "kneeR": 5,
+        "hipL": [-12, 0, 0]
+      }
+    },
+    {
+      "name": "Left foot forward",
+      "cue": "Now the left foot; short, steady steps.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 20, 0],
+        "shoulderR": [0, 8, 0],
+        "hipL": [15, 0, 0],
+        "kneeL": 5,
+        "hipR": [-12, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hand": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 15
+  },
+  "repName": "step pair",
+  "bilateral": {
+    "labels": {
+      "L": "Right hand",
+      "R": "Left hand"
+    }
+  }
+}

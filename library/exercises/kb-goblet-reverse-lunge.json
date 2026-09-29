@@ -1,0 +1,194 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "kb-goblet-reverse-lunge",
+  "name": "Kettlebell Goblet Reverse Lunge",
+  "otherNames": ["Goblet Reverse Lunge", "Kettlebell Reverse Lunge"],
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Free weights"],
+  "equipment": ["Kettlebell"],
+  "description": "Holding a kettlebell at your chest, step one foot back and lower until both knees are bent, then push back up to standing.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/kettlebell-goblet-squat",
+    "title": "Kettlebell goblet hold (Muscle & Strength)",
+    "note": "The goblet hold with a reverse lunge, described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand tall, holding the bell by its handle close to your chest."],
+  "cues": ["Chest up, the bell close.", "Step back far enough that the front knee stays over the ankle.", "Push through the front heel."],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower. Start with a light bell."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Dumbbells at your sides.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-16.8, 0, 0],
+        "elbowL": 147.5,
+        "shoulderR": [-16.8, 0, 0],
+        "elbowR": 147.5
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": -24,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -22,
+          "dy": -24,
+          "dz": 22
+        }
+      ]
+    },
+    {
+      "name": "Lift the foot",
+      "cue": "Shift onto your left leg and lift your right foot.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "hipL": [8, 0, 0],
+        "kneeL": 10,
+        "ankleL": -2,
+        "hipR": [-10, 0, 0],
+        "kneeR": 55,
+        "ankleR": 20,
+        "shoulderL": [-16.8, 0, 0],
+        "elbowL": 147.5,
+        "shoulderR": [-16.8, 0, 0],
+        "elbowR": 147.5
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": -24,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -22,
+          "dy": -24,
+          "dz": 22
+        }
+      ]
+    },
+    {
+      "name": "Step back and lower",
+      "cue": "Step back and bend both knees, arms hanging.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "hipL": [85, 0, 0],
+        "kneeL": 88,
+        "ankleL": -3,
+        "hipR": [4.1, 0, 0],
+        "kneeR": 100,
+        "ankleR": 40,
+        "shoulderL": [-16.8, 0, 0],
+        "elbowL": 147.5,
+        "shoulderR": [-16.8, 0, 0],
+        "elbowR": 147.5
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": -24,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -22,
+          "dy": -24,
+          "dz": 22
+        }
+      ]
+    },
+    {
+      "name": "Push back up",
+      "cue": "Drive through your front heel and step back in.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "hipL": [8, 0, 0],
+        "kneeL": 10,
+        "ankleL": -2,
+        "hipR": [-10, 0, 0],
+        "kneeR": 55,
+        "ankleR": 20,
+        "shoulderL": [-16.8, 0, 0],
+        "elbowL": 147.5,
+        "shoulderR": [-16.8, 0, 0],
+        "elbowR": 147.5
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 22,
+          "dy": -24,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -22,
+          "dy": -24,
+          "dz": 22
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hands": ["handL", "handR"]
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg back",
+      "R": "Left leg back"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

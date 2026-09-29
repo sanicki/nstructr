@@ -10,7 +10,7 @@ async def main():
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         print('first run: my workouts', await pg.evaluate("WK.list.length"), '| library', await pg.evaluate("LIB_WK.map(w=>w.id)"))
         # the library workout has no editor
-        await pg.evaluate("go('#/workout/lib:full-body-routine')"); await pg.wait_for_timeout(200)
+        await pg.evaluate("go('#/workout/lib:beginner-yoga-20')"); await pg.wait_for_timeout(200)
         print('editing a library workout goes to    ', await pg.evaluate("location.hash"))
         # start it, exit: back to the list (no editor to go back to)
         await pg.evaluate("WK.hinted=true; setSound('off'); startWorkout(LIB_WK[0], 2)"); await pg.wait_for_timeout(300)
@@ -25,8 +25,8 @@ async def main():
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         print('resume banner                        ', (await pg.inner_text('#resumeSlot')).replace('\n', ' | '))
         # an old install: a first-run copy under the plain library id stays a separate, editable workout
-        await pg.evaluate("WK.list.push({...hydrateWorkout(LIBRARY_WORKOUTS.find(w => w.id === 'full-body-routine'))}); saveWorkouts(); renderWorkouts()")
-        print('old copy + library                   ', await pg.evaluate("[wkById('full-body-routine').libId, wkById('lib:full-body-routine').libId]"))
+        await pg.evaluate("WK.list.push({...hydrateWorkout(LIBRARY_WORKOUTS.find(w => w.id === 'beginner-yoga-20'))}); saveWorkouts(); renderWorkouts()")
+        print('old copy + library                   ', await pg.evaluate("[wkById('beginner-yoga-20').libId, wkById('lib:beginner-yoga-20').libId]"))
         # --- ids on import ---
         lib = await pg.evaluate("JSON.stringify(findInDb('bw-reverse-lunge'))")
         changed = json.loads(lib); changed['name'] = 'My Lunge'
