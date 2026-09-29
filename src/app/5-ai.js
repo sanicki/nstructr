@@ -6,14 +6,17 @@
 const AI_KEY = 'nstructr-ai-app-v1';
 const AI_Q_MAX = 15000;          // longest link we fill in (Cloudflare, in front of most of these, refuses URLs over 16 KB); longer ones are only copied
 const AI_APPS = [                // A–Z by provider, "other" last. q: the link parameter that fills in the message, where the app has one
+  { id: 'qwen', provider: 'Alibaba', name: 'Qwen', url: 'https://www.qianwen.com/' },        // the mainland app (chat.qwen.ai is the one outside China); no filled-in link: copy
   { id: 'claude', provider: 'Anthropic', name: 'Claude', url: 'https://claude.ai/new', q: 'q' },
+  { id: 'doubao', provider: 'ByteDance', name: 'Doubao', url: 'https://www.doubao.com/chat/' }, // copy
   { id: 'deepseek', provider: 'DeepSeek', name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
   { id: 'gemini', provider: 'Google', name: 'Gemini', url: 'https://gemini.google.com/app' },
   { id: 'copilot', provider: 'Microsoft', name: 'Copilot', url: 'https://copilot.microsoft.com/', q: 'q' },
   { id: 'mistral', provider: 'Mistral', name: 'Vibe', url: 'https://chat.mistral.ai/chat' },   // formerly Le Chat; refuses the long link (header too large): copy
+  { id: 'kimi', provider: 'Moonshot', name: 'Kimi', url: 'https://www.kimi.com/' },           // copy
   { id: 'chatgpt', provider: 'OpenAI', name: 'ChatGPT', url: 'https://chatgpt.com/', q: 'q' },
   { id: 'grok', provider: 'xAI', name: 'Grok', url: 'https://grok.com/' },                  // refuses the long link too: copy
-  { id: 'other', name: 'Other LLM' },
+  { id: 'other', name: 'Unspecified' },   // any AI chat: the instructions are copied. To be the default once the app has other languages (ROADMAP.md)
 ];
 /* the list shows "Provider (App)", e.g. "Google (Gemini)"; the button and messages use the app's name ("Open Gemini") */
 const aiAppLabel = a => (!a.provider ? a.name : a.provider === a.name ? a.name : `${a.provider} (${a.name})`);

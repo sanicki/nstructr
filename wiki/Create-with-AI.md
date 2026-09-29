@@ -3,7 +3,7 @@
 [← User guide](Home.md)
 
 Have a routine from a class, a physio's sheet, or a video? **Create with AI** gets an AI app (ChatGPT, Claude,
-Copilot, DeepSeek, Gemini, Grok, Vibe or any other LLM) to turn it into an exercise or workout for NstructR. You need an
+Copilot, DeepSeek, Doubao, Gemini, Grok, Kimi, Qwen, Vibe or any other) to turn it into an exercise or workout for NstructR. You need an
 account with that AI app. NstructR doesn't send anything itself: you see everything in the AI app.
 
 Open it from **Workouts → Create with AI** or **Exercises → My exercises → Create with AI**. The AI app it uses is
@@ -45,9 +45,9 @@ app, e.g. **Google (Gemini)**; Gemini at first), e.g. "Open Gemini":
 - **ChatGPT, Claude, Copilot**: open with NstructR's instructions already typed in when they fit in a link (planning a
   workout); the instructions for writing an exercise or workout list the whole library with every exercise's names,
   too long for a link, so they're **copied** as below. Nothing is left out to make them fit.
-- **DeepSeek, Gemini, Grok, Vibe**: can't be opened with a message this long, so the instructions are **copied**. Paste them into the
+- **DeepSeek, Doubao, Gemini, Grok, Kimi, Qwen, Vibe**: can't be opened with a message this long, so the instructions are **copied**. Paste them into the
   chat (long-press → Paste), add your photo or video if you have one, and send.
-- **Other LLM**: copies the instructions for you to paste into any AI chat.
+- **Unspecified** (last in the list): copies the instructions for you to paste into any AI chat.
 
 The instructions are always copied too, in case the message doesn't show up. **Copy instructions** copies them
 again.
