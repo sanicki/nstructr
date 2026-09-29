@@ -565,6 +565,8 @@ function buildPlan(item, segInfo) {
   const push = (r, m = {}) => { plan.push(r); meta.push(m); };
   const V0 = versions[0].R, guided = WK.sound === 'coach';
   const cueOf = r => r.cue || r.name || '';
+  const h = ex.measure === 'time' ? (ex.holdStep != null ? ex.holdStep : ph.start) : null;
+  let holdCued = false;                                          // the run-through already read the held step's cue
   if (guided) {
     // walk through the exercise once, step by step: each step waits for both its animation and its spoken cue
     const label = segLabel(ex, item, segInfo);
@@ -572,15 +574,14 @@ function buildPlan(item, segInfo) {
     // an instant step (like the seam where a circle starts again) has nothing to show, so it only carries the title
     const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
     ph.setup.forEach(i => g(V0[i]));
-    if (ex.measure === 'time') {
-      const h = ex.holdStep != null ? ex.holdStep : ph.start;
-      ph.rep.filter(i => i !== h).forEach(i => g(V0[i]));
-    } else versions.forEach(v => ph.rep.forEach(i => g(v.R[i])));
-    if (first) g(V0[ph.start]);
+    if (ex.measure === 'time') ph.rep.filter(i => i !== h).forEach(i => g(V0[i]));
+    else versions.forEach(v => ph.rep.forEach(i => g(v.R[i])));
+    if (first) { g(V0[ph.start]); holdCued = ph.start === h; }
   } else ph.setup.forEach(i => push(V0[i], { phase: 'setup' }));
   if (ex.measure === 'time') {
-    const h = ex.holdStep != null ? ex.holdStep : ph.start;
-    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(guided ? { say: `Now hold for ${item.seconds} seconds.` } : {}) } : { phase: 'rep' }));
+    // Coach reads the held step's own cue (how to get into the pose) as it starts, then the time
+    const holdSay = () => `${holdCued || V0[h].quiet ? '' : cueOf(V0[h]) + ' '}Now hold for ${item.seconds} seconds.`.replace(/([^.!?])\s+Now/, '$1. Now');
+    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(guided ? { say: holdSay() } : {}) } : { phase: 'rep' }));
   } else {
     const total = item.reps * versions.length;
     for (let k = 0; k < total; k++) {
