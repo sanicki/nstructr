@@ -22,7 +22,7 @@ try { const t = localStorage.getItem('nstructr-theme-v1'); if (t === 'light' || 
   --md-surface:#f8f9ff;--md-surface-container-lowest:#ffffff;--md-surface-container-low:#f2f3fa;--md-surface-container:#eceef4;--md-surface-container-high:#e6e8ee;--md-surface-container-highest:#e1e2e8;
   --md-on-surface:#191c20;--md-on-surface-variant:#43474e;--md-outline:#73777f;--md-outline-variant:#c3c7cf;--md-inverse-surface:#2e3135;--md-inverse-on-surface:#eff0f7;--md-inverse-primary:#a0cafd;--md-error:#ba1a1a;--md-on-error:#ffffff;
   --md-scrim:rgba(0,0,0,.32);
-  --tape:#c9a227;--band:#d4453a;--towel:#b08968;--strap:#5b7fa6;--weight:#4f555c;
+  --tape:#c9a227;--band:#d4453a;--towel:#b08968;--strap:#5b7fa6;--ring:#7a5ba6;--medball:#6b4f3a;--ball:#9fc1a8;--weight:#4f555c;
   --shape-s:8px;--shape-m:12px;--shape-l:16px;--shape-xl:28px;--shape-full:999px;
   --elev-3:0 1px 3px rgba(0,0,0,.3),0 4px 8px 3px rgba(0,0,0,.15);
   --ease-emph:cubic-bezier(.2,0,0,1);
@@ -34,13 +34,13 @@ try { const t = localStorage.getItem('nstructr-theme-v1'); if (t === 'light' || 
   --md-secondary:#bbc7db;--md-secondary-container:#3b4858;--md-on-secondary-container:#d7e3f7;--md-tertiary:#d6bee4;--md-tertiary-container:#523f5f;--md-on-tertiary-container:#f2daff;
   --md-surface:#111418;--md-surface-container-lowest:#0b0e13;--md-surface-container-low:#191c20;--md-surface-container:#1d2024;--md-surface-container-high:#272a2f;--md-surface-container-highest:#32353a;
   --md-on-surface:#e1e2e8;--md-on-surface-variant:#c3c7cf;--md-outline:#8d9199;--md-outline-variant:#43474e;--md-inverse-surface:#e1e2e8;--md-inverse-on-surface:#2e3135;--md-inverse-primary:#36618e;--md-error:#ffb4ab;--md-on-error:#690005;
-  --tape:#d9b441;--band:#ff8a7a;--towel:#d9b98f;--strap:#8fb3d9;--weight:#aab2ba;color-scheme:dark;}}
+  --tape:#d9b441;--band:#ff8a7a;--towel:#d9b98f;--strap:#8fb3d9;--ring:#b69be0;--medball:#b08968;--ball:#5f8a6c;--weight:#aab2ba;color-scheme:dark;}}
 :root[data-theme="dark"]{
   --md-primary:#a0cafd;--md-on-primary:#003258;--md-primary-container:#194975;--md-on-primary-container:#d1e4ff;
   --md-secondary:#bbc7db;--md-secondary-container:#3b4858;--md-on-secondary-container:#d7e3f7;--md-tertiary:#d6bee4;--md-tertiary-container:#523f5f;--md-on-tertiary-container:#f2daff;
   --md-surface:#111418;--md-surface-container-lowest:#0b0e13;--md-surface-container-low:#191c20;--md-surface-container:#1d2024;--md-surface-container-high:#272a2f;--md-surface-container-highest:#32353a;
   --md-on-surface:#e1e2e8;--md-on-surface-variant:#c3c7cf;--md-outline:#8d9199;--md-outline-variant:#43474e;--md-inverse-surface:#e1e2e8;--md-inverse-on-surface:#2e3135;--md-inverse-primary:#36618e;--md-error:#ffb4ab;--md-on-error:#690005;
-  --tape:#d9b441;--band:#ff8a7a;--towel:#d9b98f;--strap:#8fb3d9;--weight:#aab2ba;color-scheme:dark;}
+  --tape:#d9b441;--band:#ff8a7a;--towel:#d9b98f;--strap:#8fb3d9;--ring:#b69be0;--medball:#b08968;--ball:#5f8a6c;--weight:#aab2ba;color-scheme:dark;}
 html{scroll-padding-top:env(safe-area-inset-top,0px);height:100%}
 *,*::before,*::after{box-sizing:inherit}
 body{margin:0;min-height:100%;background:var(--md-surface);color:var(--md-on-surface);
@@ -96,6 +96,7 @@ main{display:block;min-width:0}
 .surface.solid{fill:var(--md-surface-container-highest);stroke-width:3;opacity:1}
 .thumb .ts{fill:none;stroke:var(--md-outline);stroke-width:5;stroke-linecap:round;opacity:.6}
 .thumb .ts.solid{fill:var(--md-surface-container-highest);stroke-width:3;opacity:1}
+.surface.ball,.thumb .ts.ball{fill:var(--ball)}
 .wall{stroke:var(--md-outline);stroke-width:6;opacity:.55}
 .thumb .tt{fill:none;stroke:var(--towel);stroke-width:6;stroke-linecap:round}
 .thumb .tst{fill:none;stroke:var(--strap);stroke-width:4;stroke-linecap:round}
@@ -106,6 +107,10 @@ main{display:block;min-width:0}
 .wt-plate{stroke:var(--weight);stroke-width:6;stroke-linecap:round}.wt-plate.big{stroke-width:8}
 .band{fill:none;stroke:var(--band);stroke-linecap:round;stroke-linejoin:round}
 .thumb .tb{fill:none;stroke:var(--band);stroke-width:4;stroke-linecap:round}
+.ring,.thumb .tring{fill:none;stroke:var(--ring);stroke-width:5}
+.thumb .tring{stroke-width:4}
+.wt.medball{fill:var(--medball)}
+.wt-seam{fill:none;stroke:var(--md-surface);stroke-width:1.5;opacity:.6}
 .bar,.thumb .tbar{stroke:var(--md-outline);stroke-width:7;stroke-linecap:round}
 .bar-end,.thumb .tbar-end{fill:var(--md-outline)}
 .anchor,.thumb .ta{fill:var(--md-outline);stroke:none}   /* where a band is tied to a fixed spot (a door anchor) */

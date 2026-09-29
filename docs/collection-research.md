@@ -63,7 +63,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Renegade Row, Single-Leg Romanian Deadlift | ✅ |
 | Turkish Get-Up | ready (many steps; a big one to animate) |
 | Farmer's Carry | ✅ (batch 10, travelling) |
-| Weighted versions with a medicine ball (Russian Twist, slams) | new equipment: **medicine ball** (drawn like the kettlebell) |
+| Weighted versions with a medicine ball (Russian Twist, slams) | ✅ with the new **medicine ball** (`tools/variants/batch-13-balls-ring.cjs`) |
 
 ## Stretches (12)
 ([Mayo Clinic, a guide to basic stretches](https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848))
@@ -84,7 +84,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Roll-Over, Single-Leg Kick, Double-Leg Kick, Neck Pull, Scissors, Shoulder Bridge, Spine Twist, Saw, Side Kick, Side Bend, Pilates Push-Up | ✅ (`tools/variants/batch-6-pilates.cjs`) |
 | Bicycle | done lying down it would duplicate Scissors; the classical version is on the shoulders (like Roll-Over): a later batch |
 | Open-Leg Rocker, Corkscrew, Jackknife, Swan Dive, Hip Twist, Seal, Crab, Rocking, Control Balance, Boomerang, Kneeling Side Kick, Leg Pull (back) | ready (advanced) |
-| Magic circle versions (inner-thigh squeeze, arm presses) | new equipment: **Pilates ring** |
+| Magic circle versions (inner-thigh squeeze, arm presses) | ✅ with the new **Pilates ring** (batch 13) |
 
 ## Core (7)
 ([Hinge Health](https://www.hingehealth.com/resources/articles/how-to-engage-your-core/), [Cleveland Clinic, best core exercises](https://health.clevelandclinic.org/best-core-exercises))
@@ -94,7 +94,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Bicycle Crunch, Russian Twist, Hollow Hold, Heel Taps, Flutter Kicks, V-Up, Sit-Up | ✅ |
 | Mountain Climber | engine: the fast leg swap (the driving knee passes the floor at plank height) |
 | Pallof Press, Band Woodchop | ✅ (door anchor) |
-| Stability-ball crunch, ball pass | new equipment: **stability ball** |
+| Stability-ball crunch, bridge, seated march | ✅ with the new **stability ball** (batch 13) |
+| Ball pass, ball hamstring curl | a later batch (the ball moves: not yet) |
 
 ## Chair-based (13)
 ([NHS sitting exercises](https://www.nhs.uk/live-well/exercise/sitting-exercises/), [BHF chair exercises](https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/chair-based-exercises))
@@ -132,10 +133,10 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | **Yoga block** ✅ | supported standing and seated poses | done: a `block` surface, 41 high on end; a hand rests on it with `touch` |
 | **Yoga strap** ✅ | reclined hamstring stretch, seated forward bend (cow-face arms later) | done: a `strap` prop drawn like the towel |
 | **Pull-up bar** ✅ | pull-up, chin-up, dead hang, hanging knee raise (inverted row: a low bar, later) | done: a `bar` prop, `anchorY` holds a hand at the bar |
-| **Stability ball** | ball crunch, wall squat with a ball, hamstring curl | a round surface to lie or sit on |
-| **Medicine ball** | Russian twist, slams, chest pass | drawn like the kettlebell (a ball) |
+| **Stability ball** ✅ | ball crunch, bridge, seated march (wall squat with a ball, hamstring curl later) | done: a round surface (`ball`) |
+| **Medicine ball** ✅ | Russian twist, slam (chest pass later: a throw) | done: `medball`, held in both hands |
 | **Foam roller** | rolling the calves, quads, upper back | a cylinder surface under the body |
-| **Pilates ring** | ring presses and squeezes | a ring between the hands or knees |
+| **Pilates ring** ✅ | chest press, inner thigh squeeze | done: `ring` between two points, flattening as they press |
 
 ## Engine work this would need
 - **Jumping** ✅ (Sep 2026): a step's `lift` raises the whole figure, anchor or not, and the checks count it as meant.
@@ -145,6 +146,6 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 - **Hanging** ✅ (Sep 2026): a hand anchored at a height (`anchorY`) on a `bar` prop. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise.
 
 Done so far: most **ready** rows (batches 3–6), the **door anchor** (batch 7), jumping (batch 9) and travelling
-(batch 10), hanging (batch 11), and the yoga block and strap (batch 12). Next: stability ball, medicine ball, foam roller, Pilates ring. The Create with AI prompt lists every
+(batch 10), hanging (batch 11), the yoga block and strap (batch 12), and the medicine ball, Pilates ring and stability ball (batch 13). Next: the foam roller (a rolling motion) and the deferred exercises. The Create with AI prompt lists every
 exercise and isn't trimmed to fit a link (accuracy first, HANDOFF §10, "Create with AI"): past about 250 exercises,
 ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.

@@ -1,0 +1,63 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "ring-chest-press",
+  "name": "Pilates Ring Chest Press",
+  "otherNames": ["Magic Circle Chest Press", "Pilates Ring Arm Squeeze"],
+  "category": "Strength",
+  "focus": "Chest, arms and upper back",
+  "collections": ["Pilates"],
+  "equipment": ["Pilates ring"],
+  "description": "Standing tall with the ring between your palms and your arms straight out at chest height, squeeze the ring, hold, and release slowly.",
+  "source": {
+    "url": "https://www.onepeloton.com/blog/pilates-ring-exercises",
+    "title": "Peloton: Pilates ring exercises"
+  },
+  "setup": ["Stand tall, feet hip-width apart.", "Hold the ring between your palms, arms straight in front at chest height."],
+  "cues": ["Shoulders down, away from your ears.", "Squeeze from your chest.", "Release slowly."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Squeeze for a breath, then release slowly without letting the ring spring back."
+  },
+  "keyframes": [
+    {
+      "name": "Hold the ring",
+      "cue": "Arms straight in front at chest height, the ring between your palms.",
+      "camera": 0,
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [85, 6.5, 0],
+        "shoulderR": [85, 6.5, 0]
+      }
+    },
+    {
+      "name": "Squeeze",
+      "cue": "Press your palms together to squeeze the ring; arms stay straight.",
+      "camera": 0,
+      "durationMs": 1200,
+      "holdMs": 800,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [85, 0, 0],
+        "shoulderR": [85, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "ring",
+      "from": "handL",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

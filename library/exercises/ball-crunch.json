@@ -1,0 +1,138 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "ball-crunch",
+  "name": "Stability Ball Crunch",
+  "otherNames": ["Swiss Ball Crunch", "Exercise Ball Crunch"],
+  "category": "Core",
+  "focus": "Abdominals",
+  "collections": ["Core"],
+  "equipment": ["Stability ball"],
+  "description": "Lying back over a stability ball with your feet flat and thighs level, curl your chest up toward your thighs, then lower back over the ball.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/68/stability-ball-sit-ups-crunches/",
+    "title": "ACE Exercise Library: Stability Ball Sit-Ups & Crunches"
+  },
+  "setup": ["Sit on the ball, then walk your feet out and lean back until your mid-back rests on it.", "Feet flat and hip-width apart, knees over ankles, hands lightly behind your head."],
+  "cues": ["Curl up from your ribs; chin slightly tucked.", "Keep the ball still.", "Lower slowly over the ball."],
+  "prescription": {
+    "reps": "8–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Lie back on the ball",
+      "cue": "Mid-back on the ball, feet flat, thighs level, hands behind your head.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "spine",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-75, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipL": [20, 0, 0],
+        "kneeL": 90,
+        "ankleL": 32,
+        "hipR": [20, 0, 0],
+        "kneeR": 90,
+        "ankleR": 32
+      },
+      "anchorX": 0,
+      "anchorZ": 0
+    },
+    {
+      "name": "Curl up",
+      "cue": "Lift your head and shoulders off the floor.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "spine",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 28,
+          "dy": -10
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -28,
+          "dy": -10
+        }
+      ],
+      "pose": {
+        "root": [-75, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [150, 60, 90],
+        "elbowL": 120,
+        "shoulderR": [150, 60, 90],
+        "elbowR": 120,
+        "hipL": [20, 0, 0],
+        "kneeL": 90,
+        "ankleL": 32,
+        "hipR": [20, 0, 0],
+        "kneeR": 90,
+        "ankleR": 32
+      },
+      "anchorX": 0,
+      "anchorZ": 0
+    }
+  ],
+  "props": [
+    {
+      "type": "ball",
+      "x": 0,
+      "z": 0,
+      "r": 58
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}
