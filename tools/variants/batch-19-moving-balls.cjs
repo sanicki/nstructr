@@ -59,10 +59,11 @@ module.exports = [
     category: 'Strength', focus: 'Chest, shoulders and triceps (power)', collections: ['Free weights'],
     equipment: ['Medicine ball', 'Wall'], props: [{ type: 'medball' }, { type: 'wall', z: 260 }],
     edit: ex => {
-      const st = { anchor: 'ankleL', plant: ['L', 'R'], camera: 70 }, hands = ['handL', 'handR'], T = [335, 240, 300, 436];
+      const st = { anchor: 'ankleL', plant: ['L', 'R'], camera: 70 }, hands = ['handL', 'handR'], T = [250, 240, 303, 503];
       const load = { hipL: [22, 6, 0], kneeL: 38, hipR: [22, 6, 0], kneeR: 38, torso: [10, 0, 0], shoulderL: [25, 0, 0], elbowL: 118, shoulderR: [25, 0, 0], elbowR: 118 };
       const out = { hipL: [4, 6, 0], kneeL: 6, hipR: [4, 6, 0], kneeR: 6, torso: [6, 0, 0], shoulderL: [85, 0, 0], elbowL: 5, shoulderR: [85, 0, 0], elbowR: 5 };
-      const reachC = { hipL: [8, 6, 0], kneeL: 14, hipR: [8, 6, 0], kneeR: 14, torso: [6, 0, 0], shoulderL: [78, 0, 0], elbowL: 25, shoulderR: [78, 0, 0], elbowR: 25 };
+      // (caught lower than it left: it hits the wall a little below chest height and keeps dropping on the way back)
+      const reachC = { hipL: [12, 6, 0], kneeL: 20, hipR: [12, 6, 0], kneeR: 20, torso: [6, 0, 0], shoulderL: [54, 0, 0], elbowL: 16, shoulderR: [54, 0, 0], elbowR: 16 };
       const wall = [{ x: 0, y: 222, z: 240 }];
       ex.keyframes = [
         K('Ball at your chest', 'The ball at your chest, knees bent.', load, { ...st, holds: hands, durationMs: T[0], holdMs: 150, ease: 'out' }),
