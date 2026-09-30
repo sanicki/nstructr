@@ -5,9 +5,6 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## Exercises and equipment
 
-- **Smaller additions** found in the research, still to add: Cow Face arms with a strap, advanced Pilates (Open-Leg
-  Rocker, Corkscrew, Jackknife and others), side stepping and balance walk. List:
-  [collection research](docs/collection-research.md).
 - **Exercise machines**: cable stations first, then leg press and lat pulldown, then cardio machines.
 
 ## App

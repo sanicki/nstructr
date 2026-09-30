@@ -24,7 +24,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Fish Pose (Matsyasana), Reclined Bound Angle Pose, Supine Twist | ✅ |
 | Supported versions of standing poses (Triangle, Half Moon, Pyramid with hands on blocks) | ✅ with the new **yoga block** (`tools/variants/batch-12-yoga-props.cjs`) |
 | Strap versions: Reclining Hand-to-Big-Toe Pose, Seated Forward Bend with a strap | ✅ with the new **yoga strap** (batch 12) |
-| Cow Face arms with a strap | a later batch (hands behind the back, one up, one down) |
+| Cow Face arms with a strap | ✅ batch 23 (`tools/variants/batch-23-more.cjs`), sitting cross-legged |
 
 ## Bodyweight (18)
 ([BarBend, 15 best bodyweight exercises](https://barbend.com/best-bodyweight-exercises/), [ACE Exercise Library](https://www.acefitness.org/resources/everyone/exercise-library/))
@@ -61,7 +61,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Shrug | the figure has no shoulder blades |
 | Front Squat (barbell), Hip Thrust (bench + barbell) | ✅ |
 | Renegade Row, Single-Leg Romanian Deadlift | ✅ |
-| Turkish Get-Up | ready (many steps; a big one to animate) |
+| Turkish Get-Up | ✅ (kettlebell, batch 18; dumbbell and bodyweight versions, batch 21) |
 | Farmer's Carry | ✅ (batch 10, travelling) |
 | Weighted versions with a medicine ball (Russian Twist, slams) | ✅ with the new **medicine ball** (`tools/variants/batch-13-balls-ring.cjs`) |
 
@@ -73,7 +73,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Doorway Chest Stretch | ✅ (two wall edges) |
 | Overhead Triceps Stretch, Figure-Four Stretch | ✅ |
 | Butterfly Stretch, Lying Spinal Twist, Cobra Stretch | the same as Bound Angle Pose, Supine Twist and Cobra Pose: other names, not new exercises |
-| Wrist flexor and extensor stretches | ready (the figure has no wrists: hands only; would need a hand joint) |
+| Wrist flexor and extensor stretches | not added: the figure has no wrists (hands only); they'd need a hand joint |
 | Foam rolling (calves, quads, upper back) | ✅ with the new **foam roller**, plus hamstrings, glutes, IT band and lats (`tools/variants/batch-17-foam-roller.cjs`) |
 
 ## Pilates (12, now 23)
@@ -82,8 +82,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Exercise | Status |
 |---|---|
 | Roll-Over, Single-Leg Kick, Double-Leg Kick, Neck Pull, Scissors, Shoulder Bridge, Spine Twist, Saw, Side Kick, Side Bend, Pilates Push-Up | ✅ (`tools/variants/batch-6-pilates.cjs`) |
-| Bicycle | done lying down it would duplicate Scissors; the classical version is on the shoulders (like Roll-Over): a later batch |
-| Open-Leg Rocker, Corkscrew, Jackknife, Swan Dive, Hip Twist, Seal, Crab, Rocking, Control Balance, Boomerang, Kneeling Side Kick, Leg Pull (back) | ready (advanced) |
+| Bicycle | ✅ batch 23, the classical version on the shoulders (lying down it would duplicate Scissors) |
+| Open-Leg Rocker, Corkscrew, Jackknife, Swan Dive, Hip Twist, Seal, Crab, Rocking, Control Balance, Boomerang, Kneeling Side Kick, Leg Pull (back) | ✅ batch 23 (the figure's arms don't reach the ankles in Open Leg Rocker and Control Balance, so the hands hold the lower legs) |
 | Magic circle versions (inner-thigh squeeze, arm presses) | ✅ with the new **Pilates ring** (batch 13) |
 
 ## Core (7)
@@ -123,7 +123,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Single-Leg Stand, Tandem Stance, Clock Reach (arm version; the leg version is the Star Excursion) | ✅ |
 | Single-Leg Deadlift | ✅ as Single-Leg Romanian Deadlift (dumbbells), also in Balance |
 | Heel-to-Toe Walk | ✅ (batch 10; Tandem Stance's feet now in line too) |
-| Side Stepping, Balance Walk | travelling works now; a later batch |
+| Side Stepping, Balance Walk | ✅ batch 23 (travelling) |
 
 ## Proposed equipment
 
@@ -146,7 +146,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 - **Hanging** ✅ (Sep 2026): a hand anchored at a height (`anchorY`) on a `bar` prop. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise.
 
 Done so far: most **ready** rows (batches 3–6), the **door anchor** (batch 7), jumping (batch 9) and travelling
-(batch 10), hanging (batch 11), the yoga block and strap (batch 12), the medicine ball, Pilates ring and stability ball (batch 13), and the deferred exercises (batch 14: Bulgarian Split Squat, Monster Walk, Mountain Climber, Burpee). The foam roller followed (batch 17: rolling calves, hamstrings, quads, upper back). The Create with AI prompt lists every
+(batch 10), hanging (batch 11), the yoga block and strap (batch 12), the medicine ball, Pilates ring and stability ball (batch 13), and the deferred exercises (batch 14: Bulgarian Split Squat, Monster Walk, Mountain Climber, Burpee). The foam roller followed (batch 17: rolling calves, hamstrings, quads, upper back). Batch 20 (`tools/variants/batch-20-small.cjs`) and batch 23 (`tools/variants/batch-23-more.cjs`) added the remaining smaller additions, so every ready row is now done. The Create with AI prompt lists every
 exercise and isn't trimmed to fit a link (accuracy first, HANDOFF §10, "Create with AI"): past about 250 exercises,
 ChatGPT, Claude and Copilot open with it copied to paste instead of filled in.
 

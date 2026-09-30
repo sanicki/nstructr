@@ -1,0 +1,200 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-boomerang",
+  "name": "Boomerang",
+  "otherNames": ["Pilates Boomerang"],
+  "category": "Pilates",
+  "focus": "Core, spine and hamstrings",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Sitting with your legs straight and crossed at the ankles, roll back and over, switch the cross, roll up to balance in a Teaser, lower the legs as the arms sweep behind you, fold forward with the arms lifting behind, circle them round to your feet and sit up.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Sit tall, legs straight and crossed at the ankles.", "Hands on the mat by your hips."],
+  "cues": ["One smooth, flowing movement.", "Weight on the shoulders when over.", "Balance at the top of the Teaser."],
+  "prescription": {
+    "reps": "4",
+    "note": "Advanced: learn the Roll-Over and the Teaser first. Switch the cross each time."
+  },
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Sit tall, legs straight and crossed at the ankles, hands by your hips.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 200,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-24, 0, 0],
+        "shoulderR": [-24, 0, 0],
+        "hipL": [90, -3, 0],
+        "hipR": [90, 3, 0]
+      }
+    },
+    {
+      "name": "Roll over",
+      "cue": "Roll back and over, legs over your head, arms pressing down.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-170, 0, 0],
+        "neck": [114, 0, 0],
+        "shoulderL": [-75, 0, 0],
+        "shoulderR": [-75, 0, 0],
+        "hipL": [110, -3, 0],
+        "hipR": [110, 3, 0]
+      }
+    },
+    {
+      "name": "Switch",
+      "cue": "Open and switch the cross of the ankles.",
+      "camera": 90,
+      "durationMs": 500,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-170, 0, 0],
+        "neck": [114, 0, 0],
+        "shoulderL": [-75, 0, 0],
+        "shoulderR": [-75, 0, 0],
+        "hipL": [110, 6, 0],
+        "hipR": [110, 6, 0]
+      }
+    },
+    {
+      "name": "Teaser",
+      "cue": "Roll up to balance in a V, arms reaching toward your feet.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-40, 0, 0],
+        "chest": [10, 0, 0],
+        "neck": [10, 0, 0],
+        "shoulderL": [70, 0, 0],
+        "shoulderR": [70, 0, 0],
+        "hipL": [95, -3, 0],
+        "hipR": [95, 3, 0]
+      }
+    },
+    {
+      "name": "Lower the legs",
+      "cue": "Lower the legs; the arms sweep down and behind your back.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "shoulderL": [-25, 8, 0],
+        "shoulderR": [-25, 8, 0],
+        "hipL": [90, -3, 0],
+        "hipR": [90, 3, 0]
+      }
+    },
+    {
+      "name": "Fold forward",
+      "cue": "Fold forward over your legs, arms lifting behind you.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "torso": [55, 0, 0],
+        "chest": [20, 0, 0],
+        "neck": [15, 0, 0],
+        "shoulderL": [-60, 0, 0],
+        "shoulderR": [-60, 0, 0],
+        "hipL": [90, -3, 0],
+        "hipR": [90, 3, 0]
+      }
+    },
+    {
+      "name": "Circle round",
+      "cue": "Circle the arms out to the sides...",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "torso": [55, 0, 0],
+        "chest": [20, 0, 0],
+        "neck": [15, 0, 0],
+        "shoulderL": [30, 95, 0],
+        "shoulderR": [30, 95, 0],
+        "hipL": [90, -3, 0],
+        "hipR": [90, 3, 0]
+      }
+    },
+    {
+      "name": "Reach",
+      "cue": "...and round to reach toward your feet.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "torso": [55, 0, 0],
+        "chest": [20, 0, 0],
+        "neck": [15, 0, 0],
+        "shoulderL": [150, 0, 0],
+        "shoulderR": [150, 0, 0],
+        "hipL": [90, -3, 0],
+        "hipR": [90, 3, 0]
+      }
+    },
+    {
+      "name": "Sit up",
+      "cue": "Roll up to sit tall, hands by your hips.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-24, 0, 0],
+        "shoulderR": [-24, 0, 0],
+        "hipL": [90, -3, 0],
+        "hipR": [90, 3, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  }
+}

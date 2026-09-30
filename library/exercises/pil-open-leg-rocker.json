@@ -1,0 +1,94 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-open-leg-rocker",
+  "name": "Open Leg Rocker",
+  "category": "Pilates",
+  "focus": "Core, spine and balance",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Balanced on your tailbone with your legs straight in a V and your hands on your ankles (or shins), roll back to your shoulder blades and back up to balance, keeping the same shape.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Sit, lift your legs straight into a V and hold your ankles, or your shins.", "Balance just behind your sitting bones."],
+  "cues": ["Keep the V the same the whole time.", "Chin in, back rounded.", "Stop and balance at the top."],
+  "prescription": {
+    "reps": "6",
+    "note": "Roll only to your shoulder blades; use your stomach to stop at the top."
+  },
+  "keyframes": [
+    {
+      "name": "Balance",
+      "cue": "Balance on your tailbone, legs straight in a V, holding your ankles or shins.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 500,
+      "phase": "rep",
+      "pose": {
+        "root": [-40, 0, 0],
+        "torso": [31.75, 0, 0],
+        "chest": [23, 0, 0],
+        "neck": [20, 0, 0],
+        "hipL": [78, 18, 0],
+        "hipR": [78, 18, 0],
+        "kneeL": 0,
+        "kneeR": 0,
+        "shoulderL": [62.75, 17.25, 0],
+        "elbowL": 28.25,
+        "shoulderR": [62.75, 17.25, 0],
+        "elbowR": 28.25
+      }
+    },
+    {
+      "name": "Roll back",
+      "cue": "Roll back to your shoulder blades, keeping the shape.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 200,
+      "phase": "rep",
+      "pose": {
+        "root": [-118, 0, 0],
+        "torso": [31.75, 0, 0],
+        "chest": [23, 0, 0],
+        "neck": [20, 0, 0],
+        "hipL": [78, 18, 0],
+        "hipR": [78, 18, 0],
+        "kneeL": 0,
+        "kneeR": 0,
+        "shoulderL": [62.75, 17.25, 0],
+        "elbowL": 28.25,
+        "shoulderR": [62.75, 17.25, 0],
+        "elbowR": 28.25
+      }
+    },
+    {
+      "name": "Roll up",
+      "cue": "Roll up and balance again.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 500,
+      "phase": "rep",
+      "pose": {
+        "root": [-40, 0, 0],
+        "torso": [31.75, 0, 0],
+        "chest": [23, 0, 0],
+        "neck": [20, 0, 0],
+        "hipL": [78, 18, 0],
+        "hipR": [78, 18, 0],
+        "kneeL": 0,
+        "kneeR": 0,
+        "shoulderL": [62.75, 17.25, 0],
+        "elbowL": 28.25,
+        "shoulderR": [62.75, 17.25, 0],
+        "elbowR": 28.25
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  }
+}

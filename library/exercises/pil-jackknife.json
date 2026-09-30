@@ -1,0 +1,97 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-jackknife",
+  "name": "Jackknife",
+  "otherNames": ["Pilates Jackknife"],
+  "category": "Pilates",
+  "focus": "Core and spine",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying on your back with your legs straight up, roll them over your head until parallel to the floor, reach them straight up to the ceiling with your weight on your shoulders, then roll down slowly.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, arms long by your sides, palms down.", "Legs straight up together."],
+  "cues": ["Press the arms down.", "Legs straight up, not over your face.", "Roll down one vertebra at a time."],
+  "prescription": {
+    "reps": "3–5",
+    "note": "Move with control and breathe steadily; quality before quantity."
+  },
+  "keyframes": [
+    {
+      "name": "Legs up",
+      "cue": "Lying down, lift your legs straight up.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Roll over",
+      "cue": "Roll your legs over your head, toes toward the floor.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-170, 0, 0],
+        "neck": [114, 0, 0],
+        "shoulderL": [-75, 0, 0],
+        "shoulderR": [-75, 0, 0],
+        "hipL": [110, 0, 0],
+        "hipR": [110, 0, 0]
+      }
+    },
+    {
+      "name": "Shoot up",
+      "cue": "Reach your legs straight up to the ceiling, weight on your shoulders.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-178, 0, 0],
+        "neck": [110, 0, 0],
+        "shoulderL": [-85, 0, 0],
+        "shoulderR": [-85, 0, 0],
+        "hipL": [0, 0, 0],
+        "hipR": [0, 0, 0]
+      }
+    },
+    {
+      "name": "Roll down",
+      "cue": "Roll down one vertebra at a time, legs straight up.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 4
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-cow-face-arms-strap",
+  "name": "Cow Face Arms with a Strap",
+  "otherNames": ["Gomukhasana Arms with a Strap"],
+  "category": "Flexibility",
+  "focus": "Shoulders and chest",
+  "collections": ["Yoga", "Stretches"],
+  "equipment": ["Yoga mat", "Yoga strap"],
+  "description": "Sitting cross-legged, reach one arm down and up the middle of your back and the other over your shoulder and down, holding a strap between the hands, and walk the hands toward each other.",
+  "source": {
+    "url": "https://www.yogajournal.com/poses/cow-face-pose/",
+    "title": "Yoga Journal: Cow Face Pose (Gomukhasana)",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit cross-legged, tall.", "Hold a strap in the top hand and let it hang down your back."],
+  "cues": ["Top elbow points up.", "Bottom hand slides up the back.", "Sit tall; chest open."],
+  "keyframes": [
+    {
+      "name": "Easy Pose",
+      "cue": "Cross your shins, each foot under the opposite knee. Hands on your knees; sit tall.",
+      "camera": 30,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "torso": [0, 0, 0],
+        "shoulderL": [20, 20, 0],
+        "elbowL": 20,
+        "shoulderR": [20, 20, 0],
+        "elbowR": 20,
+        "hipR": [105, 25, 80],
+        "kneeR": 120,
+        "ankleR": 20,
+        "hipL": [105, 25, 80],
+        "kneeL": 125,
+        "ankleL": 20
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dy": 6
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dy": 6
+        }
+      ]
+    },
+    {
+      "name": "Cow Face Arms",
+      "cue": "Top hand behind your head, bottom hand up your back; walk the hands along the strap toward each other.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 30000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "torso": [0, 0, 0],
+        "shoulderL": [-30, 10, -80],
+        "elbowL": 100,
+        "shoulderR": [-180, 0, 0],
+        "elbowR": 118,
+        "hipR": [105, 25, 80],
+        "kneeR": 120,
+        "ankleR": 20,
+        "hipL": [105, 25, 80],
+        "kneeL": 125,
+        "ankleL": 20
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "handR",
+          "dx": -44,
+          "dy": -78
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "strap",
+      "from": "handR",
+      "to": "handL"
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left arm up",
+      "R": "Right arm up"
+    }
+  },
+  "prescription": {
+    "seconds": "30",
+    "note": "Sit tall; don't let the top elbow push the head forward."
+  }
+}

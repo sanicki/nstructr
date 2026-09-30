@@ -1,0 +1,138 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-rocking",
+  "name": "Rocking",
+  "otherNames": ["Pilates Rocking"],
+  "category": "Pilates",
+  "focus": "Back, shoulders and front of the thighs",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying face down with your knees bent and your hands holding your ankles, press the feet into your hands to lift your chest and thighs, then rock forward and back like a rocking chair.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Lie on your front.", "Bend your knees and hold your ankles from the outside."],
+  "cues": ["Press the feet into your hands.", "Keep the bow shape.", "Rock, don't bend."],
+  "prescription": {
+    "reps": "6 rocks",
+    "note": "Kick the feet into the hands to lift; keep the shape the same."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your front",
+      "cue": "Hands under your shoulders.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dz": 12,
+          "dy": 4
+        },
+        {
+          "hand": "handL",
+          "to": "shoulderL",
+          "dz": 12,
+          "dy": 4
+        }
+      ],
+      "pose": {
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
+        "shoulderL": [-40, 15, 0],
+        "elbowL": 110,
+        "shoulderR": [-40, 15, 0],
+        "elbowR": 110,
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Hold your ankles",
+      "cue": "Bend your knees and hold your ankles; lift chest and thighs.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "reach": [],
+      "pose": {
+        "root": [90, 0, 0],
+        "torso": [-20, 0, 0],
+        "chest": [-12, 0, 0],
+        "neck": [-15, 0, 0],
+        "hipL": [-18, 8, 0],
+        "kneeL": 125.75,
+        "ankleL": 60,
+        "hipR": [-18, 8, 0],
+        "kneeR": 125.75,
+        "ankleR": 60,
+        "shoulderL": [-48, -6, 0],
+        "elbowL": 1,
+        "shoulderR": [-48, -6, 0],
+        "elbowR": 1
+      }
+    },
+    {
+      "name": "Rock forward",
+      "cue": "Rock forward onto your chest.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "reach": [],
+      "pose": {
+        "root": [104, 0, 0],
+        "torso": [-20, 0, 0],
+        "chest": [-12, 0, 0],
+        "neck": [-15, 0, 0],
+        "hipL": [-18, 8, 0],
+        "kneeL": 125.75,
+        "ankleL": 60,
+        "hipR": [-18, 8, 0],
+        "kneeR": 125.75,
+        "ankleR": 60,
+        "shoulderL": [-48, -6, 0],
+        "elbowL": 1,
+        "shoulderR": [-48, -6, 0],
+        "elbowR": 1
+      }
+    },
+    {
+      "name": "Rock back",
+      "cue": "Rock back onto your thighs.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "reach": [],
+      "pose": {
+        "root": [78, 0, 0],
+        "torso": [-20, 0, 0],
+        "chest": [-12, 0, 0],
+        "neck": [-15, 0, 0],
+        "hipL": [-18, 8, 0],
+        "kneeL": 125.75,
+        "ankleL": 60,
+        "hipR": [-18, 8, 0],
+        "kneeR": 125.75,
+        "ankleR": 60,
+        "shoulderL": [-48, -6, 0],
+        "elbowL": 1,
+        "shoulderR": [-48, -6, 0],
+        "elbowR": 1
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  }
+}
