@@ -51,8 +51,9 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
   the figure in the middle: the marks on the floor slide past as it goes. You'll need a clear stretch of floor. Heel-to-Toe Walk goes **Forward** or **Backward** (the Direction switch).
 - Pull-up bar exercises (Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise) show the bar above the figure; the view
   grows a little to fit it.
-- Foam roller exercises (calves, hamstrings, quads, upper back; in **Stretches** and **Warm-up**) roll back and forth
-  for the time you set: the figure moves over the roller and stays on it. Set how long in the workout (45 s at first).
+- Foam roller exercises (calves, hamstrings, quads, upper back, glutes, IT band, lats; in **Stretches** and **Warm-up**) roll back and forth
+  for the time you set: the figure moves over the roller, which rolls along the floor under it (half as far, as a real
+  one does). Glutes, IT band and lats are done one side at a time. Set how long in the workout (45 s at first).
 
 Scroll down for the details:
 

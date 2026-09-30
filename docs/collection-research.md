@@ -74,7 +74,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Overhead Triceps Stretch, Figure-Four Stretch | ✅ |
 | Butterfly Stretch, Lying Spinal Twist, Cobra Stretch | the same as Bound Angle Pose, Supine Twist and Cobra Pose: other names, not new exercises |
 | Wrist flexor and extensor stretches | ready (the figure has no wrists: hands only; would need a hand joint) |
-| Foam rolling (calves, quads, upper back) | ✅ with the new **foam roller**, plus hamstrings (`tools/variants/batch-17-foam-roller.cjs`) |
+| Foam rolling (calves, quads, upper back) | ✅ with the new **foam roller**, plus hamstrings, glutes, IT band and lats (`tools/variants/batch-17-foam-roller.cjs`) |
 
 ## Pilates (12, now 23)
 Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.com/blog/mat/the-34-pilates-mat-exercises-)); the library had 12:
@@ -135,7 +135,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | **Pull-up bar** ✅ | pull-up, chin-up, dead hang, hanging knee raise | done: a `bar` prop, `anchorY` holds a hand at the bar |
 | **Stability ball** ✅ | ball crunch, bridge, seated march (wall squat with a ball, hamstring curl later) | done: a round surface (`ball`) |
 | **Medicine ball** ✅ | Russian twist, slam (chest pass later: a throw) | done: `medball`, held in both hands |
-| **Foam roller** ✅ | rolling the calves, hamstrings, quads, upper back | done: a `roller` surface (a cylinder across the body); a leg or the back rests on it with a segment `touch`, and stays on it while rolling |
+| **Foam roller** ✅ | rolling the calves, hamstrings, quads, upper back, glutes, IT band, lats | done: a `roller` surface (a cylinder across the body); a leg or the back rests on it with a segment `touch`, and stays on it while rolling |
 | **Pilates ring** ✅ | chest press, inner thigh squeeze | done: `ring` between two points, flattening as they press |
 
 ## Engine work this would need

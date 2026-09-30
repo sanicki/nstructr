@@ -3,7 +3,7 @@
   "version": 2,
   "id": "roller-hamstrings",
   "name": "Foam Roller Hamstring Roll",
-  "otherNames": ["Foam Roll Hamstrings", "Hamstring Foam Roll"],
+  "otherNames": ["Foam Roll Hamstrings"],
   "category": "Mobility",
   "focus": "Hamstrings (back of the thighs)",
   "collections": ["Stretches", "Warm-up"],
@@ -44,8 +44,8 @@
       ],
       "pose": {
         "root": [-41, 0, 0],
-        "shoulderL": [-20, 0, 0],
-        "shoulderR": [-20, 0, 0],
+        "shoulderL": [-25, 0, 0],
+        "shoulderR": [-25, 0, 0],
         "hipL": [50, 0, 0],
         "hipR": [50, 0, 0],
         "ankleL": 20,
@@ -75,9 +75,9 @@
         }
       ],
       "pose": {
-        "root": [-41, 0, 0],
-        "shoulderL": [-45, 0, 0],
-        "shoulderR": [-45, 0, 0],
+        "root": [-44, 0, 0],
+        "shoulderL": [-72, 0, 0],
+        "shoulderR": [-72, 0, 0],
         "hipL": [50, 0, 0],
         "hipR": [50, 0, 0],
         "ankleL": 20,
@@ -88,7 +88,7 @@
   "props": [
     {
       "type": "roller",
-      "z": 95
+      "z": 100
     }
   ],
   "measure": "time",

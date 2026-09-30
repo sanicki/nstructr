@@ -1,0 +1,98 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "roller-lats",
+  "name": "Foam Roller Lat Roll",
+  "otherNames": ["Foam Roll Latissimus Dorsi", "Foam Roll Lats"],
+  "category": "Mobility",
+  "focus": "Lats (sides of the back)",
+  "collections": ["Stretches", "Warm-up"],
+  "equipment": ["Foam roller"],
+  "description": "Lying on your side with a foam roller under your armpit and your bottom arm stretched overhead, push with your top foot to roll slowly down the side of your back and up again.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/foam-roll-latissimus-dorsi",
+    "title": "NASM Exercise Library: Foam Roll Latissimus Dorsi"
+  },
+  "setup": ["Lie on your side, the foam roller just under your armpit, bottom arm stretched overhead.", "Bend your top leg and plant that foot on the floor in front."],
+  "cues": ["Thumb of the bottom hand turned up.", "Move with your top leg.", "Slow, even rolls."],
+  "prescription": {
+    "time": "30–60 seconds",
+    "note": "Roll slowly between your armpit and the middle of your ribs; stay on the side of your back, not your ribs or lower back."
+  },
+  "keyframes": [
+    {
+      "name": "Roller under your armpit",
+      "cue": "On your side, bottom arm overhead, the roller just under your armpit, top foot planted in front.",
+      "camera": 80,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "sideL",
+          "adjust": "root.side"
+        }
+      ],
+      "pose": {
+        "root": [0, -71, -90],
+        "neck": [0, 10, 0],
+        "shoulderL": [0, 170, 0],
+        "elbowL": 10,
+        "shoulderR": [0, 0, 0],
+        "elbowR": 10,
+        "hipL": [2, -16, 0],
+        "kneeL": 68,
+        "hipR": [95, -6.5, 0],
+        "kneeR": 100,
+        "ankleR": 10
+      }
+    },
+    {
+      "name": "Roll to your mid-back",
+      "cue": "Push with your top foot to roll down your side to the middle of your ribs, then back.",
+      "camera": 80,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "touch": [
+        {
+          "point": "sideL",
+          "adjust": "root.side"
+        }
+      ],
+      "pose": {
+        "root": [0, -78.8, -90],
+        "neck": [0, 10, 0],
+        "shoulderL": [0, 170, 0],
+        "elbowL": 10,
+        "shoulderR": [0, 0, 0],
+        "elbowR": 10,
+        "hipL": [2, -8, 0],
+        "kneeL": 60,
+        "hipR": [40, -7.8, 0],
+        "kneeR": 40,
+        "ankleR": 10
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "roller",
+      "z": 160
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side down",
+      "R": "Right side down"
+    }
+  },
+  "measure": "time",
+  "defaults": {
+    "seconds": 45
+  }
+}

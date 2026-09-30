@@ -248,7 +248,7 @@ function drawProps(P, Q, pose, cam) {
   let back = '', front = '';
   const dx = S.shiftX, proj = p => { const q = project({ p }, cam).p; return { x: q.x + dx, y: q.y, d: q.d }; };
   // chairs, benches and steps sit behind the figure
-  for (const sh of surfaceShapes(S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
+  for (const sh of surfaceShapes(S.frameSupports || S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
   const M0 = rootM(pose.root), wts = { handL: '', handR: '' };
   S.props.forEach((pr, i) => {
     if (SURFACE_TYPES.includes(pr.type)) return;
@@ -387,7 +387,7 @@ function draw() {
   for (const k in Q) Q[k].x += S.shiftX;
   drawFloorTicks(P, f.cam);
   applyPose(Q);
-  S.curCam = f.cam;
+  S.curCam = f.cam; S.frameSupports = f.supports;
   if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);
   drawGuide(a, b, e);
   if (S.mode !== 'workout' && EX_SHOW_PROGRESS) $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';

@@ -3,7 +3,7 @@
   "version": 2,
   "id": "roller-upper-back",
   "name": "Foam Roller Upper Back Roll",
-  "otherNames": ["Thoracic Spine Foam Roll", "Foam Roll Upper Back", "Upper Back Foam Roll"],
+  "otherNames": ["Thoracic Spine Foam Roll", "Foam Roll Upper Back"],
   "category": "Mobility",
   "focus": "Upper back",
   "collections": ["Stretches", "Warm-up"],
@@ -62,8 +62,8 @@
         "elbowR": 120,
         "hipL": [30, 0, 0],
         "hipR": [30, 0, 0],
-        "kneeL": 100,
-        "kneeR": 100,
+        "kneeL": 110,
+        "kneeR": 110,
         "ankleL": 20,
         "ankleR": 20
       }
@@ -110,8 +110,8 @@
         "elbowR": 120,
         "hipL": [30, 0, 0],
         "hipR": [30, 0, 0],
-        "kneeL": 70,
-        "kneeR": 70,
+        "kneeL": 42,
+        "kneeR": 42,
         "ankleL": 20,
         "ankleR": 20
       }
@@ -120,7 +120,7 @@
   "props": [
     {
       "type": "roller",
-      "z": -185
+      "z": -175
     }
   ],
   "measure": "time",
