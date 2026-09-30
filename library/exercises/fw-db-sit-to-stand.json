@@ -1,0 +1,215 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-sit-to-stand",
+  "name": "Dumbbell Sit-to-Stand",
+  "otherNames": ["Goblet Sit-to-Stand", "Dumbbell Chair Squat"],
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Free weights", "Chair-based"],
+  "equipment": ["Dumbbells", "Chair"],
+  "description": "Sitting on a chair holding a dumbbell upright at your chest, lean forward and stand up, then slowly sit back down.",
+  "source": {
+    "url": "https://sweat.com/exercises/goblet-sit-squat",
+    "title": "Sweat: Goblet Sit Squat (chair)",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit near the front of a sturdy chair, feet flat.", "Hold one dumbbell upright at your chest with both hands."],
+  "cues": ["Lean forward, then stand.", "Push through your heels.", "Sit down slowly, under control."],
+  "prescription": {
+    "reps": "5",
+    "note": "Aim for 5 slow repetitions and build up over time. Do these strength exercises at least twice a week."
+  },
+  "keyframes": [
+    {
+      "name": "Sit on the edge",
+      "cue": "Feet flat, hip-width apart.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "torso": [5, 0, 0],
+        "shoulderL": [30, -10, 0],
+        "shoulderR": [30, -10, 0],
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "elbowL": 120,
+        "elbowR": 120
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 6,
+          "dy": -38,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -6,
+          "dy": -38,
+          "dz": 22
+        }
+      ]
+    },
+    {
+      "name": "Lean forward",
+      "cue": "Lean your chest slightly forward over your feet.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "torso": [35, 0, 0],
+        "shoulderL": [30, -10, 0],
+        "shoulderR": [30, -10, 0],
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "elbowL": 120,
+        "elbowR": 120
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 6,
+          "dy": -38,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -6,
+          "dy": -38,
+          "dz": 22
+        }
+      ]
+    },
+    {
+      "name": "Stand up",
+      "cue": "Push through your feet and stand up tall.",
+      "camera": 90,
+      "durationMs": 2400,
+      "holdMs": 800,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [30, -10, 0],
+        "shoulderR": [30, -10, 0],
+        "elbowL": 120,
+        "elbowR": 120
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 6,
+          "dy": -38,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -6,
+          "dy": -38,
+          "dz": 22
+        }
+      ]
+    },
+    {
+      "name": "Sit down slowly",
+      "cue": "Bend your knees and lower slowly back to the chair.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "torso": [35, 0, 0],
+        "shoulderL": [30, -10, 0],
+        "shoulderR": [30, -10, 0],
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "elbowL": 120,
+        "elbowR": 120
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "neckBase",
+          "dx": 6,
+          "dy": -38,
+          "dz": 22
+        },
+        {
+          "hand": "handL",
+          "to": "neckBase",
+          "dx": -6,
+          "dy": -38,
+          "dz": 22
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "ud"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

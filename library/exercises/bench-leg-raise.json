@@ -1,0 +1,110 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bench-leg-raise",
+  "name": "Bench Leg Raise",
+  "otherNames": ["Flat Bench Leg Raise", "Lying Bench Leg Raise"],
+  "category": "Core",
+  "focus": "Lower abdominals and hip flexors",
+  "collections": ["Core"],
+  "equipment": ["Bench"],
+  "description": "Lying on a bench with your hips at its end and holding it behind your head, lower your straight legs to about bench level, then lift them until they point to the ceiling.",
+  "source": {
+    "url": "https://repfitness.com/blogs/training/ab-exercises-on-bench",
+    "title": "Rep Fitness: Bench ab exercises",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on a bench, hips at one end, legs straight out.", "Hold the bench behind your head."],
+  "cues": ["Low back stays on the bench.", "Lower slowly.", "No swinging."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Legs down",
+      "cue": "Legs straight, hovering just above the floor.",
+      "camera": 90,
+      "durationMs": 2400,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [-8, 0, 0],
+        "hipR": [-8, 0, 0],
+        "shoulderL": [160, 20, 0],
+        "elbowL": 90,
+        "shoulderR": [160, 20, 0],
+        "elbowR": 90
+      },
+      "anchorZ": -10,
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 22,
+          "dy": -6,
+          "dz": -22
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -22,
+          "dy": -6,
+          "dz": -22
+        }
+      ]
+    },
+    {
+      "name": "Lift",
+      "cue": "Raise both legs toward the ceiling.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [85, 0, 0],
+        "hipR": [85, 0, 0],
+        "shoulderL": [160, 20, 0],
+        "elbowL": 90,
+        "shoulderR": [160, 20, 0],
+        "elbowR": 90
+      },
+      "anchorZ": -10,
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 22,
+          "dy": -6,
+          "dz": -22
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -22,
+          "dy": -6,
+          "dz": -22
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "bench",
+      "z": -100,
+      "width": 200,
+      "height": 70
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

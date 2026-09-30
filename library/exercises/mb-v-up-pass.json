@@ -1,0 +1,132 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "mb-v-up-pass",
+  "name": "Medicine Ball V-Up Pass",
+  "otherNames": ["Medicine Ball Hand-to-Foot Pass", "Med Ball V-Up Pass"],
+  "category": "Core",
+  "focus": "Abdominals and hip flexors",
+  "collections": ["Free weights", "Core"],
+  "equipment": ["Medicine ball"],
+  "description": "Lying on your back with a medicine ball between your feet, fold up into a V to pass it to your hands, lower with it overhead, then fold up again and pass it back to your feet.",
+  "source": {
+    "url": "https://shiftmovementscience.com/video-quick-tip-medball-v-up-passes/",
+    "title": "Shift Movement Science: Medball V-up passes",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, arms overhead.", "Squeeze a light medicine ball between your feet."],
+  "cues": ["Fold up from your middle.", "Hand the ball over at the top.", "Lower slowly; low back stays down."],
+  "prescription": {
+    "reps": "6–10",
+    "note": "One rep passes the ball to your hands and back to your feet. Lower slowly; keep your low back on the floor."
+  },
+  "keyframes": [
+    {
+      "name": "Ball between your feet",
+      "cue": "Lie on your back, arms overhead, the ball squeezed between your feet.",
+      "camera": 40,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "holds": ["ankleL", "ankleR"],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [7.25, 3.5, 0],
+        "hipR": [7.25, 3.5, 0],
+        "shoulderL": [175, 0, 0],
+        "shoulderR": [175, 0, 0]
+      }
+    },
+    {
+      "name": "Pass it up",
+      "cue": "Fold up and take the ball in your hands.",
+      "camera": 40,
+      "durationMs": 1300,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "holds": ["handL", "handR", "ankleL", "ankleR"],
+      "pose": {
+        "root": [-30, 0, 0],
+        "neck": [10, 0, 0],
+        "hipL": [150, 3.5, 0],
+        "kneeL": 20,
+        "hipR": [150, 3.5, 0],
+        "kneeR": 20,
+        "shoulderL": [115, 0, 0],
+        "elbowL": 10,
+        "shoulderR": [115, 0, 0],
+        "elbowR": 10
+      }
+    },
+    {
+      "name": "Lower with it",
+      "cue": "Lower your arms and legs, the ball overhead.",
+      "camera": 40,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "holds": ["handL", "handR"],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [40, 0, 0],
+        "shoulderL": [169, 0, 0],
+        "elbowL": 0,
+        "shoulderR": [169, 0, 0],
+        "elbowR": 0
+      }
+    },
+    {
+      "name": "Pass it back",
+      "cue": "Fold up and give the ball to your feet.",
+      "camera": 40,
+      "durationMs": 1300,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "holds": ["handL", "handR", "ankleL", "ankleR"],
+      "pose": {
+        "root": [-30, 0, 0],
+        "neck": [10, 0, 0],
+        "hipL": [150, 3.5, 0],
+        "kneeL": 20,
+        "hipR": [150, 3.5, 0],
+        "kneeR": 20,
+        "shoulderL": [115, 0, 0],
+        "elbowL": 10,
+        "shoulderR": [115, 0, 0],
+        "elbowR": 10
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Lower your arms and legs, the ball between your feet.",
+      "camera": 40,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "holds": ["ankleL", "ankleR"],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [7.25, 3.5, 0],
+        "hipR": [7.25, 3.5, 0],
+        "shoulderL": [175, 0, 0],
+        "shoulderR": [175, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "medball"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

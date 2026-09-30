@@ -1,0 +1,108 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-weighted-crunch",
+  "name": "Weighted Crunch",
+  "otherNames": ["Dumbbell Crunch"],
+  "category": "Core",
+  "focus": "Abdominals",
+  "collections": ["Free weights", "Core"],
+  "equipment": ["Dumbbells"],
+  "description": "Lying on your back, knees bent, holding a dumbbell on your chest with both hands, curl your head and shoulders up off the floor, then lower.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/weighted-crunch.html",
+    "title": "Muscle & Strength: Weighted Crunch",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, knees bent, feet flat.", "Hold a dumbbell on your chest with both hands."],
+  "cues": ["Curl up from your ribs.", "Chin slightly tucked.", "Lower slowly."],
+  "prescription": {
+    "reps": "8–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, arms across your chest.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "reach": [],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-7.75, -55.75, 0],
+        "elbowL": 141.75,
+        "shoulderR": [-7.75, -55.75, 0],
+        "elbowR": 141.75,
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Curl up",
+      "cue": "Lift your head and shoulders off the floor.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "reach": [],
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [-7.75, -55.75, 0],
+        "elbowL": 141.75,
+        "shoulderR": [-7.75, -55.75, 0],
+        "elbowR": 141.75,
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

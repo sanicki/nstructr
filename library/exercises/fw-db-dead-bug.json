@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-dead-bug",
+  "name": "Dumbbell Dead Bug",
+  "otherNames": ["Weighted Dead Bug"],
+  "category": "Core",
+  "focus": "Deep core",
+  "collections": ["Free weights", "Core"],
+  "equipment": ["Dumbbells"],
+  "description": "Lying on your back holding light dumbbells straight up over your shoulders, knees bent over your hips, lower one arm overhead and the opposite leg toward the floor, then return and switch.",
+  "source": {
+    "url": "https://www.strengthlog.com/dead-bugs-with-dumbbells/",
+    "title": "StrengthLog: Dead bugs with dumbbells",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, a light dumbbell in each hand, arms straight up.", "Knees bent over your hips."],
+  "cues": ["Low back stays on the floor.", "Move slowly.", "Breathe out as you reach."],
+  "prescription": {
+    "reps": "6–10 each side",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Arms up, knees up",
+      "cue": "Knees over hips, arms to the ceiling.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [90, 0, 0],
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Extend",
+      "cue": "Lower your right arm overhead and straighten your left leg.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [90, 0, 0],
+        "shoulderR": [170, 0, 0],
+        "hipL": [12, 0, 0],
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right arm, left leg",
+      "R": "Left arm, right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  },
+  "repName": "rep"
+}

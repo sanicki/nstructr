@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-wall-sit",
+  "name": "Wall Sit with Dumbbells",
+  "otherNames": ["Weighted Wall Sit", "Dumbbell Wall Sit"],
+  "category": "Strength",
+  "focus": "Thighs",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells", "Wall"],
+  "description": "Back against a wall and a dumbbell in each hand by your sides, slide down until your knees are bent to about a right angle, and hold.",
+  "source": {
+    "url": "https://www.trainwell.net/exercises/weighted-wall-sit",
+    "title": "Trainwell: Weighted Wall Sit",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Back flat against a wall, feet a step out from it.", "A dumbbell in each hand, arms by your sides."],
+  "cues": ["Knees over ankles.", "Back flat on the wall.", "Breathe steadily."],
+  "prescription": {
+    "reps": "Hold 20–30 s, 2–3 times",
+    "note": "Breathe steadily throughout; don't hold your breath."
+  },
+  "keyframes": [
+    {
+      "name": "Back to the wall",
+      "cue": "Feet forward, back flat on the wall.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 500,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [30, 0, 0],
+        "ankleL": 30,
+        "hipR": [30, 0, 0],
+        "ankleR": 30,
+        "shoulderL": [2, 4, 0],
+        "shoulderR": [2, 4, 0]
+      }
+    },
+    {
+      "name": "Slide down and hold",
+      "cue": "Slide down until your thighs are about level, then hold.",
+      "camera": 90,
+      "durationMs": 2500,
+      "holdMs": 20000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "shoulderL": [2, 4, 0],
+        "shoulderR": [2, 4, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "backL",
+      "keyframe": 1,
+      "offset": -6
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "fb"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "fb"
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 20
+  },
+  "repName": "rep"
+}

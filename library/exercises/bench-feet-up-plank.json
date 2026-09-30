@@ -1,0 +1,99 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bench-feet-up-plank",
+  "name": "Feet-Elevated Plank",
+  "otherNames": ["Decline Plank"],
+  "category": "Core",
+  "focus": "Core and shoulders",
+  "collections": ["Core"],
+  "equipment": ["Bench"],
+  "description": "A forearm plank with your feet up on a bench: body straight from head to heels, hold.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/plank-with-feet-on-bench.html",
+    "title": "Muscle & Strength: Feet Elevated Plank",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Forearms on the floor under your shoulders.", "Step your feet back onto a bench behind you."],
+  "cues": ["Body in one straight line.", "Squeeze your glutes.", "Breathe steadily."],
+  "prescription": {
+    "reps": "Hold 20–30 s, 2–3 times",
+    "note": "Breathe steadily; build up the hold time gradually."
+  },
+  "keyframes": [
+    {
+      "name": "Feet up",
+      "cue": "Forearms down, feet up on the bench, hips a little high.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 600,
+      "phase": "setup",
+      "anchor": "elbowR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [100, 0, 0],
+        "shoulderL": [100, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [100, 0, 0],
+        "elbowR": 90,
+        "hipL": [-7.9, 0, 0],
+        "ankleL": 12.4,
+        "hipR": [-7.9, 0, 0],
+        "ankleR": 12.4
+      }
+    },
+    {
+      "name": "Plank",
+      "cue": "Lift your knees and hold a straight line.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 30000,
+      "phase": "rep",
+      "anchor": "elbowR",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [95, 0, 0],
+        "shoulderL": [95, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [95, 0, 0],
+        "elbowR": 90,
+        "hipL": [-7.9, 0, 0],
+        "ankleL": 12.4,
+        "hipR": [-7.9, 0, 0],
+        "ankleR": 12.4
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "bench",
+      "z": -265,
+      "width": 80,
+      "height": 60
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

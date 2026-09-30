@@ -1,0 +1,97 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-bird-dog",
+  "name": "Banded Bird Dog",
+  "otherNames": ["Resistance Band Bird Dog"],
+  "category": "Core",
+  "focus": "Core, glutes and back",
+  "collections": ["Resistance band", "Core"],
+  "equipment": ["Resistance band"],
+  "description": "On hands and knees with a band looped round one foot and held in the opposite hand, reach that arm forward and that leg back against the band, then return.",
+  "source": {
+    "url": "https://www.healthline.com/health/bird-dog-exercise",
+    "title": "Healthline: Bird dog exercise and its variations",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["On hands and knees, wrists under shoulders.", "Loop a band round one foot and hold the other end in the opposite hand."],
+  "cues": ["Reach long, don't lift high.", "Hips level.", "Slow back in."],
+  "prescription": {
+    "reps": "6–10 each side",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Hands and knees",
+      "cue": "Back flat.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "handL",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Reach and extend",
+      "cue": "Reach your right arm forward and your left leg back.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 2000,
+      "phase": "rep",
+      "anchor": "handL",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [165, 0, 0],
+        "hipL": [-15, 0, 0],
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "handR",
+      "to": "footL"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right arm, left leg",
+      "R": "Left arm, right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  },
+  "repName": "rep"
+}

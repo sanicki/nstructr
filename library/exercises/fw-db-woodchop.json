@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-woodchop",
+  "name": "Dumbbell Woodchop",
+  "otherNames": ["Dumbbell Wood Chop", "High-to-Low Dumbbell Chop"],
+  "category": "Core",
+  "focus": "Obliques and core",
+  "collections": ["Free weights", "Core"],
+  "equipment": ["Dumbbells"],
+  "description": "Holding one dumbbell in both hands above one shoulder, chop it diagonally down across your body to the outside of the opposite knee, turning and bending your knees, then lift it back.",
+  "source": {
+    "url": "https://www.coachweb.com/core-exercises/212/how-to-do-the-dumbbell-woodchop",
+    "title": "Coach: How to do the dumbbell woodchop",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand with feet a little wider than your hips.", "Hold one dumbbell by both ends above one shoulder."],
+  "cues": ["Turn from your chest and hips.", "Pivot the back foot.", "Control it back up."],
+  "prescription": {
+    "reps": "8–12 each side",
+    "note": "Pick a band you can control for every rep; about 2 seconds each way."
+  },
+  "keyframes": [
+    {
+      "name": "Reach up",
+      "cue": "Side-on to the door, arms up toward the anchor.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [0, 14, 0],
+        "hipR": [0, 14, 0],
+        "torso": [0, 0, -30],
+        "shoulderL": [140, -20, 0],
+        "shoulderR": [140, -5, 0]
+      }
+    },
+    {
+      "name": "Chop down",
+      "cue": "Rotate and pull the band down across to your left knee.",
+      "camera": 0,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "hipL": [30, 14, 0],
+        "kneeL": 35,
+        "hipR": [30, 14, 0],
+        "kneeR": 35,
+        "torso": [25, 0, 30],
+        "shoulderL": [60, -10, 0],
+        "shoulderR": [60, -15, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "ud"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "High on your right",
+      "R": "High on your left"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}
