@@ -10,7 +10,7 @@ async def main():
         b = await p.chromium.launch(); errs = []
         pg = await b.new_page(viewport={'width': 412, 'height': 860}); pg.on('pageerror', lambda e: errs.append(str(e)))
         at = """((i, t) => { setPlaying(false); const n = S.resolved.length; S.prev = (i - 1 + n) % n; S.idx = i; S.t = S.resolved[i].dur * t; draw();
-          const f = frameAt(S.resolved[S.prev], S.resolved[i], S.resolved[i].ease === 'linear' ? t : easeInOut(t), S.seg); return { f, P: fkAt(f.pose, S.seg, f.pos) }; })"""
+          const f = frameAt(S.resolved[S.prev], S.resolved[i], easeAt(S.resolved[i].ease, t), S.seg); return { f, P: fkAt(f.pose, S.seg, f.pos) }; })"""
         await pg.goto(URL + '#/play/ball-hamstring-curl', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         rows = []
         for i, t in [(1, 1), (2, 0.5), (2, 1), (3, 0.5)]:

@@ -9,7 +9,6 @@
               next to it (a mid-move hold or fix that doesn't arrive where the step is, so the limb jumps into place) */
 const C = require('../src/core.js');
 const seg = C.DEFAULT_SEGMENTS, V = C.V3;
-const ease = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const PLANTED = ['ankleL', 'ankleR', 'toeL', 'toeR', 'handL', 'handR', 'kneeL', 'kneeR', 'elbowL', 'elbowR', 'pelvis', 'neckBase'];
 const BONES = [['pelvis', 'neckBase'], ['neckBase', 'head'], ['hipL', 'kneeL'], ['kneeL', 'ankleL'], ['hipR', 'kneeR'], ['kneeR', 'ankleR'],
   ['shoulderL', 'elbowL'], ['elbowL', 'handL'], ['shoulderR', 'elbowR'], ['elbowR', 'handR']];
@@ -67,7 +66,7 @@ function check(ex, opts = {}) {
     for (const [ia, ib] of moves(R, kfs)) {
       // a travelling exercise's next rep carries on from where this one ended
       const b = R[ib], a = ex.travel && ia === ph.end && ib === ph.start ? C.travelStep(R[ia], b, seg) : R[ia], F = [];
-      for (let s = 0; s <= 60; s++) { const f = C.frameAt(a, b, (b.ease === 'linear' ? s / 60 : ease(s / 60)), seg); F.push(C.fkAt(f.pose, seg, f.pos)); }
+      for (let s = 0; s <= 60; s++) { const f = C.frameAt(a, b, C.easeAt(b.ease, s / 60), seg); F.push(C.fkAt(f.pose, seg, f.pos)); }
       const where = `${label} "${a.name}" → "${b.name}"`;
       let worst = 0, wb = '';
       for (let s = 1; s < F.length; s++) for (const [p, q] of BONES) {
