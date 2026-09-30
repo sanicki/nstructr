@@ -85,7 +85,7 @@ module.exports = [
     // head and neck all the way (Sep 2026: angles alone took it through them); quiet points between the four named
     edit: ex => { const A = (f, s, t, e) => [[f, s, t], e];
       const arms = ([sr, er], [sl, el]) => ({ shoulderR: sr, elbowR: er, shoulderL: sl, elbowL: el });
-      const FRONT = A(20, -10, -30, 140), BEHIND = A(160, -10, -30, 150), NEAR = A(100, 20, 0, 150), CROSS = A(90, -30, -45, 130);
+      const FRONT = A(110, -20, -20, 110), BEHIND = A(160, -10, -30, 150), NEAR = A(100, 20, 0, 150), CROSS = A(90, -30, -45, 130);
       const MID = (x, y) => [[0, 1, 2].map(i => (x[0][i] + y[0][i]) / 2), (x[1] + y[1]) / 2];
       const at = deg => { const t = deg * Math.PI / 180, x = 34 * Math.sin(t), z = 44 * Math.cos(t), tx = Math.cos(t) * 5, tz = -Math.sin(t) * 5;
         return [{ hand: 'handR', to: 'head', dx: x - tx, dy: 6, dz: z - tz }, { hand: 'handL', to: 'head', dx: x + tx, dy: 6, dz: z + tz }]; };

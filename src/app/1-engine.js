@@ -220,7 +220,7 @@ function buildFigure() {
   scene.innerHTML =
     `<line class="floor-line" x1="${-5 * W}" y1="${FLOOR + 7}" x2="${6 * W}" y2="${FLOOR + 7}"/>` +
     `<ellipse class="shadow" id="figShadow" cy="${FLOOR + 7}" rx="52" ry="6"/><g class="floor-ticks" id="floorTicks"></g>` +
-    `<g id="propsBack"></g><g id="figRoot">` +
+    `<g id="propsBack"></g><g id="figRoot"><g id="heldBall"></g>` +
     BONES.map(bn => `<g class="${cls[bn.part]}" data-bone="${bn.id}"><line class="bone" vector-effect="non-scaling-stroke"/>${extra[bn.id] || ''}</g>`).join('') +
     `</g><g id="propsFront"></g>`;
   FIG.bones = BONES.map(bn => { const g = scene.querySelector(`[data-bone="${bn.id}"]`); return { ...bn, g, line: g.querySelector('line'), dots: [...g.querySelectorAll('[data-at]')] }; });
@@ -261,16 +261,19 @@ function drawProps(P, Q, pose, cam) {
   // chairs, benches and steps sit behind the figure
   for (const sh of surfaceShapes(S.frameSupports || S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
   const M0 = rootM(pose.root), wts = { handL: '', handR: '' };
+  let held = '', heldD = 0;
   S.props.forEach((pr, i) => {
-    // a carried stability ball: behind the figure (the arms and legs that hold it are drawn over it)
-    if (carried(pr)) { back += weightSVG(pr, P, M0, proj, null, S.held); return; }
+    // a carried stability ball: among the limbs, by depth (the near hand and foot on it, the far ones behind it)
+    if (carried(pr)) { held = weightSVG(pr, P, M0, proj, null, S.held); heldD = S.held ? proj(S.held).d : Q.pelvis.d; return; }
     if (SURFACE_TYPES.includes(pr.type)) return;
     if (WEIGHT_TYPES.includes(pr.type)) {
       const grip = pr.type === 'kettlebell' ? S.grip : null, svg = weightSVG(pr, P, M0, proj, grip, pr.type === 'medball' ? S.held : null);
       // a weight in one hand is drawn with that arm (behind the body if the arm is); a barbell in front
       const hand = grip ? (grip.handL > 0.99 ? 'handL' : grip.handR > 0.99 ? 'handR' : null) : pr.hand;
-      // passed between the hands behind the back: behind the body
-      const behind = grip && !hand && proj(V3.add(V3.mul(P.handL, grip.handL), V3.mul(P.handR, grip.handR))).d < proj(P.pelvis).d - 4;
+      // held in both hands (or passed between them) behind the head or back: behind the body there (its depth at the bell's height)
+      const kb = pr.type === 'kettlebell' && !hand ? kettlebellAt(pr, P, grip) : null;
+      const body = kb && V3.lerp(P.pelvis, P.head, Math.max(0, Math.min(1, (kb.bell.y - P.pelvis.y) / (P.head.y - P.pelvis.y))));
+      const behind = !!kb && proj(kb.bell).d < proj(body).d - 4;
       if (hand && wts[hand] != null) wts[hand] += svg; else if (behind) back += svg; else front += svg;
       return;
     }
@@ -301,6 +304,14 @@ function drawProps(P, Q, pose, cam) {
     back += bandAnchors(pr, q).map(p => anchorSVG(p, 'anchor')).join('');
   });
   $('#propsBack').innerHTML = back; $('#propsFront').innerHTML = front;
+  const hb = $('#heldBall');
+  if (hb) {
+    if (hb.innerHTML !== held) hb.innerHTML = held;
+    // in front of every bone further back than the ball, behind the rest
+    const byId = new Map(FIG.bones.map(bn => [bn.id, bn])), next = FIG.order.map(id => byId.get(id)).find(bn => (Q[bn.a].d + Q[bn.b].d) / 2 > heldD);
+    const before = next ? next.g : null;
+    if (held && hb.nextSibling !== before) hb.parentNode.insertBefore(hb, before);
+  }
   document.querySelectorAll('#scene .wts').forEach(g => { const v = wts[g.dataset.hand] || ''; if (g.innerHTML !== v) g.innerHTML = v; });
 }
 

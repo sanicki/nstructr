@@ -54,9 +54,10 @@ module.exports = [
     description: 'Reach one arm up, bend the elbow so the hand drops down your back, and use the other hand on the elbow to ease the stretch deeper.',
     setup: ['Stand tall, shoulders down and back.'],
     cues: ['Elbow points up.', 'Light pressure only.', 'Keep your head up.'], source: { url: 'https://www.acefitness.org/resources/everyone/exercise-library/174/overhead-triceps-stretch/', title: 'ACE Exercise Library: Overhead Triceps Stretch' } }),
+  // the right ankle rests just above the left knee (hip fitted, Sep 2026), the left thigh drawn in until both hands are on its knee
   x('str-figure-four', 'mayo-knee-to-chest', 'Figure-Four Stretch', ['Supine Figure Four', 'Reclined Pigeon'], { equipment: [], collections: ['Stretches'], category: 'Stretch', focus: 'Outer hip and glutes', props: [],
-    edit: e => { e.keyframes = [K('Lie on your back', 'Knees bent, feet flat.', { root: [-90, 0, 0], neck: [34, 0, 0], hipL: [45, 0, 0], kneeL: 90, ankleL: 45, hipR: [45, 0, 0], kneeR: 90, ankleR: 45 }, { anchor: 'neckBase', plant: ['L', 'R'], touch: [{ point: 'ankleR', adjust: 'kneeR' }, { point: 'ankleL', adjust: 'kneeL' }], phase: 'setup' }),
-      K('Figure-Four Stretch', 'Right ankle on your left knee, pull the left thigh toward you.', { root: [-90, 0, 0], neck: [34, 0, 0], hipL: [95, 0, 0], kneeL: 90, hipR: [100, 30, 60], kneeR: 110, ankleR: 10 }, { anchor: 'neckBase', holdMs: 5000, reach: [{ hand: 'handR', to: 'kneeL', dz: -26 }, { hand: 'handL', to: 'kneeL', dz: -26 }] })]; },
+    edit: e => { e.keyframes = [K('Lie on your back', 'Knees bent, feet flat.', { root: [-90, 0, 0], neck: [34, 0, 0], hipL: [45, 0, 0], kneeL: 90, ankleL: 45, hipR: [45, 0, 0], kneeR: 90, ankleR: 45 }, { anchor: 'neckBase', plant: ['L', 'R'], touch: [{ point: 'ankleR', adjust: 'kneeR' }, { point: 'ankleL', adjust: 'kneeL' }], phase: 'setup', camera: 60 }),
+      K('Figure-Four Stretch', 'Right ankle on your left knee, pull the left thigh toward you.', { root: [-90, 0, 0], neck: [34, 0, 0], hipL: [125, 0, 0], kneeL: 90, hipR: [130, 42.5, 88.5], kneeR: 110, ankleR: 10 }, { anchor: 'neckBase', holdMs: 5000, camera: 60, reach: [{ hand: 'handR', to: 'kneeL', dx: 6, dz: 6 }, { hand: 'handL', to: 'kneeL', dx: -6, dz: 6 }] })]; },
     over: { ...sidesL(), ...holdT(30) },
     description: 'Lying on your back, cross one ankle over the opposite knee and draw that thigh toward you to stretch the outer hip of the crossed leg.',
     setup: ['Lie on your back, knees bent, feet flat.'],

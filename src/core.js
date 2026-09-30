@@ -541,7 +541,7 @@ function frameAt(a, b, e, seg) {
       for (const ch of CHAINS) {
         const tip = ch.tip + ch.s;
         if (ch.root !== 'shoulder' || pinned.includes(tip) || V3.dist(A[tip], B[tip]) > 2 || A[tip].y - supportAt(A[tip]) > 3) continue;
-        reachTip(pose, seg, pos, ch, A[tip], 1);
+        reachTip(pose, seg, pos, ch, V3.lerp(A[tip], B[tip], e), 1);   // (from one end's spot to the other's: no snap at the end)
       }
     }
     // toes resting on the same spot of a raised surface at both ends (the back foot on a bench) stay on it: the leg
@@ -549,8 +549,8 @@ function frameAt(a, b, e, seg) {
     const A = worldOf(a, seg), B = worldOf(b, seg);
     for (const ch of CHAINS) {
       if (ch.root !== 'hip') continue;
-      const toe = 'toe' + ch.s, T = A[toe];
-      if (pinned.includes(ch.tip + ch.s) || supportAt(T) < 5 || T.y - supportAt(T) > 3 || V3.dist(T, B[toe]) > 3) continue;
+      const toe = 'toe' + ch.s, T0 = A[toe], T = V3.lerp(A[toe], B[toe], e);
+      if (pinned.includes(ch.tip + ch.s) || supportAt(T0) < 5 || T0.y - supportAt(T0) > 3 || V3.dist(T0, B[toe]) > 3) continue;
       for (let it = 0; it < 2; it++) {
         const P = fkAt(pose, seg, pos);
         reachTip(pose, seg, pos, ch, V3.add(P[ch.tip + ch.s], V3.sub(T, P[toe])), 1);
@@ -567,7 +567,7 @@ function frameAt(a, b, e, seg) {
     for (const ch of CHAINS) {
       const tip = ch.tip + ch.s;
       if (ch.root !== 'shoulder' || tip === a.rule.anchor || V3.dist(A[tip], B[tip]) > 3) continue;
-      reachTip(pose, seg, pos, ch, A[tip], 1);
+      reachTip(pose, seg, pos, ch, V3.lerp(A[tip], B[tip], e), 1);
     }
   }
   return { pose, cam, pos, supports: frameSupports };
@@ -682,6 +682,19 @@ function heldAt(a, b, e, P) {
   if (!A && !B) return null;
   return V3.lerp(A || B, B || A, e);
 }
+/* A kettlebell (world points): its handle in the hand(s), and the bell 15 on. In one hand it hangs on in line with the
+   forearm; held in both (by the horns) it hangs straight down, and in between (passed from hand to hand) it turns from
+   one to the other. */
+function kettlebellAt(pr, P, grip = null) {
+  const hands = (pr.hands || [pr.hand]).map(k => P[k]).filter(Boolean); if (!hands.length) return null;
+  let handle = V3.mul(hands.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / hands.length);
+  const w = grip || (pr.hands && pr.hands.length > 1 ? { handL: 0.5, handR: 0.5 } : { [pr.hand || pr.hands[0]]: 1 });
+  if (grip) handle = V3.add(V3.mul(P.handL, grip.handL), V3.mul(P.handR, grip.handR));   // passed between the hands: where the grip is
+  const wl = w.handL || 0, wr = w.handR || 0, one = wl >= wr ? 'L' : 'R', both = Math.min(1, 2 * Math.min(wl, wr));
+  const down = { x: 0, y: -1, z: 0 }, fore = P['elbow' + one] ? V3.unit(V3.sub(P['hand' + one], P['elbow' + one])) : down;
+  const mix = V3.lerp(fore, down, both), dir = V3.len(mix) > 0.1 ? V3.unit(mix) : down;
+  return { handle, bell: V3.add(handle, V3.mul(dir, 15)) };
+}
 function weightSVG(pr, P, M0, proj, grip = null, at = null) {
   const f = n => n.toFixed(1);
   const bar = (a, b, cls = 'wt-bar') => `<line class="${cls}" x1="${f(a.x)}" y1="${f(a.y)}" x2="${f(b.x)}" y2="${f(b.y)}"/>`;
@@ -696,15 +709,8 @@ function weightSVG(pr, P, M0, proj, grip = null, at = null) {
     return bar(A, B) + plate(A, ux, uy, 8) + plate(B, ux, uy, 8);
   }
   if (pr.type === 'kettlebell') {
-    const hands = (pr.hands || [pr.hand]).map(k => P[k]).filter(Boolean); if (!hands.length) return '';
-    let hc = V3.mul(hands.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / hands.length);
-    // it hangs on in line with the forearm, or with both forearms (their directions averaged, by grip) when both hold it
-    const w = grip || (pr.hands && pr.hands.length > 1 ? { handL: 0.5, handR: 0.5 } : { [pr.hand || pr.hands[0]]: 1 });
-    if (grip) hc = V3.add(V3.mul(P.handL, grip.handL), V3.mul(P.handR, grip.handR));   // passed between the hands: where the grip is
-    let sum = { x: 0, y: 0, z: 0 };
-    for (const s of ['L', 'R']) if (w['hand' + s] > 0 && P['elbow' + s]) sum = V3.add(sum, V3.mul(V3.unit(V3.sub(P['hand' + s], P['elbow' + s])), w['hand' + s]));
-    const dir = V3.len(sum) > 0.1 ? V3.unit(sum) : { x: 0, y: -1, z: 0 };
-    const H = proj(hc), Bl = proj(V3.add(hc, V3.mul(dir, 15)));       // the bell hangs on, in line with the forearm
+    const k = kettlebellAt(pr, P, grip); if (!k) return '';
+    const H = proj(k.handle), Bl = proj(k.bell);
     return bar(H, Bl) + `<circle class="wt" cx="${f(Bl.x)}" cy="${f(Bl.y)}" r="11"/>`;
   }
   if (pr.type === 'medball') {                                          // a medicine ball, held in both hands (r 20: about 23 cm)
@@ -1002,7 +1008,7 @@ function mirrorKeyframe(kf) {
 }
 
 if (typeof module !== 'undefined') module.exports = {
-  phaseInfo, reverseReps, weightSVG, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
+  phaseInfo, reverseReps, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
   propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   SEGMENTS, clearance, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS

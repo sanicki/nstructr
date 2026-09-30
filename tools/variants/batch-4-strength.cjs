@@ -157,7 +157,7 @@ module.exports = [
   ex('fw-db-single-leg-rdl', 'fw-db-rdl', 'Single-Leg Romanian Deadlift', ['Single-Leg Deadlift', 'Single-Leg RDL'], { equipment: ['Dumbbells'], collections: ['Free weights', 'Balance'], category: 'Strength', focus: 'Hamstrings, glutes and balance',
     props: p => p,
     edit: e => { e.keyframes = [
-      K('Stand on your left leg', 'Right foot just off the floor, weights at your thighs.', { shoulderL: [8, 0, 0], shoulderR: [8, 0, 0], hipR: [-5, 0, 0], kneeR: 20 }, { anchor: 'ankleL', plant: ['L'] }),
+      K('Stand on your left leg', 'Right foot just off the floor, weights at your thighs.', { shoulderL: [8, 0, 0], shoulderR: [8, 0, 0], hipR: [-5, 0, 0], kneeR: 30 }, { anchor: 'ankleL', plant: ['L'] }),
       K('Hinge', 'Tip forward from your hip, right leg reaching back.', { root: [70, 0, 0], shoulderL: [70, 0, 0], shoulderR: [70, 0, 0], hipL: [70, 0, 0], kneeL: 15, ankleL: -12, hipR: [0, 0, 0] }, { anchor: 'ankleL', plant: ['L'], durationMs: 2000 })]; },
     over: { bilateral: { labels: { L: 'Standing on the left leg', R: 'Standing on the right leg' } }, ...reps('6–10 each leg', 8) },
     description: 'Standing on one leg with a dumbbell in each hand, hinge forward from the hip while the other leg reaches straight back, then stand up tall.',

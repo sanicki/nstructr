@@ -26,10 +26,15 @@ function poseThumbSVG(ex, kf, opts = {}) {
   const rest = bandRestLengths(ex.props, seq, seg), M0 = rootM(r.pose.root);
   let over = '';
   const byId = new Map(BONES.map(bn => [bn.id, bn]));
-  const figure = boneOrder(Q).map(id => { const bn = byId.get(id); return L(bn.a, bn.b, cls[bn.part]) +
-    (bn.b === 'head' ? `<circle cx="${Q.head.x.toFixed(1)}" cy="${Q.head.y.toFixed(1)}" r="${seg.head}" class="th"/>` : ''); }).join('');
+  // a carried ball goes among the limbs, by depth (the near hand and foot on it, the far ones behind it)
+  const ball = (ex.props || []).find(carried), ballSVG = ball ? weightSVG(ball, P, M0, proj, null, held) : '', ballD = held ? proj(held).d : Q.pelvis.d;
+  let ballDone = !ballSVG;
+  const figure = boneOrder(Q).map(id => { const bn = byId.get(id);
+    const pre = !ballDone && (Q[bn.a].d + Q[bn.b].d) / 2 > ballD ? ((ballDone = true), ballSVG) : '';
+    return pre + L(bn.a, bn.b, cls[bn.part]) +
+    (bn.b === 'head' ? `<circle cx="${Q.head.x.toFixed(1)}" cy="${Q.head.y.toFixed(1)}" r="${seg.head}" class="th"/>` : ''); }).join('') + (ballDone ? '' : ballSVG);
   const back = (ex.props || []).map((pr, i) => {
-    if (carried(pr)) return weightSVG(pr, P, M0, proj, null, heldAt(r, r, 1, P));
+    if (carried(pr)) return '';
     if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj, pr.type === 'kettlebell' ? gripAt(r, r, 1) : null, pr.type === 'medball' ? heldAt(r, r, 1, P) : null); return ''; }
     if (pr.type === 'bar') { over += barSVG(pr, proj, 'tbar'); return ''; }
     if (pr.type === 'ring') { over += ringSVG(pr, P, proj, 'tring'); return ''; }
