@@ -5,7 +5,6 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## Exercises and equipment
 
-- **Kettlebell Around the World**: the bell passes from hand to hand, and a held weight can't change hands yet.
 - **Turkish Get-Up** and **Kettlebell Clean**: many steps to animate.
 - **Moving props**: stability-ball pass and hamstring curl, medicine-ball chest pass (the ball has to move).
 - **Smaller additions** found in the research, still to add: Cow Face arms with a strap, Thread the Needle, band front

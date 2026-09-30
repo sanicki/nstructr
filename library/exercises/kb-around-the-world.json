@@ -1,0 +1,153 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "kb-around-the-world",
+  "name": "Kettlebell Around the World",
+  "otherNames": ["Around the World", "Kettlebell Around the Waist", "Kettlebell Around the Body", "Kettlebell Pass Around"],
+  "category": "Core",
+  "focus": "Core, grip and shoulders",
+  "collections": ["Free weights", "Warm-up"],
+  "equipment": ["Kettlebell"],
+  "description": "Standing tall with a kettlebell, pass it from hand to hand in a circle round your waist, in front and behind, keeping your hips and chest still.",
+  "source": {
+    "url": "https://www.onnit.com/blogs/the-edge/the-kettlebell-around-the-world-exercise-explained",
+    "title": "Onnit: The kettlebell around the world exercise explained"
+  },
+  "setup": ["Stand tall, feet hip-width apart, knees soft.", "Hold a light kettlebell by the handle in front of you with both hands."],
+  "cues": ["Brace your stomach; hips stay square.", "Pass it cleanly, hand to hand.", "Keep the bell close to your body."],
+  "prescription": {
+    "reps": "5–10 each way",
+    "note": "A light bell. Hips and shoulders face forward the whole time; only the arms move. Change direction halfway."
+  },
+  "keyframes": [
+    {
+      "name": "Pass in front",
+      "cue": "Pass the bell to your right hand in front.",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "holds": ["handL", "handR"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 4,
+          "dy": 0,
+          "dz": 30
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -4,
+          "dy": 0,
+          "dz": 30
+        }
+      ],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0]
+      }
+    },
+    {
+      "name": "Round the right side",
+      "cue": "Right hand takes it round your right side.",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "holds": ["handR"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 42,
+          "dy": 0,
+          "dz": 0
+        }
+      ],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "shoulderL": [0, 10, 0]
+      }
+    },
+    {
+      "name": "Pass behind",
+      "cue": "Pass it to your left hand behind your back.",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "holds": ["handL", "handR"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 4,
+          "dy": 0,
+          "dz": -28
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -4,
+          "dy": 0,
+          "dz": -28
+        }
+      ],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0]
+      }
+    },
+    {
+      "name": "Round the left side",
+      "cue": "Left hand brings it round your left side.",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "holds": ["handL"],
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -42,
+          "dy": 0,
+          "dz": 0
+        }
+      ],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "shoulderR": [0, 10, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hands": ["handL", "handR"]
+    }
+  ],
+  "direction": {
+    "labels": {
+      "A": "Clockwise",
+      "B": "Counterclockwise"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "circle"
+}
