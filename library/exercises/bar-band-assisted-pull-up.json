@@ -1,0 +1,176 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bar-band-assisted-pull-up",
+  "name": "Band-Assisted Pull-Up",
+  "otherNames": ["Assisted Pull-Up", "Banded Pull-Up"],
+  "category": "Strength",
+  "focus": "Back and arms",
+  "collections": ["Bodyweight", "Resistance band"],
+  "equipment": ["Pull-up bar", "Resistance band"],
+  "description": "A pull-up with a resistance band looped over the bar and under your knees: the band takes some of your weight, most at the bottom, so you can do full pull-ups while you build up to them.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/band-assisted-pull-up",
+    "title": "NASM Exercise Library: Band Assisted Pull-Up",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Loop a band over the bar and pull one end through the other.", "From a step or chair, put your knees (or one foot) in the loop and grip the bar."],
+  "cues": ["Pull your elbows down and in.", "Chin over the bar.", "Lower all the way, slowly."],
+  "prescription": {
+    "reps": "5–10",
+    "note": "A thicker band helps more; move to a thinner one as you get stronger."
+  },
+  "keyframes": [
+    {
+      "name": "Stand under the bar",
+      "cue": "Stand under the bar.",
+      "camera": 0,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {}
+    },
+    {
+      "name": "Reach up",
+      "cue": "Reach up to the bar, arms overhead.",
+      "camera": 0,
+      "durationMs": 900,
+      "holdMs": 200,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 145, 0],
+        "shoulderR": [0, 145, 0]
+      }
+    },
+    {
+      "name": "Bend your knees",
+      "cue": "Bend your knees, ready to jump.",
+      "camera": 0,
+      "durationMs": 600,
+      "holdMs": 100,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 145, 0],
+        "shoulderR": [0, 145, 0],
+        "torso": [15, 0, 0],
+        "hipL": [50, 0, 0],
+        "kneeL": 75,
+        "ankleL": -25,
+        "hipR": [50, 0, 0],
+        "kneeR": 75,
+        "ankleR": -25
+      }
+    },
+    {
+      "name": "Jump to the bar",
+      "cue": "Grip the bar, knees in the band; hang with straight arms.",
+      "camera": 0,
+      "durationMs": 450,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 385,
+      "anchorZ": 0,
+      "anchorX": 82.5,
+      "pose": {
+        "hipL": [15, 0, 0],
+        "kneeL": 95,
+        "hipR": [15, 0, 0],
+        "kneeR": 95,
+        "shoulderL": [0, 145, 0],
+        "shoulderR": [0, 145, 0]
+      }
+    },
+    {
+      "name": "Pull up",
+      "cue": "Pull your elbows down and in until your chin clears the bar.",
+      "camera": 0,
+      "durationMs": 1600,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "anchorY": 385,
+      "anchorZ": 0,
+      "anchorX": 82.5,
+      "pose": {
+        "hipL": [15, 0, 0],
+        "kneeL": 95,
+        "hipR": [15, 0, 0],
+        "kneeR": 95,
+        "shoulderL": [0, 70, 90],
+        "elbowL": 100,
+        "shoulderR": [0, 70, 90],
+        "elbowR": 100
+      }
+    },
+    {
+      "name": "Drop down",
+      "cue": "Let go and land softly, knees deeply bent.",
+      "camera": 0,
+      "durationMs": 450,
+      "holdMs": 250,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 145, 0],
+        "shoulderR": [0, 145, 0],
+        "torso": [20, 0, 0],
+        "hipL": [60, 0, 0],
+        "kneeL": 85,
+        "ankleL": -28,
+        "hipR": [60, 0, 0],
+        "kneeR": 85,
+        "ankleR": -28
+      }
+    },
+    {
+      "name": "Lower your arms",
+      "cue": "Stand tall and lower your arms.",
+      "camera": 0,
+      "durationMs": 900,
+      "holdMs": 400,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "anchorX": -12,
+      "plant": ["L", "R"],
+      "pose": {}
+    }
+  ],
+  "props": [
+    {
+      "type": "bar",
+      "y": 385,
+      "z": 0,
+      "width": 190
+    },
+    {
+      "type": "band",
+      "from": {
+        "x": -14,
+        "y": 385,
+        "z": 0
+      },
+      "via": ["kneeL", "kneeR"],
+      "to": {
+        "x": 14,
+        "y": 385,
+        "z": 0
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  }
+}

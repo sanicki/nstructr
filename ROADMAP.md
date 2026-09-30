@@ -5,7 +5,10 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## Exercises and equipment
 
-- **Exercise machines**: cable stations first, then leg press and lat pulldown, then cardio machines.
+- **Muscle groups** (agreed Sep 2026; plan in HANDOFF §13): rate every exercise 0–3 for 11 muscle groups, show a
+  front/back map on the exercise page and a workout's total on its card and editor. Next PR: a mockup of the map for
+  the owner, then the data and the exercise page map; then workout totals, a card indicator, a muscle filter and Create
+  with AI by muscle.
 
 ## App
 
@@ -27,6 +30,8 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## Deferred
 
+- **Exercise machines** (deferred by the owner, Sep 2026): cable stations first, then leg press and lat pulldown, then
+  cardio machines.
 - **Browser tests in CI**: today the build's checks run on every pull request, but the browser tests only print their
   results and are run by hand. Plan in HANDOFF §13.
 - **The engine as its own package** (MIT, browser 3D figure posing): split out when a second app needs it. The owner's

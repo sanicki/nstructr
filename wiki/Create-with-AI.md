@@ -30,7 +30,9 @@ exercise is done, its steps, typical reps and safety notes), and to name the pag
 
 Tap the equipment you have (nothing is picked at first, which means no equipment; your choice is remembered). The AI may use **only exercises
 already in the app**, from the library or your own, that need nothing more than that equipment. It is told how long
-each rep takes and what each exercise works, so it can fit the length you ask for.
+each rep takes and what each exercise works, so it can fit the length you ask for. It also gets the
+[easier and harder versions](Exercises.md#variations-easier-harder-other-equipment) of each exercise, so it can suit
+the level you ask for ("an easy workout", "a hard core workout"; a beginner's if you don't say).
 
 When you add its answer:
 - an exercise that isn't in the app is refused (ask the AI again);
