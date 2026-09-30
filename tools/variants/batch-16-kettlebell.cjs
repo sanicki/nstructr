@@ -64,13 +64,14 @@ module.exports = [
     cues: ['Turn your chest, not just your arms.', 'Back long; don\'t slump.', 'Breathe out as you turn.'],
     source: { url: 'https://www.nasm.org/resource-center/exercise-library/russian-twist', title: 'NASM Exercise Library: Russian Twist', note: 'With a kettlebell, described in our own words. Stick-figure approximation.' } },
   // feet wide and turned out, the bell hanging between the legs; the knees bend out over the toes
+  // the squat's hips fitted (Sep 2026) so both feet stay exactly where they stood: knees out over the toes, hips back
   { id: 'kb-sumo-squat', base: 'fw-kb-deadlift', name: 'Kettlebell Sumo Squat', otherNames: ['Kettlebell Plié Squat'], ...EQ,
     focus: 'Inner thighs, thighs and glutes', props: KB2,
     edit: ex => { const k = (name, cue, pose) => ({ name, cue, camera: 20, durationMs: 2000, holdMs: 300, phase: 'rep', anchor: 'ankleR', plant: ['L', 'R'],
-      touch: [{ point: 'ankleL', adjust: 'hipL.side' }], pose: { shoulderL: [0, -10, 0], shoulderR: [0, -10, 0], ...pose } });
+      pose: { shoulderL: [0, -10, 0], shoulderR: [0, -10, 0], ...pose } });
       ex.keyframes = [
         k('Stand wide', 'Feet wide, toes turned out, the bell hanging in both hands.', { hipL: [0, 22, 35], hipR: [0, 22, 35] }),
-        k('Squat', 'Bend your knees out over your toes and lower, chest up.', { torso: [12, 0, 0], shoulderL: [12, -10, 0], shoulderR: [12, -10, 0], hipL: [0, 55, 70], kneeL: 85, hipR: [0, 55, 70], kneeR: 85 })]; },
+        k('Squat', 'Bend your knees out over your toes and lower, chest up.', { torso: [12, 0, 0], shoulderL: [12, -10, 0], shoulderR: [12, -10, 0], hipL: [56, 47.5, 5], kneeL: 85, hipR: [56, 47, 4], kneeR: 85 })]; },
     over: reps('8–12', 10, SLOW),
     description: 'With your feet wide and toes turned out, hold a kettlebell hanging between your legs and squat down, knees out over your toes, then stand back up.',
     setup: ['Feet wider than your shoulders, toes turned out.', 'Hold the bell by the handle in both hands, arms long.'],
@@ -80,15 +81,24 @@ module.exports = [
   // the head, beside the left ear (arm angles fitted to hand points around the neck; direction B runs it the other way)
   { id: 'kb-halo', base: 'fw-kb-goblet-squat', name: 'Kettlebell Halo', otherNames: ['Halo'], ...EQ,
     category: 'Mobility', focus: 'Shoulders, upper back and core', props: KB2,
+    // the hands go round an oval about the head (34 to the sides, 44 front and back, at head height), so the bell stays clear of the
+    // head and neck all the way (Sep 2026: angles alone took it through them); quiet points between the four named
     edit: ex => { const A = (f, s, t, e) => [[f, s, t], e];
       const arms = ([sr, er], [sl, el]) => ({ shoulderR: sr, elbowR: er, shoulderL: sl, elbowL: el });
       const FRONT = A(20, -10, -30, 140), BEHIND = A(160, -10, -30, 150), NEAR = A(100, 20, 0, 150), CROSS = A(90, -30, -45, 130);
-      const k = (name, cue, pose) => ({ name, cue, camera: 0, durationMs: 900, holdMs: 0, phase: 'rep', anchor: 'ankleL', plant: ['L', 'R'], pose });
+      const MID = (x, y) => [[0, 1, 2].map(i => (x[0][i] + y[0][i]) / 2), (x[1] + y[1]) / 2];
+      const at = deg => { const t = deg * Math.PI / 180, x = 34 * Math.sin(t), z = 44 * Math.cos(t), tx = Math.cos(t) * 5, tz = -Math.sin(t) * 5;
+        return [{ hand: 'handR', to: 'head', dx: x - tx, dy: 6, dz: z - tz }, { hand: 'handL', to: 'head', dx: x + tx, dy: 6, dz: z + tz }]; };
+      const k = (name, cue, pose, deg, quiet) => ({ name, cue, camera: 0, durationMs: 450, holdMs: 0, phase: 'rep', ease: 'linear', anchor: 'ankleL', plant: ['L', 'R'], reach: at(deg), ...(quiet ? { quiet: true } : {}), pose });
       ex.keyframes = [
-        k('In front', 'The bell in front of your chest.', arms(FRONT, FRONT)),
-        k('Right side', 'Beside your right ear.', arms(NEAR, CROSS)),
-        k('Behind', 'Behind your head.', arms(BEHIND, BEHIND)),
-        k('Left side', 'Beside your left ear.', arms(CROSS, NEAR))]; },
+        k('In front', 'The bell in front of your face.', arms(FRONT, FRONT), 0),
+        k('', '', arms(MID(FRONT, NEAR), MID(FRONT, CROSS)), 45, true),
+        k('Right side', 'Past your right ear.', arms(NEAR, CROSS), 90),
+        k('', '', arms(MID(NEAR, BEHIND), MID(CROSS, BEHIND)), 135, true),
+        k('Behind', 'Behind your head.', arms(BEHIND, BEHIND), 180),
+        k('', '', arms(MID(BEHIND, CROSS), MID(BEHIND, NEAR)), 225, true),
+        k('Left side', 'Past your left ear.', arms(CROSS, NEAR), 270),
+        k('', '', arms(MID(CROSS, FRONT), MID(NEAR, FRONT)), 315, true)]; },
     over: { direction: { labels: { A: 'To the right first', B: 'To the left first' } }, repName: 'circle', ...reps('5–8 each way', 5, 'A light bell. Keep it close to your head and your ribs down.') },
     description: 'Holding a kettlebell by the horns in front of your chest, circle it slowly around your head, close to it, then the other way.',
     setup: ['Stand tall, feet hip-width apart.', 'Hold the bell by the horns in front of your chest.'],

@@ -158,5 +158,5 @@ dead bug, bird dog, clamshell and side kick, `beginner-pilates-20`), **Free weig
 **Kettlebell** (one bell, `beginner-kettlebell-20`). For it, batch 16
 (`tools/variants/batch-16-kettlebell.cjs`) added ✅ Halo, Single-Arm Row, Overhead Press, Goblet Reverse Lunge, Sumo
 Squat, Romanian Deadlift, Suitcase Carry and Russian Twist; ✅ Around the World followed (batch 18: a step's `holds`
-passes the bell from hand to hand). Not yet: Turkish Get-Up and Clean (many steps).
+passes the bell from hand to hand). ✅ Clean and ✅ Turkish Get-Up followed too (batch 18; the get-up's positions fitted numerically, with quiet in-between steps).
 The order the app lists them in: `library/workout-order.json`.

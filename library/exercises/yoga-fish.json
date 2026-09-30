@@ -8,7 +8,7 @@
   "focus": "Chest and throat",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
-  "description": "A backbend lying on your back: lift your chest and let the crown of your head rest lightly on the floor, arms along your sides.",
+  "description": "A backbend lying on your back: lift your chest and let the crown of your head rest lightly on the floor, forearms flat beside you.",
   "source": {
     "url": "https://www.yogajournal.com/poses/fish-pose/",
     "title": "Yoga Journal: Fish Pose"
@@ -39,10 +39,13 @@
       "anchor": "pelvis",
       "pose": {
         "root": [-90, 0, 0],
-        "torso": [25, 0, 0],
-        "neck": [-80, 0, 0],
-        "shoulderL": [5, 0, 0],
-        "shoulderR": [5, 0, 0]
+        "torso": [40, 0, 0],
+        "chest": [-40, 0, 0],
+        "neck": [-30, 0, 0],
+        "shoulderL": [-35, 0, 0],
+        "shoulderR": [-35, 0, 0],
+        "elbowL": 35,
+        "elbowR": 35
       }
     }
   ],

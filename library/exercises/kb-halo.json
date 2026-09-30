@@ -23,13 +23,30 @@
   "keyframes": [
     {
       "name": "In front",
-      "cue": "The bell in front of your chest.",
+      "cue": "The bell in front of your face.",
       "camera": 0,
-      "durationMs": 900,
+      "durationMs": 450,
       "holdMs": 0,
       "phase": "rep",
+      "ease": "linear",
       "anchor": "ankleL",
       "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": -5,
+          "dy": 6,
+          "dz": 44
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": 5,
+          "dy": 6,
+          "dz": 44
+        }
+      ],
       "pose": {
         "shoulderR": [20, -10, -30],
         "elbowR": 140,
@@ -38,14 +55,65 @@
       }
     },
     {
-      "name": "Right side",
-      "cue": "Beside your right ear.",
+      "name": "",
+      "cue": "",
       "camera": 0,
-      "durationMs": 900,
+      "durationMs": 450,
       "holdMs": 0,
       "phase": "rep",
+      "ease": "linear",
       "anchor": "ankleL",
       "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 20.506096654409877,
+          "dy": 6,
+          "dz": 34.64823227814083
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": 27.577164466275352,
+          "dy": 6,
+          "dz": 27.577164466275356
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "shoulderR": [60, 5, -15],
+        "elbowR": 145,
+        "shoulderL": [55, -20, -37.5],
+        "elbowL": 135
+      }
+    },
+    {
+      "name": "Right side",
+      "cue": "Past your right ear.",
+      "camera": 0,
+      "durationMs": 450,
+      "holdMs": 0,
+      "phase": "rep",
+      "ease": "linear",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 34,
+          "dy": 6,
+          "dz": 5.000000000000003
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": 34,
+          "dy": 6,
+          "dz": -4.999999999999997
+        }
+      ],
       "pose": {
         "shoulderR": [100, 20, 0],
         "elbowR": 150,
@@ -54,14 +122,65 @@
       }
     },
     {
+      "name": "",
+      "cue": "",
+      "camera": 0,
+      "durationMs": 450,
+      "holdMs": 0,
+      "phase": "rep",
+      "ease": "linear",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 27.577164466275356,
+          "dy": 6,
+          "dz": -27.57716446627535
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": 20.50609665440988,
+          "dy": 6,
+          "dz": -34.648232278140824
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "shoulderR": [130, 5, -15],
+        "elbowR": 150,
+        "shoulderL": [125, -20, -37.5],
+        "elbowL": 140
+      }
+    },
+    {
       "name": "Behind",
       "cue": "Behind your head.",
       "camera": 0,
-      "durationMs": 900,
+      "durationMs": 450,
       "holdMs": 0,
       "phase": "rep",
+      "ease": "linear",
       "anchor": "ankleL",
       "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": 5.000000000000004,
+          "dy": 6,
+          "dz": -44
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -4.999999999999996,
+          "dy": 6,
+          "dz": -44
+        }
+      ],
       "pose": {
         "shoulderR": [160, -10, -30],
         "elbowR": 150,
@@ -70,19 +189,104 @@
       }
     },
     {
-      "name": "Left side",
-      "cue": "Beside your left ear.",
+      "name": "",
+      "cue": "",
       "camera": 0,
-      "durationMs": 900,
+      "durationMs": 450,
       "holdMs": 0,
       "phase": "rep",
+      "ease": "linear",
       "anchor": "ankleL",
       "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": -20.506096654409877,
+          "dy": 6,
+          "dz": -34.64823227814083
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -27.577164466275352,
+          "dy": 6,
+          "dz": -27.57716446627536
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "shoulderR": [125, -20, -37.5],
+        "elbowR": 140,
+        "shoulderL": [130, 5, -15],
+        "elbowL": 150
+      }
+    },
+    {
+      "name": "Left side",
+      "cue": "Past your left ear.",
+      "camera": 0,
+      "durationMs": 450,
+      "holdMs": 0,
+      "phase": "rep",
+      "ease": "linear",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": -34,
+          "dy": 6,
+          "dz": -5.000000000000008
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -34,
+          "dy": 6,
+          "dz": 4.999999999999992
+        }
+      ],
       "pose": {
         "shoulderR": [90, -30, -45],
         "elbowR": 130,
         "shoulderL": [100, 20, 0],
         "elbowL": 150
+      }
+    },
+    {
+      "name": "",
+      "cue": "",
+      "camera": 0,
+      "durationMs": 450,
+      "holdMs": 0,
+      "phase": "rep",
+      "ease": "linear",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "head",
+          "dx": -27.57716446627536,
+          "dy": 6,
+          "dz": 27.577164466275345
+        },
+        {
+          "hand": "handL",
+          "to": "head",
+          "dx": -20.506096654409884,
+          "dy": 6,
+          "dz": 34.648232278140824
+        }
+      ],
+      "quiet": true,
+      "pose": {
+        "shoulderR": [55, -20, -37.5],
+        "elbowR": 135,
+        "shoulderL": [60, 5, -15],
+        "elbowL": 145
       }
     }
   ],

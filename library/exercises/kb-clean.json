@@ -1,0 +1,96 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "kb-clean",
+  "name": "Kettlebell Clean",
+  "otherNames": ["Single-Arm Kettlebell Clean", "One-Arm Kettlebell Clean"],
+  "category": "Strength",
+  "focus": "Hips, glutes, back and grip (power)",
+  "collections": ["Free weights"],
+  "equipment": ["Kettlebell"],
+  "description": "From a hinge with the kettlebell hiked back between your legs, drive your hips forward so the bell rises close to your body, and catch it at your shoulder in the rack position.",
+  "source": {
+    "url": "https://www.garagegymreviews.com/kettlebell-clean",
+    "title": "Garage Gym Reviews: Kettlebell clean"
+  },
+  "setup": ["Stand with feet a little wider than hip-width, a kettlebell on the floor just in front of you.", "Hinge and grip the handle with one hand."],
+  "cues": ["Power comes from your hips, not your arm.", "Keep the bell close; zip it up.", "Elbow tucked at the top."],
+  "prescription": {
+    "reps": "5–8 each arm",
+    "note": "Learn the swing first. The bell travels close to your body and rolls round your hand; it shouldn't bang your forearm."
+  },
+  "keyframes": [
+    {
+      "name": "Hike back",
+      "cue": "Hinge and hike the bell back between your legs.",
+      "camera": 60,
+      "durationMs": 700,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [60, 0, 0],
+        "shoulderR": [12, -4, 0],
+        "shoulderL": [30, 20, 0],
+        "hipL": [20, 8, 0],
+        "kneeL": 30,
+        "ankleL": -10,
+        "hipR": [20, 8, 0],
+        "kneeR": 30,
+        "ankleR": -10
+      }
+    },
+    {
+      "name": "Drive",
+      "cue": "Snap your hips forward; pull the bell up close to your body.",
+      "camera": 60,
+      "durationMs": 350,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [8, 0, 0],
+        "shoulderR": [-10, 0, 0],
+        "elbowR": 100,
+        "shoulderL": [10, 15, 0],
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0]
+      }
+    },
+    {
+      "name": "Rack",
+      "cue": "Catch it at your shoulder, elbow tucked in, wrist straight.",
+      "camera": 60,
+      "durationMs": 350,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderR": [20, 10, 0],
+        "elbowR": 150,
+        "shoulderL": [0, 8, 0],
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "kettlebell",
+      "hand": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Right arm",
+      "R": "Left arm"
+    }
+  }
+}

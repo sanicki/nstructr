@@ -23,12 +23,12 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **271 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **273 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 80 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions |
-| Free weights | 43 | dumbbell, kettlebell, barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry |
+| Free weights | 45 | dumbbell, kettlebell (incl. around the world, clean, Turkish get-up), barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry |
 | Bodyweight | 33 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
 | Resistance band | 28 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
 | Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
@@ -38,7 +38,7 @@ Library today: **271 exercises, 5 workouts** (20-minute beginner's yoga, Pilates
 | Balance | 12 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 19 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-163 are rep-based, 108 timed; 93 are two-sided (`bilateral`); 6 have `direction`. Common exercises per collection
+165 are rep-based, 108 timed; 95 are two-sided (`bilateral`); 6 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -268,7 +268,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `medball` | `hands` (default both) | A medicine ball held in both hands, at their middle (`--medball`). |
 | `ring` | `from`, `to` | A Pilates ring (magic circle) between two points, 68 across; pressed, it flattens (`ringSVG`: a circle across the press line and upright, drawn in 3D). |
 | `dumbbell` | `hand`, `axis` `lr` (bar left–right) / `fb` (front–back) / `ud` (upright), relative to the body | Drawn end-on when the bar points at the camera; drawn with its arm (behind the body when the arm is). |
-| `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm. A step's `holds` overrides which hands hold it (passing it hand to hand). |
+| `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm (held in both hands, the forearms' directions averaged, weighted by the grip). A step's `holds` overrides which hands hold it (passing it hand to hand). |
 | `barbell` | `from`, `to` (hands) | Projected in 3D: the end plate from the side, the full bar from the front. |
 | `bar` | `y` (height), `z`, `width` 90 | A pull-up bar, drawn in front of the hands that hold it (end-on, a dot). Hang from it with `anchor` a hand, `anchorY` the bar's `y`, `anchorX` half the grip width. The exercise page's view grows upwards to show it (still square). Equipment "Pull-up bar" (its own kind). |
 
@@ -393,9 +393,14 @@ differently.
    passes when there are several), with planted feet kept flat, so what rests on the roller stays on it the whole way
    (angles alone lifted it up to 4 px mid-move); and rolling, feet and hands slide along the floor instead of
    stepping (`slideContacts`/`clampTips` are skipped); a foot or hand resting on the same spot at both ends stays on
-   it (IK back to it; a foot also keeps its toes there: `holdFoot` turns the hip, each try from the same leg). The
+   it (IK back to it; a foot also keeps its toes there: `holdFoot` turns the hip, each try from the same leg; the
+   target is lerped from where the step put it to where the next one does, so the move lands exactly on the next step:
+   aimed at the first step's spot only, the IT band roll's leg snapped the last few px at each end). The
    IT band roll's top foot is planted: the second step `keep`s it where the first put it (it slid 53 px until Sep 2026). `worldOf` leaves the frame's surfaces as they were (it used to
    switch them to a step's, which put a rolling roller in the wrong place for the rest of the frame).
+   **A hand planted on the same spot at both ends** of any move (not only rolling) stays on it: the arm reaches back
+   each frame (Sep 2026, for the Turkish Get-Up's hand under the body; where the shoulder moves more than an arm's
+   length from it, a quiet in-between step is needed, as the get-up has).
 5. Toe fix: toes that would sink turn the ankle.
    Toes resting on the same spot of a raised surface at both ends (the back foot on a bench) stay on it: the leg
    reaches so the toe lands back where it was (Sep 2026: Bulgarian Split Squat's rear toe slid 21 px mid-move).

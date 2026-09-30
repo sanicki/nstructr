@@ -30,12 +30,6 @@
       "phase": "rep",
       "anchor": "ankleR",
       "plant": ["L", "R"],
-      "touch": [
-        {
-          "point": "ankleL",
-          "adjust": "hipL.side"
-        }
-      ],
       "pose": {
         "shoulderL": [0, -10, 0],
         "shoulderR": [0, -10, 0],
@@ -52,19 +46,13 @@
       "phase": "rep",
       "anchor": "ankleR",
       "plant": ["L", "R"],
-      "touch": [
-        {
-          "point": "ankleL",
-          "adjust": "hipL.side"
-        }
-      ],
       "pose": {
         "shoulderL": [12, -10, 0],
         "shoulderR": [12, -10, 0],
         "torso": [12, 0, 0],
-        "hipL": [0, 55, 70],
+        "hipL": [56, 47.5, 5],
         "kneeL": 85,
-        "hipR": [0, 55, 70],
+        "hipR": [56, 47, 4],
         "kneeR": 85
       }
     }

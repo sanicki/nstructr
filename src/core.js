@@ -501,7 +501,9 @@ function frameAt(a, b, e, seg) {
       for (const ch of CHAINS) {
         const tip = ch.tip + ch.s;
         if (tip === r0.anchor || V3.dist(A[tip], B[tip]) > 2 || A[tip].y - supportAt(A[tip]) > 3) continue;
-        if (ch.root === 'hip') holdFoot(pose, seg, pos, ch, A, flat); else reachTip(pose, seg, pos, ch, A[tip], 1);
+        // (aimed from where it is at one end to where it is at the other, so the move arrives exactly on the next step)
+        const T = { [tip]: V3.lerp(A[tip], B[tip], e), ['toe' + ch.s]: V3.lerp(A['toe' + ch.s], B['toe' + ch.s], e) };
+        if (ch.root === 'hip') holdFoot(pose, seg, pos, ch, T, flat); else reachTip(pose, seg, pos, ch, T[tip], 1);
       }
     }
     // rolling, the feet and hands slide along the floor with it rather than stepping
@@ -513,6 +515,15 @@ function frameAt(a, b, e, seg) {
       const a0 = pose['ankle' + s];
       const th = root1D(x => { pose['ankle' + s] = x; const Q = fkAt(pose, seg, pos)['toe' + s]; return Q.y - supportAt(Q) - 0.25; }, a0, 120, 2);
       pose['ankle' + s] = th == null ? a0 : th;
+    }
+    // a hand planted on the same spot at both ends (the hand under a Turkish get-up) stays on it: the arm reaches back
+    if (!rolls.length) {
+      const A = worldOf(a, seg), B = worldOf(b, seg);
+      for (const ch of CHAINS) {
+        const tip = ch.tip + ch.s;
+        if (ch.root !== 'shoulder' || pinned.includes(tip) || V3.dist(A[tip], B[tip]) > 2 || A[tip].y - supportAt(A[tip]) > 3) continue;
+        reachTip(pose, seg, pos, ch, A[tip], 1);
+      }
     }
     // toes resting on the same spot of a raised surface at both ends (the back foot on a bench) stay on it: the leg
     // reaches so the toe lands back where it was (twice, since moving the ankle moves the toe too)
@@ -546,7 +557,7 @@ function frameAt(a, b, e, seg) {
 /* a foot kept where it was (A: that step's world points): the leg reaches the ankle back, flat if planted (flat()), and
    the hip turns until the toes are back too, so the foot doesn't swivel on the spot */
 function holdFoot(pose, seg, pos, ch, A, flat = () => {}) {
-  const tip = 'ankle' + ch.s, toe = 'toe' + ch.s, hk = 'hip' + ch.s;
+  const tip = 'ankle' + ch.s, toe = 'toe' + ch.s, hk = 'hip' + ch.s;   // (A: where the ankle and toes go)
   // (each try from the same leg: reachTip answers nearest to the angles it starts from; a hip swinging sideways costs
   // as much as a toe off its spot)
   const leg = [hk, 'knee' + ch.s, 'ankle' + ch.s].map(k => [k, Array.isArray(pose[k]) ? [...pose[k]] : pose[k]]), s0 = pose[hk][1];
@@ -658,12 +669,12 @@ function weightSVG(pr, P, M0, proj, grip = null) {
   if (pr.type === 'kettlebell') {
     const hands = (pr.hands || [pr.hand]).map(k => P[k]).filter(Boolean); if (!hands.length) return '';
     let hc = V3.mul(hands.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / hands.length);
-    let el = P['elbow' + (pr.hands ? pr.hands[0] : pr.hand).slice(-1)];
-    if (grip) {                                                         // passed between the hands: where the grip is
-      hc = V3.add(V3.mul(P.handL, grip.handL), V3.mul(P.handR, grip.handR));
-      el = P[grip.handL > grip.handR ? 'elbowL' : 'elbowR'];
-    }
-    const dir = el ? V3.unit(V3.sub(hc, el)) : { x: 0, y: -1, z: 0 };
+    // it hangs on in line with the forearm, or with both forearms (their directions averaged, by grip) when both hold it
+    const w = grip || (pr.hands && pr.hands.length > 1 ? { handL: 0.5, handR: 0.5 } : { [pr.hand || pr.hands[0]]: 1 });
+    if (grip) hc = V3.add(V3.mul(P.handL, grip.handL), V3.mul(P.handR, grip.handR));   // passed between the hands: where the grip is
+    let sum = { x: 0, y: 0, z: 0 };
+    for (const s of ['L', 'R']) if (w['hand' + s] > 0 && P['elbow' + s]) sum = V3.add(sum, V3.mul(V3.unit(V3.sub(P['hand' + s], P['elbow' + s])), w['hand' + s]));
+    const dir = V3.len(sum) > 0.1 ? V3.unit(sum) : { x: 0, y: -1, z: 0 };
     const H = proj(hc), Bl = proj(V3.add(hc, V3.mul(dir, 15)));       // the bell hangs on, in line with the forearm
     return bar(H, Bl) + `<circle class="wt" cx="${f(Bl.x)}" cy="${f(Bl.y)}" r="11"/>`;
   }
