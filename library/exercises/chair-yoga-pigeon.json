@@ -8,13 +8,13 @@
   "focus": "Outer hip",
   "collections": ["Yoga", "Chair-based"],
   "equipment": ["Chair"],
-  "description": "A seated hip stretch on a chair: rest one ankle on the opposite knee and sit tall, the lifted knee dropping out to the side.",
+  "description": "A seated hip stretch on a chair: rest one ankle on the opposite knee, the lifted knee dropping out to the side, then hinge forward from the hips with a long back.",
   "source": {
     "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",
     "title": "Yoga Journal: 13 Chair Yoga Poses You Can Do Anywhere"
   },
   "setup": ["Sit on a sturdy chair, feet flat.", "Lift one ankle onto the opposite knee."],
-  "cues": ["Flex the lifted foot.", "Sit tall, lean in a little for more.", "Keep it gentle on the knee."],
+  "cues": ["Flex the lifted foot.", "Lean from your hips, not your back.", "Keep it gentle on the knee."],
   "prescription": {
     "reps": "hold 30 seconds",
     "note": "Breathe slowly and evenly; ease out of the pose if anything pinches."
@@ -61,12 +61,12 @@
       }
     },
     {
-      "name": "Chair Pigeon",
+      "name": "Cross the ankle",
       "cue": "Right ankle on your left knee, sit tall.",
       "camera": 30,
       "durationMs": 2000,
       "holdMs": 400,
-      "phase": "rep",
+      "phase": "setup",
       "anchor": "pelvis",
       "plant": ["L"],
       "reach": [
@@ -95,6 +95,43 @@
         "kneeR": 127,
         "ankleR": 10
       }
+    },
+    {
+      "name": "Lean forward",
+      "cue": "Hinge forward from your hips, back long.",
+      "camera": 30,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeR",
+          "dz": -6
+        },
+        {
+          "hand": "handL",
+          "to": "ankleR",
+          "dz": -8
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [100.5, 47.5, 88],
+        "kneeR": 127,
+        "ankleR": 10,
+        "torso": [40, 0, 0],
+        "neck": [-12, 0, 0]
+      }
     }
   ],
   "props": [
@@ -114,5 +151,5 @@
   "defaults": {
     "seconds": 30
   },
-  "holdStep": 1
+  "holdStep": 2
 }
