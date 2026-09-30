@@ -45,7 +45,7 @@ module.exports = [
     category: 'Hip opener', focus: 'Outer hip', equipment: ['Chair'], collections: ['Yoga', 'Chair-based'], props: CHAIR,
     edit: ex => { ex.keyframes = [
       sit('Sit tall', 'Feet flat, hands on your thighs.', {}, { phase: 'setup' }),
-      { ...sit('Chair Pigeon', 'Right ankle on your left knee, sit tall.', { hipR: [100.5, 47.5, 88], kneeR: 127, ankleR: 10 }), plant: ['L'], touch: [feet[0]],
+      { ...sit('Chair Pigeon', 'Right ankle on your left knee, sit tall.', { hipR: [100.5, 47.5, 88], kneeR: 127, ankleR: 10 }), camera: 30, plant: ['L'], touch: [feet[0]],
         reach: [{ hand: 'handR', to: 'kneeR', dz: -10 }, { hand: 'handL', to: 'pelvis', dx: -22, dz: 26 }] }]; },
     over: { ...sides, ...hold(30) },
     description: 'A seated hip stretch on a chair: rest one ankle on the opposite knee and sit tall, the lifted knee dropping out to the side.',
