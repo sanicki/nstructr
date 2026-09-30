@@ -8,6 +8,8 @@
   "focus": "Hip flexors and thighs",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"frontThigh": 1, "glutes": 1},
+  "stretches": ["frontThigh"],
   "description": "A lunge with the back knee on the floor: front knee over the ankle, hips sinking forward, arms reaching up.",
   "source": {
     "url": "https://www.yogajournal.com/poses/low-lunge/",

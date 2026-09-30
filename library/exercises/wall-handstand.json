@@ -7,6 +7,7 @@
   "category": "Balancing",
   "collections": ["Yoga"],
   "equipment": ["Wall"],
+  "muscles": {"shoulders": 3, "chest": 1, "upperBack": 2, "triceps": 2, "core": 2},
   "description": "Handstand with a wall behind you: from Downward-Facing Dog with your hands a little way from the wall, kick up one leg at a time and rest your heels lightly on the wall, arms straight and strong.",
   "source": {
     "url": "https://yogainternational.com/article/view/step-up-to-handstand/",

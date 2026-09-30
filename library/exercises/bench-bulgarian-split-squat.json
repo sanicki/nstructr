@@ -8,6 +8,8 @@
   "focus": "Thighs and glutes",
   "collections": ["Bodyweight"],
   "equipment": ["Bench"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
+  "stretches": ["frontThigh"],
   "description": "With the top of your back foot resting on a bench behind you, lower straight down on the front leg until the thigh is level, then push back up.",
   "source": {
     "url": "https://www.acefitness.org/education-and-resources/lifestyle/exercise-library/366/bulgarian-split-squat/",

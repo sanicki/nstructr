@@ -8,6 +8,7 @@
   "focus": "Abs",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 3, "frontThigh": 2},
   "description": "Lying flat with arms overhead, lift your chest and straight legs at the same time to meet in a V, balanced on your sit bones, then lower.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/242/v-ups/",

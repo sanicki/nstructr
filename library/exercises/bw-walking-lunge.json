@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Step forward into a lunge, stand up bringing the back foot through, then lunge forward with the other leg, moving across the floor.",
   "source": {
     "url": "https://www.acefitness.org/about-ace/press-room/in-the-news/8310/how-to-do-walking-lunges-properly-for-all-the-lower-body-benefits-according-to-a-trainer-women-s-health/",

@@ -8,6 +8,7 @@
   "focus": "Hamstrings and glutes",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"upperBack": 1, "lowerBack": 2, "core": 1, "frontThigh": 1, "glutes": 3, "backThigh": 2},
   "description": "Holding a kettlebell in both hands, push your hips back with soft knees until you feel the backs of your legs stretch, then stand tall.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/317/romanian-deadlift/",

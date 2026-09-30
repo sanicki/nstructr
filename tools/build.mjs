@@ -53,6 +53,8 @@ for (const w of workouts) w.blocks.forEach((b, bi) => b.items.forEach((it, ii) =
 for (const ex of exercises) ex.keyframes.forEach((k, i) => (k.keep || []).forEach(x => {
   if (typeof x === 'object' && x.keyframe >= ex.keyframes.length) errors.push(`${ex.id}: keyframes[${i}].keep points at step ${x.keyframe}, which doesn't exist`);
 }));
+// muscle groups (HANDOFF §13, docs/muscles.md; written by tools/muscles.cjs): every library exercise rates them
+for (const ex of exercises) if (!ex.muscles) errors.push(`${ex.id}: a library exercise needs "muscles" (the groups it works, 1–3; {} for none): add it to tools/muscles.cjs and run it`);
 for (const ex of exercises) if (!(ex.collections || []).length) errors.push(`${ex.id}: a library exercise needs "collections" (where the app shows it: Bodyweight, Yoga...)`);
 // linked variations (library/progressions.json, HANDOFF §5.4): easier/harder steps and equipment groups
 const links = JSON.parse(rd('library/progressions.json'));
@@ -65,6 +67,11 @@ const links = JSON.parse(rd('library/progressions.json'));
     for (const id of g.ids) if (!byId.has(id)) errors.push(`library/progressions.json: equipment group "${g.name}" lists "${id}", which isn't in the library`);
     const kinds = g.ids.filter(id => byId.has(id)).map(id => equipKinds(byId.get(id).equipment).join(' and ') || 'no equipment');
     kinds.forEach((k, i) => { if (kinds.indexOf(k) !== i) errors.push(`library/progressions.json: equipment group "${g.name}" has two exercises with ${k} (${g.ids[kinds.indexOf(k)]}, ${g.ids[i]}); each member uses other equipment`); });
+    // the same move with other equipment works the same muscles: a group most members are for (3), all of them work
+    // (one may add a group, as a band pull-apart does to a wall sit)
+    const rated = g.ids.map(id => byId.get(id)).filter(ex => ex && ex.muscles);
+    for (const m of new Set(rated.flatMap(ex => Object.keys(ex.muscles)))) if (rated.filter(ex => ex.muscles[m] === 3).length * 2 > rated.length)
+      for (const b of rated) if (!b.muscles[m]) warnings.push(`library/progressions.json: equipment group "${g.name}" is for ${m}, but ${b.id} doesn't work it (tools/muscles.cjs)`);
   }
   for (const n of links.notLinked || []) for (const id of n.ids) if (!byId.has(id)) errors.push(`library/progressions.json: notLinked lists "${id}", which isn't in the library`);
 }

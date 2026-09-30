@@ -8,6 +8,8 @@
   "focus": "Hip flexors",
   "collections": ["Stretches"],
   "equipment": [],
+  "muscles": {},
+  "stretches": ["frontThigh"],
   "description": "Stretches the front of the hip: kneel on one knee with the other foot forward, then shift your weight forward with a straight back.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

@@ -8,6 +8,8 @@
   "focus": "Back, shoulders and front of the thighs",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"upperBack": 1, "lowerBack": 3, "glutes": 2, "backThigh": 1},
+  "stretches": ["shoulders", "chest", "frontThigh"],
   "description": "Lying face down with your knees bent and your hands holding your ankles, press the feet into your hands to lift your chest and thighs, then rock forward and back like a rocking chair.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

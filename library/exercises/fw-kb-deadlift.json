@@ -7,6 +7,7 @@
   "focus": "Back, glutes and hamstrings",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"upperBack": 1, "lowerBack": 1, "core": 1, "frontThigh": 2, "glutes": 3, "backThigh": 2, "lowerLegs": 2},
   "description": "A hip hinge lifting one kettlebell from between your feet: push your hips back, grip the handle with both hands, and stand up tall.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/kettlebell-deadlift",

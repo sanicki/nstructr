@@ -8,6 +8,7 @@
   "focus": "Chest",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells", "Bench"],
+  "muscles": {"shoulders": 2, "chest": 3, "biceps": 1, "triceps": 1},
   "description": "Lying on a bench with dumbbells above your chest, open your arms out wide in an arc with a slight elbow bend, then bring them back together.",
   "source": {
     "url": "https://www.strengthlog.com/best-dumbbell-exercises-muscle-strength/",

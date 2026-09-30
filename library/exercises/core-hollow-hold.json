@@ -8,6 +8,7 @@
   "focus": "Deep abs",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 3, "frontThigh": 2},
   "description": "Lying on your back, press your lower back into the floor and lift your shoulders, arms and straight legs a little way off it; hold.",
   "source": {
     "url": "https://www.hingehealth.com/resources/articles/hollow-body-hold/",

@@ -8,6 +8,8 @@
   "focus": "Lower back and chest",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"lowerBack": 1},
+  "stretches": ["chest", "core"],
   "description": "A gentle backbend on your forearms: lying face down with elbows under your shoulders, lift your chest and look ahead.",
   "source": {
     "url": "https://www.yogajournal.com/poses/sphinx-pose/",

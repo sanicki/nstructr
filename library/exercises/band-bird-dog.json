@@ -8,6 +8,7 @@
   "focus": "Core, glutes and back",
   "collections": ["Resistance band", "Core"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 1, "lowerBack": 3, "core": 3, "glutes": 2},
   "description": "On hands and knees with a band looped round one foot and held in the opposite hand, reach that arm forward and that leg back against the band, then return.",
   "source": {
     "url": "https://www.healthline.com/health/bird-dog-exercise",

@@ -8,6 +8,8 @@
   "focus": "Back and hamstrings",
   "collections": ["Yoga", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["lowerBack", "backThigh"],
   "description": "A relaxed forward fold sitting on a chair: lean forward over your thighs and let your back round, arms and head hanging.",
   "source": {
     "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",

@@ -7,6 +7,7 @@
   "category": "Backbend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 1, "upperBack": 1, "lowerBack": 3, "glutes": 2, "backThigh": 2},
   "description": "Belly-down backbend lifting the chest, arms, and legs.",
   "source": {
     "url": "https://www.yogajournal.com/poses/locust-pose/",

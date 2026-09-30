@@ -7,6 +7,8 @@
   "category": "Hip-Opening",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "core", "glutes"],
   "description": "Seated twist with one knee up and the torso turning toward it.",
   "source": {
     "url": "https://www.yogajournal.com/poses/marichi-s-pose/",

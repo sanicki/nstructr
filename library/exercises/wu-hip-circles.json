@@ -8,6 +8,7 @@
   "focus": "Hips and lower back",
   "collections": ["Warm-up"],
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 1, "glutes": 1},
   "description": "A hip and lower-back warm-up: hands on your hips, circle your hips in a wide, smooth loop one way, then the other.",
   "source": {
     "url": "https://support.runna.com/en/articles/8837242-hip-circles-exercise-tutorial",

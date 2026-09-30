@@ -8,6 +8,8 @@
   "focus": "Outer hip and thigh",
   "collections": ["Stretches"],
   "equipment": ["Wall"],
+  "muscles": {},
+  "stretches": ["glutes"],
   "description": "Stretches the band of tissue along the outside of the hip and thigh: cross one ankle over the other and reach that arm overhead toward the other side.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

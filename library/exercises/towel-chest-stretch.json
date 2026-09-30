@@ -8,6 +8,8 @@
   "focus": "Chest and front of the shoulders",
   "collections": ["Stretches"],
   "equipment": ["Towel"],
+  "muscles": {},
+  "stretches": ["shoulders", "chest"],
   "description": "Standing tall with a towel held behind you in both hands, arms straight, lift the towel back and away from you to open the chest.",
   "source": {
     "url": "https://www.ripple.sg/move/towel-chest-stretch",

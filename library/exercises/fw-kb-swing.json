@@ -8,6 +8,7 @@
   "focus": "Glutes, hamstrings and back",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 2, "upperBack": 2, "lowerBack": 2, "core": 1, "frontThigh": 2, "glutes": 3, "backThigh": 2, "lowerLegs": 1},
   "description": "A powerful hip hinge: swing the kettlebell back between your legs, then snap your hips forward so it floats up to chest height.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/391/swing/",

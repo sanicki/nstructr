@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 1, "lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "lowerLegs": 2},
+  "stretches": ["frontThigh", "lowerLegs"],
   "description": "Lunge with the back heel down, the hips facing forward, and the arms overhead.",
   "source": {
     "url": "https://www.yogajournal.com/poses/warrior-i-pose/",

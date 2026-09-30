@@ -146,4 +146,4 @@ notes.unshift(`File: \`library/exercises/${out.id}.json\` · try it after mergin
 if (note) notes.push(`Note from the submitter: ${md(note.slice(0, 1000))}`);
 // the research to do before merging (names, equipment versions): .claude/skills/exercise-research/SKILL.md
 const research = require('./research.cjs').report([out.id], true);
-finish(true, summary, out.id, `${summary}, from #${number}.\n\n#### Before merging: names and equipment versions\n${research}\n\nCheck the name is the most common one and add other common names; look for established versions with the missing equipment (\`.claude/skills/exercise-research/SKILL.md\`).`);
+finish(true, summary, out.id, `${summary}, from #${number}.\n\n#### Before merging: names and equipment versions\n${research}\n\nCheck the name is the most common one and add other common names; look for established versions with the missing equipment (\`.claude/skills/exercise-research/SKILL.md\`)${out.muscles ? '' : '; rate its muscle groups in \`tools/muscles.cjs\` and run it (the build needs them)'}.`);

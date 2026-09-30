@@ -8,6 +8,8 @@
   "focus": "Upper back",
   "collections": ["Stretches", "Warm-up"],
   "equipment": ["Foam roller"],
+  "muscles": {"core": 1, "glutes": 1},
+  "stretches": ["upperBack"],
   "description": "Lying back on a foam roller under your shoulder blades with your feet flat and your hands behind your head, lift your hips a little and push with your legs to roll between your shoulder blades and mid-back.",
   "source": {
     "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",

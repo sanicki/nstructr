@@ -8,6 +8,7 @@
   "focus": "Glutes and hamstrings",
   "collections": ["Core", "Bodyweight"],
   "equipment": ["Stability ball"],
+  "muscles": {"lowerBack": 1, "core": 2, "glutes": 3, "backThigh": 2},
   "description": "Lying on your back with straight legs and your heels on a stability ball, press into the ball to lift your hips until your body is straight, then lower.",
   "source": {
     "url": "https://www.bodbot.com/Exercises/797/Straight-Leg-Supine-Bridge-on-Stability-Ball",

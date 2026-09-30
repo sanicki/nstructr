@@ -7,6 +7,8 @@
   "category": "Balancing",
   "collections": ["Yoga", "Balance"],
   "equipment": ["Wall"],
+  "muscles": {"shoulders": 1, "upperBack": 1, "lowerBack": 2, "core": 2, "frontThigh": 1, "glutes": 3, "backThigh": 2, "lowerLegs": 2},
+  "stretches": ["backThigh"],
   "description": "Warrior III with your fingertips on a wall: balance on one leg with your body and the other leg level, arms reaching to the wall.",
   "source": {
     "url": "https://yogauonline.com/pose-library/warrior-3-yoga-pose-practice-propped-variations-at-the-wall/",

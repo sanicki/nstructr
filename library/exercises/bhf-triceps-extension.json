@@ -8,6 +8,7 @@
   "focus": "Arms",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 1, "triceps": 3, "core": 1},
   "description": "Strengthens the back of the upper arm: one hand anchors the band at the opposite hip while the other arm straightens behind you.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",

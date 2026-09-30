@@ -7,6 +7,8 @@
   "category": "Arm Balance",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 2, "chest": 2, "triceps": 3, "core": 3, "frontThigh": 1},
+  "stretches": ["backThigh"],
   "description": "Arm balance with the legs crossed and extended to one side of the bent arms.",
   "source": {
     "url": "https://www.yogajournal.com/poses/eight-angle-pose/",

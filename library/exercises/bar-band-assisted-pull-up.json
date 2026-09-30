@@ -8,6 +8,7 @@
   "focus": "Back and arms",
   "collections": ["Bodyweight", "Resistance band"],
   "equipment": ["Pull-up bar", "Resistance band"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 3, "biceps": 2, "triceps": 1, "core": 1},
   "description": "A pull-up with a resistance band looped over the bar and under your knees: the band takes some of your weight, most at the bottom, so you can do full pull-ups while you build up to them.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/band-assisted-pull-up",

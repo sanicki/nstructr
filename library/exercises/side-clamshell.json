@@ -8,6 +8,7 @@
   "focus": "Outer hips (glute medius)",
   "collections": ["Bodyweight"],
   "equipment": ["Mat"],
+  "muscles": {"core": 1, "glutes": 3},
   "description": "Lying on your side with knees bent and heels together, open your top knee toward the ceiling like a clamshell, then close it with control.",
   "source": {
     "url": "https://www.msdmanuals.com/home/multimedia/video/side-lying-hip-external-rotation-clamshell-exercise",

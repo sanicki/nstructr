@@ -8,6 +8,7 @@
   "focus": "Chest",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 2, "chest": 3, "biceps": 1, "triceps": 2},
   "description": "Lying on your back with knees bent, press the dumbbells from elbows-on-the-floor to straight above your chest, then lower until your upper arms touch the floor again.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/19/chest-press/",

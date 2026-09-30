@@ -7,6 +7,7 @@
   "focus": "Obliques",
   "collections": ["Free weights", "Core"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 1, "core": 3, "frontThigh": 1},
   "description": "Seated and leaning back with your feet down, hold a kettlebell at your chest and turn it from side to side.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/russian-twist",

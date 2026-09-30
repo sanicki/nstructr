@@ -8,6 +8,7 @@
   "focus": "Outer hips (glutes)",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"core": 1, "frontThigh": 2, "glutes": 3, "lowerLegs": 1},
   "description": "In a half squat with a band round your ankles or knees, walk forward in small steps, each foot going forward and out against the band.",
   "source": {
     "url": "https://www.physitrack.com/exercise-library/how-to-perform-the-monster-walk-with-band-exercise",

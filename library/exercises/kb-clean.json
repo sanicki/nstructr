@@ -8,6 +8,7 @@
   "focus": "Hips, glutes, back and grip (power)",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 2, "upperBack": 2, "lowerBack": 2, "biceps": 1, "core": 1, "frontThigh": 2, "glutes": 3, "backThigh": 2, "lowerLegs": 2},
   "description": "From a hinge with the kettlebell hiked back between your legs, drive your hips forward so the bell rises close to your body, and catch it at your shoulder in the rack position.",
   "source": {
     "url": "https://www.garagegymreviews.com/kettlebell-clean",

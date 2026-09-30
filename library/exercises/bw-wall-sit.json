@@ -8,6 +8,7 @@
   "focus": "Thighs",
   "collections": ["Bodyweight"],
   "equipment": ["Wall"],
+  "muscles": {"core": 1, "frontThigh": 3, "glutes": 2, "lowerLegs": 1},
   "description": "An isometric leg exercise: with your back flat against a wall, slide down until your thighs are about level with the floor and hold.",
   "source": {
     "url": "https://health.clevelandclinic.org/wall-sits",

@@ -8,6 +8,7 @@
   "focus": "Shoulders, core and hips (full body)",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 3, "upperBack": 1, "lowerBack": 1, "triceps": 2, "core": 3, "frontThigh": 2, "glutes": 2},
   "description": "Lying on your back with a kettlebell pressed straight up in one hand, get up to standing in a set sequence of positions, keeping the bell straight overhead the whole time, then reverse the steps back down to the floor.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/388/turkish-get-up/",

@@ -7,6 +7,8 @@
   "category": "Balancing",
   "collections": ["Yoga", "Balance"],
   "equipment": ["Yoga mat", "Yoga block"],
+  "muscles": {"core": 2, "frontThigh": 2, "glutes": 3, "lowerLegs": 2},
+  "stretches": ["frontThigh", "backThigh"],
   "description": "Half Moon Pose with the lower hand on a block in front of the standing foot, for steadier balance while the hips and chest open.",
   "source": {
     "url": "https://www.huggermugger.com/blog/2015/half-moon-pose-block/",

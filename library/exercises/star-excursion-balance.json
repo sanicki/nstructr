@@ -6,6 +6,7 @@
   "otherNames": ["Star Excursion Balance Test"],
   "category": "Balance",
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 2, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Single-leg balance and reach: standing on one leg, reach the other foot out in eight directions around you, like the points of a star, tapping the floor lightly each time and coming back to the middle.",
   "source": {
     "url": "https://youtu.be/UoMSMdMKfBY",

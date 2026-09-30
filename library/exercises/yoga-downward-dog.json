@@ -7,6 +7,8 @@
   "category": "Forward Bend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 2, "triceps": 1, "core": 1},
+  "stretches": ["upperBack", "backThigh", "lowerLegs"],
   "description": "Upside-down V shape pressing the hips up and back from the hands and feet.",
   "source": {
     "url": "https://www.yogajournal.com/poses/downward-facing-dog/",

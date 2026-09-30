@@ -8,6 +8,7 @@
   "focus": "Thighs",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells", "Wall"],
+  "muscles": {"core": 1, "frontThigh": 3, "glutes": 2, "lowerLegs": 1},
   "description": "Back against a wall and a dumbbell in each hand by your sides, slide down until your knees are bent to about a right angle, and hold.",
   "source": {
     "url": "https://www.trainwell.net/exercises/weighted-wall-sit",

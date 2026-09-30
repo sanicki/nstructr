@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A lunge with both feet staying put: in a staggered stance, bend both knees to lower straight down, then stand back up.",
   "source": {
     "url": "https://barbend.com/lunge-vs-split-squat/",

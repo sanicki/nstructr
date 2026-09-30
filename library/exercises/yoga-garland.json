@@ -8,6 +8,8 @@
   "focus": "Hips, ankles and groin",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"frontThigh": 1},
+  "stretches": ["lowerBack", "frontThigh", "glutes", "lowerLegs"],
   "description": "A deep squat with heels down and knees wide: palms together at your chest, elbows pressing the knees open.",
   "source": {
     "url": "https://www.yogajournal.com/poses/garland-pose/",

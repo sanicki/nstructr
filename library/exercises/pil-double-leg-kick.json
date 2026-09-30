@@ -8,6 +8,8 @@
   "focus": "Back, hamstrings and shoulders",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"shoulders": 1, "upperBack": 2, "lowerBack": 3, "glutes": 2, "backThigh": 2},
+  "stretches": ["shoulders", "chest"],
   "description": "Lying face down with your hands clasped behind your back, kick both heels toward your seat, then straighten your legs and arms and lift your chest.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

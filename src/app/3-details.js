@@ -71,6 +71,7 @@ function renderPlayerInfo() {
   // about
   $('#aboutPanel').innerHTML = `${ex.description ? `<p class="body-large">${esc(ex.description)}</p>` : ''}
     ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
+    ${musclesHTML(ex)}
     ${linksHTML(ex)}
     <div class="row" style="margin-top:12px">${findInDb(ex.id) ? '' : `<button class="btn tonal stateful" data-act="shareEx"><span class="icon">share</span>Share</button>`}
     <button class="btn text stateful authoring-only" data-act="json"><span class="icon">data_object</span>Show JSON</button>

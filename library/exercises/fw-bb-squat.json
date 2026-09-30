@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Free weights"],
   "equipment": ["Barbell"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "The classic barbell lift: with the bar across your upper back, squat down until your thighs are about level, then stand up.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/11/back-squat/",

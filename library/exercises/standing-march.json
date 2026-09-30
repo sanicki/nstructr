@@ -8,6 +8,7 @@
   "focus": "Hips, legs and balance",
   "collections": ["Warm-up", "Balance"],
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 3, "glutes": 1, "lowerLegs": 1},
   "description": "Standing tall, lift one knee toward hip height with the opposite arm swinging forward, lower it with control, then lift the other: a slow march in place.",
   "source": {
     "url": "https://www.physitrack.com/exercise-library/how-to-perform-the-standing-march-exercise",

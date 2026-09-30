@@ -8,6 +8,7 @@
   "focus": "Obliques and core",
   "collections": ["Free weights", "Core"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 2, "lowerBack": 1, "core": 3, "frontThigh": 1, "glutes": 1},
   "description": "Holding one dumbbell in both hands above one shoulder, chop it diagonally down across your body to the outside of the opposite knee, turning and bending your knees, then lift it back.",
   "source": {
     "url": "https://www.coachweb.com/core-exercises/212/how-to-do-the-dumbbell-woodchop",

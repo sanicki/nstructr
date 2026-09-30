@@ -8,6 +8,7 @@
   "focus": "Thighs and core",
   "collections": ["Free weights"],
   "equipment": ["Barbell"],
+  "muscles": {"upperBack": 1, "lowerBack": 1, "core": 2, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A squat with the barbell resting across the front of your shoulders: elbows high and chest up, sit down between your heels and stand back up.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/22/front-squat/",

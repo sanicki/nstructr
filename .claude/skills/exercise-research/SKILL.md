@@ -1,9 +1,9 @@
 ---
 name: exercise-research
-description: After an exercise is added to library/exercises (by hand, from Create with AI, or a submission PR), check its names, its equipment versions and its linked variations the way the Sep 2026 library research did - the most common name, other common names, established versions with the library's other equipment, and where it goes in library/progressions.json (easier/harder steps, equipment groups). Use when an exercise is added or the user asks to research names, equipment versions or progressions.
+description: After an exercise is added to library/exercises (by hand, from Create with AI, or a submission PR), check its names, its equipment versions and its linked variations the way the Sep 2026 library research did - the most common name, other common names, established versions with the library's other equipment, where it goes in library/progressions.json (easier/harder steps, equipment groups), and its muscle-group ratings (tools/muscles.cjs). Use when an exercise is added or the user asks to research names, equipment versions or progressions.
 ---
 
-# Exercise research (names, equipment versions, linked variations)
+# Exercise research (names, equipment versions, linked variations, muscles)
 
 The checks the whole library had in Sep 2026 (`docs/equipment-equivalents.md`, `docs/progressions.md`), for one exercise or a few.
 The mechanical half is `tools/research.cjs`; the judgment half is a web search. Library rules still apply
@@ -60,9 +60,17 @@ The app shows each exercise's **easier** and **harder** versions (and lets a wor
 - The build warns about two exercises that move the same with other equipment but aren't linked: link them, or add
   them to `notLinked` with why.
 
-## 5. Before the pull request
+## 5. Muscle groups (`tools/muscles.cjs`)
+Every library exercise rates the 11 muscle groups 1–3 and lists what it stretches (the build fails without `muscles`).
+Add it to `EX` in `tools/muscles.cjs`: the movement pattern it shares (squat, row, plank, stretch...) plus any changes,
+then `node tools/muscles.cjs` writes the fields and `docs/muscles.md`. Ratings follow ExRx's target / synergist /
+stabilizer (3 / 2 / 1): search `exrx.net <exercise>` and map its muscles to the groups (`docs/muscles.md`); a yoga
+pose, Pilates move or stretch is rated from its own source (Yoga Journal names what a pose strengthens and stretches).
+An equipment version rates like the rest of its group (the build warns otherwise). Unsure: ask the owner.
+
+## 6. Before the pull request
 - `node tools/build.mjs --check-only` passes.
 - The Create with AI prompt lists every exercise: check it still fits in a link (HANDOFF §10, "Create with AI":
   under `AI_Q_MAX` as a ChatGPT link).
 - HANDOFF's library counts, `docs/equipment-equivalents.md`, `docs/progressions.md`, and the wiki if collections changed.
-- No link warnings from the build (`⚠ ... aren't linked`).
+- No link warnings from the build (`⚠ ... aren't linked`, `⚠ ... doesn't work it`).

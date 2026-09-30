@@ -8,6 +8,7 @@
   "focus": "Back and core",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 3, "biceps": 2, "triceps": 1, "core": 2, "glutes": 1},
   "description": "In a high plank with your hands on two dumbbells, row one to your hip, lower it, then the other, keeping your hips still.",
   "source": {
     "url": "https://www.lyfta.app/exercise/dumbbell-renegade-row--842",

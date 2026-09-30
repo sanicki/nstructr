@@ -8,6 +8,7 @@
   "focus": "Balance",
   "collections": ["Balance"],
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 1, "glutes": 1, "lowerLegs": 2},
   "description": "With your arms out to the sides at shoulder height, walk slowly in a straight line, one foot just in front of the other; as you step, lift the back knee and pause for a second before stepping forward.",
   "source": {
     "url": "https://go4life.nia.nih.gov/sample_workout/3-balance-exercises-older-adults",

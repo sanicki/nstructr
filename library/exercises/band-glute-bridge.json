@@ -8,6 +8,7 @@
   "focus": "Glutes and hamstrings",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"lowerBack": 1, "core": 1, "glutes": 3, "backThigh": 2},
   "description": "A glute bridge with a loop band just above your knees: press your knees out against the band as you lift your hips.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/banded-glute-bridge",

@@ -8,6 +8,7 @@
   "focus": "Obliques",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 3, "frontThigh": 1},
   "description": "Sitting leaned back in a V with feet lifted, turn your chest and clasped hands from side to side.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/russian-twist",

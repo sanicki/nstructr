@@ -7,6 +7,7 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 2, "lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Standing squat with the hips back and the arms reaching overhead.",
   "source": {
     "url": "https://www.yogajournal.com/poses/chair-pose-2/",

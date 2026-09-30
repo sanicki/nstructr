@@ -8,6 +8,7 @@
   "focus": "Chest",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 2, "chest": 3, "biceps": 1, "triceps": 2},
   "description": "Builds the chest muscles and mobilises the shoulders: with the band around your back, press your hands forward until your arms are nearly straight.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",

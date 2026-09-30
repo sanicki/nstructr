@@ -8,6 +8,7 @@
   "focus": "Grip, core and shoulders",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 1, "upperBack": 2, "biceps": 3, "core": 3, "frontThigh": 1, "glutes": 1, "lowerLegs": 1},
   "description": "Holding one kettlebell at your side like a suitcase, walk tall without leaning, then change hands.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/359/farmer-s-carry/",

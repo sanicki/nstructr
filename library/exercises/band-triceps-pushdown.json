@@ -8,6 +8,7 @@
   "focus": "Triceps",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band", "Door anchor"],
+  "muscles": {"shoulders": 1, "upperBack": 1, "triceps": 3},
   "description": "With a band anchored high on a door, keep your elbows by your sides and push your hands down until your arms are straight, then let them come back up.",
   "source": {
     "url": "https://www.fitbudd.com/academy/resistance-band-tricep-pushdown",

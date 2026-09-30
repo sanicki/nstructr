@@ -8,6 +8,8 @@
   "focus": "Glutes, hamstrings and core",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"lowerBack": 1, "core": 2, "frontThigh": 1, "glutes": 3, "backThigh": 2},
+  "stretches": ["frontThigh"],
   "description": "From a bridge with your hips lifted, kick one straight leg up to the ceiling and lower it long, keeping your hips high and level.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

@@ -8,6 +8,8 @@
   "focus": "Abdominals and spine",
   "collections": ["Pilates", "Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"core": 3, "frontThigh": 2},
+  "stretches": ["lowerBack", "backThigh"],
   "description": "The Roll-Up with a band looped round the feet and held in both hands: curl up one bone at a time, using the band to help, reach toward the feet, then roll back down slowly.",
   "source": {
     "url": "https://complete-pilates.co.uk/pilates-roll-up/",

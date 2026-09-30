@@ -8,6 +8,7 @@
   "focus": "Glutes and hamstrings",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 1, "glutes": 3, "backThigh": 2},
   "description": "Strengthens the glutes: lying on your back with knees bent, squeeze your buttocks and lift your hips until your body is straight from knees to shoulders.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/49/glute-bridge/",

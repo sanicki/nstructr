@@ -106,6 +106,10 @@ async def main():
         await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(500)
         await pg.evaluate("setPlaying(false); hideExControls(); $('#linksTitle').scrollIntoView({block:'start'}); scrollBy(0,-90)"); await pg.evaluate(HIDE_SNACK)
         await shot(pg, 'exercise-variations')
+        # Muscles (the map), on the Bulgarian Split Squat: worked and stretched
+        await pg.evaluate("go('#/play/bench-bulgarian-split-squat')"); await pg.wait_for_timeout(500)
+        await pg.evaluate("setPlaying(false); hideExControls(); $('#musclesTitle').scrollIntoView({block:'start'}); scrollBy(0,-90)"); await pg.evaluate(HIDE_SNACK)
+        await shot(pg, 'exercise-muscles')
         await pg.evaluate("go('#/play/bw-reverse-lunge'); scrollTo(0,0)"); await pg.wait_for_timeout(300)
         await pg.click('#editPoseBtn'); await pg.wait_for_timeout(600); await pg.evaluate(HIDE_SNACK)
         await shot(pg, 'edit-words')

@@ -8,6 +8,7 @@
   "focus": "Abdominals",
   "collections": ["Core"],
   "equipment": ["Stability ball"],
+  "muscles": {"core": 3},
   "description": "Lying back over a stability ball with your feet flat and thighs level, curl your chest up toward your thighs, then lower back over the ball.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/68/stability-ball-sit-ups-crunches/",

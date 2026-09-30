@@ -8,6 +8,7 @@
   "focus": "Shoulders",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 3, "upperBack": 2},
   "description": "Raise the dumbbells out to your sides to shoulder height with a slight bend in your elbows, then lower slowly.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/26/lateral-raise/",

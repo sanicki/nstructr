@@ -8,6 +8,7 @@
   "focus": "Glutes and hamstrings",
   "collections": ["Bodyweight"],
   "equipment": ["Bench"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 2, "glutes": 3, "backThigh": 1},
   "description": "Upper back against a bench, knees bent and feet flat, drive through your heels to lift your hips until your body is flat from shoulders to knees, then lower.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/bodyweight-hip-thrust",

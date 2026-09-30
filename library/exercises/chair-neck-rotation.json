@@ -8,6 +8,8 @@
   "focus": "Neck",
   "collections": ["Chair-based", "Stretches"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["upperBack"],
   "description": "Sitting tall with shoulders down, turn your head slowly to look over one shoulder, then the other.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",

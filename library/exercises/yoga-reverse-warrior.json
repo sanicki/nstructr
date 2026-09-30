@@ -8,6 +8,8 @@
   "focus": "Legs and side body",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"core": 1, "frontThigh": 3, "glutes": 2, "lowerLegs": 2},
+  "stretches": ["core", "frontThigh"],
   "description": "From Warrior 2, keep the front knee bent and arc the front arm up and back while the back hand rests on the back leg.",
   "source": {
     "url": "https://www.yogajournal.com/poses/reverse-warrior/",

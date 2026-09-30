@@ -8,6 +8,7 @@
   "focus": "Calves",
   "collections": ["Bodyweight"],
   "equipment": ["Wall"],
+  "muscles": {"lowerLegs": 3},
   "description": "Strengthens the calf muscles: holding a wall for balance, rise slowly onto the balls of both feet and lower back down.",
   "source": {
     "url": "https://abuhb.nhs.wales/files/patient-information-leaflets1/foot-care-podiatry/calf-strengthening-guide-piu1441-pdf/",

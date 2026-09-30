@@ -7,6 +7,7 @@
   "category": "Cardio",
   "focus": "Whole body (cardio)",
   "collections": ["Bodyweight", "Warm-up"],
+  "muscles": {"shoulders": 2, "chest": 2, "triceps": 2, "core": 2, "frontThigh": 3, "glutes": 2, "lowerLegs": 2},
   "description": "Squat and put your hands on the floor, jump your feet back to a plank, jump them back in, then jump up with your arms overhead and land softly.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/squat-thrust-burpees",

@@ -8,6 +8,8 @@
   "focus": "Thighs and inner legs",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 1},
+  "stretches": ["frontThigh"],
   "description": "From a wide stance, bend one knee and sit your hips back over that foot while the other leg stays straight, then push back up.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/50/side-lunge/",

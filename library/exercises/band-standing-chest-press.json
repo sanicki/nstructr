@@ -8,6 +8,7 @@
   "focus": "Chest and front of the shoulders",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band", "Door anchor"],
+  "muscles": {"shoulders": 2, "chest": 3, "biceps": 1, "triceps": 2, "core": 1},
   "description": "With a band anchored behind you at chest height, press both hands forward from your chest until your arms are nearly straight, then return.",
   "source": {
     "url": "https://tribelifting.com/blogs/news/how-door-straps-enhance-your-upper-body-training",

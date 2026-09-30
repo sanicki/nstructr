@@ -8,6 +8,7 @@
   "focus": "Front of the shoulders",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 3, "chest": 2, "upperBack": 2},
   "description": "Standing on a resistance band with an end in each hand, lift both arms straight in front of you to shoulder height, then lower slowly.",
   "source": {
     "url": "https://www.setforset.com/blogs/news/resistance-band-shoulder-workout-for-building-muscle",

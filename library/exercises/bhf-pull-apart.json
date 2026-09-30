@@ -8,6 +8,7 @@
   "focus": "Back",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 3, "upperBack": 2},
   "description": "Upper-back exercise for posture: hold the band at shoulder height with straight arms and pull it apart until your shoulder blades squeeze, which also opens the chest.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",

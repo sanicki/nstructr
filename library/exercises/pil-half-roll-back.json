@@ -8,6 +8,8 @@
   "focus": "Abdominals and spine",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 3, "frontThigh": 1},
+  "stretches": ["lowerBack"],
   "description": "Sitting tall with knees bent and arms reaching forward, curve your spine into a C and roll back part-way, then scoop your abs to come back up.",
   "source": {
     "note": "From your full-body routine, described in our own words (no band: the classic mat version, e.g. onlinepilatesclasses.com \"Half Roll Back on the Mat\"). Stick-figure approximation.",

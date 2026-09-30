@@ -8,6 +8,7 @@
   "focus": "Biceps and back (lats)",
   "collections": ["Bodyweight"],
   "equipment": ["Pull-up bar"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 3, "biceps": 2, "triceps": 1, "core": 1},
   "description": "Hang from a bar with your hands shoulder-width apart, palms facing you, and pull up until your chin clears the bar, then lower under control.",
   "source": {
     "url": "https://www.acefitness.org/continuing-education/certified/february-2025/8800/the-ace-do-it-better-series-chin-ups/",

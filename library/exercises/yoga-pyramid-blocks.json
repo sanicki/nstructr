@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat", "Yoga block"],
+  "muscles": {"frontThigh": 1, "glutes": 1},
+  "stretches": ["backThigh", "lowerLegs"],
   "description": "Pyramid Pose with a hand on a block either side of the front foot, so you can fold over the front leg with a long back.",
   "source": {
     "url": "https://www.doyogawithme.com/blog/how-use-blocks",

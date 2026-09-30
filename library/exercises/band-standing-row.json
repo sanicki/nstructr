@@ -8,6 +8,7 @@
   "focus": "Upper back",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band", "Door anchor"],
+  "muscles": {"shoulders": 2, "upperBack": 3, "lowerBack": 1, "biceps": 2, "triceps": 1, "core": 1},
   "description": "With a band anchored at chest height on a door, pull your elbows straight back past your ribs, squeezing your shoulder blades, then return.",
   "source": {
     "url": "https://tribelifting.com/blogs/news/how-door-straps-enhance-your-upper-body-training",

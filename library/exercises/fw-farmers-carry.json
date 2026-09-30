@@ -8,6 +8,7 @@
   "focus": "Grip, shoulders and core",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 1, "upperBack": 3, "biceps": 3, "core": 2, "frontThigh": 1, "glutes": 1, "lowerLegs": 1},
   "description": "Hold a heavy dumbbell in each hand by your sides and walk tall with short, steady steps, without letting the weights swing.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/359/farmer-s-carry/",

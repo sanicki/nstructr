@@ -8,6 +8,8 @@
   "focus": "Outer thighs (IT band)",
   "collections": ["Stretches", "Warm-up"],
   "equipment": ["Foam roller"],
+  "muscles": {"shoulders": 1, "triceps": 1, "core": 2},
+  "stretches": ["glutes"],
   "description": "Lying on your side on your forearm with a foam roller under the outside of your bottom thigh and your top foot planted in front, roll slowly between just above the knee and the hip.",
   "source": {
     "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",

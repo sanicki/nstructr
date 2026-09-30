@@ -8,6 +8,8 @@
   "focus": "Chest and front of the shoulders",
   "collections": ["Stretches"],
   "equipment": ["Wall"],
+  "muscles": {},
+  "stretches": ["shoulders", "chest"],
   "description": "Standing in a doorway with a forearm on each side of the frame, step one foot through and lean forward until you feel a stretch across the chest.",
   "source": {
     "url": "https://www.hingehealth.com/resources/articles/sitting-stretches/",

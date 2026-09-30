@@ -8,6 +8,7 @@
   "focus": "Core, grip and shoulders",
   "collections": ["Free weights", "Warm-up"],
   "equipment": ["Medicine ball"],
+  "muscles": {"shoulders": 2, "upperBack": 1, "biceps": 2, "core": 3},
   "description": "Standing tall, pass a medicine ball from hand to hand around your waist, in front and behind, then go the other way.",
   "source": {
     "url": "https://us.physitrack.com/home-exercise-video/around-the-world",

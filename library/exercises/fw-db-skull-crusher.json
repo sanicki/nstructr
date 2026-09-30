@@ -8,6 +8,7 @@
   "focus": "Triceps",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells", "Bench"],
+  "muscles": {"shoulders": 1, "triceps": 3, "core": 1},
   "description": "Lying on a bench with the weights above your shoulders, bend only your elbows to lower them beside your head, then straighten your arms.",
   "source": {
     "url": "https://www.strengthlog.com/best-dumbbell-exercises-muscle-strength/",

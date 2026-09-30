@@ -8,6 +8,8 @@
   "focus": "Front of the hips",
   "collections": ["Stretches", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["frontThigh"],
   "description": "Sitting sideways near the front corner of a chair, slide the leg nearest the front of the seat back until the knee points down, and tuck your hips under to stretch the front of that hip.",
   "source": {
     "url": "https://www.health.harvard.edu/healthy-aging-and-longevity/do-you-spend-most-of-your-day-sitting-these-hip-flexor-stretches-are-for-you",

@@ -8,6 +8,7 @@
   "focus": "Deep core",
   "collections": ["Pilates", "Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 1, "core": 3, "frontThigh": 2},
   "description": "The Hundred with a band looped round both feet and an end in each hand: head and shoulders curled up, legs long at an angle, pump the arms in small beats against the band.",
   "source": {
     "url": "https://gravity.fitness/blogs/training/how-to-do-pilates-with-resistance-bands-a-complete-guide",

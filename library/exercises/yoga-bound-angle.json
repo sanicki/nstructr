@@ -7,6 +7,8 @@
   "category": "Forward Bend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"lowerBack": 1},
+  "stretches": ["frontThigh", "glutes"],
   "description": "Seated hip opener with the soles of the feet together and the knees dropping out to the sides.",
   "source": {
     "url": "https://www.yogajournal.com/poses/bound-angle-pose-2/",

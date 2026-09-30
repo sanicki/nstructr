@@ -8,6 +8,7 @@
   "focus": "Chest",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells", "Bench"],
+  "muscles": {"shoulders": 2, "chest": 3, "biceps": 1, "triceps": 2},
   "description": "Lying on a bench, press the dumbbells from beside your chest to straight above it, then lower with control.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/19/chest-press/",

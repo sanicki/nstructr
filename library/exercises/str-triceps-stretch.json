@@ -8,6 +8,8 @@
   "focus": "Triceps and shoulders",
   "collections": ["Stretches"],
   "equipment": [],
+  "muscles": {},
+  "stretches": ["shoulders", "triceps"],
   "description": "Reach one arm up, bend the elbow so the hand drops down your back, and use the other hand on the elbow to ease the stretch deeper.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/174/overhead-triceps-stretch/",

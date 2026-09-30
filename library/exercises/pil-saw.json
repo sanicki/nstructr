@@ -8,6 +8,8 @@
   "focus": "Spine, hamstrings and obliques",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 1},
+  "stretches": ["upperBack", "lowerBack", "core", "backThigh"],
   "description": "Sitting tall with legs wide and arms out, twist to one side and reach forward past the opposite foot as if sawing off the little toe, then sit up and switch.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

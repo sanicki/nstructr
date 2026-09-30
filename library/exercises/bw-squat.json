@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "The basic lower-body strength move: sit your hips back and down as if onto a chair, then stand back up.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",

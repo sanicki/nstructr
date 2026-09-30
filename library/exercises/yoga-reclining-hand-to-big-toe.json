@@ -8,6 +8,8 @@
   "focus": "Hamstrings and calves",
   "collections": ["Yoga", "Stretches"],
   "equipment": ["Yoga mat", "Yoga strap"],
+  "muscles": {},
+  "stretches": ["backThigh", "lowerLegs"],
   "description": "Lying on your back with a strap round the arch of one foot, straighten that leg up toward the ceiling to stretch the back of the leg, the other leg long on the floor.",
   "source": {
     "url": "https://www.yogajournal.com/poses/reclining-big-toe-pose/",

@@ -8,6 +8,7 @@
   "focus": "Deep core",
   "collections": ["Free weights", "Core"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 1, "core": 3, "frontThigh": 1},
   "description": "Lying on your back holding light dumbbells straight up over your shoulders, knees bent over your hips, lower one arm overhead and the opposite leg toward the floor, then return and switch.",
   "source": {
     "url": "https://www.strengthlog.com/dead-bugs-with-dumbbells/",

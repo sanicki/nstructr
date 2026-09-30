@@ -8,6 +8,8 @@
   "focus": "Chest and throat",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"lowerBack": 1},
+  "stretches": ["chest", "core"],
   "description": "A backbend lying on your back: lift your chest and let the crown of your head rest lightly on the floor, forearms flat beside you.",
   "source": {
     "url": "https://www.yogajournal.com/poses/fish-pose/",

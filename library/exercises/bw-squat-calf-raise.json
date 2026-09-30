@@ -7,6 +7,7 @@
   "focus": "Thighs, glutes and calves",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 3},
   "description": "A squat that finishes on your toes: sit your hips back into a comfortable squat, stand up through your heels, then rise onto the balls of your feet.",
   "source": {
     "url": "https://support.runna.com/en/articles/6344351-squat-to-calf-raise-exercise-tutorial",

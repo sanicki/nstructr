@@ -8,6 +8,7 @@
   "focus": "Lower abdominals and hip flexors",
   "collections": ["Core"],
   "equipment": ["Bench"],
+  "muscles": {"core": 2, "frontThigh": 3},
   "description": "Lying on a bench with your hips at its end and holding it behind your head, lower your straight legs to about bench level, then lift them until they point to the ceiling.",
   "source": {
     "url": "https://repfitness.com/blogs/training/ab-exercises-on-bench",

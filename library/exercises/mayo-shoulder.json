@@ -8,6 +8,8 @@
   "focus": "Back of the shoulder",
   "collections": ["Stretches"],
   "equipment": [],
+  "muscles": {},
+  "stretches": ["shoulders", "upperBack"],
   "description": "Stretches the back of the shoulder: bring one arm across your body and hold it with the other arm, above or below the elbow.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

@@ -7,6 +7,8 @@
   "category": "Backbend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 2, "lowerBack": 2, "triceps": 3, "frontThigh": 1, "glutes": 2, "backThigh": 2},
+  "stretches": ["shoulders", "chest", "core", "frontThigh"],
   "description": "Full backbend pressing up onto the hands and feet.",
   "source": {
     "url": "https://www.yogajournal.com/poses/upward-bow-or-wheel-pose/",

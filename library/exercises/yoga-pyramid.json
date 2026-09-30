@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"frontThigh": 1, "glutes": 1},
+  "stretches": ["backThigh", "lowerLegs"],
   "description": "Straight-legged split stance folding the torso over the front leg.",
   "source": {
     "url": "https://www.yogajournal.com/poses/intense-side-stretch-pose/",

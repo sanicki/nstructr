@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A supported half squat: holding the back of a chair, bend your knees a little way and come back up, squeezing your buttocks.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",

@@ -8,6 +8,8 @@
   "focus": "Spine and outer hip",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "core", "glutes"],
   "description": "Lying on your back, draw one knee across your body toward the floor while your shoulders stay down and your arms reach wide.",
   "source": {
     "url": "https://www.yogajournal.com/poses/reclining-twist/",

@@ -8,6 +8,7 @@
   "focus": "Core (anti-rotation)",
   "collections": ["Resistance band", "Core"],
   "equipment": ["Resistance band", "Door anchor"],
+  "muscles": {"shoulders": 1, "chest": 1, "core": 3, "glutes": 1},
   "description": "Kneeling tall side-on to a door anchor with the band held at your chest, press your hands straight out in front and hold, resisting the pull, then bring them back.",
   "source": {
     "url": "https://fitbod.me/exercises/full-kneeling-pallof-press",

@@ -8,6 +8,7 @@
   "focus": "Rotator cuff",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 3, "upperBack": 1},
   "description": "Lying on your side with the top elbow bent at your side and a light dumbbell in front of your belly, rotate the forearm up toward the ceiling, keeping the elbow at your side, then lower.",
   "source": {
     "url": "https://exrx.net/WeightExercises/Infraspinatus/DBLyingExternalRotation",

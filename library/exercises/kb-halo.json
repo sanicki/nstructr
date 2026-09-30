@@ -8,6 +8,7 @@
   "focus": "Shoulders, upper back and core",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 3, "upperBack": 2, "triceps": 1, "core": 2},
   "description": "Holding a kettlebell by the horns in front of your chest, circle it slowly around your head, close to it, then the other way.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/394/halo/",

@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Builds the leg strength for everyday life: from sitting on the edge of a chair, lean forward and stand up using your legs, then sit back down slowly.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",

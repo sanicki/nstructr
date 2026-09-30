@@ -8,6 +8,7 @@
   "focus": "Back",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 2, "chest": 1, "upperBack": 3, "biceps": 2},
   "description": "Works the large muscles of the back (the lats): pull the band apart and down from overhead until it passes below your chin.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",

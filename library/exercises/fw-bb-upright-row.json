@@ -8,6 +8,7 @@
   "focus": "Shoulders and upper back",
   "collections": ["Free weights"],
   "equipment": ["Barbell"],
+  "muscles": {"shoulders": 3, "chest": 2, "upperBack": 2, "biceps": 2},
   "description": "Holding a barbell in front of your thighs, hands about shoulder-width apart, pull it straight up to your chest, elbows leading high and out, then lower.",
   "source": {
     "url": "https://www.onepeloton.com/blog/upright-rows",

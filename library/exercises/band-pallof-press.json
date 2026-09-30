@@ -8,6 +8,7 @@
   "focus": "Core (anti-rotation)",
   "collections": ["Resistance band", "Core"],
   "equipment": ["Resistance band", "Door anchor"],
+  "muscles": {"shoulders": 1, "chest": 1, "core": 3, "glutes": 1},
   "description": "Standing side-on to a band anchored at chest height, press your clasped hands straight out from your chest and hold, without letting the band twist you.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/332/standing-anti-rotation-press/",

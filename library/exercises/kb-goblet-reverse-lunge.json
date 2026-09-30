@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Holding a kettlebell at your chest, step one foot back and lower until both knees are bent, then push back up to standing.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/kettlebell-goblet-squat",

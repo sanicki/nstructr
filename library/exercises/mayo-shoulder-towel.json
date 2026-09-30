@@ -7,6 +7,8 @@
   "focus": "Shoulder rotators",
   "collections": ["Stretches"],
   "equipment": ["Towel"],
+  "muscles": {},
+  "stretches": ["shoulders", "triceps"],
   "description": "Stretches the shoulder's internal rotators: a rolled towel held behind your back, top hand pulls up so the lower hand slides up your back.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

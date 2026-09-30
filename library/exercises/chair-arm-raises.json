@@ -8,6 +8,7 @@
   "focus": "Shoulders",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"shoulders": 2, "upperBack": 1},
   "description": "Sitting tall, raise both arms out to the sides and up over your head, then lower them slowly.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",

@@ -8,6 +8,7 @@
   "focus": "Balance",
   "collections": ["Balance"],
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 1, "glutes": 1, "lowerLegs": 2},
   "description": "Walk in a straight line, the heel of one foot just in front of the toes of the other, as if on a tightrope: forward, or backward, putting each foot down with its toes just behind the other heel.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/balance-exercises/",

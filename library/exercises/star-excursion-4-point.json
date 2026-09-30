@@ -5,6 +5,7 @@
   "name": "4-Point Star Excursion",
   "category": "Balance",
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 2, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A simpler star excursion: balancing on one leg, reach the other foot forward, out to the side, straight back and across behind, tapping the floor lightly and coming back to the middle each time.",
   "source": {
     "url": "https://youtu.be/UoMSMdMKfBY",

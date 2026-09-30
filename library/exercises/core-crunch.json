@@ -8,6 +8,7 @@
   "focus": "Abdominals",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 3},
   "description": "Works the stomach muscles: lying on your back with knees bent, curl your head and shoulders up off the floor and lower slowly.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/52/crunch/",

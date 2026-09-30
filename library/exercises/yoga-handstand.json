@@ -7,6 +7,7 @@
   "category": "Balancing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 3, "chest": 1, "upperBack": 2, "triceps": 2, "core": 2},
   "description": "Full inversion balancing on the hands with the body vertical.",
   "source": {
     "url": "https://www.yogajournal.com/poses/handstand/",

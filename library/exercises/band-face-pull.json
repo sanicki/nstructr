@@ -8,6 +8,7 @@
   "focus": "Upper back and rear shoulders",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band", "Door anchor"],
+  "muscles": {"shoulders": 3, "upperBack": 2, "biceps": 1},
   "description": "With a band anchored at face height on a door, pull it toward your face with elbows high and wide, squeezing your shoulder blades, then return.",
   "source": {
     "url": "https://aerobis.com/blogs/fitness/face-pulls-with-resistance-bands",

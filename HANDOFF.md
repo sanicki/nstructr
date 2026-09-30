@@ -377,6 +377,29 @@ equipment. Checked against `schema/progressions.schema.json`; bundled into `libr
 - Research and sources: `docs/progressions.md`; placing a new exercise is step 4 of the `exercise-research` skill,
   and `node tools/research.cjs report <id>` shows its links or the likely ones.
 
+### 5.5 Muscle groups (`muscles`, `stretches`, Sep 2026)
+
+What an exercise works, in 11 groups: `shoulders`, `chest`, `upperBack` (lats, traps, rhomboids, neck), `lowerBack`,
+`biceps` (and forearms, grip), `triceps`, `core`, `frontThigh` (quads, hip flexors, inner thigh), `glutes` (outer hip
+too), `backThigh` (hamstrings), `lowerLegs` (calves, shins).
+```json
+"muscles": {"core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
+"stretches": ["frontThigh"]
+```
+- `muscles`: 3 primary (what it's for), 2 secondary (helps move the load), 1 stabilizer (holds you steady); a group it
+  doesn't work is left out; `{}` for none (Corpse Pose). **Required on library exercises** (the build fails without);
+  optional on a user's own. `stretches`: the groups it lengthens (a foam roller: the rolled group), in the same order.
+- Library files get them from `tools/muscles.cjs` (movement patterns with their sources, plus each exercise's changes;
+  `node tools/muscles.cjs` writes the fields, one line, after `equipment`, and `docs/muscles.md`; `check` only
+  compares). Ratings follow ExRx's target / synergist / stabilizer; rules and judgment calls: `docs/muscles.md`.
+- The build **warns** when most of an equipment group is for a muscle group (3) and one member doesn't work it.
+- A user's copy (`basedOn`) carries its original's ratings (copied with it; one without shows its original's).
+- The exercise page's About shows them (`src/app/2-muscles.js`): a front and back outline of the figure, each group
+  filled by rating (`--mg-1`…`--mg-3` in `src/head.html`: lighter to darker in the light theme, darker to brighter in
+  the dark one, so the order reads in greyscale), stretched groups outlined in dashed blue (`--mg-stretch`), a legend,
+  and a list under seven headings (arms, shoulders, chest, back, core, upper legs and glutes, lower legs). Test:
+  `tools/e2e/muscles.py`.
+
 ---
 
 ## 6. How playback works (engine pipeline)
@@ -704,7 +727,8 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   Sep 2026): the rep/hold label on the figure (`#repChip` "Rep 3", `#holdChip` "Hold 0:20") and the progress bar under
   it (`.progress`, `#progressBar`); they're still built, and `EX_SHOW_COUNT` / `EX_SHOW_PROGRESS` in
   `src/app/1-engine.js` (and the bar's `hidden` in `src/body.html`) bring them back. The details are part of
-  the page, below the controls (on screens ≥ 840 px a right-hand column): **About** (description, chips), **How to
+  the page, below the controls (on screens ≥ 840 px a right-hand column): **About** (description, chips, **Muscles** map §5.5,
+  Variations §5.4), **How to
   do it** (setup, form, then the time estimate "About N s per round, each side", the source link and note, and the
   prescription note),
   **Steps (n)** (collapsed), and the editor when open.
@@ -956,7 +980,7 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
       `library/progressions.json`, shown on the exercise page, swapped in the workout editor and, for a session, in
       the player. Knee Plank and Single-Leg Glute Bridge were added to fill gaps (`tools/variants/batch-24-links.cjs`).
 
-### Muscle groups (agreed with the owner, Sep 2026; not started)
+### Muscle groups (agreed with the owner, Sep 2026; data and exercise page done, §5.5)
 
 - **Ratings**: each exercise rates each group 0–3 (ExRx's classification): 3 primary (what it's for), 2 secondary (helps
   move the load), 1 stabilizer (holds you steady), 0 not worked. Stretched groups are listed separately. New fields,
@@ -982,8 +1006,10 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
   green below 2, amber 2–5, red above 5, to be tested on the library workouts before they're fixed. It's an estimate
   (the app can't know the weight or effort); the ACSM recommends 8–12 reps for most adults and 10–15 for beginners and
   older adults.
-- **Phasing**: a mockup; then the data, the build check and the exercise page map; then workout totals (card, editor),
-  an indicator on exercise cards, a muscle filter on the Exercises tab, and Create with AI "a workout for my back".
+- **Phasing**: ✅ a mockup (approved: the figure, the dark theme's salmon, primary = red); ✅ the data for all 354
+  exercises, the build check and the exercise page map (§5.5); then workout totals (card, editor), an indicator on
+  exercise cards, a muscle filter on the Exercises tab, Create with AI "a workout for my back", and the fields in Edit
+  and the AI prompt.
 
 ### Agreed next (Sep 2026, in this order)
 

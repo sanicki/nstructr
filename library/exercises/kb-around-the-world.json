@@ -8,6 +8,7 @@
   "focus": "Core, grip and shoulders",
   "collections": ["Free weights", "Warm-up"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 2, "upperBack": 1, "biceps": 2, "core": 3},
   "description": "Standing tall with a kettlebell, pass it from hand to hand in a circle round your waist, in front and behind, keeping your hips and chest still.",
   "source": {
     "url": "https://www.onnit.com/blogs/the-edge/the-kettlebell-around-the-world-exercise-explained",

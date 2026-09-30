@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"core": 1, "frontThigh": 1},
+  "stretches": ["backThigh"],
   "description": "Seated with the legs straight out and the spine tall.",
   "source": {
     "url": "https://www.yogajournal.com/poses/staff-pose/",

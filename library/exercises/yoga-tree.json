@@ -7,6 +7,8 @@
   "category": "Balancing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"core": 1, "frontThigh": 1, "glutes": 2, "lowerLegs": 2},
+  "stretches": ["frontThigh"],
   "description": "Standing balance with one foot pressed into the opposite inner thigh.",
   "source": {
     "url": "https://www.yogajournal.com/poses/tree-pose-2/",

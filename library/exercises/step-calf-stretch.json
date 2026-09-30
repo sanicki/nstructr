@@ -8,6 +8,8 @@
   "focus": "Calves",
   "collections": ["Stretches"],
   "equipment": ["Step", "Wall"],
+  "muscles": {},
+  "stretches": ["lowerLegs"],
   "description": "Standing with the balls of your feet on the edge of a step and a hand on the wall, let your heels sink below the step until you feel a stretch in the calves.",
   "source": {
     "url": "https://www.onepeloton.com/blog/best-calf-stretches",

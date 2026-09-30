@@ -8,6 +8,8 @@
   "focus": "Spine",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["lowerBack", "core"],
   "description": "Sitting tall with your arms crossed on your chest, turn your upper body slowly to one side and then the other, hips still.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",

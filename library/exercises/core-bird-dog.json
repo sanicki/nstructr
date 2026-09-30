@@ -8,6 +8,7 @@
   "focus": "Core and lower back",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"shoulders": 1, "lowerBack": 3, "core": 3, "glutes": 2},
   "description": "A stability exercise on hands and knees: reach one arm forward and the opposite leg back, hold, and return without twisting.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/14/bird-dog/",

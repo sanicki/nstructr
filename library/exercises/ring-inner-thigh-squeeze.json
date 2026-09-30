@@ -8,6 +8,7 @@
   "focus": "Inner thighs and core",
   "collections": ["Pilates"],
   "equipment": ["Pilates ring"],
+  "muscles": {"core": 1, "frontThigh": 3},
   "description": "Lying on your back with your knees bent and a Pilates ring between your thighs, squeeze the ring with your inner thighs, hold, and release slowly.",
   "source": {
     "url": "https://blog.alomoves.com/movement/12-pilates-ring-exercises-for-beginners",

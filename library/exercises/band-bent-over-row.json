@@ -8,6 +8,7 @@
   "focus": "Upper back",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 3, "lowerBack": 1, "biceps": 2, "triceps": 1, "core": 1},
   "description": "Standing on the middle of a band and hinged forward with a flat back, pull the ends toward your lower ribs, then lower them.",
   "source": {
     "url": "https://workoutlabs.com/exercise-guide/resistance-band-bent-over-rows/",

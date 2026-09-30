@@ -8,6 +8,7 @@
   "focus": "Hamstrings, glutes and core",
   "collections": ["Core", "Bodyweight"],
   "equipment": ["Stability ball"],
+  "muscles": {"lowerBack": 1, "core": 2, "glutes": 2, "backThigh": 3, "lowerLegs": 1},
   "description": "Lying on your back with your heels on a stability ball, lift your hips, then pull your heels in to roll the ball toward you and straighten your legs to roll it back, hips up throughout.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/59/stability-ball-hamstring-curl/",

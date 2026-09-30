@@ -8,6 +8,8 @@
   "focus": "Neck",
   "collections": ["Stretches"],
   "equipment": [],
+  "muscles": {},
+  "stretches": ["upperBack"],
   "description": "Gentle neck stretch: tip your head forward and slightly to one side, and let that hand add a light pull.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

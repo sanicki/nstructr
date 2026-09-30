@@ -8,6 +8,8 @@
   "focus": "Hips",
   "collections": ["Warm-up"],
   "equipment": ["Wall"],
+  "muscles": {"frontThigh": 1, "glutes": 1, "backThigh": 1},
+  "stretches": ["frontThigh", "backThigh"],
   "description": "Standing side-on to a wall with one hand on it, swing the outside leg forward and back in a smooth, relaxed arc.",
   "source": {
     "url": "https://www.healthline.com/health/exercise-fitness/dynamic-stretching",

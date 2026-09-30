@@ -8,6 +8,7 @@
   "focus": "Chest, shoulders and arms",
   "collections": ["Bodyweight"],
   "equipment": ["Wall"],
+  "muscles": {"shoulders": 2, "chest": 3, "lowerBack": 1, "biceps": 1, "triceps": 2, "core": 1, "frontThigh": 1},
   "description": "The gentlest push-up: lean into a wall with straight arms, then bend your elbows to bring your chest toward it and push back.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",

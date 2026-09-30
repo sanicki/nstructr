@@ -8,6 +8,7 @@
   "focus": "Front of the shoulders",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 3, "chest": 2, "upperBack": 2},
   "description": "Standing tall, lift a dumbbell in each hand straight forward to shoulder height, arms almost straight, then lower slowly.",
   "source": {
     "url": "https://www.endomondo.com/exercise/dumbbell-front-raise",

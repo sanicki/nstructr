@@ -61,10 +61,28 @@ Scroll down for the details:
 
 <img src="images/exercise-details.png" width="300" alt="About, How to do it with the time per round and the source, and Steps">
 
-- **About**: what it is, what it works, its type and suggested reps, and its **Variations** (below).
+- **About**: what it is, what it works, its type and suggested reps, the **Muscles** it works (below) and its
+  **Variations** (below).
 - **How to do it**: setup and form cues, then roughly how long one round takes (and whether that's for each
   side), where the description comes from, and any note on reps.
 - **Steps**: every step in order (tap one to jump the figure to it).
+
+### Muscles: what it works and stretches
+
+About shows which muscle groups an exercise works on a front and back outline of the figure:
+
+<img src="images/exercise-muscles.png" width="300" alt="Muscles worked and stretched for the Bulgarian Split Squat: front of thighs primary and stretched, glutes and lower legs secondary, others stabilizers">
+
+- **Primary** (red): what the exercise is for. **Secondary** (amber): muscles that help move the load.
+  **Stabilizer** (green): muscles that hold you steady. Unfilled: not worked.
+- A **dashed blue outline**: that group is stretched.
+- The list below the figure says the same in words, under Arms, Shoulders, Chest, Back, Core, Upper legs and glutes,
+  and Lower legs. The colours get darker the more a muscle works (brighter in the dark theme).
+- Eleven groups: shoulders, chest, upper back, lower back, biceps and forearms, triceps, core, front of thighs (with the
+  hip flexors and inner thighs), glutes (with the outer hips), back of thighs and lower legs.
+- The ratings are research, not measurement: they follow [ExRx](https://exrx.net)'s target, synergist and stabilizer
+  muscles for strength exercises, and each pose's or stretch's own source otherwise. Your own exercises don't have
+  them yet; a copy of a library exercise keeps its original's.
 
 ### Variations: easier, harder, other equipment
 

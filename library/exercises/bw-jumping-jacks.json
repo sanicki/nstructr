@@ -8,6 +8,7 @@
   "focus": "Whole body (cardio)",
   "collections": ["Warm-up", "Bodyweight"],
   "equipment": [],
+  "muscles": {"shoulders": 2, "core": 1, "frontThigh": 2, "glutes": 2, "lowerLegs": 3},
   "description": "Jump your feet apart while swinging your arms overhead, then jump them back together as your arms come down, in a steady rhythm.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/jumping-jacks",

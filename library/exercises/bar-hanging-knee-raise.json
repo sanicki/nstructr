@@ -8,6 +8,7 @@
   "focus": "Core (lower abs) and hip flexors",
   "collections": ["Core", "Bodyweight"],
   "equipment": ["Pull-up bar"],
+  "muscles": {"shoulders": 1, "upperBack": 1, "biceps": 2, "core": 2, "frontThigh": 3},
   "description": "Hanging from a bar, lift your knees to hip height by curling your pelvis up, then lower them slowly without swinging.",
   "source": {
     "url": "https://www.strengthlog.com/hanging-knee-raise/",

@@ -8,6 +8,8 @@
   "focus": "Legs and hip flexors",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 1, "lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
+  "stretches": ["frontThigh"],
   "description": "A high lunge on the ball of the back foot: front knee bent over the ankle, back leg long, arms reaching up.",
   "source": {
     "url": "https://www.yogajournal.com/poses/high-lunge-crescent-variation/",

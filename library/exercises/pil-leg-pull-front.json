@@ -8,6 +8,7 @@
   "focus": "Core and shoulders",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"shoulders": 2, "triceps": 1, "core": 3, "frontThigh": 1, "glutes": 2, "backThigh": 1},
   "description": "From a straight-arm plank, lift one straight leg a little way and lower it, keeping your hips and shoulders completely still.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-leg-pull-front/",

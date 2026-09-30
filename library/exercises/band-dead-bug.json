@@ -8,6 +8,7 @@
   "focus": "Deep core",
   "collections": ["Resistance band", "Core"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 1, "core": 3, "frontThigh": 1},
   "description": "Lying on your back with a band looped round both feet, knees bent over your hips and arms up, straighten one leg and reach the opposite arm overhead against the band, then return and switch.",
   "source": {
     "url": "https://au.physitrack.com/home-exercise-video/resisted-dead-bugs",

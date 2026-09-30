@@ -8,6 +8,7 @@
   "focus": "Abdominals and hip flexors",
   "collections": ["Free weights", "Core"],
   "equipment": ["Medicine ball"],
+  "muscles": {"shoulders": 1, "core": 3, "frontThigh": 2},
   "description": "Lying on your back with a medicine ball between your feet, fold up into a V to pass it to your hands, lower with it overhead, then fold up again and pass it back to your feet.",
   "source": {
     "url": "https://shiftmovementscience.com/video-quick-tip-medball-v-up-passes/",

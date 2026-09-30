@@ -8,6 +8,7 @@
   "focus": "Glutes and hamstrings",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 2, "frontThigh": 1, "glutes": 3, "backThigh": 2},
   "description": "Lying on your back with one foot flat and the other leg straight, thighs level, push through the heel on the floor to lift your hips, then lower. Harder than the two-legged Glute Bridge.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/145/glute-bridge-single-leg-progression/",

@@ -8,6 +8,7 @@
   "focus": "Glutes and hamstrings",
   "collections": ["Bodyweight"],
   "equipment": ["Chair"],
+  "muscles": {"lowerBack": 1, "core": 1, "glutes": 3, "backThigh": 2},
   "description": "Works the back of the thigh and the buttock: holding the back of a chair, lift one straight leg behind you without arching your back.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",

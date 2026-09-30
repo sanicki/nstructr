@@ -8,6 +8,8 @@
   "focus": "Back of the thighs",
   "collections": ["Stretches", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["backThigh"],
   "description": "Sitting near the front of a chair with one leg straight out and the heel on the floor, keep your back long and lean forward from the hips until you feel a stretch behind the thigh.",
   "source": {
     "url": "https://exrx.net/Stretches/Hamstrings/SeatedChairSingleLeg",

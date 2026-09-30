@@ -8,6 +8,7 @@
   "focus": "Hips and lower back",
   "collections": ["Warm-up", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"core": 1, "frontThigh": 1, "glutes": 1},
   "description": "Standing behind a chair with your hands on its back, circle your hips slowly: forward, to one side, back and to the other side.",
   "source": {
     "url": "https://www.onemedical.com/blog/exercise-fitness/hip-strengthening-exercises-for-seniors/",

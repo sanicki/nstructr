@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes, balance",
   "collections": ["Bodyweight", "Balance"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 2, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Balancing on one leg with the other held straight out in front, squat down as low as you can control, then stand back up on the same leg.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/single-leg-squat",

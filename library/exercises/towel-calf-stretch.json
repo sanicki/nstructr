@@ -8,6 +8,8 @@
   "focus": "Calves",
   "collections": ["Stretches"],
   "equipment": ["Towel"],
+  "muscles": {},
+  "stretches": ["lowerLegs"],
   "description": "Sitting with your legs straight and a towel round the ball of one foot, pull the towel to draw your toes toward you until you feel a stretch in the calf.",
   "source": {
     "url": "https://www.physitrack.com/exercise-library/how-to-perform-seated-calf-stretch",

@@ -7,6 +7,8 @@
   "category": "Balancing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 1, "upperBack": 1, "lowerBack": 2, "core": 2, "frontThigh": 1, "glutes": 3, "backThigh": 2, "lowerLegs": 2},
+  "stretches": ["backThigh"],
   "description": "Balance on one leg with the torso and lifted leg level with the floor.",
   "source": {
     "url": "https://www.yogajournal.com/poses/warrior-iii-pose/",

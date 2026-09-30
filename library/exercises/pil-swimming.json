@@ -7,6 +7,7 @@
   "focus": "Back and glutes",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"shoulders": 2, "upperBack": 1, "lowerBack": 3, "core": 1, "glutes": 2, "backThigh": 2},
   "description": "Lying face down with arms and legs lifted, flutter opposite arm and leg up and down as if swimming.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-swimming/",

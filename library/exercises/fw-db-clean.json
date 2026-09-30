@@ -8,6 +8,7 @@
   "focus": "Hips, shoulders and grip (power)",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 2, "upperBack": 2, "lowerBack": 2, "biceps": 1, "core": 1, "frontThigh": 2, "glutes": 3, "backThigh": 2, "lowerLegs": 2},
   "description": "Holding a dumbbell in one hand, hinge to bring it between your knees, then drive your hips forward and pull it up close to your body, catching it at your shoulder.",
   "source": {
     "url": "https://www.builtlean.com/single-arm-dumbbell-clean/",

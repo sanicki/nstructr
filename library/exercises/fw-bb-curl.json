@@ -8,6 +8,7 @@
   "focus": "Front of the upper arms",
   "collections": ["Free weights"],
   "equipment": ["Barbell"],
+  "muscles": {"shoulders": 1, "upperBack": 1, "biceps": 3},
   "description": "A biceps curl with a barbell: holding it with palms up at shoulder width, bend your elbows to lift it toward your shoulders, then lower it slowly.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/standing-barbell-curl.html",

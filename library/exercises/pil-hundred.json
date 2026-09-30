@@ -7,6 +7,7 @@
   "focus": "Deep core",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"shoulders": 1, "core": 3, "frontThigh": 2},
   "description": "The classic Pilates warm-up: head and shoulders curled up, legs raised, pump your straight arms up and down in small beats while you breathe.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-hundred/",

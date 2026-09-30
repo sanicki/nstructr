@@ -8,6 +8,8 @@
   "focus": "Spine and chest",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"lowerBack": 2, "triceps": 1},
+  "stretches": ["chest", "core"],
   "description": "A gentle backbend lying face down: with hands under your shoulders, lift your chest while your hips and legs stay on the floor.",
   "source": {
     "url": "https://www.yogajournal.com/poses/cobra-pose/",

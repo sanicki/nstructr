@@ -7,6 +7,8 @@
   "category": "Hands & wrists",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 2, "lowerBack": 2, "triceps": 2, "core": 1, "glutes": 3, "backThigh": 2},
+  "stretches": ["shoulders", "chest"],
   "description": "Face-up plank with the hands under the shoulders and the hips lifted.",
   "source": {
     "url": "https://www.yogajournal.com/poses/upward-plank-pose-2/",

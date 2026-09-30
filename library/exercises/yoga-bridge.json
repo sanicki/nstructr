@@ -7,6 +7,8 @@
   "category": "Backbend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"lowerBack": 2, "core": 1, "glutes": 3, "backThigh": 2},
+  "stretches": ["chest", "frontThigh"],
   "description": "Lying on the back with the feet planted, lift the hips toward the ceiling.",
   "source": {
     "url": "https://www.yogajournal.com/poses/bridge-pose/",

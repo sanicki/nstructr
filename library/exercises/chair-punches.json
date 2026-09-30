@@ -8,6 +8,7 @@
   "focus": "Arms, shoulders and core",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"shoulders": 3, "chest": 2, "triceps": 2, "core": 1},
   "description": "Sitting tall on a chair with your fists up in front of your face, punch one fist forward, and as it comes back, punch the other.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/chair-based-exercises/5-more-chair-based-exercises",

@@ -8,6 +8,8 @@
   "focus": "Ankles",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"lowerLegs": 1},
+  "stretches": ["lowerLegs"],
   "description": "Improves ankle flexibility and helps circulation: with one leg straightened off the floor, point the toes away and then pull them back toward you.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",

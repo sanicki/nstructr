@@ -8,6 +8,7 @@
   "focus": "Core and hips (balance)",
   "collections": ["Core", "Balance"],
   "equipment": ["Stability ball"],
+  "muscles": {"core": 2, "frontThigh": 3, "glutes": 1},
   "description": "Sitting tall on a stability ball with your feet flat, lift one foot a little off the floor and set it down, then the other, keeping the ball still.",
   "source": {
     "url": "https://us.physitrack.com/home-exercise-video/seated-marching-on-stability-ball",

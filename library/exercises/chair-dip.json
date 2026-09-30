@@ -8,6 +8,7 @@
   "focus": "Backs of the arms",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 1, "triceps": 3},
   "description": "Strengthens the triceps: hands on the front edge of a chair seat behind you, bend your elbows to lower your hips, then press back up.",
   "source": {
     "url": "https://www.healthline.com/health/chair-dips",

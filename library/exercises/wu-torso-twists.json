@@ -8,6 +8,8 @@
   "focus": "Spine",
   "collections": ["Warm-up"],
   "equipment": [],
+  "muscles": {"core": 1},
+  "stretches": ["lowerBack", "core"],
   "description": "Standing with feet shoulder-width apart and arms out at shoulder height, turn your upper body from side to side, hips facing forward.",
   "source": {
     "url": "https://www.healthline.com/health/exercise-fitness/dynamic-stretching",
