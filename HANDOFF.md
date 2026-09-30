@@ -409,9 +409,10 @@ too), `backThigh` (hamstrings), `lowerLegs` (calves, shins).
   workouts come out mostly amber, red for what each is for (Pilates core 11.9, kettlebell glutes 8.4) and yoga green.
   Shown on a workout card (a small map and the three groups worked most) and in the editor ("Muscles worked",
   collapsed: map, scale, each group's number).
-- **Exercise cards** carry a small map (`muscleMini`: one shared `<symbol id="mgFig">`, each card setting `--m-<group>`
-  colours, so 354 cards stay light; `.results>.pose-card` use `content-visibility: auto`, which also made the tab
-  faster than before); the card's label adds "Works …" (its primary groups) for screen readers.
+- **Exercise cards** have no map (a small one in the corner came out with the owner's review, Sep 2026); the card's
+  label adds "Works …" (its primary groups) for screen readers. `.results>.pose-card` use `content-visibility: auto`
+  (added with that map, kept: the long list renders faster).
+- The outline's head and neck are drawn like an unworked part (`--mg-empty`, `--mg-line`), not solid (owner, Sep 2026).
 - **Muscle filter** (Exercises tab, `E.muscle`): the seven headings; an exercise matches when a group under it is
   primary or stretched (secondary too put a third of the library under Back). Search also matches primary and
   secondary group names (the Exercises tab and Add exercises).

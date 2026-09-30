@@ -6,7 +6,7 @@ from playwright.async_api import async_playwright
 # list under the seven headings); stretched groups outlined; a copy without ratings shows its original's; the user's
 # own exercise without ratings has no section; the dark theme uses the dark colours; fits the cover screen.
 # Then (PR 3): a workout's total (set-equivalents) on its card and in the editor; the small map on exercise cards;
-# the muscle filter; muscle fields in Edit details (a library exercise becomes a copy); imports drop bad ratings;
+# the muscle filter (no maps on exercise cards: owner, Sep 2026); muscle fields in Edit details (a library exercise becomes a copy); imports drop bad ratings;
 # Create with AI's muscle chips and the plan's muscle words.
 async def main():
     async with async_playwright() as p:
@@ -48,7 +48,7 @@ async def main():
         # --- exercise cards and filter
         await pg.goto(URL + '#/exercises'); await pg.wait_for_timeout(400)
         await pg.evaluate("E.coll = 'All'; E.muscle = 'All'; renderExplore()")
-        print('cards with a mini map     ', await pg.evaluate("[document.querySelectorAll('#exploreBody .pose-card .mg-mini').length, document.querySelectorAll('#exploreBody .pose-card').length]"), '(expect a mini map on nearly every card)')
+        print('no mini maps on cards     ', await pg.evaluate("document.querySelectorAll('#exploreBody .pose-card svg.mg-map').length"), '(expect 0)')
         print('card label says works     ', await pg.evaluate("$('#exploreBody [data-open=bw-squat]').textContent.replace(/\s+/g, ' ').trim()"))
         await pg.click('#fMuscle [data-muscle="Chest"]'); await pg.wait_for_timeout(200)
         print('chest filter              ', await pg.evaluate("[$('#fMuscle [aria-pressed=true]').textContent, [...document.querySelectorAll('#exploreBody .pose-card')].every(c => worksHeading(exById(c.dataset.open), 'Chest')), document.querySelectorAll('#exploreBody .pose-card').length]"))

@@ -55,7 +55,7 @@ function thumbFor(ex) {
 function card(ex) {
   return `<button class="pose-card stateful" data-open="${esc(ex.id)}">
     ${thumbFor(ex)}${isBookmarked(ex.id) ? '<span class="badge" title="Bookmarked"><span class="icon fill">bookmark</span></span>' : ''}
-    ${muscleMini(ex)}<span class="t title-small">${esc(ex.name)}</span>
+    <span class="t title-small">${esc(ex.name)}</span>
     <span class="meta body-small">${esc(otherNames(ex)[0] || typeOf(ex))}</span>${worksText(ex) ? `<span class="visually-hidden">. ${esc(worksText(ex))}</span>` : ''}</button>`;
 }
 const chip = (attr, val, on, label = val) =>
