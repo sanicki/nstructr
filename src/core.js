@@ -514,6 +514,15 @@ function frameAt(a, b, e, seg) {
       const th = root1D(x => { pose['ankle' + s] = x; const Q = fkAt(pose, seg, pos)['toe' + s]; return Q.y - supportAt(Q) - 0.25; }, a0, 120, 2);
       pose['ankle' + s] = th == null ? a0 : th;
     }
+    // a hand planted on the same spot at both ends (the hand under a Turkish get-up) stays on it: the arm reaches back
+    if (!rolls.length) {
+      const A = worldOf(a, seg), B = worldOf(b, seg);
+      for (const ch of CHAINS) {
+        const tip = ch.tip + ch.s;
+        if (ch.root !== 'shoulder' || pinned.includes(tip) || V3.dist(A[tip], B[tip]) > 2 || A[tip].y - supportAt(A[tip]) > 3) continue;
+        reachTip(pose, seg, pos, ch, A[tip], 1);
+      }
+    }
     // toes resting on the same spot of a raised surface at both ends (the back foot on a bench) stay on it: the leg
     // reaches so the toe lands back where it was (twice, since moving the ankle moves the toe too)
     const A = worldOf(a, seg), B = worldOf(b, seg);

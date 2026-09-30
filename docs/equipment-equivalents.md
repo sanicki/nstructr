@@ -61,6 +61,8 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Dead Bug | ⏳ Dumbbell Dead Bug · ⏳ Band Dead Bug |
 | Bird Dog | ⏳ Banded Bird Dog |
 | Plank, Forearm Side Plank, Superman | ⏳ Plank with feet on a bench; — otherwise |
+| Turkish Get-Up (batch 18) | ⏳ Dumbbell Turkish Get-Up · ⏳ Bodyweight Get-Up (a fist up, or a shoe balanced on it, to learn it) |
+| Kettlebell Clean (batch 18) | ⏳ Dumbbell Clean (one arm) |
 | Kettlebell Around the World (batch 18) | ⏳ Medicine Ball Around the World (the same pass with a ball); a dumbbell held by one end works too but isn't a common name |
 
 ## Door anchor (batch 7)
