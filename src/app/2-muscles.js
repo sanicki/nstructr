@@ -77,17 +77,6 @@ function workoutMusclesHTML(w, compact) {
   return `${fig}${MG_SCALE}<p class="body-small muted mg-note">Estimated work, in sets: green up to 2, amber 2–5, red above 5. A set near the suggested reps counts 1; muscles that help count ½, those that steady you ¼; stretches don't count.${unrated ? ` ${plural(unrated, { one: '# exercise has', other: '# exercises have' })} no muscle ratings.` : ''}</p>
     <ul class="mg-list body-medium">${list}</ul>`;
 }
-/* the small map on an exercise card (no words; the card's label says what it works): one shared outline (a
-   <symbol>, added once) coloured through CSS variables, so 354 cards stay light */
-function muscleMini(ex) {
-  const r = musclesOf(ex); if (!r || !Object.keys(r.muscles).length) return '';
-  if (!document.getElementById('mgFig')) {
-    const fig = muscleFigure(g => `var(--m-${g}, var(--mg-empty))`, () => false, '').replace(/<text[^>]*>[^<]*<\/text>/g, '')
-      .replace(/^<svg[^>]*>/, '<symbol id="mgFig" viewBox="0 8 400 296">').replace(/<\/svg>$/, '</symbol>');
-    document.body.insertAdjacentHTML('beforeend', `<svg class="mg-sym" width="0" height="0" style="position:absolute" aria-hidden="true">${fig}</svg>`);
-  }
-  return `<svg class="mg-mini" viewBox="0 8 400 296" aria-hidden="true" style="${Object.entries(r.muscles).map(([g, v]) => `--m-${g}:var(--mg-${v})`).join(';')}"><use href="#mgFig"/></svg>`;
-}
 /* "Works the front of thighs and glutes" for a card's label */
 function worksText(ex) {
   const r = musclesOf(ex); if (!r) return '';
@@ -116,7 +105,7 @@ function muscleFigure(fill, stretched, label) {
          <line x1="${X(100)}" y1="140" x2="${X(100)}" y2="164" stroke="var(--mg-line)" stroke-width="1.5"/>`;
     const shoulders = [-1, 1].map(d => `<circle cx="${X(100 + d * 25)}" cy="68" r="11" ${attrs('shoulders')}/>`).join('');
     return `${leg(-1)}${leg(1)}${arm(-1)}${arm(1)}${torso}${shoulders}
-      <rect x="${X(95)}" y="44" width="10" height="16" rx="4" fill="var(--md-on-surface)"/><circle cx="${X(100)}" cy="30" r="17" fill="var(--md-on-surface)"/>
+      <rect x="${X(95)}" y="44" width="10" height="16" rx="4" fill="var(--mg-empty)" stroke="var(--mg-line)" stroke-width="1.5"/><circle cx="${X(100)}" cy="30" r="17" fill="var(--mg-empty)" stroke="var(--mg-line)" stroke-width="1.5"/>
       <text x="${X(100)}" y="318" text-anchor="middle" font-size="13" fill="var(--md-on-surface-variant)">${front ? 'Front' : 'Back'}</text>`;
   };
   return `<svg class="mg-map" viewBox="0 0 400 326" role="img" aria-label="${esc(label)}">${view(true, 0)}${view(false, 200)}</svg>`;
