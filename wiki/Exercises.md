@@ -15,6 +15,10 @@ The **Exercises** tab is the library: 354 exercises, each animated step by step,
 - The **equipment** row narrows the list to exercises that use, for example, a resistance band or a chair. Your
   equipment choice stays when you switch collections. Capital letters don't matter: an imported exercise that says
   "resistance band" is listed under Resistance band.
+- The **muscles** row (Arms, Shoulders, Chest, Back, Core, Upper legs and glutes, Lower legs) lists the exercises
+  that are mainly for those muscles, or stretch them.
+- Each card has a small **muscle map** in its top corner: the same front and back figure as on the exercise page
+  (red primary, amber secondary, green stabilizer), so you can see at a glance what it works.
 - **Group by collection** (under the filters, for *All collections*; off at first, and remembered):
   - **on**: with nothing filtered, a shelf per collection (**See all** opens one); with a search or filter, the
     matches under each collection they're in;
@@ -81,8 +85,10 @@ About shows which muscle groups an exercise works on a front and back outline of
 - Eleven groups: shoulders, chest, upper back, lower back, biceps and forearms, triceps, core, front of thighs (with the
   hip flexors and inner thighs), glutes (with the outer hips), back of thighs and lower legs.
 - The ratings are research, not measurement: they follow [ExRx](https://exrx.net)'s target, synergist and stabilizer
-  muscles for strength exercises, and each pose's or stretch's own source otherwise. Your own exercises don't have
-  them yet; a copy of a library exercise keeps its original's.
+  muscles for strength exercises, and each pose's or stretch's own source otherwise. A copy of a library exercise
+  keeps its original's. Set or change them in **Edit** (Name, description, instructions and muscles); an exercise made
+  with Create with AI comes with them.
+- A workout adds up what its exercises work: see [Workouts](Workouts.md#muscles-worked).
 
 ### Variations: easier, harder, other equipment
 

@@ -399,6 +399,28 @@ too), `backThigh` (hamstrings), `lowerLegs` (calves, shins).
   the dark one, so the order reads in greyscale), stretched groups outlined in dashed blue (`--mg-stretch`), a legend,
   and a list under seven headings (arms, shoulders, chest, back, core, upper legs and glutes, lower legs). Test:
   `tools/e2e/muscles.py`.
+- **A workout's total** (`workoutMuscles`, `src/app/2-muscles.js`), per group in set-equivalents: each set counts
+  toward a sweet spot (`sweetSpot`: the prescription's reps, the first "a–b" after any "3 sets of"; 12–15 when there
+  are none; 30–60 s for a timed exercise): below it amount / low end, in it 1, above it `1 + ½(1 − e^(−0.916·(amount −
+  high) / high))` (1.3 at twice the high end, at most 1½). Direction "both"/"alternate" doubles the amount (it does the
+  reps both ways); × the block's rounds; × ½ for one side only (each side's muscles get their own sets, so "both" is
+  × 1); × 1 primary, ½ secondary, ¼ stabilizer. Stretches don't count. Colours (`mgScale`): green to 2, amber 2–5, red
+  above 5 (to 8), a gradient within each (`color-mix` of the `--mg-g0`…`--mg-r1` stops). The library's 20-minute
+  workouts come out mostly amber, red for what each is for (Pilates core 11.9, kettlebell glutes 8.4) and yoga green.
+  Shown on a workout card (a small map and the three groups worked most) and in the editor ("Muscles worked",
+  collapsed: map, scale, each group's number).
+- **Exercise cards** carry a small map (`muscleMini`: one shared `<symbol id="mgFig">`, each card setting `--m-<group>`
+  colours, so 354 cards stay light; `.results>.pose-card` use `content-visibility: auto`, which also made the tab
+  faster than before); the card's label adds "Works …" (its primary groups) for screen readers.
+- **Muscle filter** (Exercises tab, `E.muscle`): the seven headings; an exercise matches when a group under it is
+  primary or stretched (secondary too put a third of the library under Back). Search also matches primary and
+  secondary group names (the Exercises tab and Add exercises).
+- **Edit** (Name, description, instructions and muscles): a rating and a Stretched toggle per group (`muscleForm`).
+- **Import** keeps only known groups rated 1–3 and known stretched groups (`cleanMuscles`; they go into SVG).
+- **Create with AI**: the exercise format asks for `muscles` and `stretches` (ExRx's target / synergist / stabilizer);
+  a plan's library lines say what each exercise mainly works (`planWorks`: up to two primary groups, or what it
+  stretches; short, the prompt goes in a link) and **Muscles to work** chips (`AI_MUSCLES`, the seven headings) add
+  "Work mainly my …" to the goal.
 
 ---
 
@@ -980,7 +1002,7 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
       `library/progressions.json`, shown on the exercise page, swapped in the workout editor and, for a session, in
       the player. Knee Plank and Single-Leg Glute Bridge were added to fill gaps (`tools/variants/batch-24-links.cjs`).
 
-### Muscle groups (agreed with the owner, Sep 2026; data and exercise page done, §5.5)
+### Muscle groups (agreed with the owner, Sep 2026; done, §5.5)
 
 - **Ratings**: each exercise rates each group 0–3 (ExRx's classification): 3 primary (what it's for), 2 secondary (helps
   move the load), 1 stabilizer (holds you steady), 0 not worked. Stretched groups are listed separately. New fields,
@@ -1007,9 +1029,10 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
   (the app can't know the weight or effort); the ACSM recommends 8–12 reps for most adults and 10–15 for beginners and
   older adults.
 - **Phasing**: ✅ a mockup (approved: the figure, the dark theme's salmon, primary = red); ✅ the data for all 354
-  exercises, the build check and the exercise page map (§5.5); then workout totals (card, editor), an indicator on
+  exercises, the build check and the exercise page map (§5.5); ✅ workout totals (card, editor), an indicator on
   exercise cards, a muscle filter on the Exercises tab, Create with AI "a workout for my back", and the fields in Edit
-  and the AI prompt.
+  and the AI prompt. One change from the plan: "× sides" became "each side's muscles get their own sets" (both sides
+  count once, one side only half), since 3 × 10 split squats a leg work each leg's thighs as much as 3 × 10 squats.
 
 ### Agreed next (Sep 2026, in this order)
 

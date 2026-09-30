@@ -3,12 +3,6 @@
 What's still to do, and what's waiting on a decision. Only open items are listed: when something is done or decided it
 comes off this list. How things work, and why past decisions were made, is in [HANDOFF.md](HANDOFF.md).
 
-## Exercises and equipment
-
-- **Muscle groups** (plan in HANDOFF §13; ratings and the exercise page map done, §5.5): a workout's total on its card
-  and editor (thresholds tested on the library workouts first), an indicator on exercise cards, a muscle filter,
-  Create with AI by muscle, and the fields in Edit and the AI prompt.
-
 ## App
 
 - **Workout submissions**: exercises can be submitted to the library; workouts can't yet.

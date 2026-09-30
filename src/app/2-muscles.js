@@ -11,11 +11,88 @@ const MUSCLE_NAMES = { shoulders: 'Shoulders', chest: 'Chest', upperBack: 'Upper
 const MUSCLE_HEADS = [['Arms', ['biceps', 'triceps']], ['Shoulders', ['shoulders']], ['Chest', ['chest']], ['Back', ['upperBack', 'lowerBack']],
   ['Core', ['core']], ['Upper legs and glutes', ['frontThigh', 'glutes', 'backThigh']], ['Lower legs', ['lowerLegs']]];
 const RATING_NAMES = { 3: 'Primary', 2: 'Secondary', 1: 'Stabilizer' };
+/* only known groups with 1–3, only known groups stretched (an imported file can carry anything; these go into SVG) */
+function cleanMuscles(m, st) {
+  const muscles = {}, stretches = MUSCLE_GROUPS.filter(g => Array.isArray(st) && st.includes(g));
+  if (m && typeof m === 'object') for (const g of MUSCLE_GROUPS) if ([1, 2, 3].includes(m[g])) muscles[g] = m[g];
+  return { muscles, stretches };
+}
 function musclesOf(ex) {
   if (!ex) return null;
-  if (ex.muscles) return { muscles: ex.muscles, stretches: ex.stretches || [] };
+  if (ex.muscles) return cleanMuscles(ex.muscles, ex.stretches);
   const base = ex.basedOn && exById(ex.basedOn);
-  return base && base.muscles ? { muscles: base.muscles, stretches: base.stretches || [] } : null;
+  return base && base.muscles ? cleanMuscles(base.muscles, base.stretches) : null;
+}
+/* ---------- a workout's total: set-equivalents per group (HANDOFF §13) ----------
+   Each set counts toward a sweet spot: the exercise's suggested reps ("8–12"; 12–15 when it gives none), 30–60 s for
+   a hold. Below it a set counts in proportion, in it 1, above it with diminishing returns up to 1½ (about 1.3 at twice
+   the sweet spot). Then × the block's rounds, × ½ when only one side is done (each side's muscles get their own sets),
+   × 1 for a primary group, ½ secondary, ¼ stabilizer. Stretches don't count. */
+const MG_WEIGHT = { 3: 1, 2: 0.5, 1: 0.25 };
+function sweetSpot(ex) {
+  if (ex.measure === 'time') return [30, 60];
+  const r = String((ex.prescription || {}).reps || '').replace(/\d+\s*(rounds|sets)\s+of\s*/i, ''), m = /(\d+)(?:\s*[–-]\s*(\d+))?/.exec(r);
+  return m && +m[1] > 0 ? [+m[1], +(m[2] || m[1])] : [12, 15];
+}
+function setCredit(amount, [lo, hi]) {
+  if (!(amount > 0)) return 0;
+  if (amount < lo) return amount / lo;
+  if (amount <= hi) return 1;
+  return 1 + 0.5 * (1 - Math.exp(-0.916 * (amount - hi) / hi));
+}
+function itemMuscles(item, out = {}, rounds = 1) {
+  const ex = exById(item.ex), r = musclesOf(ex); if (!r) return out;
+  const both = v => v === 'both' || v === 'alternate';
+  const amount = (ex.measure === 'time' ? item.seconds : item.reps) * (both(item.dir) ? 2 : 1);
+  const sets = (item.sets || 1) * rounds * (item.sides && !both(item.sides) ? 0.5 : 1), c = sets * setCredit(amount, sweetSpot(ex));
+  for (const [g, v] of Object.entries(r.muscles)) out[g] = (out[g] || 0) + c * MG_WEIGHT[v];
+  return out;
+}
+function workoutMuscles(w) {
+  const out = {};
+  for (const b of w.blocks) for (const it of b.items) itemMuscles(it, out, Math.max(1, b.rounds || 1));
+  return out;
+}
+/* set-equivalents -> a colour: green up to 2, amber 2–5, red above 5 (to 8), a gradient within each band */
+function mgScale(v) {
+  if (!(v >= 0.05)) return null;
+  const mix = (a, b, t) => `color-mix(in srgb, var(--mg-${b}) ${Math.round(Math.min(1, t) * 100)}%, var(--mg-${a}))`;
+  return v <= 2 ? mix('g0', 'g1', v / 2) : v <= 5 ? mix('a0', 'a1', (v - 2) / 3) : mix('r0', 'r1', (v - 5) / 3);
+}
+const mgNum = v => fmtNum(Math.round(v * 10) / 10);
+/* the scale under a workout's map: 0 · 2 · 5 · 8+ */
+const MG_SCALE = `<div class="mg-scale" aria-hidden="true"><div class="mg-bar"></div><div class="mg-ticks body-small"><span style="left:0">0</span><span style="left:25%">2</span><span style="left:62.5%">5</span><span style="left:100%">8+</span></div></div>`;
+/* a workout's muscles: compact (its card: a small map and the three groups worked most) or full (the editor: map,
+   scale and every group's number under the seven headings) */
+function workoutMusclesHTML(w, compact) {
+  const items = w.blocks.flatMap(b => b.items), rated = items.filter(it => musclesOf(exById(it.ex)));
+  if (!rated.length) return '';
+  const t = workoutMuscles(w), on = MUSCLE_GROUPS.filter(g => t[g] >= 0.05), unrated = items.length - rated.length;
+  const top = [...on].sort((a, b) => t[b] - t[a]).slice(0, 3);
+  const label = 'Muscle map, estimated work in set-equivalents. ' + on.map(g => `${MUSCLE_NAMES[g]}: ${mgNum(t[g])}`).join('. ');
+  const fig = muscleFigure(g => mgScale(t[g]), () => false, label);
+  if (compact) return `<div class="mg-card">${fig.replace(/<text[^>]*>[^<]*<\/text>/g, '').replace('viewBox="0 0 400 326"', 'viewBox="0 8 400 296"')}<p class="body-small">${top.length ? `Most work: ${top.map(g => MUSCLE_NAMES[g].toLowerCase()).join(', ').replace(/^./, c => c.toUpperCase())}` : ''}</p></div>`;
+  const list = MUSCLE_HEADS.map(([h, gs]) => { const x = gs.filter(g => t[g] >= 0.05);
+    return x.length ? `<li><b>${h}:</b> ${x.map(g => MUSCLE_NAMES[g] === h ? mgNum(t[g]) : `${MUSCLE_NAMES[g].toLowerCase()} ${mgNum(t[g])}`).join('; ')}</li>` : ''; }).join('');
+  return `${fig}${MG_SCALE}<p class="body-small muted mg-note">Estimated work, in sets: green up to 2, amber 2–5, red above 5. A set near the suggested reps counts 1; muscles that help count ½, those that steady you ¼; stretches don't count.${unrated ? ` ${plural(unrated, { one: '# exercise has', other: '# exercises have' })} no muscle ratings.` : ''}</p>
+    <ul class="mg-list body-medium">${list}</ul>`;
+}
+/* the small map on an exercise card (no words; the card's label says what it works): one shared outline (a
+   <symbol>, added once) coloured through CSS variables, so 354 cards stay light */
+function muscleMini(ex) {
+  const r = musclesOf(ex); if (!r || !Object.keys(r.muscles).length) return '';
+  if (!document.getElementById('mgFig')) {
+    const fig = muscleFigure(g => `var(--m-${g}, var(--mg-empty))`, () => false, '').replace(/<text[^>]*>[^<]*<\/text>/g, '')
+      .replace(/^<svg[^>]*>/, '<symbol id="mgFig" viewBox="0 8 400 296">').replace(/<\/svg>$/, '</symbol>');
+    document.body.insertAdjacentHTML('beforeend', `<svg class="mg-sym" width="0" height="0" style="position:absolute" aria-hidden="true">${fig}</svg>`);
+  }
+  return `<svg class="mg-mini" viewBox="0 8 400 296" aria-hidden="true" style="${Object.entries(r.muscles).map(([g, v]) => `--m-${g}:var(--mg-${v})`).join(';')}"><use href="#mgFig"/></svg>`;
+}
+/* "Works the front of thighs and glutes" for a card's label */
+function worksText(ex) {
+  const r = musclesOf(ex); if (!r) return '';
+  const p = MUSCLE_GROUPS.filter(g => r.muscles[g] === 3).map(g => MUSCLE_NAMES[g].toLowerCase());
+  return p.length ? `Works ${p.length > 1 ? p.slice(0, -1).join(', ') + ' and ' + p[p.length - 1] : p[0]}` : '';
 }
 /* the outline: fill(g) gives a group's fill (null = empty), stretched(g) whether it's outlined as stretched */
 function muscleFigure(fill, stretched, label) {
