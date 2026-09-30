@@ -25,6 +25,18 @@ caption of what's being said.
 
 The chip at the top right shows the **sound** mode; tap it to change it for this workout.
 
+## Too easy or too hard?
+
+When the exercise has an easier or harder version, the controls show **Easier** and **Harder** under the play buttons.
+
+<img src="images/player-swap.png" width="300" alt="The controls with Easier and Harder under the play buttons">
+
+- Tap one to switch to that version. It starts the set again from the first rep (or 0:00), with Coach's run-through
+  if Coach is on; what you'd done doesn't carry over. The rest of that exercise's sets, and later rounds, use it too.
+- The swap is only for this workout. When you leave the player, you're asked **Keep these changes in the
+  workout?** Keep saves them (for a library workout, in your own copy); **Don't keep** leaves the workout as it was.
+- **Resume** keeps a swap. In **History**, sets you finished before swapping count as the exercise you did them as.
+
 ## Rests
 
 Between exercises (and sets and rounds) a big countdown shows what's next. **+15 s** adds time; **Skip** moves

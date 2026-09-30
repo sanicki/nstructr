@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sanicki.github.io/nstructr/schema/progressions.schema.json",
+  "title": "NstructR linked variations",
+  "description": "Which library exercises are easier or harder versions of one another (progressions, easiest first), and which are the same move with other equipment (equipment groups). HANDOFF §5.4.",
+  "type": "object",
+  "required": ["progressions", "equipment"],
+  "properties": {
+    "$comment": { "type": "string" },
+    "progressions": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["name", "steps"], "additionalProperties": false,
+        "properties": { "name": { "type": "string" }, "steps": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string" } } }
+      }
+    },
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["name", "ids"], "additionalProperties": false,
+        "properties": { "name": { "type": "string" }, "ids": { "type": "array", "minItems": 2, "uniqueItems": true, "items": { "type": "string" } } }
+      }
+    },
+    "notLinked": {
+      "description": "Pairs the duplicate check calls the same move with other equipment that aren't: the build stops suggesting them.",
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["ids", "why"], "additionalProperties": false,
+        "properties": { "ids": { "type": "array", "minItems": 2, "maxItems": 2, "items": { "type": "string" } }, "why": { "type": "string" } }
+      }
+    }
+  },
+  "additionalProperties": false
+}

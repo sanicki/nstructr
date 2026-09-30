@@ -10,8 +10,6 @@ comes off this list. How things work, and why past decisions were made, is in [H
 ## App
 
 - **Workout submissions**: exercises can be submitted to the library; workouts can't yet.
-- **Linked variations**: an exercise names its easier and harder versions (knee push-up ↔ push-up ↔ decline push-up), so a
-  workout can swap one for another.
 - **AI with your own API key**: Create with AI calls the provider directly instead of copy and paste; self-hosted models
   too. The provider list could come from [models.dev](https://models.dev).
 - **Other languages** (audit Sep 2026; the groundwork is done: `src/app/0-i18n.js`):

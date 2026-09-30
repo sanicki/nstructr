@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-single-leg-glute-bridge",
+  "name": "Single-Leg Glute Bridge",
+  "otherNames": ["One-Leg Glute Bridge", "Single-Leg Bridge"],
+  "category": "Strength",
+  "focus": "Glutes and hamstrings",
+  "collections": ["Bodyweight"],
+  "equipment": [],
+  "description": "Lying on your back with one foot flat and the other leg straight, thighs level, push through the heel on the floor to lift your hips, then lower. Harder than the two-legged Glute Bridge.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/145/glute-bridge-single-leg-progression/",
+    "title": "ACE Exercise Library: Glute Bridge, single-leg progression",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, knees bent, feet flat, arms by your sides.", "Straighten one leg, keeping the thighs level."],
+  "cues": ["Hips level; don't let one side drop.", "Squeeze your seat at the top.", "Lower slowly."],
+  "prescription": {
+    "reps": "8–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, feet flat; straighten one leg, thighs level.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "plant": ["L"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 0,
+        "ankleR": 20
+      }
+    },
+    {
+      "name": "Lift your hips",
+      "cue": "Push through the heel on the floor and lift your hips.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "plant": ["L"],
+      "keep": ["ankleL", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 0,
+        "ankleR": 20
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep",
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  }
+}

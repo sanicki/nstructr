@@ -59,6 +59,11 @@ Tap an exercise in the editor to set how it's done:
 
 The estimated time updates as you change things.
 
+**Swap for**: an exercise with [variations](Exercises.md#variations-easier-harder-other-equipment) lists them at the
+bottom (**Easier**, **Harder**, **Other equipment**). Tap one to swap: the dialog shows the new exercise ("Swapped
+from …"); **Save** keeps it, **Cancel** doesn't. Sets, sides and direction stay; reps or seconds stay when both count
+the same way (a hold swapped for reps gets the new exercise's usual reps); the pace goes back to the new exercise's own.
+
 ## Rests
 
 - **Rest between exercises** and **rest between sets** are settings for all workouts, in

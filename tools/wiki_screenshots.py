@@ -102,6 +102,11 @@ async def main():
         await pg.evaluate("$('#stepsPanel').open=true; $('#aboutTitle').scrollIntoView({block:'start'}); scrollBy(0,-70)")
         await shot(pg, 'exercise-details')
         await pg.evaluate("$('#stepsPanel').open=false; scrollTo(0,0)")
+        # Variations (linked easier / harder / other equipment), on the Squat
+        await pg.evaluate("go('#/play/bw-squat')"); await pg.wait_for_timeout(500)
+        await pg.evaluate("setPlaying(false); hideExControls(); $('#linksTitle').scrollIntoView({block:'start'}); scrollBy(0,-90)"); await pg.evaluate(HIDE_SNACK)
+        await shot(pg, 'exercise-variations')
+        await pg.evaluate("go('#/play/bw-reverse-lunge'); scrollTo(0,0)"); await pg.wait_for_timeout(300)
         await pg.click('#editPoseBtn'); await pg.wait_for_timeout(600); await pg.evaluate(HIDE_SNACK)
         await shot(pg, 'edit-words')
         await pg.evaluate("closeEditor(); localStorage.setItem('nstructr-authoring-v1','on'); applyAuthoring(); go('#/play/bw-squat')"); await pg.wait_for_timeout(500)
@@ -155,6 +160,10 @@ async def main():
         await shot(wp, 'player-controls')
         await wp.evaluate("startRest(20, 'item')"); await wp.wait_for_timeout(1300); await wp.evaluate(HIDE_SNACK)
         await shot(wp, 'rest')
+        # Easier / Harder in the controls (a Push-Up)
+        await wp.evaluate("WK.list.push({id:'pu', name:'Push-ups', blocks:[{id:'b', name:'Main', items:[newItem(exById('bw-pushup'))]}]}); startWorkout(wkById('pu'))"); await wp.wait_for_timeout(2500)
+        await wp.touchscreen.tap(*box); await wp.wait_for_timeout(400); await wp.evaluate(HIDE_SNACK)
+        await shot(wp, 'player-swap')
         await wp.context.close()
         # --- the flip phone's cover screen (360 x 398): only where the guide is about it ---
         cv = await page(b, COVER)

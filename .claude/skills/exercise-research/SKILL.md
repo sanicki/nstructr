@@ -1,11 +1,11 @@
 ---
 name: exercise-research
-description: After an exercise is added to library/exercises (by hand, from Create with AI, or a submission PR), check its names and its equipment versions the way the Sep 2026 library research did - the most common name, other common names, and established versions with the library's other equipment. Use when an exercise is added or the user asks to research names or equipment versions.
+description: After an exercise is added to library/exercises (by hand, from Create with AI, or a submission PR), check its names, its equipment versions and its linked variations the way the Sep 2026 library research did - the most common name, other common names, established versions with the library's other equipment, and where it goes in library/progressions.json (easier/harder steps, equipment groups). Use when an exercise is added or the user asks to research names, equipment versions or progressions.
 ---
 
-# Exercise research (names and equipment versions)
+# Exercise research (names, equipment versions, linked variations)
 
-The same two checks the whole library had in Sep 2026 (`docs/equipment-equivalents.md`), for one exercise or a few.
+The checks the whole library had in Sep 2026 (`docs/equipment-equivalents.md`, `docs/progressions.md`), for one exercise or a few.
 The mechanical half is `tools/research.cjs`; the judgment half is a web search. Library rules still apply
 (`CLAUDE.md`): our own words, a cited source, every pose within the checks.
 
@@ -16,6 +16,8 @@ node tools/research.cjs report <id...>        # --md for Markdown (a PR descript
 It lists the exercise's names, any name another exercise also has, a duplicate if there is one, the library's
 versions of it with other equipment, and the equipment headings with no version yet (the AI prompt's headings:
 no equipment, band, door anchor, dumbbell, barbell, kettlebell, chair, bench, wall, step, towel; a mat doesn't count).
+It also says where the exercise is linked (easier, harder, other equipment) or, when it isn't, the progressions and
+equipment groups it's likely to belong to (step 4).
 
 ## 2. Names
 Search the web (WebSearch; reputable sources: ACE, NASM, NHS, Mayo Clinic, Cleveland Clinic, Yoga Journal,
@@ -46,8 +48,21 @@ python3 tools/research_sheet.py /tmp/sheet.png <id...>              # look at ev
 ```
 A version must be a *variant* (other equipment or measure), never a *duplicate*; the build fails otherwise.
 
-## 4. Before the pull request
+## 4. Linked variations (`library/progressions.json`)
+The app shows each exercise's **easier** and **harder** versions (and lets a workout swap to them), and its versions with
+**other equipment**. Place every new library exercise, or say in the PR why it has none:
+- **Progression** (`progressions`: steps easiest first): is it an easier or harder version of a library exercise
+  (Knee Push-Up → Push-Up → Decline Push-Up; a wall, block, strap or chair that supports a pose makes it easier)?
+  Search for an established progression (ACE, NASM, physiotherapy sites) and put it in its place; start a new
+  progression only with a source. Record the source in `docs/progressions.md`.
+- **Equipment group** (`equipment`): the same move with other equipment (Dumbbell/Kettlebell/Barbell Deadlift). Each
+  member uses other equipment (the build fails otherwise); an exercise may be in more than one group.
+- The build warns about two exercises that move the same with other equipment but aren't linked: link them, or add
+  them to `notLinked` with why.
+
+## 5. Before the pull request
 - `node tools/build.mjs --check-only` passes.
 - The Create with AI prompt lists every exercise: check it still fits in a link (HANDOFF §10, "Create with AI":
   under `AI_Q_MAX` as a ChatGPT link).
-- HANDOFF's library counts, `docs/equipment-equivalents.md`, and the wiki if collections changed.
+- HANDOFF's library counts, `docs/equipment-equivalents.md`, `docs/progressions.md`, and the wiki if collections changed.
+- No link warnings from the build (`⚠ ... aren't linked`).

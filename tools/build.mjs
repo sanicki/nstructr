@@ -54,6 +54,20 @@ for (const ex of exercises) ex.keyframes.forEach((k, i) => (k.keep || []).forEac
   if (typeof x === 'object' && x.keyframe >= ex.keyframes.length) errors.push(`${ex.id}: keyframes[${i}].keep points at step ${x.keyframe}, which doesn't exist`);
 }));
 for (const ex of exercises) if (!(ex.collections || []).length) errors.push(`${ex.id}: a library exercise needs "collections" (where the app shows it: Bodyweight, Yoga...)`);
+// linked variations (library/progressions.json, HANDOFF §5.4): easier/harder steps and equipment groups
+const links = JSON.parse(rd('library/progressions.json'));
+{
+  const vLinks = ajv.compile(JSON.parse(rd('schema/progressions.schema.json'))), byId = new Map(exercises.map(ex => [ex.id, ex]));
+  if (!vLinks(links)) for (const e of vLinks.errors) errors.push(`library/progressions.json: ${e.instancePath || '(top)'} ${e.message}`);
+  const { equipKinds } = require('../src/similar.js');
+  for (const c of links.progressions || []) for (const id of c.steps) if (!byId.has(id)) errors.push(`library/progressions.json: progression "${c.name}" lists "${id}", which isn't in the library`);
+  for (const g of links.equipment || []) {
+    for (const id of g.ids) if (!byId.has(id)) errors.push(`library/progressions.json: equipment group "${g.name}" lists "${id}", which isn't in the library`);
+    const kinds = g.ids.filter(id => byId.has(id)).map(id => equipKinds(byId.get(id).equipment).join(' and ') || 'no equipment');
+    kinds.forEach((k, i) => { if (kinds.indexOf(k) !== i) errors.push(`library/progressions.json: equipment group "${g.name}" has two exercises with ${k} (${g.ids[kinds.indexOf(k)]}, ${g.ids[i]}); each member uses other equipment`); });
+  }
+  for (const n of links.notLinked || []) for (const id of n.ids) if (!byId.has(id)) errors.push(`library/progressions.json: notLinked lists "${id}", which isn't in the library`);
+}
 console.log(`validated ${exercises.length} exercises, ${workouts.length} workouts`);
 
 // ---------- 2. animation checks ----------
@@ -90,6 +104,10 @@ if (!args.has('--no-checks') && !errors.length) {
     seen.add(pair);
     if (m.verdict === 'duplicate') errors.push(`${pair}: move the same (${m.motion}°) with the same equipment and measure; make one exercise (add the other's name to "otherNames")`);
     if (m.verdict === 'variant') variants++;
+    // the same move with other equipment or measure, but not linked (library/progressions.json): suggest it, unless it's ruled out
+    const linked = [...links.equipment.map(g => g.ids), ...links.progressions.map(c => c.steps)].some(l => l.includes(ex.id) && l.includes(m.id));
+    const ruledOut = (links.notLinked || []).some(n => n.ids.includes(ex.id) && n.ids.includes(m.id));
+    if (m.verdict === 'variant' && !linked && !ruledOut) warnings.push(`${pair}: move the same (other equipment or measure) but aren't linked: add them to an equipment group or a progression in library/progressions.json, or to its "notLinked" with why`);
   }
   const d = errors.length;
   console.log(d ? `duplicates: ${d}` : `duplicates: none (${variants} variant pair(s): same motion, other equipment or measure)`);
@@ -112,11 +130,12 @@ if (!args.has('--no-checks') && !errors.length) {
   const n = errors.length - n0;
   console.log(n ? `equipment: ${n} problem(s)` : 'equipment: every listed item is drawn, every drawn one listed');
 }
+if (warnings.length) console.warn('\n' + warnings.map(w => '⚠ ' + w).join('\n') + '\n');
 if (errors.length) { console.error('\n' + errors.map(e => '✗ ' + e).join('\n')); process.exit(1); }
 if (args.has('--check-only')) process.exit(0);
 
 // ---------- 3. bundle ----------
-const bundle = { format: 'nstructr/library', version: 2, generated: new Date().toISOString(), exercises, workouts };
+const bundle = { format: 'nstructr/library', version: 2, generated: new Date().toISOString(), exercises, workouts, links: { progressions: links.progressions, equipment: links.equipment } };
 fs.writeFileSync(path.join(ROOT, 'library/index.json'), JSON.stringify(bundle));
 
 // ---------- 4. assemble the site ----------
