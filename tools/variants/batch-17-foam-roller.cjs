@@ -64,10 +64,11 @@ module.exports = [
   { id: 'roller-it-band', base: 'core-side-plank', name: 'Foam Roller IT Band Roll', otherNames: ['Foam Roll IT Band', 'Iliotibial Band Foam Roll'], ...EQ, focus: 'Outer thighs (IT band)',
     props: [{ type: 'roller', z: -110 }],
     edit: ex => { const side = (arm, s, hipL, hipR, kneeR) => ({ root: [0, s, -90], shoulderL: [0, arm, 0], elbowL: 90, shoulderR: [0, 0, 0], elbowR: 10, hipL: [0, hipL, 0], kneeL: 5, hipR, kneeR, ankleR: 10 });
-      const x = { camera: 80, anchor: 'elbowL', plant: ['L', 'R'], touch: [{ point: 'ankleL', adjust: 'hipL.side' }, { point: 'ankleR', adjust: 'kneeR' }, { point: 'thighL', adjust: 'root.side' }] };
+      // the top foot stays where it's planted: in the second step the leg reaches back to it (keep)
+      const x = { camera: 80, anchor: 'elbowL', plant: ['L', 'R'], touch: [{ point: 'ankleL', adjust: 'hipL.side' }, { point: 'thighL', adjust: 'root.side' }] };
       ex.keyframes = [
-        K('Roller above your knee', 'On your side on your forearm, the roller just above your knee, top foot planted in front.', side(50, -78, 2, [36.8, -16, 0], 56), x),
-        K('Roll toward your hip', 'Push with your arm and top foot to roll up toward your hip, then back.', side(120, -78, -1, [28.5, -16, 0], 72), x)]; },
+        K('Roller above your knee', 'On your side on your forearm, the roller just above your knee, top foot planted in front.', side(50, -78, 2, [36.8, -16, 0], 56), { ...x, touch: [...x.touch, { point: 'ankleR', adjust: 'kneeR' }] }),
+        K('Roll toward your hip', 'Push with your arm and top foot to roll up toward your hip, then back.', side(120, -78, -1, [28.5, -16, 0], 72), { ...x, keep: [{ point: 'ankleR', keyframe: 0 }] })]; },
     over: { ...timed('Roll slowly along the outside of your thigh, between the hip and just above the knee. It can be tender: take weight through your top foot to ease the pressure.'), bilateral: { labels: { L: 'Left side down', R: 'Right side down' } } },
     description: 'Lying on your side on your forearm with a foam roller under the outside of your bottom thigh and your top foot planted in front, roll slowly between just above the knee and the hip.',
     setup: ['Lie on your side on your forearm, a foam roller under the outside of your bottom thigh, just above the knee.', 'Cross your top leg in front and plant that foot on the floor.'],

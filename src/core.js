@@ -494,7 +494,16 @@ function frameAt(a, b, e, seg) {
     const rolls = r0 && SUPPORTS.some(k => k.type === 'roller') ? (a.touch || []).filter(t => (b.touch || []).some(u => u.point === t.point && u.adjust === t.adjust)) : [];
     const flat = () => { for (const s of (a.plant || []).filter(x => (b.plant || []).includes(x))) pose['ankle' + s] = flatAnkle(pose, s, seg); };   // (feet planted at both ends stay flat)
     for (let pass = 0; pass < (rolls.length > 1 ? 4 : 1); pass++) for (const t of rolls) solveTouch(pose, seg, r0, t, flat);   // (over again when they pull on each other)
-    if (rolls.length) Object.assign(pos, rule ? place(pose, seg, rule, false) : V3.lerp(place(pose, seg, a.rule, false), place(pose, seg, b.rule, false), e));
+    if (rolls.length) {
+      Object.assign(pos, rule ? place(pose, seg, rule, false) : V3.lerp(place(pose, seg, a.rule, false), place(pose, seg, b.rule, false), e));
+      // a foot or hand planted on the same spot at both ends (the top foot pushing) stays on it: the limb reaches back
+      const A = worldOf(a, seg), B = worldOf(b, seg);
+      for (const ch of CHAINS) {
+        const tip = ch.tip + ch.s;
+        if (tip === r0.anchor || V3.dist(A[tip], B[tip]) > 2 || A[tip].y - supportAt(A[tip]) > 3) continue;
+        if (ch.root === 'hip') holdFoot(pose, seg, pos, ch, A, flat); else reachTip(pose, seg, pos, ch, A[tip], 1);
+      }
+    }
     // rolling, the feet and hands slide along the floor with it rather than stepping
     if (!rolls.length) { slideContacts(a, b, e, pose, seg, pos, pinned); clampTips(a, b, pose, seg, pos, pinned); }
     // a foot that tips its toes into the floor flexes at the ankle instead of pushing the body up
@@ -532,6 +541,20 @@ function frameAt(a, b, e, seg) {
     }
   }
   return { pose, cam, pos, supports: frameSupports };
+}
+
+/* a foot kept where it was (A: that step's world points): the leg reaches the ankle back, flat if planted (flat()), and
+   the hip turns until the toes are back too, so the foot doesn't swivel on the spot */
+function holdFoot(pose, seg, pos, ch, A, flat = () => {}) {
+  const tip = 'ankle' + ch.s, toe = 'toe' + ch.s, hk = 'hip' + ch.s;
+  // (each try from the same leg: reachTip answers nearest to the angles it starts from; a hip swinging sideways costs
+  // as much as a toe off its spot)
+  const leg = [hk, 'knee' + ch.s, 'ankle' + ch.s].map(k => [k, Array.isArray(pose[k]) ? [...pose[k]] : pose[k]]), s0 = pose[hk][1];
+  const miss = t => { for (const [k, v] of leg) pose[k] = Array.isArray(v) ? [...v] : v; pose[hk][2] = t; reachTip(pose, seg, pos, ch, A[tip], 1); flat(); const q = fkAt(pose, seg, pos)[toe]; return Math.hypot(q.x - A[toe].x, q.z - A[toe].z) + Math.abs(pose[hk][1] - s0); };
+  const t0 = pose[hk][2];
+  let bt = t0, bm = miss(bt);
+  for (const step of [4, 1, 0.25]) { const c = bt; for (let k = -4; k <= 4; k++) { const t = c + k * step; if (Math.abs(t - t0) > 25) continue; const m = miss(t); if (m < bm - 0.05) { bm = m; bt = t; } } }   // (within 25°)
+  miss(bt);
 }
 
 /* touch: turn one joint (or one number of a ball joint) until a point lands on the floor, nearest to the angle written */
@@ -825,6 +848,7 @@ function resolvePass(keyframes, seg, ex, props, base, dz) {
     for (const t of kf.touch) if (t.point !== r.rule.anchor) solveTouch(r.pose, seg, r.rule, t, applyPlant);   // the pinned point is already down
   });
   // keep: hands or feet that stay exactly where they were in the previous step (feet planted while the hips lift...)
+  const roller = base.some(k => k.type === 'roller');
   for (let i = 0; i < R.length; i++) {
     const kf = keyframes[i], keep = kf.keep || [];
     if (!keep.length || R.length < 2) continue;
@@ -836,8 +860,9 @@ function resolvePass(keyframes, seg, ex, props, base, dz) {
       SUPPORTS = a.supports; const A = fkAt(a.pose, seg, place(a.pose, seg, a.rule)); SUPPORTS = b.supports;
       const s = tip.slice(-1), ch = CHAINS.find(k => k.tip + k.s === tip);
       if (!ch) continue;
-      reachTip(b.pose, seg, place(b.pose, seg, b.rule), ch, A[tip], 1, false);
-      if (ch.root === 'hip' && (kf.plant || []).includes(s)) b.pose['ankle' + s] = flatAnkle(b.pose, s, seg);
+      const flatB = () => { if ((kf.plant || []).includes(s)) b.pose['ankle' + s] = flatAnkle(b.pose, s, seg); };
+      if (ch.root === 'hip' && roller) holdFoot(b.pose, seg, place(b.pose, seg, b.rule), ch, A, flatB);   // (on a foam roller: the foot doesn't swivel either)
+      else { reachTip(b.pose, seg, place(b.pose, seg, b.rule), ch, A[tip], 1, false); if (ch.root === 'hip') flatB(); }
       b.auto.add(ch.root + s); b.auto.add(ch.mid + s);
     }
   }

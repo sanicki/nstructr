@@ -391,7 +391,9 @@ differently.
    the roller, and a foot on the floor) is re-solved every frame while the pin holds (in the order written, four
    passes when there are several), with planted feet kept flat, so what rests on the roller stays on it the whole way
    (angles alone lifted it up to 4 px mid-move); and rolling, feet and hands slide along the floor instead of
-   stepping (`slideContacts`/`clampTips` are skipped). `worldOf` leaves the frame's surfaces as they were (it used to
+   stepping (`slideContacts`/`clampTips` are skipped); a foot or hand resting on the same spot at both ends stays on
+   it (IK back to it; a foot also keeps its toes there: `holdFoot` turns the hip, each try from the same leg). The
+   IT band roll's top foot is planted: the second step `keep`s it where the first put it (it slid 53 px until Sep 2026). `worldOf` leaves the frame's surfaces as they were (it used to
    switch them to a step's, which put a rolling roller in the wrong place for the rest of the frame).
 5. Toe fix: toes that would sink turn the ankle.
    Toes resting on the same spot of a raised surface at both ends (the back foot on a bench) stay on it: the leg

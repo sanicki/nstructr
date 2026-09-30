@@ -35,12 +35,12 @@
           "adjust": "hipL.side"
         },
         {
-          "point": "ankleR",
-          "adjust": "kneeR"
-        },
-        {
           "point": "thighL",
           "adjust": "root.side"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
         }
       ],
       "pose": {
@@ -71,12 +71,14 @@
           "adjust": "hipL.side"
         },
         {
-          "point": "ankleR",
-          "adjust": "kneeR"
-        },
-        {
           "point": "thighL",
           "adjust": "root.side"
+        }
+      ],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
         }
       ],
       "pose": {
