@@ -23,12 +23,12 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **270 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **271 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 80 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions |
-| Free weights | 42 | dumbbell, kettlebell, barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry |
+| Free weights | 43 | dumbbell, kettlebell, barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry |
 | Bodyweight | 33 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
 | Resistance band | 28 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
 | Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
@@ -36,9 +36,9 @@ Library today: **270 exercises, 5 workouts** (20-minute beginner's yoga, Pilates
 | Core | 23 | planks, hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 25 | Pilates ring (chest press, inner thigh squeeze); classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
 | Balance | 12 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, clock reach, single-leg RDL, pistol squat |
-| Warm-up | 18 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
+| Warm-up | 19 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-162 are rep-based, 108 timed; 93 are two-sided (`bilateral`); 5 have `direction`. Common exercises per collection
+163 are rep-based, 108 timed; 93 are two-sided (`bilateral`); 6 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -247,6 +247,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). `adjust` is a hinge, or a ball joint's number: `"hipR"` = its forward number, `"hipR.side"`, `"hipR.turn"`. `point` can also be a **segment** (Sep 2026, for the foam roller): `thighL/R`, `shinL/R`, `back` (pelvis to neck), `sideL/R` (the flank, hip to shoulder, lying on your side), which rests where it is lowest over what's under it (`SEGMENTS`, `clearance()`). |
 | `reach` | `[{hand, to, dx?, dy?, dz?}]`: two-bone arm IK (3D) to put a hand on a body point (plus the offset: sideways, up, forward), `"wall"` or `"chair"` (the chair back, at the hand's own shoulder width). The elbow bends the way it can, in the plane the arm's turn gives it. |
 | `keep` | Hands/feet that stay exactly where they were: `"ankleL"` = where it was in the previous step; `{"point":"ankleR","keyframe":0}` = where it was in step 0. Solved with two-bone IK after everything else. |
+| `holds` | Which hands hold the weight in this step (Sep 2026): `["handR"]`, or `["handL", "handR"]` at a pass; the exercise's kettlebell is drawn there, and between steps the grip moves from one to the other (`gripAt`), so a bell passes from hand to hand (Kettlebell Around the World, `tools/variants/batch-18-around-the-world.cjs`). Passed behind the back, it's drawn behind the body. Mirrored with the side. |
 | `guide` | `{direction, label}` for the compass: 0 = forward, 90 = the figure's right (for the default side), clockwise from above. |
 | `pose` | Joint angles (see §4): ball joints `[forward, side, turn]`, hinges a number. Joints not listed are 0. |
 
@@ -267,7 +268,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `medball` | `hands` (default both) | A medicine ball held in both hands, at their middle (`--medball`). |
 | `ring` | `from`, `to` | A Pilates ring (magic circle) between two points, 68 across; pressed, it flattens (`ringSVG`: a circle across the press line and upright, drawn in 3D). |
 | `dumbbell` | `hand`, `axis` `lr` (bar left–right) / `fb` (front–back) / `ud` (upright), relative to the body | Drawn end-on when the bar points at the camera; drawn with its arm (behind the body when the arm is). |
-| `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm. |
+| `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm. A step's `holds` overrides which hands hold it (passing it hand to hand). |
 | `barbell` | `from`, `to` (hands) | Projected in 3D: the end plate from the side, the full bar from the front. |
 | `bar` | `y` (height), `z`, `width` 90 | A pull-up bar, drawn in front of the hands that hold it (end-on, a dot). Hang from it with `anchor` a hand, `anchorY` the bar's `y`, `anchorX` half the grip width. The exercise page's view grows upwards to show it (still square). Equipment "Pull-up bar" (its own kind). |
 

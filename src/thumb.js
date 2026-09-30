@@ -25,7 +25,7 @@ function poseThumbSVG(ex, kf, opts = {}) {
   const figure = boneOrder(Q).map(id => { const bn = byId.get(id); return L(bn.a, bn.b, cls[bn.part]) +
     (bn.b === 'head' ? `<circle cx="${Q.head.x.toFixed(1)}" cy="${Q.head.y.toFixed(1)}" r="${seg.head}" class="th"/>` : ''); }).join('');
   const back = (ex.props || []).map((pr, i) => {
-    if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj); return ''; }
+    if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj, pr.type === 'kettlebell' ? gripAt(r, r, 1) : null); return ''; }
     if (pr.type === 'bar') { over += barSVG(pr, proj, 'tbar'); return ''; }
     if (pr.type === 'ring') { over += ringSVG(pr, P, proj, 'tring'); return ''; }
     if (pr.type === 'wall') { const wl = walls[i]; return wl && wl.show > 0.5 ? `<line class="tw" x1="${wl.x.toFixed(1)}" y1="${FLOOR + 7}" x2="${wl.x.toFixed(1)}" y2="${(vy - 5).toFixed(1)}"/>` : ''; }

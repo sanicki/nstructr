@@ -596,7 +596,7 @@ function resolveKeyframe(kf, seg, ex = {}) {
     if (Math.abs(gap) > 2) misses.push({ point: t.point, adjust: t.adjust, gap });
   }
   return {
-    pose, cam, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], reach: kf.reach || [], ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
+    pose, cam, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], reach: kf.reach || [], holds: Array.isArray(kf.holds) ? kf.holds : null, ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
     dur: kf.durationMs == null ? 1000 : Math.max(0, num(kf.durationMs)), hold: Math.max(0, kf.holdMs == null ? 500 : num(kf.holdMs))
   };
 }
@@ -633,7 +633,16 @@ const WEIGHT_TYPES = ['dumbbell', 'kettlebell', 'barbell', 'medball'];
 /* Hand-held weights, drawn where the hands are. A dumbbell's "axis" is its bar direction relative to the body:
    "lr" left-right (the usual grip), "fb" front-back (neutral grip), "ud" up-down (held upright, like a goblet
    squat). P: world points; M0: the body's rotation (the whole-body joint); proj: world point -> screen {x, y}. */
-function weightSVG(pr, P, M0, proj) {
+/* Which hands hold the weight (a kettlebell passed from hand to hand): a step's "holds" (["handR"], or both hands at
+   the pass), shared between the hands; between two steps the grip moves from one to the other. null: as the prop says. */
+function gripAt(a, b, e) {
+  const w = h => (h ? { handL: h.includes('handL') ? 1 / h.length : 0, handR: h.includes('handR') ? 1 / h.length : 0 } : null);
+  const A = w(a && a.holds), B = w(b && b.holds);
+  if (!A && !B) return null;
+  const x = A || B, y = B || A;
+  return { handL: lerp(x.handL, y.handL, e), handR: lerp(x.handR, y.handR, e) };
+}
+function weightSVG(pr, P, M0, proj, grip = null) {
   const f = n => n.toFixed(1);
   const bar = (a, b, cls = 'wt-bar') => `<line class="${cls}" x1="${f(a.x)}" y1="${f(a.y)}" x2="${f(b.x)}" y2="${f(b.y)}"/>`;
   const plate = (c, ux, uy, half) => bar({ x: c.x - uy * half, y: c.y + ux * half }, { x: c.x + uy * half, y: c.y - ux * half }, 'wt-plate');
@@ -648,8 +657,12 @@ function weightSVG(pr, P, M0, proj) {
   }
   if (pr.type === 'kettlebell') {
     const hands = (pr.hands || [pr.hand]).map(k => P[k]).filter(Boolean); if (!hands.length) return '';
-    const hc = V3.mul(hands.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / hands.length);
-    const el = P['elbow' + (pr.hands ? pr.hands[0] : pr.hand).slice(-1)];
+    let hc = V3.mul(hands.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / hands.length);
+    let el = P['elbow' + (pr.hands ? pr.hands[0] : pr.hand).slice(-1)];
+    if (grip) {                                                         // passed between the hands: where the grip is
+      hc = V3.add(V3.mul(P.handL, grip.handL), V3.mul(P.handR, grip.handR));
+      el = P[grip.handL > grip.handR ? 'elbowL' : 'elbowR'];
+    }
     const dir = el ? V3.unit(V3.sub(hc, el)) : { x: 0, y: -1, z: 0 };
     const H = proj(hc), Bl = proj(V3.add(hc, V3.mul(dir, 15)));       // the bell hangs on, in line with the forearm
     return bar(H, Bl) + `<circle class="wt" cx="${f(Bl.x)}" cy="${f(Bl.y)}" r="11"/>`;
@@ -932,6 +945,7 @@ function mirrorKeyframe(kf) {
     touch: (kf.touch || []).map(t => ({ ...t, point: swapSide(t.point), adjust: swapSide(jointRef(t.adjust).j) + (String(t.adjust).includes('.') ? '.' + t.adjust.split('.')[1] : '') })),
     keep: (kf.keep || []).map(k => (typeof k === 'string' ? swapSide(k) : { ...k, point: swapSide(k.point) })),
     reach: (kf.reach || []).map(r => ({ ...r, hand: swapSide(r.hand), to: swapSide(r.to), ...(r.dx != null ? { dx: -num(r.dx) } : {}) })),
+    ...(Array.isArray(kf.holds) ? { holds: kf.holds.map(swapSide) } : {}),
     guide: kf.guide ? { ...kf.guide, direction: -num(kf.guide.direction) } : kf.guide
   };
   if (kf.anchorX != null) out.anchorX = -num(kf.anchorX);
@@ -939,7 +953,7 @@ function mirrorKeyframe(kf) {
 }
 
 if (typeof module !== 'undefined') module.exports = {
-  phaseInfo, reverseReps, weightSVG, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
+  phaseInfo, reverseReps, weightSVG, gripAt, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
   propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   SEGMENTS, clearance, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS

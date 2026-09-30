@@ -561,6 +561,17 @@
             }
           },
           "additionalProperties": false
+        },
+        "holds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "handL",
+              "handR"
+            ]
+          },
+          "description": "Which hands hold the weight in this step (a kettlebell passed from hand to hand, Around the World): [\"handR\"], or both at the pass. Between steps the grip moves from one to the other."
         }
       },
       "additionalProperties": false

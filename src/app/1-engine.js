@@ -48,6 +48,8 @@ function validateExercise(ex, path) {
     }
     if (kf.keep != null && (!Array.isArray(kf.keep) || kf.keep.some(k => !/^(ankle|hand)[LR]$/.test(typeof k === 'string' ? k : (k && k.point) || '') || (typeof k === 'object' && !(Number.isInteger(k.keyframe) && k.keyframe >= 0 && k.keyframe < ex.keyframes.length)))))
       fail(`${p}.keep must list ankleL/ankleR/handL/handR, or {"point": "ankleR", "keyframe": 0} to return to where it was in that step.`);
+    if (kf.holds != null && (!Array.isArray(kf.holds) || !kf.holds.length || kf.holds.some(h => h !== 'handL' && h !== 'handR')))
+      fail(`${p}.holds must list the hands holding the weight in this step: ["handR"], ["handL"] or ["handL", "handR"].`);
     if (kf.quiet != null && typeof kf.quiet !== 'boolean') fail(`${p}.quiet must be true or false.`);
     if (kf.ease != null && !['smooth', 'linear'].includes(kf.ease)) fail(`${p}.ease must be "smooth" or "linear".`);
     if (kf.phase != null && !['setup', 'rep', 'finish'].includes(kf.phase)) fail(`${p}.phase must be "setup", "rep" or "finish".`);
@@ -253,9 +255,12 @@ function drawProps(P, Q, pose, cam) {
   S.props.forEach((pr, i) => {
     if (SURFACE_TYPES.includes(pr.type)) return;
     if (WEIGHT_TYPES.includes(pr.type)) {
-      const svg = weightSVG(pr, P, M0, proj);
+      const grip = pr.type === 'kettlebell' ? S.grip : null, svg = weightSVG(pr, P, M0, proj, grip);
       // a weight in one hand is drawn with that arm (behind the body if the arm is); a barbell in front
-      if (pr.hand && wts[pr.hand] != null) wts[pr.hand] += svg; else front += svg;
+      const hand = grip ? (grip.handL > 0.99 ? 'handL' : grip.handR > 0.99 ? 'handR' : null) : pr.hand;
+      // passed between the hands behind the back: behind the body
+      const behind = grip && !hand && proj(V3.add(V3.mul(P.handL, grip.handL), V3.mul(P.handR, grip.handR))).d < proj(P.pelvis).d - 4;
+      if (hand && wts[hand] != null) wts[hand] += svg; else if (behind) back += svg; else front += svg;
       return;
     }
     if (pr.type === 'bar') { front += barSVG(pr, proj, 'bar'); return; }
@@ -387,7 +392,7 @@ function draw() {
   for (const k in Q) Q[k].x += S.shiftX;
   drawFloorTicks(P, f.cam);
   applyPose(Q);
-  S.curCam = f.cam; S.frameSupports = f.supports;
+  S.curCam = f.cam; S.frameSupports = f.supports; S.grip = gripAt(a, b, e);
   if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);
   drawGuide(a, b, e);
   if (S.mode !== 'workout' && EX_SHOW_PROGRESS) $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';
