@@ -1,0 +1,75 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-chest-fly",
+  "name": "Band Chest Fly",
+  "otherNames": ["Resistance Band Chest Fly", "Band Fly"],
+  "category": "Strength",
+  "focus": "Chest and front of the shoulders",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "With a resistance band around your upper back and an end in each hand, open your arms wide at shoulder height, then sweep them together in front of your chest as if hugging a tree.",
+  "source": {
+    "url": "https://www.garagestrength.com/blogs/news/resistance-band-chest-exercises",
+    "title": "Garage Strength: Resistance band chest exercises",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Wrap the band around your upper back, under your arms.", "Hold an end in each hand, arms out wide."],
+  "cues": ["Elbows softly bent, as if hugging a tree.", "Squeeze your chest at the front.", "Open slowly."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "A soft bend in the elbows the whole way; open slowly."
+  },
+  "keyframes": [
+    {
+      "name": "Arms wide",
+      "cue": "Band round your upper back, arms out wide at shoulder height.",
+      "camera": 45,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [15, 85, 0],
+        "elbowL": 18,
+        "shoulderR": [15, 85, 0],
+        "elbowR": 18
+      }
+    },
+    {
+      "name": "Hug",
+      "cue": "Sweep your arms together in front of your chest.",
+      "camera": 45,
+      "durationMs": 1500,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [88, 8, 0],
+        "elbowL": 18,
+        "shoulderR": [88, 8, 0],
+        "elbowR": 18
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "handR",
+      "via": ["armpitR"],
+      "to": "backR"
+    },
+    {
+      "type": "band",
+      "from": "handL",
+      "via": ["armpitL"],
+      "to": "backL"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

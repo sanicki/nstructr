@@ -1,0 +1,131 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-punches",
+  "name": "Seated Punches",
+  "otherNames": ["Seated Forward Punches", "Chair Punches"],
+  "category": "Cardio",
+  "focus": "Arms, shoulders and core",
+  "collections": ["Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Sitting tall on a chair with your fists up in front of your face, punch one fist forward, and as it comes back, punch the other.",
+  "source": {
+    "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/chair-based-exercises/5-more-chair-based-exercises",
+    "title": "British Heart Foundation: 5 more chair-based exercises",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit tall near the front of a firm chair, feet flat.", "Make fists and hold them in front of your face."],
+  "cues": ["Punch straight forward.", "Turn a little with each punch.", "Breathe out as you punch."],
+  "prescription": {
+    "reps": "10–20 pairs",
+    "note": "Sit up straight away from the chair back; punch at your own pace."
+  },
+  "keyframes": [
+    {
+      "name": "Fists up",
+      "cue": "Sit tall, fists up in front of your face.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "shoulderL": [55, -12, 0],
+        "elbowL": 125,
+        "shoulderR": [55, -12, 0],
+        "elbowR": 125
+      }
+    },
+    {
+      "name": "Right punch",
+      "cue": "Punch your right fist forward.",
+      "camera": 30,
+      "durationMs": 500,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "shoulderL": [55, -12, 0],
+        "elbowL": 125,
+        "shoulderR": [88, -6, 0],
+        "elbowR": 4,
+        "torso": [0, 0, 12]
+      }
+    },
+    {
+      "name": "Left punch",
+      "cue": "Bring it back as your left punches.",
+      "camera": 30,
+      "durationMs": 500,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "shoulderL": [88, -6, 0],
+        "elbowL": 4,
+        "shoulderR": [55, -12, 0],
+        "elbowR": 125,
+        "torso": [0, 0, -12]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

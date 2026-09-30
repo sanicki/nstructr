@@ -47,6 +47,9 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Dumbbell Shoulder Press / Overhead Press / Band Overhead Press | all three in library · ✅ Kettlebell Overhead Press |
 | Bench Press / Dumbbell Bench Press / Band Chest Press | all in library · ✅ Dumbbell Floor Press (no bench) |
 | Band Pull-Apart | ⏳ Dumbbell Reverse Fly |
+| Band Front Raise, Band Chest Fly (batch 20) | Dumbbell Front Raise, Dumbbell Chest Fly (in library) |
+| Band Upright Row (batch 20) | ⏳ Dumbbell Upright Row · ⏳ Barbell Upright Row |
+| Seated Knee Extension, Seated Leg Raise, Seated Punches (chair, batch 20) | — (ankle weights or light dumbbells make them harder, but aren't other exercises) |
 | Band Lat Pulldown | — (the dumbbell and barbell versions need a machine or a bar overhead) |
 | Dumb Waiter | ⏳ Side-Lying Dumbbell External Rotation |
 | Standing Band Leg Press | — |
@@ -88,6 +91,7 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Hip Flexor Stretch (towel) | ⏳ Chair Hip Flexor Stretch |
 | Chest stretch (wall) | ⏳ Towel Chest Stretch |
 | Cross-Body Shoulder Stretch | Shoulder Stretch with Towel (in library) |
+| Thread the Needle (batch 20) | — |
 | IT Band Stretch, Neck Stretch, Knee-to-Chest | — |
 | Arm Circles, Hip Circles | ⏳ Chair-supported Hip Circles |
 | Star Excursions | — |

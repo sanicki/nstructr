@@ -1,0 +1,161 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-leg-raise",
+  "name": "Seated Leg Raise",
+  "otherNames": ["Seated Straight-Leg Raise", "Chair Leg Raise"],
+  "category": "Strength",
+  "focus": "Front of the thighs and hip flexors",
+  "collections": ["Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Sitting tall on a chair with one leg straight out in front and the heel on the floor, lift the straight leg as high as is comfortable, then lower it.",
+  "source": {
+    "url": "https://www.hingehealth.com/resources/articles/seated-leg-raise/",
+    "title": "Hinge Health: How to do a seated leg raise",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit tall near the front of a sturdy chair.", "Straighten one leg out in front, heel on the floor, toes up."],
+  "cues": ["Leg straight, thigh tight.", "Chest up; don't lean back.", "Lower with control."],
+  "prescription": {
+    "reps": "10–12 each leg",
+    "note": "Keep your chest up; lift less to make it easier."
+  },
+  "keyframes": [
+    {
+      "name": "Leg out",
+      "cue": "Straighten your right leg out in front, heel on the floor.",
+      "camera": 60,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [60, 0, 0],
+        "kneeR": 0,
+        "ankleR": -15
+      }
+    },
+    {
+      "name": "Lift",
+      "cue": "Lift the straight leg as high as is comfortable.",
+      "camera": 60,
+      "durationMs": 1500,
+      "holdMs": 800,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [92, 0, 0],
+        "kneeR": 0,
+        "ankleR": -15
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Lower it until the heel touches the floor.",
+      "camera": 60,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [60, 0, 0],
+        "kneeR": 0,
+        "ankleR": -15
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

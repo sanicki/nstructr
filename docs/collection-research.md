@@ -20,7 +20,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 | Low Lunge (Anjaneyasana), Crescent Lunge, Lizard Pose | ✅ |
 | Reverse Warrior, Humble Warrior, Goddess Pose | ✅ |
 | Happy Baby Pose, Garland Pose (Malasana), Puppy Pose | ✅ |
-| Thread the Needle | ready (the arm threads under the body: a twist that needs more work) |
+| Thread the Needle | ✅ batch 20 (`tools/variants/batch-20-small.cjs`; both twists fitted numerically) |
 | Fish Pose (Matsyasana), Reclined Bound Angle Pose, Supine Twist | ✅ |
 | Supported versions of standing poses (Triangle, Half Moon, Pyramid with hands on blocks) | ✅ with the new **yoga block** (`tools/variants/batch-12-yoga-props.cjs`) |
 | Strap versions: Reclining Hand-to-Big-Toe Pose, Seated Forward Bend with a strap | ✅ with the new **yoga strap** (batch 12) |
@@ -46,7 +46,7 @@ Beginner and all-levels pose lists ([Yoga Journal, beginner poses](https://www.y
 
 | Exercise | Status |
 |---|---|
-| Band Front Raise, Band Upright Row, Band Chest Fly (band behind the back) | ready |
+| Band Front Raise, Band Upright Row, Band Chest Fly (band behind the back) | ✅ batch 20 |
 | Lateral Band Walk | ✅ (batch 10, travelling) |
 | Monster Walk | ✅ batch 14 |
 | Face Pull, Pallof Press, Band Woodchop, Standing Band Row, Standing Band Chest Press, Band Triceps Pushdown | ✅ with the new **door anchor** (`tools/variants/batch-7-door-anchor.cjs`) |
@@ -103,7 +103,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Exercise | Status |
 |---|---|
 | Seated Chest Stretch, Seated Upper-Body Twist, Seated Arm Raises, Seated Neck Rotation | ✅ |
-| Seated Knee Extension, Seated Leg Raise, Seated Punches | ready |
+| Seated Knee Extension, Seated Leg Raise, Seated Punches | ✅ batch 20 |
 
 ## Warm-up (2)
 ([dynamic warm-up exercises](https://www.garagegymreviews.com/best-warm-up-exercises))

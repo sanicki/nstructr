@@ -5,9 +5,8 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## Exercises and equipment
 
-- **Smaller additions** found in the research, still to add: Cow Face arms with a strap, Thread the Needle, band front
-  raise / upright row / chest fly, seated knee extension and leg raise, advanced Pilates (Open-Leg Rocker, Corkscrew,
-  Jackknife and others), side stepping and balance walk. List:
+- **Smaller additions** found in the research, still to add: Cow Face arms with a strap, advanced Pilates (Open-Leg
+  Rocker, Corkscrew, Jackknife and others), side stepping and balance walk. List:
   [collection research](docs/collection-research.md).
 - **Equipment versions** of existing exercises (about 30, marked ⏳), e.g. decline push-up, dumbbell deadlift, dumbbell
   swing, towel stretches: [equipment equivalents](docs/equipment-equivalents.md).

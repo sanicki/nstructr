@@ -1,0 +1,73 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-upright-row",
+  "name": "Band Upright Row",
+  "otherNames": ["Resistance Band Upright Row"],
+  "category": "Strength",
+  "focus": "Shoulders and upper back",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "Standing on a resistance band with your hands close together in front of your thighs, pull straight up to your chest, elbows leading high and out, then lower.",
+  "source": {
+    "url": "https://www.setforset.com/blogs/news/resistance-band-shoulder-workout-for-building-muscle",
+    "title": "Set For Set: Resistance band shoulder exercises",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand on the middle of the band, feet hip-width apart.", "Hold both ends close together in front of your thighs."],
+  "cues": ["Elbows lead, higher than your hands.", "Stop at shoulder height.", "Shoulders down, away from your ears."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Keep the band close to your body; stop with your elbows at shoulder height."
+  },
+  "keyframes": [
+    {
+      "name": "Hands low",
+      "cue": "Stand on the band, hands close together in front of your thighs.",
+      "camera": 20,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [10, -9, 0],
+        "elbowL": 8,
+        "shoulderR": [10, -9, 0],
+        "elbowR": 8
+      }
+    },
+    {
+      "name": "Pull up",
+      "cue": "Pull your hands up to your chest, elbows high and out.",
+      "camera": 20,
+      "durationMs": 1500,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [37, 66, -85],
+        "elbowL": 146,
+        "shoulderR": [37, 66, -85],
+        "elbowR": 146
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "footL",
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": "footR",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}
