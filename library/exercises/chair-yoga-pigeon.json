@@ -63,7 +63,7 @@
     {
       "name": "Chair Pigeon",
       "cue": "Right ankle on your left knee, sit tall.",
-      "camera": 90,
+      "camera": 30,
       "durationMs": 2000,
       "holdMs": 400,
       "phase": "rep",
@@ -91,8 +91,8 @@
       "pose": {
         "hipL": [90, 0, 0],
         "kneeL": 90,
-        "hipR": [108, 22, 62],
-        "kneeR": 118,
+        "hipR": [100.5, 47.5, 88],
+        "kneeR": 127,
         "ankleR": 10
       }
     }

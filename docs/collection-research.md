@@ -95,7 +95,7 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | Mountain Climber | ✅ batch 14 (the hips rise a little and the knee comes in a little wide, so it clears the floor) |
 | Pallof Press, Band Woodchop | ✅ (door anchor) |
 | Stability-ball crunch, bridge, seated march | ✅ with the new **stability ball** (batch 13) |
-| Ball pass, ball hamstring curl | a later batch (the ball moves: not yet) |
+| Ball pass, ball hamstring curl | ✅ batch 19 (`tools/variants/batch-19-moving-balls.cjs`): the ball is carried, or rolls under the heels |
 
 ## Chair-based (13)
 ([NHS sitting exercises](https://www.nhs.uk/live-well/exercise/sitting-exercises/), [BHF chair exercises](https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/chair-based-exercises))
@@ -133,8 +133,8 @@ Joseph Pilates's 34 mat exercises ([Pilates Anytime](https://www.pilatesanytime.
 | **Yoga block** ✅ | supported standing and seated poses | done: a `block` surface, 41 high on end; a hand rests on it with `touch` |
 | **Yoga strap** ✅ | reclined hamstring stretch, seated forward bend (cow-face arms later) | done: a `strap` prop drawn like the towel |
 | **Pull-up bar** ✅ | pull-up, chin-up, dead hang, hanging knee raise | done: a `bar` prop, `anchorY` holds a hand at the bar |
-| **Stability ball** ✅ | ball crunch, bridge, seated march (wall squat with a ball, hamstring curl later) | done: a round surface (`ball`) |
-| **Medicine ball** ✅ | Russian twist, slam (chest pass later: a throw) | done: `medball`, held in both hands |
+| **Stability ball** ✅ | ball crunch, bridge, seated march, hamstring curl (rolls), ball pass (carried) (wall squat with a ball later) | done: a round surface (`ball`) |
+| **Medicine ball** ✅ | Russian twist, slam, chest pass (thrown to a wall: batch 19) | done: `medball`, held in both hands |
 | **Foam roller** ✅ | rolling the calves, hamstrings, quads, upper back, glutes, IT band, lats | done: a `roller` surface (a cylinder across the body); a leg or the back rests on it with a segment `touch`, and stays on it while rolling |
 | **Pilates ring** ✅ | chest press, inner thigh squeeze | done: `ring` between two points, flattening as they press |
 

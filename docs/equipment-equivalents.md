@@ -63,6 +63,9 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Plank, Forearm Side Plank, Superman | ⏳ Plank with feet on a bench; — otherwise |
 | Turkish Get-Up (batch 18) | ⏳ Dumbbell Turkish Get-Up · ⏳ Bodyweight Get-Up (a fist up, or a shoe balanced on it, to learn it) |
 | Kettlebell Clean (batch 18) | ⏳ Dumbbell Clean (one arm) |
+| Stability Ball Hamstring Curl (batch 19) | ⏳ Slider (or towel) Hamstring Curl: heels on a towel on a smooth floor |
+| Stability Ball Pass (batch 19) | V-Up (no equipment, in library) · ⏳ Medicine Ball V-Up Pass (a smaller ball) |
+| Medicine Ball Chest Pass (batch 19) | — (a partner instead of the wall isn't library equipment) |
 | Kettlebell Around the World (batch 18) | ⏳ Medicine Ball Around the World (the same pass with a ball); a dumbbell held by one end works too but isn't a common name |
 
 ## Door anchor (batch 7)

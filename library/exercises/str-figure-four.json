@@ -23,7 +23,7 @@
     {
       "name": "Lie on your back",
       "cue": "Knees bent, feet flat.",
-      "camera": 90,
+      "camera": 60,
       "durationMs": 1500,
       "holdMs": 300,
       "phase": "setup",
@@ -53,7 +53,7 @@
     {
       "name": "Figure-Four Stretch",
       "cue": "Right ankle on your left knee, pull the left thigh toward you.",
-      "camera": 90,
+      "camera": 60,
       "durationMs": 1500,
       "holdMs": 5000,
       "phase": "rep",
@@ -62,20 +62,22 @@
         {
           "hand": "handR",
           "to": "kneeL",
-          "dz": -26
+          "dx": 6,
+          "dz": 6
         },
         {
           "hand": "handL",
           "to": "kneeL",
-          "dz": -26
+          "dx": -6,
+          "dz": 6
         }
       ],
       "pose": {
         "root": [-90, 0, 0],
         "neck": [34, 0, 0],
-        "hipL": [95, 0, 0],
+        "hipL": [125, 0, 0],
         "kneeL": 90,
-        "hipR": [100, 30, 60],
+        "hipR": [130, 42.5, 88.5],
         "kneeR": 110,
         "ankleR": 10
       }

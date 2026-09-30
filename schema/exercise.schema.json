@@ -566,12 +566,33 @@
           "type": "array",
           "minItems": 1,
           "items": {
-            "enum": [
-              "handL",
-              "handR"
+            "anyOf": [
+              {
+                "enum": [
+                  "handL",
+                  "handR",
+                  "ankleL",
+                  "ankleR"
+                ]
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "z": {
+                    "type": "number"
+                  }
+                },
+                "additionalProperties": false
+              }
             ]
           },
-          "description": "Which hands hold the weight in this step (a kettlebell passed from hand to hand, Around the World): [\"handR\"], or both at the pass. Between steps the grip moves from one to the other."
+          "description": "What holds the weight or ball in this step: hands (a kettlebell passed from hand to hand, Around the World: [\"handR\"], or both at the pass), the ankles (a stability ball passed from the hands to the feet), or a spot {x, y, z} it was thrown to (a medicine ball against a wall). Between steps it moves from one to the other."
         }
       },
       "additionalProperties": false
@@ -727,9 +748,12 @@
             "type": "string",
             "enum": [
               "handL",
-              "handR"
+              "handR",
+              "ankleL",
+              "ankleR"
             ]
-          }
+          },
+          "description": "The hands holding a weight. A stability ball with \"hands\" is carried, not lain on: what can hold it (the ankles too), with each step's \"holds\" saying who has it."
         },
         "axis": {
           "enum": [
@@ -759,6 +783,10 @@
         "r": {
           "type": "number",
           "description": "Stability ball: its radius (58: a 65 cm ball). Foam roller: its radius (14: 15 cm across)."
+        },
+        "rolls": {
+          "type": "boolean",
+          "description": "Stability ball: it rolls along the floor under what rests on it (the heels curling it in), moving as far as the point on it does."
         }
       },
       "additionalProperties": false

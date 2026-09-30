@@ -4,7 +4,9 @@
               or a hand misses its reach
    - jump:    a body segment snapping round more than 20° in 1/60 of a move
    - planted: a hand/foot/knee resting in the same spot before and after a move that wanders during it
-   - skid:    a foot on the floor at one end of a move only (lifting off, setting down) sliding along the floor */
+   - skid:    a foot on the floor at one end of a move only (lifting off, setting down) sliding along the floor
+   - snap:    a point that moves more than 3 px in the first or last frame of a move, twice as far as in the frame
+              next to it (a mid-move hold or fix that doesn't arrive where the step is, so the limb jumps into place) */
 const C = require('../src/core.js');
 const seg = C.DEFAULT_SEGMENTS, V = C.V3;
 const ease = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -74,6 +76,11 @@ function check(ex, opts = {}) {
         if (d > worst) { worst = d; wb = `${p}-${q}`; }
       }
       if (worst > 20) issues.push({ kind: 'jump', px: worst, msg: `${where}: ${wb} snaps ${worst.toFixed(0)}° in one frame` });
+      const step = (i, j) => { let m = [0, '']; for (const k of C.POINTS) { const d = V.dist(F[i][k], F[j][k]); if (d > m[0]) m = [d, k]; } return m; };
+      for (const [i, j, k, end] of [[59, 60, 58, 'end'], [0, 1, 2, 'start']]) {
+        const [d, pt] = step(i, j), prev = step(k, i === 59 ? 59 : 1)[0];
+        if (d > 3 && d > 2 * prev) issues.push({ kind: 'snap', px: d, msg: `${where}: ${pt} jumps ${d.toFixed(0)}px at the ${end} of the move` });
+      }
       for (const p of PLANTED) {
         const A = F[0][p], B = F[60][p];
         if (V.dist(A, B) > 2 || A.y - C.supportAt(A) > 3) continue;

@@ -48,10 +48,10 @@
         }
       ],
       "pose": {
-        "shoulderR": [20, -10, -30],
-        "elbowR": 140,
-        "shoulderL": [20, -10, -30],
-        "elbowL": 140
+        "shoulderR": [110, -20, -20],
+        "elbowR": 110,
+        "shoulderL": [110, -20, -20],
+        "elbowL": 110
       }
     },
     {
@@ -82,10 +82,10 @@
       ],
       "quiet": true,
       "pose": {
-        "shoulderR": [60, 5, -15],
-        "elbowR": 145,
-        "shoulderL": [55, -20, -37.5],
-        "elbowL": 135
+        "shoulderR": [105, 0, -10],
+        "elbowR": 130,
+        "shoulderL": [100, -25, -32.5],
+        "elbowL": 120
       }
     },
     {
@@ -283,10 +283,10 @@
       ],
       "quiet": true,
       "pose": {
-        "shoulderR": [55, -20, -37.5],
-        "elbowR": 135,
-        "shoulderL": [60, 5, -15],
-        "elbowL": 145
+        "shoulderR": [100, -25, -32.5],
+        "elbowR": 120,
+        "shoulderL": [105, 0, -10],
+        "elbowL": 130
       }
     }
   ],

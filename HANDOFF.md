@@ -23,7 +23,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **273 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **276 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -104,7 +104,8 @@ src/
   head.html           <head>, all CSS (Material 3 tokens, player, workouts, cover-screen rules)
   body.html           all markup: views, dialogs, <template id="aiPrompt">
   core.js             engine: figure model, FK, placement, IK, transitions, props, surfaces (no DOM)
-  thumb.js            static SVG thumbnail of an exercise
+  thumb.js            static SVG thumbnail of an exercise (shown as an image, colours written in: 2-explore.js thumbFor;
+                      live SVG thumbnails got hairline shins and feet after scrolling in Chrome on Android, Sep 2026)
   app/0-boot.js       globals the library fills (POSE_DB, LIBRARY_WORKOUTS)
   app/1-engine.js     app state S, import validation, figure SVG, drawing, playback loop, editor sliders
   app/2-explore.js    Exercises tab (collections incl. Saved, filters, search, cards)
@@ -247,7 +248,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). `adjust` is a hinge, or a ball joint's number: `"hipR"` = its forward number, `"hipR.side"`, `"hipR.turn"`. `point` can also be a **segment** (Sep 2026, for the foam roller): `thighL/R`, `shinL/R`, `back` (pelvis to neck), `sideL/R` (the flank, hip to shoulder, lying on your side), which rests where it is lowest over what's under it (`SEGMENTS`, `clearance()`). |
 | `reach` | `[{hand, to, dx?, dy?, dz?}]`: two-bone arm IK (3D) to put a hand on a body point (plus the offset: sideways, up, forward), `"wall"` or `"chair"` (the chair back, at the hand's own shoulder width). The elbow bends the way it can, in the plane the arm's turn gives it. |
 | `keep` | Hands/feet that stay exactly where they were: `"ankleL"` = where it was in the previous step; `{"point":"ankleR","keyframe":0}` = where it was in step 0. Solved with two-bone IK after everything else. |
-| `holds` | Which hands hold the weight in this step (Sep 2026): `["handR"]`, or `["handL", "handR"]` at a pass; the exercise's kettlebell is drawn there, and between steps the grip moves from one to the other (`gripAt`), so a bell passes from hand to hand (Kettlebell Around the World, `tools/variants/batch-18-around-the-world.cjs`). Passed behind the back, it's drawn behind the body. Mirrored with the side. |
+| `holds` | What holds the weight or ball in this step (Sep 2026): `["handR"]`, or `["handL", "handR"]` at a pass; the exercise's kettlebell is drawn there, and between steps the grip moves from one to the other (`gripAt`), so a bell passes from hand to hand (Kettlebell Around the World, `tools/variants/batch-18-around-the-world.cjs`). Passed behind the back, it's drawn behind the body. A ball: the ankles too, or a spot `{x, y, z}` it was thrown to; it is at the middle of what holds it, moving from one step's to the next (`heldAt`). Mirrored with the side (a spot's `x` negated). |
 | `guide` | `{direction, label}` for the compass: 0 = forward, 90 = the figure's right (for the default side), clockwise from above. |
 | `pose` | Joint angles (see §4): ball joints `[forward, side, turn]`, hinges a number. Joints not listed are 0. |
 
@@ -263,12 +264,12 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `bench` | `z`, `width` 200, `depth` 70, `height` 70 | Surface. |
 | `step` | `z`, `width` 90, `depth` 140, `height` 30 | Surface. |
 | `block` | `x`, `z`, `width` 27, `depth` 18, `height` 41 | A yoga block on end (23 × 15 × 10 cm), drawn in its own colour (`--block`). Surface: a hand over it rests on its top with `touch`. |
-| `ball` | `x`, `z`, `r` 58 | A stability ball (65 cm), resting on the floor: a round surface, what's over it rests on its curve (`supportY`), drawn as a circle (`--ball`). Sit on it (`anchor: "pelvis"`), lie back on it (`anchor: "spine"`), heels on it (`touch`). |
+| `ball` | `x`, `z`, `r` 58 | A stability ball (65 cm), resting on the floor: a round surface, what's over it rests on its curve (`supportY`), drawn as a circle (`--ball`). Sit on it (`anchor: "pelvis"`), lie back on it (`anchor: "spine"`), heels on it (`touch`). **`rolls: true`** (Sep 2026): it rolls along the floor under what rests on it, as the foam roller does (`rolling()`, `rollerTravel`), but as far as that point moves, not half (the feet ride on its top); a line across it turns as it rolls (Stability Ball Hamstring Curl). **`hands`** (Sep 2026): carried, not a surface (`carried()`): drawn at the middle of what holds it, among the limbs by depth (the near hand and foot over it, the far ones behind: `#heldBall` inside `#figRoot`, moved each frame; thumbnails the same); each step's `holds` says what that is (`["ankleL", "ankleR"]`, the hands, or all four at a pass: Stability Ball Pass, `tools/variants/batch-19-moving-balls.cjs`). The player and thumbnails frame all of it. |
 | `roller` | `z`, `x` 0, `r` 14, `length` 160 | A foam roller (15 × 90 cm), lying on the floor across the figure (side to side): a cylinder surface (`supportY`), drawn end-on as a circle, from the front as a bar, in between with a round near end (`--roller`). A leg or the back lies across it with a segment `touch` (`{point: "shinR", adjust: "hipR"}`); no segment sinks into a roller (`rollerSink`, in `place` and `groundY`). **Rolling**: the same touch at another spot along the segment in the next step; mid-move the engine holds it on the roller (§6.2). **The roller rolls** (Sep 2026): each step's roller is where the move left it, half as far along the floor as the spot of the segment that rests on it at the first step has moved (`rollerTravel`; the steps are resolved again with it there until it settles, starting from the steps as written without what rests on it: resting on an unmoved roller bends them); each step keeps its own surfaces (`r.supports`, `rolledSupports`, `dz`), a frame has its roller in between (`frameAt` returns `supports`; the player draws those), and a line across its near end turns `dz / r`. So a stroke moves the body about twice the length it rolls. Seven: Calf, Hamstring, Quad, Upper Back, IT Band, Lat, Glute Roll (`tools/variants/batch-17-foam-roller.cjs`). The side-lying ones (IT band, lats) and the glutes (sitting in a figure four, the seat, a point, on the roller) were fitted numerically (several contacts at once) and keep one live touch for the rolling. |
-| `medball` | `hands` (default both) | A medicine ball held in both hands, at their middle (`--medball`). |
+| `medball` | `hands` (default both) | A medicine ball held in both hands, at their middle (`--medball`). With `holds` it can be thrown: a spot `{x, y, z}` in a step's `holds` is where it flies to (Medicine Ball Chest Pass: to the wall and back; a quiet step keeps it in the hands until the arms are straight). |
 | `ring` | `from`, `to` | A Pilates ring (magic circle) between two points, 68 across; pressed, it flattens (`ringSVG`: a circle across the press line and upright, drawn in 3D). |
 | `dumbbell` | `hand`, `axis` `lr` (bar left–right) / `fb` (front–back) / `ud` (upright), relative to the body | Drawn end-on when the bar points at the camera; drawn with its arm (behind the body when the arm is). |
-| `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm (held in both hands, the forearms' directions averaged, weighted by the grip). A step's `holds` overrides which hands hold it (passing it hand to hand). |
+| `kettlebell` | `hand` or `hands[]` | In one hand it hangs in line with the forearm; held in both (by the horns) straight down, turning from one to the other as it's passed (`kettlebellAt`). Held in both behind the head or back, it's drawn behind the body there (Kettlebell Halo). A step's `holds` overrides which hands hold it (passing it hand to hand). |
 | `barbell` | `from`, `to` (hands) | Projected in 3D: the end plate from the side, the full bar from the front. |
 | `bar` | `y` (height), `z`, `width` 90 | A pull-up bar, drawn in front of the hands that hold it (end-on, a dot). Hang from it with `anchor` a hand, `anchorY` the bar's `y`, `anchorX` half the grip width. The exercise page's view grows upwards to show it (still square). Equipment "Pull-up bar" (its own kind). |
 
@@ -397,7 +398,9 @@ differently.
    target is lerped from where the step put it to where the next one does, so the move lands exactly on the next step:
    aimed at the first step's spot only, the IT band roll's leg snapped the last few px at each end). The
    IT band roll's top foot is planted: the second step `keep`s it where the first put it (it slid 53 px until Sep 2026). `worldOf` leaves the frame's surfaces as they were (it used to
-   switch them to a step's, which put a rolling roller in the wrong place for the rest of the frame).
+   switch them to a step's, which put a rolling roller in the wrong place for the rest of the frame). A rolling
+   stability ball is put under the point resting on it every frame (as far from it as at the two ends) and the touches
+   solved again: the heels move on an arc, so an even roll left them 20 px off it mid-curl.
    **A hand planted on the same spot at both ends** of any move (not only rolling) stays on it: the arm reaches back
    each frame (Sep 2026, for the Turkish Get-Up's hand under the body; where the shoulder moves more than an arm's
    length from it, a quiet in-between step is needed, as the get-up has).
@@ -441,6 +444,7 @@ no phases. Held poses are checked at the step itself.
 | rest | The pinned point and every `touch` point rest on the floor/surface (minus `gap`); every `reach` hand is on its target | 7 px |
 | jump | No body segment's direction (in 3D) changes more than **20° in 1/60 of a move** | 20° |
 | planted | Any of ankles, toes, hands, knees, elbows, pelvis, neckBase that is at the same spot (±2 px) before and after a move and resting on a surface (≤ 3 px) must not wander during it | 6 px |
+| snap | No point moves more than 3 px in the first or last 1/60 of a move and twice as far as in the frame next to it (Sep 2026): a mid-move hold or fix that doesn't end exactly on the step, so the limb jumps into place (the Fish Pose arm; holds now aim from one end's spot to the other's, and a step's pose must be one the holds can reach: no bent-back elbow they'd bend forward) | 3 px |
 
 Accepted exceptions (`tools/known-issues.json`, per exercise, per check, max px):
 

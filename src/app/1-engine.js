@@ -48,8 +48,8 @@ function validateExercise(ex, path) {
     }
     if (kf.keep != null && (!Array.isArray(kf.keep) || kf.keep.some(k => !/^(ankle|hand)[LR]$/.test(typeof k === 'string' ? k : (k && k.point) || '') || (typeof k === 'object' && !(Number.isInteger(k.keyframe) && k.keyframe >= 0 && k.keyframe < ex.keyframes.length)))))
       fail(`${p}.keep must list ankleL/ankleR/handL/handR, or {"point": "ankleR", "keyframe": 0} to return to where it was in that step.`);
-    if (kf.holds != null && (!Array.isArray(kf.holds) || !kf.holds.length || kf.holds.some(h => h !== 'handL' && h !== 'handR')))
-      fail(`${p}.holds must list the hands holding the weight in this step: ["handR"], ["handL"] or ["handL", "handR"].`);
+    if (kf.holds != null && (!Array.isArray(kf.holds) || !kf.holds.length || kf.holds.some(h => !(HOLD_POINTS.includes(h) || (h && typeof h === 'object' && ['x', 'y', 'z'].every(k => h[k] == null || isFinite(h[k])))))))
+      fail(`${p}.holds must list what holds the weight or ball in this step: ["handR"], ["handL", "handR"], ["ankleL", "ankleR"], or a spot it was thrown to, {"x": 0, "y": 240, "z": 150}.`);
     if (kf.quiet != null && typeof kf.quiet !== 'boolean') fail(`${p}.quiet must be true or false.`);
     if (kf.ease != null && !['smooth', 'linear'].includes(kf.ease)) fail(`${p}.ease must be "smooth" or "linear".`);
     if (kf.phase != null && !['setup', 'rep', 'finish'].includes(kf.phase)) fail(`${p}.phase must be "setup", "rep" or "finish".`);
@@ -75,6 +75,8 @@ function validateExercise(ex, path) {
       }
       if (SURFACE_TYPES.includes(pr.type)) {
         for (const f of ['width', 'depth', 'height', 'backHeight', 'r', 'length']) if (pr[f] != null && !(pr[f] > 0)) fail(`${p}.${f} must be a positive number.`);
+        if (pr.rolls != null && typeof pr.rolls !== 'boolean') fail(`${p}.rolls must be true or false.`);
+        if (pr.hands != null && (pr.type !== 'ball' || !Array.isArray(pr.hands) || !pr.hands.length || pr.hands.some(h => !HOLD_POINTS.includes(h)))) fail(`${p}.hands (a ball carried) must list what holds it: handL, handR, ankleL, ankleR.`);
         if (pr.back != null && !['behind', 'ahead'].includes(pr.back)) fail(`${p}.back must be "behind" or "ahead".`);
         return;
       }
@@ -170,7 +172,14 @@ function sequenceSpan(R, seg, dx = 0, centre = false) {
     if (centre) { const d = W / 2 - Q.pelvis.x; for (const k in Q) Q[k].x += d; }
     for (const k of POINTS) { minX = Math.min(minX, Q[k].x); maxX = Math.max(maxX, Q[k].x); minY = Math.min(minY, Q[k].y); }
     for (const wl of R.walls || []) if (wl) { const w = wallOnScreen(wl, r.cam); if (w.show > 0.02) { minX = Math.min(minX, w.x + dx - 6); maxX = Math.max(maxX, w.x + dx + 6); } }
-    for (const sh of surfaceShapes(R.supports, r.cam)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); }
+    for (const sh of surfaceShapes(r.supports || R.supports, r.cam)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); }   // (a rolling ball moves)
+    // a ball carried or thrown (where the step's "holds" puts it), all of it
+    const balls = (S.props || []).filter(pr => carried(pr) || pr.type === 'medball');
+    if (balls.length && r.holds) {
+      const c = heldAt(r, r, 1, fkAt(r.pose, seg, place(r.pose, seg, r.rule)));
+      if (c) for (const pr of balls) { const q = project({ c }, r.cam).c, rad = pr.type === 'medball' ? 20 : num(pr.r) || 58, x = q.x + dx + (centre ? W / 2 - Q.pelvis.x : 0);
+        minX = Math.min(minX, x - rad - 6); maxX = Math.max(maxX, x + rad + 6); minY = Math.min(minY, q.y - rad); }
+    }
   }
   for (const s of R.supports || []) minY = Math.min(minY, FLOOR - s.h - (s.backHeight || 0));
   for (const b of R.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 6);
@@ -211,7 +220,7 @@ function buildFigure() {
   scene.innerHTML =
     `<line class="floor-line" x1="${-5 * W}" y1="${FLOOR + 7}" x2="${6 * W}" y2="${FLOOR + 7}"/>` +
     `<ellipse class="shadow" id="figShadow" cy="${FLOOR + 7}" rx="52" ry="6"/><g class="floor-ticks" id="floorTicks"></g>` +
-    `<g id="propsBack"></g><g id="figRoot">` +
+    `<g id="propsBack"></g><g id="figRoot"><g id="heldBall"></g>` +
     BONES.map(bn => `<g class="${cls[bn.part]}" data-bone="${bn.id}"><line class="bone" vector-effect="non-scaling-stroke"/>${extra[bn.id] || ''}</g>`).join('') +
     `</g><g id="propsFront"></g>`;
   FIG.bones = BONES.map(bn => { const g = scene.querySelector(`[data-bone="${bn.id}"]`); return { ...bn, g, line: g.querySelector('line'), dots: [...g.querySelectorAll('[data-at]')] }; });
@@ -252,14 +261,19 @@ function drawProps(P, Q, pose, cam) {
   // chairs, benches and steps sit behind the figure
   for (const sh of surfaceShapes(S.frameSupports || S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
   const M0 = rootM(pose.root), wts = { handL: '', handR: '' };
+  let held = '', heldD = 0;
   S.props.forEach((pr, i) => {
+    // a carried stability ball: among the limbs, by depth (the near hand and foot on it, the far ones behind it)
+    if (carried(pr)) { held = weightSVG(pr, P, M0, proj, null, S.held); heldD = S.held ? proj(S.held).d : Q.pelvis.d; return; }
     if (SURFACE_TYPES.includes(pr.type)) return;
     if (WEIGHT_TYPES.includes(pr.type)) {
-      const grip = pr.type === 'kettlebell' ? S.grip : null, svg = weightSVG(pr, P, M0, proj, grip);
+      const grip = pr.type === 'kettlebell' ? S.grip : null, svg = weightSVG(pr, P, M0, proj, grip, pr.type === 'medball' ? S.held : null);
       // a weight in one hand is drawn with that arm (behind the body if the arm is); a barbell in front
       const hand = grip ? (grip.handL > 0.99 ? 'handL' : grip.handR > 0.99 ? 'handR' : null) : pr.hand;
-      // passed between the hands behind the back: behind the body
-      const behind = grip && !hand && proj(V3.add(V3.mul(P.handL, grip.handL), V3.mul(P.handR, grip.handR))).d < proj(P.pelvis).d - 4;
+      // held in both hands (or passed between them) behind the head or back: behind the body there (its depth at the bell's height)
+      const kb = pr.type === 'kettlebell' && !hand ? kettlebellAt(pr, P, grip) : null;
+      const body = kb && V3.lerp(P.pelvis, P.head, Math.max(0, Math.min(1, (kb.bell.y - P.pelvis.y) / (P.head.y - P.pelvis.y))));
+      const behind = !!kb && proj(kb.bell).d < proj(body).d - 4;
       if (hand && wts[hand] != null) wts[hand] += svg; else if (behind) back += svg; else front += svg;
       return;
     }
@@ -290,6 +304,14 @@ function drawProps(P, Q, pose, cam) {
     back += bandAnchors(pr, q).map(p => anchorSVG(p, 'anchor')).join('');
   });
   $('#propsBack').innerHTML = back; $('#propsFront').innerHTML = front;
+  const hb = $('#heldBall');
+  if (hb) {
+    if (hb.innerHTML !== held) hb.innerHTML = held;
+    // in front of every bone further back than the ball, behind the rest
+    const byId = new Map(FIG.bones.map(bn => [bn.id, bn])), next = FIG.order.map(id => byId.get(id)).find(bn => (Q[bn.a].d + Q[bn.b].d) / 2 > heldD);
+    const before = next ? next.g : null;
+    if (held && hb.nextSibling !== before) hb.parentNode.insertBefore(hb, before);
+  }
   document.querySelectorAll('#scene .wts').forEach(g => { const v = wts[g.dataset.hand] || ''; if (g.innerHTML !== v) g.innerHTML = v; });
 }
 
@@ -392,7 +414,7 @@ function draw() {
   for (const k in Q) Q[k].x += S.shiftX;
   drawFloorTicks(P, f.cam);
   applyPose(Q);
-  S.curCam = f.cam; S.frameSupports = f.supports; S.grip = gripAt(a, b, e);
+  S.curCam = f.cam; S.frameSupports = f.supports; S.grip = gripAt(a, b, e); S.held = heldAt(a, b, e, P);
   if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);
   drawGuide(a, b, e);
   if (S.mode !== 'workout' && EX_SHOW_PROGRESS) $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';
