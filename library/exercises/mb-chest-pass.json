@@ -1,0 +1,134 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "mb-chest-pass",
+  "name": "Medicine Ball Chest Pass",
+  "otherNames": ["Med Ball Chest Pass", "Medicine Ball Wall Chest Pass"],
+  "category": "Strength",
+  "focus": "Chest, shoulders and triceps (power)",
+  "collections": ["Free weights"],
+  "equipment": ["Medicine ball", "Wall"],
+  "description": "Facing a wall with a medicine ball at your chest, push it off hard and straight to the wall, then catch the rebound with soft elbows and bring it back to your chest.",
+  "source": {
+    "url": "https://fitwill.app/exercise/5144/medicine-ball-chest-pass-against-wall/",
+    "title": "Fitwill: Medicine Ball Chest Pass Against Wall",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand facing a sturdy wall, about a big step and a half away.", "Feet shoulder-width apart, knees soft, the ball at your chest."],
+  "cues": ["Push fast, straight from your chest.", "Arms finish long.", "Catch soft, then go again."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Use a ball that bounces back (not a slam ball). Stand close enough to catch it easily."
+  },
+  "keyframes": [
+    {
+      "name": "Ball at your chest",
+      "cue": "Face the wall, the ball at your chest, knees soft.",
+      "camera": 70,
+      "durationMs": 700,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "holds": ["handL", "handR"],
+      "pose": {
+        "hipL": [8, 6, 0],
+        "kneeL": 12,
+        "hipR": [8, 6, 0],
+        "kneeR": 12,
+        "shoulderL": [30, 0, 0],
+        "elbowL": 110,
+        "shoulderR": [30, 0, 0],
+        "elbowR": 110
+      }
+    },
+    {
+      "name": "Pass",
+      "cue": "Push it hard off your chest to the wall.",
+      "camera": 70,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "holds": ["handL", "handR"],
+      "pose": {
+        "hipL": [8, 6, 0],
+        "kneeL": 12,
+        "hipR": [8, 6, 0],
+        "kneeR": 12,
+        "torso": [4, 0, 0],
+        "shoulderL": [85, 0, 0],
+        "elbowL": 5,
+        "shoulderR": [85, 0, 0],
+        "elbowR": 5
+      }
+    },
+    {
+      "name": "",
+      "cue": "",
+      "camera": 70,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "holds": [
+        {
+          "x": 0,
+          "y": 235,
+          "z": 240
+        }
+      ],
+      "ease": "linear",
+      "quiet": true,
+      "pose": {
+        "hipL": [8, 6, 0],
+        "kneeL": 12,
+        "hipR": [8, 6, 0],
+        "kneeR": 12,
+        "torso": [4, 0, 0],
+        "shoulderL": [85, 0, 0],
+        "elbowL": 5,
+        "shoulderR": [85, 0, 0],
+        "elbowR": 5
+      }
+    },
+    {
+      "name": "Catch",
+      "cue": "Catch it with soft elbows.",
+      "camera": 70,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "holds": ["handL", "handR"],
+      "ease": "linear",
+      "pose": {
+        "hipL": [8, 6, 0],
+        "kneeL": 12,
+        "hipR": [8, 6, 0],
+        "kneeR": 12,
+        "torso": [4, 0, 0],
+        "shoulderL": [85, 0, 0],
+        "elbowL": 5,
+        "shoulderR": [85, 0, 0],
+        "elbowR": 5
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "medball"
+    },
+    {
+      "type": "wall",
+      "z": 260
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

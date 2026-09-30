@@ -1,0 +1,217 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "ball-hamstring-curl",
+  "name": "Stability Ball Hamstring Curl",
+  "otherNames": ["Swiss Ball Leg Curl", "Exercise Ball Leg Curl", "Stability Ball Leg Curl"],
+  "category": "Strength",
+  "focus": "Hamstrings, glutes and core",
+  "collections": ["Core", "Bodyweight"],
+  "equipment": ["Stability ball"],
+  "description": "Lying on your back with your heels on a stability ball, lift your hips, then pull your heels in to roll the ball toward you and straighten your legs to roll it back, hips up throughout.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/59/stability-ball-hamstring-curl/",
+    "title": "ACE Exercise Library: Stability Ball Hamstring Curl",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, arms out to the sides, palms down.", "Rest your heels and lower legs on top of the ball, feet hip-width apart."],
+  "cues": ["Hips stay up as the ball rolls.", "Pull with your hamstrings.", "Roll out slowly."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Keep your hips up the whole set; lower them only at the end."
+  },
+  "keyframes": [
+    {
+      "name": "Heels on the ball",
+      "cue": "Lie on your back, heels on the ball, arms out to the sides.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [35, 0, 0],
+        "hipR": [35, 0, 0]
+      }
+    },
+    {
+      "name": "Lift your hips",
+      "cue": "Press your heels into the ball and lift your hips.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-107.5, 0, 0],
+        "neck": [51.5, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [12, 0, 0],
+        "hipR": [12, 0, 0]
+      }
+    },
+    {
+      "name": "Curl in",
+      "cue": "Pull your heels in, rolling the ball toward you; hips stay up.",
+      "camera": 90,
+      "durationMs": 1300,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-128, 0, 0],
+        "neck": [72, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [30, 0, 0],
+        "kneeL": 95,
+        "ankleL": 70,
+        "hipR": [30, 0, 0],
+        "kneeR": 95,
+        "ankleR": 70
+      }
+    },
+    {
+      "name": "Roll out",
+      "cue": "Slowly straighten your legs, hips still up.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-107.5, 0, 0],
+        "neck": [51.5, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [12, 0, 0],
+        "hipR": [12, 0, 0]
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Lower your hips to the floor.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "finish",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [35, 0, 0],
+        "hipR": [35, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "ball",
+      "x": 0,
+      "z": 225,
+      "r": 49,
+      "rolls": true
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

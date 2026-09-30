@@ -4,16 +4,20 @@ function poseThumbSVG(ex, kf, opts = {}) {
   const seq = resolveSequence(ex.keyframes, seg, ex);
   const idx = ex.keyframes.indexOf(kf);
   const r = idx >= 0 ? seq[idx] : resolveKeyframe(kf, seg, ex);
-  SUPPORTS = seq.supports || [];
+  SUPPORTS = r.supports || seq.supports || [];
   const P = fkAt(r.pose, seg, place(r.pose, seg, r.rule)), Q = project(P, r.cam), cam = r.cam;
   const proj = p => project({ p }, cam).p;
   const pts = POINTS.map(k => Q[k]);
   let minX = Math.min(...pts.map(p => p.x)) - 26, maxX = Math.max(...pts.map(p => p.x)) + 26;
   const walls = (seq.walls || []).map(wl => (wl ? wallOnScreen(wl, cam) : null));
   for (const w of walls) if (w && w.show > 0.5) { minX = Math.min(minX, w.x - 12); maxX = Math.max(maxX, w.x + 12); }
-  const surfaces = surfaceShapes(seq.supports || [], cam);
+  const surfaces = surfaceShapes(r.supports || seq.supports || [], cam);   // (the step's own: a rolling ball has moved)
   for (const s of surfaces) { minX = Math.min(minX, s.x0 - 8); maxX = Math.max(maxX, s.x1 + 8); }
   let minY = Math.min(...pts.map(p => p.y)) - 26, maxY = FLOOR + 14;
+  // a carried stability ball, all of it
+  const held = heldAt(r, r, 1, P);
+  for (const pr of (ex.props || []).filter(carried)) { const c = proj(held || P.handL), rad = num(pr.r) || 58;
+    minX = Math.min(minX, c.x - rad - 6); maxX = Math.max(maxX, c.x + rad + 6); minY = Math.min(minY, c.y - rad - 6); }
   for (const b of seq.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 12);
   const w = maxX - minX, h = maxY - minY, s = Math.max(w, h, 150);
   const vx = (minX + maxX) / 2 - s / 2, vy = maxY - s;
@@ -25,7 +29,8 @@ function poseThumbSVG(ex, kf, opts = {}) {
   const figure = boneOrder(Q).map(id => { const bn = byId.get(id); return L(bn.a, bn.b, cls[bn.part]) +
     (bn.b === 'head' ? `<circle cx="${Q.head.x.toFixed(1)}" cy="${Q.head.y.toFixed(1)}" r="${seg.head}" class="th"/>` : ''); }).join('');
   const back = (ex.props || []).map((pr, i) => {
-    if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj, pr.type === 'kettlebell' ? gripAt(r, r, 1) : null); return ''; }
+    if (carried(pr)) return weightSVG(pr, P, M0, proj, null, heldAt(r, r, 1, P));
+    if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj, pr.type === 'kettlebell' ? gripAt(r, r, 1) : null, pr.type === 'medball' ? heldAt(r, r, 1, P) : null); return ''; }
     if (pr.type === 'bar') { over += barSVG(pr, proj, 'tbar'); return ''; }
     if (pr.type === 'ring') { over += ringSVG(pr, P, proj, 'tring'); return ''; }
     if (pr.type === 'wall') { const wl = walls[i]; return wl && wl.show > 0.5 ? `<line class="tw" x1="${wl.x.toFixed(1)}" y1="${FLOOR + 7}" x2="${wl.x.toFixed(1)}" y2="${(vy - 5).toFixed(1)}"/>` : ''; }

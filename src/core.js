@@ -167,10 +167,13 @@ const SURFACE_TYPES = ['chair', 'bench', 'step', 'block', 'ball', 'roller'];
 // a yoga block stands on end (23 × 15 × 10 cm at about 5.6 mm a px): 41 high, 27 front to back, 18 side to side
 const SURFACE_DEFAULTS = { chair: { width: 70, depth: 80, height: 80, backHeight: 85 }, bench: { width: 200, depth: 70, height: 70 }, step: { width: 90, depth: 140, height: 30 }, block: { width: 27, depth: 18, height: 41 } };
 let SUPPORTS = [];
+/* a stability ball held (in the hands, or squeezed between the ankles: "hands" lists who holds it) rather than lain on */
+const carried = p => p.type === 'ball' && Array.isArray(p.hands);
 function surfacesFrom(props) {
-  return (props || []).filter(p => SURFACE_TYPES.includes(p.type)).map(p => {
+  return (props || []).filter(p => SURFACE_TYPES.includes(p.type) && !carried(p)).map(p => {
     // a stability ball: round, resting on the floor (r 58: a 65 cm ball); what's over it rests on its curve
-    if (p.type === 'ball') { const r = num(p.r) || 58, x = num(p.x), z = num(p.z); return { type: 'ball', r, cx: x, cz: z, x0: x - r, x1: x + r, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0 }; }
+    // ("rolls": it rolls along the floor under what rests on it, like a foam roller: the heels curling it in)
+    if (p.type === 'ball') { const r = num(p.r) || 58, x = num(p.x), z = num(p.z); return { type: 'ball', r, cx: x, cz: z, x0: x - r, x1: x + r, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0, rolls: !!p.rolls, dz: 0 }; }
     // a foam roller: a cylinder lying on the floor across the figure (side to side), r 14 and 160 long (15 × 90 cm);
     // what lies over it rests on its curve
     if (p.type === 'roller') { const r = num(p.r) || 14, len = num(p.length) || 160, x = num(p.x), z = num(p.z); return { type: 'roller', r, cx: x, cz: z, x0: x - len / 2, x1: x + len / 2, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0, dz: 0 }; }
@@ -189,11 +192,13 @@ function supportY(x, z) {
   return y;
 }
 const supportAt = p => supportY(p.x, p.z);
-/* the surfaces with each foam roller rolled dz along the floor (it turns dz / r as it goes) */
+/* what rolls along the floor: a foam roller, or a stability ball that "rolls" */
+const rolling = s => s.type === 'roller' || (s.type === 'ball' && s.rolls);
+/* the surfaces with each foam roller (or rolling ball) rolled dz along the floor (it turns dz / r as it goes) */
 function rolledSupports(sups, dz) {
-  return sups.map(s => (s.type !== 'roller' ? s : { ...s, cz: s.cz + dz - s.dz, z0: s.z0 + dz - s.dz, z1: s.z1 + dz - s.dz, dz }));
+  return sups.map(s => (!rolling(s) ? s : { ...s, cz: s.cz + dz - s.dz, z0: s.z0 + dz - s.dz, z1: s.z1 + dz - s.dz, dz }));
 }
-const rollerDz = sups => { const s = (sups || []).find(k => k.type === 'roller'); return s ? s.dz : 0; };
+const rollerDz = sups => { const s = (sups || []).find(rolling); return s ? s.dz : 0; };
 /* points along a body segment (P: body points), ends included */
 function segmentPoints(P, name, n = 12) {
   const ks = SEGMENTS[name], out = [];
@@ -224,7 +229,10 @@ function surfaceShapes(sup, yaw) {
     // (the floor line is drawn 7 below the floor the body rests on, for the feet's thickness: the ball reaches it, its top
     // where the body rests on it)
     if (k.type === 'ball') { const c = sx(k.cx, k.cz), r = k.r + 3.5, cy = FLOOR + 7 - r;
-      return { solid: true, ball: true, d: `M${c - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`, x0: c - r, x1: c + r }; }
+      // a rolling ball: a line across it turns as it rolls (seen from the side; from the front it only moves)
+      const ph = k.dz / k.r, ux = Math.cos(ph) * r * 0.8 * s, uy = Math.sin(ph) * r * 0.8;
+      const line = k.rolls ? `M${(c - ux).toFixed(1)} ${(cy - uy).toFixed(1)}L${(c + ux).toFixed(1)} ${(cy + uy).toFixed(1)}` : '';
+      return { solid: true, ball: true, d: `M${c - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z` + line, x0: c - r, x1: c + r }; }
     // a foam roller: seen end-on a circle, from the front a bar, in between a bar with round ends (the near one outlined)
     if (k.type === 'roller') {
       const r = k.r + 3.5, cy = FLOOR + 7 - r, e0 = sx(k.x0, k.cz), e1 = sx(k.x1, k.cz), a = Math.min(e0, e1), b = Math.max(e0, e1), rx = Math.max(0.01, r * Math.abs(s));
@@ -475,7 +483,7 @@ function frameAt(a, b, e, seg) {
   SUPPORTS = b.supports || a.supports || [];
   // a foam roller rolls along with the move (it's where it was at a, then b)
   if (a.supports && b.supports && rollerDz(a.supports) !== rollerDz(b.supports)) SUPPORTS = rolledSupports(a.supports, lerp(rollerDz(a.supports), rollerDz(b.supports), e));
-  const frameSupports = SUPPORTS;
+  let frameSupports = SUPPORTS;
   // joints turn exactly as written (an angle may be written as e.g. -270 instead of 90 to pick the direction)
   const pose = lerpPose(a.pose, b.pose, e);
   const cam = lerp(a.cam, b.cam, e);
@@ -491,9 +499,20 @@ function frameAt(a, b, e, seg) {
     // stays on it the whole way, by the same joint, while the pin holds (in-between angles alone would lift it off);
     // so do the other touches both steps share (a foot on the floor), in the order written
     const r0 = rule || (a.rule.anchor === b.rule.anchor ? a.rule : null);
-    const rolls = r0 && SUPPORTS.some(k => k.type === 'roller') ? (a.touch || []).filter(t => (b.touch || []).some(u => u.point === t.point && u.adjust === t.adjust)) : [];
+    const rolls = r0 && SUPPORTS.some(rolling) ? (a.touch || []).filter(t => (b.touch || []).some(u => u.point === t.point && u.adjust === t.adjust)) : [];
     const flat = () => { for (const s of (a.plant || []).filter(x => (b.plant || []).includes(x))) pose['ankle' + s] = flatAnkle(pose, s, seg); };   // (feet planted at both ends stay flat)
     for (let pass = 0; pass < (rolls.length > 1 ? 4 : 1); pass++) for (const t of rolls) solveTouch(pose, seg, r0, t, flat);   // (over again when they pull on each other)
+    // a rolling ball goes with the point on it the whole way (the heels move on an arc, not in step with an even roll):
+    // it is put under that point, as far from it as at the two ends, and what rests on it is solved again
+    const ball = SUPPORTS.find(k => k.type === 'ball' && k.rolls), on = ball && rolls.find(t => !SEGMENTS[t.point] && Math.abs(worldOf(a, seg)[t.point].z - a.supports.find(rolling).cz) < ball.r);
+    if (on) {
+      const off = lerp(worldOf(a, seg)[on.point].z - a.supports.find(rolling).cz, worldOf(b, seg)[on.point].z - b.supports.find(rolling).cz, e);
+      for (let it = 0; it < 2; it++) {
+        const z = fkAt(pose, seg, rule ? place(pose, seg, rule, false) : V3.lerp(place(pose, seg, a.rule, false), place(pose, seg, b.rule, false), e))[on.point].z;
+        SUPPORTS = frameSupports = rolledSupports(a.supports, rollerDz(a.supports) + (z - off) - a.supports.find(rolling).cz);
+        for (let pass = 0; pass < (rolls.length > 1 ? 4 : 1); pass++) for (const t of rolls) solveTouch(pose, seg, r0, t, flat);
+      }
+    }
     if (rolls.length) {
       Object.assign(pos, rule ? place(pose, seg, rule, false) : V3.lerp(place(pose, seg, a.rule, false), place(pose, seg, b.rule, false), e));
       // a foot or hand planted on the same spot at both ends (the top foot pushing) stays on it: the limb reaches back
@@ -647,13 +666,23 @@ const WEIGHT_TYPES = ['dumbbell', 'kettlebell', 'barbell', 'medball'];
 /* Which hands hold the weight (a kettlebell passed from hand to hand): a step's "holds" (["handR"], or both hands at
    the pass), shared between the hands; between two steps the grip moves from one to the other. null: as the prop says. */
 function gripAt(a, b, e) {
-  const w = h => (h ? { handL: h.includes('handL') ? 1 / h.length : 0, handR: h.includes('handR') ? 1 / h.length : 0 } : null);
+  const w = h => { const n = h ? h.filter(k => k === 'handL' || k === 'handR').length : 0; return n ? { handL: h.includes('handL') ? 1 / n : 0, handR: h.includes('handR') ? 1 / n : 0 } : null; };
   const A = w(a && a.holds), B = w(b && b.holds);
   if (!A && !B) return null;
   const x = A || B, y = B || A;
   return { handL: lerp(x.handL, y.handL, e), handR: lerp(x.handR, y.handR, e) };
 }
-function weightSVG(pr, P, M0, proj, grip = null) {
+/* Where a ball is between two steps (P: this frame's world points): in the middle of what holds it in each step ("holds":
+   hands, ankles, or a spot {x, y, z} it was thrown to), from one to the other. null: neither step says. */
+const HOLD_POINTS = ['handL', 'handR', 'ankleL', 'ankleR'];
+function heldAt(a, b, e, P) {
+  const at = h => { if (!h || !h.length) return null; const q = h.map(k => (typeof k === 'string' ? P[k] : { x: num(k.x), y: num(k.y), z: num(k.z) })).filter(Boolean);
+    return q.length ? V3.mul(q.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / q.length) : null; };
+  const A = at(a && a.holds), B = at(b && b.holds);
+  if (!A && !B) return null;
+  return V3.lerp(A || B, B || A, e);
+}
+function weightSVG(pr, P, M0, proj, grip = null, at = null) {
   const f = n => n.toFixed(1);
   const bar = (a, b, cls = 'wt-bar') => `<line class="${cls}" x1="${f(a.x)}" y1="${f(a.y)}" x2="${f(b.x)}" y2="${f(b.y)}"/>`;
   const plate = (c, ux, uy, half) => bar({ x: c.x - uy * half, y: c.y + ux * half }, { x: c.x + uy * half, y: c.y - ux * half }, 'wt-plate');
@@ -680,8 +709,14 @@ function weightSVG(pr, P, M0, proj, grip = null) {
   }
   if (pr.type === 'medball') {                                          // a medicine ball, held in both hands (r 20: about 23 cm)
     const hands = (pr.hands || ['handL', 'handR']).map(k => P[k]).filter(Boolean); if (!hands.length) return '';
-    const c = proj(V3.mul(hands.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / hands.length));
+    // (at: where "holds" puts it: thrown, it flies to a spot and back)
+    const c = proj(at || V3.mul(hands.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / hands.length));
     return `<circle class="wt medball" cx="${f(c.x)}" cy="${f(c.y)}" r="20"/><path class="wt-seam" d="M${f(c.x - 20)} ${f(c.y)}Q${f(c.x)} ${f(c.y - 9)} ${f(c.x + 20)} ${f(c.y)}"/>`;
+  }
+  if (carried(pr)) {                                                    // a stability ball carried: between what holds it
+    const q = pr.hands.map(k => P[k]).filter(Boolean); if (!q.length) return '';
+    const c = proj(at || V3.mul(q.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / q.length)), r = num(pr.r) || 58;
+    return `<circle class="held-ball" cx="${f(c.x)}" cy="${f(c.y)}" r="${r}"/>`;
   }
   if (pr.type === 'barbell') {
     const a = P[pr.from], b = P[pr.to]; if (!a || !b) return '';
@@ -812,7 +847,7 @@ function travelStep(a, b, seg) {
 function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
   const base = surfacesFrom(props);
   let R = resolvePass(keyframes, seg, ex, props, base, null);
-  if (!base.some(s => s.type === 'roller')) return R;
+  if (!base.some(rolling)) return R;
   // first guess: the steps as written, without what rests on the roller (resting on an unmoved roller bends them)
   const free = resolvePass(keyframes.map(k => ({ ...k, touch: (k.touch || []).filter(t => !SEGMENTS[t.point]) })), seg, ex, props, base, null);
   for (let it = 0; it < 4; it++) {
@@ -824,11 +859,12 @@ function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
   }
   return R;
 }
-/* how far the roller has rolled at each step: half the travel along the floor of the spot that rests on it at the first step */
+/* how far the roller has rolled at each step: half the travel along the floor of the spot that rests on it at the first step
+   (a rolling ball: all of it) */
 function rollerTravel(R, keyframes, seg, M = R) {
   // (a segment on it, or failing that a point: the seat, sitting on it)
   const on = k => { SUPPORTS = R[0].supports; const P = worldOf(R[0], seg), q = SEGMENTS[k.point] ? segmentPoints(P, k.point, 40) : P[k.point] ? [P[k.point]] : [];
-    return q.some(v => SUPPORTS.some(s => s.type === 'roller' && Math.abs(v.z - s.cz) < s.r && v.x >= s.x0 && v.x <= s.x1) && Math.abs(v.y - supportAt(v)) < 3); };
+    return q.some(v => SUPPORTS.some(s => rolling(s) && (s.type === 'ball' ? Math.hypot(v.x - s.cx, v.z - s.cz) < s.r : Math.abs(v.z - s.cz) < s.r && v.x >= s.x0 && v.x <= s.x1)) && Math.abs(v.y - supportAt(v)) < 3); };
   const touches = (keyframes[0] && keyframes[0].touch) || [];
   const t = touches.find(k => SEGMENTS[k.point] && on(k)) || touches.find(k => SEGMENTS[k.point]) || touches.find(k => on(k));
   if (!t) return null;
@@ -839,7 +875,9 @@ function rollerTravel(R, keyframes, seg, M = R) {
   pts0.forEach((q, i) => { const c = q.y - supportAt(q); if (c < low) { low = c; best = i; } });
   const f = pts0.length > 1 ? best / (pts0.length - 1) : 0;
   const m0 = spot(M[0], f).z;
-  return M.map((r, i) => (i ? (spot(r, f).z - m0) / 2 : 0));
+  // (a ball under the heels goes with them: the feet ride on its top as it rolls, so it moves as far as they do)
+  const k = R[0].supports.some(s => s.type === 'ball' && s.rolls) ? 1 : 0.5;
+  return M.map((r, i) => (i ? (spot(r, f).z - m0) * k : 0));
 }
 function resolvePass(keyframes, seg, ex, props, base, dz) {
   const supAt = i => (dz ? rolledSupports(base, dz[i]) : base);
@@ -872,7 +910,7 @@ function resolvePass(keyframes, seg, ex, props, base, dz) {
     for (const t of kf.touch) if (t.point !== r.rule.anchor) solveTouch(r.pose, seg, r.rule, t, applyPlant);   // the pinned point is already down
   });
   // keep: hands or feet that stay exactly where they were in the previous step (feet planted while the hips lift...)
-  const roller = base.some(k => k.type === 'roller');
+  const roller = base.some(rolling);
   for (let i = 0; i < R.length; i++) {
     const kf = keyframes[i], keep = kf.keep || [];
     if (!keep.length || R.length < 2) continue;
@@ -956,7 +994,7 @@ function mirrorKeyframe(kf) {
     touch: (kf.touch || []).map(t => ({ ...t, point: swapSide(t.point), adjust: swapSide(jointRef(t.adjust).j) + (String(t.adjust).includes('.') ? '.' + t.adjust.split('.')[1] : '') })),
     keep: (kf.keep || []).map(k => (typeof k === 'string' ? swapSide(k) : { ...k, point: swapSide(k.point) })),
     reach: (kf.reach || []).map(r => ({ ...r, hand: swapSide(r.hand), to: swapSide(r.to), ...(r.dx != null ? { dx: -num(r.dx) } : {}) })),
-    ...(Array.isArray(kf.holds) ? { holds: kf.holds.map(swapSide) } : {}),
+    ...(Array.isArray(kf.holds) ? { holds: kf.holds.map(h => (h && typeof h === 'object' ? { ...h, x: -num(h.x) } : swapSide(h))) } : {}),
     guide: kf.guide ? { ...kf.guide, direction: -num(kf.guide.direction) } : kf.guide
   };
   if (kf.anchorX != null) out.anchorX = -num(kf.anchorX);
@@ -964,7 +1002,7 @@ function mirrorKeyframe(kf) {
 }
 
 if (typeof module !== 'undefined') module.exports = {
-  phaseInfo, reverseReps, weightSVG, gripAt, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
+  phaseInfo, reverseReps, weightSVG, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
   propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   SEGMENTS, clearance, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS

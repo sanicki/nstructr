@@ -54,6 +54,8 @@ The **Exercises** tab is the library: over 220 exercises, each animated step by 
 - Foam roller exercises (calves, hamstrings, quads, upper back, glutes, IT band, lats; in **Stretches** and **Warm-up**) roll back and forth
   for the time you set: the figure moves over the roller, which rolls along the floor under it (half as far, as a real
   one does). Glutes, IT band and lats are done one side at a time. Set how long in the workout (45 s at first).
+- Balls move too: in the Stability Ball Hamstring Curl the ball rolls in and out under your heels; in the Stability Ball
+  Pass it goes from your feet to your hands and back; in the Medicine Ball Chest Pass it flies to the wall and back.
 
 Scroll down for the details:
 
