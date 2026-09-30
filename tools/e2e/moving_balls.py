@@ -33,7 +33,7 @@ async def main():
             rows.append(await pg.evaluate(f"""(() => {{ const {{ P }} = ({at})({i}, {t}); const c = document.querySelector('#scene circle.medball'), q = project({{ p: V3.lerp(P.handL, P.handR, 0.5) }}, S.curCam).p;
               return [{i}, {t}, 'ball ahead of the hands px', Math.round(+c.getAttribute('cx') - q.x - S.shiftX)]; }})()"""))
         print('chest pass: ball        ', rows, '<- 0 in the hands, then out to the wall (~110) and back to 0')
-        print('thumbnails draw the ball', await pg.evaluate("['ball-pass', 'mb-chest-pass', 'ball-hamstring-curl'].map(id => /held-ball|medball|ts ball|ts solid ball/.test(decodeURIComponent(thumbFor(exById(id)))))"))
+        print('thumbnails draw the ball', await pg.evaluate("['ball-pass', 'mb-chest-pass', 'ball-hamstring-curl'].map(id => /held-ball|medball|ts ball|ts solid ball/.test(thumbFor(exById(id))))"))
         await pg.set_viewport_size({'width': 360, 'height': 398})
         await pg.goto(URL + '#/play/ball-pass', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         print('360x398 sideways scroll ', await pg.evaluate("document.documentElement.scrollWidth > innerWidth"))
