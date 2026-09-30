@@ -39,11 +39,13 @@ module.exports = [
     description: 'A relaxed forward fold sitting on a chair: lean forward over your thighs and let your back round, arms and head hanging.',
     setup: ['Sit toward the front of a sturdy chair, feet flat and wider than your hips.'],
     cues: ['Let your back round.', 'Arms and head hang heavy.', 'Come up slowly.'], source: YJ_CHAIR },
+  // the right ankle rests on top of the left thigh just above the knee, the right knee out to the side (fitted, Sep 2026:
+  // it crossed under the left thigh)
   { id: 'chair-yoga-pigeon', base: 'chair-hip-marching', name: 'Chair Pigeon', otherNames: ['Seated Figure Four', 'Seated Pigeon'],
     category: 'Hip opener', focus: 'Outer hip', equipment: ['Chair'], collections: ['Yoga', 'Chair-based'], props: CHAIR,
     edit: ex => { ex.keyframes = [
       sit('Sit tall', 'Feet flat, hands on your thighs.', {}, { phase: 'setup' }),
-      { ...sit('Chair Pigeon', 'Right ankle on your left knee, sit tall.', { hipR: [108, 22, 62], kneeR: 118, ankleR: 10 }), plant: ['L'], touch: [feet[0]],
+      { ...sit('Chair Pigeon', 'Right ankle on your left knee, sit tall.', { hipR: [100.5, 47.5, 88], kneeR: 127, ankleR: 10 }), plant: ['L'], touch: [feet[0]],
         reach: [{ hand: 'handR', to: 'kneeR', dz: -10 }, { hand: 'handL', to: 'pelvis', dx: -22, dz: 26 }] }]; },
     over: { ...sides, ...hold(30) },
     description: 'A seated hip stretch on a chair: rest one ankle on the opposite knee and sit tall, the lifted knee dropping out to the side.',
