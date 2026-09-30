@@ -1,0 +1,219 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bw-marching-glute-bridge",
+  "name": "Marching Glute Bridge",
+  "otherNames": ["Marching Bridge", "Bridge March"],
+  "category": "Strength",
+  "focus": "Glutes, hamstrings and core",
+  "collections": ["Bodyweight", "Core"],
+  "equipment": [],
+  "description": "Holding a glute bridge, lift one knee toward you, put the foot down and lift the other, keeping the hips up and level the whole time.",
+  "source": {
+    "url": "https://www.healthline.com/health/fitness-exercise/glute-bridge-variations",
+    "title": "Healthline: Glute bridge variations",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, knees bent, feet flat, arms by your sides.", "Lift your hips into a bridge."],
+  "cues": ["Hips level; no dipping.", "Squeeze your seat.", "Slow, one knee at a time."],
+  "prescription": {
+    "reps": "6–10 each leg",
+    "note": "Hips stay level and lifted the whole time; lift the knee only as high as you can without the hips dropping."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Knees bent, feet flat, arms by your sides.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Lift your hips",
+      "cue": "Squeeze your glutes and lift your hips.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "keep": ["ankleL", "ankleR", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 80.5,
+        "ankleR": 24.6
+      }
+    },
+    {
+      "name": "Lift your right knee",
+      "cue": "Keep the hips up and level; lift your right knee.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "plant": ["L"],
+      "keep": ["ankleL", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [60, 0, 0],
+        "kneeR": 95,
+        "ankleR": 20
+      }
+    },
+    {
+      "name": "Foot down",
+      "cue": "Put it down, hips still up.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "keep": ["ankleL", "ankleR", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 80.5,
+        "ankleR": 24.6
+      }
+    },
+    {
+      "name": "Lift your left knee",
+      "cue": "Keep the hips up and level; lift your left knee.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "plant": ["R"],
+      "keep": ["ankleR", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [60, 0, 0],
+        "kneeL": 95,
+        "ankleL": 20,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 80.5,
+        "ankleR": 24.6
+      }
+    },
+    {
+      "name": "Foot down",
+      "cue": "Put it down, hips still up.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "keep": ["ankleL", "ankleR", "handL", "handR"],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [-11.1, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-11.3, 0, 0],
+        "elbowR": 1.6,
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 80.5,
+        "ankleR": 24.6
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Lower your hips slowly.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "finish",
+      "anchor": "neckBase",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [58, 0, 0],
+        "kneeL": 116,
+        "ankleL": 32,
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

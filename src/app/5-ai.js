@@ -86,7 +86,13 @@ function planLines(have) {
   }
   return [...groups.keys()].sort().map(k => `${k ? 'WITH ' + k : 'NO EQUIPMENT'}\n${groups.get(k).join('\n')}`).join('\n');
 }
+/* the progressions (library/progressions.json), easiest first, with only the steps the user's equipment allows */
+function planProgressions(have) {
+  return (LINKS.progressions || []).map(p => p.steps.filter(id => { const ex = exById(id); return ex && aiCanDo(ex, have); }))
+    .filter(s => s.length > 1).map(s => s.join(' > ')).join('\n');
+}
 function planPrompt(what, have = aiEquipChosen()) {
+  const prog = planProgressions(have);
   const kit = [...have].filter(k => aiEquipKinds().includes(k)).map(aiEquipLabel).join(', ').toLowerCase();
   return `Plan a workout for my exercise app: ${what || '[GOAL]'}
 
@@ -107,9 +113,13 @@ WORKOUT
     {"ex":"<exercise id>","seconds":30,"sides":"both"}]}]}
 ${aiItemRules}
 - Group the exercises into blocks (Warm-up, Main, Cool-down, or a circuit with "rounds" and "roundRest").
-
+${prog ? `- Suit the level I asked for (a beginner if I didn't say): in PROGRESSIONS, each line goes from easiest to hardest, so pick earlier steps for an easier workout and later ones for a harder one.
+` : ''}
 LIBRARY (exercise ids under the equipment they use; after an id: seconds per rep or "time"; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y; after the colon, its name and what it works)
-${planLines(have)}`;
+${planLines(have)}${prog ? `
+
+PROGRESSIONS (easier and harder versions of one exercise, easiest first)
+${prog}` : ''}`;
 }
 function aiPrompt(kind = AI_KIND, input = '') {
   const what = input.trim();

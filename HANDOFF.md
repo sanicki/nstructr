@@ -24,22 +24,22 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **352 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **354 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 90 | Yoga Journal pose list + chair and wall versions (incl. Chair Warrior I and II, Chair Eagle; Handstand, Headstand and Forearm Stand at the wall) + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions (incl. Cow Face arms with a strap) |
 | Free weights | 65 | dumbbell, kettlebell (incl. around the world, clean, Turkish get-up), barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry; dumbbell and barbell versions of other exercises (batch 21) |
-| Bodyweight | 41 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
-| Resistance band | 37 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) + band Pilates (Hundred, Leg Circles, Roll-Up) |
+| Bodyweight | 43 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
+| Resistance band | 38 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) + band Pilates (Hundred, Leg Circles, Roll-Up) |
 | Chair-based | 29 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga, chair-supported stretches… |
 | Stretches | 36 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway, strap stretches + towel, chair and step versions + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
-| Core | 39 | planks (incl. knee plank), hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
+| Core | 40 | planks (incl. knee plank), hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 41 | Pilates ring (chest press, inner thigh squeeze); all 34 classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick… and the advanced ones, batch 23: Open Leg Rocker, Corkscrew, Jackknife, Boomerang…); band versions |
 | Balance | 15 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, side stepping, balance walk, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 23 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-223 are rep-based, 129 timed; 126 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
+225 are rep-based, 129 timed; 126 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -765,7 +765,10 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   `SIMILAR_EX.equipKinds` finds in the library, remembered in `nstructr-ai-equipment-v1`, nothing at first). Its prompt
   is its own, and short: only the workout format (no exercise format: nothing new is written) and only the exercises
   whose every kind of equipment is picked (`aiCanDo`), each with its pace (`repSeconds`, or "time"), sides/direction,
-  name and focus, plus the user's rests (`restGap`, `restSets`): as a link 12.6k with a wall and dumbbells, 17.1k with everything (then copied).
+  name and focus, plus the user's rests (`restGap`, `restSets`), and the progressions (`planProgressions`: each
+  library/progressions.json line with only the steps the equipment allows, easiest first) with a rule to suit the level
+  asked for (a beginner's if unsaid): as a ChatGPT link (Sep 2026, 354 exercises) 12.8k with no equipment, 16.4k with a
+  wall and dumbbells, 28k with everything; the progressions add 0.7–1.8k. Over `AI_Q_MAX` (15k) it's copied instead.
   The import (`planCheck`) refuses a workout naming an exercise the app doesn't have, drops any "exercises" the AI
   wrote anyway, names the ones needing unpicked equipment, and shows the length (`workoutSeconds`).
 - **Library check after an import** (`src/app/5-libcheck.js`; any import: AI answer, file, pasted JSON, link;
@@ -948,9 +951,39 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
       and maybe paths on the floor. To split: ES module exports instead of the shared script scope, the stage size
       (`W`, `CX`, `FLOOR`) as options, the SVG drawing optional (the posing maths alone for a canvas/WebGL
       renderer), HANDOFF §4–6 and the schema as its README. CLAUDE.md's rule keeps `src/core.js` separable meanwhile.
-    - ✅ **Linked variations** (Sep 2026, §5.4 and §8.1b): progressions and equipment groups in
+    - ✅ **Linked variations** (Sep 2026, §5.4 and §8.1b; then the Marching Glute Bridge, the Band-Assisted Pull-Up and Create
+      with AI's plan prompt listing the progressions): progressions and equipment groups in
       `library/progressions.json`, shown on the exercise page, swapped in the workout editor and, for a session, in
       the player. Knee Plank and Single-Leg Glute Bridge were added to fill gaps (`tools/variants/batch-24-links.cjs`).
+
+### Muscle groups (agreed with the owner, Sep 2026; not started)
+
+- **Ratings**: each exercise rates each group 0–3 (ExRx's classification): 3 primary (what it's for), 2 secondary (helps
+  move the load), 1 stabilizer (holds you steady), 0 not worked. Stretched groups are listed separately. New fields,
+  e.g. `"muscles": {"glutes": 3, "backThigh": 2, "core": 1}`, `"stretches": ["frontThigh"]`, with a source; the build
+  requires them on library exercises. Equipment groups share ratings; `basedOn` copies inherit; Edit and the AI prompt
+  get the fields. Uncertain ratings go to the owner. Sources: ExRx for strength moves; Yoga Journal anatomy and
+  physiotherapy sites for yoga, Pilates and stretches.
+- **11 groups**, each one side of one part of the figure: shoulders (front and back), chest, upper back (lats, traps;
+  neck folded in), biceps (and forearms), triceps, core (abs, obliques), lower back, front of thigh (quads, hip flexors,
+  inner thigh), glutes (outer hip too), back of thigh (hamstrings), lower legs (calves and shins). The owner's seven
+  (arms, shoulders, chest, back, core, upper legs and glutes, lower legs) are headings in the text list. Why not seven:
+  push/pull (biceps/triceps), upper/lower back and quads/hamstrings balance would be invisible, the back view would
+  repeat the front, and coarse ratings can't be split later without redoing the research.
+- **Map**: a separate front and back outline that resembles the stick figure as closely as possible (the thumbnails'
+  capsule limbs and round head; the torso a rounded capsule, the one real addition). The owner approves a mockup first.
+- **Colours**: unfilled → pale green → deep green → amber → deep red, each darker than the last (so the order reads in
+  greyscale and for colour-blind viewers; a gradient within each band), checked for contrast in both themes; stretched
+  groups outlined in blue; always a text list too. Legend: "Estimated work".
+- **Workout total** per group, in set-equivalents: each set counts toward a sweet spot (the exercise's prescribed reps,
+  12–15 when it gives none; 30–60 s for holds): below it in proportion, in it 1, above it with diminishing returns up to
+  1½ (about 1.3 at twice the sweet spot); × sides; × 1 primary, ½ secondary, ¼ stabilizer; stretches don't count. So 60
+  sets of 1 push-up count 5 (60 reps, as 5 sets of 12), one set of 60 about 1.4, 3 × 12 counts 3. Fixed thresholds:
+  green below 2, amber 2–5, red above 5, to be tested on the library workouts before they're fixed. It's an estimate
+  (the app can't know the weight or effort); the ACSM recommends 8–12 reps for most adults and 10–15 for beginners and
+  older adults.
+- **Phasing**: a mockup; then the data, the build check and the exercise page map; then workout totals (card, editor),
+  an indicator on exercise cards, a muscle filter on the Exercises tab, and Create with AI "a workout for my back".
 
 ### Agreed next (Sep 2026, in this order)
 
