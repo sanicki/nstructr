@@ -10,7 +10,11 @@ permissions:
   contents: read
   pages: write
   id-token: write
-concurrency: { group: pages, cancel-in-progress: true }
+# a pull request's run only replaces an older run of the same pull request; deploys from main queue, never cancelled
+# (sharing one group, a pull request's run cancelled a merge's deploy, Sep 2026)
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
   build:
     runs-on: ubuntu-latest

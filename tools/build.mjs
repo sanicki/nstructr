@@ -7,7 +7,8 @@
    2. Every exercise is played through (both sides, both directions) and checked for floating/sinking poses,
       snapping limbs and planted feet/hands that wander. Accepted deviations live in tools/known-issues.json.
    3. library/index.json bundles the whole library; the app loads it (and caches it for offline use).
-   4. _site/ is what GitHub Pages serves: index.html + src/ + library/, the web app manifest, icons and a service
+   4. _site/ is what GitHub Pages serves: index.html + src/ + library/, the web app manifest, icons, og.png (the link
+      preview image: tools/og-image.cjs) and a service
       worker (so the installed app works offline), and nstructr.html, a single file with everything inlined that
       also works opened straight from disk. */
 import fs from 'node:fs';
@@ -143,4 +144,6 @@ const inline = s => rd(s).replace(/<\/script/gi, '<\\/script');
 fs.writeFileSync(path.join(SITE, 'nstructr.html'), head + body + '<script>\nwindow.NSTRUCTR_BUNDLE = ' + JSON.stringify(bundle).replace(/<\/script/gi, '<\\/script') + ';\n' +
   scripts.map(inline).join('\n') + '\n</script>\n</body></html>\n');
 fs.writeFileSync(path.join(SITE, '.nojekyll'), '');
+// the link-preview image (og:image in src/head.html): library figures, drawn with the engine
+fs.writeFileSync(path.join(SITE, 'og.png'), require('./og-image.cjs').ogImage(exercises));
 console.log(`built _site/ (index.html, nstructr.html ${(fs.statSync(path.join(SITE, 'nstructr.html')).size / 1024).toFixed(0)} KB, library/index.json ${(fs.statSync(path.join(ROOT, 'library/index.json')).size / 1024).toFixed(0)} KB)`);

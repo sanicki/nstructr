@@ -53,10 +53,16 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
   retired and not in the repo — see §8.6.)
 - JSON Schemas in `schema/` (draft 2020-12).
 - `tools/build.mjs`: validates every file, runs the animation checks (`tools/checks.cjs`) on every exercise,
-  writes `library/index.json`, assembles `_site/` (multi-file `index.html` + single-file `nstructr.html`).
+  writes `library/index.json`, assembles `_site/` (multi-file `index.html` + single-file `nstructr.html`), and draws
+  `_site/og.png`, the link-preview image (`tools/og-image.cjs`: four library figures on the icon's navy, rendered
+  with the engine and written as a PNG with Node's zlib, no image library; `node tools/og-image.cjs out.png` to look).
+  `src/head.html` has the meta description and Open Graph tags (Sep 2026); every link, share links included, gets
+  the same card, since what a share link carries is after the `#`.
 - `tools/known-issues.json`: accepted deviations with reasons.
 - `.github/workflows/build.yml`: PRs run the build (validation + checks); pushes to `main` also deploy `_site/`
-  to Pages. **Not yet run on GitHub.** One-time setup: repo Settings → Pages → Source: **GitHub Actions**.
+  to Pages. One-time setup: repo Settings → Pages → Source: **GitHub Actions**. A pull request's run only cancels
+  an older run of the same pull request; deploys queue (Sep 2026: sharing one group, a PR's run cancelled a merge's
+  deploy).
 - App loads the library at startup (`boot()` in `src/app/5-main.js`): from `window.NSTRUCTR_BUNDLE` in the
   single-file build, otherwise `fetch('library/index.json')`.
 - **Library workouts** are listed in their own section on the Workouts tab (Start / **Customize**), no longer
@@ -125,6 +131,7 @@ library/index.json         generated bundle (committed or not — see note)
 schema/*.schema.json
 tools/build.mjs  tools/checks.cjs  tools/known-issues.json  tools/rom.cjs (range of motion)  tools/e2e/*.py
 tools/format-json.cjs (how library files are laid out)  tools/viewer3d.html (any exercise from any camera)
+tools/og-image.cjs (the link-preview image)
 .github/workflows/build.yml
 ```
 
