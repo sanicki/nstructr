@@ -1,0 +1,138 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-yoga-warrior-1",
+  "name": "Chair Warrior I",
+  "otherNames": ["Seated Warrior I", "Chair Virabhadrasana I"],
+  "category": "Strength",
+  "collections": ["Yoga", "Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Sitting sideways near the front corner of a chair with the front foot flat, reach the other leg long behind you, toes tucked, and lift your arms overhead.",
+  "source": {
+    "url": "https://www.tummee.com/yoga-poses/seated-warrior-pose-i-chair",
+    "title": "Tummee: Seated Warrior Pose I, chair yoga",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit sideways near the front corner of a sturdy chair, the chair back beside you.", "Front foot flat, knee over the ankle."],
+  "cues": ["Back leg long, heel reaching back.", "Arms up by your ears.", "Sit tall."],
+  "keyframes": [
+    {
+      "name": "Sit sideways",
+      "cue": "Sit sideways near the front corner of the seat, both feet flat.",
+      "camera": 0,
+      "durationMs": 1800,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["R"],
+      "reach": [],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [0, 0, -90],
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "shoulderL": [-10, 10, 0],
+        "elbowL": 70,
+        "shoulderR": [-10, 10, 0],
+        "elbowR": 70,
+        "hipL": [80, 18, 0],
+        "kneeL": 80
+      }
+    },
+    {
+      "name": "Leg back",
+      "cue": "Reach the leg nearest the front of the chair back, toes tucked.",
+      "camera": 0,
+      "durationMs": 1800,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["R"],
+      "reach": [],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [0, 0, -90],
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "shoulderL": [-10, 10, 0],
+        "elbowL": 70,
+        "shoulderR": [-10, 10, 0],
+        "elbowR": 70,
+        "hipL": [-38, 6, 0],
+        "kneeL": 4,
+        "ankleL": 50
+      }
+    },
+    {
+      "name": "Chair Warrior I",
+      "cue": "Sweep your arms up overhead.",
+      "camera": 0,
+      "durationMs": 2400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["R"],
+      "reach": [],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "toeL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [0, 0, -90],
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "shoulderL": [175, 0, 0],
+        "elbowL": 4,
+        "shoulderR": [175, 0, 0],
+        "elbowR": 4,
+        "hipL": [-38, 6, 0],
+        "kneeL": 4,
+        "ankleL": 50
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "x": 5,
+      "z": -30
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 2,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "seconds": "30",
+    "note": "Sit tall; keep the back leg long."
+  }
+}

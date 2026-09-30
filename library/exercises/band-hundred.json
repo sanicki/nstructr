@@ -1,0 +1,74 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-hundred",
+  "name": "Band Hundred",
+  "otherNames": ["Banded Hundred"],
+  "category": "Pilates",
+  "focus": "Deep core",
+  "collections": ["Pilates", "Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "The Hundred with a band looped round both feet and an end in each hand: head and shoulders curled up, legs long at an angle, pump the arms in small beats against the band.",
+  "source": {
+    "url": "https://gravity.fitness/blogs/training/how-to-do-pilates-with-resistance-bands-a-complete-guide",
+    "title": "Gravity Fitness: How to do Pilates with resistance bands",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, a band round both feet, an end in each hand.", "Legs up and long at about 45 degrees."],
+  "cues": ["Breathe in for five beats, out for five.", "Low back stays down.", "Press the legs a little into the band."],
+  "prescription": {
+    "reps": "100 pumps (10 breaths)",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "keyframes": [
+    {
+      "name": "Pump up",
+      "cue": "Small beat up.",
+      "camera": 90,
+      "durationMs": 450,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [40, 0, 0],
+        "shoulderR": [40, 0, 0],
+        "hipL": [45, 0, 0],
+        "hipR": [45, 0, 0]
+      }
+    },
+    {
+      "name": "Pump down",
+      "cue": "Small beat down.",
+      "camera": 90,
+      "durationMs": 450,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [30, 0, 0],
+        "shoulderR": [30, 0, 0],
+        "hipL": [45, 0, 0],
+        "hipR": [45, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "handL",
+      "via": ["footL", "footR"],
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 100
+  },
+  "repName": "pump"
+}

@@ -1,0 +1,353 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-hip-circles",
+  "name": "Chair-Supported Hip Circles",
+  "otherNames": ["Standing Hip Circles with a Chair"],
+  "category": "Mobility",
+  "focus": "Hips and lower back",
+  "collections": ["Warm-up", "Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Standing behind a chair with your hands on its back, circle your hips slowly: forward, to one side, back and to the other side.",
+  "source": {
+    "url": "https://www.onemedical.com/blog/exercise-fitness/hip-strengthening-exercises-for-seniors/",
+    "title": "One Medical: Hip strengthening exercises for seniors",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand behind a sturdy chair, hands on its back.", "Feet shoulder-width apart, knees soft."],
+  "cues": ["Big, slow circles.", "Shoulders stay quiet.", "Change direction halfway."],
+  "prescription": {
+    "reps": "10 each direction",
+    "note": "About 30 seconds. From the front you see the side-to-side part of each circle; the compass shows where your hips are."
+  },
+  "keyframes": [
+    {
+      "name": "Hips forward",
+      "cue": "Forward.",
+      "camera": 60,
+      "durationMs": 360,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "guide": {
+        "direction": 0,
+        "label": "Forward"
+      },
+      "pose": {
+        "hipL": [0, 6, 0],
+        "hipR": [0, 5.4, 0],
+        "kneeR": 1.3,
+        "ankleR": -1.3
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ]
+    },
+    {
+      "name": "Hips forward right",
+      "cue": "",
+      "camera": 60,
+      "durationMs": 360,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "guide": {
+        "direction": 45,
+        "label": "Forward right"
+      },
+      "pose": {
+        "torso": [0, -5.8, 0],
+        "hipL": [0, 10.1, 0],
+        "hipR": [0, 1.3, 0],
+        "kneeR": 1.3,
+        "ankleR": -1.3
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ]
+    },
+    {
+      "name": "Hips right",
+      "cue": "Right.",
+      "camera": 60,
+      "durationMs": 360,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "guide": {
+        "direction": 90,
+        "label": "Right"
+      },
+      "pose": {
+        "torso": [0, -8.3, 0],
+        "hipL": [0, 11.7, 0],
+        "hipR": [0, -0.4, 0],
+        "kneeR": 1.3,
+        "ankleR": -1.3
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ]
+    },
+    {
+      "name": "Hips back right",
+      "cue": "",
+      "camera": 60,
+      "durationMs": 360,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "guide": {
+        "direction": 135,
+        "label": "Back right"
+      },
+      "pose": {
+        "torso": [0, -5.8, 0],
+        "hipL": [0, 10.1, 0],
+        "hipR": [0, 1.3, 0],
+        "kneeR": 1.3,
+        "ankleR": -1.3
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ]
+    },
+    {
+      "name": "Hips back",
+      "cue": "Back.",
+      "camera": 60,
+      "durationMs": 360,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "guide": {
+        "direction": 180,
+        "label": "Back"
+      },
+      "pose": {
+        "hipL": [0, 6, 0],
+        "hipR": [0, 5.4, 0],
+        "kneeR": 1.3,
+        "ankleR": -1.3
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ]
+    },
+    {
+      "name": "Hips back left",
+      "cue": "",
+      "camera": 60,
+      "durationMs": 360,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "guide": {
+        "direction": 225,
+        "label": "Back left"
+      },
+      "pose": {
+        "torso": [0, 5.9, 0],
+        "hipL": [0, 2, 0],
+        "hipR": [0, 9.3, 0],
+        "kneeR": 1.3,
+        "ankleR": -1.3
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ]
+    },
+    {
+      "name": "Hips left",
+      "cue": "Left.",
+      "camera": 60,
+      "durationMs": 360,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "guide": {
+        "direction": 270,
+        "label": "Left"
+      },
+      "pose": {
+        "torso": [0, 8.3, 0],
+        "hipL": [0, 0.3, 0],
+        "hipR": [0, 10.9, 0],
+        "kneeR": 1.3,
+        "ankleR": -1.3
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ]
+    },
+    {
+      "name": "Hips forward left",
+      "cue": "",
+      "camera": 60,
+      "durationMs": 360,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "guide": {
+        "direction": 315,
+        "label": "Forward left"
+      },
+      "pose": {
+        "torso": [0, 5.9, 0],
+        "hipL": [0, 2, 0],
+        "hipR": [0, 9.3, 0],
+        "kneeR": 1.3,
+        "ankleR": -1.3
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "chair"
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": 78
+    }
+  ],
+  "direction": {
+    "labels": {
+      "A": "Clockwise",
+      "B": "Counterclockwise"
+    }
+  },
+  "floorGuide": {
+    "type": "star",
+    "arms": 8
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "circle"
+}

@@ -85,17 +85,17 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 
 | Library exercise | Equivalents |
 |---|---|
-| Hamstring Stretch (wall) | Seated Hamstring Stretch (in library) · ⏳ Towel Hamstring Stretch (lying, towel round the foot) · ⏳ Chair Hamstring Stretch |
-| Calf Stretch (wall) | ⏳ Towel Calf Stretch (seated) · ⏳ Step Calf Stretch |
-| Quad Stretch (wall) | ⏳ Chair-supported Quad Stretch · ⏳ Towel Quad Stretch (lying on your side) |
-| Hip Flexor Stretch (towel) | ⏳ Chair Hip Flexor Stretch |
-| Chest stretch (wall) | ⏳ Towel Chest Stretch |
+| Hamstring Stretch (wall) | Seated Hamstring Stretch (in library) · ✅ Towel Hamstring Stretch (lying, towel round the foot) · ✅ Chair Hamstring Stretch |
+| Calf Stretch (wall) | ✅ Towel Calf Stretch (seated) · ✅ Step Calf Stretch |
+| Quad Stretch (wall) | ✅ Chair-supported Quad Stretch · ✅ Towel Quad Stretch (lying face down: lying on your side, the leg bends in the floor's plane, which no camera angle shows) |
+| Hip Flexor Stretch (towel) | ✅ Chair Hip Flexor Stretch (sitting sideways) |
+| Chest stretch (wall) | ✅ Towel Chest Stretch |
 | Cross-Body Shoulder Stretch | Shoulder Stretch with Towel (in library) |
 | Thread the Needle (batch 20) | — |
 | IT Band Stretch, Neck Stretch, Knee-to-Chest | — |
-| Arm Circles, Hip Circles | ⏳ Chair-supported Hip Circles |
+| Arm Circles, Hip Circles | ✅ Chair-supported Hip Circles |
 | Star Excursions | — |
-| Chair-based exercises (Seated Hip Marching, Seated Ankle Stretch) | ⏳ Standing Marching (no equipment) |
+| Chair-based exercises (Seated Hip Marching, Seated Ankle Stretch) | ✅ Standing March (no equipment) |
 
 ## Foam roller (added Sep 2026, batch 17)
 
@@ -117,10 +117,10 @@ Names: NASM calls them "Foam Roll Calves" and so on ([NASM Exercise Library](htt
 | Downward Dog | ✅ Wall Downward Dog (batch 2) |
 | Warrior III | ✅ Warrior III at the Wall (batch 2) |
 | Tree Pose | ✅ Tree Pose at the Wall (batch 2) |
-| Mountain, Warrior I and II, Eagle, Chair Pose | ⏳ Seated Mountain, Chair Warrior I and II, Chair Eagle; Chair Pose at the wall is the library's Wall Sit (a duplicate, so not added) |
-| Handstand, Headstand, Forearm Stand | ⏳ at the wall (the same poses with the wall behind: variants) |
-| Pilates mat exercises | ⏳ band versions (Banded Hundred, Band Leg Circles, Roll-Up with a band) |
-| Bound Angle Forward Bend (added Sep 2026, triage) | Chair Forward Bend (in library, a chair version of the fold) · ⏳ Supported Bound Angle Forward Fold (head on a block or bolster: needs a **yoga block**) |
+| Mountain, Warrior I and II, Eagle, Chair Pose | ✅ Seated Mountain, Chair Warrior I (sitting sideways) and II, Chair Eagle; Chair Pose at the wall is the library's Wall Sit (a duplicate, so not added) |
+| Handstand, Headstand, Forearm Stand | ✅ at the wall (the same poses with the heels resting on a wall behind: variants) |
+| Pilates mat exercises | ✅ band versions (Band Hundred, Band Leg Circles, Roll-Up with a Band) |
+| Bound Angle Forward Bend (added Sep 2026, triage) | Chair Forward Bend (in library, a chair version of the fold) · ✅ Supported Bound Angle Forward Fold (forehead on a yoga block lying flat) |
 
 Sources for batch 2: [Yoga Journal, chair yoga poses](https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/),
 [Yoga Journal, wall yoga poses](https://www.yogajournal.com/practice/yoga-wall-poses/),

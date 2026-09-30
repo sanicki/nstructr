@@ -1,0 +1,99 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "step-calf-stretch",
+  "name": "Step Calf Stretch",
+  "otherNames": ["Heel Drop Calf Stretch"],
+  "category": "Flexibility",
+  "focus": "Calves",
+  "collections": ["Stretches"],
+  "equipment": ["Step", "Wall"],
+  "description": "Standing with the balls of your feet on the edge of a step and a hand on the wall, let your heels sink below the step until you feel a stretch in the calves.",
+  "source": {
+    "url": "https://www.onepeloton.com/blog/best-calf-stretches",
+    "title": "Peloton: The best calf stretches",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand on a step facing a wall or rail, the balls of your feet on its edge.", "Hands on the wall for balance."],
+  "cues": ["Knees straight.", "Sink slowly.", "Stand tall."],
+  "prescription": {
+    "seconds": "30",
+    "note": "Sink only as far as is comfortable; keep the knees straight."
+  },
+  "keyframes": [
+    {
+      "name": "Feet level",
+      "cue": "Balls of your feet on the edge of the step, hands on the wall.",
+      "camera": 90,
+      "durationMs": 3000,
+      "holdMs": 500,
+      "phase": "setup",
+      "anchor": "toeL",
+      "plant": [],
+      "pose": {
+        "shoulderL": [78, 0, 0],
+        "elbowL": 14,
+        "shoulderR": [78, 0, 0],
+        "elbowR": 14,
+        "ankleL": 0,
+        "ankleR": 0
+      },
+      "anchorZ": 38,
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "wall"
+        },
+        {
+          "hand": "handR",
+          "to": "wall"
+        }
+      ]
+    },
+    {
+      "name": "Drop the heels",
+      "cue": "Let both heels sink below the step.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "toeL",
+      "plant": [],
+      "pose": {
+        "shoulderL": [78, 0, 0],
+        "elbowL": 14,
+        "shoulderR": [78, 0, 0],
+        "elbowR": 14,
+        "ankleL": -22,
+        "ankleR": -22
+      },
+      "anchorZ": 38,
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "wall"
+        },
+        {
+          "hand": "handR",
+          "to": "wall"
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "step",
+      "z": 60,
+      "width": 60
+    },
+    {
+      "type": "wall",
+      "z": 120
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 30
+  },
+  "holdStep": 1
+}

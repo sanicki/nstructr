@@ -1,0 +1,107 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-roll-up",
+  "name": "Roll-Up with a Band",
+  "otherNames": ["Assisted Roll-Up"],
+  "category": "Pilates",
+  "focus": "Abdominals and spine",
+  "collections": ["Pilates", "Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "The Roll-Up with a band looped round the feet and held in both hands: curl up one bone at a time, using the band to help, reach toward the feet, then roll back down slowly.",
+  "source": {
+    "url": "https://complete-pilates.co.uk/pilates-roll-up/",
+    "title": "Complete Pilates: How to do a Pilates Roll Up",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, legs long, a band round both feet.", "Hold an end in each hand, arms reaching up."],
+  "cues": ["Chin in, roll up slowly.", "Use the band only as much as you need.", "Roll down one bone at a time."],
+  "prescription": {
+    "reps": "5–8",
+    "note": "Move with your breath, slowly and with control."
+  },
+  "keyframes": [
+    {
+      "name": "Lie long",
+      "cue": "Lie long, the band round your feet, arms reaching up.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [60, 0, 0],
+        "shoulderR": [60, 0, 0],
+        "elbowL": 0,
+        "elbowR": 0
+      }
+    },
+    {
+      "name": "Arms up, chin in",
+      "cue": "Bring your arms to the ceiling and curl your head up.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [60, 0, 0],
+        "shoulderR": [60, 0, 0]
+      }
+    },
+    {
+      "name": "Roll up",
+      "cue": "Roll up one bone at a time, the band helping you.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "torso": [55, 0, 0],
+        "chest": [25, 0, 0],
+        "neck": [20, 0, 0],
+        "shoulderL": [150, 0, 0],
+        "shoulderR": [150, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0],
+        "elbowL": 0,
+        "elbowR": 0
+      }
+    },
+    {
+      "name": "Roll back down",
+      "cue": "Curl back down, one vertebra at a time.",
+      "camera": 90,
+      "durationMs": 2400,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [60, 0, 0],
+        "shoulderR": [60, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "handL",
+      "via": ["footL", "footR"],
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}
