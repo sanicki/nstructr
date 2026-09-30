@@ -101,9 +101,10 @@ module.exports = [
   pose('yoga-fish', 'Fish Pose', 'Matsyasana', [], { category: 'Backbend', focus: 'Chest and throat',
     edit: ex => { ex.keyframes = [K('Lie on your back', 'Legs long, arms by your sides.', { root: [-90, 0, 0], neck: [34, 0, 0] }, { anchor: 'pelvis' }),
       K('Fish Pose', 'Lift your chest, crown of the head light on the floor.',
-      { root: [-90, 0, 0], torso: [25, 0, 0], neck: [-80, 0, 0], shoulderL: [5, 0, 0], shoulderR: [5, 0, 0] },
+      // the chest arches up and over (Sep 2026: the neck alone bent 80° back), forearms flat under the hips, crown on the floor
+      { root: [-90, 0, 0], torso: [40, 0, 0], chest: [-40, 0, 0], neck: [-30, 0, 0], shoulderL: [-35, 0, 0], shoulderR: [-35, 0, 0], elbowL: 35, elbowR: 35 },
       { ...HOLD, anchor: 'pelvis' })]; },
-    description: 'A backbend lying on your back: lift your chest and let the crown of your head rest lightly on the floor, arms along your sides.',
+    description: 'A backbend lying on your back: lift your chest and let the crown of your head rest lightly on the floor, forearms flat beside you.',
     setup: ['Lie on your back, legs long, arms by your sides.'],
     cues: ['Press your forearms and elbows down to lift your chest.', 'Keep the weight off your head.', 'Legs stay active.'], source: YJ('fish-pose', 'Fish Pose') }),
   pose('yoga-reclined-bound-angle', 'Reclined Bound Angle Pose', 'Supta Baddha Konasana', ['Reclining Butterfly'], { category: 'Restorative', focus: 'Inner thighs and hips',

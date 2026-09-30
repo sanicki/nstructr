@@ -268,7 +268,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `medball` | `hands` (default both) | A medicine ball held in both hands, at their middle (`--medball`). |
 | `ring` | `from`, `to` | A Pilates ring (magic circle) between two points, 68 across; pressed, it flattens (`ringSVG`: a circle across the press line and upright, drawn in 3D). |
 | `dumbbell` | `hand`, `axis` `lr` (bar left–right) / `fb` (front–back) / `ud` (upright), relative to the body | Drawn end-on when the bar points at the camera; drawn with its arm (behind the body when the arm is). |
-| `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm. A step's `holds` overrides which hands hold it (passing it hand to hand). |
+| `kettlebell` | `hand` or `hands[]` | Hangs in line with the forearm (held in both hands, the forearms' directions averaged, weighted by the grip). A step's `holds` overrides which hands hold it (passing it hand to hand). |
 | `barbell` | `from`, `to` (hands) | Projected in 3D: the end plate from the side, the full bar from the front. |
 | `bar` | `y` (height), `z`, `width` 90 | A pull-up bar, drawn in front of the hands that hold it (end-on, a dot). Hang from it with `anchor` a hand, `anchorY` the bar's `y`, `anchorX` half the grip width. The exercise page's view grows upwards to show it (still square). Equipment "Pull-up bar" (its own kind). |
 
@@ -393,7 +393,9 @@ differently.
    passes when there are several), with planted feet kept flat, so what rests on the roller stays on it the whole way
    (angles alone lifted it up to 4 px mid-move); and rolling, feet and hands slide along the floor instead of
    stepping (`slideContacts`/`clampTips` are skipped); a foot or hand resting on the same spot at both ends stays on
-   it (IK back to it; a foot also keeps its toes there: `holdFoot` turns the hip, each try from the same leg). The
+   it (IK back to it; a foot also keeps its toes there: `holdFoot` turns the hip, each try from the same leg; the
+   target is lerped from where the step put it to where the next one does, so the move lands exactly on the next step:
+   aimed at the first step's spot only, the IT band roll's leg snapped the last few px at each end). The
    IT band roll's top foot is planted: the second step `keep`s it where the first put it (it slid 53 px until Sep 2026). `worldOf` leaves the frame's surfaces as they were (it used to
    switch them to a step's, which put a rolling roller in the wrong place for the rest of the frame).
    **A hand planted on the same spot at both ends** of any move (not only rolling) stays on it: the arm reaches back
