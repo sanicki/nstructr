@@ -7,7 +7,8 @@
 The **Workouts** tab has three parts:
 
 - **My workouts**: the ones you made, customised or received. Tap a card to expand it (time, number of exercises,
-  equipment, safety notes, **Edit**, **Share**). Tap ▶ to start.
+  equipment, safety notes, a small map of the muscles it works and the three it works most, **Edit**, **Share**).
+  Tap ▶ to start.
 - **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy. There
   are 20-minute beginner's workouts for yoga and Pilates (a mat, nothing else), resistance band (one band), free
   weights (dumbbells) and kettlebell (one bell). The 20 minutes are with **Coach** (Settings › Instruction); without it they take 15–17.
@@ -41,6 +42,21 @@ If you stop a workout part-way, a **Resume** card at the top takes you back to w
 - Drag an exercise by its handle to reorder it, even into another block. Its menu (⋮) can move, duplicate, view or
   remove it.
 - Changes save as you go.
+
+### Muscles worked
+
+<img src="images/workout-muscles.png" width="300" alt="Muscles worked in a workout: the front and back figure coloured green, amber and red, the scale 0, 2, 5, 8+, and each group's number">
+
+**Muscles worked** (under the summary; tap to open) adds up what the workout's exercises work, as an estimate in
+**sets**, on the same front and back figure:
+- **green** up to 2 sets, **amber** 2–5, **red** above 5, a little darker the more (brighter in the dark theme);
+- a set close to the exercise's suggested reps counts 1 (12–15 reps when it suggests none, 30–60 s for a hold);
+  fewer reps count less, and more count a little more, up to 1½ (so 60 push-ups in one go count far less than 5
+  sets of 12);
+- a muscle the exercise is for counts the whole set, one that helps counts ½, one that steadies you ¼; stretches
+  don't count;
+- a block's rounds multiply it; doing only one side counts half;
+- it's an estimate: the app can't know how heavy the weight is or how hard you worked.
 
 ### An exercise's settings
 

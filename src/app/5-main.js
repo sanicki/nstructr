@@ -86,8 +86,27 @@ function renderTextForm() {
     const v = show ? show(getPath(ex, path)) : (getPath(ex, path) || '');
     const ctl = kind === 'textarea' ? `<textarea data-field="${path}" rows="${/setup|cues/.test(path) ? 4 : 2}">${esc(v)}</textarea>` : `<input data-field="${path}" value="${esc(v)}" autocomplete="off">`;
     return `<label class="field"><span class="field-label">${label}</span>${ctl}</label>`;
-  }).join('');
+  }).join('') + muscleForm(ex);
 }
+/* the muscle groups it works (1–3) and stretches (HANDOFF §5.5); a copy starts from its original's */
+function muscleForm(ex) {
+  const r = musclesOf(ex) || { muscles: {}, stretches: [] };
+  return `<fieldset class="mg-edit"><legend class="field-label">Muscles: how much it works each group</legend>${MUSCLE_GROUPS.map(g => `<div class="mg-edit-row">
+    <label class="body-medium" for="mr-${g}">${MUSCLE_NAMES[g]}</label>
+    <select class="select" id="mr-${g}" data-mrate="${g}">${[['', 'Not worked'], ['1', 'Stabilizer'], ['2', 'Secondary'], ['3', 'Primary']].map(([v, t]) => `<option value="${v}"${String(r.muscles[g] || '') === v ? ' selected' : ''}>${t}</option>`).join('')}</select>
+    <button type="button" class="filter stateful" data-mstretch="${g}" aria-pressed="${r.stretches.includes(g)}" aria-label="${MUSCLE_NAMES[g]} stretched"><span class="icon">check</span>Stretched</button></div>`).join('')}</fieldset>`;
+}
+function editMuscles(change) {
+  if (!editExercise(ex => { const r = musclesOf(ex) || { muscles: {}, stretches: [] }; change(r);
+    ex.muscles = cleanMuscles(r.muscles, []).muscles; const st = cleanMuscles({}, r.stretches).stretches; if (st.length) ex.stretches = st; else delete ex.stretches; })) return;
+  renderPlayerInfo(); renderTextForm();
+}
+$('#view-player').addEventListener('click', e => {
+  const b = e.target.closest('[data-mstretch]'); if (!b) return;
+  const g = b.dataset.mstretch;
+  editMuscles(r => { r.stretches = r.stretches.includes(g) ? r.stretches.filter(x => x !== g) : [...r.stretches, g]; });
+  const again = $(`[data-mstretch="${g}"]`); if (again) again.focus();
+});
 $('#view-player').addEventListener('change', e => {
   const el = e.target;
   if (el.dataset.field) {
@@ -96,6 +115,12 @@ $('#view-player').addEventListener('change', e => {
     if (!editExercise(ex => setPath(ex, f[0], v))) return;
     renderPlayerInfo(); renderTextForm();
     $('#barTitle').textContent = S.ex.name; document.title = `${S.ex.name} · ${APP_NAME}`;
+    return;
+  }
+  if (el.dataset.mrate) {
+    const g = el.dataset.mrate, v = +el.value;
+    editMuscles(r => { if (v) r.muscles[g] = v; else delete r.muscles[g]; });
+    const again = $(`#mr-${g}`); if (again) again.focus();
     return;
   }
   if (el.dataset.sfield) {
@@ -477,9 +502,10 @@ document.querySelector('.shell').addEventListener('click', e => {
   else if (d.coll) { E.coll = d.coll; E.type = 'All'; renderExplore(); scrollTo(0, 0); }
   else if (d.type) { E.type = d.type; renderExplore(); }
   else if (d.equip) { E.equip = d.equip; renderExplore(); }
+  else if (d.muscle) { E.muscle = d.muscle; renderExplore(); }
   else if (d.step != null) jumpTo(+d.step);
   else if (d.del) removeSaved(d.del);
-  else if (d.act === 'clearFilters') { Object.assign(E, { coll: 'All', type: 'All', equip: 'Any', q: '' }); $('#search').value = ''; renderExplore(); }
+  else if (d.act === 'clearFilters') { Object.assign(E, { coll: 'All', type: 'All', equip: 'Any', muscle: 'All', q: '' }); $('#search').value = ''; renderExplore(); }
   else if (d.act === 'import') $('#fileInput').click();
   else if (d.act === 'exportAll') showJson('Your exercises', JSON.stringify({ format: 'nstructr/exercise', version: FILE_VERSION, exercises: S.lib.items }, null, 2));
   else if (d.act === 'edPrev' || d.act === 'edNext') { setPlaying(false); jumpTo(S.idx + (d.act === 'edNext' ? 1 : -1)); }

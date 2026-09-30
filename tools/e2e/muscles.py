@@ -5,6 +5,9 @@ from playwright.async_api import async_playwright
 # Muscle groups (HANDOFF §5.5): every library exercise has ratings; the exercise page's Muscles section (map, legend,
 # list under the seven headings); stretched groups outlined; a copy without ratings shows its original's; the user's
 # own exercise without ratings has no section; the dark theme uses the dark colours; fits the cover screen.
+# Then (PR 3): a workout's total (set-equivalents) on its card and in the editor; the small map on exercise cards;
+# the muscle filter; muscle fields in Edit details (a library exercise becomes a copy); imports drop bad ratings;
+# Create with AI's muscle chips and the plan's muscle words.
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
@@ -30,6 +33,45 @@ async def main():
         # cover screen: no sideways scroll, map fits
         await pg.set_viewport_size({'width': 360, 'height': 398}); await pg.goto(URL + '#/play/bw-pushup'); await pg.wait_for_timeout(500)
         print('cover: map width / page   ', await pg.evaluate("[Math.round($('.mg-map').getBoundingClientRect().width), document.documentElement.scrollWidth]"), '(expect <= 360, 360)')
+        # --- workout totals
+        await pg.set_viewport_size({'width': 412, 'height': 860}); await pg.goto(URL + '#/workouts'); await pg.wait_for_timeout(500)
+        print('3 x 12 push-ups           ', await pg.evaluate("(() => { const t = workoutMuscles({ blocks: [{ rounds: 1, items: [{ ...newItem(exById('bw-pushup')), sets: 3, reps: 12 }] }] }); return [t.chest, t.shoulders, t.core]; })()"), '(expect [3, 1.5, 0.75])')
+        print('60 x 1 vs 1 x 60 push-ups ', await pg.evaluate("(() => { const f = (sets, reps) => workoutMuscles({ blocks: [{ items: [{ ...newItem(exById('bw-pushup')), sets, reps }] }] }).chest; return [f(60, 1), Math.round(f(1, 60) * 100) / 100]; })()"), '(expect [12: 60 reps / 5, the low end of its 5–15; about 1.4])')
+        print('one side only counts half ', await pg.evaluate("(() => { const f = sides => workoutMuscles({ blocks: [{ items: [{ ...newItem(exById('bw-split-squat')), reps: 10, sides }] }] }).frontThigh; return [f('both'), f('L')]; })()"), '(expect [1, 0.5])')
+        print('2 rounds, 30 s plank      ', await pg.evaluate("workoutMuscles({ blocks: [{ rounds: 2, items: [{ ...newItem(exById('core-forearm-plank')), seconds: 30 }] }] }).core"), '(expect 2)')
+        print('stretch counts nothing    ', await pg.evaluate("JSON.stringify(workoutMuscles({ blocks: [{ items: [newItem(exById('mayo-hamstring'))] }] }))"), '(expect {})')
+        print('colour bands              ', await pg.evaluate("[mgScale(0), mgScale(1).includes('g1'), mgScale(3).includes('a1'), mgScale(9).includes('r1) 100%')]"), '(expect [null, true, true, true])')
+        await pg.click('#libWkList [data-wtoggle]'); await pg.wait_for_timeout(200)
+        print('card: map and most work   ', await pg.evaluate("[!!document.querySelector('#libWkList .mg-card .mg-map'), $('#libWkList .mg-card p').textContent]"))
+        await pg.evaluate("go('#/workout/' + customizeWorkout(LIB_WK[0]).id)"); await pg.wait_for_timeout(400)
+        print('editor section            ', await pg.evaluate("[!$('#wkMusclesBox').hidden, !!$('#wkMuscles .mg-scale'), $('#wkMuscles .mg-list').children.length]"), '(expect [true, true, > 0])')
+        # --- exercise cards and filter
+        await pg.goto(URL + '#/exercises'); await pg.wait_for_timeout(400)
+        await pg.evaluate("E.coll = 'All'; E.muscle = 'All'; renderExplore()")
+        print('cards with a mini map     ', await pg.evaluate("[document.querySelectorAll('#exploreBody .pose-card .mg-mini').length, document.querySelectorAll('#exploreBody .pose-card').length]"), '(expect a mini map on nearly every card)')
+        print('card label says works     ', await pg.evaluate("$('#exploreBody [data-open=bw-squat]').textContent.replace(/\s+/g, ' ').trim()"))
+        await pg.click('#fMuscle [data-muscle="Chest"]'); await pg.wait_for_timeout(200)
+        print('chest filter              ', await pg.evaluate("[$('#fMuscle [aria-pressed=true]').textContent, [...document.querySelectorAll('#exploreBody .pose-card')].every(c => worksHeading(exById(c.dataset.open), 'Chest')), document.querySelectorAll('#exploreBody .pose-card').length]"))
+        await pg.fill('#search', 'triceps'); await pg.dispatch_event('#search', 'input'); await pg.wait_for_timeout(200)
+        print('search finds muscle words ', await pg.evaluate("document.querySelectorAll('#exploreBody .pose-card').length > 0"))
+        await pg.evaluate("Object.assign(E, { coll: 'All', type: 'All', equip: 'Any', muscle: 'All', q: '' }); $('#search').value = ''; renderExplore()")
+        # --- Edit details: a library exercise's muscles, edited, make a copy
+        await pg.goto(URL + '#/play/bw-squat'); await pg.wait_for_timeout(500)
+        await pg.click('#editPoseBtn'); await pg.wait_for_timeout(400); await pg.evaluate("document.querySelector('details.text-edit').open = true")
+        print('form rows                 ', await pg.evaluate("[document.querySelectorAll('.mg-edit-row').length, $('#mr-frontThigh').value]"), '(expect [11, "3"])')
+        await pg.select_option('#mr-chest', '1'); await pg.wait_for_timeout(300)
+        await pg.click('[data-mstretch="backThigh"]'); await pg.wait_for_timeout(300)
+        print('edited copy               ', await pg.evaluate("[S.ex.id.startsWith('u-'), S.ex.basedOn, JSON.stringify(S.ex.muscles), JSON.stringify(S.ex.stretches), findInDb('bw-squat').muscles.chest]"), '(expect a u- copy of bw-squat with chest 1, stretches backThigh; library untouched)')
+        print('page map updated          ', await pg.evaluate("$('#musclesTitle').textContent"), '(expect Muscles worked and stretched)')
+        # --- import drops bad ratings
+        print('import sanitised          ', await pg.evaluate("(() => { const ex = validateExercise({ ...clone(findInDb('bw-squat')), id: 'u-bad', muscles: { core: 3, chest: '2\" onload=\"x', neck: 2, glutes: 5 }, stretches: ['backThigh', 'x\"y'] }, 'test'); return [JSON.stringify(ex.muscles), JSON.stringify(ex.stretches)]; })()"), '(expect core 3 only, backThigh only)')
+        # --- Create with AI
+        await pg.goto(URL + '#/workouts'); await pg.wait_for_timeout(300)
+        await pg.evaluate("openAi(); AI_KIND = 'plan'; renderAi()"); await pg.wait_for_timeout(200)
+        await pg.click('#aiMuscle [data-aimuscle="Back"]'); await pg.wait_for_timeout(100)
+        print('plan goal from chips      ', await pg.evaluate("planPrompt($('#aiInput').value).split('\\n')[0]"))
+        print('plan line muscles         ', await pg.evaluate("planLines(new Set()).split('\\n').find(l => l.startsWith('bw-pushup '))"), '(expect chest)')
+        print('exercise format has fields', await pg.evaluate("aiPrompt('name', 'x').includes('muscles:') && aiPrompt('name', 'x').includes('stretches:')"))
         print('errors', errs)
         await b.close()
 asyncio.run(main())

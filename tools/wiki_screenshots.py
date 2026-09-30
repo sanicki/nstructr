@@ -86,6 +86,8 @@ async def main():
         await pg.evaluate(HIDE_SNACK + "; INSTALL_EVT = null; renderInstall(); localStorage.setItem('nstructr-install-hint-v1', 'shown')")
         await pg.evaluate("go('#/workout/legs')"); await pg.wait_for_timeout(300); await pg.evaluate(HIDE_SNACK)
         await shot(pg, 'workout-editor')
+        await pg.evaluate("$('#wkMusclesBox').open = true; $('#wkMusclesBox').scrollIntoView({block:'start'}); scrollBy(0,-80)"); await shot(pg, 'workout-muscles')
+        await pg.evaluate("$('#wkMusclesBox').open = false; scrollTo(0,0)")
         uid = await pg.evaluate("WK.list[0].blocks[1].items[0].uid")
         await pg.evaluate(f"openItemSettings('{uid}')"); await shot(pg, 'item-settings')
         await pg.evaluate("$('#itemDialog').close()")
@@ -126,7 +128,8 @@ async def main():
         await pg.evaluate("setSound('beeps')")
         # Create with AI
         await pg.evaluate("AI_KIND = 'name'; openAi()"); await pg.fill('#aiInput', 'Pilates leg circles'); await shot(pg, 'create-with-ai')
-        await pg.evaluate("AI_KIND = 'plan'; renderAi()"); await pg.fill('#aiInput', 'a 30-minute leg workout'); await shot(pg, 'create-with-ai-plan')
+        await pg.evaluate("AI_KIND = 'plan'; AI_MUSCLES = new Set(['Upper legs and glutes']); renderAi()"); await pg.fill('#aiInput', 'a 30-minute leg workout'); await shot(pg, 'create-with-ai-plan')
+        await pg.evaluate("AI_MUSCLES = new Set()")
         await pg.evaluate("AI_KIND = 'plan'; renderAi()")
         await pg.evaluate("$('#aiAnswer').value='{ \"version\": 1, \"id\": \"u-leg-circles\", \"name\": \"Leg Circles\", … }'; $('#aiImport').scrollIntoView({block:'end'})")
         await shot(pg, 'create-with-ai-answer')

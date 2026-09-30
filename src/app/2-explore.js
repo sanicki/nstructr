@@ -33,7 +33,12 @@ function migrateSaved() {
   });
   if (changed) { saveBookmarks(); saveLib(); }
 }
-const E = { coll: 'All', type: 'All', equip: 'Any', q: '' };
+const E = { coll: 'All', type: 'All', equip: 'Any', muscle: 'All', q: '' };
+/* the muscle filter: one of the seven headings; an exercise matches when a group under it is its primary (3) or one it
+   stretches (secondary too would put a third of the library under Back) */
+const worksHeading = (ex, h) => { const r = musclesOf(ex), gs = (MUSCLE_HEADS.find(x => x[0] === h) || [, []])[1];
+  return !!r && gs.some(g => r.muscles[g] === 3 || r.stretches.includes(g)); };
+const muscleWords = ex => { const r = musclesOf(ex); return r ? MUSCLE_GROUPS.filter(g => r.muscles[g] >= 2).map(g => MUSCLE_NAMES[g]) : []; };
 /* All collections: grouped (a row per collection; with filters, a section per collection) or one A–Z list */
 const GROUP_KEY = 'nstructr-group-collections-v1';
 const grouped = () => pref(GROUP_KEY, 'off') === 'on';                // one A–Z list until turned on (grouped until Sep 2026)
@@ -50,8 +55,8 @@ function thumbFor(ex) {
 function card(ex) {
   return `<button class="pose-card stateful" data-open="${esc(ex.id)}">
     ${thumbFor(ex)}${isBookmarked(ex.id) ? '<span class="badge" title="Bookmarked"><span class="icon fill">bookmark</span></span>' : ''}
-    <span class="t title-small">${esc(ex.name)}</span>
-    <span class="meta body-small">${esc(otherNames(ex)[0] || typeOf(ex))}</span></button>`;
+    ${muscleMini(ex)}<span class="t title-small">${esc(ex.name)}</span>
+    <span class="meta body-small">${esc(otherNames(ex)[0] || typeOf(ex))}</span>${worksText(ex) ? `<span class="visually-hidden">. ${esc(worksText(ex))}</span>` : ''}</button>`;
 }
 const chip = (attr, val, on, label = val) =>
   `<button class="filter stateful" ${attr}="${esc(val)}" aria-pressed="${on}"><span class="icon">check</span>${esc(label)}</button>`;
@@ -83,16 +88,20 @@ function renderExplore() {
   $('#fType').hidden = !showType;
   $('#fEquip').innerHTML = showEquip ? chip('data-equip', 'Any', eq === 'Any', 'All equipment') + equip.map(q => chip('data-equip', q, eq === q)).join('') : '';
   $('#fEquip').hidden = !showEquip;
+  const showMuscle = scope.some(ex => musclesOf(ex));
+  $('#fMuscle').innerHTML = showMuscle ? chip('data-muscle', 'All', E.muscle === 'All', 'All muscles') + MUSCLE_HEADS.map(([h]) => chip('data-muscle', h, E.muscle === h)).join('') : '';
+  $('#fMuscle').hidden = !showMuscle;
   $('#clearSearch').hidden = !E.q;
 
   const q = E.q.trim().toLowerCase();
   const list = scope.filter(ex => (E.type === 'All' || typeOf(ex) === E.type) &&
     (eq === 'Any' || (ex.equipment || []).some(x => equipKey(x) === equipKey(eq))) &&
-    (!q || [ex.name, ...otherNames(ex), ex.category, ex.focus, ...(ex.collections || []), ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q))));
+    (E.muscle === 'All' || worksHeading(ex, E.muscle)) &&
+    (!q || [ex.name, ...otherNames(ex), ex.category, ex.focus, ...(ex.collections || []), ...(ex.equipment || []), ...muscleWords(ex)].some(s => String(s || '').toLowerCase().includes(q))));
   const body = $('#exploreBody');
   $('#groupWrap').hidden = E.coll !== 'All';
   $('#groupColl').checked = grouped();
-  if (E.coll === 'All' && grouped() && list.length && (E.type !== 'All' || eq !== 'Any' || q)) {
+  if (E.coll === 'All' && grouped() && list.length && (E.type !== 'All' || eq !== 'Any' || E.muscle !== 'All' || q)) {
     // filtered, grouped: every match, under each collection it's in
     const matches = new Set(list);
     const section = (c, items) => items.length ? `<section class="section"><div class="section-head">
@@ -102,7 +111,7 @@ function renderExplore() {
       section(MINE, mine.filter(ex => matches.has(ex))) + colls.map(c => section(c, inCollection(c).filter(ex => matches.has(ex)))).join('');
     return;
   }
-  if (E.coll === 'All' && grouped() && E.type === 'All' && eq === 'Any' && !q) {
+  if (E.coll === 'All' && grouped() && E.type === 'All' && eq === 'Any' && E.muscle === 'All' && !q) {
     // browsing: one shelf per collection, Saved first
     const shelf = (c, items) => `<section class="section"><div class="section-head">
         <h2 class="title-medium">${esc(c)}<span class="count">${items.length}</span></h2>

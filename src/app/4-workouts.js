@@ -129,6 +129,7 @@ function wkCard(w) {
         <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${plural(n, { one: '# exercise', other: '# exercises' })}</span><span><span class="icon">view_agenda</span>${plural(w.blocks.length, { one: '# block', other: '# blocks' })}</span></div>
         ${eq.length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(eq.join(', '))}</span></div>` : ''}
         ${safetyHtml(w)}
+        ${workoutMusclesHTML(w, true)}
         <div class="row">${lib ? `<button class="btn tonal stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
           : `<a class="btn tonal stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>
              <button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>`}</div>
@@ -214,6 +215,8 @@ function renderEditor() {
   $('#wkSummary').innerHTML = `<span class="chip"><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span>
     <span class="chip"><span class="icon">format_list_numbered</span>${plural(w.blocks.flatMap(b => b.items).length, { one: '# exercise', other: '# exercises' })}</span>
     ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}${safetyHtml(w)}`;
+  const mg = workoutMusclesHTML(w, false);
+  $('#wkMusclesBox').hidden = !mg; $('#wkMuscles').innerHTML = mg;
   $('#wkBlocks').innerHTML = w.blocks.map((b, bi) => `<section class="block" data-block="${b.id}">
     <div class="block-head"><input value="${esc(b.name)}" data-bname="${b.id}" aria-label="Block name"><span class="count">${(b.rounds || 1) > 1 ? `<span class="icon" style="font-size:16px;vertical-align:-3px">repeat</span> ${plural(b.rounds, { one: '# round', other: '# rounds' })}, ` : ''}${plural(b.items.length, { one: '# exercise', other: '# exercises' })}, ${fmtMin(blockSeconds(b, w))}</span>
       <button class="icon-btn stateful" data-bmenu="${b.id}" aria-label="Block options"><span class="icon">more_vert</span></button></div>
@@ -434,7 +437,7 @@ function allExercises() {
 }
 function renderPicker() {
   const q = $('#pickSearch').value.trim().toLowerCase();
-  const list = allExercises().filter(ex => !q || [ex.name, ...otherNames(ex), ex.focus, ex.category, ...(ex.collections || []), ...(ex.equipment || [])].some(s => String(s || '').toLowerCase().includes(q)));
+  const list = allExercises().filter(ex => !q || [ex.name, ...otherNames(ex), ex.focus, ex.category, ...(ex.collections || []), ...(ex.equipment || []), ...muscleWords(ex)].some(s => String(s || '').toLowerCase().includes(q)));
   $('#pickList').innerHTML = list.slice(0, 200).map(ex => `<li><label><input type="checkbox" data-pick="${esc(ex.id)}"${PICK.chosen.has(ex.id) ? ' checked' : ''}>
     ${thumbFor(ex)}<span class="txt"><span class="title-small">${esc(ex.name)}</span><span class="body-small muted">${esc((ex.collections || [])[0] || typeOf(ex))}</span></span></label></li>`).join('');
   $('#pickAdd').textContent = PICK.chosen.size ? `Add ${PICK.chosen.size}` : 'Add';

@@ -95,6 +95,12 @@ function validateExercise(ex, path) {
   }
   const clone = modernize(JSON.parse(JSON.stringify(ex)));
   if (clone.otherNames != null && !(Array.isArray(clone.otherNames) && clone.otherNames.every(n => typeof n === 'string'))) fail(`${path}.otherNames must be a list of names.`);
+  // muscle ratings: only known groups with 1–3 (they're drawn into the muscle map); anything else is dropped
+  if (clone.muscles != null || clone.stretches != null) {
+    const r = cleanMuscles(clone.muscles, clone.stretches);
+    if (clone.muscles != null) clone.muscles = r.muscles;
+    if (r.stretches.length) clone.stretches = r.stretches; else delete clone.stretches;
+  }
   clone.id = typeof ex.id === 'string' && ex.id.trim() ? ex.id.trim() : slug(ex.name);
   if (Array.isArray(clone.equipment)) clone.equipment = equipNames(clone.equipment);
   return clone;

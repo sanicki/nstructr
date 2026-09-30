@@ -82,17 +82,31 @@ function planLines(have) {
     if (ex.direction) bits.push(`dir A-${word(ex.direction.labels.A)} B-${word(ex.direction.labels.B)}`);
     const k = SIMILAR_EX.equipKinds(ex.equipment).join(' and ');
     if (!groups.has(k)) groups.set(k, []);
-    groups.get(k).push(`${ex.id} ${bits.join(' ')}: ${ex.name} (${String(ex.focus || ex.category || '').replace(/\s+/g, ' ').trim()})`);
+    groups.get(k).push(`${ex.id} ${bits.join(' ')}: ${ex.name} (${planWorks(ex)})`);
   }
   return [...groups.keys()].sort().map(k => `${k ? 'WITH ' + k : 'NO EQUIPMENT'}\n${groups.get(k).join('\n')}`).join('\n');
+}
+/* what an exercise works, for the plan, kept short (the prompt goes in a link): up to two of its primary groups
+   (secondary when it has none), or what it stretches; its focus when it has no ratings */
+const AI_MUSCLE = { shoulders: 'shoulders', chest: 'chest', upperBack: 'upper back', lowerBack: 'low back', biceps: 'biceps', triceps: 'triceps',
+  core: 'core', frontThigh: 'quads', glutes: 'glutes', backThigh: 'hams', lowerLegs: 'calves' };
+function planWorks(ex) {
+  const r = musclesOf(ex); if (!r) return String(ex.focus || ex.category || '').replace(/\s+/g, ' ').trim();
+  const top = [3, 2].map(v => MUSCLE_GROUPS.filter(g => r.muscles[g] === v)).find(l => l.length);
+  return top ? top.slice(0, 2).map(g => AI_MUSCLE[g]).join(', ') : r.stretches.length ? 'stretch ' + r.stretches.slice(0, 2).map(g => AI_MUSCLE[g]).join(', ') : 'rest';
 }
 /* the progressions (library/progressions.json), easiest first, with only the steps the user's equipment allows */
 function planProgressions(have) {
   return (LINKS.progressions || []).map(p => p.steps.filter(id => { const ex = exById(id); return ex && aiCanDo(ex, have); }))
     .filter(s => s.length > 1).map(s => s.join(' > ')).join('\n');
 }
+/* muscles the plan should work (the seven headings), for this visit to Create with AI */
+let AI_MUSCLES = new Set();
+const aiMuscleGoal = () => [...AI_MUSCLES].map(h => h === 'Upper legs and glutes' ? 'upper legs (quads, hamstrings) and glutes' : h === 'Lower legs' ? 'lower legs (calves)'
+  : h === 'Arms' ? 'arms (biceps, triceps)' : h === 'Back' ? 'back (upper and lower)' : h.toLowerCase()).join(', ');
 function planPrompt(what, have = aiEquipChosen()) {
-  const prog = planProgressions(have);
+  const prog = planProgressions(have), focus = aiMuscleGoal();
+  if (focus) what = `${what ? what.replace(/[.\s]+$/, '') + '. ' : 'A workout. '}Work mainly my ${focus}.`;
   const kit = [...have].filter(k => aiEquipKinds().includes(k)).map(aiEquipLabel).join(', ').toLowerCase();
   return `Plan a workout for my exercise app: ${what || '[GOAL]'}
 
@@ -115,7 +129,7 @@ ${aiItemRules}
 - Group the exercises into blocks (Warm-up, Main, Cool-down, or a circuit with "rounds" and "roundRest").
 ${prog ? `- Suit the level I asked for (a beginner if I didn't say): in PROGRESSIONS, each line goes from easiest to hardest, so pick earlier steps for an easier workout and later ones for a harder one.
 ` : ''}
-LIBRARY (exercise ids under the equipment they use; after an id: seconds per rep or "time"; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y; after the colon, its name and what it works)
+LIBRARY (exercise ids under the equipment they use; after an id: seconds per rep or "time"; "sides" = takes sides; "dir A-x B-y" = takes a direction, A is x and B is y; after the colon, its name and the muscles it mainly works; hams = hamstrings)
 ${planLines(have)}${prog ? `
 
 PROGRESSIONS (easier and harder versions of one exercise, easiest first)
@@ -177,6 +191,7 @@ function renderAi() {
   $('#aiKind').innerHTML = AI_KINDS.map(x => `<button class="filter stateful" data-aikind="${x.id}" aria-pressed="${x.id === AI_KIND}"><span class="icon">check</span>${x.label}</button>`).join('');
   $('#aiInputWrap').hidden = !k.field;
   $('#aiEquipWrap').hidden = AI_KIND !== 'plan';
+  if (AI_KIND === 'plan') $('#aiMuscle').innerHTML = MUSCLE_HEADS.map(([h]) => chip('data-aimuscle', h, AI_MUSCLES.has(h))).join('');
   if (AI_KIND === 'plan') { const have = aiEquipChosen(); $('#aiEquip').innerHTML = aiEquipKinds().sort((a, b) => aiEquipLabel(a).localeCompare(aiEquipLabel(b), LANG)).map(q => chip('data-aiequip', q, have.has(q), aiEquipLabel(q))).join(''); }
   $('#aiInputLabel').textContent = k.field;
   $('#aiInput').placeholder = k.ph;
@@ -202,7 +217,7 @@ const aiQuery = text => encodeURIComponent(text).replace(/%20/g, '+').replace(/%
 const aiLink = (app, text) => `${aiUrl(app)}?${app.q}=${aiQuery(text)}`;
 async function aiCopy(text) { try { await navigator.clipboard.writeText(text); return true; } catch (e) { return false; } }
 function aiCheckInput() {
-  if (AI_KIND === 'media' || $('#aiInput').value.trim()) return true;
+  if (AI_KIND === 'media' || $('#aiInput').value.trim() || (AI_KIND === 'plan' && AI_MUSCLES.size)) return true;
   snack(`Add the ${AI_KINDS.find(x => x.id === AI_KIND).field.toLowerCase()} first.`); $('#aiInput').focus(); return false;
 }
 $('#aiOpen').addEventListener('click', async () => {
@@ -223,6 +238,11 @@ $('#aiCopy').addEventListener('click', async () => {
   if (await aiCopy(text)) snack('Instructions copied'); else { showJson('Copy these instructions', text); snack('Select the text and copy it.'); }
 });
 $('#aiShow').addEventListener('click', () => showJson('Create with AI: the instructions', aiPrompt(AI_KIND, $('#aiInput').value)));
+$('#aiMuscle').addEventListener('click', e => {
+  const b = e.target.closest('[data-aimuscle]'); if (!b) return;
+  const h = b.dataset.aimuscle; if (AI_MUSCLES.has(h)) AI_MUSCLES.delete(h); else AI_MUSCLES.add(h);
+  renderAi(); const again = $(`#aiMuscle [data-aimuscle="${h}"]`); if (again) again.focus();
+});
 $('#aiEquip').addEventListener('click', e => {
   const b = e.target.closest('[data-aiequip]'); if (!b) return;
   const have = aiEquipChosen(), k = b.dataset.aiequip;
