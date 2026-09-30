@@ -2,7 +2,7 @@
 
 [← User guide](Home.md)
 
-The **Exercises** tab is the library: over 220 exercises, each animated step by step, with written instructions.
+The **Exercises** tab is the library: 350 exercises, each animated step by step, with written instructions.
 
 <img src="images/exercises.png" width="300" alt="The Exercises tab: search, collection and equipment filters, Group by collection, shelves">
 
