@@ -1,0 +1,88 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-reverse-fly",
+  "name": "Dumbbell Reverse Fly",
+  "otherNames": ["Bent-Over Reverse Fly", "Rear Delt Fly"],
+  "category": "Strength",
+  "focus": "Upper back and back of the shoulders",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "Bent forward from the hips with a dumbbell in each hand, arms hanging, open your arms out to the sides to shoulder height, squeezing your shoulder blades, then lower.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/bent-over-dumbbell-reverse-fly.html",
+    "title": "Muscle & Strength: Bent Over Dumbbell Reverse Fly",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Hinge forward with a flat back, knees soft.", "A dumbbell in each hand, arms hanging."],
+  "cues": ["Lead with your elbows, a soft bend in them.", "Squeeze your shoulder blades.", "Lower slowly."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Pick a weight you can lift for every rep with good form. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Arms hanging",
+      "cue": "Hinged forward, back flat.",
+      "camera": 40,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [58, 0, 0],
+        "shoulderL": [58, 0, 0],
+        "shoulderR": [58, 0, 0],
+        "hipL": [14, 0, 0],
+        "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10,
+        "elbowL": 14,
+        "elbowR": 14
+      }
+    },
+    {
+      "name": "Row",
+      "cue": "Pull the weights up toward your hips.",
+      "camera": 40,
+      "durationMs": 2000,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [58, 0, 0],
+        "shoulderL": [58, 80, 0],
+        "shoulderR": [58, 80, 0],
+        "hipL": [14, 0, 0],
+        "kneeL": 24,
+        "ankleL": -10,
+        "hipR": [14, 0, 0],
+        "kneeR": 24,
+        "ankleR": -10,
+        "elbowL": 14,
+        "elbowR": 14
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "fb"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "fb"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

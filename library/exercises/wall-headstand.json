@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "wall-headstand",
+  "name": "Headstand at the Wall",
+  "otherNames": ["Wall Headstand", "Supported Headstand at the Wall"],
+  "category": "Balancing",
+  "collections": ["Yoga"],
+  "equipment": ["Wall"],
+  "description": "Supported Headstand with a wall behind you: with your forearms down and fingers interlaced near the wall, lift your legs up and rest your heels on the wall, the weight mostly in your forearms.",
+  "source": {
+    "url": "https://yogaselection.com/headstand-preparation-kick-up-to-the-wall/",
+    "title": "Yoga Selection: Headstand preparation at the wall",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Forearms down, fingers interlaced, a hand's width or so from the wall.", "Crown of the head on the floor, the back of the head against your hands."],
+  "cues": ["Press the forearms down.", "Shoulders lift away from your ears.", "Heels rest on the wall lightly."],
+  "keyframes": [
+    {
+      "name": "Dolphin",
+      "cue": "Forearms down, lift the hips high.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "elbowR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": [135, 0, 0],
+        "shoulderL": [135, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [135, 0, 0],
+        "elbowR": 90,
+        "hipL": [-39.8, 0, 0],
+        "ankleL": -39.8,
+        "hipR": [-39.8, 0, 0],
+        "ankleR": -39.8
+      }
+    },
+    {
+      "name": "Supported Headstand",
+      "cue": "Interlace the hands behind the head, walk in, and lift the legs.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "elbowR",
+      "pose": {
+        "root": [186, 0, 0],
+        "shoulderL": [155, 0, 0],
+        "elbowL": 115,
+        "shoulderR": [155, 0, 0],
+        "elbowR": 115
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "ankleR",
+      "keyframe": 1,
+      "offset": 6
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

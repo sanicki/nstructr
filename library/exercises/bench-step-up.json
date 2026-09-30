@@ -1,0 +1,137 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bench-step-up",
+  "name": "Bench Step-Up",
+  "otherNames": ["High Step-Up", "Box Step-Up"],
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Bodyweight"],
+  "equipment": ["Bench"],
+  "description": "Step one foot up onto a sturdy bench, drive through it to stand tall on the bench, then step back down one foot at a time.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/28/step-up/",
+    "title": "ACE Exercise Library: Step-Up",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand facing a sturdy bench, about knee height."],
+  "cues": ["Whole foot on the bench.", "Push through the top foot, not the one below.", "Step down with control."],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Stand in front of the step",
+      "cue": "Feet together, hands on hips.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4
+      }
+    },
+    {
+      "name": "Right foot up",
+      "cue": "Place your right foot flat on the step.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "hipR": [95, 0, 0],
+        "kneeR": 110,
+        "ankleR": -20
+      }
+    },
+    {
+      "name": "Step up",
+      "cue": "Push up and bring your left foot onto the step.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4
+      }
+    },
+    {
+      "name": "Right foot down",
+      "cue": "Bend your left knee and step your right foot back down to the floor.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        }
+      ],
+      "keep": [
+        {
+          "point": "ankleR",
+          "keyframe": 0
+        }
+      ],
+      "pose": {
+        "torso": [18, 0, 0],
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "hipL": [78, 0, 0],
+        "kneeL": 105,
+        "ankleL": -30,
+        "hipR": [4.2, 0, 0],
+        "kneeR": 1.3,
+        "ankleR": 2.9
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "bench",
+      "z": 75,
+      "width": 90,
+      "depth": 140,
+      "height": 70
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right foot leads",
+      "R": "Left foot leads"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

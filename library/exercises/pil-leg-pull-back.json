@@ -1,0 +1,115 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-leg-pull-back",
+  "name": "Leg Pull",
+  "otherNames": ["Leg Pull Back", "Leg Pull Up", "Reverse Plank Leg Kick"],
+  "category": "Pilates",
+  "focus": "Glutes, hamstrings, shoulders and core",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Sitting with your legs straight and your hands on the floor behind you, lift your hips until your body is in one straight line facing up, kick one leg up toward the ceiling, lower it, and switch.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Sit with your legs straight, hands on the floor behind your hips, fingers pointing toward your feet."],
+  "cues": ["Hips high, body straight.", "Kick from the hip, toes pointed.", "Shoulders down, chest open."],
+  "prescription": {
+    "reps": "3 each leg",
+    "note": "Hips stay lifted when the leg moves."
+  },
+  "keyframes": [
+    {
+      "name": "Reverse plank",
+      "cue": "Hands behind you, lift your hips: one straight line, face up.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [-66, 0, 0],
+        "shoulderL": [-66, 0, 0],
+        "shoulderR": [-66, 0, 0],
+        "hipL": [0, 0, 0],
+        "ankleL": 30,
+        "hipR": [0, 0, 0],
+        "ankleR": 30
+      }
+    },
+    {
+      "name": "Kick up",
+      "cue": "Kick the right leg up, toes pointed.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [-66, 0, 0],
+        "shoulderL": [-66, 0, 0],
+        "shoulderR": [-66, 0, 0],
+        "hipL": [0, 0, 0],
+        "ankleL": 30,
+        "hipR": [70, 0, 0],
+        "ankleR": 30
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Lower it with control.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [-66, 0, 0],
+        "shoulderL": [-66, 0, 0],
+        "shoulderR": [-66, 0, 0],
+        "hipL": [0, 0, 0],
+        "ankleL": 30,
+        "hipR": [0, 0, 0],
+        "ankleR": 30
+      }
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  }
+}

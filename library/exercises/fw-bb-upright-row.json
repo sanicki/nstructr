@@ -1,0 +1,68 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-bb-upright-row",
+  "name": "Barbell Upright Row",
+  "otherNames": ["BB Upright Row"],
+  "category": "Strength",
+  "focus": "Shoulders and upper back",
+  "collections": ["Free weights"],
+  "equipment": ["Barbell"],
+  "description": "Holding a barbell in front of your thighs, hands about shoulder-width apart, pull it straight up to your chest, elbows leading high and out, then lower.",
+  "source": {
+    "url": "https://www.onepeloton.com/blog/upright-rows",
+    "title": "Peloton: How to do upright rows",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand tall, the bar in front of your thighs, hands about shoulder-width apart."],
+  "cues": ["Elbows lead, higher than your hands.", "Stop at shoulder height.", "Bar close to your body."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Keep the band close to your body; stop with your elbows at shoulder height."
+  },
+  "keyframes": [
+    {
+      "name": "Hands low",
+      "cue": "Stand on the band, hands close together in front of your thighs.",
+      "camera": 20,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [10, -9, 0],
+        "elbowL": 8,
+        "shoulderR": [10, -9, 0],
+        "elbowR": 8
+      }
+    },
+    {
+      "name": "Pull up",
+      "cue": "Pull your hands up to your chest, elbows high and out.",
+      "camera": 20,
+      "durationMs": 1500,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [37, 66, -85],
+        "elbowL": 146,
+        "shoulderR": [37, 66, -85],
+        "elbowR": 146
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "barbell",
+      "from": "handL",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

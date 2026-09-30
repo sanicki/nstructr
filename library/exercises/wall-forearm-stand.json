@@ -1,0 +1,82 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "wall-forearm-stand",
+  "name": "Forearm Stand at the Wall",
+  "otherNames": ["Wall Forearm Stand", "Pincha Mayurasana at the Wall"],
+  "category": "Inversion",
+  "collections": ["Yoga"],
+  "equipment": ["Wall"],
+  "description": "Forearm Stand with a wall behind you: from Dolphin with your hands near the wall, walk your feet in, kick up one leg at a time and rest your heels on the wall.",
+  "source": {
+    "url": "https://liforme.com/blogs/blog/how-to-do-forearm-stand-pincha-mayurasana",
+    "title": "Liforme: How to do Forearm Stand (Pincha Mayurasana)",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Forearms down, shoulder-width apart, hands near the wall.", "Come into Dolphin and walk your feet in."],
+  "cues": ["Shoulders over the elbows.", "Press the forearms down.", "Heels touch the wall lightly."],
+  "keyframes": [
+    {
+      "name": "Dolphin",
+      "cue": "Forearms down, lift the hips high.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "elbowR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": [135, 0, 0],
+        "shoulderL": [-225, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-225, 0, 0],
+        "elbowR": 90,
+        "hipL": [-39.8, 0, 0],
+        "ankleL": -39.8,
+        "hipR": [-39.8, 0, 0],
+        "ankleR": -39.8
+      }
+    },
+    {
+      "name": "Forearm Balance",
+      "cue": "Walk in, kick up, and balance on the forearms.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "pose": {
+        "root": [190, 0, 0],
+        "neck": [-70, 0, 0],
+        "shoulderL": [-170, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-170, 0, 0],
+        "elbowR": 90
+      },
+      "anchor": "elbowR"
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "ankleR",
+      "keyframe": 1,
+      "offset": 6
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

@@ -687,8 +687,13 @@ const HOLD_POINTS = ['handL', 'handR', 'ankleL', 'ankleR'];
 function heldAt(a, b, e, P) {
   const at = h => { if (!h || !h.length) return null; const q = h.map(k => (typeof k === 'string' ? P[k] : { x: num(k.x), y: num(k.y), z: num(k.z) })).filter(Boolean);
     return q.length ? V3.mul(q.reduce((s, p) => V3.add(s, p), { x: 0, y: 0, z: 0 }), 1 / q.length) : null; };
-  const A = at(a && a.holds), B = at(b && b.holds);
+  const ha = a && a.holds, hb = b && b.holds, A = at(ha), B = at(hb);
   if (!A && !B) return null;
+  // handed over (the hands take it from the feet, or let the feet have it back): it stays with the ones that hold it the
+  // whole move, the smaller group (it's where the larger one meets it at the end); averaging them dragged it through the body
+  const sub = (x, y) => x && y && x.length < y.length && x.every(k => typeof k === 'string' && y.includes(k));
+  if (sub(ha, hb)) return A;
+  if (sub(hb, ha)) return B;
   return V3.lerp(A || B, B || A, e);
 }
 /* A kettlebell (world points): its handle in the hand(s), and the bell 15 on. In one hand it hangs on in line with the

@@ -1,0 +1,128 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-bound-angle-forward-bend-block",
+  "name": "Supported Bound Angle Forward Fold",
+  "otherNames": ["Bound Angle Forward Fold with a Block"],
+  "category": "Stretch",
+  "focus": "Inner thighs, hips and back",
+  "collections": ["Yoga"],
+  "equipment": ["Yoga mat", "Yoga block"],
+  "description": "Bound Angle Forward Fold with a yoga block lying flat in front of your feet: soles together, fold forward from the hips and rest your forehead on the block, letting the back soften.",
+  "source": {
+    "url": "https://dorestorativeyoga.blogspot.com/2009/03/supported-bound-angle-forward-fold.html",
+    "title": "Do Restorative Yoga: Supported Bound Angle Forward Fold",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit with the soles of your feet together, knees open.", "Set a block flat on the floor in front of your feet."],
+  "cues": ["Fold from the hips.", "Let your head rest.", "Breathe into your back."],
+  "prescription": {
+    "reps": "Hold 30–60 seconds",
+    "note": "Breathe slowly; come up on a breath in. Skip the fold with a groin or knee injury."
+  },
+  "keyframes": [
+    {
+      "name": "Bend the knees",
+      "cue": "Draw the heels in toward you.",
+      "camera": 45,
+      "durationMs": 1200,
+      "holdMs": 0,
+      "phase": "setup",
+      "quiet": true,
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "pose": {
+        "shoulderL": [-23.9, 0, 0],
+        "shoulderR": [-23.9, 0, 0],
+        "hipL": [143.5, 25, 25],
+        "kneeL": 118,
+        "hipR": [143.5, 25, 25],
+        "kneeR": 118
+      }
+    },
+    {
+      "name": "Sit tall",
+      "cue": "Soles together, hold your feet. Breathe in and sit tall.",
+      "camera": 0,
+      "durationMs": 1600,
+      "holdMs": 1500,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "touch": [],
+      "pose": {
+        "shoulderL": [0, 26.6, -90],
+        "elbowL": 6,
+        "shoulderR": [0, 26.6, -90],
+        "elbowR": 6,
+        "hipL": [95, 55, 90],
+        "kneeL": 150,
+        "hipR": [95, 55, 90],
+        "kneeR": 150
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "footR"
+        },
+        {
+          "hand": "handL",
+          "to": "footL"
+        }
+      ]
+    },
+    {
+      "name": "Rest on the block",
+      "cue": "Fold forward and rest your forehead on the block.",
+      "camera": 75,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "torso": [66, 0, 0],
+        "neck": [20, 0, 0],
+        "shoulderL": [150, 8, 0],
+        "shoulderR": [150, 8, 0],
+        "hipL": [95, 55, 90],
+        "kneeL": 150,
+        "hipR": [95, 55, 90],
+        "kneeR": 150
+      },
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "block",
+      "z": 128,
+      "width": 27,
+      "depth": 41,
+      "height": 18
+    }
+  ],
+  "measure": "time",
+  "holdStep": 2,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

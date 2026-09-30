@@ -1,0 +1,224 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "towel-hamstring-curl",
+  "name": "Towel Hamstring Curl",
+  "otherNames": ["Slider Hamstring Curl", "Sliding Leg Curl"],
+  "category": "Strength",
+  "focus": "Hamstrings, glutes and core",
+  "collections": ["Bodyweight", "Core"],
+  "equipment": ["Towel"],
+  "description": "Lying on your back with your heels on a towel on a smooth floor, lift your hips, then slide your heels in toward you and back out, hips up throughout.",
+  "source": {
+    "url": "https://gymnation.com/exercise-library/reverse-sliding-leg-curl-on-floor-with-towel",
+    "title": "GymNation: Reverse Sliding Leg Curl on Floor with Towel",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["On a smooth floor, lie on your back with your heels on a folded towel.", "Arms out to the sides, palms down."],
+  "cues": ["Hips stay up as you slide.", "Pull with your hamstrings.", "Slide out slowly."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Keep your hips up the whole set; lower them only at the end."
+  },
+  "keyframes": [
+    {
+      "name": "Heels on the towel",
+      "cue": "Lie on your back, legs straight, heels on a towel.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [8, 0, 0],
+        "hipR": [8, 0, 0],
+        "ankleL": -20,
+        "ankleR": -20
+      }
+    },
+    {
+      "name": "Lift your hips",
+      "cue": "Press your heels down and lift your hips.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-100, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [-8, 0, 0],
+        "hipR": [-8, 0, 0],
+        "ankleL": -20,
+        "ankleR": -20
+      }
+    },
+    {
+      "name": "Curl in",
+      "cue": "Slide your heels toward you, hips up.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-150, 0, 0],
+        "chest": [50, 0, 0],
+        "neck": [50, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [-44.9, 0, 0],
+        "kneeL": 80.5,
+        "ankleL": 24.6,
+        "hipR": [-44.9, 0, 0],
+        "kneeR": 80.5,
+        "ankleR": 24.6
+      }
+    },
+    {
+      "name": "Slide out",
+      "cue": "Slowly slide your heels away, hips still up.",
+      "camera": 90,
+      "durationMs": 1700,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-100, 0, 0],
+        "neck": [44, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [-8, 0, 0],
+        "hipR": [-8, 0, 0],
+        "ankleL": -20,
+        "ankleR": -20
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Lower your hips to the floor.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "finish",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "shoulderR": [0, 45, 0],
+        "hipL": [8, 0, 0],
+        "hipR": [8, 0, 0],
+        "ankleL": -20,
+        "ankleR": -20
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "towel",
+      "from": "ankleL",
+      "to": "ankleR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

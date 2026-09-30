@@ -1,0 +1,143 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-bicycle",
+  "name": "Pilates Bicycle",
+  "otherNames": ["Classical Bicycle", "Shoulder Stand Bicycle"],
+  "category": "Pilates",
+  "focus": "Core, hips and hamstrings",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Up on your shoulders with your hands supporting your lower back, pedal your legs as if riding a bicycle upside down: one leg reaches over your head as the other reaches away, then bends and comes through.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, legs up.", "Roll up onto your shoulders and support your lower back with your hands, elbows on the mat."],
+  "cues": ["Big, slow strides.", "Hips lifted.", "Weight on the shoulders, not the neck."],
+  "prescription": {
+    "reps": "5 each way",
+    "note": "Weight on the shoulders and upper arms, never the neck."
+  },
+  "keyframes": [
+    {
+      "name": "Legs up",
+      "cue": "Lying down, lift your legs straight up.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Up on your shoulders",
+      "cue": "Lift your hips, hands supporting your lower back.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 200,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-160, 0, 0],
+        "neck": [110, 0, 0],
+        "shoulderL": [-60, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-60, 0, 0],
+        "elbowR": 90,
+        "hipL": [25, 0, 0],
+        "hipR": [25, 0, 0]
+      }
+    },
+    {
+      "name": "Right leg over",
+      "cue": "Right leg reaches over your head; left leg reaches away.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-160, 0, 0],
+        "neck": [110, 0, 0],
+        "shoulderL": [-60, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-60, 0, 0],
+        "elbowR": 90,
+        "hipR": [80, 0, 0],
+        "hipL": [-25, 0, 0]
+      }
+    },
+    {
+      "name": "Pedal",
+      "cue": "Bend the left knee and bring it through.",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-160, 0, 0],
+        "neck": [110, 0, 0],
+        "shoulderL": [-60, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-60, 0, 0],
+        "elbowR": 90,
+        "hipR": [20, 0, 0],
+        "hipL": [40, 0, 0],
+        "kneeL": 110
+      }
+    },
+    {
+      "name": "Left leg over",
+      "cue": "Left leg reaches over; right leg reaches away.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-160, 0, 0],
+        "neck": [110, 0, 0],
+        "shoulderL": [-60, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-60, 0, 0],
+        "elbowR": 90,
+        "hipL": [80, 0, 0],
+        "hipR": [-25, 0, 0]
+      }
+    },
+    {
+      "name": "Pedal",
+      "cue": "Bend the right knee and bring it through.",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-160, 0, 0],
+        "neck": [110, 0, 0],
+        "shoulderL": [-60, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [-60, 0, 0],
+        "elbowR": 90,
+        "hipL": [20, 0, 0],
+        "hipR": [40, 0, 0],
+        "kneeR": 110
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  }
+}

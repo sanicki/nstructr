@@ -1,0 +1,159 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-knee-extension",
+  "name": "Seated Knee Extension",
+  "otherNames": ["Seated Leg Extension", "Chair Knee Extension"],
+  "category": "Strength",
+  "focus": "Front of the thighs",
+  "collections": ["Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Sitting tall on a chair, slowly lift one foot until the leg is straight out in front of you, hold, then lower it back to the floor.",
+  "source": {
+    "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/knee-strengthening-exercises",
+    "title": "British Heart Foundation: 10 knee-strengthening exercises",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit tall on a sturdy chair, feet flat and hip-width apart.", "Hands on your thighs or the sides of the seat."],
+  "cues": ["Straighten from the knee; thigh stays on the chair.", "Toes toward you.", "Lower slowly."],
+  "prescription": {
+    "reps": "8–10 each leg",
+    "note": "Hold the leg straight for a few seconds, up to 10. If it won't straighten, lift as far as is comfortable."
+  },
+  "keyframes": [
+    {
+      "name": "Sit tall",
+      "cue": "Feet flat, hands on your thighs.",
+      "camera": 60,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Straighten",
+      "cue": "Lift your right foot until your leg is straight.",
+      "camera": 60,
+      "durationMs": 1500,
+      "holdMs": 3000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 3,
+        "ankleR": -10
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Slowly lower your foot to the floor.",
+      "camera": 60,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  }
+}

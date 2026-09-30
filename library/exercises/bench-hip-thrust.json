@@ -1,0 +1,132 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bench-hip-thrust",
+  "name": "Bodyweight Hip Thrust",
+  "otherNames": ["Bench Hip Thrust"],
+  "category": "Strength",
+  "focus": "Glutes and hamstrings",
+  "collections": ["Bodyweight"],
+  "equipment": ["Bench"],
+  "description": "Upper back against a bench, knees bent and feet flat, drive through your heels to lift your hips until your body is flat from shoulders to knees, then lower.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/bodyweight-hip-thrust",
+    "title": "Muscle & Strength: Bodyweight Hip Thrust",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit with your upper back against the side of a bench.", "Knees bent, feet flat, hands on your hips."],
+  "cues": ["Chin tucked, ribs down.", "Squeeze your glutes at the top.", "Knees over ankles."],
+  "prescription": {
+    "reps": "8–12",
+    "note": "Move with control: about 2 seconds each way, resting between sets as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Hips down",
+      "cue": "Upper back on the bench, bar across your hips.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "backL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "hipR",
+          "dx": 12,
+          "dy": 8
+        },
+        {
+          "hand": "handL",
+          "to": "hipL",
+          "dx": -12,
+          "dy": 8
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-40, 0, 0],
+        "neck": [30, 0, 0],
+        "shoulderL": [30, 40, 0],
+        "elbowL": 40,
+        "shoulderR": [30, 40, 0],
+        "elbowR": 40,
+        "hipL": [70, 0, 0],
+        "kneeL": 100,
+        "ankleL": 10,
+        "hipR": [70, 0, 0],
+        "kneeR": 100,
+        "ankleR": 10
+      }
+    },
+    {
+      "name": "Thrust",
+      "cue": "Drive through your heels until your body is level from shoulders to knees.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "backL",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "hipR",
+          "dx": 12,
+          "dy": 8
+        },
+        {
+          "hand": "handL",
+          "to": "hipL",
+          "dx": -12,
+          "dy": 8
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [45, 0, 0],
+        "shoulderL": [30, 40, 0],
+        "elbowL": 40,
+        "shoulderR": [30, 40, 0],
+        "elbowR": 40,
+        "hipL": [0, 0, 0],
+        "kneeL": 90,
+        "hipR": [0, 0, 0],
+        "kneeR": 90
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "bench",
+      "z": -10,
+      "width": 40,
+      "depth": 140,
+      "height": 70
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-swing",
+  "name": "Dumbbell Swing",
+  "otherNames": ["DB Swing"],
+  "category": "Strength",
+  "focus": "Glutes, hamstrings and core (power)",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "Holding one dumbbell by one end in both hands, hinge and let it swing back between your legs, then drive your hips forward to swing it up to chest height.",
+  "source": {
+    "url": "https://spotebi.com/exercise-guide/dumbbell-swing/",
+    "title": "Spotebi: Dumbbell Swing",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Hold one dumbbell by one end in both hands, arms long.", "Feet a little wider than your hips."],
+  "cues": ["Hinge, don't squat.", "Snap your hips forward.", "Arms just guide the weight."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Explosive hips, controlled arms. Stop the set before your form fades."
+  },
+  "keyframes": [
+    {
+      "name": "Hike back",
+      "cue": "Hinge and swing the bell back between your legs.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [62, 0, 0],
+        "shoulderL": [45, 0, 0],
+        "shoulderR": [45, 0, 0],
+        "hipL": [20, 0, 0],
+        "kneeL": 30,
+        "ankleL": -10,
+        "hipR": [20, 0, 0],
+        "kneeR": 30,
+        "ankleR": -10
+      }
+    },
+    {
+      "name": "Swing up",
+      "cue": "Snap your hips forward; the bell floats to chest height.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 150,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [88, 0, 0],
+        "shoulderR": [88, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "ud"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  },
+  "repName": "rep"
+}

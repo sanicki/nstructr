@@ -1,0 +1,126 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-swan-dive",
+  "name": "Swan Dive",
+  "otherNames": ["Pilates Swan Dive"],
+  "category": "Pilates",
+  "focus": "Back and glutes",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying face down, press up into Swan, then let go of the floor and rock forward onto your chest with your arms reaching forward and your legs lifting, and back up again, keeping one long arched shape.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Lie on your front, hands under your shoulders.", "Legs long and together."],
+  "cues": ["One long curve from head to toes.", "Legs stay straight.", "Rock like a rocking chair."],
+  "prescription": {
+    "reps": "6 rocks",
+    "note": "Keep the long arched shape; rock, don't bend in the middle."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your front",
+      "cue": "Hands under your shoulders.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dz": 12,
+          "dy": 4
+        },
+        {
+          "hand": "handL",
+          "to": "shoulderL",
+          "dz": 12,
+          "dy": 4
+        }
+      ],
+      "pose": {
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
+        "shoulderL": [-40, 15, 0],
+        "elbowL": 110,
+        "shoulderR": [-40, 15, 0],
+        "elbowR": 110,
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Lift your chest",
+      "cue": "Press gently and lift your chest.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 800,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "keep": ["handL", "handR"],
+      "pose": {
+        "root": [90, 0, 0],
+        "torso": [-26, 0, 0],
+        "chest": [-16, 0, 0],
+        "neck": [-20, 0, 0],
+        "shoulderL": [-40, 15, 0],
+        "elbowL": 110,
+        "shoulderR": [-40, 15, 0],
+        "elbowR": 110,
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Rock forward",
+      "cue": "Let go and rock forward onto your chest, arms reaching forward, legs lifting.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "pose": {
+        "root": [104, 0, 0],
+        "torso": [-18, 0, 0],
+        "chest": [-10, 0, 0],
+        "neck": [-20, 0, 0],
+        "shoulderL": [150, 10, 0],
+        "elbowL": 5,
+        "shoulderR": [150, 10, 0],
+        "elbowR": 5,
+        "hipL": [-22, 0, 0],
+        "hipR": [-22, 0, 0],
+        "ankleL": 60,
+        "ankleR": 60
+      }
+    },
+    {
+      "name": "Rock back",
+      "cue": "Rock back, chest lifting, legs lowering.",
+      "camera": 90,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "pose": {
+        "root": [78, 0, 0],
+        "torso": [-26, 0, 0],
+        "chest": [-16, 0, 0],
+        "neck": [-20, 0, 0],
+        "shoulderL": [150, 10, 0],
+        "elbowL": 5,
+        "shoulderR": [150, 10, 0],
+        "elbowR": 5,
+        "ankleL": 60,
+        "ankleR": 60
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  }
+}

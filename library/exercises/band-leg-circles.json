@@ -1,0 +1,311 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-leg-circles",
+  "name": "Band Leg Circles",
+  "otherNames": ["Banded Leg Circles", "Resistance Band Leg Circles"],
+  "category": "Pilates",
+  "focus": "Hips and deep core",
+  "collections": ["Pilates", "Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "Leg Circles with a band looped round the lifted foot and an end in each hand: keeping the hips still, draw small circles with the straight leg against the band, then change direction.",
+  "source": {
+    "url": "https://gophysiotherapy.co.uk/pilates-with-resistance-band/",
+    "title": "Go Physiotherapy: Pilates with a resistance band",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, one leg long on the floor.", "Loop a band round the other foot, an end in each hand, and lift that leg up."],
+  "cues": ["Hips still.", "Small circles.", "Keep the band taut."],
+  "prescription": {
+    "reps": "5 each direction, each leg",
+    "note": "Breathe out as the leg circles down, in as it comes back up."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie on your back, arms by your sides.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "ankleR": 20,
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Leg up",
+      "cue": "Lift your right leg to the ceiling.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 400,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 0,
+        "label": "Up"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [100, 0, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Up and across",
+      "cue": "",
+      "camera": 90,
+      "durationMs": 225,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 315,
+        "label": "Up and across"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [95.3, -22.6, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Across",
+      "cue": "Across your body.",
+      "camera": 90,
+      "durationMs": 225,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 270,
+        "label": "Across"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [84, -32, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Across and down",
+      "cue": "",
+      "camera": 90,
+      "durationMs": 225,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 225,
+        "label": "Across and down"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [72.7, -22.6, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Down",
+      "cue": "Down.",
+      "camera": 90,
+      "durationMs": 225,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 180,
+        "label": "Down"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [68, 0, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Down and out",
+      "cue": "",
+      "camera": 90,
+      "durationMs": 225,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 135,
+        "label": "Down and out"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [72.7, 22.6, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Out",
+      "cue": "Out to the side.",
+      "camera": 90,
+      "durationMs": 225,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 90,
+        "label": "Out"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [84, 32, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Out and up",
+      "cue": "",
+      "camera": 90,
+      "durationMs": 225,
+      "holdMs": 0,
+      "ease": "linear",
+      "phase": "rep",
+      "quiet": true,
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 45,
+        "label": "Out and up"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [95.3, 22.6, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Up",
+      "cue": "Back up, and pause.",
+      "camera": 90,
+      "durationMs": 225,
+      "holdMs": 250,
+      "ease": "linear",
+      "phase": "rep",
+      "anchor": "pelvis",
+      "guide": {
+        "direction": 0,
+        "label": "Up"
+      },
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "hipR": [100, 0, 0],
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Lower the leg",
+      "cue": "Lower the leg to the mat.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "finish",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "ankleL": 20,
+        "ankleR": 20,
+        "shoulderL": [28, 0, 0],
+        "elbowL": 20,
+        "shoulderR": [28, 0, 0],
+        "elbowR": 20
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "handL",
+      "via": ["footR"],
+      "to": "handR"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  },
+  "direction": {
+    "labels": {
+      "A": "Across first",
+      "B": "Out first"
+    }
+  },
+  "floorGuide": {
+    "type": "star",
+    "arms": 4
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "circle"
+}

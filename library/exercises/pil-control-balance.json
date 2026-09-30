@@ -1,0 +1,147 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-control-balance",
+  "name": "Control Balance",
+  "otherNames": ["Pilates Control Balance"],
+  "category": "Pilates",
+  "focus": "Core, spine and hamstrings",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "From the Roll-Over with your toes on the floor behind your head, hold one leg (at the ankle if you can) with both hands and lift the other leg straight up to the ceiling, then switch legs, and roll down.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, arms long, legs straight up."],
+  "cues": ["Weight on the shoulders, not the neck.", "Top leg reaches straight up.", "Switch with control."],
+  "prescription": {
+    "reps": "3 each leg",
+    "note": "Weight on the shoulders, never the neck."
+  },
+  "keyframes": [
+    {
+      "name": "Legs up",
+      "cue": "Lying down, lift your legs straight up.",
+      "camera": 90,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Roll over",
+      "cue": "Roll your legs over your head, toes to the floor.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-170, 0, 0],
+        "neck": [114, 0, 0],
+        "shoulderL": [-75, 0, 0],
+        "shoulderR": [-75, 0, 0],
+        "hipL": [110, 0, 0],
+        "hipR": [110, 0, 0]
+      }
+    },
+    {
+      "name": "Right leg up",
+      "cue": "Hold your left leg; lift the right leg straight up.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "toeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [-170, 0, 0],
+        "neck": [114, 0, 0],
+        "hipL": [128.5, 0, 0],
+        "hipR": [10, 0, 0],
+        "shoulderL": [100, 0, 0],
+        "elbowL": 5,
+        "shoulderR": [100, 0, 0],
+        "elbowR": 5
+      }
+    },
+    {
+      "name": "Left leg up",
+      "cue": "Switch: hold the right leg, lift the left leg.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "root": [-170, 0, 0],
+        "neck": [114, 0, 0],
+        "hipR": [128.5, 0, 0],
+        "hipL": [10, 0, 0],
+        "shoulderL": [100, 0, 0],
+        "elbowL": 5,
+        "shoulderR": [100, 0, 0],
+        "elbowR": 5
+      }
+    },
+    {
+      "name": "Both legs over",
+      "cue": "Both feet down over your head, arms back down.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-170, 0, 0],
+        "neck": [114, 0, 0],
+        "shoulderL": [-75, 0, 0],
+        "shoulderR": [-75, 0, 0],
+        "hipL": [110, 0, 0],
+        "hipR": [110, 0, 0]
+      }
+    },
+    {
+      "name": "Roll down",
+      "cue": "Roll down one vertebra at a time.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [60, 0, 0],
+        "hipR": [60, 0, 0]
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  }
+}

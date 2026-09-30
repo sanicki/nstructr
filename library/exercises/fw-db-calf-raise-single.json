@@ -1,0 +1,85 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-calf-raise-single",
+  "name": "Single-Leg Dumbbell Calf Raise",
+  "otherNames": ["One-Leg Dumbbell Calf Raise"],
+  "category": "Strength",
+  "focus": "Calves and balance",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells", "Wall"],
+  "description": "Standing on one leg with a dumbbell in the other hand and a hand on a wall for balance, rise onto the ball of the foot, then lower slowly.",
+  "source": {
+    "url": "https://exrx.net/WeightExercises/Gastrocnemius/DBSingleLegCalfRaise",
+    "title": "ExRx: Dumbbell Single Leg Calf Raise",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand on one leg beside a wall, a hand on it for balance.", "Hold a dumbbell in the other hand by your side."],
+  "cues": ["Rise as high as you can.", "Lower slowly.", "Stand tall; don't lean on the wall."],
+  "prescription": {
+    "reps": "5 each leg, building to 20",
+    "note": "Start with 5 repetitions on each leg 3 times a day and build up to 20 repetitions 5 times a day."
+  },
+  "keyframes": [
+    {
+      "name": "Stand on your left leg",
+      "cue": "Weight on the left foot, right foot lifted behind you.",
+      "camera": 90,
+      "durationMs": 3000,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "shoulderL": [78, 0, 0],
+        "elbowL": 14,
+        "shoulderR": [0, 4, 0],
+        "elbowR": 6,
+        "hipR": [-12, 0, 0],
+        "kneeR": 75
+      }
+    },
+    {
+      "name": "Rise onto your toes",
+      "cue": "Slowly lift your left heel until you're on the ball of the foot.",
+      "camera": 90,
+      "durationMs": 3000,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "toeL",
+      "keep": ["handL"],
+      "pose": {
+        "shoulderL": [63.3, 0, 0],
+        "elbowL": 28.4,
+        "shoulderR": [0, 4, 0],
+        "elbowR": 6,
+        "ankleL": 38,
+        "hipR": [-12, 0, 0],
+        "kneeR": 75
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "handL",
+      "keyframe": 0
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "fb"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

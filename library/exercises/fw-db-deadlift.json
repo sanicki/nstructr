@@ -1,0 +1,89 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-deadlift",
+  "name": "Dumbbell Deadlift",
+  "otherNames": ["DB Deadlift"],
+  "category": "Strength",
+  "focus": "Glutes, hamstrings and back",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "With a dumbbell on the floor beside each foot, hinge and bend your knees to grip them, then stand up tall by driving your hips forward, and lower them back down.",
+  "source": {
+    "url": "https://www.muscleandstrength.com/exercises/dumbbell-deadlift.html",
+    "title": "Muscle & Strength: Dumbbell Deadlift",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand with a dumbbell just outside each foot.", "Feet hip-width apart."],
+  "cues": ["Back flat, chest up.", "Push the floor away.", "Weights stay close to your legs."],
+  "prescription": {
+    "reps": "3–6",
+    "note": "Warm up with lighter sets first. Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Set up",
+      "cue": "Hips back, back flat, hands on the bar.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "handR",
+          "adjust": "shoulderR",
+          "gap": 20
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL",
+          "gap": 20
+        }
+      ],
+      "pose": {
+        "torso": [66, 0, 0],
+        "shoulderL": [43.1, 0, 0],
+        "shoulderR": [43.1, 0, 0],
+        "hipL": [84, 0, 0],
+        "kneeL": 114,
+        "ankleL": -30,
+        "hipR": [84, 0, 0],
+        "kneeR": 114,
+        "ankleR": -30
+      }
+    },
+    {
+      "name": "Stand up",
+      "cue": "Drive through your feet and stand tall.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [4, 0, 0],
+        "shoulderR": [4, 0, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handL",
+      "axis": "lr"
+    },
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  },
+  "repName": "rep"
+}

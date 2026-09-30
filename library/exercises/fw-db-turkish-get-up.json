@@ -1,0 +1,674 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-turkish-get-up",
+  "name": "Dumbbell Turkish Get-Up",
+  "otherNames": ["Dumbbell Get-Up"],
+  "category": "Core",
+  "focus": "Whole body, shoulders and core",
+  "collections": ["Free weights", "Core"],
+  "equipment": ["Dumbbells"],
+  "description": "The Turkish get-up with a dumbbell held straight up: from lying on your back, rise step by step to standing with the weight overhead, then reverse back down.",
+  "source": {
+    "url": "https://www.garagegymreviews.com/turkish-get-up",
+    "title": "Garage Gym Reviews: How to do a Turkish get-up",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, a dumbbell held straight up over your shoulder.", "Bend the knee on the same side, foot flat."],
+  "cues": ["Eyes on the weight.", "Arm straight and locked.", "Slow and steady."],
+  "prescription": {
+    "reps": "1–3 each side",
+    "note": "Learn it without a weight first (a shoe balanced on your fist works). Slow and deliberate; keep your eyes on the bell."
+  },
+  "keyframes": [
+    {
+      "name": "Lie back, bell up",
+      "cue": "Lie on your back, the bell pressed straight up in your right hand, right knee bent.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [0, 45, 0],
+        "hipR": [58, 0, 0],
+        "kneeR": 116,
+        "ankleR": 32,
+        "hipL": [0, 30, 56.5],
+        "shoulderR": [-82.5, 180, 0],
+        "elbowR": 15.8
+      }
+    },
+    {
+      "name": "Up onto your elbow",
+      "cue": "Roll up onto your left elbow; eyes on the bell.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [-90, -0.5, 0],
+        "torso": [26.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-23.5, 0, 0],
+        "elbowL": 49.5,
+        "shoulderR": [-55.7, 180, 0],
+        "elbowR": 15.8,
+        "hipL": [0, 30, 56.5],
+        "kneeL": -0.5,
+        "ankleL": 0,
+        "hipR": [58, 0, 0],
+        "kneeR": 115.5,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Up onto your hand",
+      "cue": "Push up onto your left hand.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [-90, -0.5, 0],
+        "torso": [46.3, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-23.5, 0, 0],
+        "elbowL": 49.5,
+        "shoulderR": [-36.2, 180, 0],
+        "elbowR": 15.8,
+        "hipL": [0, 30, 56.5],
+        "kneeL": -0.5,
+        "ankleL": 0,
+        "hipR": [58, 0, 0],
+        "kneeR": 115.5,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Lift",
+      "cue": "",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "quiet": true,
+      "pose": {
+        "root": [-85, 1.3, -2],
+        "torso": [-2.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-34.5, -1.5, 0],
+        "elbowL": 35.9,
+        "shoulderR": [-80.3, 180.1, -0.1],
+        "elbowR": 15.8,
+        "hipL": [-8, 30, -54.1],
+        "kneeL": -1.6,
+        "ankleL": 0,
+        "hipR": [41.5, 2.5, 0],
+        "kneeR": 112.2,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Lift your hips",
+      "cue": "Drive through your right foot to lift your hips high.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [-79.5, 3.5, -4],
+        "torso": [-8.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-46, 0, 0],
+        "elbowL": 21.3,
+        "shoulderR": [-80.8, 180.7, -0.1],
+        "elbowR": 15.8,
+        "hipL": [-16, 30, 29.3],
+        "kneeL": -0.8,
+        "ankleL": 0,
+        "hipR": [25, 0, 0],
+        "kneeR": 108.8,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Tuck",
+      "cue": "",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "quiet": true,
+      "pose": {
+        "root": [-24.8, 13.6, 1],
+        "torso": [-54.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-94.7, 22, 0],
+        "elbowL": 0,
+        "shoulderR": [-72.5, 192.2, 1.7],
+        "elbowR": 15.8,
+        "hipL": [-62.3, 44.7, 7.1],
+        "kneeL": 24.6,
+        "ankleL": 13.2,
+        "hipR": [11.1, -42.7, 0],
+        "kneeR": 116.8,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Swing",
+      "cue": "",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "quiet": true,
+      "pose": {
+        "root": [-3.5, -2.9, 40],
+        "torso": [-68.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-63.3, 28, 0],
+        "elbowL": 0,
+        "shoulderR": [-64.8, 176.9, 1.2],
+        "elbowR": 15.8,
+        "hipL": [-52.5, 43.4, 0.8],
+        "kneeL": 34.1,
+        "ankleL": 26.4,
+        "hipR": [29.3, -2.9, 0],
+        "kneeR": 122.9,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Sweep the leg back",
+      "cue": "Sweep your left leg back under you onto your knee.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [10, -40.3, 49.5],
+        "torso": [-52.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-18.5, 24, 0],
+        "elbowL": 0,
+        "shoulderR": [-30.6, 142.8, -21.2],
+        "elbowR": 15.8,
+        "hipL": [-48, 24.8, -11.8],
+        "kneeL": 53,
+        "ankleL": 52.8,
+        "hipR": [67.5, -13.3, 0],
+        "kneeR": 121,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Kneel up",
+      "cue": "Lift your chest to kneeling, the bell still overhead.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [8, -20, 24.5],
+        "torso": [-8.5, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [0, 0, 0],
+        "shoulderL": [0, 35, 0],
+        "elbowL": 10,
+        "shoulderR": [6.4, 164.7, -37.6],
+        "elbowR": 15.8,
+        "hipL": [4.5, 1, 8.8],
+        "kneeL": 92,
+        "ankleL": 46.3,
+        "hipR": [91.8, 0.3, 0],
+        "kneeR": 85.8,
+        "ankleR": 0
+      }
+    },
+    {
+      "name": "Stand up",
+      "cue": "Stand up; the bell stays straight up.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["L", "R"],
+      "pose": {
+        "root": [0, 0, 25],
+        "torso": [-0.5, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [0, 0, 0],
+        "shoulderL": [0, 35, 0],
+        "elbowL": 10,
+        "shoulderR": [5.6, 184.4, -35.9],
+        "elbowR": 15.8,
+        "hipL": [0, 0, 0],
+        "kneeL": 0,
+        "ankleL": 0,
+        "hipR": [0, 0, 0],
+        "kneeR": 0,
+        "ankleR": 0
+      }
+    },
+    {
+      "name": "Step back to kneeling",
+      "cue": "Step your left leg back and lower to your knee.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [8, -20, 24.5],
+        "torso": [-8.5, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [0, 0, 0],
+        "shoulderL": [0, 35, 0],
+        "elbowL": 10,
+        "shoulderR": [6.4, 164.7, -37.6],
+        "elbowR": 15.8,
+        "hipL": [4.5, 1, 8.8],
+        "kneeL": 92,
+        "ankleL": 46.3,
+        "hipR": [91.8, 0.3, 0],
+        "kneeR": 85.8,
+        "ankleR": 0
+      }
+    },
+    {
+      "name": "Hand to the floor",
+      "cue": "Reach your left hand to the floor beside you.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [10, -40.3, 49.5],
+        "torso": [-52.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-18.5, 24, 0],
+        "elbowL": 0,
+        "shoulderR": [-30.6, 142.8, -21.2],
+        "elbowR": 15.8,
+        "hipL": [-48, 24.8, -11.8],
+        "kneeL": 53,
+        "ankleL": 52.8,
+        "hipR": [67.5, -13.3, 0],
+        "kneeR": 121,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Swing back",
+      "cue": "",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "quiet": true,
+      "pose": {
+        "root": [-3.5, -2.9, 40],
+        "torso": [-68.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-63.3, 28, 0],
+        "elbowL": 0,
+        "shoulderR": [-64.8, 176.9, 1.2],
+        "elbowR": 15.8,
+        "hipL": [-52.5, 43.4, 0.8],
+        "kneeL": 34.1,
+        "ankleL": 26.4,
+        "hipR": [29.3, -2.9, 0],
+        "kneeR": 122.9,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Tuck back",
+      "cue": "",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "quiet": true,
+      "pose": {
+        "root": [-24.8, 13.6, 1],
+        "torso": [-54.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-94.7, 22, 0],
+        "elbowL": 0,
+        "shoulderR": [-72.5, 192.2, 1.7],
+        "elbowR": 15.8,
+        "hipL": [-62.3, 44.7, 7.1],
+        "kneeL": 24.6,
+        "ankleL": 13.2,
+        "hipR": [11.1, -42.7, 0],
+        "kneeR": 116.8,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Leg through, hips high",
+      "cue": "Swing your left leg through and hold your hips high.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [-79.5, 3.5, -4],
+        "torso": [-8.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-46, 0, 0],
+        "elbowL": 21.3,
+        "shoulderR": [-80.8, 180.7, -0.1],
+        "elbowR": 15.8,
+        "hipL": [-16, 30, 29.3],
+        "kneeL": -0.8,
+        "ankleL": 0,
+        "hipR": [25, 0, 0],
+        "kneeR": 108.8,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Lift back",
+      "cue": "",
+      "camera": 30,
+      "durationMs": 700,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "quiet": true,
+      "pose": {
+        "root": [-85, 1.3, -2],
+        "torso": [-2.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-34.5, -1.5, 0],
+        "elbowL": 35.9,
+        "shoulderR": [-80.3, 180.1, -0.1],
+        "elbowR": 15.8,
+        "hipL": [-8, 30, -54.1],
+        "kneeL": -1.6,
+        "ankleL": 0,
+        "hipR": [41.5, 2.5, 0],
+        "kneeR": 112.2,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Sit down",
+      "cue": "Lower your hips to the floor.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [-90, -0.5, 0],
+        "torso": [46.3, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-23.5, 0, 0],
+        "elbowL": 49.5,
+        "shoulderR": [-36.2, 180, 0],
+        "elbowR": 15.8,
+        "hipL": [0, 30, 56.5],
+        "kneeL": -0.5,
+        "ankleL": 0,
+        "hipR": [58, 0, 0],
+        "kneeR": 115.5,
+        "ankleR": 32
+      }
+    },
+    {
+      "name": "Down to your elbow",
+      "cue": "Lower onto your left elbow.",
+      "camera": 30,
+      "durationMs": 1500,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "shoulderR",
+          "dx": 0,
+          "dy": 104,
+          "dz": 0
+        }
+      ],
+      "plant": ["R"],
+      "pose": {
+        "root": [-90, -0.5, 0],
+        "torso": [26.8, 0, 0],
+        "chest": [0, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [-23.5, 0, 0],
+        "elbowL": 49.5,
+        "shoulderR": [-55.7, 180, 0],
+        "elbowR": 15.8,
+        "hipL": [0, 30, 56.5],
+        "kneeL": -0.5,
+        "ankleL": 0,
+        "hipR": [58, 0, 0],
+        "kneeR": 115.5,
+        "ankleR": 32
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Bell in the right hand",
+      "R": "Bell in the left hand"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 2
+  },
+  "repName": "get-up"
+}

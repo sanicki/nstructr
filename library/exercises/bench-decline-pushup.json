@@ -1,0 +1,78 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bench-decline-pushup",
+  "name": "Decline Push-Up",
+  "otherNames": ["Feet-Elevated Push-Up"],
+  "category": "Strength",
+  "focus": "Chest, shoulders and triceps",
+  "collections": ["Bodyweight"],
+  "equipment": ["Bench"],
+  "description": "A push-up with your feet up on a bench: body straight from head to heels, lower your chest toward the floor, then press back up.",
+  "source": {
+    "url": "https://www.nasm.org/resource-center/exercise-library/decline-push-up",
+    "title": "NASM Exercise Library: Decline Push-Up",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Hands on the floor under your shoulders, feet up on a bench behind you."],
+  "cues": ["Body in one straight line.", "Elbows about 45° from your body.", "Chest to the floor, then press."],
+  "prescription": {
+    "reps": "5–15",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Plank",
+      "cue": "Arms straight, body in one line.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [],
+      "pose": {
+        "root": [86.25, 0, 0],
+        "shoulderL": [66, 0, 0],
+        "shoulderR": [66, 0, 0],
+        "hipL": [0, 0, 0],
+        "ankleL": -7,
+        "hipR": [0, 0, 0],
+        "ankleR": -7
+      }
+    },
+    {
+      "name": "Lower",
+      "cue": "Bend your elbows until your upper arms are level.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "handR",
+      "touch": [],
+      "pose": {
+        "root": [98.75, 0, 0],
+        "shoulderL": [-11, 40, 0],
+        "elbowL": 90,
+        "shoulderR": [-11, 40, 0],
+        "elbowR": 90,
+        "hipL": [0, 0, 0],
+        "ankleL": 48.75,
+        "hipR": [0, 0, 0],
+        "ankleR": 48.75
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "bench",
+      "z": -235,
+      "width": 80,
+      "height": 60
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 5
+  },
+  "repName": "rep"
+}

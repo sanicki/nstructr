@@ -1,0 +1,134 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-crab",
+  "name": "Crab",
+  "otherNames": ["Pilates Crab"],
+  "category": "Pilates",
+  "focus": "Core, spine and balance",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Curled up with your legs crossed and your hands holding your feet, roll back to your shoulder blades, switch the cross of your legs, then roll forward onto your knees with the top of your head touching down lightly, and roll back to balance.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Sit, cross your legs and hold your feet, right hand on the left foot and left hand on the right.", "Lift your feet and balance on your tailbone."],
+  "cues": ["Stay round.", "Switch the legs quickly at the back.", "Barely touch the head down."],
+  "prescription": {
+    "reps": "6",
+    "note": "Very little weight on the head; use your stomach to roll."
+  },
+  "keyframes": [
+    {
+      "name": "Balance",
+      "cue": "Legs crossed, hands holding your feet, balance on your tailbone.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "pose": {
+        "root": [-38, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [34, 0, 0],
+        "hipR": [110, 18, 70],
+        "kneeR": 150,
+        "hipL": [110, 18, 70],
+        "kneeL": 150,
+        "shoulderL": [24, -10, 0],
+        "elbowL": 30,
+        "shoulderR": [24, -10, 0],
+        "elbowR": 30
+      }
+    },
+    {
+      "name": "Roll back",
+      "cue": "Roll back to your shoulder blades.",
+      "camera": 90,
+      "durationMs": 1000,
+      "holdMs": 0,
+      "phase": "rep",
+      "pose": {
+        "root": [-118, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [34, 0, 0],
+        "hipR": [110, 18, 70],
+        "kneeR": 150,
+        "hipL": [110, 18, 70],
+        "kneeL": 150,
+        "shoulderL": [24, -10, 0],
+        "elbowL": 30,
+        "shoulderR": [24, -10, 0],
+        "elbowR": 30
+      }
+    },
+    {
+      "name": "Switch",
+      "cue": "Switch the cross of your legs.",
+      "camera": 90,
+      "durationMs": 500,
+      "holdMs": 0,
+      "phase": "rep",
+      "pose": {
+        "root": [-118, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [110, 18, 70],
+        "kneeL": 150,
+        "hipR": [110, 18, 60],
+        "kneeR": 150,
+        "shoulderL": [24, -10, 0],
+        "elbowL": 30,
+        "shoulderR": [24, -10, 0],
+        "elbowR": 30
+      }
+    },
+    {
+      "name": "Roll forward",
+      "cue": "Roll up and over onto your knees, the top of your head touching down lightly.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "pose": {
+        "root": [84, 0, 0],
+        "chest": [22, 0, 0],
+        "neck": [25.5, 0, 0],
+        "hipL": [138, 18, 70],
+        "kneeL": 150,
+        "hipR": [138, 18, 60],
+        "kneeR": 150,
+        "shoulderL": [24, -10, 0],
+        "elbowL": 30,
+        "shoulderR": [24, -10, 0],
+        "elbowR": 30
+      }
+    },
+    {
+      "name": "Roll back up",
+      "cue": "Roll back to balance.",
+      "camera": 90,
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "rep",
+      "pose": {
+        "root": [-38, 0, 0],
+        "chest": [32, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [110, 18, 70],
+        "kneeL": 150,
+        "hipR": [110, 18, 70],
+        "kneeR": 150,
+        "shoulderL": [24, -10, 0],
+        "elbowL": 30,
+        "shoulderR": [24, -10, 0],
+        "elbowR": 30
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  }
+}

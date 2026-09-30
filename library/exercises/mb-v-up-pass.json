@@ -1,20 +1,20 @@
 {
   "$schema": "../../schema/exercise.schema.json",
   "version": 2,
-  "id": "ball-pass",
-  "name": "Stability Ball Pass",
-  "otherNames": ["Stability Ball V-Pass", "Swiss Ball Hand-to-Foot Pass", "Ball Transfer", "Exercise Ball Hand-Off"],
+  "id": "mb-v-up-pass",
+  "name": "Medicine Ball V-Up Pass",
+  "otherNames": ["Medicine Ball Hand-to-Foot Pass", "Med Ball V-Up Pass"],
   "category": "Core",
   "focus": "Abdominals and hip flexors",
-  "collections": ["Core"],
-  "equipment": ["Stability ball"],
-  "description": "Lying on your back with a stability ball between your feet, fold up into a V to pass it to your hands, lower with it overhead, then fold up again and pass it back to your feet.",
+  "collections": ["Free weights", "Core"],
+  "equipment": ["Medicine ball"],
+  "description": "Lying on your back with a medicine ball between your feet, fold up into a V to pass it to your hands, lower with it overhead, then fold up again and pass it back to your feet.",
   "source": {
-    "url": "https://us.physitrack.com/home-exercise-video/core-activation---stability-ball-pass-hands-to-feet",
-    "title": "Physitrack: Stability ball pass, hands to feet",
+    "url": "https://shiftmovementscience.com/video-quick-tip-medball-v-up-passes/",
+    "title": "Shift Movement Science: Medball V-up passes",
     "note": "Described in our own words. Stick-figure approximation."
   },
-  "setup": ["Lie on your back, arms overhead.", "Squeeze a stability ball between your feet."],
+  "setup": ["Lie on your back, arms overhead.", "Squeeze a light medicine ball between your feet."],
   "cues": ["Fold up from your middle.", "Hand the ball over at the top.", "Lower slowly; low back stays down."],
   "prescription": {
     "reps": "6–10",
@@ -33,8 +33,8 @@
       "pose": {
         "root": [-90, 0, 0],
         "neck": [34, 0, 0],
-        "hipL": [18.5, 15.5, 0],
-        "hipR": [18.5, 15.5, 0],
+        "hipL": [7.25, 3.5, 0],
+        "hipR": [7.25, 3.5, 0],
         "shoulderL": [175, 0, 0],
         "shoulderR": [175, 0, 0]
       }
@@ -51,14 +51,14 @@
       "pose": {
         "root": [-30, 0, 0],
         "neck": [10, 0, 0],
-        "hipL": [145, 16, 0],
+        "hipL": [150, 3.5, 0],
         "kneeL": 20,
-        "hipR": [145, 16, 0],
+        "hipR": [150, 3.5, 0],
         "kneeR": 20,
-        "shoulderL": [113.5, 15, 0],
-        "elbowL": 16,
-        "shoulderR": [113.5, 15, 0],
-        "elbowR": 16
+        "shoulderL": [115, 0, 0],
+        "elbowL": 10,
+        "shoulderR": [115, 0, 0],
+        "elbowR": 10
       }
     },
     {
@@ -73,9 +73,9 @@
       "pose": {
         "root": [-90, 0, 0],
         "neck": [40, 0, 0],
-        "shoulderL": [151, 15, 0],
+        "shoulderL": [169, 0, 0],
         "elbowL": 0,
-        "shoulderR": [151, 15, 0],
+        "shoulderR": [169, 0, 0],
         "elbowR": 0
       }
     },
@@ -91,14 +91,14 @@
       "pose": {
         "root": [-30, 0, 0],
         "neck": [10, 0, 0],
-        "hipL": [145, 16, 0],
+        "hipL": [150, 3.5, 0],
         "kneeL": 20,
-        "hipR": [145, 16, 0],
+        "hipR": [150, 3.5, 0],
         "kneeR": 20,
-        "shoulderL": [113.5, 15, 0],
-        "elbowL": 16,
-        "shoulderR": [113.5, 15, 0],
-        "elbowR": 16
+        "shoulderL": [115, 0, 0],
+        "elbowL": 10,
+        "shoulderR": [115, 0, 0],
+        "elbowR": 10
       }
     },
     {
@@ -113,8 +113,8 @@
       "pose": {
         "root": [-90, 0, 0],
         "neck": [34, 0, 0],
-        "hipL": [18.5, 15.5, 0],
-        "hipR": [18.5, 15.5, 0],
+        "hipL": [7.25, 3.5, 0],
+        "hipR": [7.25, 3.5, 0],
         "shoulderL": [175, 0, 0],
         "shoulderR": [175, 0, 0]
       }
@@ -122,9 +122,7 @@
   ],
   "props": [
     {
-      "type": "ball",
-      "r": 49,
-      "hands": ["handL", "handR", "ankleL", "ankleR"]
+      "type": "medball"
     }
   ],
   "measure": "reps",

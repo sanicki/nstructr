@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "wall-handstand",
+  "name": "Handstand at the Wall",
+  "otherNames": ["Wall Handstand", "Wall-Supported Handstand"],
+  "category": "Balancing",
+  "collections": ["Yoga"],
+  "equipment": ["Wall"],
+  "description": "Handstand with a wall behind you: from Downward-Facing Dog with your hands a little way from the wall, kick up one leg at a time and rest your heels lightly on the wall, arms straight and strong.",
+  "source": {
+    "url": "https://yogainternational.com/article/view/step-up-to-handstand/",
+    "title": "Yoga International: Step up to Handstand",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Hands shoulder-width apart, about a foot from the wall, fingers spread.", "Come into Downward-Facing Dog facing the wall."],
+  "cues": ["Push the floor away.", "Heels touch the wall lightly.", "Ribs in, legs strong."],
+  "keyframes": [
+    {
+      "name": "Downward-Facing Dog",
+      "cue": "Press the hips up and back into an upside-down V.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "handR",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "ankleL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "torso": [135, 0, 0],
+        "shoulderL": [-180, 0, 0],
+        "shoulderR": [-180, 0, 0],
+        "hipL": [-27.3, 0, 0],
+        "ankleL": -27.3,
+        "hipR": [-27.3, 0, 0],
+        "ankleR": -27.3
+      }
+    },
+    {
+      "name": "Handstand",
+      "cue": "Kick up and stack the hips and feet over the hands.",
+      "camera": 90,
+      "durationMs": 2600,
+      "holdMs": 5000,
+      "phase": "rep",
+      "pose": {
+        "root": [188, 0, 0],
+        "shoulderL": [-180, 0, 0],
+        "shoulderR": [-180, 0, 0]
+      },
+      "anchor": "handR"
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "at": "ankleR",
+      "keyframe": 1,
+      "offset": 6
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

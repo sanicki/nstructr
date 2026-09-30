@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-kneeling-side-kick",
+  "name": "Kneeling Side Kick",
+  "otherNames": ["Pilates Kneeling Side Kick"],
+  "category": "Pilates",
+  "focus": "Hips, waist and balance",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Kneeling, lean over onto one hand under your shoulder with the other hand behind your head, lift the top leg to hip height, then kick it forward and sweep it back behind you.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Kneel up tall.", "Lean to one side and put that hand down under your shoulder; other hand behind your head.", "Lift the top leg straight out to hip height."],
+  "cues": ["Hips stacked.", "Leg level with the hip.", "Waist lifted off the floor."],
+  "prescription": {
+    "reps": "6 each side",
+    "note": "Keep the hips stacked; the kick comes from the hip, not the back."
+  },
+  "keyframes": [
+    {
+      "name": "Lean over",
+      "cue": "Kneel, place one hand down under your shoulder, other hand behind your head; lift the top leg to hip height.",
+      "camera": 30,
+      "durationMs": 1800,
+      "holdMs": 200,
+      "phase": "setup",
+      "anchor": "kneeR",
+      "pose": {
+        "root": [0, 70, 0],
+        "neck": [0, -20, 0],
+        "hipR": [0, 60, 0],
+        "kneeR": 90,
+        "ankleR": 90,
+        "shoulderR": [0, 70, 0],
+        "shoulderL": [0, 150, 0],
+        "elbowL": 140,
+        "hipL": [0, 20, 0]
+      }
+    },
+    {
+      "name": "Kick forward",
+      "cue": "Kick the top leg forward.",
+      "camera": 30,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "kneeR",
+      "pose": {
+        "root": [0, 70, 0],
+        "neck": [0, -20, 0],
+        "hipR": [0, 60, 0],
+        "kneeR": 90,
+        "ankleR": 90,
+        "shoulderR": [0, 70, 0],
+        "shoulderL": [0, 150, 0],
+        "elbowL": 140,
+        "hipL": [70, 20, 0]
+      }
+    },
+    {
+      "name": "Sweep back",
+      "cue": "Sweep it back behind you.",
+      "camera": 30,
+      "durationMs": 1100,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "kneeR",
+      "pose": {
+        "root": [0, 70, 0],
+        "neck": [0, -20, 0],
+        "hipR": [0, 60, 0],
+        "kneeR": 90,
+        "ankleR": 90,
+        "shoulderR": [0, 70, 0],
+        "shoulderL": [0, 150, 0],
+        "elbowL": 140,
+        "hipL": [-25, 20, 0]
+      }
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bal-side-stepping",
+  "name": "Side Stepping",
+  "otherNames": ["Sideways Walking", "Side Steps"],
+  "category": "Balance",
+  "focus": "Balance and hips",
+  "collections": ["Balance", "Warm-up"],
+  "equipment": [],
+  "description": "Standing tall with your hands on your hips, step one foot out to the side and bring the other to meet it, pausing each time; go one way, then come back the other way.",
+  "source": {
+    "url": "https://www.healthline.com/health/exercises-for-balance",
+    "title": "Healthline: Balance exercises",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand tall, feet together, hands on your hips.", "A counter or wall nearby if you need support."],
+  "cues": ["Stand tall; hips level.", "Step, meet, pause.", "Look ahead, not down."],
+  "prescription": {
+    "reps": "10 each way",
+    "note": "Stand near a counter or wall to hold if you need it."
+  },
+  "keyframes": [
+    {
+      "name": "Feet together",
+      "cue": "Stand tall, feet together, hands on your hips.",
+      "camera": 0,
+      "durationMs": 900,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "kneeL": 6,
+        "kneeR": 6,
+        "ankleL": -3,
+        "ankleR": -3,
+        "hipL": [3, 2, 0],
+        "hipR": [3, 2, 0]
+      }
+    },
+    {
+      "name": "Step to the side",
+      "cue": "Step your right foot out to the side, then bring the left to meet it.",
+      "camera": 0,
+      "durationMs": 900,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [-27.5, 0, 0],
+        "elbowL": 69.4,
+        "shoulderR": [-27.5, 0, 0],
+        "elbowR": 69.4,
+        "kneeL": 6,
+        "kneeR": 6,
+        "ankleL": -3,
+        "ankleR": -3,
+        "hipL": [3, 12, 0],
+        "hipR": [3, 12, 0]
+      }
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "To the right",
+      "R": "To the left"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

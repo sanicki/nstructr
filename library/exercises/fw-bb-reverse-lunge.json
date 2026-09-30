@@ -1,0 +1,195 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-bb-reverse-lunge",
+  "name": "Barbell Reverse Lunge",
+  "otherNames": ["Back Rack Reverse Lunge"],
+  "category": "Strength",
+  "focus": "Thighs and glutes",
+  "collections": ["Free weights"],
+  "equipment": ["Barbell"],
+  "description": "With a barbell across your upper back, step one foot back and lower until both knees are bent, then push through the front foot to stand.",
+  "source": {
+    "url": "https://www.acefitness.org/resources/everyone/exercise-library/319/reverse-lunge/",
+    "title": "ACE Exercise Library: Reverse Lunge",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Set the bar across your upper back, hands just wider than your shoulders.", "Stand tall, feet hip-width apart."],
+  "cues": ["Step back, not out to the side.", "Front knee over the ankle.", "Chest up; push through the front heel."],
+  "prescription": {
+    "reps": "8–12 each leg",
+    "note": "Move slowly: about 2 seconds to lift or push and 2 seconds to lower, resting between exercises as needed."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Hands on your hips.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 80, 90],
+        "elbowL": 140,
+        "shoulderR": [0, 80, 90],
+        "elbowR": 140
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "backR",
+          "dx": 8.8,
+          "dy": 2,
+          "dz": -4
+        },
+        {
+          "hand": "handL",
+          "to": "backL",
+          "dx": -8.8,
+          "dy": 2,
+          "dz": -4
+        }
+      ]
+    },
+    {
+      "name": "Lift the foot",
+      "cue": "Shift onto your left leg and lift your right foot.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "hipL": [8, 0, 0],
+        "kneeL": 10,
+        "ankleL": -2,
+        "hipR": [-10, 0, 0],
+        "kneeR": 55,
+        "ankleR": 20,
+        "shoulderL": [0, 80, 90],
+        "elbowL": 140,
+        "shoulderR": [0, 80, 90],
+        "elbowR": 140
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "backR",
+          "dx": 8.8,
+          "dy": 2,
+          "dz": -4
+        },
+        {
+          "hand": "handL",
+          "to": "backL",
+          "dx": -8.8,
+          "dy": 2,
+          "dz": -4
+        }
+      ]
+    },
+    {
+      "name": "Step back and lower",
+      "cue": "Place your right toes behind you and bend both knees.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "touch": [
+        {
+          "point": "toeR",
+          "adjust": "hipR"
+        }
+      ],
+      "pose": {
+        "hipL": [85, 0, 0],
+        "kneeL": 88,
+        "ankleL": -3,
+        "hipR": [4.1, 0, 0],
+        "kneeR": 100,
+        "ankleR": 40,
+        "shoulderL": [0, 80, 90],
+        "elbowL": 140,
+        "shoulderR": [0, 80, 90],
+        "elbowR": 140
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "backR",
+          "dx": 8.8,
+          "dy": 2,
+          "dz": -4
+        },
+        {
+          "hand": "handL",
+          "to": "backL",
+          "dx": -8.8,
+          "dy": 2,
+          "dz": -4
+        }
+      ]
+    },
+    {
+      "name": "Push back up",
+      "cue": "Drive through your front heel and lift the back foot.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 0,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "hipL": [8, 0, 0],
+        "kneeL": 10,
+        "ankleL": -2,
+        "hipR": [-10, 0, 0],
+        "kneeR": 55,
+        "ankleR": 20,
+        "shoulderL": [0, 80, 90],
+        "elbowL": 140,
+        "shoulderR": [0, 80, 90],
+        "elbowR": 140
+      },
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "backR",
+          "dx": 8.8,
+          "dy": 2,
+          "dz": -4
+        },
+        {
+          "hand": "handL",
+          "to": "backL",
+          "dx": -8.8,
+          "dy": 2,
+          "dz": -4
+        }
+      ]
+    }
+  ],
+  "props": [
+    {
+      "type": "barbell",
+      "from": "handL",
+      "to": "handR"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right leg back",
+      "R": "Left leg back"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 8
+  },
+  "repName": "rep"
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "fw-db-external-rotation",
+  "name": "Side-Lying Dumbbell External Rotation",
+  "otherNames": ["Side-Lying External Rotation", "Side-Lying Shoulder External Rotation"],
+  "category": "Strength",
+  "focus": "Rotator cuff",
+  "collections": ["Free weights"],
+  "equipment": ["Dumbbells"],
+  "description": "Lying on your side with the top elbow bent at your side and a light dumbbell in front of your belly, rotate the forearm up toward the ceiling, keeping the elbow at your side, then lower.",
+  "source": {
+    "url": "https://exrx.net/WeightExercises/Infraspinatus/DBLyingExternalRotation",
+    "title": "ExRx: Dumbbell Lying Shoulder External Rotation",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on one side, head resting on the lower arm, knees bent.", "Top elbow bent to a right angle and tucked at your side, a light dumbbell in that hand."],
+  "cues": ["Elbow stays glued to your side.", "Turn only as far as is comfortable.", "Lower slowly."],
+  "prescription": {
+    "reps": "10–15 each arm",
+    "note": "A light weight; a folded towel between elbow and side helps."
+  },
+  "keyframes": [
+    {
+      "name": "Forearm across",
+      "cue": "Top elbow bent at your side, the weight in front of your belly.",
+      "camera": 0,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "pose": {
+        "root": [0, -90, 0],
+        "neck": [0, 8, 0],
+        "shoulderL": [0, -180, 0],
+        "hipL": [45, 0, 0],
+        "ankleL": 44.3,
+        "hipR": [45, 0, 0],
+        "ankleR": 44.3,
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderR": [0, 0, -70],
+        "elbowR": 90
+      }
+    },
+    {
+      "name": "Rotate up",
+      "cue": "Turn the forearm up; the elbow stays at your side.",
+      "camera": 0,
+      "durationMs": 1400,
+      "holdMs": 500,
+      "phase": "rep",
+      "pose": {
+        "root": [0, -90, 0],
+        "neck": [0, 8, 0],
+        "shoulderL": [0, -180, 0],
+        "hipL": [45, 0, 0],
+        "ankleL": 44.3,
+        "hipR": [45, 0, 0],
+        "ankleR": 44.3,
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderR": [0, 0, 25],
+        "elbowR": 90
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "dumbbell",
+      "hand": "handR",
+      "axis": "lr"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right arm",
+      "R": "Left arm"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-front-raise",
+  "name": "Band Front Raise",
+  "otherNames": ["Resistance Band Front Raise"],
+  "category": "Strength",
+  "focus": "Front of the shoulders",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "description": "Standing on a resistance band with an end in each hand, lift both arms straight in front of you to shoulder height, then lower slowly.",
+  "source": {
+    "url": "https://www.setforset.com/blogs/news/resistance-band-shoulder-workout-for-building-muscle",
+    "title": "Set For Set: Resistance band shoulder exercises",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand on the middle of the band, feet hip-width apart.", "Hold an end in each hand in front of your thighs, palms facing you."],
+  "cues": ["Arms long, a soft bend in the elbows.", "Stop at shoulder height.", "Ribs down; no swinging."],
+  "prescription": {
+    "reps": "10–15",
+    "note": "Lower slowly; don't swing or lean back."
+  },
+  "keyframes": [
+    {
+      "name": "Arms down",
+      "cue": "Stand on the band, hands in front of your thighs.",
+      "camera": 70,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [5, 0, 0],
+        "elbowL": 6,
+        "shoulderR": [5, 0, 0],
+        "elbowR": 6
+      }
+    },
+    {
+      "name": "Raise",
+      "cue": "Lift both arms straight in front to shoulder height.",
+      "camera": 70,
+      "durationMs": 1500,
+      "holdMs": 400,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [88, 0, 0],
+        "elbowL": 6,
+        "shoulderR": [88, 0, 0],
+        "elbowR": 6
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "footL",
+      "to": "handL"
+    },
+    {
+      "type": "band",
+      "from": "footR",
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  }
+}

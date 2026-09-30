@@ -23,22 +23,22 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **276 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **350 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
-| Yoga | 80 | Yoga Journal pose list + chair and wall versions + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions |
-| Free weights | 45 | dumbbell, kettlebell (incl. around the world, clean, Turkish get-up), barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry |
-| Bodyweight | 33 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
-| Resistance band | 28 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) |
-| Chair-based | 17 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga… |
-| Stretches | 26 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway, strap stretches + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
-| Core | 23 | planks, hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
-| Pilates | 25 | Pilates ring (chest press, inner thigh squeeze); classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick…) |
-| Balance | 12 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, clock reach, single-leg RDL, pistol squat |
-| Warm-up | 19 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
+| Yoga | 90 | Yoga Journal pose list + chair and wall versions (incl. Chair Warrior I and II, Chair Eagle; Handstand, Headstand and Forearm Stand at the wall) + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions (incl. Cow Face arms with a strap) |
+| Free weights | 65 | dumbbell, kettlebell (incl. around the world, clean, Turkish get-up), barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry; dumbbell and barbell versions of other exercises (batch 21) |
+| Bodyweight | 40 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
+| Resistance band | 37 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) + band Pilates (Hundred, Leg Circles, Roll-Up) |
+| Chair-based | 29 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga, chair-supported stretches… |
+| Stretches | 36 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway, strap stretches + towel, chair and step versions + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
+| Core | 38 | planks, hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
+| Pilates | 41 | Pilates ring (chest press, inner thigh squeeze); all 34 classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick… and the advanced ones, batch 23: Open Leg Rocker, Corkscrew, Jackknife, Boomerang…); band versions |
+| Balance | 15 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, side stepping, balance walk, clock reach, single-leg RDL, pistol squat |
+| Warm-up | 23 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-165 are rep-based, 108 timed; 95 are two-sided (`bilateral`); 6 have `direction`. Common exercises per collection
+222 are rep-based, 128 timed; 125 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -166,6 +166,8 @@ All in `src/core.js`. Format v2 (Sep 2026): a 3D figure, jointed like an artist'
 - **Camera**: a keyframe's `camera` is a turn around the vertical, in degrees: `90` = side view (the figure faces
   screen-right), `0` = front view (the figure's right on screen left). Screen x = CX + z·sin(camera) − x·cos(camera),
   screen y = FLOOR − y. Between steps the camera turns; the body stays rigid.
+  The camera never tilts, so a move made flat in the floor's plane (a knee bending while lying on your side) can't be
+  seen from any angle: choose a position where it happens upright (the Towel Quad Stretch lies face down, not on its side).
 - Segments (`DEFAULT_SEGMENTS`): torso 100 (two halves: lower back `torso`, upper back `chest`), neck 14,
   head radius 18, upper arm 55, forearm 50, thigh 80, shin 80, foot 22, shoulder half-width 22, hip half-width 12.
   The figure is ~310 units tall ≈ 170 cm (≈ 1.8 units/cm) — use this to size equipment.
@@ -256,7 +258,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `touch` | `[{point, adjust, gap?}]`: turn joint `adjust` until `point` rests on the floor/surface (`gap` = height above it, e.g. barbell plates). `adjust` is a hinge, or a ball joint's number: `"hipR"` = its forward number, `"hipR.side"`, `"hipR.turn"`. `point` can also be a **segment** (Sep 2026, for the foam roller): `thighL/R`, `shinL/R`, `back` (pelvis to neck), `sideL/R` (the flank, hip to shoulder, lying on your side), which rests where it is lowest over what's under it (`SEGMENTS`, `clearance()`). |
 | `reach` | `[{hand, to, dx?, dy?, dz?}]`: two-bone arm IK (3D) to put a hand on a body point (plus the offset: sideways, up, forward), `"wall"` or `"chair"` (the chair back, at the hand's own shoulder width). The elbow bends the way it can, in the plane the arm's turn gives it. |
 | `keep` | Hands/feet that stay exactly where they were: `"ankleL"` = where it was in the previous step; `{"point":"ankleR","keyframe":0}` = where it was in step 0. Solved with two-bone IK after everything else. |
-| `holds` | What holds the weight or ball in this step (Sep 2026): `["handR"]`, or `["handL", "handR"]` at a pass; the exercise's kettlebell is drawn there, and between steps the grip moves from one to the other (`gripAt`), so a bell passes from hand to hand (Kettlebell Around the World, `tools/variants/batch-18-around-the-world.cjs`). Passed behind the back, it's drawn behind the body. A ball: the ankles too, or a spot `{x, y, z}` it was thrown to; it is at the middle of what holds it, moving from one step's to the next (`heldAt`). Mirrored with the side (a spot's `x` negated). |
+| `holds` | What holds the weight or ball in this step (Sep 2026): `["handR"]`, or `["handL", "handR"]` at a pass; the exercise's kettlebell is drawn there, and between steps the grip moves from one to the other (`gripAt`), so a bell passes from hand to hand (Kettlebell Around the World, `tools/variants/batch-18-around-the-world.cjs`). Passed behind the back, it's drawn behind the body. A ball: the ankles too, or a spot `{x, y, z}` it was thrown to; it is at the middle of what holds it, moving from one step's to the next (`heldAt`); handed over (the next step's holders a subset of this one's, or the other way round) it stays with the smaller group the whole move, so a ball the hands take from the feet doesn't drift through the body. Mirrored with the side (a spot's `x` negated). |
 | `guide` | `{direction, label}` for the compass: 0 = forward, 90 = the figure's right (for the default side), clockwise from above. |
 | `pose` | Joint angles (see §4): ball joints `[forward, side, turn]`, hinges a number. Joints not listed are 0. |
 

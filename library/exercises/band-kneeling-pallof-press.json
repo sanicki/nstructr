@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-kneeling-pallof-press",
+  "name": "Kneeling Pallof Press",
+  "otherNames": ["Tall-Kneeling Pallof Press", "Half-Kneeling Pallof Press"],
+  "category": "Core",
+  "focus": "Core (anti-rotation)",
+  "collections": ["Resistance band", "Core"],
+  "equipment": ["Resistance band", "Door anchor"],
+  "description": "Kneeling tall side-on to a door anchor with the band held at your chest, press your hands straight out in front and hold, resisting the pull, then bring them back.",
+  "source": {
+    "url": "https://fitbod.me/exercises/full-kneeling-pallof-press",
+    "title": "Fitbod: Full Kneeling Pallof Press",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Anchor the band at chest height when kneeling.", "Kneel tall side-on to the door, band held at your chest."],
+  "cues": ["Hips and ribs stay square.", "Squeeze your glutes.", "Press out slowly and hold."],
+  "prescription": {
+    "reps": "8–12 each side",
+    "note": "Hold the press for a breath or two; keep your chest facing forward."
+  },
+  "keyframes": [
+    {
+      "name": "Hands at your chest",
+      "cue": "Side-on to the door, hands clasped at your chest.",
+      "camera": 0,
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "kneeL",
+      "plant": [],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderL": [30, -10, 0],
+        "elbowL": 110,
+        "shoulderR": [30, -10, 0],
+        "elbowR": 110,
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Press out",
+      "cue": "Press straight forward; don't let the band turn you.",
+      "camera": 0,
+      "durationMs": 1800,
+      "holdMs": 1000,
+      "phase": "rep",
+      "anchor": "kneeL",
+      "plant": [],
+      "pose": {
+        "hipL": [0, 8, 0],
+        "hipR": [0, 8, 0],
+        "kneeL": 90,
+        "kneeR": 90,
+        "shoulderL": [88, -14, 0],
+        "elbowL": 4,
+        "shoulderR": [88, -14, 0],
+        "elbowR": 4,
+        "ankleL": 90,
+        "ankleR": 90
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "wall",
+      "beside": true,
+      "x": 170
+    },
+    {
+      "type": "band",
+      "from": {
+        "x": 170,
+        "y": 160,
+        "z": 0
+      },
+      "to": "handR"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Door on your right",
+      "R": "Door on your left"
+    }
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

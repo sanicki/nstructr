@@ -1,0 +1,109 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-yoga-eagle",
+  "name": "Chair Eagle Pose",
+  "otherNames": ["Seated Eagle Pose", "Chair Garudasana"],
+  "category": "Flexibility",
+  "collections": ["Yoga", "Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Sitting near the front of a chair, cross one thigh over the other and wrap your arms, crossing them at the elbows with the forearms up and the palms toward each other.",
+  "source": {
+    "url": "https://www.tummee.com/yoga-poses/garudasana-chair",
+    "title": "Tummee: Eagle Pose, chair yoga",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit near the front of a sturdy chair, feet flat."],
+  "cues": ["Thigh over thigh.", "Elbows at shoulder height.", "Sit tall and breathe."],
+  "keyframes": [
+    {
+      "name": "Sit",
+      "cue": "Sit near the front of the seat, feet flat.",
+      "camera": 30,
+      "durationMs": 1600,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "plant": ["L", "R"],
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "pelvis",
+          "dx": 22,
+          "dz": 26
+        },
+        {
+          "hand": "handL",
+          "to": "pelvis",
+          "dx": -22,
+          "dz": 26
+        }
+      ],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90
+      }
+    },
+    {
+      "name": "Chair Eagle Pose",
+      "cue": "Cross one thigh over the other; wrap the arms, elbows up.",
+      "camera": 30,
+      "durationMs": 2400,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "plant": ["L"],
+      "reach": [],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "kneeL"
+        }
+      ],
+      "pose": {
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "hipR": [100, -18, 0],
+        "kneeR": 85,
+        "ankleR": 20,
+        "torso": [6, 0, 0],
+        "shoulderL": [100, -10, 0],
+        "elbowL": 95,
+        "shoulderR": [100, -10, 0],
+        "elbowR": 95
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": -12
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side",
+      "R": "Right side"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "prescription": {
+    "seconds": "30",
+    "note": "Lift the elbows a little; keep both sitting bones on the seat."
+  }
+}

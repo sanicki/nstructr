@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "bal-balance-walk",
+  "name": "Balance Walk",
+  "otherNames": ["Balance Walking"],
+  "category": "Balance",
+  "focus": "Balance",
+  "collections": ["Balance"],
+  "equipment": [],
+  "description": "With your arms out to the sides at shoulder height, walk slowly in a straight line, one foot just in front of the other; as you step, lift the back knee and pause for a second before stepping forward.",
+  "source": {
+    "url": "https://go4life.nia.nih.gov/sample_workout/3-balance-exercises-older-adults",
+    "title": "National Institute on Aging (Go4Life): 3 balance exercises for older adults",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand tall, arms out to the sides at shoulder height.", "Pick a spot ahead to look at."],
+  "cues": ["Eyes on your spot.", "Lift the knee and pause.", "Slow and steady."],
+  "prescription": {
+    "reps": "20 steps",
+    "note": "Pick a spot ahead to look at; hold a wall or counter if you need it."
+  },
+  "keyframes": [
+    {
+      "name": "Right foot in front",
+      "cue": "Arms out to the sides; step the right foot in front.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0],
+        "hipR": [4, -5.5, 0],
+        "hipL": [-6, -3, 0]
+      }
+    },
+    {
+      "name": "Lift the back knee",
+      "cue": "Lift the left knee and pause for a second.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 1000,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "pose": {
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0],
+        "hipR": [0, 0, 0],
+        "hipL": [70, 0, 0],
+        "kneeL": 80
+      }
+    },
+    {
+      "name": "Left foot in front",
+      "cue": "Step the left foot forward.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 500,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0],
+        "hipL": [4, -5.5, 0],
+        "hipR": [-6, -3, 0]
+      }
+    },
+    {
+      "name": "Lift the back knee",
+      "cue": "Lift the right knee and pause for a second.",
+      "camera": 90,
+      "durationMs": 1400,
+      "holdMs": 1000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "pose": {
+        "shoulderL": [0, 88, 0],
+        "shoulderR": [0, 88, 0],
+        "hipL": [0, 0, 0],
+        "hipR": [70, 0, 0],
+        "kneeR": 80
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

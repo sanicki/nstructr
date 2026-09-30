@@ -27,7 +27,8 @@ module.exports = [
     setup: ['Lie on your back, arms out to the sides, palms down.', 'Rest your heels and lower legs on top of the ball, feet hip-width apart.'],
     cues: ['Hips stay up as the ball rolls.', 'Pull with your hamstrings.', 'Roll out slowly.'],
     source: { url: 'https://www.acefitness.org/resources/everyone/exercise-library/59/stability-ball-hamstring-curl/', title: 'ACE Exercise Library: Stability Ball Hamstring Curl', note: 'Described in our own words. Stick-figure approximation.' } },
-  // lying, a 55 cm ball squeezed between the ankles (resting on the floor), arms overhead: fold up into a V and hand it to the
+  // lying, a 55 cm ball squeezed between the ankles (resting on the floor; ankles 110 apart, so the shins clear it), arms
+  // overhead: fold up into a V and hand it to the
   // hands, lower with it overhead, fold up again and give it back to the feet. The V fitted so the hands reach the ball
   // just before the ankles (trunk 60° up, hips 145°, knees a little bent)
   { id: 'ball-pass', base: 'ball-bridge', name: 'Stability Ball Pass', otherNames: ['Stability Ball V-Pass', 'Swiss Ball Hand-to-Foot Pass', 'Ball Transfer', 'Exercise Ball Hand-Off'],
@@ -35,10 +36,10 @@ module.exports = [
     equipment: ['Stability ball'], props: [{ type: 'ball', r: 49, hands: ['handL', 'handR', 'ankleL', 'ankleR'] }],
     edit: ex => {
       const feet = ['ankleL', 'ankleR'], hands = ['handL', 'handR'], both = [...hands, ...feet];
-      const legsUp = { hipL: [18, 13, 0], hipR: [18, 13, 0] }, armsUp = { shoulderL: [175, 0, 0], shoulderR: [175, 0, 0] };
+      const legsUp = { hipL: [18.5, 15.5, 0], hipR: [18.5, 15.5, 0] }, armsUp = { shoulderL: [175, 0, 0], shoulderR: [175, 0, 0] };
       const lieFeet = { root: [-90, 0, 0], neck: [34, 0, 0], ...legsUp, ...armsUp };
-      const lieHands = { root: [-90, 0, 0], neck: [34, 0, 0], shoulderL: [148, 15, 0], elbowL: 5, shoulderR: [148, 15, 0], elbowR: 5 };
-      const V = { root: [-30, 0, 0], neck: [10, 0, 0], hipL: [145, 14, 0], kneeL: 20, hipR: [145, 14, 0], kneeR: 20, shoulderL: [115, 15, 0], elbowL: 14, shoulderR: [115, 15, 0], elbowR: 14 };
+      const lieHands = { root: [-90, 0, 0], neck: [40, 0, 0], shoulderL: [151, 15, 0], elbowL: 0, shoulderR: [151, 15, 0], elbowR: 0 };   // (chin tucked a little: the ball overhead clears the head)
+      const V = { root: [-30, 0, 0], neck: [10, 0, 0], hipL: [145, 16, 0], kneeL: 20, hipR: [145, 16, 0], kneeR: 20, shoulderL: [113.5, 15, 0], elbowL: 16, shoulderR: [113.5, 15, 0], elbowR: 16 };
       const st = { anchor: 'pelvis', camera: 40 };
       ex.keyframes = [
         K('Ball between your feet', 'Lie on your back, arms overhead, the ball squeezed between your feet.', lieFeet, { ...st, phase: 'setup', holds: feet }),
@@ -59,10 +60,11 @@ module.exports = [
     category: 'Strength', focus: 'Chest, shoulders and triceps (power)', collections: ['Free weights'],
     equipment: ['Medicine ball', 'Wall'], props: [{ type: 'medball' }, { type: 'wall', z: 260 }],
     edit: ex => {
-      const st = { anchor: 'ankleL', plant: ['L', 'R'], camera: 70 }, hands = ['handL', 'handR'], T = [335, 240, 300, 436];
+      const st = { anchor: 'ankleL', plant: ['L', 'R'], camera: 70 }, hands = ['handL', 'handR'], T = [250, 240, 303, 503];
       const load = { hipL: [22, 6, 0], kneeL: 38, hipR: [22, 6, 0], kneeR: 38, torso: [10, 0, 0], shoulderL: [25, 0, 0], elbowL: 118, shoulderR: [25, 0, 0], elbowR: 118 };
       const out = { hipL: [4, 6, 0], kneeL: 6, hipR: [4, 6, 0], kneeR: 6, torso: [6, 0, 0], shoulderL: [85, 0, 0], elbowL: 5, shoulderR: [85, 0, 0], elbowR: 5 };
-      const reachC = { hipL: [8, 6, 0], kneeL: 14, hipR: [8, 6, 0], kneeR: 14, torso: [6, 0, 0], shoulderL: [78, 0, 0], elbowL: 25, shoulderR: [78, 0, 0], elbowR: 25 };
+      // (caught lower than it left: it hits the wall a little below chest height and keeps dropping on the way back)
+      const reachC = { hipL: [12, 6, 0], kneeL: 20, hipR: [12, 6, 0], kneeR: 20, torso: [6, 0, 0], shoulderL: [54, 0, 0], elbowL: 16, shoulderR: [54, 0, 0], elbowR: 16 };
       const wall = [{ x: 0, y: 222, z: 240 }];
       ex.keyframes = [
         K('Ball at your chest', 'The ball at your chest, knees bent.', load, { ...st, holds: hands, durationMs: T[0], holdMs: 150, ease: 'out' }),

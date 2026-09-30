@@ -1,0 +1,93 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "chair-quad-stretch",
+  "name": "Chair-Supported Quad Stretch",
+  "otherNames": ["Standing Quad Stretch with a Chair"],
+  "category": "Flexibility",
+  "focus": "Front of the thighs",
+  "collections": ["Stretches", "Chair-based"],
+  "equipment": ["Chair"],
+  "description": "Standing tall with one hand on a chair back, bend one knee and hold that ankle behind you, drawing the heel toward your buttock.",
+  "source": {
+    "url": "https://uk.physitrack.com/home-exercise-video/quads-stretch-using-chair",
+    "title": "Physitrack: Quads stretch using chair",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand behind a sturdy chair, one hand on its back.", "Feet hip-width apart."],
+  "cues": ["Knees side by side.", "Stand tall; tuck the hips a little.", "Gentle pull, no bouncing."],
+  "prescription": {
+    "reps": "2–4 each side",
+    "note": "Hold about 30 seconds and repeat 2 to 4 times on each side. Warm up for 5 to 10 minutes first, move slowly, don't bounce, and back off if it hurts."
+  },
+  "keyframes": [
+    {
+      "name": "Hand on the wall",
+      "cue": "Stand tall with your left hand on the wall.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 800,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [90, 0, 0]
+      },
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        }
+      ]
+    },
+    {
+      "name": "Hold your ankle",
+      "cue": "Grasp your right ankle and draw the heel up and back.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 30000,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "chair"
+        },
+        {
+          "hand": "handR",
+          "to": "ankleR",
+          "dx": 10
+        }
+      ],
+      "pose": {
+        "shoulderL": [89.2, 0, 0],
+        "elbowL": 1.6,
+        "shoulderR": [-20.8, 0, 0],
+        "elbowR": 1.6,
+        "hipR": [-5, 0, 0],
+        "kneeR": 150,
+        "ankleR": 20
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "chair",
+      "back": "behind",
+      "z": 70
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right thigh",
+      "R": "Left thigh"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

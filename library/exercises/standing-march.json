@@ -1,0 +1,110 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "standing-march",
+  "name": "Standing March",
+  "otherNames": ["Marching in Place", "Standing Marches"],
+  "category": "Cardio",
+  "focus": "Hips, legs and balance",
+  "collections": ["Warm-up", "Balance"],
+  "equipment": [],
+  "description": "Standing tall, lift one knee toward hip height with the opposite arm swinging forward, lower it with control, then lift the other: a slow march in place.",
+  "source": {
+    "url": "https://www.physitrack.com/exercise-library/how-to-perform-the-standing-march-exercise",
+    "title": "Physitrack: Step-by-step guide to the standing march",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand tall, feet hip-width apart.", "Elbows bent; a chair or wall nearby if you need balance."],
+  "cues": ["Stand tall; don't lean back.", "Lift and lower slowly.", "Opposite arm, opposite knee."],
+  "prescription": {
+    "reps": "10–20",
+    "note": "Slow and steady; hold a chair or the wall for balance if you need to."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet hip-width apart, elbows bent.",
+      "camera": 90,
+      "durationMs": 1200,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 0, 0],
+        "elbowL": 80,
+        "shoulderR": [0, 0, 0],
+        "elbowR": 80
+      }
+    },
+    {
+      "name": "Right knee up",
+      "cue": "Lift your right knee, left arm forward.",
+      "camera": 90,
+      "durationMs": 900,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "holdMs": 300,
+      "pose": {
+        "hipR": [70, 0, 0],
+        "kneeR": 75,
+        "shoulderL": [30, 0, 0],
+        "elbowL": 80,
+        "shoulderR": [-15, 0, 0],
+        "elbowR": 80
+      }
+    },
+    {
+      "name": "Down",
+      "cue": "Lower it with control.",
+      "camera": 90,
+      "durationMs": 700,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 0, 0],
+        "elbowL": 80,
+        "shoulderR": [0, 0, 0],
+        "elbowR": 80
+      }
+    },
+    {
+      "name": "Left knee up",
+      "cue": "Lift your left knee, right arm forward.",
+      "camera": 90,
+      "durationMs": 900,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["R"],
+      "holdMs": 300,
+      "pose": {
+        "hipL": [70, 0, 0],
+        "kneeL": 75,
+        "shoulderR": [30, 0, 0],
+        "elbowR": 80,
+        "shoulderL": [-15, 0, 0],
+        "elbowL": 80
+      }
+    },
+    {
+      "name": "Down",
+      "cue": "Lower it with control.",
+      "camera": 90,
+      "durationMs": 700,
+      "phase": "rep",
+      "anchor": "ankleR",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [0, 0, 0],
+        "elbowL": 80,
+        "shoulderR": [0, 0, 0],
+        "elbowR": 80
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 10
+  }
+}

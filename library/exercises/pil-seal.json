@@ -1,0 +1,260 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-seal",
+  "name": "Seal",
+  "otherNames": ["Seal Puppy"],
+  "category": "Pilates",
+  "focus": "Core, spine and balance",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Balanced on your tailbone with your knees open, soles together and your hands through your legs holding your ankles, clap your feet together, roll back to your shoulder blades, clap again, and roll up to balance.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Sit with the soles of your feet together, knees open.", "Slide your hands between your legs and hold the outsides of your ankles; lift your feet and balance."],
+  "cues": ["Round like a ball.", "Clap the feet lightly, three times.", "Stop at the top and balance."],
+  "prescription": {
+    "reps": "6",
+    "note": "Roll only to your shoulder blades; a playful, even rhythm."
+  },
+  "keyframes": [
+    {
+      "name": "Balance",
+      "cue": "Knees open, soles together, hands through your legs holding your ankles.",
+      "camera": 60,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        },
+        {
+          "hand": "handL",
+          "to": "ankleL"
+        }
+      ],
+      "pose": {
+        "root": [-38, 0, 0],
+        "chest": [24, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [126.75, 32, 30],
+        "kneeL": 155,
+        "ankleL": 20,
+        "hipR": [126.75, 32, 30],
+        "kneeR": 155,
+        "ankleR": 20,
+        "shoulderL": [24, -10.25, 0],
+        "elbowL": 16,
+        "shoulderR": [24, -10.25, 0],
+        "elbowR": 16
+      }
+    },
+    {
+      "name": "Clap",
+      "cue": "Clap your feet together three times.",
+      "camera": 60,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        },
+        {
+          "hand": "handL",
+          "to": "ankleL"
+        }
+      ],
+      "pose": {
+        "root": [-38, 0, 0],
+        "chest": [24, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [126.75, 40, 30],
+        "kneeL": 155,
+        "ankleL": 20,
+        "hipR": [126.75, 40, 30],
+        "kneeR": 155,
+        "ankleR": 20,
+        "shoulderL": [24, -10.25, 0],
+        "elbowL": 16,
+        "shoulderR": [24, -10.25, 0],
+        "elbowR": 16
+      }
+    },
+    {
+      "name": "Clap",
+      "cue": "And again.",
+      "camera": 60,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        },
+        {
+          "hand": "handL",
+          "to": "ankleL"
+        }
+      ],
+      "pose": {
+        "root": [-38, 0, 0],
+        "chest": [24, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [126.75, 32, 30],
+        "kneeL": 155,
+        "ankleL": 20,
+        "hipR": [126.75, 32, 30],
+        "kneeR": 155,
+        "ankleR": 20,
+        "shoulderL": [24, -10.25, 0],
+        "elbowL": 16,
+        "shoulderR": [24, -10.25, 0],
+        "elbowR": 16
+      }
+    },
+    {
+      "name": "Roll back",
+      "cue": "Roll back to your shoulder blades.",
+      "camera": 60,
+      "durationMs": 1000,
+      "holdMs": 100,
+      "phase": "rep",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        },
+        {
+          "hand": "handL",
+          "to": "ankleL"
+        }
+      ],
+      "pose": {
+        "root": [-118, 0, 0],
+        "chest": [24, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [126.75, 32, 30],
+        "kneeL": 155,
+        "ankleL": 20,
+        "hipR": [126.75, 32, 30],
+        "kneeR": 155,
+        "ankleR": 20,
+        "shoulderL": [24, -10.25, 0],
+        "elbowL": 16,
+        "shoulderR": [24, -10.25, 0],
+        "elbowR": 16
+      }
+    },
+    {
+      "name": "Clap",
+      "cue": "Clap your feet again.",
+      "camera": 60,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        },
+        {
+          "hand": "handL",
+          "to": "ankleL"
+        }
+      ],
+      "pose": {
+        "root": [-118, 0, 0],
+        "chest": [24, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [126.75, 40, 30],
+        "kneeL": 155,
+        "ankleL": 20,
+        "hipR": [126.75, 40, 30],
+        "kneeR": 155,
+        "ankleR": 20,
+        "shoulderL": [24, -10.25, 0],
+        "elbowL": 16,
+        "shoulderR": [24, -10.25, 0],
+        "elbowR": 16
+      }
+    },
+    {
+      "name": "Clap",
+      "cue": "And again.",
+      "camera": 60,
+      "durationMs": 300,
+      "holdMs": 0,
+      "phase": "rep",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        },
+        {
+          "hand": "handL",
+          "to": "ankleL"
+        }
+      ],
+      "pose": {
+        "root": [-118, 0, 0],
+        "chest": [24, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [126.75, 32, 30],
+        "kneeL": 155,
+        "ankleL": 20,
+        "hipR": [126.75, 32, 30],
+        "kneeR": 155,
+        "ankleR": 20,
+        "shoulderL": [24, -10.25, 0],
+        "elbowL": 16,
+        "shoulderR": [24, -10.25, 0],
+        "elbowR": 16
+      }
+    },
+    {
+      "name": "Roll up",
+      "cue": "Roll up and balance.",
+      "camera": 60,
+      "durationMs": 1000,
+      "holdMs": 300,
+      "phase": "rep",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "ankleR"
+        },
+        {
+          "hand": "handL",
+          "to": "ankleL"
+        }
+      ],
+      "pose": {
+        "root": [-38, 0, 0],
+        "chest": [24, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [126.75, 32, 30],
+        "kneeL": 155,
+        "ankleL": 20,
+        "hipR": [126.75, 32, 30],
+        "kneeR": 155,
+        "ankleR": 20,
+        "shoulderL": [24, -10.25, 0],
+        "elbowL": 16,
+        "shoulderR": [24, -10.25, 0],
+        "elbowR": 16
+      }
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 6
+  }
+}

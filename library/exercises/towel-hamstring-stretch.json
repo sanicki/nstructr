@@ -1,0 +1,77 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "towel-hamstring-stretch",
+  "name": "Towel Hamstring Stretch",
+  "otherNames": ["Lying Hamstring Stretch with a Towel", "Supine Towel Hamstring Stretch"],
+  "category": "Flexibility",
+  "focus": "Back of the thighs",
+  "collections": ["Stretches"],
+  "equipment": ["Towel"],
+  "description": "Lying on your back with a towel looped round one foot, straighten that leg up toward the ceiling and gently pull it toward you with the towel.",
+  "source": {
+    "url": "https://exrx.net/Stretches/Hamstrings/LyingTowel",
+    "title": "ExRx: Lying Hamstring Stretch (towel)",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back.", "Loop a towel round the ball of one foot and hold an end in each hand."],
+  "cues": ["Leg straight, or a soft knee.", "Head and shoulders relaxed on the floor.", "Breathe slowly."],
+  "prescription": {
+    "seconds": "30",
+    "note": "Pull only until you feel a stretch; the other leg stays long or bent, foot flat."
+  },
+  "keyframes": [
+    {
+      "name": "Lie on your back",
+      "cue": "Lie on your back, a towel round one foot.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 800,
+      "phase": "setup",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0]
+      }
+    },
+    {
+      "name": "Pull the leg up",
+      "cue": "Straighten the leg and gently pull it toward you.",
+      "camera": 90,
+      "durationMs": 2200,
+      "holdMs": 30000,
+      "phase": "rep",
+      "anchor": "neckBase",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "hipL": [85, 0, 0],
+        "kneeL": 0,
+        "ankleL": -10,
+        "shoulderL": [70, 0, 0],
+        "elbowL": 5,
+        "shoulderR": [70, 0, 0],
+        "elbowR": 5
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "towel",
+      "from": "handL",
+      "via": ["footL"],
+      "to": "handR"
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  }
+}

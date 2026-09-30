@@ -1,0 +1,81 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "towel-quad-stretch",
+  "name": "Towel Quad Stretch",
+  "otherNames": ["Prone Quad Stretch with a Towel", "Lying Quad Stretch"],
+  "category": "Flexibility",
+  "focus": "Front of the thighs",
+  "collections": ["Stretches"],
+  "equipment": ["Towel"],
+  "description": "Lying face down with a towel looped round one ankle and the ends held over your shoulder, pull the towel to bring that heel toward your seat until you feel a stretch in the front of the thigh.",
+  "source": {
+    "url": "https://library.theprehabguys.com/vimeo-video/prone-quad-stretch-strap/",
+    "title": "[P]rehab: Prone quad stretch with a strap",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Lie face down, one arm long on the floor past your head.", "Loop a towel round one ankle and hold the ends over the same shoulder."],
+  "cues": ["Hips pressed down.", "Knees close together.", "Pull gently."],
+  "prescription": {
+    "seconds": "30",
+    "note": "Hips stay down on the floor; stop at a gentle stretch."
+  },
+  "keyframes": [
+    {
+      "name": "Towel round the ankle",
+      "cue": "Lie face down, a towel round one ankle, the ends over your shoulder.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 1000,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "ankleL": 90,
+        "kneeR": 70,
+        "ankleR": 60,
+        "shoulderR": [-30, 10, 0],
+        "elbowR": 20
+      }
+    },
+    {
+      "name": "Heel to your seat",
+      "cue": "Pull the towel to bring the heel toward your seat.",
+      "camera": 90,
+      "durationMs": 2400,
+      "holdMs": 1000,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [90, 0, 0],
+        "neck": [-34, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "ankleL": 90,
+        "kneeR": 125,
+        "ankleR": 60,
+        "shoulderR": [-70, 10, 0],
+        "elbowR": 70
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "towel",
+      "from": "handR",
+      "to": "ankleR"
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Right leg",
+      "R": "Left leg"
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "towel-calf-stretch",
+  "name": "Towel Calf Stretch",
+  "otherNames": ["Seated Towel Calf Stretch"],
+  "category": "Flexibility",
+  "focus": "Calves",
+  "collections": ["Stretches"],
+  "equipment": ["Towel"],
+  "description": "Sitting with your legs straight and a towel round the ball of one foot, pull the towel to draw your toes toward you until you feel a stretch in the calf.",
+  "source": {
+    "url": "https://www.physitrack.com/exercise-library/how-to-perform-seated-calf-stretch",
+    "title": "Physitrack: How to perform the seated calf stretch",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Sit on the floor, legs straight in front.", "Loop a towel round the ball of one foot, an end in each hand."],
+  "cues": ["Sit tall.", "Knee straight.", "Pull the toes, not the leg."],
+  "keyframes": [
+    {
+      "name": "Towel round the foot",
+      "cue": "Sit tall, legs straight, a towel round the ball of one foot.",
+      "camera": 70,
+      "durationMs": 1600,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeL",
+          "dx": 12,
+          "dy": 18,
+          "dz": -8
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": -12,
+          "dy": 18,
+          "dz": -8
+        }
+      ],
+      "pose": {
+        "torso": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "Pull the toes back",
+      "cue": "Pull the towel to bring your toes toward you.",
+      "camera": 70,
+      "durationMs": 2200,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "reach": [
+        {
+          "hand": "handR",
+          "to": "kneeL",
+          "dx": 12,
+          "dy": 18,
+          "dz": -8
+        },
+        {
+          "hand": "handL",
+          "to": "kneeL",
+          "dx": -12,
+          "dy": 18,
+          "dz": -8
+        }
+      ],
+      "pose": {
+        "torso": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0],
+        "ankleL": -25
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "towel",
+      "from": "handL",
+      "via": ["toeL"],
+      "to": "handR"
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left leg",
+      "R": "Right leg"
+    }
+  },
+  "prescription": {
+    "seconds": "30",
+    "note": "Keep the knee straight; pull gently."
+  }
+}

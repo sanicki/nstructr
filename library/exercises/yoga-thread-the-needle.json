@@ -1,0 +1,184 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "yoga-thread-the-needle",
+  "name": "Thread the Needle",
+  "otherNames": ["Parsva Balasana"],
+  "category": "Twist",
+  "focus": "Shoulders and upper back",
+  "collections": ["Yoga", "Stretches"],
+  "equipment": [],
+  "description": "From hands and knees, reach one arm up to the ceiling, then thread it under the other arm along the floor until that shoulder and the side of your head rest down, hips lifted.",
+  "source": {
+    "url": "https://www.yogamatters.com/blogs/poses/thread-the-needle-pose-parsva-balasana",
+    "title": "Yogamatters: Thread the Needle Pose (Parsva Balasana)",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Start on hands and knees, wrists under shoulders, knees under hips."],
+  "cues": ["Hips stay over your knees.", "Let the twist come from your upper back.", "Press into the other hand to come up."],
+  "keyframes": [
+    {
+      "name": "Tabletop",
+      "cue": "On hands and knees, wrists under shoulders, knees under hips.",
+      "anchor": "kneeL",
+      "camera": 45,
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "durationMs": 1800,
+      "holdMs": 600,
+      "phase": "setup",
+      "pose": {
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Open",
+      "cue": "Breathe in, reach your right arm up to the ceiling.",
+      "anchor": "kneeL",
+      "camera": 45,
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "durationMs": 1800,
+      "holdMs": 600,
+      "phase": "setup",
+      "pose": {
+        "root": [75, 0, 0],
+        "torso": [-12, 0, -55],
+        "chest": [0, 0, -15],
+        "neck": [0, 0, -20],
+        "shoulderL": [34, 57, 0],
+        "elbowL": 0,
+        "shoulderR": [0, 115.5, 0],
+        "hipL": [75, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "",
+      "cue": "",
+      "anchor": "kneeL",
+      "camera": 45,
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        }
+      ],
+      "durationMs": 1200,
+      "holdMs": 0,
+      "phase": "setup",
+      "quiet": true,
+      "pose": {
+        "root": [80, 0, 0],
+        "torso": [0, 0, 15],
+        "shoulderL": [78, 0, 0],
+        "shoulderR": [80, -35, -30],
+        "elbowR": 10,
+        "hipL": [75, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Thread",
+      "cue": "Breathe out, slide it under your left arm; rest your shoulder and head down.",
+      "anchor": "kneeL",
+      "camera": 45,
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "durationMs": 1800,
+      "holdMs": 5000,
+      "phase": "rep",
+      "pose": {
+        "root": [94, 0, 0],
+        "torso": [18, 6.3, 75.8],
+        "chest": [0, 0, 13.8],
+        "neck": [0, 27, 20],
+        "shoulderL": [145.5, -17.5, 0],
+        "elbowL": 8.3,
+        "shoulderR": [129.5, 5.8, -60],
+        "elbowR": 26.8,
+        "hipL": [90, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [90, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 30
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Right arm threads",
+      "R": "Left arm threads"
+    }
+  },
+  "holdStep": 3,
+  "prescription": {
+    "reps": "hold 30 seconds each side",
+    "note": "Keep your hips over your knees; a cushion under your head helps."
+  }
+}

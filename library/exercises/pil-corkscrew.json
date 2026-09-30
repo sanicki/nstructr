@@ -1,0 +1,126 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "pil-corkscrew",
+  "name": "Corkscrew",
+  "otherNames": ["Pilates Corkscrew"],
+  "category": "Pilates",
+  "focus": "Core and obliques",
+  "collections": ["Pilates"],
+  "equipment": ["Mat"],
+  "description": "Lying on your back with your legs straight up together, circle both legs to one side, down, round to the other side and back up, keeping the upper back and arms still on the mat.",
+  "source": {
+    "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",
+    "title": "Online Pilates Classes: The original 34 classical Pilates mat exercises",
+    "note": "Classic Pilates mat exercise, described in our own words for this library. Stick-figure approximation."
+  },
+  "setup": ["Lie on your back, arms long by your sides.", "Legs straight up together."],
+  "cues": ["Legs glued together.", "Shoulders and arms stay down.", "Circle, then reverse."],
+  "prescription": {
+    "reps": "3 each way",
+    "note": "Small circles to start; the back stays on the mat."
+  },
+  "keyframes": [
+    {
+      "name": "Legs up",
+      "cue": "Lying down, legs straight up together, arms long by your sides.",
+      "camera": 25,
+      "durationMs": 1600,
+      "holdMs": 200,
+      "phase": "setup",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    },
+    {
+      "name": "To the right",
+      "cue": "Swing both legs to the right.",
+      "camera": 25,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [84, -22, 0],
+        "hipR": [84, 22, 0],
+        "torso": [0, 0, -8]
+      }
+    },
+    {
+      "name": "Down",
+      "cue": "Circle them down.",
+      "camera": 25,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [60, 0, 0],
+        "hipR": [60, 0, 0]
+      }
+    },
+    {
+      "name": "To the left",
+      "cue": "Round to the left.",
+      "camera": 25,
+      "durationMs": 1400,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [84, 22, 0],
+        "hipR": [84, -22, 0],
+        "torso": [0, 0, 8]
+      }
+    },
+    {
+      "name": "Up",
+      "cue": "And back up to the middle.",
+      "camera": 25,
+      "durationMs": 1400,
+      "holdMs": 300,
+      "phase": "rep",
+      "anchor": "pelvis",
+      "pose": {
+        "root": [-90, 0, 0],
+        "neck": [34, 0, 0],
+        "shoulderL": [8, 0, 0],
+        "shoulderR": [8, 0, 0],
+        "hipL": [90, 0, 0],
+        "hipR": [90, 0, 0]
+      }
+    }
+  ],
+  "direction": {
+    "labels": {
+      "A": "Right first",
+      "B": "Left first"
+    }
+  },
+  "floorGuide": {
+    "type": "star",
+    "arms": 4
+  },
+  "measure": "reps",
+  "defaults": {
+    "reps": 3
+  }
+}
