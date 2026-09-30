@@ -10,7 +10,7 @@ async def main():
         b = await p.chromium.launch(); errs = []
         pg = await b.new_page(viewport={'width': 412, 'height': 860}); pg.on('pageerror', lambda e: errs.append(str(e)))
         at = """((i, t) => { setPlaying(false); const n = S.resolved.length; S.prev = (i - 1 + n) % n; S.idx = i; S.t = S.resolved[i].dur * t; draw();
-          const f = frameAt(S.resolved[S.prev], S.resolved[i], S.resolved[i].ease === 'linear' ? t : easeInOut(t), S.seg); return { f, P: fkAt(f.pose, S.seg, f.pos) }; })"""
+          const f = frameAt(S.resolved[S.prev], S.resolved[i], easeAt(S.resolved[i].ease, t), S.seg); return { f, P: fkAt(f.pose, S.seg, f.pos) }; })"""
         await pg.goto(URL + '#/play/ball-hamstring-curl', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         rows = []
         for i, t in [(1, 1), (2, 0.5), (2, 1), (3, 0.5)]:
@@ -33,7 +33,7 @@ async def main():
             rows.append(await pg.evaluate(f"""(() => {{ const {{ P }} = ({at})({i}, {t}); const c = document.querySelector('#scene circle.medball'), q = project({{ p: V3.lerp(P.handL, P.handR, 0.5) }}, S.curCam).p;
               return [{i}, {t}, 'ball ahead of the hands px', Math.round(+c.getAttribute('cx') - q.x - S.shiftX)]; }})()"""))
         print('chest pass: ball        ', rows, '<- 0 in the hands, then out to the wall (~110) and back to 0')
-        print('thumbnails draw the ball', await pg.evaluate("['ball-pass', 'mb-chest-pass', 'ball-hamstring-curl'].map(id => /held-ball|medball|ts ball|ts solid ball/.test(decodeURIComponent(thumbFor(exById(id)))))"))
+        print('thumbnails draw the ball', await pg.evaluate("['ball-pass', 'mb-chest-pass', 'ball-hamstring-curl'].map(id => /held-ball|medball|ts ball|ts solid ball/.test(thumbFor(exById(id))))"))
         await pg.set_viewport_size({'width': 360, 'height': 398})
         await pg.goto(URL + '#/play/ball-pass', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         print('360x398 sideways scroll ', await pg.evaluate("document.documentElement.scrollWidth > innerWidth"))

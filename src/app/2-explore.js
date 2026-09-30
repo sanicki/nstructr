@@ -39,30 +39,14 @@ const GROUP_KEY = 'nstructr-group-collections-v1';
 const grouped = () => pref(GROUP_KEY, 'off') === 'on';                // one A–Z list until turned on (grouped until Sep 2026)
 const byName = list => [...list].sort((a, b) => a.name.localeCompare(b.name, LANG));
 const THUMBS = new Map();
-/* Thumbnails are images (the SVG with the theme's colours written in), not live SVG: after scrolling, Chrome on Android
-   repainted parts of live ones with hairline strokes (the shins and feet of straight standing legs, Sep 2026). So the
-   colours are the theme's at the time, and the cache key has them: a theme change draws them again. */
-let THUMB_CSS = null;
-function thumbCSS() {
-  const cs = getComputedStyle(document.documentElement), sig = ['--md-primary', '--md-tertiary', '--md-on-surface', '--md-outline'].map(k => cs.getPropertyValue(k).trim()).join();
-  if (THUMB_CSS && THUMB_CSS.sig === sig) return THUMB_CSS;
-  const rules = [];
-  for (const sh of document.styleSheets) { let list = []; try { list = sh.cssRules; } catch (e) { } for (const r of list) if (r.selectorText && /\.thumb|\.(wt|held-ball)\b/.test(r.selectorText)) rules.push(r.cssText); }
-  const css = rules.join('').replace(/var\((--[\w-]+)(?:,[^)]*)?\)/g, (m, k) => cs.getPropertyValue(k).trim() || m);
-  return (THUMB_CSS = { sig, css });
-}
 function thumbFor(ex) {
-  const st = thumbCSS(), key = ex.id + ':' + JSON.stringify(ex.keyframes).length + ':' + st.sig;
+  const key = ex.id + ':' + JSON.stringify(ex.keyframes).length;
   if (!THUMBS.has(key)) {
     const kf = ex.keyframes.reduce((best, k) => ((k.holdMs || 0) >= (best.holdMs || 0) ? k : best), ex.keyframes[0]);   // the held pose (latest on a tie)
-    let svg; try { svg = poseThumbSVG(ex, kf); } catch (e) { svg = '<svg class="thumb" viewBox="0 0 10 10"></svg>'; }
-    svg = svg.replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" ').replace(/(<svg[^>]*>)/, `$1<style>${st.css}</style>`);
-    THUMBS.set(key, `<img class="thumb" alt="" src="data:image/svg+xml,${encodeURIComponent(svg)}">`);
+    try { THUMBS.set(key, poseThumbSVG(ex, kf)); } catch (e) { THUMBS.set(key, '<svg class="thumb" viewBox="0 0 10 10"></svg>'); }
   }
   return THUMBS.get(key);
 }
-// the system switching light/dark while a list is shown: draw it again in the new colours
-try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (!document.documentElement.dataset.theme && typeof route === 'function') route(); }); } catch (e) { }
 function card(ex) {
   return `<button class="pose-card stateful" data-open="${esc(ex.id)}">
     ${thumbFor(ex)}${isBookmarked(ex.id) ? '<span class="badge" title="Bookmarked"><span class="icon fill">bookmark</span></span>' : ''}

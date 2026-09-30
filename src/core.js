@@ -478,6 +478,15 @@ function sharedPin(a, b, seg) {
   return rule;
 }
 
+/* How far along a move is at time fraction t, by the step's "ease": "smooth" speeds up and slows down; "linear" keeps
+   one speed (a chain of them flows like a clock hand); "in" speeds up to the end (a push that lets go at full speed);
+   "out" starts at full speed and slows (a catch that gives). "in" ends, and "out" starts, at twice the average speed. */
+function easeAt(kind, t) {
+  if (kind === 'linear') return t;
+  if (kind === 'in') return t * t;
+  if (kind === 'out') return 1 - (1 - t) * (1 - t);
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
 /* One playback frame: blend two resolved keyframes at eased progress e; returns the pose, camera and pelvis position */
 function frameAt(a, b, e, seg) {
   SUPPORTS = b.supports || a.supports || [];
@@ -1008,7 +1017,7 @@ function mirrorKeyframe(kf) {
 }
 
 if (typeof module !== 'undefined') module.exports = {
-  phaseInfo, reverseReps, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
+  phaseInfo, reverseReps, easeAt, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
   propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   SEGMENTS, clearance, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS

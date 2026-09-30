@@ -227,8 +227,11 @@
         "ease": {
           "enum": [
             "smooth",
-            "linear"
-          ]
+            "linear",
+            "in",
+            "out"
+          ],
+          "description": "How the move into this step goes: smooth (speeds up and slows down, the default), linear (one speed), in (speeds up to the end: a push that lets go at full speed), out (starts fast and slows: a catch that gives)."
         },
         "phase": {
           "enum": [

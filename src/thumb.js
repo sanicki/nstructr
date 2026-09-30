@@ -21,7 +21,12 @@ function poseThumbSVG(ex, kf, opts = {}) {
   for (const b of seq.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 12);
   const w = maxX - minX, h = maxY - minY, s = Math.max(w, h, 150);
   const vx = (minX + maxX) / 2 - s / 2, vy = maxY - s;
-  const L = (a, b, c) => `<line x1="${Q[a].x.toFixed(1)}" y1="${Q[a].y.toFixed(1)}" x2="${Q[b].x.toFixed(1)}" y2="${Q[b].y.toFixed(1)}" class="${c}"/>`;
+  // each limb a filled capsule (a bar with round ends, 10 wide), not a stroked line: Chrome on Android drew some thick
+  // round-capped lines of these thumbnails (the lower legs of Barbell Curl and Barbell RDL) as hairlines, Sep 2026
+  const L = (a, b, c) => { const A = Q[a], B = Q[b], r = 5, len = Math.hypot(B.x - A.x, B.y - A.y), f = n => n.toFixed(1);
+    if (len < 0.01) return `<circle cx="${f(A.x)}" cy="${f(A.y)}" r="${r}" class="${c}"/>`;
+    const nx = -(B.y - A.y) / len * r, ny = (B.x - A.x) / len * r;
+    return `<path class="${c}" d="M${f(A.x + nx)} ${f(A.y + ny)}L${f(B.x + nx)} ${f(B.y + ny)}A${r} ${r} 0 0 0 ${f(B.x - nx)} ${f(B.y - ny)}L${f(A.x - nx)} ${f(A.y - ny)}A${r} ${r} 0 0 0 ${f(A.x + nx)} ${f(A.y + ny)}Z"/>`; };
   const cls = { legL: 'tL', armL: 'tL', legR: 'tR', armR: 'tR', body: 'tc' };
   const rest = bandRestLengths(ex.props, seq, seg), M0 = rootM(r.pose.root);
   let over = '';

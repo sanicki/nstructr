@@ -51,22 +51,25 @@ module.exports = [
     setup: ['Lie on your back, arms overhead.', 'Squeeze a stability ball between your feet.'],
     cues: ['Fold up from your middle.', 'Hand the ball over at the top.', 'Lower slowly; low back stays down.'],
     source: { url: 'https://us.physitrack.com/home-exercise-video/core-activation---stability-ball-pass-hands-to-feet', title: 'Physitrack: Stability ball pass, hands to feet', note: 'Described in our own words. Stick-figure approximation.' } },
-  // standing about 1.5 m from a wall (z 260), the ball at the chest: push it off straight to the wall, where it hits at chest
-  // height (a spot 20 in front of it: the ball's radius), and catch it as it comes back; "holds" moves it (heldAt)
+  // standing about 1.5 m from a wall (z 260), the ball at the chest, knees bent (loaded): drive up through the legs and
+  // push it off (ease "in": it leaves the hands at full speed), it flies to the wall (dropping a little: it's heavy),
+  // comes back slower, and the arms and knees give as it's caught (ease "out") and brought back to the chest. The
+  // steps' times are set so the ball keeps its speed from one step to the next (no stop at the release or the catch)
   { id: 'mb-chest-pass', base: 'mb-slam', name: 'Medicine Ball Chest Pass', otherNames: ['Med Ball Chest Pass', 'Medicine Ball Wall Chest Pass'],
     category: 'Strength', focus: 'Chest, shoulders and triceps (power)', collections: ['Free weights'],
     equipment: ['Medicine ball', 'Wall'], props: [{ type: 'medball' }, { type: 'wall', z: 260 }],
     edit: ex => {
-      const legs = { hipL: [8, 6, 0], kneeL: 12, hipR: [8, 6, 0], kneeR: 12 }, st = { anchor: 'ankleL', plant: ['L', 'R'], camera: 70 };
-      const chest = { ...legs, shoulderL: [30, 0, 0], elbowL: 110, shoulderR: [30, 0, 0], elbowR: 110 };
-      const out = { ...legs, torso: [4, 0, 0], shoulderL: [85, 0, 0], elbowL: 5, shoulderR: [85, 0, 0], elbowR: 5 };
-      const wall = [{ x: 0, y: 235, z: 240 }];
+      const st = { anchor: 'ankleL', plant: ['L', 'R'], camera: 70 }, hands = ['handL', 'handR'], T = [335, 240, 300, 436];
+      const load = { hipL: [22, 6, 0], kneeL: 38, hipR: [22, 6, 0], kneeR: 38, torso: [10, 0, 0], shoulderL: [25, 0, 0], elbowL: 118, shoulderR: [25, 0, 0], elbowR: 118 };
+      const out = { hipL: [4, 6, 0], kneeL: 6, hipR: [4, 6, 0], kneeR: 6, torso: [6, 0, 0], shoulderL: [85, 0, 0], elbowL: 5, shoulderR: [85, 0, 0], elbowR: 5 };
+      const reachC = { hipL: [8, 6, 0], kneeL: 14, hipR: [8, 6, 0], kneeR: 14, torso: [6, 0, 0], shoulderL: [78, 0, 0], elbowL: 25, shoulderR: [78, 0, 0], elbowR: 25 };
+      const wall = [{ x: 0, y: 222, z: 240 }];
       ex.keyframes = [
-        K('Ball at your chest', 'Face the wall, the ball at your chest, knees soft.', chest, { ...st, holds: ['handL', 'handR'], durationMs: 700, holdMs: 200 }),
-        K('Pass', 'Push it hard off your chest to the wall.', out, { ...st, holds: ['handL', 'handR'], durationMs: 300, holdMs: 0 }),
-        // (it leaves the hands at full stretch, flies to the wall and back at a steady speed)
-        K('', '', out, { ...st, holds: wall, durationMs: 300, holdMs: 0, ease: 'linear', quiet: true }),
-        K('Catch', 'Catch it with soft elbows.', out, { ...st, holds: ['handL', 'handR'], durationMs: 300, holdMs: 0, ease: 'linear' })]; },
+        K('Ball at your chest', 'The ball at your chest, knees bent.', load, { ...st, holds: hands, durationMs: T[0], holdMs: 150, ease: 'out' }),
+        K('Pass', 'Drive up and push it hard to the wall.', out, { ...st, holds: hands, durationMs: T[1], holdMs: 0, ease: 'in' }),
+        // (it flies to the wall at the speed it left the hands, then back more slowly)
+        K('', '', out, { ...st, holds: wall, durationMs: T[2], holdMs: 0, ease: 'linear', quiet: true }),
+        K('Catch', 'Catch it and let your arms and knees give.', reachC, { ...st, holds: hands, durationMs: T[3], holdMs: 0, ease: 'linear' })]; },
     over: { bilateral: null, ...reps('8–12', 10, 'Use a ball that bounces back (not a slam ball). Stand close enough to catch it easily.') },
     description: 'Facing a wall with a medicine ball at your chest, push it off hard and straight to the wall, then catch the rebound with soft elbows and bring it back to your chest.',
     setup: ['Stand facing a sturdy wall, about a big step and a half away.', 'Feet shoulder-width apart, knees soft, the ball at your chest.'],

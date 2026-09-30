@@ -43,14 +43,18 @@ module.exports = [
   // it crossed under the left thigh)
   { id: 'chair-yoga-pigeon', base: 'chair-hip-marching', name: 'Chair Pigeon', otherNames: ['Seated Figure Four', 'Seated Pigeon'],
     category: 'Hip opener', focus: 'Outer hip', equipment: ['Chair'], collections: ['Yoga', 'Chair-based'], props: CHAIR,
-    edit: ex => { ex.keyframes = [
+    // then the stretch itself: hinge forward from the hips, back long, hands on the crossed leg (added Sep 2026)
+    edit: ex => { const legs = { hipR: [100.5, 47.5, 88], kneeR: 127, ankleR: 10 };
+      ex.keyframes = [
       sit('Sit tall', 'Feet flat, hands on your thighs.', {}, { phase: 'setup' }),
-      { ...sit('Chair Pigeon', 'Right ankle on your left knee, sit tall.', { hipR: [100.5, 47.5, 88], kneeR: 127, ankleR: 10 }), camera: 30, plant: ['L'], touch: [feet[0]],
-        reach: [{ hand: 'handR', to: 'kneeR', dz: -10 }, { hand: 'handL', to: 'pelvis', dx: -22, dz: 26 }] }]; },
-    over: { ...sides, ...hold(30) },
-    description: 'A seated hip stretch on a chair: rest one ankle on the opposite knee and sit tall, the lifted knee dropping out to the side.',
+      { ...sit('Cross the ankle', 'Right ankle on your left knee, sit tall.', legs), camera: 30, plant: ['L'], touch: [feet[0]], phase: 'setup',
+        reach: [{ hand: 'handR', to: 'kneeR', dz: -10 }, { hand: 'handL', to: 'pelvis', dx: -22, dz: 26 }] },
+      { ...sit('Lean forward', 'Hinge forward from your hips, back long.', { ...legs, torso: [40, 0, 0], neck: [-12, 0, 0] }), camera: 30, plant: ['L'], touch: [feet[0]],
+        reach: [{ hand: 'handR', to: 'kneeR', dz: -6 }, { hand: 'handL', to: 'ankleR', dz: -8 }] }]; },
+    over: { ...sides, ...hold(30), holdStep: 2 },
+    description: 'A seated hip stretch on a chair: rest one ankle on the opposite knee, the lifted knee dropping out to the side, then hinge forward from the hips with a long back.',
     setup: ['Sit on a sturdy chair, feet flat.', 'Lift one ankle onto the opposite knee.'],
-    cues: ['Flex the lifted foot.', 'Sit tall, lean in a little for more.', 'Keep it gentle on the knee.'], source: YJ_CHAIR },
+    cues: ['Flex the lifted foot.', 'Lean from your hips, not your back.', 'Keep it gentle on the knee.'], source: YJ_CHAIR },
   { id: 'chair-yoga-side-bend', base: 'chair-hip-marching', name: 'Seated Side Bend', otherNames: ['Chair Side Stretch'],
     category: 'Side bend', focus: 'Side of the body', equipment: ['Chair'], collections: ['Yoga', 'Chair-based'], props: CHAIR,
     edit: ex => { ex.keyframes = [

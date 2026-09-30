@@ -4,7 +4,7 @@ const APP_NAME = 'NstructR';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const slug = s => String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'exercise';
-const easeInOut = t => (t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const easeInOut = t => easeAt('smooth', t);
 
 /* ---------- Import & validation ---------- */
 function normalizeImport(data) {
@@ -51,7 +51,7 @@ function validateExercise(ex, path) {
     if (kf.holds != null && (!Array.isArray(kf.holds) || !kf.holds.length || kf.holds.some(h => !(HOLD_POINTS.includes(h) || (h && typeof h === 'object' && ['x', 'y', 'z'].every(k => h[k] == null || isFinite(h[k])))))))
       fail(`${p}.holds must list what holds the weight or ball in this step: ["handR"], ["handL", "handR"], ["ankleL", "ankleR"], or a spot it was thrown to, {"x": 0, "y": 240, "z": 150}.`);
     if (kf.quiet != null && typeof kf.quiet !== 'boolean') fail(`${p}.quiet must be true or false.`);
-    if (kf.ease != null && !['smooth', 'linear'].includes(kf.ease)) fail(`${p}.ease must be "smooth" or "linear".`);
+    if (kf.ease != null && !['smooth', 'linear', 'in', 'out'].includes(kf.ease)) fail(`${p}.ease must be "smooth", "linear", "in" or "out".`);
     if (kf.phase != null && !['setup', 'rep', 'finish'].includes(kf.phase)) fail(`${p}.phase must be "setup", "rep" or "finish".`);
     for (const f of ['durationMs', 'holdMs']) if (kf[f] != null && (typeof kf[f] !== 'number' || kf[f] < 0)) fail(`${p}.${f} must be a positive number of milliseconds.`);
   });
@@ -406,9 +406,9 @@ function drawFloorTicks(P, cam) {
 function draw() {
   const n = S.resolved.length, b = S.resolved[S.idx];
   const a = S.prev != null && S.resolved[S.prev] ? S.resolved[S.prev] : (S.from || b);
-  // "smooth" steps speed up and slow down; "linear" ones keep a constant speed, so a chain of them flows like a clock hand
+  // "smooth" steps speed up and slow down; "linear" ones keep a constant speed; "in" speeds up, "out" slows (easeAt)
   const raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
-  const e = b.ease === 'linear' ? raw : easeInOut(raw);
+  const e = easeAt(b.ease, raw);
   const f = travelFrame(a, b, e), P = fkAt(f.pose, S.seg, f.pos), Q = project(P, f.cam);
   if (S.travel) S.shiftX = W / 2 - Q.pelvis.x;                  // the view follows the figure over a marked floor
   for (const k in Q) Q[k].x += S.shiftX;

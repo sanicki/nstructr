@@ -6,7 +6,7 @@ from playwright.async_api import async_playwright
 # only ever moves forward over the floor (backward, for a walk played Backward) (no slide back at the loop), the view keeps it centred, and the floor
 # ticks scroll. The same in a workout.
 SAMPLE = """(() => { const b = S.resolved[S.idx], a = S.prev != null && S.resolved[S.prev] ? S.resolved[S.prev] : (S.from || b);
-  const raw = b.dur ? Math.min(1, S.t / b.dur) : 1, e = b.ease === 'linear' ? raw : easeInOut(raw), f = travelFrame(a, b, e), P = fkAt(f.pose, S.seg, f.pos);
+  const raw = b.dur ? Math.min(1, S.t / b.dur) : 1, e = easeAt(b.ease, raw), f = travelFrame(a, b, e), P = fkAt(f.pose, S.seg, f.pos);
   const lo = ['ankleL', 'ankleR'].filter(k => P[k].y < 4).map(k => P[k][AX]);
   return [P.pelvis[AX], lo, +$('#figShadow').getAttribute('cx'), $('#floorTicks').children.length, S.rep]; })()"""
 async def run(pg, id, ax, secs):
