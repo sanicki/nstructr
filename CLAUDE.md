@@ -22,7 +22,7 @@ The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wik
 - After adding a library exercise: the `exercise-research` skill (`.claude/skills/exercise-research/SKILL.md`): most common name, other names, equipment versions (`node tools/research.cjs report <id>`).
 - Write bilateral exercises for one side; the other is mirrored (names/cues/guide labels have left/right swapped automatically).
 - Exercise text: our own words, cite the source, never copy. Spoken cues: short, plain directions.
-- Workout player targets the **cover screen of foldable flip phones, on the floor**: nothing important at the bottom (camera cutouts), first tap only shows controls, hold ✕ to exit, test at 360×398.
+- Workout player works on the **cover screen of foldable flip phones, on the floor** (an important feature, not the app's focus: keep it working): nothing important at the bottom (camera cutouts), first tap only shows controls, hold ✕ to exit, test at 360×398.
 - Don't rename localStorage keys without a migration (see HANDOFF §11).
 - UI changes: run `tools/audit.py` (axe, 48 px targets, sideways scroll); confirmations use `ask()`, never `confirm()`.
 - User-visible changes: update the README / `wiki/` and retake screenshots (`tools/wiki_screenshots.py`).

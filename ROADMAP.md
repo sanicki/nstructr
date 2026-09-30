@@ -14,7 +14,6 @@ comes off this list. How things work, and why past decisions were made, is in [H
   workout can swap one for another.
 - **AI with your own API key**: Create with AI calls the provider directly instead of copy and paste; self-hosted models
   too. The provider list could come from [models.dev](https://models.dev).
-- **Experiments**: a flex-mode layout for folding phones; optional voice commands.
 - **Other languages** (audit Sep 2026; the groundwork is done: `src/app/0-i18n.js`):
   - The app's own text moves into a catalogue per language, with a Language setting (System, then the languages
     offered). We translate the app.

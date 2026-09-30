@@ -15,8 +15,9 @@ A web app (planned installable PWA on GitHub Pages) that shows exercises as an a
 **workouts**: ordered blocks of exercises with reps or hold times, sets, rests, sides and directions, with
 optional voice coaching.
 
-**Primary target:** the **cover screen of foldable flip phones** (reference device: the owner's Samsung Galaxy Z Flip7), with the phone lying on the floor in front of the
-user while they exercise. Everything in the workout player is designed for that: readable from ~2 m, usable
+**Cover screen support:** the workout player works on the **cover screen of foldable flip phones** (reference device: the owner's Samsung Galaxy Z Flip7), with the phone lying on the floor in front of the
+user while they exercise. It was an early focus of the app and is still an important feature, but not the app's focus
+(owner, Sep 2026): keep it working, don't design the app around it. The workout player is built for it: readable from ~2 m, usable
 with the fewest possible touches, nothing important at the bottom of the screen (the cover screen's camera
 cutouts and flash sit along the bottom), no accidental skips.
 
