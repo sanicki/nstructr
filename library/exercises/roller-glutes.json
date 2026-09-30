@@ -1,0 +1,110 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "roller-glutes",
+  "name": "Foam Roller Glute Roll",
+  "otherNames": ["Foam Roll Glutes", "Foam Roll Piriformis", "Figure-Four Foam Roll"],
+  "category": "Mobility",
+  "focus": "Glutes and outer hips",
+  "collections": ["Stretches", "Warm-up"],
+  "equipment": ["Foam roller"],
+  "description": "Sitting on a foam roller with one ankle crossed over the other knee and your hands behind you, lean toward the crossed leg and rock slowly back and forth over that buttock.",
+  "source": {
+    "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",
+    "title": "Healthline: Foam rolling, how to"
+  },
+  "setup": ["Sit on a foam roller, hands on the floor behind you, feet flat.", "Cross your right ankle over your left knee and lean a little to the right."],
+  "cues": ["Lean into the crossed-leg side.", "Small rolls; the planted foot does the work.", "Breathe out on tender spots."],
+  "prescription": {
+    "time": "30–60 seconds",
+    "note": "Small, slow rolls over the buttock of the crossed leg; lean toward it to find the tender spot. Then change sides."
+  },
+  "keyframes": [
+    {
+      "name": "Sit on the roller",
+      "cue": "Sit on the roller, right ankle crossed over your left knee, hands behind you; lean a little to the right.",
+      "camera": 60,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "touch": [
+        {
+          "point": "pelvis",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-19, 0, 0],
+        "torso": [-25, 0, 0],
+        "shoulderL": [-66.5, 10, 0],
+        "shoulderR": [-66.5, 10, 0],
+        "hipL": [108, 5, 0],
+        "kneeL": 105.8,
+        "hipR": [116, 31, 78.3],
+        "kneeR": 118,
+        "ankleR": 10
+      }
+    },
+    {
+      "name": "Roll back",
+      "cue": "Straighten your left leg a little to roll back over your right glute, then forward again.",
+      "camera": 60,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "ankleL",
+      "plant": ["L"],
+      "touch": [
+        {
+          "point": "pelvis",
+          "adjust": "hipL"
+        },
+        {
+          "point": "handL",
+          "adjust": "shoulderL"
+        },
+        {
+          "point": "handR",
+          "adjust": "shoulderR"
+        }
+      ],
+      "pose": {
+        "root": [-19, 0, 0],
+        "torso": [-25, 0, 0],
+        "shoulderL": [-66.5, 10, 0],
+        "shoulderR": [-66.5, 10, 0],
+        "hipL": [108, 5, 0],
+        "kneeL": 80,
+        "hipR": [113, 31, 78.3],
+        "kneeR": 118,
+        "ankleR": 10
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "roller",
+      "z": -100
+    }
+  ],
+  "measure": "time",
+  "defaults": {
+    "seconds": 45
+  },
+  "bilateral": {
+    "labels": {
+      "L": "Left glute",
+      "R": "Right glute"
+    }
+  }
+}

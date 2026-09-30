@@ -338,9 +338,11 @@
                   "thighR",
                   "shinL",
                   "shinR",
-                  "back"
+                  "back",
+                  "sideL",
+                  "sideR"
                 ],
-                "description": "A body point, or a segment (thighL/R, shinL/R, back: pelvis to neck) that rests where it is lowest over what's under it, e.g. a shin across a foam roller."
+                "description": "A body point, or a segment (thighL/R, shinL/R, back: pelvis to neck, sideL/R: hip to shoulder) that rests where it is lowest over what's under it, e.g. a shin across a foam roller."
               },
               "adjust": {
                 "type": "string",

@@ -43,9 +43,9 @@
         }
       ],
       "pose": {
-        "root": [-35, 0, 0],
-        "shoulderL": [-18, 0, 0],
-        "shoulderR": [-18, 0, 0],
+        "root": [-36, 0, 0],
+        "shoulderL": [-8, 0, 0],
+        "shoulderR": [-8, 0, 0],
         "hipL": [70, 0, 0],
         "hipR": [70, 0, 0],
         "ankleL": 20,
@@ -75,9 +75,9 @@
         }
       ],
       "pose": {
-        "root": [-35, 0, 0],
-        "shoulderL": [-48, 0, 0],
-        "shoulderR": [-48, 0, 0],
+        "root": [-44, 0, 0],
+        "shoulderL": [-78, 0, 0],
+        "shoulderR": [-78, 0, 0],
         "hipL": [70, 0, 0],
         "hipR": [70, 0, 0],
         "ankleL": 20,
@@ -88,7 +88,7 @@
   "props": [
     {
       "type": "roller",
-      "z": 170
+      "z": 160
     }
   ],
   "measure": "time",

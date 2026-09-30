@@ -1,0 +1,112 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "roller-it-band",
+  "name": "Foam Roller IT Band Roll",
+  "otherNames": ["Foam Roll IT Band", "Iliotibial Band Foam Roll"],
+  "category": "Mobility",
+  "focus": "Outer thighs (IT band)",
+  "collections": ["Stretches", "Warm-up"],
+  "equipment": ["Foam roller"],
+  "description": "Lying on your side on your forearm with a foam roller under the outside of your bottom thigh and your top foot planted in front, roll slowly between just above the knee and the hip.",
+  "source": {
+    "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",
+    "title": "Healthline: Foam rolling, how to"
+  },
+  "setup": ["Lie on your side on your forearm, a foam roller under the outside of your bottom thigh, just above the knee.", "Cross your top leg in front and plant that foot on the floor."],
+  "cues": ["Elbow under your shoulder.", "Use your top foot to take some weight off.", "Slow, even rolls."],
+  "prescription": {
+    "time": "30–60 seconds",
+    "note": "Roll slowly along the outside of your thigh, between the hip and just above the knee. It can be tender: take weight through your top foot to ease the pressure."
+  },
+  "keyframes": [
+    {
+      "name": "Roller above your knee",
+      "cue": "On your side on your forearm, the roller just above your knee, top foot planted in front.",
+      "camera": 80,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "elbowL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "thighL",
+          "adjust": "root.side"
+        }
+      ],
+      "pose": {
+        "root": [0, -78, -90],
+        "shoulderL": [0, 50, 0],
+        "elbowL": 90,
+        "shoulderR": [0, 0, 0],
+        "elbowR": 10,
+        "hipL": [0, 2, 0],
+        "kneeL": 5,
+        "hipR": [36.8, -16, 0],
+        "kneeR": 56,
+        "ankleR": 10
+      }
+    },
+    {
+      "name": "Roll toward your hip",
+      "cue": "Push with your arm and top foot to roll up toward your hip, then back.",
+      "camera": 80,
+      "durationMs": 2200,
+      "holdMs": 200,
+      "phase": "rep",
+      "anchor": "elbowL",
+      "plant": ["L", "R"],
+      "touch": [
+        {
+          "point": "ankleL",
+          "adjust": "hipL.side"
+        },
+        {
+          "point": "ankleR",
+          "adjust": "kneeR"
+        },
+        {
+          "point": "thighL",
+          "adjust": "root.side"
+        }
+      ],
+      "pose": {
+        "root": [0, -78, -90],
+        "shoulderL": [0, 120, 0],
+        "elbowL": 90,
+        "shoulderR": [0, 0, 0],
+        "elbowR": 10,
+        "hipL": [0, -1, 0],
+        "kneeL": 5,
+        "hipR": [28.5, -16, 0],
+        "kneeR": 72,
+        "ankleR": 10
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "roller",
+      "z": -110
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Left side down",
+      "R": "Right side down"
+    }
+  },
+  "measure": "time",
+  "defaults": {
+    "seconds": 45
+  }
+}

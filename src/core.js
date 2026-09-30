@@ -29,7 +29,8 @@ const COMPONENTS = ['forward', 'side', 'turn'];            // "hipR.side": a bal
 const POINTS = ['pelvis', 'spine', 'neckBase', 'head', 'headTop', 'headLow', 'hipL', 'hipR', 'kneeL', 'kneeR', 'ankleL', 'ankleR', 'toeL', 'toeR', 'shoulderL', 'shoulderR', 'elbowL', 'elbowR', 'handL', 'handR', 'footL', 'footR', 'armpitL', 'armpitR', 'backL', 'backR'];
 /* body segments (the bone lines as drawn), for what lies across a foam roller: "touch" can name one (it rests where
    it's lowest over what's under it), and none of them sinks into a roller */
-const SEGMENTS = { thighL: ['hipL', 'kneeL'], thighR: ['hipR', 'kneeR'], shinL: ['kneeL', 'ankleL'], shinR: ['kneeR', 'ankleR'], back: ['pelvis', 'spine', 'neckBase'] };
+// (sideL/R: the flank, hip to shoulder, for lying on your side on it)
+const SEGMENTS = { thighL: ['hipL', 'kneeL'], thighR: ['hipR', 'kneeR'], shinL: ['kneeL', 'ankleL'], shinR: ['kneeR', 'ankleR'], back: ['pelvis', 'spine', 'neckBase'], sideL: ['hipL', 'shoulderL'], sideR: ['hipR', 'shoulderR'] };
 /* every point that can rest on the floor: nothing in this list may sink below it */
 const CONTACT_POINTS = ['pelvis', 'spine', 'neckBase', 'headLow', 'headTop', 'hipL', 'hipR', 'kneeL', 'kneeR', 'ankleL', 'ankleR', 'toeL', 'toeR',
   'shoulderL', 'shoulderR', 'elbowL', 'elbowR', 'handL', 'handR'];
@@ -172,7 +173,7 @@ function surfacesFrom(props) {
     if (p.type === 'ball') { const r = num(p.r) || 58, x = num(p.x), z = num(p.z); return { type: 'ball', r, cx: x, cz: z, x0: x - r, x1: x + r, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0 }; }
     // a foam roller: a cylinder lying on the floor across the figure (side to side), r 14 and 160 long (15 × 90 cm);
     // what lies over it rests on its curve
-    if (p.type === 'roller') { const r = num(p.r) || 14, len = num(p.length) || 160, x = num(p.x), z = num(p.z); return { type: 'roller', r, cx: x, cz: z, x0: x - len / 2, x1: x + len / 2, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0 }; }
+    if (p.type === 'roller') { const r = num(p.r) || 14, len = num(p.length) || 160, x = num(p.x), z = num(p.z); return { type: 'roller', r, cx: x, cz: z, x0: x - len / 2, x1: x + len / 2, z0: z - r, z1: z + r, h: 2 * r, back: null, backHeight: 0, dz: 0 }; }
     const d = SURFACE_DEFAULTS[p.type], w = num(p.width) || d.width, dp = num(p.depth) || d.depth, h = num(p.height) || d.height;
     return { type: p.type, z0: num(p.z) - w / 2, z1: num(p.z) + w / 2, x0: num(p.x) - dp / 2, x1: num(p.x) + dp / 2, h,
       back: p.type === 'chair' ? (p.back || 'behind') : null, backHeight: num(p.backHeight) || d.backHeight || 0 };
@@ -188,6 +189,11 @@ function supportY(x, z) {
   return y;
 }
 const supportAt = p => supportY(p.x, p.z);
+/* the surfaces with each foam roller rolled dz along the floor (it turns dz / r as it goes) */
+function rolledSupports(sups, dz) {
+  return sups.map(s => (s.type !== 'roller' ? s : { ...s, cz: s.cz + dz - s.dz, z0: s.z0 + dz - s.dz, z1: s.z1 + dz - s.dz, dz }));
+}
+const rollerDz = sups => { const s = (sups || []).find(k => k.type === 'roller'); return s ? s.dz : 0; };
 /* points along a body segment (P: body points), ends included */
 function segmentPoints(P, name, n = 12) {
   const ks = SEGMENTS[name], out = [];
@@ -223,8 +229,11 @@ function surfaceShapes(sup, yaw) {
     if (k.type === 'roller') {
       const r = k.r + 3.5, cy = FLOOR + 7 - r, e0 = sx(k.x0, k.cz), e1 = sx(k.x1, k.cz), a = Math.min(e0, e1), b = Math.max(e0, e1), rx = Math.max(0.01, r * Math.abs(s));
       const near = (k.x0 * s + k.cz * c) > (k.x1 * s + k.cz * c) ? e0 : e1;
+      // turned by how far it has rolled: a line across its near end shows it
+      const ph = k.dz / k.r, ux = Math.sin(ph) * rx * Math.sign(s || 1), uy = -Math.cos(ph) * r;
       const d = `M${a} ${cy - r}L${b} ${cy - r}A${rx} ${r} 0 0 1 ${b} ${cy + r}L${a} ${cy + r}A${rx} ${r} 0 0 1 ${a} ${cy - r}Z` +
-        `M${near} ${cy - r}A${rx} ${r} 0 0 1 ${near} ${cy + r}A${rx} ${r} 0 0 1 ${near} ${cy - r}`;   // (same winding: stays filled)
+        `M${near} ${cy - r}A${rx} ${r} 0 0 1 ${near} ${cy + r}A${rx} ${r} 0 0 1 ${near} ${cy - r}` +
+        `M${(near - ux).toFixed(1)} ${(cy - uy).toFixed(1)}L${(near + ux).toFixed(1)} ${(cy + uy).toFixed(1)}`;   // (same winding: stays filled)
       return { solid: true, roller: true, d, x0: a - rx, x1: b + rx };
     }
     const xs = [sx(k.x0, k.z0), sx(k.x1, k.z0), sx(k.x0, k.z1), sx(k.x1, k.z1)];
@@ -435,7 +444,7 @@ function clampTips(a, b, pose, seg, pos, pinned) {
 const WORLD_CACHE = new WeakMap();
 function worldOf(r, seg) {
   let w = WORLD_CACHE.get(r);
-  if (!w) { SUPPORTS = r.supports || SUPPORTS; w = fkAt(r.pose, seg, place(r.pose, seg, r.rule, false)); WORLD_CACHE.set(r, w); }
+  if (!w) { const keep = SUPPORTS; SUPPORTS = r.supports || SUPPORTS; w = fkAt(r.pose, seg, place(r.pose, seg, r.rule, false)); SUPPORTS = keep; WORLD_CACHE.set(r, w); }   // (the frame's own surfaces stay: a rolling roller differs from both steps')
   return w;
 }
 const PIN_CACHE = new WeakMap();
@@ -464,28 +473,30 @@ function sharedPin(a, b, seg) {
 /* One playback frame: blend two resolved keyframes at eased progress e; returns the pose, camera and pelvis position */
 function frameAt(a, b, e, seg) {
   SUPPORTS = b.supports || a.supports || [];
+  // a foam roller rolls along with the move (it's where it was at a, then b)
+  if (a.supports && b.supports && rollerDz(a.supports) !== rollerDz(b.supports)) SUPPORTS = rolledSupports(a.supports, lerp(rollerDz(a.supports), rollerDz(b.supports), e));
+  const frameSupports = SUPPORTS;
   // joints turn exactly as written (an angle may be written as e.g. -270 instead of 90 to pick the direction)
   const pose = lerpPose(a.pose, b.pose, e);
   const cam = lerp(a.cam, b.cam, e);
   // if one step's pin is also resting at the same spot in the other step, use it for the whole move (no sliding)
   const rule = sharedPin(a, b, seg);
+  SUPPORTS = frameSupports;
   const pa = place(pose, seg, rule || a.rule, false), pb = place(pose, seg, rule || b.rule, false);
   const pos = V3.lerp(pa, pb, e);
   const lift = lerp(num(a.rule.lift), num(b.rule.lift), e);
   const pinned = rule ? [rule.anchor] : [a.rule.anchor, b.rule.anchor];
   if (e > 0 && e < 1) {
     // rolling on a foam roller: a segment that rests on it at both ends of the move (the same "touch" in both steps)
-    // stays on it the whole way, by the same joint, while the pin holds (in-between angles alone would lift it off)
+    // stays on it the whole way, by the same joint, while the pin holds (in-between angles alone would lift it off);
+    // so do the other touches both steps share (a foot on the floor), in the order written
     const r0 = rule || (a.rule.anchor === b.rule.anchor ? a.rule : null);
-    const rolls = r0 && SUPPORTS.some(k => k.type === 'roller') ? (a.touch || []).filter(t => SEGMENTS[t.point] && (b.touch || []).some(u => u.point === t.point && u.adjust === t.adjust)) : [];
-    for (const t of rolls) {
-      const a0 = getJ(pose, t.adjust), gap = x => { setJ(pose, t.adjust, x); return clearance(fkAt(pose, seg, place(pose, seg, r0, false)), t.point) - num(t.gap); };
-      const th = root1D(gap, a0, 20, 0.5);
-      setJ(pose, t.adjust, th == null ? a0 : th);
-    }
+    const rolls = r0 && SUPPORTS.some(k => k.type === 'roller') ? (a.touch || []).filter(t => (b.touch || []).some(u => u.point === t.point && u.adjust === t.adjust)) : [];
+    const flat = () => { for (const s of (a.plant || []).filter(x => (b.plant || []).includes(x))) pose['ankle' + s] = flatAnkle(pose, s, seg); };   // (feet planted at both ends stay flat)
+    for (let pass = 0; pass < (rolls.length > 1 ? 4 : 1); pass++) for (const t of rolls) solveTouch(pose, seg, r0, t, flat);   // (over again when they pull on each other)
     if (rolls.length) Object.assign(pos, rule ? place(pose, seg, rule, false) : V3.lerp(place(pose, seg, a.rule, false), place(pose, seg, b.rule, false), e));
-    slideContacts(a, b, e, pose, seg, pos, pinned);
-    clampTips(a, b, pose, seg, pos, pinned);
+    // rolling, the feet and hands slide along the floor with it rather than stepping
+    if (!rolls.length) { slideContacts(a, b, e, pose, seg, pos, pinned); clampTips(a, b, pose, seg, pos, pinned); }
     // a foot that tips its toes into the floor flexes at the ankle instead of pushing the body up
     for (const s of ['L', 'R']) {
       const P = fkAt(pose, seg, pos);
@@ -520,7 +531,7 @@ function frameAt(a, b, e, seg) {
       reachTip(pose, seg, pos, ch, A[tip], 1);
     }
   }
-  return { pose, cam, pos };
+  return { pose, cam, pos, supports: frameSupports };
 }
 
 /* touch: turn one joint (or one number of a ball joint) until a point lands on the floor, nearest to the angle written */
@@ -562,7 +573,7 @@ function resolveKeyframe(kf, seg, ex = {}) {
     if (Math.abs(gap) > 2) misses.push({ point: t.point, adjust: t.adjust, gap });
   }
   return {
-    pose, cam, rule, auto, misses, touch: kf.touch || [], reach: kf.reach || [], ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
+    pose, cam, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], reach: kf.reach || [], ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
     dur: kf.durationMs == null ? 1000 : Math.max(0, num(kf.durationMs)), hold: Math.max(0, kf.holdMs == null ? 500 : num(kf.holdMs))
   };
 }
@@ -747,22 +758,59 @@ function travelStep(a, b, seg) {
   if (!m.has(b)) { const d = travelOf(a, b, seg); m.set(b, { ...a, rule: { ...a.rule, x: num(a.rule.x) - d.x, z: num(a.rule.z) - d.z } }); }
   return m.get(b);
 }
+/* A foam roller isn't fixed: it rolls along the floor as the body rolls over it, half as far as the part on it moves
+   (rolling on both faces, slipping on neither). Each step's roller is where that step's move left it: from the first
+   step, half how far the same spot of the rolling segment (the one touching it there) has moved. The steps are
+   resolved again with the roller there until it settles. */
 function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
-  SUPPORTS = surfacesFrom(props);
-  const R = keyframes.map(kf => resolveKeyframe(kf, seg, ex));
-  R.forEach((r, i) => { r.supports = SUPPORTS; r.step = i; });
-  R.supports = SUPPORTS;
+  const base = surfacesFrom(props);
+  let R = resolvePass(keyframes, seg, ex, props, base, null);
+  if (!base.some(s => s.type === 'roller')) return R;
+  // first guess: the steps as written, without what rests on the roller (resting on an unmoved roller bends them)
+  const free = resolvePass(keyframes.map(k => ({ ...k, touch: (k.touch || []).filter(t => !SEGMENTS[t.point]) })), seg, ex, props, base, null);
+  for (let it = 0; it < 4; it++) {
+    const dz = rollerTravel(R, keyframes, seg, it ? R : free);
+    if (!dz) break;
+    const moved = R.some((r, i) => Math.abs(rollerDz(r.supports) - dz[i]) > 0.05);
+    R = resolvePass(keyframes, seg, ex, props, base, dz);
+    if (!moved) break;
+  }
+  return R;
+}
+/* how far the roller has rolled at each step: half the travel along the floor of the spot that rests on it at the first step */
+function rollerTravel(R, keyframes, seg, M = R) {
+  // (a segment on it, or failing that a point: the seat, sitting on it)
+  const on = k => { SUPPORTS = R[0].supports; const P = worldOf(R[0], seg), q = SEGMENTS[k.point] ? segmentPoints(P, k.point, 40) : P[k.point] ? [P[k.point]] : [];
+    return q.some(v => SUPPORTS.some(s => s.type === 'roller' && Math.abs(v.z - s.cz) < s.r && v.x >= s.x0 && v.x <= s.x1) && Math.abs(v.y - supportAt(v)) < 3); };
+  const touches = (keyframes[0] && keyframes[0].touch) || [];
+  const t = touches.find(k => SEGMENTS[k.point] && on(k)) || touches.find(k => SEGMENTS[k.point]) || touches.find(k => on(k));
+  if (!t) return null;
+  const spot = (r, frac) => { const P = worldOf(r, seg), pts = SEGMENTS[t.point] ? segmentPoints(P, t.point, 40) : [P[t.point]]; return frac == null ? pts : pts[Math.round(frac * (pts.length - 1))]; };
+  SUPPORTS = R[0].supports;
+  const pts0 = spot(R[0]);
+  let best = 0, low = Infinity;
+  pts0.forEach((q, i) => { const c = q.y - supportAt(q); if (c < low) { low = c; best = i; } });
+  const f = pts0.length > 1 ? best / (pts0.length - 1) : 0;
+  const m0 = spot(M[0], f).z;
+  return M.map((r, i) => (i ? (spot(r, f).z - m0) / 2 : 0));
+}
+function resolvePass(keyframes, seg, ex, props, base, dz) {
+  const supAt = i => (dz ? rolledSupports(base, dz[i]) : base);
+  const R = keyframes.map((kf, i) => { SUPPORTS = supAt(i); return resolveKeyframe(kf, seg, ex); });
+  R.forEach((r, i) => { r.supports = supAt(i); r.step = i; });
+  SUPPORTS = R.supports = R.length ? R[0].supports : base;
   R.bars = (props || []).filter(p => p.type === 'bar');                 // pull-up bars, for framing
-  const onFloor = (P, k) => P[k].y - supportAt(P[k]) <= 3;
+  const onFloor = (P, k, sup) => { SUPPORTS = sup; return P[k].y - supportAt(P[k]) <= 3; };
   for (let i = 1; i < R.length; i++) {
     const a = R[i - 1], b = R[i];
     if (b.rule.y != null) continue;                                      // hanging: held where it says
-    const A = fkAt(a.pose, seg, place(a.pose, seg, a.rule)), B = fkAt(b.pose, seg, place(b.pose, seg, b.rule));
+    SUPPORTS = a.supports; const A = fkAt(a.pose, seg, place(a.pose, seg, a.rule));
+    SUPPORTS = b.supports; const B = fkAt(b.pose, seg, place(b.pose, seg, b.rule));
     // the point that stays on the floor through the move: the previous pin if it still touches, else another shared contact
     // (the step's own pin goes first when it was already resting somewhere, e.g. the foot placed on a step)
     const order = [b.rule.anchor, a.rule.anchor, 'handR', 'handL', 'elbowR', 'elbowL', 'ankleR', 'ankleL', 'kneeR', 'kneeL',
       'toeR', 'toeL', 'pelvis', 'neckBase', 'headLow'].filter(Boolean);
-    const shared = order.find(k => onFloor(A, k) && onFloor(B, k));
+    const shared = order.find(k => onFloor(A, k, a.supports) && onFloor(B, k, b.supports));
     if (!shared) continue;                                               // nothing stays down: leave the step where it is
     b.rule.anchor = shared;
     b.rule.x = A[shared].x; b.rule.z = A[shared].z;
@@ -772,6 +820,7 @@ function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
     const kf = keyframes[i];
     const own = { anchor: kf.anchor || null, x: num(kf.anchorX), z: num(kf.anchorZ), y: kf.anchor && kf.anchorY != null ? num(kf.anchorY) : null };
     if (!(kf.touch || []).length || (r.rule.anchor === own.anchor && r.rule.x === own.x && r.rule.z === own.z)) return;
+    SUPPORTS = r.supports;
     const applyPlant = () => { for (const s of kf.plant || []) r.pose['ankle' + s] = flatAnkle(r.pose, s, seg); };
     for (const t of kf.touch) if (t.point !== r.rule.anchor) solveTouch(r.pose, seg, r.rule, t, applyPlant);   // the pinned point is already down
   });
@@ -784,7 +833,7 @@ function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
       // "ankleR" = where it was in the previous step; { "point": "ankleR", "keyframe": 0 } = where it was in that step
       const tip = typeof item === 'string' ? item : item.point;
       const a = typeof item === 'object' && R[item.keyframe] ? R[item.keyframe] : R[(i - 1 + R.length) % R.length];
-      const A = fkAt(a.pose, seg, place(a.pose, seg, a.rule));
+      SUPPORTS = a.supports; const A = fkAt(a.pose, seg, place(a.pose, seg, a.rule)); SUPPORTS = b.supports;
       const s = tip.slice(-1), ch = CHAINS.find(k => k.tip + k.s === tip);
       if (!ch) continue;
       reachTip(b.pose, seg, place(b.pose, seg, b.rule), ch, A[tip], 1, false);
@@ -792,10 +841,12 @@ function resolveSequence(keyframes, seg, ex = {}, props = ex.props) {
       b.auto.add(ch.root + s); b.auto.add(ch.mid + s);
     }
   }
+  SUPPORTS = R.supports;
   R.walls = wallsOf(props, R, seg);
   const grip = chairGrip();
   for (const r of R) for (const rc of r.reach) {
     let T = null;
+    SUPPORTS = r.supports;
     const P = fkAt(r.pose, seg, place(r.pose, seg, r.rule)), sh = P['shoulder' + rc.hand.slice(-1)];
     if (rc.to === 'wall') {
       const wl = R.walls.find(Boolean);
