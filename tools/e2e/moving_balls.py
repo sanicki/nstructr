@@ -26,7 +26,7 @@ async def main():
               const d = ks => {{ const [x, y] = m(ks); return Math.round(Math.hypot(x - +c.getAttribute('cx'), y - +c.getAttribute('cy'))); }};
               const vb = document.querySelector('#scene').getAttribute('viewBox').split(' ').map(Number), r = +c.getAttribute('r');
               return [S.resolved[{i}].name, 'to ankles', d(['ankleL', 'ankleR']), 'to hands', d(['handL', 'handR']), 'on stage', +c.getAttribute('cx') - r >= vb[0] - 1 && +c.getAttribute('cx') + r <= vb[0] + vb[2] + 1]; }})()"""))
-        print('pass: ball held by      ', rows, '<- 0 to the ankles (feet), to the hands (hands), between at the passes; all on stage')
+        print('pass: ball held by      ', rows, '<- 0 to what holds it; at a pass still with the ones that had it (the others reach it: ~36); all on stage')
         await pg.goto(URL + '#/play/mb-chest-pass', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         rows = []
         for i, t in [(0, 1), (1, 1), (2, 0.5), (2, 1), (3, 0.5), (3, 1)]:

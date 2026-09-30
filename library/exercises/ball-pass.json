@@ -33,8 +33,8 @@
       "pose": {
         "root": [-90, 0, 0],
         "neck": [34, 0, 0],
-        "hipL": [18, 13, 0],
-        "hipR": [18, 13, 0],
+        "hipL": [18.5, 15.5, 0],
+        "hipR": [18.5, 15.5, 0],
         "shoulderL": [175, 0, 0],
         "shoulderR": [175, 0, 0]
       }
@@ -51,14 +51,14 @@
       "pose": {
         "root": [-30, 0, 0],
         "neck": [10, 0, 0],
-        "hipL": [145, 14, 0],
+        "hipL": [145, 16, 0],
         "kneeL": 20,
-        "hipR": [145, 14, 0],
+        "hipR": [145, 16, 0],
         "kneeR": 20,
-        "shoulderL": [115, 15, 0],
-        "elbowL": 14,
-        "shoulderR": [115, 15, 0],
-        "elbowR": 14
+        "shoulderL": [113.5, 15, 0],
+        "elbowL": 16,
+        "shoulderR": [113.5, 15, 0],
+        "elbowR": 16
       }
     },
     {
@@ -72,11 +72,11 @@
       "holds": ["handL", "handR"],
       "pose": {
         "root": [-90, 0, 0],
-        "neck": [34, 0, 0],
-        "shoulderL": [148, 15, 0],
-        "elbowL": 5,
-        "shoulderR": [148, 15, 0],
-        "elbowR": 5
+        "neck": [40, 0, 0],
+        "shoulderL": [151, 15, 0],
+        "elbowL": 0,
+        "shoulderR": [151, 15, 0],
+        "elbowR": 0
       }
     },
     {
@@ -91,14 +91,14 @@
       "pose": {
         "root": [-30, 0, 0],
         "neck": [10, 0, 0],
-        "hipL": [145, 14, 0],
+        "hipL": [145, 16, 0],
         "kneeL": 20,
-        "hipR": [145, 14, 0],
+        "hipR": [145, 16, 0],
         "kneeR": 20,
-        "shoulderL": [115, 15, 0],
-        "elbowL": 14,
-        "shoulderR": [115, 15, 0],
-        "elbowR": 14
+        "shoulderL": [113.5, 15, 0],
+        "elbowL": 16,
+        "shoulderR": [113.5, 15, 0],
+        "elbowR": 16
       }
     },
     {
@@ -113,8 +113,8 @@
       "pose": {
         "root": [-90, 0, 0],
         "neck": [34, 0, 0],
-        "hipL": [18, 13, 0],
-        "hipR": [18, 13, 0],
+        "hipL": [18.5, 15.5, 0],
+        "hipR": [18.5, 15.5, 0],
         "shoulderL": [175, 0, 0],
         "shoulderR": [175, 0, 0]
       }
