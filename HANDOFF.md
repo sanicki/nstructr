@@ -110,8 +110,9 @@ src/
   head.html           <head>, all CSS (Material 3 tokens, player, workouts, cover-screen rules)
   body.html           all markup: views, dialogs, <template id="aiPrompt">
   core.js             engine: figure model, FK, placement, IK, transitions, props, surfaces (no DOM)
-  thumb.js            static SVG thumbnail of an exercise (shown as an image, colours written in: 2-explore.js thumbFor;
-                      live SVG thumbnails got hairline shins and feet after scrolling in Chrome on Android, Sep 2026)
+  thumb.js            static SVG thumbnail of an exercise (shown as an image, colours written in: 2-explore.js thumbFor);
+                      its limbs are filled capsules, not stroked lines: Chrome on Android drew some thick round-capped
+                      lines (the lower legs of Barbell Curl and Barbell RDL) as hairlines, live or as an image, Sep 2026
   app/0-boot.js       globals the library fills (POSE_DB, LIBRARY_WORKOUTS)
   app/1-engine.js     app state S, import validation, figure SVG, drawing, playback loop, editor sliders
   app/2-explore.js    Exercises tab (collections incl. Saved, filters, search, cards)
