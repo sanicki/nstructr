@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Single-leg strength and balance: step one foot back and lower until both knees bend to about 90°, then step back up.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/319/reverse-lunge/",

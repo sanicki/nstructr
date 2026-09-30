@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga", "Stretches"],
   "equipment": ["Yoga mat", "Yoga strap"],
+  "muscles": {},
+  "stretches": ["lowerBack", "backThigh", "lowerLegs"],
   "description": "A seated forward bend with a strap looped round the soles of the feet, so you can fold from the hips with a long back instead of rounding to reach your toes.",
   "source": {
     "url": "https://www.yogajournal.com/practice/10-ways-to-use-blocks-to-advance-your-yoga-practice/",

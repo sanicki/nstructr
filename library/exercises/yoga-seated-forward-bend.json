@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "backThigh", "lowerLegs"],
   "description": "Seated fold over both straight legs.",
   "source": {
     "url": "https://www.yogajournal.com/poses/seated-forward-bend/",

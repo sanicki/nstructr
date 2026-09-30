@@ -8,6 +8,7 @@
   "focus": "Glutes, hamstrings and back",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"upperBack": 1, "lowerBack": 1, "core": 1, "frontThigh": 2, "glutes": 3, "backThigh": 2, "lowerLegs": 2},
   "description": "With a dumbbell on the floor beside each foot, hinge and bend your knees to grip them, then stand up tall by driving your hips forward, and lower them back down.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/dumbbell-deadlift.html",

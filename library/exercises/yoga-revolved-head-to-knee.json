@@ -7,6 +7,8 @@
   "category": "Seated",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "core", "frontThigh", "backThigh"],
   "description": "Seated side bend over one straight leg with the top arm reaching overhead.",
   "source": {
     "url": "https://www.yogajournal.com/poses/revolved-head-to-knee-pose/",

@@ -8,6 +8,7 @@
   "focus": "Obliques",
   "collections": ["Core", "Free weights"],
   "equipment": ["Medicine ball"],
+  "muscles": {"shoulders": 1, "core": 3, "frontThigh": 1},
   "description": "Sitting leaned back with your knees bent, hold a medicine ball in both hands and turn it from side to side by rotating your trunk.",
   "source": {
     "url": "https://www.acefitness.org/continuing-education/certified/august-2026/9179/throw-catch-slam-smarter-medicine-ball-training/",

@@ -8,6 +8,8 @@
   "focus": "Hamstrings",
   "collections": ["Stretches"],
   "equipment": ["Wall"],
+  "muscles": {},
+  "stretches": ["backThigh"],
   "description": "Stretches the back of the thigh lying down at a doorway: rest one heel up the wall or door frame and gently straighten the knee.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

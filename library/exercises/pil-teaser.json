@@ -7,6 +7,7 @@
   "focus": "Abdominals",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"lowerBack": 1, "core": 3, "frontThigh": 2},
   "description": "An advanced balance: from lying down, roll up into a V shape with your legs raised and your arms reaching toward your toes, then roll down.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-teaser/",

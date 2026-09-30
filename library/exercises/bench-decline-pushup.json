@@ -8,6 +8,7 @@
   "focus": "Chest, shoulders and triceps",
   "collections": ["Bodyweight"],
   "equipment": ["Bench"],
+  "muscles": {"shoulders": 3, "chest": 3, "lowerBack": 1, "biceps": 1, "triceps": 2, "core": 1, "frontThigh": 1},
   "description": "A push-up with your feet up on a bench: body straight from head to heels, lower your chest toward the floor, then press back up.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/decline-push-up",

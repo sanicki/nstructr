@@ -8,6 +8,7 @@
   "focus": "Whole body, shoulders and core",
   "collections": ["Free weights", "Core"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 3, "upperBack": 1, "lowerBack": 1, "triceps": 2, "core": 3, "frontThigh": 2, "glutes": 2},
   "description": "The Turkish get-up with a dumbbell held straight up: from lying on your back, rise step by step to standing with the weight overhead, then reverse back down.",
   "source": {
     "url": "https://www.garagegymreviews.com/turkish-get-up",

@@ -8,6 +8,7 @@
   "focus": "Chest, arms and upper back",
   "collections": ["Pilates"],
   "equipment": ["Pilates ring"],
+  "muscles": {"shoulders": 2, "chest": 3, "biceps": 1, "triceps": 1},
   "description": "Standing tall with the ring between your palms and your arms straight out at chest height, squeeze the ring, hold, and release slowly.",
   "source": {
     "url": "https://www.onepeloton.com/blog/pilates-ring-exercises",

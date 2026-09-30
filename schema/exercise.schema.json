@@ -54,6 +54,30 @@
         "type": "string"
       }
     },
+    "muscles": {
+      "type": "object",
+      "description": "How much it works each muscle group (HANDOFF §13, docs/muscles.md): 3 primary (what it’s for), 2 secondary (helps move the load), 1 stabilizer (holds you steady); a group it doesn’t work is left out. Required on library exercises.",
+      "properties": {
+        "shoulders": {"$ref": "#/$defs/rating"},
+        "chest": {"$ref": "#/$defs/rating"},
+        "upperBack": {"$ref": "#/$defs/rating"},
+        "lowerBack": {"$ref": "#/$defs/rating"},
+        "biceps": {"$ref": "#/$defs/rating"},
+        "triceps": {"$ref": "#/$defs/rating"},
+        "core": {"$ref": "#/$defs/rating"},
+        "frontThigh": {"$ref": "#/$defs/rating"},
+        "glutes": {"$ref": "#/$defs/rating"},
+        "backThigh": {"$ref": "#/$defs/rating"},
+        "lowerLegs": {"$ref": "#/$defs/rating"}
+      },
+      "additionalProperties": false
+    },
+    "stretches": {
+      "type": "array",
+      "description": "The muscle groups it stretches (same names as in muscles).",
+      "items": {"enum": ["shoulders", "chest", "upperBack", "lowerBack", "biceps", "triceps", "core", "frontThigh", "glutes", "backThigh", "lowerLegs"]},
+      "uniqueItems": true
+    },
     "description": {
       "type": "string"
     },
@@ -200,6 +224,10 @@
   },
   "additionalProperties": false,
   "$defs": {
+    "rating": {
+      "enum": [1, 2, 3],
+      "description": "3 primary, 2 secondary, 1 stabilizer (leave a group out for 0)."
+    },
     "keyframe": {
       "type": "object",
       "required": [

@@ -8,6 +8,7 @@
   "focus": "Hamstrings, glutes and balance",
   "collections": ["Free weights", "Balance"],
   "equipment": ["Dumbbells"],
+  "muscles": {"upperBack": 1, "lowerBack": 2, "core": 2, "frontThigh": 1, "glutes": 3, "backThigh": 2, "lowerLegs": 2},
   "description": "Standing on one leg with a dumbbell in each hand, hinge forward from the hip while the other leg reaches straight back, then stand up tall.",
   "source": {
     "url": "https://www.strengthlog.com/best-dumbbell-exercises-muscle-strength/",

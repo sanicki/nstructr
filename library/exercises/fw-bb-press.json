@@ -8,6 +8,7 @@
   "focus": "Shoulders and arms",
   "collections": ["Free weights"],
   "equipment": ["Barbell"],
+  "muscles": {"shoulders": 3, "chest": 2, "upperBack": 2, "biceps": 1, "triceps": 2, "core": 1},
   "description": "Press the bar from the front of your shoulders to straight overhead, moving your head back slightly to let it pass.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/71/standing-shoulder-press/",

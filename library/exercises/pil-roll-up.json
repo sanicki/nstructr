@@ -7,6 +7,8 @@
   "focus": "Abdominals and spine",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 3, "frontThigh": 2},
+  "stretches": ["lowerBack", "backThigh"],
   "description": "Roll up from lying down one vertebra at a time, reach forward over your legs, then roll back down with control.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-roll-up/",

@@ -7,6 +7,7 @@
   "category": "Arm Balance",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 2, "chest": 1, "upperBack": 1, "lowerBack": 1, "triceps": 1, "core": 3, "frontThigh": 1, "glutes": 1},
   "description": "Balance on one hand and the edge of the foot with the body in one line.",
   "source": {
     "url": "https://www.yogajournal.com/poses/side-plank-pose/",

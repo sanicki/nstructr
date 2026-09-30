@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "frontThigh", "backThigh"],
   "description": "Wide stance folding forward with the hands on the floor.",
   "source": {
     "url": "https://www.yogajournal.com/poses/wide-legged-forward-bend/",

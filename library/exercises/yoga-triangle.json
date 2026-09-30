@@ -7,6 +7,8 @@
   "category": "Standing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"core": 2, "frontThigh": 2, "glutes": 1},
+  "stretches": ["core", "frontThigh", "backThigh"],
   "description": "Straight-legged wide stance tilting the torso over the front leg, arms in one vertical line.",
   "source": {
     "url": "https://www.yogajournal.com/poses/extended-triangle-pose/",

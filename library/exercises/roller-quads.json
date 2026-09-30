@@ -8,6 +8,8 @@
   "focus": "Quadriceps (front of the thighs)",
   "collections": ["Stretches", "Warm-up"],
   "equipment": ["Foam roller"],
+  "muscles": {"shoulders": 2, "triceps": 1, "core": 1},
+  "stretches": ["frontThigh"],
   "description": "Face down on your forearms with a foam roller under the fronts of your thighs, roll slowly from just above the knees toward the hips and back, moving with your arms.",
   "source": {
     "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",

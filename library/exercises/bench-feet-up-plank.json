@@ -8,6 +8,7 @@
   "focus": "Core and shoulders",
   "collections": ["Core"],
   "equipment": ["Bench"],
+  "muscles": {"shoulders": 2, "core": 3, "frontThigh": 1, "glutes": 1},
   "description": "A forearm plank with your feet up on a bench: body straight from head to heels, hold.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/plank-with-feet-on-bench.html",

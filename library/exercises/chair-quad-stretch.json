@@ -8,6 +8,8 @@
   "focus": "Front of the thighs",
   "collections": ["Stretches", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"glutes": 1, "lowerLegs": 1},
+  "stretches": ["frontThigh"],
   "description": "Standing tall with one hand on a chair back, bend one knee and hold that ankle behind you, drawing the heel toward your buttock.",
   "source": {
     "url": "https://uk.physitrack.com/home-exercise-video/quads-stretch-using-chair",

@@ -7,6 +7,7 @@
   "category": "Balancing",
   "collections": ["Yoga"],
   "equipment": ["Wall"],
+  "muscles": {"shoulders": 3, "upperBack": 2, "triceps": 1, "core": 2},
   "description": "Supported Headstand with a wall behind you: with your forearms down and fingers interlaced near the wall, lift your legs up and rest your heels on the wall, the weight mostly in your forearms.",
   "source": {
     "url": "https://yogaselection.com/headstand-preparation-kick-up-to-the-wall/",

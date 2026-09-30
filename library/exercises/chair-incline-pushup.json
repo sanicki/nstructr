@@ -7,6 +7,7 @@
   "focus": "Chest, shoulders and arms",
   "collections": ["Chair-based"],
   "equipment": ["Chair", "Wall"],
+  "muscles": {"shoulders": 2, "chest": 3, "lowerBack": 1, "biceps": 1, "triceps": 2, "core": 1, "frontThigh": 1},
   "description": "An incline push-up on a chair braced against a wall: hands on the front edge of the seat, lower your chest toward it and press back up.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/incline-push-up",

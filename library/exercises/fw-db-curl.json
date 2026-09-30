@@ -8,6 +8,7 @@
   "focus": "Front of the upper arms",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 1, "upperBack": 1, "biceps": 3},
   "description": "With your arms by your sides, curl the dumbbells up to your shoulders by bending your elbows, then lower slowly.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",

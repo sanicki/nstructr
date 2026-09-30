@@ -8,6 +8,8 @@
   "focus": "Hamstrings, core and shoulders",
   "collections": ["Warm-up"],
   "equipment": [],
+  "muscles": {"shoulders": 2, "chest": 1, "triceps": 1, "core": 2},
+  "stretches": ["backThigh", "lowerLegs"],
   "description": "From standing, fold forward to put your hands on the floor, walk them out to a plank, then walk them back in and stand up.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/254/inchworms/",

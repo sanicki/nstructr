@@ -8,6 +8,8 @@
   "focus": "Glutes and outer hips",
   "collections": ["Stretches", "Warm-up"],
   "equipment": ["Foam roller"],
+  "muscles": {"shoulders": 1, "triceps": 1, "core": 1},
+  "stretches": ["glutes"],
   "description": "Sitting on a foam roller with one ankle crossed over the other knee and your hands behind you, lean toward the crossed leg and rock slowly back and forth over that buttock.",
   "source": {
     "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",

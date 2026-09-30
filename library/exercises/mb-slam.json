@@ -8,6 +8,7 @@
   "focus": "Core, shoulders and legs (power)",
   "collections": ["Free weights", "Core"],
   "equipment": ["Medicine ball"],
+  "muscles": {"shoulders": 2, "upperBack": 3, "triceps": 2, "core": 3, "frontThigh": 1, "glutes": 1},
   "description": "Reach a medicine ball overhead, then slam it down in front of your feet as hard as you can, bending your hips and knees; pick it up and repeat.",
   "source": {
     "url": "https://www.acefitness.org/continuing-education/certified/august-2026/9179/throw-catch-slam-smarter-medicine-ball-training/",

@@ -8,6 +8,7 @@
   "focus": "Shoulders and arms",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 3, "chest": 2, "upperBack": 2, "biceps": 1, "triceps": 2, "core": 1},
   "description": "Standing on the band with your hands at your shoulders, press straight overhead until your arms are fully extended, then lower with control.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/banded-standing-shoulder-press",

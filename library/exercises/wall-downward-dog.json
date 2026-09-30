@@ -8,6 +8,8 @@
   "focus": "Shoulders and back of the legs",
   "collections": ["Yoga", "Stretches"],
   "equipment": ["Wall"],
+  "muscles": {"shoulders": 1},
+  "stretches": ["shoulders", "upperBack", "backThigh", "lowerLegs"],
   "description": "Downward Dog standing at a wall: hands on the wall, hinge at your hips until your back is flat and your arms and legs make an L.",
   "source": {
     "url": "https://www.yogajournal.com/practice/yoga-wall-poses/",

@@ -8,6 +8,7 @@
   "focus": "Calves",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"lowerLegs": 3},
   "description": "A calf raise holding a dumbbell in each hand: rise up onto the balls of your feet, pause, and lower your heels slowly.",
   "source": {
     "url": "https://exrx.net/WeightExercises/Gastrocnemius/DBStandingCalfRaise",

@@ -7,6 +7,8 @@
   "category": "Hip-Opening",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["frontThigh", "glutes"],
   "description": "Hip opener with the front shin on the floor and the back leg extended behind.",
   "source": {
     "url": "https://www.yogajournal.com/poses/one-legged-king-pigeon-pose/",

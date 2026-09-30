@@ -8,6 +8,8 @@
   "focus": "Front of thigh",
   "collections": ["Stretches"],
   "equipment": ["Wall"],
+  "muscles": {},
+  "stretches": ["frontThigh"],
   "description": "Stretches the front of the thigh standing: hold one ankle and draw the heel up and back, a hand on a wall for balance.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

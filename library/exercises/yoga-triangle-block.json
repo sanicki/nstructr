@@ -7,6 +7,8 @@
   "category": "Standing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat", "Yoga block"],
+  "muscles": {"core": 2, "frontThigh": 2, "glutes": 1},
+  "stretches": ["core", "frontThigh", "backThigh"],
   "description": "Triangle Pose with the lower hand on a block outside the front foot, so you can keep both sides of the waist long and the chest open.",
   "source": {
     "url": "https://www.doyogawithme.com/blog/how-use-blocks",

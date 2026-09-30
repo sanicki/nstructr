@@ -7,6 +7,7 @@
   "focus": "Deep core",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 3, "frontThigh": 2},
   "description": "Head and shoulders curled up, draw one knee in toward your chest while the other leg reaches long, then switch.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-single-leg-stretch/",

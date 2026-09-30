@@ -7,6 +7,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A squat holding one kettlebell close to your chest by its handle: sit your hips down between your heels, then stand up.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/kettlebell-goblet-squat",

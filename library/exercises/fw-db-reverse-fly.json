@@ -8,6 +8,7 @@
   "focus": "Upper back and back of the shoulders",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 3, "upperBack": 2},
   "description": "Bent forward from the hips with a dumbbell in each hand, arms hanging, open your arms out to the sides to shoulder height, squeezing your shoulder blades, then lower.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/bent-over-dumbbell-reverse-fly.html",

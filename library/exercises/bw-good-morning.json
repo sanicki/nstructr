@@ -8,6 +8,7 @@
   "focus": "Hamstrings and glutes",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 1, "glutes": 2, "backThigh": 3},
   "description": "A hip hinge with no weight, hands behind your head: push your hips back with soft knees until your hamstrings stretch, then stand up.",
   "source": {
     "url": "https://www.issaonline.com/blogs/training-tips/how-to-do-the-good-morning-exercise-and-why-you-should",

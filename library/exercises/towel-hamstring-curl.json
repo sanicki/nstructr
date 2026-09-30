@@ -8,6 +8,7 @@
   "focus": "Hamstrings, glutes and core",
   "collections": ["Bodyweight", "Core"],
   "equipment": ["Towel"],
+  "muscles": {"lowerBack": 1, "core": 1, "glutes": 2, "backThigh": 3, "lowerLegs": 1},
   "description": "Lying on your back with your heels on a towel on a smooth floor, lift your hips, then slide your heels in toward you and back out, hips up throughout.",
   "source": {
     "url": "https://gymnation.com/exercise-library/reverse-sliding-leg-curl-on-floor-with-towel",

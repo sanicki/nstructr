@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A reverse lunge holding a dumbbell in each hand: step one foot back, lower until both knees bend to about 90°, then step back in.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/dumbbell-rear-lunge.html",

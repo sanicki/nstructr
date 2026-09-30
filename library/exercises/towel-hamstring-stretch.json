@@ -8,6 +8,8 @@
   "focus": "Back of the thighs",
   "collections": ["Stretches"],
   "equipment": ["Towel"],
+  "muscles": {},
+  "stretches": ["backThigh"],
   "description": "Lying on your back with a towel looped round one foot, straighten that leg up toward the ceiling and gently pull it toward you with the towel.",
   "source": {
     "url": "https://exrx.net/Stretches/Hamstrings/LyingTowel",

@@ -8,6 +8,7 @@
   "focus": "Glutes and hamstrings",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band", "Chair"],
+  "muscles": {"lowerBack": 1, "core": 1, "glutes": 3, "backThigh": 2},
   "description": "Holding a chair for balance with a loop band around your ankles, kick one straight leg back against the band, then bring it back.",
   "source": {
     "url": "https://fitbod.me/blog/banded-kickback-variations/",

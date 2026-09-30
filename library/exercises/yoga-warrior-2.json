@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 2, "core": 1, "frontThigh": 3, "glutes": 2, "lowerLegs": 2},
+  "stretches": ["frontThigh"],
   "description": "Wide lunge with the torso upright and the arms reaching out to the sides.",
   "source": {
     "url": "https://www.yogajournal.com/poses/warrior-ii-pose/",

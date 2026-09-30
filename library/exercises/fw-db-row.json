@@ -8,6 +8,7 @@
   "focus": "Upper back",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 3, "lowerBack": 1, "biceps": 2, "triceps": 1, "core": 1},
   "description": "Hinged forward with a flat back, pull the dumbbells up toward your hips, squeezing your shoulder blades, then lower.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/12/bent-over-row/",

@@ -8,6 +8,8 @@
   "focus": "Hamstrings (back of the thighs)",
   "collections": ["Stretches", "Warm-up"],
   "equipment": ["Foam roller"],
+  "muscles": {"shoulders": 1, "triceps": 1, "core": 1},
+  "stretches": ["backThigh"],
   "description": "Sitting with a foam roller under the backs of your thighs and your hands behind you, lift your hips and roll slowly from just above the knees toward the hips and back.",
   "source": {
     "url": "https://www.healthline.com/health/fitness-exercise/foam-rolling-how-to",

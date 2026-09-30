@@ -8,6 +8,7 @@
   "focus": "Lower abs and hip flexors",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 2, "frontThigh": 3},
   "description": "Lying on your back with legs straight and low, kick them up and down in small alternating movements.",
   "source": {
     "url": "https://www.bodi.com/blog/flutter-kicks",

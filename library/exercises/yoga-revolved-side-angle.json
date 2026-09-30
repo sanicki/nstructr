@@ -7,6 +7,8 @@
   "category": "Standing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"lowerBack": 1, "core": 2, "frontThigh": 3, "glutes": 2, "lowerLegs": 2},
+  "stretches": ["lowerBack", "core"],
   "description": "Lunging twist with the opposite elbow hooked outside the front knee.",
   "source": {
     "url": "https://www.yogajournal.com/poses/revolved-side-angle-pose/",

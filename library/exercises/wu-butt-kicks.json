@@ -8,6 +8,7 @@
   "focus": "Thighs and hamstrings",
   "collections": ["Warm-up"],
   "equipment": [],
+  "muscles": {"core": 1, "frontThigh": 1, "backThigh": 3, "lowerLegs": 2},
   "description": "In place, kick one heel up toward your seat and then the other, in a quick rhythm with arms bent. Jog to make it harder.",
   "source": {
     "url": "https://www.acefitness.org/resources/pros/expert-articles/6886/dynamic-warm-ups-and-sticking-finishes/",

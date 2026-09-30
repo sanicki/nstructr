@@ -8,6 +8,8 @@
   "focus": "Hips and deep core",
   "collections": ["Pilates", "Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"core": 2, "frontThigh": 3, "glutes": 1},
+  "stretches": ["backThigh"],
   "description": "Leg Circles with a band looped round the lifted foot and an end in each hand: keeping the hips still, draw small circles with the straight leg against the band, then change direction.",
   "source": {
     "url": "https://gophysiotherapy.co.uk/pilates-with-resistance-band/",

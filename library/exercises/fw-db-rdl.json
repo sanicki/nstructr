@@ -8,6 +8,7 @@
   "focus": "Hamstrings and glutes",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"upperBack": 1, "lowerBack": 2, "core": 1, "frontThigh": 1, "glutes": 3, "backThigh": 2},
   "description": "A hip hinge: with soft knees, push your hips back and lower the dumbbells down the front of your legs, then stand up by driving your hips forward.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/317/romanian-deadlift/",

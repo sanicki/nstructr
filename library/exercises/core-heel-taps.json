@@ -8,6 +8,7 @@
   "focus": "Obliques",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 3},
   "description": "Lying on your back with knees bent and shoulders lifted, crunch to each side in turn to reach a hand toward the same-side heel.",
   "source": {
     "url": "https://workoutlabs.com/exercise-guide/alternate-heel-touchers/",

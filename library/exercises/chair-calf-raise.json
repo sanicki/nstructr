@@ -8,6 +8,7 @@
   "focus": "Calves",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"lowerLegs": 3},
   "description": "A calf raise holding the back of a sturdy chair for balance: rise onto the balls of your feet and lower slowly.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-exercises/",

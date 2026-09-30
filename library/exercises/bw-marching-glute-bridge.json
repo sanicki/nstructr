@@ -8,6 +8,7 @@
   "focus": "Glutes, hamstrings and core",
   "collections": ["Bodyweight", "Core"],
   "equipment": [],
+  "muscles": {"lowerBack": 1, "core": 2, "frontThigh": 1, "glutes": 3, "backThigh": 2},
   "description": "Holding a glute bridge, lift one knee toward you, put the foot down and lift the other, keeping the hips up and level the whole time.",
   "source": {
     "url": "https://www.healthline.com/health/fitness-exercise/glute-bridge-variations",

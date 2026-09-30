@@ -5,10 +5,9 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## Exercises and equipment
 
-- **Muscle groups** (agreed Sep 2026; plan in HANDOFF §13): rate every exercise 0–3 for 11 muscle groups, show a
-  front/back map on the exercise page and a workout's total on its card and editor. Next PR: a mockup of the map for
-  the owner, then the data and the exercise page map; then workout totals, a card indicator, a muscle filter and Create
-  with AI by muscle.
+- **Muscle groups** (plan in HANDOFF §13; ratings and the exercise page map done, §5.5): a workout's total on its card
+  and editor (thresholds tested on the library workouts first), an indicator on exercise cards, a muscle filter,
+  Create with AI by muscle, and the fields in Edit and the AI prompt.
 
 ## App
 

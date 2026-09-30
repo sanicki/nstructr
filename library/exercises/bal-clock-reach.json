@@ -8,6 +8,7 @@
   "focus": "Balance and core",
   "collections": ["Balance"],
   "equipment": [],
+  "muscles": {"core": 2, "frontThigh": 1, "glutes": 2, "lowerLegs": 2},
   "description": "Standing on one leg, reach one arm to 12, 3 and 6 o'clock on an imaginary clock and back, keeping your balance.",
   "source": {
     "url": "https://eat-move-save.extension.illinois.edu/move/exercise/clock-reach",

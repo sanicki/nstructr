@@ -7,6 +7,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Free weights"],
   "equipment": ["Step", "Dumbbells"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A step-up holding a dumbbell in each hand: step up onto a sturdy step, stand tall on it, then step back down.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/dumbbell-step-up.html",

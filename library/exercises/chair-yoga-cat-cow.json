@@ -8,6 +8,8 @@
   "focus": "Spine",
   "collections": ["Yoga", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["lowerBack", "core"],
   "description": "The cat-cow spine stretch done sitting on a chair: arch your back and lift your chest, then round your back and tuck your chin.",
   "source": {
     "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",

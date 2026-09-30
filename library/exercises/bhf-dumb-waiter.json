@@ -8,6 +8,7 @@
   "focus": "Shoulders",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 3, "upperBack": 1},
   "description": "Rotator-cuff exercise to keep the shoulders stable: elbows stay tucked at 90° while the hands swing out to the sides against the band.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",

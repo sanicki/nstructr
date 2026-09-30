@@ -7,6 +7,8 @@
   "category": "Inversion",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["upperBack", "lowerBack", "backThigh"],
   "description": "Inversion on the shoulders with the legs lowered over the head.",
   "source": {
     "url": "https://www.yogajournal.com/poses/plow-pose/",

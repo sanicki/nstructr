@@ -8,6 +8,7 @@
   "focus": "Balance and hips",
   "collections": ["Balance", "Warm-up"],
   "equipment": [],
+  "muscles": {"frontThigh": 1, "glutes": 2, "lowerLegs": 1},
   "description": "Standing tall with your hands on your hips, step one foot out to the side and bring the other to meet it, pausing each time; go one way, then come back the other way.",
   "source": {
     "url": "https://www.healthline.com/health/exercises-for-balance",

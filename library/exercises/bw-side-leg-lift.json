@@ -8,6 +8,7 @@
   "focus": "Outer hips",
   "collections": ["Bodyweight"],
   "equipment": ["Wall"],
+  "muscles": {"core": 1, "glutes": 3},
   "description": "Strengthens the outer hip for balance: holding a wall, lift one straight leg out to the side and lower it slowly.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/strength-and-flexibility-exercises/strength-exercises/",

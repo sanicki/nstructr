@@ -8,6 +8,7 @@
   "focus": "Backs of the arms",
   "collections": ["Bodyweight"],
   "equipment": ["Bench"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 1, "triceps": 3},
   "description": "Hands on the edge of a bench behind you and feet on the floor, bend your elbows to lower your hips, then press back up.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/bench-dips",

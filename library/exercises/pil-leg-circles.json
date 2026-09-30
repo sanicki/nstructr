@@ -8,6 +8,8 @@
   "focus": "Hips and deep core",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 2, "frontThigh": 3, "glutes": 1},
+  "stretches": ["backThigh"],
   "description": "Lying on your back with one leg reaching to the ceiling, draw small, smooth circles with that leg while your pelvis and back stay still on the mat. Then reverse, and switch legs.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-single-leg-circles/",

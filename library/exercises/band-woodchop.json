@@ -8,6 +8,7 @@
   "focus": "Obliques and core",
   "collections": ["Resistance band", "Core"],
   "equipment": ["Resistance band", "Door anchor"],
+  "muscles": {"shoulders": 2, "lowerBack": 1, "core": 3, "frontThigh": 1, "glutes": 1},
   "description": "Standing side-on to a band anchored high, pull it diagonally down across your body toward the opposite knee, turning through your torso, then return with control.",
   "source": {
     "url": "https://www.strengthlog.com/high-to-low-wood-chop-with-band/",

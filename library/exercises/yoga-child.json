@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["upperBack", "lowerBack", "glutes"],
   "description": "Resting pose kneeling with the hips on the heels and the forehead toward the floor.",
   "source": {
     "url": "https://www.yogajournal.com/poses/child-s-pose/",

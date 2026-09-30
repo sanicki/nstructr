@@ -8,6 +8,7 @@
   "focus": "Outer hips (glutes)",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"core": 1, "frontThigh": 2, "glutes": 3, "lowerLegs": 1},
   "description": "In a half squat with a band round your ankles, step sideways against the band, then bring the other foot in to hip-width, travelling to the side.",
   "source": {
     "url": "https://sweat.com/exercises/lateral-band-walk",

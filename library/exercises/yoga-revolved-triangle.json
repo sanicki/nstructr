@@ -7,6 +7,8 @@
   "category": "Standing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"core": 2, "frontThigh": 2, "glutes": 1},
+  "stretches": ["lowerBack", "core", "backThigh"],
   "description": "Straight-legged split stance twisting with one hand down and the other up.",
   "source": {
     "url": "https://www.yogajournal.com/poses/revolved-triangle-pose-2/",

@@ -8,6 +8,8 @@
   "focus": "Thighs and inner legs",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 1, "lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 1},
+  "stretches": ["frontThigh"],
   "description": "A wide-legged squat with the toes turned out: sink the hips until the knees bend over the ankles, arms bent up like a cactus.",
   "source": {
     "url": "https://www.yogajournal.com/poses/goddess-pose/",

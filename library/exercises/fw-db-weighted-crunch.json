@@ -8,6 +8,7 @@
   "focus": "Abdominals",
   "collections": ["Free weights", "Core"],
   "equipment": ["Dumbbells"],
+  "muscles": {"core": 3},
   "description": "Lying on your back, knees bent, holding a dumbbell on your chest with both hands, curl your head and shoulders up off the floor, then lower.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/weighted-crunch.html",

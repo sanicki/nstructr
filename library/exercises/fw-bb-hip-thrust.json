@@ -8,6 +8,7 @@
   "focus": "Glutes",
   "collections": ["Free weights"],
   "equipment": ["Barbell", "Bench"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 2, "glutes": 3, "backThigh": 1},
   "description": "With your upper back on a bench and a barbell across your hips, drive through your heels to lift your hips until your body is level from shoulders to knees.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/barbell-hip-thrust",

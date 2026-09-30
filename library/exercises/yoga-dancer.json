@@ -7,6 +7,8 @@
   "category": "Backbend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"core": 1, "glutes": 2, "backThigh": 2, "lowerLegs": 2},
+  "stretches": ["shoulders", "chest", "frontThigh"],
   "description": "Standing balance holding the back foot and kicking it up while the chest reaches forward.",
   "source": {
     "url": "https://www.yogajournal.com/poses/lord-of-the-dance-pose/",

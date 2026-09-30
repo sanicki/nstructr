@@ -8,6 +8,7 @@
   "focus": "Back (lats) and biceps",
   "collections": ["Bodyweight"],
   "equipment": ["Pull-up bar"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 3, "biceps": 2, "triceps": 1, "core": 1},
   "description": "Hang from a bar with a wide grip, palms facing away, and pull yourself up until your chin clears the bar, then lower under control.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/191/pull-ups/",

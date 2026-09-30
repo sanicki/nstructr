@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Free weights", "Chair-based"],
   "equipment": ["Dumbbells", "Chair"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Sitting on a chair holding a dumbbell upright at your chest, lean forward and stand up, then slowly sit back down.",
   "source": {
     "url": "https://sweat.com/exercises/goblet-sit-squat",

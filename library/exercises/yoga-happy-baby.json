@@ -8,6 +8,8 @@
   "focus": "Hips and lower back",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "frontThigh", "glutes", "backThigh"],
   "description": "Lying on your back, draw your knees toward your armpits and hold the outsides of your feet, soles toward the ceiling.",
   "source": {
     "url": "https://www.yogajournal.com/poses/happy-baby-pose/",

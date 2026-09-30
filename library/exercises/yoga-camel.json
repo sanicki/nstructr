@@ -7,6 +7,8 @@
   "category": "Backbend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"lowerBack": 2, "frontThigh": 1, "glutes": 2},
+  "stretches": ["shoulders", "chest", "core", "frontThigh"],
   "description": "Kneeling backbend reaching the hands back toward the heels.",
   "source": {
     "url": "https://www.yogajournal.com/poses/camel-pose/",

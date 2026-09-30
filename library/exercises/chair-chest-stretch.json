@@ -8,6 +8,8 @@
   "focus": "Chest",
   "collections": ["Chair-based", "Stretches"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["shoulders", "chest"],
   "description": "Sitting tall on a chair, draw your arms back and push your chest forward and up until you feel a stretch across the chest.",
   "source": {
     "url": "https://www.nhs.uk/live-well/exercise/sitting-exercises/",

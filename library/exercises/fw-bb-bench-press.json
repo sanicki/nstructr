@@ -8,6 +8,7 @@
   "focus": "Chest, shoulders and arms",
   "collections": ["Free weights"],
   "equipment": ["Barbell", "Bench"],
+  "muscles": {"shoulders": 2, "chest": 3, "biceps": 1, "triceps": 2},
   "description": "The classic upper-body press: lying on a bench, lower the bar to your chest with control, then press it back up to straight arms.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/5/chest-press/",

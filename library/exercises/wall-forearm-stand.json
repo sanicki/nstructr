@@ -7,6 +7,8 @@
   "category": "Inversion",
   "collections": ["Yoga"],
   "equipment": ["Wall"],
+  "muscles": {"shoulders": 3, "upperBack": 2, "triceps": 1, "core": 2},
+  "stretches": ["chest"],
   "description": "Forearm Stand with a wall behind you: from Dolphin with your hands near the wall, walk your feet in, kick up one leg at a time and rest your heels on the wall.",
   "source": {
     "url": "https://liforme.com/blogs/blog/how-to-do-forearm-stand-pincha-mayurasana",

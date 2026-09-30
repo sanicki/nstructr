@@ -8,6 +8,7 @@
   "focus": "Glutes and hamstrings",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"lowerBack": 1, "core": 1, "glutes": 3, "backThigh": 2},
   "description": "Lying on your back, knees bent, a dumbbell held across your hips, press through your heels to lift your hips, then lower.",
   "source": {
     "url": "https://www.puregym.com/exercises/glutes/glute-bridge/dumbbell-glute-bridges/",

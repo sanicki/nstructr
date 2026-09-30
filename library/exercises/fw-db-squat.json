@@ -7,6 +7,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A squat holding a dumbbell in each hand at your sides: sit your hips back and down, then stand up tall.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/equipment/dumbbells/",

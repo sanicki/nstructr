@@ -8,6 +8,7 @@
   "focus": "Shoulders and upper back",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 3, "chest": 2, "upperBack": 2, "biceps": 2},
   "description": "Standing on a resistance band with your hands close together in front of your thighs, pull straight up to your chest, elbows leading high and out, then lower.",
   "source": {
     "url": "https://www.setforset.com/blogs/news/resistance-band-shoulder-workout-for-building-muscle",

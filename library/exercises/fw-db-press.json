@@ -8,6 +8,7 @@
   "focus": "Shoulders",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 3, "chest": 2, "upperBack": 2, "biceps": 1, "triceps": 2, "core": 1},
   "description": "Press a pair of dumbbells from shoulder height to straight overhead, then lower them back to your shoulders.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/45/seated-overhead-press/",

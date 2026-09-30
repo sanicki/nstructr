@@ -8,6 +8,7 @@
   "focus": "Abs and hip flexors",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 3, "frontThigh": 2, "lowerLegs": 1},
   "description": "Lying on your back with knees bent and feet flat, curl your head, shoulders and back up until you're sitting, then lower with control.",
   "source": {
     "url": "https://www.healthline.com/health/sit-ups-benefits",

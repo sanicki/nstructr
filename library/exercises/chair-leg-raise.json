@@ -8,6 +8,7 @@
   "focus": "Front of the thighs and hip flexors",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"core": 1, "frontThigh": 3},
   "description": "Sitting tall on a chair with one leg straight out in front and the heel on the floor, lift the straight leg as high as is comfortable, then lower it.",
   "source": {
     "url": "https://www.hingehealth.com/resources/articles/seated-leg-raise/",

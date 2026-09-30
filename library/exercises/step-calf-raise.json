@@ -8,6 +8,8 @@
   "focus": "Calves",
   "collections": ["Bodyweight"],
   "equipment": ["Step", "Wall"],
+  "muscles": {"lowerLegs": 3},
+  "stretches": ["lowerLegs"],
   "description": "Standing with the balls of your feet on the edge of a step and your heels hanging off, lower your heels below the step, then rise up as high as you can, a hand on a wall for balance.",
   "source": {
     "url": "https://us.physitrack.com/home-exercise-video/calf-raise-on-step",

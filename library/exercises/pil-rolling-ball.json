@@ -7,6 +7,8 @@
   "focus": "Core and spine",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 2},
+  "stretches": ["lowerBack"],
   "description": "Curled into a ball and balanced on your tailbone, roll back to your shoulder blades and back up to balance again.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-rolling-like-a-ball/",

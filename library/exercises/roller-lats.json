@@ -8,6 +8,8 @@
   "focus": "Lats (sides of the back)",
   "collections": ["Stretches", "Warm-up"],
   "equipment": ["Foam roller"],
+  "muscles": {"core": 1},
+  "stretches": ["upperBack"],
   "description": "Lying on your side with a foam roller under your armpit and your bottom arm stretched overhead, push with your top foot to roll slowly down the side of your back and up again.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/foam-roll-latissimus-dorsi",

@@ -7,6 +7,8 @@
   "category": "Binding",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["shoulders", "lowerBack", "backThigh"],
   "description": "Seated forward bend with one knee up and the arms binding behind the back.",
   "source": {
     "url": "https://www.yogajournal.com/poses/pose-dedicated-to-the-sage-marichi-i/",

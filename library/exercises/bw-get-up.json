@@ -8,6 +8,7 @@
   "focus": "Whole body, shoulders and core",
   "collections": ["Bodyweight", "Core"],
   "equipment": [],
+  "muscles": {"shoulders": 1, "triceps": 1, "core": 3, "frontThigh": 2, "glutes": 2},
   "description": "The Turkish get-up with no weight, a fist held straight up: from lying on your back, rise step by step to standing, then reverse back down. The way to learn it before adding a weight.",
   "source": {
     "url": "https://www.garagegymreviews.com/turkish-get-up",

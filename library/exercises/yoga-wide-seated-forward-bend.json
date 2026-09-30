@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "frontThigh", "backThigh"],
   "description": "Seated with the legs wide, folding forward between them.",
   "source": {
     "url": "https://www.yogajournal.com/poses/wide-angle-seated-forward-bend/",

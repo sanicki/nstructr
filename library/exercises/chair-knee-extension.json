@@ -8,6 +8,7 @@
   "focus": "Front of the thighs",
   "collections": ["Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"frontThigh": 3},
   "description": "Sitting tall on a chair, slowly lift one foot until the leg is straight out in front of you, hold, then lower it back to the floor.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/knee-strengthening-exercises",

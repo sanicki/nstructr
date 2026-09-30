@@ -8,6 +8,7 @@
   "focus": "Lower abdominals",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 2, "frontThigh": 3},
   "description": "Works the lower stomach: lying on your back with legs straight, lift both legs toward the ceiling and lower them slowly.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/lying-floor-leg-raise.html",

@@ -8,6 +8,8 @@
   "focus": "Shoulders and upper back",
   "collections": ["Yoga", "Stretches"],
   "equipment": [],
+  "muscles": {},
+  "stretches": ["shoulders", "upperBack"],
   "description": "From hands and knees, reach one arm up to the ceiling, then thread it under the other arm along the floor until that shoulder and the side of your head rest down, hips lifted.",
   "source": {
     "url": "https://www.yogamatters.com/blogs/poses/thread-the-needle-pose-parsva-balasana",

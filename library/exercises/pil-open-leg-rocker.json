@@ -7,6 +7,8 @@
   "focus": "Core, spine and balance",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 3, "frontThigh": 1},
+  "stretches": ["lowerBack", "backThigh"],
   "description": "Balanced on your tailbone with your legs straight in a V and your hands on your ankles (or shins), roll back to your shoulder blades and back up to balance, keeping the same shape.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

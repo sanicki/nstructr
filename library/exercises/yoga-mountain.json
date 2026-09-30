@@ -7,6 +7,7 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"core": 1, "frontThigh": 1, "lowerLegs": 1},
   "description": "The foundational standing pose: feet grounded, spine tall, arms by the sides.",
   "source": {
     "url": "https://www.yogajournal.com/poses/mountain-pose/",

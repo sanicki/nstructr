@@ -8,6 +8,7 @@
   "focus": "Abs and obliques",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 3, "frontThigh": 2},
   "description": "Lying on your back with hands behind your head, pedal your legs while you twist each elbow toward the opposite knee.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/241/supine-bicycle-crunches/",

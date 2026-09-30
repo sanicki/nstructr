@@ -8,6 +8,7 @@
   "focus": "Chest, shoulders and arms",
   "collections": ["Bodyweight"],
   "equipment": ["Bench"],
+  "muscles": {"shoulders": 2, "chest": 3, "lowerBack": 1, "biceps": 1, "triceps": 2, "core": 1, "frontThigh": 1},
   "description": "A step between wall and floor push-ups: hands on a bench or sturdy table, body straight, lower your chest to the edge and press away.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/incline-push-up",

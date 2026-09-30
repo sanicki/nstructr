@@ -8,6 +8,7 @@
   "focus": "Balance and ankles",
   "collections": ["Balance"],
   "equipment": [],
+  "muscles": {"core": 1, "glutes": 2, "lowerLegs": 2},
   "description": "Stand on one foot with the other lifted a little off the floor, and hold steady.",
   "source": {
     "url": "https://go4life.nia.nih.gov/sample_workout/3-balance-exercises-older-adults",

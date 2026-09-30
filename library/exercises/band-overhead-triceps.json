@@ -8,6 +8,7 @@
   "focus": "Backs of the arms",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 1, "triceps": 3, "core": 1},
   "description": "With one end of the band under your back foot, hold the other end behind your head with elbows pointing up, then straighten your arms overhead.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/overhead-banded-tricep-extension",

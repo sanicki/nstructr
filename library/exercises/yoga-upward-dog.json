@@ -7,6 +7,8 @@
   "category": "Backbend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 2, "lowerBack": 2, "triceps": 2, "glutes": 1},
+  "stretches": ["chest", "core", "frontThigh"],
   "description": "Backbend on straight arms with the chest lifted and the tops of the feet down.",
   "source": {
     "url": "https://www.yogajournal.com/poses/upward-facing-dog-2/",

@@ -8,6 +8,7 @@
   "focus": "Lower back and glutes",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"shoulders": 1, "upperBack": 1, "lowerBack": 3, "glutes": 2, "backThigh": 2},
   "description": "Strengthens the back of the body: lying face down with arms overhead, lift your arms, chest and legs a little way off the floor.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/9/supermans/",

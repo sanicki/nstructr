@@ -8,6 +8,7 @@
   "focus": "Shoulders and arms",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 3, "chest": 2, "upperBack": 2, "biceps": 1, "triceps": 2, "core": 1},
   "description": "Standing, press the kettlebell from your shoulder to straight overhead, then lower it back to your shoulder.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/45/seated-overhead-press/",

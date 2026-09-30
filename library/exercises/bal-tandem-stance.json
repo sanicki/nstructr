@@ -8,6 +8,7 @@
   "focus": "Balance",
   "collections": ["Balance"],
   "equipment": [],
+  "muscles": {"core": 1, "glutes": 1, "lowerLegs": 2},
   "description": "Stand with one foot directly in front of the other, heel touching toes, as if on a line, and hold steady.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/balance-exercises/art-20546836",

@@ -8,6 +8,7 @@
   "focus": "Outer hips (glute medius)",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"core": 1, "glutes": 3},
   "description": "The clamshell with a loop band just above your knees: lying on your side with feet together, open the top knee against the band.",
   "source": {
     "url": "https://blog.nasm.org/banded-clamshell-workout",

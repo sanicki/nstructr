@@ -7,6 +7,7 @@
   "focus": "Deep core",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"core": 3, "frontThigh": 1},
   "description": "A core exercise on your back: arms up and knees over hips, lower one arm and the opposite leg toward the floor while your back stays flat.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/147/supine-dead-bug/",

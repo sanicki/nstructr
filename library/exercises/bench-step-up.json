@@ -8,6 +8,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Bodyweight"],
   "equipment": ["Bench"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "Step one foot up onto a sturdy bench, drive through it to stand tall on the bench, then step back down one foot at a time.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/28/step-up/",

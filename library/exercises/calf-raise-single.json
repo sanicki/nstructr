@@ -8,6 +8,7 @@
   "focus": "Calves",
   "collections": ["Bodyweight"],
   "equipment": ["Wall"],
+  "muscles": {"core": 1, "glutes": 1, "lowerLegs": 3},
   "description": "A harder calf raise: with one foot lifted and a hand on the wall, rise slowly onto the ball of the standing foot.",
   "source": {
     "url": "https://abuhb.nhs.wales/files/patient-information-leaflets1/foot-care-podiatry/calf-strengthening-guide-piu1441-pdf/",

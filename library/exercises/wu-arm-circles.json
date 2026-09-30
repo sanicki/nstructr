@@ -8,6 +8,7 @@
   "focus": "Shoulders",
   "collections": ["Warm-up"],
   "equipment": [],
+  "muscles": {"shoulders": 2, "upperBack": 1},
   "description": "A shoulder warm-up: arms straight out to your sides at shoulder height, make controlled circles forward, then reverse.",
   "source": {
     "url": "https://www.muscleandstrength.com/exercises/arm-circles",

@@ -8,6 +8,7 @@
   "focus": "Upper back",
   "collections": ["Free weights"],
   "equipment": ["Barbell"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 3, "lowerBack": 1, "biceps": 2, "triceps": 1, "core": 1},
   "description": "Hinged forward with a flat back, pull a barbell up toward the bottom of your ribs, squeezing your shoulder blades, then lower it.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/12/bent-over-row/",

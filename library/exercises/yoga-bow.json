@@ -7,6 +7,8 @@
   "category": "Backbend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"shoulders": 1, "lowerBack": 3, "glutes": 2, "backThigh": 2},
+  "stretches": ["shoulders", "chest", "core", "frontThigh"],
   "description": "Belly-down backbend where the hands hold the ankles and the chest and thighs lift.",
   "source": {
     "url": "https://www.yogajournal.com/poses/bow-pose/",

@@ -8,6 +8,7 @@
   "focus": "Chest and front of the shoulders",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 2, "chest": 3, "biceps": 1, "triceps": 1},
   "description": "With a resistance band around your upper back and an end in each hand, open your arms wide at shoulder height, then sweep them together in front of your chest as if hugging a tree.",
   "source": {
     "url": "https://www.garagestrength.com/blogs/news/resistance-band-chest-exercises",

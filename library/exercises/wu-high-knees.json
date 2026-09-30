@@ -8,6 +8,7 @@
   "focus": "Hips, legs and core (cardio)",
   "collections": ["Warm-up"],
   "equipment": [],
+  "muscles": {"core": 2, "frontThigh": 3, "glutes": 1, "lowerLegs": 2},
   "description": "Run in place, driving each knee up to about hip height in turn and pumping the opposite arm, landing lightly on the balls of your feet.",
   "source": {
     "url": "https://www.healthline.com/health/fitness/high-knees-benefits",

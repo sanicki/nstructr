@@ -8,6 +8,7 @@
   "focus": "Hamstrings and glutes",
   "collections": ["Free weights"],
   "equipment": ["Barbell"],
+  "muscles": {"upperBack": 1, "lowerBack": 2, "core": 1, "frontThigh": 1, "glutes": 3, "backThigh": 2},
   "description": "A hip hinge with a barbell held in front of your thighs: push your hips back with soft knees until you feel the hamstrings stretch, then stand up.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/romanian-deadlift-barbell",

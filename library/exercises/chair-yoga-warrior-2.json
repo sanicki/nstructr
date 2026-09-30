@@ -7,6 +7,8 @@
   "category": "Strength",
   "collections": ["Yoga", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"shoulders": 2, "frontThigh": 2, "glutes": 1},
+  "stretches": ["frontThigh"],
   "description": "Sitting near the front of a chair, turn one knee out to the side with the foot flat, reach the other leg long to the other side, and stretch your arms out at shoulder height, looking past the front hand.",
   "source": {
     "url": "https://georgewatts.org/lesson-planner/yoga_pilates_poses/chair-warrior-ii/",

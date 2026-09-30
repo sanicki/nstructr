@@ -8,6 +8,8 @@
   "focus": "Core, spine and hamstrings",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"lowerBack": 1, "triceps": 1, "core": 3, "frontThigh": 2},
+  "stretches": ["upperBack", "lowerBack", "backThigh"],
   "description": "Sitting with your legs straight and crossed at the ankles, roll back and over, switch the cross, roll up to balance in a Teaser, lower the legs as the arms sweep behind you, fold forward with the arms lifting behind, circle them round to your feet and sit up.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

@@ -8,6 +8,7 @@
   "focus": "Shoulders",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 3, "upperBack": 2},
   "description": "Shoulder strengthener: with the band under one foot, raise both arms out to the sides up to shoulder height.",
   "source": {
     "url": "https://www.bhf.org.uk/informationsupport/heart-matters-magazine/activity/resistance-bands",

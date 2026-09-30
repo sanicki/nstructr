@@ -8,6 +8,8 @@
   "focus": "Grip, shoulders and spine (decompression)",
   "collections": ["Bodyweight"],
   "equipment": ["Pull-up bar"],
+  "muscles": {"shoulders": 1, "upperBack": 1, "biceps": 3, "core": 1},
+  "stretches": ["shoulders", "upperBack"],
   "description": "Hang from a bar with straight arms and relaxed shoulders, holding for time to build grip strength and ease the shoulders and spine.",
   "source": {
     "url": "https://www.healthline.com/health/fitness-exercise/dead-hang",

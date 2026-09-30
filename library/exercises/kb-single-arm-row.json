@@ -8,6 +8,7 @@
   "focus": "Upper back and biceps",
   "collections": ["Free weights"],
   "equipment": ["Kettlebell"],
+  "muscles": {"shoulders": 2, "chest": 2, "upperBack": 3, "lowerBack": 1, "biceps": 2, "triceps": 1, "core": 1},
   "description": "Hinged forward with your free hand on your hip, row the kettlebell from below your shoulder up to your hip, then lower it.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/12/bent-over-row/",

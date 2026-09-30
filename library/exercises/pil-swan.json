@@ -7,6 +7,8 @@
   "focus": "Back extensors",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"upperBack": 2, "lowerBack": 3, "triceps": 1, "glutes": 1},
+  "stretches": ["chest", "core"],
   "description": "Lying on your front with hands under your shoulders, lengthen and lift your chest into a gentle back extension, then lower.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-swan-prep/",

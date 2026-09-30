@@ -8,6 +8,7 @@
   "focus": "Chest, shoulders and arms",
   "collections": ["Bodyweight"],
   "equipment": [],
+  "muscles": {"shoulders": 2, "chest": 3, "lowerBack": 1, "biceps": 1, "triceps": 2, "core": 1, "frontThigh": 1},
   "description": "The full push-up: from a straight-arm plank on your toes, lower your chest until your elbows are bent to 90°, then press back up.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/41/push-up/",

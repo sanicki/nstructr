@@ -8,6 +8,8 @@
   "focus": "Core, spine and balance",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 2},
+  "stretches": ["lowerBack"],
   "description": "Curled up with your legs crossed and your hands holding your feet, roll back to your shoulder blades, switch the cross of your legs, then roll forward onto your knees with the top of your head touching down lightly, and roll back to balance.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

@@ -8,6 +8,8 @@
   "focus": "Chest and front of the shoulder",
   "collections": ["Stretches"],
   "equipment": ["Wall"],
+  "muscles": {},
+  "stretches": ["shoulders", "chest"],
   "description": "Stretches the chest: forearm flat on a wall beside you with the elbow at shoulder height, step forward and turn your body away from the wall.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/blog/5657/5-chest-stretch-variations/",

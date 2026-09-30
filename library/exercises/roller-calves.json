@@ -8,6 +8,8 @@
   "focus": "Calves",
   "collections": ["Stretches", "Warm-up"],
   "equipment": ["Foam roller"],
+  "muscles": {"shoulders": 1, "triceps": 1, "core": 1},
+  "stretches": ["lowerLegs"],
   "description": "Sitting with a foam roller under your calves and your hands on the floor behind you, lift your hips and roll slowly from just above the ankles to just below the knees and back.",
   "source": {
     "url": "https://www.nasm.org/resource-center/exercise-library/foam-roll-calves",

@@ -8,6 +8,8 @@
   "focus": "Hamstrings and calves",
   "collections": ["Stretches"],
   "equipment": ["Mat"],
+  "muscles": {},
+  "stretches": ["backThigh", "lowerLegs"],
   "description": "Sitting with one leg straight and the other foot against its inner thigh, hinge forward from your hips with a flat back and reach toward your ankle.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

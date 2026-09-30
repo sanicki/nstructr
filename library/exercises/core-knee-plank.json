@@ -8,6 +8,7 @@
   "focus": "Core",
   "collections": ["Core"],
   "equipment": [],
+  "muscles": {"shoulders": 1, "core": 3, "frontThigh": 1, "glutes": 1},
   "description": "Resting on your forearms and knees, walk the knees back until your body makes one straight line from the knees to the shoulders, and hold. The easier start to the Plank.",
   "source": {
     "url": "https://www.healthline.com/health/14-plank-variations-your-core-will-thank-you-for-later",

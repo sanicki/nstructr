@@ -8,6 +8,7 @@
   "focus": "Glutes, hamstrings and core (power)",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells"],
+  "muscles": {"shoulders": 2, "upperBack": 2, "lowerBack": 2, "core": 1, "frontThigh": 2, "glutes": 3, "backThigh": 2, "lowerLegs": 1},
   "description": "Holding one dumbbell by one end in both hands, hinge and let it swing back between your legs, then drive your hips forward to swing it up to chest height.",
   "source": {
     "url": "https://spotebi.com/exercise-guide/dumbbell-swing/",

@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "backThigh", "lowerLegs"],
   "description": "Standing fold with the torso hanging over the legs.",
   "source": {
     "url": "https://www.yogajournal.com/poses/standing-forward-bend-2/",

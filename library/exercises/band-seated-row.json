@@ -7,6 +7,7 @@
   "category": "Strength",
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
+  "muscles": {"shoulders": 2, "upperBack": 3, "lowerBack": 1, "biceps": 2, "triceps": 1, "core": 1},
   "description": "Seated back exercise: with a band looped around the soles, pull the ends toward your waist, elbows close to your sides, then let the band draw your arms forward again under control.",
   "source": {
     "url": "https://www.healthline.com/health/seated-row",

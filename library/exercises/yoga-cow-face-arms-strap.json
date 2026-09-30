@@ -8,6 +8,8 @@
   "focus": "Shoulders and chest",
   "collections": ["Yoga", "Stretches"],
   "equipment": ["Yoga mat", "Yoga strap"],
+  "muscles": {},
+  "stretches": ["shoulders", "chest", "triceps"],
   "description": "Sitting cross-legged, reach one arm down and up the middle of your back and the other over your shoulder and down, holding a strap between the hands, and walk the hands toward each other.",
   "source": {
     "url": "https://www.yogajournal.com/poses/cow-face-pose/",

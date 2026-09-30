@@ -7,6 +7,8 @@
   "category": "Side bend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"frontThigh": 1},
+  "stretches": ["core"],
   "description": "Kneeling side bend with one leg extended out to the side.",
   "source": {
     "url": "https://www.yogajournal.com/poses/library/gate-pose-2/",

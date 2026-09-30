@@ -7,6 +7,7 @@
   "category": "Flexibility",
   "collections": ["Yoga", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"lowerBack": 1, "core": 1},
   "description": "Sitting tall near the front of a chair, feet flat and hip-width apart, hands resting on the thighs: lengthen up through the crown of your head and breathe.",
   "source": {
     "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",

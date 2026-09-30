@@ -8,6 +8,8 @@
   "focus": "Abs and hamstrings",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 3, "frontThigh": 2},
+  "stretches": ["backThigh"],
   "description": "Lying down with your head and shoulders curled up, scissor your straight legs, pulling the top one toward you with a double pulse, then switch.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

@@ -7,6 +7,7 @@
   "category": "Cardio",
   "focus": "Core, shoulders and hip flexors (cardio)",
   "collections": ["Bodyweight", "Warm-up"],
+  "muscles": {"shoulders": 2, "chest": 1, "triceps": 1, "core": 3, "frontThigh": 2},
   "description": "From a straight-arm plank, drive one knee in towards your chest and back, then the other, keeping your hips level, at a steady run.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/258/mountain-climbers/",

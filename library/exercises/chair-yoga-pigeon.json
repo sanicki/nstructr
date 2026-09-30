@@ -8,6 +8,8 @@
   "focus": "Outer hip",
   "collections": ["Yoga", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["glutes"],
   "description": "A seated hip stretch on a chair: rest one ankle on the opposite knee, the lifted knee dropping out to the side, then hinge forward from the hips with a long back.",
   "source": {
     "url": "https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/",

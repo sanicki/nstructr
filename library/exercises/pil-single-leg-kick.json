@@ -8,6 +8,8 @@
   "focus": "Hamstrings and back",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"lowerBack": 2, "core": 1, "glutes": 1, "backThigh": 3},
+  "stretches": ["frontThigh"],
   "description": "Lying face down propped on your forearms, chest lifted, kick one heel toward your seat and then the other.",
   "source": {
     "url": "https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/",

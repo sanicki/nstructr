@@ -7,6 +7,8 @@
   "category": "Strength",
   "collections": ["Yoga", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {"shoulders": 1, "frontThigh": 2, "glutes": 1},
+  "stretches": ["frontThigh"],
   "description": "Sitting sideways near the front corner of a chair with the front foot flat, reach the other leg long behind you, toes tucked, and lift your arms overhead.",
   "source": {
     "url": "https://www.tummee.com/yoga-poses/seated-warrior-pose-i-chair",

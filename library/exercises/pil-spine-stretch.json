@@ -8,6 +8,8 @@
   "focus": "Spine",
   "collections": ["Pilates"],
   "equipment": ["Mat"],
+  "muscles": {"core": 1},
+  "stretches": ["lowerBack", "backThigh"],
   "description": "Sitting tall with your legs apart, round forward from the top of your head as if over a ball, reaching forward, then stack back up.",
   "source": {
     "url": "https://onlinepilatesclasses.com/pilates-exercises/mat-exercises/mat-spine-stretch-forward/",

@@ -8,6 +8,8 @@
   "focus": "Hips and hip flexors",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"frontThigh": 1, "glutes": 1},
+  "stretches": ["frontThigh", "glutes", "backThigh"],
   "description": "A deep lunge with both hands inside the front foot: back knee down, hips sinking low to open the hips.",
   "source": {
     "url": "https://www.yogajournal.com/poses/lizard-pose/",

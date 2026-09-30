@@ -8,6 +8,8 @@
   "focus": "Calves",
   "collections": ["Stretches"],
   "equipment": ["Wall"],
+  "muscles": {},
+  "stretches": ["lowerLegs"],
   "description": "Stretches the calf along the back of the lower leg: hands on a wall, one foot back with the heel down, bend the front knee.",
   "source": {
     "url": "https://www.mayoclinic.org/healthy-lifestyle/fitness/in-depth/stretching/art-20546848",

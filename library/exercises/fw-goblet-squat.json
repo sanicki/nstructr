@@ -7,6 +7,7 @@
   "focus": "Thighs and glutes",
   "collections": ["Free weights"],
   "equipment": ["Dumbbell"],
+  "muscles": {"lowerBack": 1, "core": 1, "frontThigh": 3, "glutes": 2, "backThigh": 1, "lowerLegs": 2},
   "description": "A squat holding one dumbbell upright against your chest, which helps keep your chest up and your balance forward.",
   "source": {
     "url": "https://www.acefitness.org/resources/everyone/exercise-library/362/goblet-squat/",

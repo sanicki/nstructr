@@ -7,6 +7,8 @@
   "category": "Forward Bend",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {},
+  "stretches": ["lowerBack", "backThigh"],
   "description": "Seated forward bend over one straight leg with the other foot against the inner thigh.",
   "source": {
     "url": "https://www.yogajournal.com/poses/head-to-knee-forward-bend/",

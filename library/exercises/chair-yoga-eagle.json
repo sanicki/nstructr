@@ -7,6 +7,8 @@
   "category": "Flexibility",
   "collections": ["Yoga", "Chair-based"],
   "equipment": ["Chair"],
+  "muscles": {},
+  "stretches": ["shoulders", "upperBack", "glutes"],
   "description": "Sitting near the front of a chair, cross one thigh over the other and wrap your arms, crossing them at the elbows with the forearms up and the palms toward each other.",
   "source": {
     "url": "https://www.tummee.com/yoga-poses/garudasana-chair",

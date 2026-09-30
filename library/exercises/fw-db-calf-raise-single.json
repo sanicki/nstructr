@@ -8,6 +8,7 @@
   "focus": "Calves and balance",
   "collections": ["Free weights"],
   "equipment": ["Dumbbells", "Wall"],
+  "muscles": {"core": 1, "glutes": 1, "lowerLegs": 3},
   "description": "Standing on one leg with a dumbbell in the other hand and a hand on a wall for balance, rise onto the ball of the foot, then lower slowly.",
   "source": {
     "url": "https://exrx.net/WeightExercises/Gastrocnemius/DBSingleLegCalfRaise",

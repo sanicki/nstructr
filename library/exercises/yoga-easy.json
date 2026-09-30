@@ -7,6 +7,8 @@
   "category": "Beginner",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "muscles": {"lowerBack": 1},
+  "stretches": ["glutes"],
   "description": "A simple cross-legged seat: shins crossed, each foot under the opposite knee, knees wide, hands resting on the knees and the spine tall.",
   "source": {
     "url": "https://www.yogajournal.com/poses/easy-pose-3/",

@@ -8,6 +8,7 @@
   "focus": "Chest, shoulders and triceps (power)",
   "collections": ["Free weights"],
   "equipment": ["Medicine ball", "Wall"],
+  "muscles": {"shoulders": 2, "chest": 3, "triceps": 2, "core": 1},
   "description": "Facing a wall with a medicine ball at your chest, push it off hard and straight to the wall, then catch the rebound with soft elbows and bring it back to your chest.",
   "source": {
     "url": "https://fitwill.app/exercise/5144/medicine-ball-chest-pass-against-wall/",
