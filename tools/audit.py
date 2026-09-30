@@ -91,6 +91,8 @@ async def screens(b, theme, results):
     await audit(pg, T('Cover: player'), results)
     await pg.touchscreen.tap(180, 200); await audit(pg, T('Cover: player, controls'), results)
     await pg.evaluate("startRest(20,'item')"); await audit(pg, T('Cover: rest'), results)
+    await pg.evaluate("WK.list.push({id:'v', name:'Vary', blocks:[{id:'b', name:'Main', items:[newItem(exById('bw-pushup'))]}]}); startWorkout(wkById('v'))"); await pg.wait_for_timeout(600)
+    await pg.touchscreen.tap(180, 120); await audit(pg, T('Cover: player, controls with Easier/Harder'), results)
     await ctx.close()
 
 def report(results):

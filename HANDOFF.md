@@ -24,22 +24,22 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **350 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **352 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 90 | Yoga Journal pose list + chair and wall versions (incl. Chair Warrior I and II, Chair Eagle; Handstand, Headstand and Forearm Stand at the wall) + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions (incl. Cow Face arms with a strap) |
 | Free weights | 65 | dumbbell, kettlebell (incl. around the world, clean, Turkish get-up), barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry; dumbbell and barbell versions of other exercises (batch 21) |
-| Bodyweight | 40 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
+| Bodyweight | 41 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
 | Resistance band | 37 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) + band Pilates (Hundred, Leg Circles, Roll-Up) |
 | Chair-based | 29 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga, chair-supported stretches… |
 | Stretches | 36 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway, strap stretches + towel, chair and step versions + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
-| Core | 38 | planks, hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
+| Core | 39 | planks (incl. knee plank), hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 41 | Pilates ring (chest press, inner thigh squeeze); all 34 classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick… and the advanced ones, batch 23: Open Leg Rocker, Corkscrew, Jackknife, Boomerang…); band versions |
 | Balance | 15 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, side stepping, balance walk, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 23 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-222 are rep-based, 128 timed; 125 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
+223 are rep-based, 129 timed; 126 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -117,6 +117,7 @@ src/
   app/0-boot.js       globals the library fills (POSE_DB, LIBRARY_WORKOUTS)
   app/1-engine.js     app state S, import validation, figure SVG, drawing, playback loop, editor sliders
   app/2-explore.js    Exercises tab (collections incl. Saved, filters, search, cards)
+  app/2-links.js      linked variations: easier/harder/other equipment, swapping a workout item (§8.1b)
   app/3-details.js    exercise page info, its tap-for-controls overlay, Edit, its sound, Settings, format reference
   app/4-workouts.js   workouts: storage, editor, plan builder, workout player, sound, history, sharing
   app/5-main.js       selection, import, routing, event wiring, boot() (defined here)
@@ -355,6 +356,27 @@ used: an exercise is `time` if its longest `holdMs` ≥ 3000, except where the h
   Health Connect logger, which was dropped, so the separate history export was removed (Sep 2026); history is
   still in **Export everything**.
 
+### 5.4 Linked variations (`library/progressions.json`, Sep 2026)
+
+Which library exercises are easier or harder versions of one another, and which are the same move with other
+equipment. Checked against `schema/progressions.schema.json`; bundled into `library/index.json` as `links`.
+```json
+{ "progressions": [{ "name": "Push-up", "steps": ["bw-wall-pushup", "…", "bw-pushup", "bench-decline-pushup"] }],
+  "equipment":    [{ "name": "Deadlift", "ids": ["fw-bb-deadlift", "fw-db-deadlift", "fw-kb-deadlift"] }],
+  "notLinked":    [{ "ids": ["bar-dead-hang", "bar-hanging-knee-raise"], "why": "…" }] }
+```
+- **progressions**: steps easiest first; an exercise's easier and harder versions are the steps beside it (in every
+  progression it's in). A wall, block, strap or chair that supports a pose makes it the easier step.
+- **equipment**: the same move with other equipment, no order; each member uses other equipment (the build fails on
+  two with the same kinds, `equipKinds` in `src/similar.js`). An exercise may be in several groups.
+- **notLinked**: pairs the duplicate check calls variants (same motion, other equipment or measure) that aren't
+  versions of each other. The build **warns** (doesn't fail) about any variant pair that is neither linked nor here,
+  so a new exercise gets placed.
+- The build fails on an unknown id, an id twice in one progression or group, or one with fewer than two members.
+- A user's copy of a library exercise (`basedOn`) has its original's links; the user's own exercises have none.
+- Research and sources: `docs/progressions.md`; placing a new exercise is step 4 of the `exercise-research` skill,
+  and `node tools/research.cjs report <id>` shows its links or the likely ones.
+
 ---
 
 ## 6. How playback works (engine pipeline)
@@ -497,6 +519,23 @@ representations that rotate the short, natural way) over adding a known issue; i
   "lines" — directions are imagined.
 - Safety notes from sources are kept (BHF heart-condition note, Mayo osteoporosis warning for knee-to-chest,
   coach/spotter notes on barbell lifts) and shown on the workout card (when expanded) and in the workout editor.
+
+### 8.1b Linked variations (Sep 2026, owner's decisions)
+- **Exercise page**: a "Variations" section in About (Easier, Harder, Other equipment), each a button to that
+  exercise. Only shown when there is one.
+- **Workout editor**: the item dialog's "Swap for" (the same three rows) swaps the item there and then; Save keeps it,
+  Cancel doesn't. A swap (`swapItem` in `src/app/2-links.js`) keeps sets; keeps reps or seconds when both exercises
+  count the same way (else the new one's defaults); keeps sides and direction where the new one has them (their
+  order only when both have the same); resets the pace (`tempo`) to the new exercise's own.
+- **Workout player**: **Easier** and **Harder** buttons in the control overlay, under the play controls (never on
+  the rest screen: you only know it's too easy or hard once you're doing it). Other equipment isn't offered there.
+  - A swap restarts the current set from the first rep / 0:00, with Coach's run-through when Coach is on; nothing
+    done carries over. The item, in every round still to come, is the new exercise.
+  - **For that session only**: the workout isn't changed (`WP.swaps` item uid → exercise id, `WP.orig` the items
+    before; saved with the session, so Resume keeps them). Leaving the player (finished or not) asks "Keep these
+    changes in the workout?" (`offerKeepSwaps`); Keep saves them, in the user's own copy for a library workout.
+  - History: sets finished before a swap count as the old exercise's (`logSets`, `entry.setBase`).
+  - Cover screen: the row's bottom stays above the kept-empty bottom 22% at 360×398 (`tools/e2e/variations.py`).
 
 ### 8.2 Reps
 - One loop of an exercise's rep steps is one rep. Nested reps (Wall Sit with Band Pull-Apart) are modelled with
@@ -793,7 +832,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `pose-player-library-v1` | `{items: [...]}` **My exercises**: the user's own (imported, copied, made). Before bookmarks it also held copies of bookmarked library exercises; `migrateSaved()` moves those to bookmarks once. Exercises saved before format v2 (Sep 2026) are still 2D and aren't converted (owner's decision: no other users yet); they draw wrongly and are best deleted |
 | `nstructr-bookmarks-v1` | ids of bookmarked exercises, library or own (a flag; library ones aren't copied, so library fixes reach them) |
 | `motion-guide-workouts-v1` | `{list: [...]}` user workouts (runtime form with uids) |
-| `motion-guide-session-v1` | `{wid, i}` resume point |
+| `motion-guide-session-v1` | `{wid, i, swaps?}` resume point; `swaps` = the session's Easier/Harder swaps (item uid → exercise id, Sep 2026) |
 | `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name). Default **coach** (beeps until Sep 2026): the 20-minute workouts are timed with Coach |
 | `motion-guide-log-v1` | history sessions (capped at 500) |
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
@@ -838,7 +877,8 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /
   caption / figure never overlap on cover, phone, landscape), `floor_height_cover` (floor ≥ 23% above bottom),
-  `arm_circles_continuity` (constant angular speed, never reverses), `star_excursion_coach`.
+  `arm_circles_continuity` (constant angular speed, never reverses), `star_excursion_coach`, `variations` (linked
+  variations: exercise page, editor swaps, player swaps with Coach, session and Resume, history, Keep these changes).
   They print results rather than assert; read the output. Install with a Playwright version matching the
   Chromium you have (Claude Code's cloud sandbox: `pip install playwright==1.56.0 pillow`, no `playwright install`). Turning them into asserting tests is worthwhile.
 
@@ -908,8 +948,9 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
       and maybe paths on the floor. To split: ES module exports instead of the shared script scope, the stage size
       (`W`, `CX`, `FLOOR`) as options, the SVG drawing optional (the posing maths alone for a canvas/WebGL
       renderer), HANDOFF §4–6 and the schema as its README. CLAUDE.md's rule keeps `src/core.js` separable meanwhile.
-    - **Linked variations**: an exercise names its easier/harder versions (knee push-up ↔ push-up ↔ decline
-      push-up), so a workout can swap one for another.
+    - ✅ **Linked variations** (Sep 2026, §5.4 and §8.1b): progressions and equipment groups in
+      `library/progressions.json`, shown on the exercise page, swapped in the workout editor and, for a session, in
+      the player. Knee Plank and Single-Leg Glute Bridge were added to fill gaps (`tools/variants/batch-24-links.cjs`).
 
 ### Agreed next (Sep 2026, in this order)
 

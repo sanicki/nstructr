@@ -14,7 +14,7 @@ const known = {
   standingMarch: S('https://www.physitrack.com/exercise-library/how-to-perform-the-standing-march-exercise', 'Physitrack: Step-by-step guide to the standing march'),
   chairWarrior1: S('https://www.tummee.com/yoga-poses/seated-warrior-pose-i-chair', 'Tummee: Seated Warrior Pose I, chair yoga'),
   chairWarrior2: S('https://georgewatts.org/lesson-planner/yoga_pilates_poses/chair-warrior-ii/', 'GeorgeWatts.org: How to teach Chair Warrior II'),
-  seatedMountain: S('https://www.yogajournal.com/poses/chair-yoga-poses/', 'Yoga Journal: Chair yoga poses'),
+  seatedMountain: S('https://www.yogajournal.com/yoga-101/types-of-yoga/chair-yoga-poses/', 'Yoga Journal: Chair yoga poses'),
   chairEagle: S('https://www.tummee.com/yoga-poses/garudasana-chair', 'Tummee: Eagle Pose, chair yoga'),
   wallHandstand: S('https://yogainternational.com/article/view/step-up-to-handstand/', 'Yoga International: Step up to Handstand'),
   wallHeadstand: S('https://yogaselection.com/headstand-preparation-kick-up-to-the-wall/', 'Yoga Selection: Headstand preparation at the wall'),

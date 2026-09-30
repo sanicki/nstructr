@@ -1,0 +1,95 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "core-knee-plank",
+  "name": "Knee Plank",
+  "otherNames": ["Modified Plank", "Kneeling Plank"],
+  "category": "Core",
+  "focus": "Core",
+  "collections": ["Core"],
+  "equipment": [],
+  "description": "Resting on your forearms and knees, walk the knees back until your body makes one straight line from the knees to the shoulders, and hold. The easier start to the Plank.",
+  "source": {
+    "url": "https://www.healthline.com/health/14-plank-variations-your-core-will-thank-you-for-later",
+    "title": "Healthline: Plank variations",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["On your forearms and knees, elbows under your shoulders."],
+  "cues": ["Straight line from knees to shoulders.", "Squeeze your seat; don't let the hips sag.", "Breathe steadily."],
+  "prescription": {
+    "reps": "Hold 20–30 s, 2–3 times",
+    "note": "Breathe steadily; build up the hold time gradually."
+  },
+  "keyframes": [
+    {
+      "name": "Forearms and knees",
+      "cue": "Elbows under your shoulders, knees on the floor.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 800,
+      "phase": "setup",
+      "anchor": "elbowR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [105, 0, 0],
+        "shoulderL": [105, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [105, 0, 0],
+        "elbowR": 90,
+        "hipL": [101.5, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [101.5, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Knee Plank",
+      "cue": "Walk your knees back: one straight line from knees to shoulders.",
+      "camera": 90,
+      "durationMs": 2000,
+      "holdMs": 30000,
+      "phase": "rep",
+      "anchor": "elbowR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [95, 0, 0],
+        "shoulderL": [95, 0, 0],
+        "elbowL": 90,
+        "shoulderR": [95, 0, 0],
+        "elbowR": 90,
+        "hipL": [0, 0, 0],
+        "kneeL": 95,
+        "ankleL": 90,
+        "hipR": [0, 0, 0],
+        "kneeR": 95,
+        "ankleR": 90
+      }
+    }
+  ],
+  "measure": "time",
+  "holdStep": 1,
+  "defaults": {
+    "seconds": 30
+  },
+  "repName": "rep"
+}

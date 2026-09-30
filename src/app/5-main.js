@@ -405,6 +405,7 @@ function route() {
     S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.holdWait = null; S.playing = false; wakeOff(); leaveFullscreen(); moveStage(false); resetScene(); buildFigure();
     if ('speechSynthesis' in window) speechSynthesis.cancel();
     if (WP.phase !== 'done') { writeSession(false); WP.phase = 'idle'; renderWorkouts(); }
+    if (Object.keys(WP.swaps || {}).length) { const w = WP.w, sw = WP.swaps; WP.swaps = {}; setTimeout(() => offerKeepSwaps(w, sw), 300); }
     S.ex = null;                                               // the exercise player rebuilds next time
   }
   if (view === 'player') {
@@ -511,6 +512,7 @@ async function boot() {
   }
   POSE_DB = { exercises: b.exercises || [] };
   LIBRARY_WORKOUTS = b.workouts || [];
+  LINKS = b.links || { progressions: [], equipment: [] };
   hydrateLibrary();
   migrateSaved();                                            // bookmarks and My exercises (once; see 2-explore.js)
   if (WK.list === null) { WK.list = []; saveWorkouts(); }     // first run: library workouts are listed on their own

@@ -1,8 +1,9 @@
 # NstructR
 
-Exercise animations and workouts with a 3D stick figure: 350 exercises (yoga, bodyweight, core, Pilates, bands,
-free weights, chair-based, stretches, balance) and a workout player built to be used from the floor —
-including on the cover screen of a foldable flip phone — with optional voice coaching.
+Exercise animations and workouts with a 3D stick figure: 352 exercises (yoga, bodyweight, core, Pilates, bands,
+free weights, chair-based, stretches, balance), linked to their easier, harder and other-equipment versions, and a
+workout player built to be used from the floor — including on the cover screen of a foldable flip phone — with
+optional voice coaching and a swap to an easier or harder version mid-workout.
 
 **Use it:** https://sanicki.github.io/nstructr/ (install it from the browser menu to use it offline and full screen).
 

@@ -21,10 +21,10 @@ async function copyText(text, done) {
 }
 /* a Material dialog instead of the browser's confirm(): resolves true on the action, false on Cancel / Esc / outside */
 /* true (yes), false (cancel), or with alt ({label, danger}) a third answer, "alt" */
-function ask(title, text, yes = 'OK', danger = false, alt = null) {
+function ask(title, text, yes = 'OK', danger = false, alt = null, no = 'Cancel') {
   const d = $('#askDialog');
   $('#askTitle').textContent = title; $('#askText').textContent = text || ''; $('#askText').hidden = !text;
-  $('#askYes').textContent = yes; $('#askYes').classList.toggle('danger-btn', danger);
+  $('#askYes').textContent = yes; $('#askNo').textContent = no; $('#askYes').classList.toggle('danger-btn', danger);
   $('#askAlt').hidden = !alt; $('#askAlt').textContent = alt ? alt.label : ''; $('#askAlt').classList.toggle('danger-text', !!(alt && alt.danger));
   return new Promise(res => {
     const done = v => { d.removeEventListener('close', onClose); $('#askYes').onclick = $('#askNo').onclick = $('#askAlt').onclick = null; if (d.open) d.close(); res(v); };
@@ -71,6 +71,7 @@ function renderPlayerInfo() {
   // about
   $('#aboutPanel').innerHTML = `${ex.description ? `<p class="body-large">${esc(ex.description)}</p>` : ''}
     ${chips.length ? `<div class="chips">${chips.join('')}</div>` : ''}
+    ${linksHTML(ex)}
     <div class="row" style="margin-top:12px">${findInDb(ex.id) ? '' : `<button class="btn tonal stateful" data-act="shareEx"><span class="icon">share</span>Share</button>`}
     <button class="btn text stateful authoring-only" data-act="json"><span class="icon">data_object</span>Show JSON</button>
     ${isOwn(ex.id) ? `<button class="btn text stateful danger" data-del="${esc(ex.id)}"><span class="icon">delete</span>Delete</button>` : ''}</div>`;

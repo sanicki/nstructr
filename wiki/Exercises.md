@@ -2,7 +2,7 @@
 
 [← User guide](Home.md)
 
-The **Exercises** tab is the library: 350 exercises, each animated step by step, with written instructions.
+The **Exercises** tab is the library: 352 exercises, each animated step by step, with written instructions.
 
 <img src="images/exercises.png" width="300" alt="The Exercises tab: search, collection and equipment filters, Group by collection, shelves">
 
@@ -61,10 +61,25 @@ Scroll down for the details:
 
 <img src="images/exercise-details.png" width="300" alt="About, How to do it with the time per round and the source, and Steps">
 
-- **About**: what it is, what it works, its type and suggested reps.
+- **About**: what it is, what it works, its type and suggested reps, and its **Variations** (below).
 - **How to do it**: setup and form cues, then roughly how long one round takes (and whether that's for each
   side), where the description comes from, and any note on reps.
 - **Steps**: every step in order (tap one to jump the figure to it).
+
+### Variations: easier, harder, other equipment
+
+Many exercises have easier and harder versions, and versions with other equipment. They're listed under
+**Variations** in About; tap one to open it.
+
+<img src="images/exercise-variations.png" width="300" alt="Variations: Easier Sit-to-Stand, Harder Jump Squat, Other equipment Band Squat, Dumbbell Squat and more">
+
+- **Easier** and **Harder**: the steps either side of this one in a progression, e.g. Wall Push-Up, Incline
+  Push-Up, Knee Push-Up, Push-Up, Decline Push-Up. A wall, block, strap or chair that supports a pose makes it easier.
+- **Other equipment**: the same move with other equipment (the Deadlift with a barbell, dumbbells or a kettlebell).
+- Your own copy of a library exercise has its original's variations.
+
+In a workout you can swap an exercise for one of these: in the [workout editor](Workouts.md#an-exercises-settings),
+or for one workout while you're doing it ([Working out](Working-out.md#too-easy-or-too-hard)).
 
 ### Instruction on the exercise page
 

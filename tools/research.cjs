@@ -1,7 +1,9 @@
 /* After an exercise is added: the mechanical half of the library research (the judgment half, what's the most common
    name and which versions are established, is a web search: .claude/skills/exercise-research/SKILL.md).
-     node tools/research.cjs report [id...]        names, name clashes, and which equipment versions the library has
-                                                  or lacks (default: every exercise); --md for Markdown
+     node tools/research.cjs report [id...]        names, name clashes, which equipment versions the library has or
+                                                  lacks, and the linked variations (library/progressions.json): its
+                                                  easier/harder steps and equipment group, or the likely ones
+                                                  (default: every exercise); --md for Markdown
      node tools/research.cjs names <names.json>    apply renames and other names: {"id": [new name or null, [other names]]}
                                                   (a renamed exercise keeps its old name as another name; yoga keeps
                                                   its Sanskrit name first; refuses a name that another exercise has)
@@ -32,9 +34,25 @@ function versions(ex, lib, prints) {
     if (x.id === ex.id || kindOf(x) === kindOf(ex)) continue;
     let d = Infinity; try { d = motionDistance(mine, prints.get(x.id)); } catch (e) { }
     const named = cores(x).some(a => c.some(b => within(a, b) || within(b, a)));
-    if (d < 2.5 || named) out.push({ id: x.id, name: x.name, kind: kindOf(x) || 'no equipment', motion: Math.round(d * 10) / 10 });
+    if (d < 2.5 || named) out.push({ id: x.id, name: x.name, kind: kindOf(x) || 'no equipment', motion: Math.round(d * 10) / 10, named });
   }
   return out.sort((a, b) => a.motion - b.motion);
+}
+/* linked variations (library/progressions.json): where ex is, or (when it's in none) the progressions and equipment
+   groups it likely belongs to: one with one of its equipment versions in it, or named like one of its names */
+function links(ex, lib, v) {
+  const L = JSON.parse(fs.readFileSync(path.join(ROOT, 'library/progressions.json'), 'utf8')), name = id => (lib.find(x => x.id === id) || { name: id }).name;
+  const out = { easier: [], harder: [], group: [], candidates: [] };
+  for (const c of L.progressions) { const i = c.steps.indexOf(ex.id); if (i < 0) continue; if (i > 0) out.easier.push(name(c.steps[i - 1])); if (i < c.steps.length - 1) out.harder.push(name(c.steps[i + 1])); }
+  for (const g of L.equipment) if (g.ids.includes(ex.id)) out.group.push(...g.ids.filter(id => id !== ex.id).map(name));
+  // (an equipment version that moves almost the same, or is also named alike; or the group's own name in its names.
+  // Words like "up" alone don't count: Step-Up isn't a Push-Up)
+  const near = new Set(v.filter(x => x.motion < 1 || (x.named && x.motion < 2.5)).map(x => x.id));
+  const words = ws => ws.filter(w => w.length > 2), c = cores(ex).map(words).filter(ws => ws.length);
+  const likely = (title, ids) => ids.some(id => near.has(id)) || c.some(ws => { const t = words(nameKey(title).split(' ')); return t.length && (within(t, ws) || within(ws, t)); });
+  for (const p of L.progressions) if (!p.steps.includes(ex.id) && likely(p.name, p.steps)) out.candidates.push(`progression "${p.name}"`);
+  for (const g of L.equipment) if (!g.ids.includes(ex.id) && likely(g.name, g.ids)) out.candidates.push(`equipment group "${g.name}"`);
+  return out;
 }
 function report(ids, md) {
   const lib = load(), prints = new Map(lib.map(x => [x.id, fingerprint(x)]));
@@ -46,10 +64,10 @@ function report(ids, md) {
     const missing = KINDS.filter(k => !have.has(k) && !(k && kindOf(ex).split(' and ').includes(k)));
     const clashes = [ex.name, ...(ex.otherNames || [])].filter(n => owner.get(nameKey(n)).length > 1);
     const dup = similarTo(ex, lib, prints).filter(m => m.verdict === 'duplicate');
-    rows.push({ ex, v, missing, clashes, dup });
+    rows.push({ ex, v, missing, clashes, dup, ln: links(ex, lib, v) });
   }
   const text = [];
-  for (const { ex, v, missing, clashes, dup } of rows) {
+  for (const { ex, v, missing, clashes, dup, ln } of rows) {
     const line = (label, t) => text.push(md ? `- **${label}:** ${t}` : `  ${label}: ${t}`);
     text.push(md ? `**${ex.name}** (\`${ex.id}\`, ${kindOf(ex) || 'no equipment'})` : `${ex.id}  ${ex.name}  [${kindOf(ex) || 'no equipment'}]`);
     line('Names', [ex.name, ...(ex.otherNames || [])].join(' · ') || '—');
@@ -57,8 +75,12 @@ function report(ids, md) {
     if (dup.length) line('⚠ Duplicate of', dup.map(d => d.id).join(', '));
     line('Equipment versions in the library', v.length ? v.map(x => `${x.name} (${x.kind})`).join(' · ') : 'none');
     line('No version yet with', missing.map(k => k || 'no equipment').join(', ') || '—');
+    const has = ln.easier.length || ln.harder.length || ln.group.length;
+    if (has) line('Linked', [ln.easier.length && `easier ${ln.easier.join(', ')}`, ln.harder.length && `harder ${ln.harder.join(', ')}`, ln.group.length && `other equipment ${ln.group.join(', ')}`].filter(Boolean).join(' · '));
+    if (ln.candidates.length) line(has ? 'Also likely' : '⚠ Not linked; likely', ln.candidates.join(', '));
+    else if (!has) line('Linked', 'none (no likely progression or equipment group)');
   }
-  if (!md) text.push(`\n${rows.length} exercise(s). Next: search the web for the most common name and other names, and for established versions with the equipment above (.claude/skills/exercise-research/SKILL.md).`);
+  if (!md) text.push(`\n${rows.length} exercise(s). Next: search the web for the most common name and other names, for established versions with the equipment above, and for its easier and harder versions; then place it in library/progressions.json (.claude/skills/exercise-research/SKILL.md).`);
   return text.join('\n');
 }
 function names(file) {

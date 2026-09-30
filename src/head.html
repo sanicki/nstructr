@@ -189,6 +189,11 @@ main{display:block;min-width:0}
 .card.outlined{background:var(--md-surface);border:1px solid var(--md-outline-variant)}
 .card h2,.card h3{margin:0}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+/* linked variations: easier, harder, other equipment (exercise page, workout item dialog) */
+.links{margin:16px 0 4px}.links h3{margin:0 0 4px}
+.link-row{display:flex;flex-direction:column;gap:4px;margin:8px 0}
+.link-btns{display:flex;flex-wrap:wrap;gap:8px}
+.link-btns .btn{height:auto;min-height:40px;padding:8px 16px 8px 12px;text-align:left}
 .chip{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 16px;border:1px solid var(--md-outline-variant);border-radius:var(--shape-s);
   color:var(--md-on-surface-variant);font-weight:500;letter-spacing:.1px;background:transparent}
 .chip .icon{font-size:18px;margin-left:-8px;color:var(--md-primary)}
@@ -673,6 +678,10 @@ body[data-view="wplay"]{overflow:hidden;background:var(--md-surface)}
 .ov-rest-btns{display:flex;gap:12px;margin-top:6px}
 .ov-pill{min-width:96px;height:clamp(48px,14vmin,64px);padding:0 22px;border-radius:32px;font-size:clamp(16px,5vmin,22px);font-weight:600;color:var(--wp-fg);background:var(--wp-btn)}
 .ov-pill.primary{background:var(--ov-primary);color:var(--ov-on-primary)}
+/* easier / harder, under the play controls: clear of the bottom (cover screen cutouts) */
+.ov-swap{position:absolute;left:50%;top:calc(50% + clamp(36px,12vmin,60px) + 8px);transform:translateX(-50%);display:flex;gap:12px}
+.ov-swap .ov-pill{display:inline-flex;align-items:center;gap:6px;height:48px;min-width:0;padding:0 18px;font-size:17px;white-space:nowrap}
+.ov-swap .ov-pill .icon{font-size:22px}
 .wp-done-title{margin:0;font-size:clamp(24px,8vmin,44px);font-weight:700}
 .fs .wp-done .icon.big{font-size:clamp(40px,14vmin,72px);color:var(--ov-primary)}
 /* short, squarish screens (the Flip cover screen): keep only what matters */
