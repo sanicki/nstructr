@@ -34,7 +34,9 @@ If you stop a workout part-way, a **Resume** card at the top takes you back to w
 <img src="images/workout-editor.png" width="300" alt="The workout editor: name, summary, blocks and exercises">
 
 - **Name** at the top; below it, the estimated time, the number of exercises and the equipment you'll need.
-- **Start**, **Add block**, **Share**, **Duplicate** and **Delete**.
+- **Test**, **Add block**, **Share**, **Duplicate** and **Delete**. **Test** plays the workout to try it out: it isn't
+  kept for **Resume** or added to **History**, and leaving it brings you back to the editor. Start it from its card
+  on the Workouts tab for a real session.
 - Below the exercises, **Muscles worked** (tap to open) shows what the workout works and stretches (below).
 - A workout is made of **blocks** (Warm-up, Strength, Cool-down…). Each block has a menu (⋮) to rename, move,
   delete it, or **repeat it as a circuit**: every exercise in the block, then back to the top, for a number of
