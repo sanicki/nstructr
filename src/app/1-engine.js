@@ -271,12 +271,6 @@ function drawProps(P, Q, pose, cam) {
   for (const sh of surfaceShapes(S.frameSupports || S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
   const M0 = rootM(pose.root), wts = { handL: '', handR: '' };
   let held = '', heldD = 0;
-  // bands, towels and straps go among the limbs, piece by piece (the body hides what's behind it): ropeRuns
-  const root = $('#figRoot'), boneG = new Map(FIG.bones.map(bn => [bn.id, bn.g])), boneD = {}, ropes = [];
-  for (const bn of FIG.bones) boneD[bn.id] = (Q[bn.a].d + Q[bn.b].d) / 2;
-  root.querySelectorAll('.rope').forEach(el => el.remove());
-  const torso = torsoOutline(Q);
-  const rope = (pts, cls, style) => { for (const r of ropeRuns(pts, FIG.order, boneD, 12, torso)) ropes.push([r.before, `<path class="rope ${cls}${r.hidden ? ' behind' : ''}" d="${runPath(r.pts)}"${style ? ` style="${style}"` : ''}/>`]); };
   S.props.forEach((pr, i) => {
     // a carried stability ball: among the limbs, by depth (the near hand and foot on it, the far ones behind it)
     if (carried(pr)) { held = weightSVG(pr, P, M0, proj, null, S.held); heldD = S.held ? proj(S.held).d : Q.pelvis.d; return; }
@@ -305,15 +299,20 @@ function drawProps(P, Q, pose, cam) {
     if (!pts) return;
     if (pr.type === 'strap') pts = strapPoints(pts, S.bandRest[i]);
     const q = pts.map(proj);
-    if (pr.type === 'towel' || pr.type === 'strap') { rope(q, pr.type); return; }      // (a yoga strap is drawn like the towel)
+    // in front of the body or behind it, by depth
+    const far = q.reduce((s, p) => s + p.d, 0) / q.length < Q.pelvis.d;
+    if (pr.type === 'towel' || pr.type === 'strap') {                  // (a yoga strap is drawn like the towel)
+      const svg = `<path class="${pr.type}" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`;
+      if (far) back += svg; else front += svg;
+      return;
+    }
     const bp = bandPathRoute(pts, q, S.bandRest[i]);
-    // a stretched band thins and deepens in colour as the tension builds (mixed with the background, not see-through:
-    // its pieces overlap where they meet)
-    rope(bp.pts, 'band', `stroke-width:${bp.width.toFixed(2)};stroke:color-mix(in srgb, var(--band) ${Math.round(100 * Math.min(1, 0.7 + (bp.stretch - 1) * 0.8))}%, var(--md-surface))`);
+    // a stretched band thins and deepens in colour as the tension builds
+    const svg = `<path class="band" d="${bp.d}" style="stroke-width:${bp.width.toFixed(2)};opacity:${Math.min(1, 0.7 + (bp.stretch - 1) * 0.8).toFixed(2)}"/>`;
+    if (far) back += svg; else front += svg;
     back += bandAnchors(pr, q).map(p => anchorSVG(p, 'anchor')).join('');
   });
   $('#propsBack').innerHTML = back; $('#propsFront').innerHTML = front;
-  for (const [before, svg] of ropes) { const g = before && boneG.get(before); if (g) g.insertAdjacentHTML('beforebegin', svg); else root.insertAdjacentHTML('beforeend', svg); }
   const hb = $('#heldBall');
   if (hb) {
     if (hb.innerHTML !== held) hb.innerHTML = held;
