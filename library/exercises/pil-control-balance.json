@@ -7,7 +7,7 @@
   "category": "Pilates",
   "focus": "Core, spine and hamstrings",
   "collections": ["Pilates"],
-  "equipment": ["Mat"],
+  "equipment": ["Yoga mat"],
   "muscles": {"upperBack": 1, "lowerBack": 1, "core": 3, "frontThigh": 1, "glutes": 2, "backThigh": 1},
   "stretches": ["lowerBack", "backThigh"],
   "description": "From the Roll-Over with your toes on the floor behind your head, hold one leg (at the ankle if you can) with both hands and lift the other leg straight up to the ceiling, then switch legs, and roll down.",

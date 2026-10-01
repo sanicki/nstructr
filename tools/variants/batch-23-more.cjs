@@ -4,7 +4,7 @@
 const SRC = require('./batch-23-sources.cjs');
 const reps = (r, n, note) => ({ measure: 'reps', holdStep: null, defaults: { reps: n }, repName: null, prescription: { reps: r, note } });
 const K = (name, cue, pose, x = {}) => ({ name, cue, camera: 90, durationMs: 1400, holdMs: 200, phase: 'rep', ...x, pose });
-const PIL = { category: 'Pilates', collections: ['Pilates'], equipment: ['Mat'], source: SRC.pilates };
+const PIL = { category: 'Pilates', collections: ['Pilates'], equipment: ['Yoga mat'], source: SRC.pilates };
 const onAnkles = [{ hand: 'handR', to: 'ankleR', dx: 6 }, { hand: 'handL', to: 'ankleL', dx: -6 }];
 // straight legs, a little apart
 const V = (f, side = 16) => ({ hipL: [f, side, 0], hipR: [f, side, 0], kneeL: 0, kneeR: 0 });

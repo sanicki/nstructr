@@ -7,7 +7,7 @@
   "category": "Pilates",
   "focus": "Core and obliques",
   "collections": ["Pilates"],
-  "equipment": ["Mat"],
+  "equipment": ["Yoga mat"],
   "muscles": {"core": 3, "frontThigh": 1},
   "description": "Lying on your back with your legs straight up together, circle both legs to one side, down, round to the other side and back up, keeping the upper back and arms still on the mat.",
   "source": {

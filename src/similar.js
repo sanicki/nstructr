@@ -38,6 +38,8 @@
     if (!t || /\bmat\b|floor|none|bodyweight|body weight/.test(t)) return '';
     const k = KINDS.find(([, re]) => re.test(t)); return k ? k[0] : singular(t);
   };
+  /* every mat (Mat, Exercise mat, Pilates mat…) is the library's one name for it */
+  const MAT = 'Yoga mat', isMat = e => /\bmats?\b/i.test(String(e || ''));
   const equipKinds = list => [...new Set((list || []).map(equipKind).filter(Boolean))].sort();
   const equipKey = ex => equipKinds(ex.equipment).join('|');
   const measureOf = ex => ex.measure || 'reps';
@@ -59,6 +61,6 @@
     const rank = { duplicate: 0, variant: 1, name: 2, similar: 3 };
     return out.sort((a, b) => rank[a.verdict] - rank[b.verdict] || a.motion - b.motion);
   }
-  const api = { fingerprint, motionDistance, similarTo, nameKey, equipKinds, SAME, SIMILAR };
+  const api = { fingerprint, motionDistance, similarTo, nameKey, equipKinds, isMat, MAT, SAME, SIMILAR };
   if (typeof module !== 'undefined') module.exports = api; else root.SIMILAR_EX = api;
 })(typeof window !== 'undefined' ? window : globalThis);

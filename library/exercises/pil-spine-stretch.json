@@ -7,7 +7,7 @@
   "category": "Pilates",
   "focus": "Spine",
   "collections": ["Pilates"],
-  "equipment": ["Mat"],
+  "equipment": ["Yoga mat"],
   "muscles": {"core": 1},
   "stretches": ["lowerBack", "backThigh"],
   "description": "Sitting tall with your legs apart, round forward from the top of your head as if over a ball, reaching forward, then stack back up.",

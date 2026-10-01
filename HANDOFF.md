@@ -289,7 +289,9 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 dumbbell, barbell or kettlebell is drawn, every drawn one is listed, and each item is spelled one way across the
 library. Optional aids ("a folded towel under your knee if you like") go in the setup text, not in `equipment`. The
 app matches equipment without case (`equipKey`, `equipName` in `src/app/1-engine.js`): an import's "resistance band"
-takes the library's spelling, and the Exercises filter merges spellings saved before.
+takes the library's spelling, and the Exercises filter merges spellings saved before. Every mat is "Yoga mat"
+(`isMat` in `src/similar.js`): an import's "Mat" or "Pilates mat" becomes it, and the build fails on any other mat name
+(Oct 2026: 39 Pilates and floor exercises said "Mat", a second filter chip).
 
 Defaults written by the (retired) generator and still expected: `measure`, `holdStep`, `defaults`, `repName`,
 phases. When adding exercises by hand, set them explicitly (the build doesn't infer them). Rule the generator

@@ -7,7 +7,7 @@
   "category": "Pilates",
   "focus": "Back and glutes",
   "collections": ["Pilates"],
-  "equipment": ["Mat"],
+  "equipment": ["Yoga mat"],
   "muscles": {"upperBack": 1, "lowerBack": 3, "glutes": 2, "backThigh": 1},
   "stretches": ["chest", "core", "frontThigh"],
   "description": "Lying face down, press up into Swan, then let go of the floor and rock forward onto your chest with your arms reaching forward and your legs lifting, and back up again, keeping one long arched shape.",

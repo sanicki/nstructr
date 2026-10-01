@@ -109,6 +109,7 @@ function validateExercise(ex, path) {
    "Resistance band", so it shows under the same filter */
 const equipKey = q => String(q).trim().replace(/\s+/g, ' ').toLowerCase();
 function equipName(q) {
+  if (SIMILAR_EX.isMat(q)) return SIMILAR_EX.MAT;                  // "Mat", "Pilates mat"… is the library's "Yoga mat"
   const k = equipKey(q);
   for (const ex of POSE_DB.exercises) for (const x of ex.equipment || []) if (equipKey(x) === k) return x;
   return String(q).trim().replace(/\s+/g, ' ');

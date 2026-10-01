@@ -53,6 +53,9 @@ for (const w of workouts) w.blocks.forEach((b, bi) => b.items.forEach((it, ii) =
 for (const ex of exercises) ex.keyframes.forEach((k, i) => (k.keep || []).forEach(x => {
   if (typeof x === 'object' && x.keyframe >= ex.keyframes.length) errors.push(`${ex.id}: keyframes[${i}].keep points at step ${x.keyframe}, which doesn't exist`);
 }));
+// one name for each piece of equipment: a mat is "Yoga mat" (src/similar.js)
+{ const { isMat, MAT } = require('../src/similar.js');
+  for (const ex of exercises) for (const q of ex.equipment || []) if (isMat(q) && q !== MAT) errors.push(`${ex.id}: equipment "${q}": call it "${MAT}"`); }
 // muscle groups (HANDOFF §13, docs/muscles.md; written by tools/muscles.cjs): every library exercise rates them
 for (const ex of exercises) if (!ex.muscles) errors.push(`${ex.id}: a library exercise needs "muscles" (the groups it works, 1–3; {} for none): add it to tools/muscles.cjs and run it`);
 for (const ex of exercises) if (!(ex.collections || []).length) errors.push(`${ex.id}: a library exercise needs "collections" (where the app shows it: Bodyweight, Yoga...)`);
