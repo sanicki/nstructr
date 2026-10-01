@@ -128,13 +128,20 @@ function wkCard(w) {
         ${lib && w.description ? `<p class="body-small muted" style="margin:0">${esc(w.description)}</p>` : ''}
         <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${plural(n, { one: '# exercise', other: '# exercises' })}</span><span><span class="icon">view_agenda</span>${plural(w.blocks.length, { one: '# block', other: '# blocks' })}</span></div>
         ${eq.length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(eq.join(', '))}</span></div>` : ''}
-        ${safetyHtml(w)}
         ${workoutMusclesHTML(w, true)}
+        ${wkExerciseList(w)}
         <div class="row">${lib ? `<button class="btn tonal stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
           : `<a class="btn tonal stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>
              <button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>`}</div>
+        ${safetyHtml(w)}
       </div>
     </div></article>`;
+}
+/* an open card lists its exercises (thumbnail and name, by block); tapping one opens it on the exercise page */
+function wkExerciseList(w) {
+  const many = w.blocks.filter(b => b.items.length).length > 1;
+  return `<div class="wk-exlist">${w.blocks.filter(b => b.items.length).map(b => `${many ? `<p class="label-medium wk-exblock">${esc(b.name)}</p>` : ''}<ul class="wk-exs">${
+    b.items.map(it => { const ex = exById(it.ex); return ex ? `<li><button class="stateful" data-open="${esc(ex.id)}">${thumbFor(ex)}<span class="body-medium">${esc(ex.name)}</span></button></li>` : ''; }).join('')}</ul>`).join('')}</div>`;
 }
 function deleteWorkout(id) {
   const w = wkById(id); if (!w || isLibWorkout(w)) return;
@@ -214,7 +221,7 @@ function renderEditor() {
   const eq = workoutEquipment(w);
   $('#wkSummary').innerHTML = `<span class="chip"><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span>
     <span class="chip"><span class="icon">format_list_numbered</span>${plural(w.blocks.flatMap(b => b.items).length, { one: '# exercise', other: '# exercises' })}</span>
-    ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}${safetyHtml(w)}`;
+    ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}`;
   const mg = workoutMusclesHTML(w, false);
   $('#wkMusclesBox').hidden = !mg; $('#wkMuscles').innerHTML = mg;
   $('#wkBlocks').innerHTML = w.blocks.map((b, bi) => `<section class="block" data-block="${b.id}">
@@ -223,7 +230,7 @@ function renderEditor() {
     <ul class="items" data-items="${b.id}">${b.items.map(it => {
       const ex = exById(it.ex);
       return `<li class="wi" data-uid="${it.uid}"><span class="handle" data-handle aria-hidden="true"><span class="icon">drag_indicator</span></span>
-        <button class="open stateful" data-iedit="${it.uid}">${ex ? thumbFor(ex) : ''}<span class="txt"><span class="title-small">${esc(ex ? ex.name : it.ex)}</span><span class="body-small muted">${esc(itemSummary(it))}</span></span></button>
+        ${ex ? `<button class="wi-thumb stateful" data-open="${esc(ex.id)}" aria-label="Open ${esc(ex.name)}" title="Open the exercise">${thumbFor(ex)}</button>` : ''}<button class="open stateful" data-iedit="${it.uid}"><span class="txt"><span class="title-small">${esc(ex ? ex.name : it.ex)}</span><span class="body-small muted">${esc(itemSummary(it))}</span></span></button>
         <button class="icon-btn stateful" data-imenu="${it.uid}" aria-label="Options for ${esc(ex ? ex.name : '')}"><span class="icon">more_vert</span></button></li>`;
     }).join('')}</ul>
     <div class="add-row"><button class="btn text stateful" data-addto="${b.id}"><span class="icon">add</span>Add exercises</button></div></section>`).join('');
@@ -483,7 +490,7 @@ function importWorkouts(data) {
 /* ===================== Workout player ===================== */
 const WP = { w: null, flat: [], i: 0, set: 0, seg: 0, phase: 'idle', restLeft: 0, restNext: null, started: 0, beeped: {} };
 function loadSession() { try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch (e) { return null; } }
-function saveSession() { try { localStorage.setItem(SESSION_KEY, JSON.stringify({ wid: WP.w.id, i: WP.i, ...(Object.keys(WP.swaps || {}).length ? { swaps: WP.swaps } : {}) })); } catch (e) { } }
+function saveSession() { if (WP.test) return; try { localStorage.setItem(SESSION_KEY, JSON.stringify({ wid: WP.w.id, i: WP.i, ...(Object.keys(WP.swaps || {}).length ? { swaps: WP.swaps } : {}) })); } catch (e) { } }
 function dropSession() { try { localStorage.removeItem(SESSION_KEY); } catch (e) { } }
 
 /* sound: beeps (Web Audio) and speech (the browser's built-in voice) */
@@ -642,8 +649,10 @@ function frameScene(plan) {
 }
 function resetScene() { scene.setAttribute('viewBox', '0 0 400 400'); syncLimbWidth(); }
 
-function startWorkout(w, fromIndex = 0, swaps = null) {
-  WP.w = w; WP.flat = flattenWorkout(w); WP.log = { start: Date.now(), done: [] }; WP.lastLogged = -1;
+/* test: started from the workout editor (Test): a trial run, so no Resume entry and nothing in History; leaving
+   goes back to the editor */
+function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
+  WP.w = w; WP.flat = flattenWorkout(w); WP.test = test; WP.log = test ? null : { start: Date.now(), done: [] }; WP.lastLogged = -1;
   if (!WP.flat.length) { snack('Add some exercises first.'); return; }
   WP.swaps = {}; WP.orig = {};
   for (const [u, id] of Object.entries(swaps || {})) { const e = WP.flat.find(x => x.item.uid === u), to = exById(id); if (e && to) swapInSession(e.item, to); }   // resumed: this session's swaps again
@@ -816,7 +825,8 @@ function finishWorkout() {
   WP.phase = 'done'; S.playing = false; S.onPlanEnd = null; S.onStep = null;
   $('#wpRest').hidden = true; $('#wpDone').hidden = false; $('#wpControls').classList.remove('show');
   $('#wpDoneText').textContent = `${WP.w.name}: ${plural(WP.flat.length, { one: '# exercise', other: '# exercises' })} in ${fmtMin((Date.now() - WP.started) / 1000)}.`;
-  dropSession(); wakeOff();
+  if (!WP.test) dropSession();
+  wakeOff();
   say('Workout complete. Well done.'); beep(880, 180); setTimeout(() => beep(1175, 260), 200);
   renderWpInfo();
 }
@@ -874,7 +884,8 @@ $('#wpRoot').addEventListener('pointerup', e => {
   // a screen reader's double-tap (TalkBack, VoiceOver) arrives as a click with no pointer press: nothing to hold, so it exits
   btn.addEventListener('click', e => { if (e.detail === 0 && !t0) exitWorkout(); t0 = 0; });
 })();
-function exitWorkout() { go('#/workouts'); }
+const afterWorkout = () => (WP.test && WP.w && !isLibWorkout(WP.w) ? `#/workout/${encodeURIComponent(WP.w.id)}` : '#/workouts');
+function exitWorkout() { go(afterWorkout()); }
 /* full screen while working out (hides the phone's status bar where allowed) */
 const FS_KEY = 'nstructr-fullscreen-v1';
 const installedApp = () => matchMedia('(display-mode: fullscreen), (display-mode: standalone)').matches;
@@ -991,14 +1002,14 @@ function wpAction(act) {
   if (act === 'nextItem' || act === 'prevItem' || act === 'restSkip') hush();
   if (act === 'nextItem') { if (WP.i < WP.flat.length - 1) { WP.i++; WP.set = 0; WP.seg = 0; runCurrent(true); } else finishWorkout(); return; }
   if (act === 'prevItem') { WP.i = Math.max(0, WP.i - 1); WP.set = 0; WP.seg = 0; runCurrent(true); return; }
-  if (act === 'finish') { go('#/workouts'); return; }
+  if (act === 'finish') { go(afterWorkout()); return; }
 }
 
 /* Start goes straight into the workout (no "before you start" sheet): the time and equipment are on the card,
-   and the safety notes from the sources are on the card and in the editor (safetyNotes). */
+   and the safety notes from the sources are at the bottom of the card (safetyNotes). */
 const safetyNotes = w => [...new Set(w.blocks.flatMap(b => b.items).map(it => ((exById(it.ex) || {}).prescription || {}).note).filter(n => n && /doctor|osteoporosis|heart|coach|spotter|blood pressure/i.test(n)))];
 const safetyHtml = w => { const n = safetyNotes(w); return n.length ? `<div class="note wk-safety"><span class="icon">health_and_safety</span><div>${n.map(x => `<p class="body-small" style="margin:0">${esc(x)}</p>`).join('')}</div></div>` : ''; };
-function confirmStart(w, fromIndex = 0, swaps = null) { startWorkout(w, fromIndex, swaps); }
+function confirmStart(w, fromIndex = 0, swaps = null, test = false) { startWorkout(w, fromIndex, swaps, test); }
 
 
 /* stage lives in the exercise player; the workout player borrows it */
@@ -1020,7 +1031,7 @@ document.querySelector('.shell').addEventListener('click', e => {
   }
   else if (d.wact === 'resume') { const s = loadSession(), w = s && wkById(s.wid); if (w) confirmStart(w, s.i, s.swaps); }
   else if (d.wact === 'dropSession') { dropSession(); renderWorkouts(); }
-  else if (d.wact === 'start' && EDIT) confirmStart(EDIT);
+  else if (d.wact === 'start' && EDIT) confirmStart(EDIT, 0, null, true);       // Test: a trial run (startWorkout)
   else if (d.wact === 'addBlock' && EDIT) { EDIT.blocks.push({ id: uid(), name: `Block ${EDIT.blocks.length + 1}`, items: [] }); commitEdit(); }
   else if (d.wact === 'export' && EDIT) showJson(EDIT.name, workoutJSON(EDIT));
   else if (d.wact === 'clearLog') ask('Clear all workout history?', 'Every finished workout is removed from History.', 'Clear', true).then(y => { if (y) { saveLog([]); renderHistory(); } });
