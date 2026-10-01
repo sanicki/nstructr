@@ -738,8 +738,8 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 
 ## 10. UI inventory (current)
 
-- **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (Start/Edit, est. time, count, equipment, safety notes), Library workouts (Start/Customize), History (delete, clear). Editor: name, blocks (rename, move, delete, repeat as circuit with rounds and
-  rest), items (drag handle, settings sheet with reps/seconds, sets, sides, direction, **seconds per rep** (0.1 s steps, typed or −/+, "Usual: n s" = the exercise's own pace; stored as `tempo` = usual ÷ chosen, clamped to ¼–4×; not for timed exercises); menu: move,
+- **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (Start/Edit, est. time, count, equipment, muscle map, then its exercises by block (thumbnail and name; tap one to open it on the exercise page), safety notes last), Library workouts (Start/Customize, the same details), History (delete, clear). Editor: name, blocks (rename, move, delete, repeat as circuit with rounds and
+  rest), items (drag handle, the thumbnail opens the exercise page, the rest of the row the settings sheet with reps/seconds, sets, sides, direction, **seconds per rep** (0.1 s steps, typed or −/+, "Usual: n s" = the exercise's own pace; stored as `tempo` = usual ÷ chosen, clamped to ¼–4×; not for timed exercises); menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
 - **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; then type and equipment,
   each on its own row; the equipment choice is kept across collections, one without it shows all), search (covers the user's own exercises too). Saved = bookmarked library exercises + the user's

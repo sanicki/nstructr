@@ -6,9 +6,9 @@
 
 The **Workouts** tab has three parts:
 
-- **My workouts**: the ones you made, customised or received. Tap a card to expand it (time, number of exercises,
-  equipment, safety notes, a small map of the muscles it works and the three it works most, **Edit**, **Share**).
-  Tap ▶ to start.
+- **My workouts**: the ones you made, customised or received. Tap a card to expand it: time, number of exercises,
+  equipment, a small map of the muscles it works and the three it works most, **Edit** and **Share**, then its
+  exercises (tap one to see it on its exercise page), and any safety notes at the bottom. Tap ▶ to start.
 - **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy. There
   are 20-minute beginner's workouts for yoga and Pilates (a mat, nothing else), resistance band (one band), free
   weights (dumbbells) and kettlebell (one bell). The 20 minutes are with **Coach** (Settings › Instruction); without it they take 15–17.
@@ -39,6 +39,7 @@ If you stop a workout part-way, a **Resume** card at the top takes you back to w
   delete it, or **repeat it as a circuit**: every exercise in the block, then back to the top, for a number of
   **rounds** with a **rest between rounds**.
 - **Add exercises** opens a searchable picker; tick as many as you like, then **Add**.
+- Tap an exercise's picture to open it on its exercise page; tap its name to change its reps, sets and sides.
 - Drag an exercise by its handle to reorder it, even into another block. Its menu (⋮) can move, duplicate, view or
   remove it.
 - Changes save as you go.

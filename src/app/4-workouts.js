@@ -128,13 +128,20 @@ function wkCard(w) {
         ${lib && w.description ? `<p class="body-small muted" style="margin:0">${esc(w.description)}</p>` : ''}
         <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${plural(n, { one: '# exercise', other: '# exercises' })}</span><span><span class="icon">view_agenda</span>${plural(w.blocks.length, { one: '# block', other: '# blocks' })}</span></div>
         ${eq.length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(eq.join(', '))}</span></div>` : ''}
-        ${safetyHtml(w)}
         ${workoutMusclesHTML(w, true)}
         <div class="row">${lib ? `<button class="btn tonal stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
           : `<a class="btn tonal stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>
              <button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>`}</div>
+        ${wkExerciseList(w)}
+        ${safetyHtml(w)}
       </div>
     </div></article>`;
+}
+/* an open card lists its exercises (thumbnail and name, by block); tapping one opens it on the exercise page */
+function wkExerciseList(w) {
+  const many = w.blocks.filter(b => b.items.length).length > 1;
+  return `<div class="wk-exlist">${w.blocks.filter(b => b.items.length).map(b => `${many ? `<p class="label-medium wk-exblock">${esc(b.name)}</p>` : ''}<ul class="wk-exs">${
+    b.items.map(it => { const ex = exById(it.ex); return ex ? `<li><button class="stateful" data-open="${esc(ex.id)}">${thumbFor(ex)}<span class="body-medium">${esc(ex.name)}</span></button></li>` : ''; }).join('')}</ul>`).join('')}</div>`;
 }
 function deleteWorkout(id) {
   const w = wkById(id); if (!w || isLibWorkout(w)) return;
@@ -223,7 +230,7 @@ function renderEditor() {
     <ul class="items" data-items="${b.id}">${b.items.map(it => {
       const ex = exById(it.ex);
       return `<li class="wi" data-uid="${it.uid}"><span class="handle" data-handle aria-hidden="true"><span class="icon">drag_indicator</span></span>
-        <button class="open stateful" data-iedit="${it.uid}">${ex ? thumbFor(ex) : ''}<span class="txt"><span class="title-small">${esc(ex ? ex.name : it.ex)}</span><span class="body-small muted">${esc(itemSummary(it))}</span></span></button>
+        ${ex ? `<button class="wi-thumb stateful" data-open="${esc(ex.id)}" aria-label="Open ${esc(ex.name)}" title="Open the exercise">${thumbFor(ex)}</button>` : ''}<button class="open stateful" data-iedit="${it.uid}"><span class="txt"><span class="title-small">${esc(ex ? ex.name : it.ex)}</span><span class="body-small muted">${esc(itemSummary(it))}</span></span></button>
         <button class="icon-btn stateful" data-imenu="${it.uid}" aria-label="Options for ${esc(ex ? ex.name : '')}"><span class="icon">more_vert</span></button></li>`;
     }).join('')}</ul>
     <div class="add-row"><button class="btn text stateful" data-addto="${b.id}"><span class="icon">add</span>Add exercises</button></div></section>`).join('');
