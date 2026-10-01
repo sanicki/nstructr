@@ -1,0 +1,94 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "str-wrist-flexor-stretch",
+  "name": "Wrist Flexor Stretch",
+  "otherNames": ["Forearm Flexor Stretch", "Forearm Stretch"],
+  "category": "Stretch",
+  "focus": "Forearms and wrists",
+  "collections": ["Stretches"],
+  "equipment": [],
+  "muscles": {},
+  "stretches": ["biceps"],
+  "description": "With one arm straight out in front and the palm up, use the other hand to ease the fingers and hand back toward the floor, stretching the inside of the forearm.",
+  "source": {
+    "url": "https://www.hingehealth.com/resources/articles/wrist-flexor-stretch/",
+    "title": "Hinge Health: How to do a wrist flexor stretch",
+    "note": "Described in our own words. Stick-figure approximation. The figure has no wrists: it shows the arm and the other hand at the fingers; the cue says how to bend the hand back."
+  },
+  "setup": ["Stand or sit tall.", "Hold one arm straight out in front of you at shoulder height, palm up."],
+  "cues": ["Elbow straight.", "Ease the fingers back gently.", "Feel it along the inside of the forearm."],
+  "prescription": {
+    "reps": "hold 15–30 seconds each arm, 2–3 times",
+    "note": "Keep the elbow straight and pull gently: you should feel it along the inside of the forearm, not in the wrist joint."
+  },
+  "keyframes": [
+    {
+      "name": "Stand tall",
+      "cue": "Feet hip-width apart, shoulders relaxed.",
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {},
+      "camera": 50
+    },
+    {
+      "camera": 50,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "name": "Arm out, palm up",
+      "cue": "Right arm straight out in front, palm up.",
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "setup",
+      "pose": {
+        "shoulderR": [88, -22, 0],
+        "elbowR": 0
+      }
+    },
+    {
+      "camera": 50,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "name": "Wrist Flexor Stretch",
+      "cue": "With your left hand, ease your right fingers down and back.",
+      "durationMs": 1500,
+      "holdMs": 5000,
+      "phase": "rep",
+      "reach": [
+        {
+          "hand": "handL",
+          "to": "handR"
+        }
+      ],
+      "pose": {
+        "shoulderR": [88, -22, 0],
+        "elbowR": 0
+      }
+    },
+    {
+      "name": "Release",
+      "cue": "Let go and lower your arm.",
+      "durationMs": 1500,
+      "holdMs": 300,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {},
+      "camera": 50
+    }
+  ],
+  "bilateral": {
+    "labels": {
+      "L": "Right arm",
+      "R": "Left arm"
+    }
+  },
+  "measure": "time",
+  "holdStep": 2,
+  "defaults": {
+    "seconds": 20
+  }
+}
