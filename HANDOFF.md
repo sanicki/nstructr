@@ -268,7 +268,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 
 | type | fields | notes |
 |---|---|---|
-| `band` | `from`, `to` (body point or fixed spot `{x, y, z}` in the world), `via[]`, `restLength` | Stretch (measured in 3D) shown by thickness/opacity. Rest length defaults to the shortest distance over the sequence. Drawn in front of or behind the body by its depth. A fixed end is drawn as a small anchor block (`bandAnchors`, `anchorSVG` in `src/core.js`): a door anchor is a `wall` plus a band from a spot on it (equipment "Door anchor", its own kind in `src/similar.js`). |
+| `band` | `from`, `to` (body point or fixed spot `{x, y, z}` in the world), `via[]`, `restLength` | One band is one prop through every point it passes (under both feet, an end in each hand: `from: "handL", via: ["footL", "footR"], to: "handR"`; round the back: `via: ["armpitR", "backR", "backL", "armpitL"]`); two props for one band draw it in two pieces (fixed Oct 2026 in 11 exercises). Stretch (measured in 3D) shown by thickness/opacity. Rest length defaults to the shortest distance over the sequence. Drawn in front of or behind the body by its depth; a band through several points (under both feet), stretch by stretch (`bandSides`), so each side is placed as two separate bands were. A fixed end is drawn as a small anchor block (`bandAnchors`, `anchorSVG` in `src/core.js`): a door anchor is a `wall` plus a band from a spot on it (equipment "Door anchor", its own kind in `src/similar.js`). |
 | `towel` | `from`, `to` | Rigid, doesn't stretch. |
 | `strap` | `from`, `via[]`, `to`, `length` | A yoga strap: drawn like the towel, thinner, its own colour (`--strap`). Round a foot: `from: "handL", via: ["footL"], to: "handR"`. It doesn't stretch: its length (`strapLength`: the longest route in the exercise plus a grip, or `length`) stays the same, what isn't needed hanging from the ends, down to the floor and then along it (`strapPoints`). |
 | `wall` | `at` + `keyframe` (+`offset`) **or** `z`; `beside` (then `x`) | A plane in front of or behind the figure (at that z), or with `beside: true` at its side (at that x). Stands where that body point is in that step, then stays. A line when seen edge-on; fades as the camera turns to face it. |
@@ -283,13 +283,15 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `dumbbell` | `hand`, `axis` `lr` (bar left–right) / `fb` (front–back) / `ud` (upright), relative to the body | Drawn end-on when the bar points at the camera; drawn with its arm (behind the body when the arm is). |
 | `kettlebell` | `hand` or `hands[]` | In one hand it hangs in line with the forearm; held in both (by the horns) straight down, turning from one to the other as it's passed (`kettlebellAt`). Held in both behind the head or back, it's drawn behind the body there (Kettlebell Halo). A step's `holds` overrides which hands hold it (passing it hand to hand). |
 | `barbell` | `from`, `to` (hands) | Projected in 3D: the end plate from the side, the full bar from the front. |
-| `bar` | `y` (height), `z`, `width` 90 | A pull-up bar, drawn in front of the hands that hold it (end-on, a dot). Hang from it with `anchor` a hand, `anchorY` the bar's `y`, `anchorX` half the grip width. The exercise page's view grows upwards to show it (still square). Equipment "Pull-up bar" (its own kind). |
+| `bar` | `y` (height), `z`, `width` 90 | A pull-up bar, drawn in front of the hands that hold it (end-on, a dot). Hang from it with `anchor` a hand, `anchorY` the bar's `y`, `anchorX` half the grip width. The exercise page's view grows upwards to show it (still square), as it does whenever the head would go above the top (standing on a bench; arms overhead may reach 20 px past it). Equipment "Pull-up bar" (its own kind). |
 
 `equipment` must match the props (build check 2d): every listed towel, wall, door anchor, chair, bench, step, band,
 dumbbell, barbell or kettlebell is drawn, every drawn one is listed, and each item is spelled one way across the
 library. Optional aids ("a folded towel under your knee if you like") go in the setup text, not in `equipment`. The
 app matches equipment without case (`equipKey`, `equipName` in `src/app/1-engine.js`): an import's "resistance band"
-takes the library's spelling, and the Exercises filter merges spellings saved before.
+takes the library's spelling, and the Exercises filter merges spellings saved before. Every mat is "Yoga mat"
+(`isMat` in `src/similar.js`): an import's "Mat" or "Pilates mat" becomes it, and the build fails on any other mat name
+(Oct 2026: 39 Pilates and floor exercises said "Mat", a second filter chip).
 
 Defaults written by the (retired) generator and still expected: `measure`, `holdStep`, `defaults`, `repName`,
 phases. When adding exercises by hand, set them explicitly (the build doesn't infer them). Rule the generator

@@ -3,7 +3,7 @@
 const K = (name, cue, pose, x = {}) => ({ name, cue, camera: 90, durationMs: 1500, holdMs: 300, phase: 'rep', ...x, pose });
 const reps = (r = '5–8', n = 6, note = 'Move with control and breathe steadily; quality before quantity.') => ({ measure: 'reps', holdStep: null, defaults: { reps: n }, repName: null, prescription: { reps: r, note } });
 const OPC = { url: 'https://onlinepilatesclasses.com/blog/the-original-34-classical-pilates-mat-exercises/', title: 'Online Pilates Classes: Joseph Pilates\' 34 mat exercises' };
-const MAT = ['Mat'];
+const MAT = ['Yoga mat'];
 const x = (id, base, name, other, o) => ({ id, base, name, otherNames: other, equipment: MAT, collections: ['Pilates'], props: [], ...o });
 const SUP = { root: [-90, 0, 0], neck: [34, 0, 0] };                          // lying on the back
 const CURL = { root: [-90, 0, 0], chest: [32, 0, 0], neck: [44, 0, 0] };      // head and shoulders curled up

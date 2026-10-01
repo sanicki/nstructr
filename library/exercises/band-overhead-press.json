@@ -74,12 +74,8 @@
   "props": [
     {
       "type": "band",
-      "from": "footL",
-      "to": "handL"
-    },
-    {
-      "type": "band",
-      "from": "footR",
+      "from": "handL",
+      "via": ["footL", "footR"],
       "to": "handR"
     }
   ],

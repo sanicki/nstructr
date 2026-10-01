@@ -7,7 +7,7 @@
   "category": "Pilates",
   "focus": "Glutes, hamstrings, shoulders and core",
   "collections": ["Pilates"],
-  "equipment": ["Mat"],
+  "equipment": ["Yoga mat"],
   "muscles": {"shoulders": 2, "lowerBack": 1, "triceps": 2, "core": 2, "glutes": 2, "backThigh": 2},
   "stretches": ["shoulders", "chest"],
   "description": "Sitting with your legs straight and your hands on the floor behind you, lift your hips until your body is in one straight line facing up, kick one leg up toward the ceiling, lower it, and switch.",

@@ -6,7 +6,7 @@
   "category": "Pilates",
   "focus": "Deep core",
   "collections": ["Pilates"],
-  "equipment": ["Mat"],
+  "equipment": ["Yoga mat"],
   "muscles": {"core": 3, "frontThigh": 2},
   "description": "Hug both knees in with your head curled up, then reach your arms overhead and your legs away at the same time, and circle back in.",
   "source": {

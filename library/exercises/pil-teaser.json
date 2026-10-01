@@ -6,7 +6,7 @@
   "category": "Pilates",
   "focus": "Abdominals",
   "collections": ["Pilates"],
-  "equipment": ["Mat"],
+  "equipment": ["Yoga mat"],
   "muscles": {"lowerBack": 1, "core": 3, "frontThigh": 2},
   "description": "An advanced balance: from lying down, roll up into a V shape with your legs raised and your arms reaching toward your toes, then roll down.",
   "source": {

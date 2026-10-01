@@ -49,7 +49,7 @@
       "plant": ["L", "R"],
       "touch": [
         {
-          "point": "ankleR",
+          "point": "footR",
           "adjust": "hipR"
         }
       ],
@@ -58,8 +58,8 @@
         "elbowL": 69.4,
         "shoulderR": [-27.5, 0, 0],
         "elbowR": 69.4,
-        "hipR": [95, 0, 0],
-        "kneeR": 110,
+        "hipR": [77.5, 0, 0],
+        "kneeR": 102,
         "ankleR": -20
       }
     },
@@ -118,7 +118,7 @@
   "props": [
     {
       "type": "bench",
-      "z": 75,
+      "z": 80,
       "width": 90,
       "depth": 140,
       "height": 70

@@ -109,6 +109,7 @@ function validateExercise(ex, path) {
    "Resistance band", so it shows under the same filter */
 const equipKey = q => String(q).trim().replace(/\s+/g, ' ').toLowerCase();
 function equipName(q) {
+  if (SIMILAR_EX.isMat(q)) return SIMILAR_EX.MAT;                  // "Mat", "Pilates mat"… is the library's "Yoga mat"
   const k = equipKey(q);
   for (const ex of POSE_DB.exercises) for (const x of ex.equipment || []) if (equipKey(x) === k) return x;
   return String(q).trim().replace(/\s+/g, ' ');
@@ -171,12 +172,13 @@ function stepScreen(r, seg = S.seg, dx = 0) {
 }
 /* the screen x range of a sequence: every step's body, walls and surfaces */
 function sequenceSpan(R, seg, dx = 0, centre = false) {
-  let minX = Infinity, maxX = -Infinity, minY = Infinity;
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, headY = Infinity;
   for (const r of R) {
     // (a travelling exercise is drawn with the view following the pelvis: each step centred on it)
     const Q = stepScreen(r, seg, dx);
     if (centre) { const d = W / 2 - Q.pelvis.x; for (const k in Q) Q[k].x += d; }
     for (const k of POINTS) { minX = Math.min(minX, Q[k].x); maxX = Math.max(maxX, Q[k].x); minY = Math.min(minY, Q[k].y); }
+    headY = Math.min(headY, Q.headTop.y);
     for (const wl of R.walls || []) if (wl) { const w = wallOnScreen(wl, r.cam); if (w.show > 0.02) { minX = Math.min(minX, w.x + dx - 6); maxX = Math.max(maxX, w.x + dx + 6); } }
     for (const sh of surfaceShapes(r.supports || R.supports, r.cam)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); }   // (a rolling ball moves)
     // a ball carried or thrown (where the step's "holds" puts it), all of it
@@ -189,7 +191,7 @@ function sequenceSpan(R, seg, dx = 0, centre = false) {
   }
   for (const s of R.supports || []) minY = Math.min(minY, FLOOR - s.h - (s.backHeight || 0));
   for (const b of R.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 6);
-  return { minX, maxX, minY };
+  return { minX, maxX, minY, headY };
 }
 function rebuild() {
   if (!S.ex) { S.resolved = []; return; }
@@ -203,11 +205,12 @@ function rebuild() {
   S.bandRest = bandRestLengths(S.props, S.resolved, S.seg);
   S.travel = !!S.ex.travel; S.off = { x: 0, z: 0 };
   // Frame the whole sequence: one constant horizontal shift so every keyframe stays on stage (nothing slides)
-  const { minX, maxX, minY } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
+  const { minX, maxX, minY, headY } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   // the stage is 400 square with the floor near the bottom; something higher (a pull-up bar) widens the view, still square
-  // (only when clearly beyond the top: arms overhead just reach it and keep the usual view)
-  const top = isFinite(minY) && minY < -20 ? minY - 16 : 0, side = 400 - top;
+  // (only when clearly beyond the top: arms overhead just reach it and keep the usual view; the head never goes off it,
+  // e.g. standing on a bench)
+  const top = isFinite(minY) && (minY < -20 || headY < 8) ? Math.min(minY, headY - 8) - 16 : 0, side = 400 - top;
   scene.setAttribute('viewBox', `${(W - side) / 2} ${top} ${side} ${side}`); syncLimbWidth();
   S.idx = Math.min(S.idx, S.resolved.length - 1);
   S.shownIdx = -1;
@@ -305,8 +308,11 @@ function drawProps(P, Q, pose, cam) {
     }
     const bp = bandPathRoute(pts, q, S.bandRest[i]);
     // a stretched band thins and deepens in colour as the tension builds
-    const svg = `<path class="band" d="${bp.d}" style="stroke-width:${bp.width.toFixed(2)};opacity:${Math.min(1, 0.7 + (bp.stretch - 1) * 0.8).toFixed(2)}"/>`;
-    if (far) back += svg; else front += svg;
+    const style = `stroke-width:${bp.width.toFixed(2)};opacity:${Math.min(1, 0.7 + (bp.stretch - 1) * 0.8).toFixed(2)}`;
+    if (q.length > 2) {
+      // through several points (under both feet, an end in each hand): each stretch in front of the body or behind it
+      for (const r of bandSides(q, Q.pelvis.d)) { const svg = `<path class="band" d="M${r.pts.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}" style="${style}"/>`; if (r.far) back += svg; else front += svg; }
+    } else { const svg = `<path class="band" d="${bp.d}" style="${style}"/>`; if (far) back += svg; else front += svg; }
     back += bandAnchors(pr, q).map(p => anchorSVG(p, 'anchor')).join('');
   });
   $('#propsBack').innerHTML = back; $('#propsFront').innerHTML = front;

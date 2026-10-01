@@ -7,7 +7,7 @@
   "category": "Pilates",
   "focus": "Hips, waist and balance",
   "collections": ["Pilates"],
-  "equipment": ["Mat"],
+  "equipment": ["Yoga mat"],
   "muscles": {"shoulders": 1, "core": 2, "frontThigh": 1, "glutes": 3},
   "description": "Kneeling, lean over onto one hand under your shoulder with the other hand behind your head, lift the top leg to hip height, then kick it forward and sweep it back behind you.",
   "source": {

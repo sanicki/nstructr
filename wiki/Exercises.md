@@ -14,7 +14,7 @@ The **Exercises** tab is the library: 354 exercises, each animated step by step,
 - Inside a collection, a second row filters by **type** (what it works, such as Calves or Core).
 - The **equipment** row narrows the list to exercises that use, for example, a resistance band or a chair. Your
   equipment choice stays when you switch collections. Capital letters don't matter: an imported exercise that says
-  "resistance band" is listed under Resistance band.
+  "resistance band" is listed under Resistance band, and any mat ("Mat", "Pilates mat") under Yoga mat.
 - The **muscles** row (Arms, Shoulders, Chest, Back, Core, Upper legs and glutes, Lower legs) lists the exercises
   that are mainly for those muscles, or stretch them.
 - **Group by collection** (under the filters, for *All collections*; off at first, and remembered):
