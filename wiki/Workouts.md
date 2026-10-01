@@ -7,8 +7,8 @@
 The **Workouts** tab has three parts:
 
 - **My workouts**: the ones you made, customised or received. Tap a card to expand it: time, number of exercises,
-  equipment, a small map of the muscles it works and the three it works most, **Edit** and **Share**, then its
-  exercises (tap one to see it on its exercise page), and any safety notes at the bottom. Tap ▶ to start.
+  equipment, a small map of the muscles it works and the three it works most, its exercises (tap one to see it on
+  its exercise page), **Edit** and **Share**, and any safety notes at the bottom. Tap ▶ to start.
 - **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy. There
   are 20-minute beginner's workouts for yoga and Pilates (a mat, nothing else), resistance band (one band), free
   weights (dumbbells) and kettlebell (one bell). The 20 minutes are with **Coach** (Settings › Instruction); without it they take 15–17.
@@ -35,6 +35,7 @@ If you stop a workout part-way, a **Resume** card at the top takes you back to w
 
 - **Name** at the top; below it, the estimated time, the number of exercises and the equipment you'll need.
 - **Start**, **Add block**, **Share**, **Duplicate** and **Delete**.
+- Below the exercises, **Muscles worked** (tap to open) shows what the workout works and stretches (below).
 - A workout is made of **blocks** (Warm-up, Strength, Cool-down…). Each block has a menu (⋮) to rename, move,
   delete it, or **repeat it as a circuit**: every exercise in the block, then back to the top, for a number of
   **rounds** with a **rest between rounds**.
@@ -48,7 +49,7 @@ If you stop a workout part-way, a **Resume** card at the top takes you back to w
 
 <img src="images/workout-muscles.png" width="300" alt="Muscles worked in a workout: the front and back figure coloured green, amber and red, the scale 0, 2, 5, 8+, and each group's number">
 
-**Muscles worked** (under the summary; tap to open) adds up what the workout's exercises work, as an estimate in
+**Muscles worked** (below the exercises; tap to open) adds up what the workout's exercises work, as an estimate in
 **sets**, on the same front and back figure:
 - **green** up to 2 sets, **amber** 2–5, **red** above 5, a little darker the more (brighter in the dark theme);
 - a set close to the exercise's suggested reps counts 1 (12–15 reps when it suggests none, 30–60 s for a hold);

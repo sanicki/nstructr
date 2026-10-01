@@ -129,10 +129,10 @@ function wkCard(w) {
         <div class="wk-meta body-small"><span><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span><span><span class="icon">format_list_numbered</span>${plural(n, { one: '# exercise', other: '# exercises' })}</span><span><span class="icon">view_agenda</span>${plural(w.blocks.length, { one: '# block', other: '# blocks' })}</span></div>
         ${eq.length ? `<div class="wk-meta body-small"><span><span class="icon">handyman</span>${esc(eq.join(', '))}</span></div>` : ''}
         ${workoutMusclesHTML(w, true)}
+        ${wkExerciseList(w)}
         <div class="row">${lib ? `<button class="btn tonal stateful" data-wcustom="${esc(w.id)}"><span class="icon">edit</span>Customize</button>`
           : `<a class="btn tonal stateful" href="#/workout/${encodeURIComponent(w.id)}" style="text-decoration:none"><span class="icon">edit</span>Edit</a>
              <button class="icon-btn stateful wk-share" data-share-wk="${esc(w.id)}" aria-label="Share ${esc(w.name)}" title="Share"><span class="icon">share</span></button>`}</div>
-        ${wkExerciseList(w)}
         ${safetyHtml(w)}
       </div>
     </div></article>`;
@@ -221,7 +221,7 @@ function renderEditor() {
   const eq = workoutEquipment(w);
   $('#wkSummary').innerHTML = `<span class="chip"><span class="icon">schedule</span>About ${fmtMin(workoutSeconds(w))}</span>
     <span class="chip"><span class="icon">format_list_numbered</span>${plural(w.blocks.flatMap(b => b.items).length, { one: '# exercise', other: '# exercises' })}</span>
-    ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}${safetyHtml(w)}`;
+    ${eq.map(q => `<span class="chip"><span class="icon">handyman</span>${esc(q)}</span>`).join('')}`;
   const mg = workoutMusclesHTML(w, false);
   $('#wkMusclesBox').hidden = !mg; $('#wkMuscles').innerHTML = mg;
   $('#wkBlocks').innerHTML = w.blocks.map((b, bi) => `<section class="block" data-block="${b.id}">
@@ -1002,7 +1002,7 @@ function wpAction(act) {
 }
 
 /* Start goes straight into the workout (no "before you start" sheet): the time and equipment are on the card,
-   and the safety notes from the sources are on the card and in the editor (safetyNotes). */
+   and the safety notes from the sources are at the bottom of the card (safetyNotes). */
 const safetyNotes = w => [...new Set(w.blocks.flatMap(b => b.items).map(it => ((exById(it.ex) || {}).prescription || {}).note).filter(n => n && /doctor|osteoporosis|heart|coach|spotter|blood pressure/i.test(n)))];
 const safetyHtml = w => { const n = safetyNotes(w); return n.length ? `<div class="note wk-safety"><span class="icon">health_and_safety</span><div>${n.map(x => `<p class="body-small" style="margin:0">${esc(x)}</p>`).join('')}</div></div>` : ''; };
 function confirmStart(w, fromIndex = 0, swaps = null) { startWorkout(w, fromIndex, swaps); }

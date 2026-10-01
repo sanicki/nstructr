@@ -410,7 +410,7 @@ too), `backThigh` (hamstrings), `lowerLegs` (calves, shins).
   above 5 (to 8), a gradient within each (`color-mix` of the `--mg-g0`…`--mg-r1` stops). The library's 20-minute
   workouts come out mostly amber, red for what each is for (Pilates core 11.9, kettlebell glutes 8.4) and yoga green.
   Shown on a workout card (a small map, the three groups worked most and what it stretches) and in the editor
-  ("Muscles worked", collapsed: map, scale, each group's number). Every group one of its exercises stretches is
+  ("Muscles worked", collapsed, below the blocks: map, scale, each group's number). Every group one of its exercises stretches is
   outlined in dashed blue, as on an exercise's map, and marked "stretched" in the list (owner, Oct 2026).
 - **Exercise cards** have no map (a small one in the corner came out with the owner's review, Sep 2026); the card's
   label adds "Works …" (its primary groups) for screen readers. `.results>.pose-card` use `content-visibility: auto`
@@ -738,7 +738,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 
 ## 10. UI inventory (current)
 
-- **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (Start/Edit, est. time, count, equipment, muscle map, then its exercises by block (thumbnail and name; tap one to open it on the exercise page), safety notes last), Library workouts (Start/Customize, the same details), History (delete, clear). Editor: name, blocks (rename, move, delete, repeat as circuit with rounds and
+- **Workouts**: Resume card, My Workouts (New workout; importing is in Settings), your workout cards (est. time, count, equipment, muscle map, its exercises by block (thumbnail and name; tap one to open it on the exercise page), Edit/Share, safety notes last; the editor has no safety notes), Library workouts (Start/Customize, the same details), History (delete, clear). Editor: name, blocks (rename, move, delete, repeat as circuit with rounds and
   rest), items (drag handle, the thumbnail opens the exercise page, the rest of the row the settings sheet with reps/seconds, sets, sides, direction, **seconds per rep** (0.1 s steps, typed or −/+, "Usual: n s" = the exercise's own pace; stored as `tempo` = usual ÷ chosen, clamped to ¼–4×; not for timed exercises); menu: move,
   duplicate, view, remove), Add exercises picker (search, multi-select), Share/JSON/Duplicate/Delete.
 - **Exercises**: collection shelves (Saved first), filters (All, **Saved**, each collection; then type and equipment,
