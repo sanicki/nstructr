@@ -308,8 +308,11 @@ function drawProps(P, Q, pose, cam) {
     }
     const bp = bandPathRoute(pts, q, S.bandRest[i]);
     // a stretched band thins and deepens in colour as the tension builds
-    const svg = `<path class="band" d="${bp.d}" style="stroke-width:${bp.width.toFixed(2)};opacity:${Math.min(1, 0.7 + (bp.stretch - 1) * 0.8).toFixed(2)}"/>`;
-    if (far) back += svg; else front += svg;
+    const style = `stroke-width:${bp.width.toFixed(2)};opacity:${Math.min(1, 0.7 + (bp.stretch - 1) * 0.8).toFixed(2)}`;
+    if (q.length > 2) {
+      // through several points (under both feet, an end in each hand): each stretch in front of the body or behind it
+      for (const r of bandSides(q, Q.pelvis.d)) { const svg = `<path class="band" d="M${r.pts.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}" style="${style}"/>`; if (r.far) back += svg; else front += svg; }
+    } else { const svg = `<path class="band" d="${bp.d}" style="${style}"/>`; if (far) back += svg; else front += svg; }
     back += bandAnchors(pr, q).map(p => anchorSVG(p, 'anchor')).join('');
   });
   $('#propsBack').innerHTML = back; $('#propsFront').innerHTML = front;

@@ -48,7 +48,12 @@ function poseThumbSVG(ex, kf, opts = {}) {
     if (!route) return '';
     if (pr.type === 'strap') route = strapPoints(route, rest[i]);
     const q = route.map(proj);
-    const svg = pr.type === 'towel' || pr.type === 'strap' ? `<path class="${pr.type === 'strap' ? 'tst' : 'tt'}" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`
+    const line = pts => `M${pts.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}`;
+    if (pr.type === 'band' && q.length > 2) {
+      // through several points (under both feet, an end in each hand): each stretch in front of the body or behind it
+      return bandSides(q, Q.pelvis.d).map(r => { const svg = `<path class="tb" d="${line(r.pts)}"/>`; if (r.far) return svg; over += svg; return ''; }).join('') + bandAnchors(pr, q).map(p => anchorSVG(p, 'ta')).join('');
+    }
+    const svg = pr.type === 'towel' || pr.type === 'strap' ? `<path class="${pr.type === 'strap' ? 'tst' : 'tt'}" d="${line(q)}"/>`
       : `<path class="tb" d="${bandPathRoute(route, q, rest[i]).d}"/>` + bandAnchors(pr, q).map(p => anchorSVG(p, 'ta')).join('');
     if (q.reduce((a, p) => a + p.d, 0) / q.length < Q.pelvis.d) return svg;
     over += svg; return '';

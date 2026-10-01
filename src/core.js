@@ -824,6 +824,18 @@ function bandPathRoute(pts, Q, rest) {
   return { d: 'M' + Q.map(p => `${f(p.x)} ${f(p.y)}`).join('L'), width: Math.max(2, 5 / Math.sqrt(Math.max(1, stretch))), stretch };
 }
 
+/* a band through several points (an end in each hand, under both feet), stretch by stretch: each in front of the body
+   or behind it by its own depth (ref: the body's), neighbours on the same side joined. q: screen points with depth.
+   [{ far, pts }] */
+function bandSides(q, ref) {
+  const runs = [];
+  for (let i = 1; i < q.length; i++) {
+    const far = (q[i - 1].d + q[i].d) / 2 < ref, last = runs[runs.length - 1];
+    if (last && last.far === far) last.pts.push(q[i]); else runs.push({ far, pts: [q[i - 1], q[i]] });
+  }
+  return runs;
+}
+
 /* ---------- Walls ----------
    A wall stands where a chosen body point is in one step ("at", "keyframe"), or at a fixed "z" (or "x"), then stays
    put. It is in front of or behind the figure, or with "beside": true, at its side. */
@@ -1022,7 +1034,7 @@ function mirrorKeyframe(kf) {
 }
 
 if (typeof module !== 'undefined') module.exports = {
-  phaseInfo, reverseReps, easeAt, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
+  phaseInfo, reverseReps, easeAt, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute, bandSides,
   propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   SEGMENTS, clearance, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
