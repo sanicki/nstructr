@@ -34,24 +34,31 @@ function poseThumbSVG(ex, kf, opts = {}) {
   // a carried ball goes among the limbs, by depth (the near hand and foot on it, the far ones behind it)
   const ball = (ex.props || []).find(carried), ballSVG = ball ? weightSVG(ball, P, M0, proj, null, held) : '', ballD = held ? proj(held).d : Q.pelvis.d;
   let ballDone = !ballSVG;
-  const figure = boneOrder(Q).map(id => { const bn = byId.get(id);
-    const pre = !ballDone && (Q[bn.a].d + Q[bn.b].d) / 2 > ballD ? ((ballDone = true), ballSVG) : '';
+  // bands, towels and straps go among the limbs, piece by piece (ropeRuns), drawn before the bone named
+  const order = boneOrder(Q), boneD = {}, ropes = new Map();
+  for (const bn of BONES) boneD[bn.id] = (Q[bn.a].d + Q[bn.b].d) / 2;
+  const torso = torsoOutline(Q);
+  const rope = (pts, c) => { for (const r of ropeRuns(pts, order, boneD, 12, torso)) ropes.set(r.before, (ropes.get(r.before) || '') + `<path class="${c}${r.hidden ? ' behind' : ''}" d="${runPath(r.pts)}"/>`); };
+  (ex.props || []).forEach((pr, i) => {
+    if (!['band', 'towel', 'strap'].includes(pr.type)) return;
+    let route = propRoute(P, pr); if (!route) return;
+    if (pr.type === 'strap') route = strapPoints(route, rest[i]);
+    const q = route.map(proj);
+    rope(pr.type === 'band' ? bandPathRoute(route, q, rest[i]).pts : q, pr.type === 'band' ? 'tb' : pr.type === 'strap' ? 'tst' : 'tt');
+  });
+  const figure = order.map(id => { const bn = byId.get(id);
+    const pre = (!ballDone && (Q[bn.a].d + Q[bn.b].d) / 2 > ballD ? ((ballDone = true), ballSVG) : '') + (ropes.get(id) || '');
     return pre + L(bn.a, bn.b, cls[bn.part]) +
-    (bn.b === 'head' ? `<circle cx="${Q.head.x.toFixed(1)}" cy="${Q.head.y.toFixed(1)}" r="${seg.head}" class="th"/>` : ''); }).join('') + (ballDone ? '' : ballSVG);
+    (bn.b === 'head' ? `<circle cx="${Q.head.x.toFixed(1)}" cy="${Q.head.y.toFixed(1)}" r="${seg.head}" class="th"/>` : ''); }).join('') + (ballDone ? '' : ballSVG) + (ropes.get(null) || '');
   const back = (ex.props || []).map((pr, i) => {
     if (carried(pr)) return '';
     if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj, pr.type === 'kettlebell' ? gripAt(r, r, 1) : null, pr.type === 'medball' ? heldAt(r, r, 1, P) : null); return ''; }
     if (pr.type === 'bar') { over += barSVG(pr, proj, 'tbar'); return ''; }
     if (pr.type === 'ring') { over += ringSVG(pr, P, proj, 'tring'); return ''; }
     if (pr.type === 'wall') { const wl = walls[i]; return wl && wl.show > 0.5 ? `<line class="tw" x1="${wl.x.toFixed(1)}" y1="${FLOOR + 7}" x2="${wl.x.toFixed(1)}" y2="${(vy - 5).toFixed(1)}"/>` : ''; }
-    let route = propRoute(P, pr);
-    if (!route) return '';
-    if (pr.type === 'strap') route = strapPoints(route, rest[i]);
-    const q = route.map(proj);
-    const svg = pr.type === 'towel' || pr.type === 'strap' ? `<path class="${pr.type === 'strap' ? 'tst' : 'tt'}" d="M${q.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L')}"/>`
-      : `<path class="tb" d="${bandPathRoute(route, q, rest[i]).d}"/>` + bandAnchors(pr, q).map(p => anchorSVG(p, 'ta')).join('');
-    if (q.reduce((a, p) => a + p.d, 0) / q.length < Q.pelvis.d) return svg;
-    over += svg; return '';
+    if (pr.type !== 'band') return '';                     // (towels and straps: among the limbs, above)
+    const route = propRoute(P, pr);
+    return route ? bandAnchors(pr, route.map(proj)).map(p => anchorSVG(p, 'ta')).join('') : '';
   }).join('');
   const surf = surfaces.map(sh => `<path class="ts${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" d="${sh.d}"/>`).join('');
   return `<svg class="thumb" viewBox="${vx.toFixed(1)} ${vy.toFixed(1)} ${s.toFixed(1)} ${s.toFixed(1)}" aria-hidden="true">

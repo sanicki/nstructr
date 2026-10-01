@@ -819,10 +819,49 @@ function bandPathRoute(pts, Q, rest) {
   if (Q.length === 2 && stretch < 1) {
     const [a, b] = Q, sag = Math.sqrt(Math.max(0, rest * rest - routeLength(pts) ** 2)) / 2;
     const mx = (a.x + b.x) / 2, my = Math.min((a.y + b.y) / 2 + sag, FLOOR + 3);
-    return { d: `M${f(a.x)} ${f(a.y)}Q${f(mx)} ${f(my)} ${f(b.x)} ${f(b.y)}`, width: 5, stretch };
+    // (the curve as points too, depth along it, for drawing it among the limbs: ropeRuns)
+    const curve = Array.from({ length: 17 }, (_, i) => { const t = i / 16, u = 1 - t;
+      return { x: u * u * a.x + 2 * u * t * mx + t * t * b.x, y: u * u * a.y + 2 * u * t * my + t * t * b.y, d: a.d + (b.d - a.d) * t }; });
+    return { d: `M${f(a.x)} ${f(a.y)}Q${f(mx)} ${f(my)} ${f(b.x)} ${f(b.y)}`, width: 5, stretch, pts: curve };
   }
-  return { d: 'M' + Q.map(p => `${f(p.x)} ${f(p.y)}`).join('L'), width: Math.max(2, 5 / Math.sqrt(Math.max(1, stretch))), stretch };
+  return { d: 'M' + Q.map(p => `${f(p.x)} ${f(p.y)}`).join('L'), width: Math.max(2, 5 / Math.sqrt(Math.max(1, stretch))), stretch, pts: Q };
 }
+/* a band, towel or strap seen among the limbs (the body hides what's behind it): its screen route q (points with depth
+   d) cut into pieces of at most `step` px, each drawn just before the first bone nearer than it. order: bone ids, far to
+   near; boneD: id -> depth. Returns [{ before: that bone's id (null: in front of them all), pts }], pieces going to the
+   same place joined. */
+/* the torso as the camera sees it, for what passes behind it: the outline of the shoulders and hips (a little wider than
+   the stick) and how deep it is. Q: screen points with depth */
+function torsoOutline(Q, pad = 8) {
+  const ks = ['shoulderL', 'shoulderR', 'hipR', 'hipL', 'neckBase', 'pelvis'], pts = ks.map(k => Q[k]);
+  const cx = pts.reduce((s, p) => s + p.x, 0) / pts.length, cy = pts.reduce((s, p) => s + p.y, 0) / pts.length;
+  // convex hull (gift wrap: a handful of points), pushed out from its middle by pad
+  const hull = []; let p0 = pts.reduce((a, b) => (b.x < a.x || (b.x === a.x && b.y < a.y) ? b : a)), p = p0;
+  for (let guard = 0; guard < 8; guard++) {
+    hull.push(p); let next = pts[0] === p ? pts[1] : pts[0];
+    for (const c of pts) { const cr = (next.x - p.x) * (c.y - p.y) - (next.y - p.y) * (c.x - p.x); if (c !== p && (cr < 0 || (cr === 0 && Math.hypot(c.x - p.x, c.y - p.y) > Math.hypot(next.x - p.x, next.y - p.y)))) next = c; }
+    p = next; if (p === p0) break;
+  }
+  const out = hull.map(h => { const dx = h.x - cx, dy = h.y - cy, n = Math.hypot(dx, dy) || 1; return { x: h.x + dx / n * pad, y: h.y + dy / n * pad }; });
+  const inside = (x, y) => { let s = 0; for (let i = 0; i < out.length; i++) { const a = out[i], b = out[(i + 1) % out.length], cr = (b.x - a.x) * (y - a.y) - (b.y - a.y) * (x - a.x); if (Math.abs(cr) > 1e-9) { if (s && Math.sign(cr) !== s) return false; s = Math.sign(cr); } } return true; };
+  return { inside, d: pts.reduce((s, p) => s + p.d, 0) / pts.length };
+}
+function ropeRuns(q, order, boneD, step = 12, torso = null) {
+  const pts = [q[0]];
+  for (let i = 1; i < q.length; i++) {
+    const a = q[i - 1], b = q[i], n = Math.max(1, Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / step));
+    for (let k = 1; k <= n; k++) { const t = k / n; pts.push({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, d: a.d + (b.d - a.d) * t }); }
+  }
+  const runs = [];
+  for (let i = 1; i < pts.length; i++) {
+    const d = (pts[i - 1].d + pts[i].d) / 2, before = order.find(id => boneD[id] > d) || null, last = runs[runs.length - 1];
+    // behind the torso's outline: hidden by the body (drawn faded, so it still reads as one band)
+    const hid = !!torso && d < torso.d - 2 && torso.inside((pts[i - 1].x + pts[i].x) / 2, (pts[i - 1].y + pts[i].y) / 2);
+    if (last && last.before === before && last.hidden === hid) last.pts.push(pts[i]); else runs.push({ before, hidden: hid, pts: [pts[i - 1], pts[i]] });
+  }
+  return runs;
+}
+const runPath = pts => 'M' + pts.map(p => `${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join('L');
 
 /* ---------- Walls ----------
    A wall stands where a chosen body point is in one step ("at", "keyframe"), or at a fixed "z" (or "x"), then stays
@@ -1022,7 +1061,7 @@ function mirrorKeyframe(kf) {
 }
 
 if (typeof module !== 'undefined') module.exports = {
-  phaseInfo, reverseReps, easeAt, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute,
+  phaseInfo, reverseReps, easeAt, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute, ropeRuns, runPath, torsoOutline,
   propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   SEGMENTS, clearance, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS
