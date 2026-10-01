@@ -24,7 +24,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **354 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **356 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -33,13 +33,13 @@ Library today: **354 exercises, 5 workouts** (20-minute beginner's yoga, Pilates
 | Bodyweight | 43 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
 | Resistance band | 38 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) + band Pilates (Hundred, Leg Circles, Roll-Up) |
 | Chair-based | 29 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga, chair-supported stretches… |
-| Stretches | 36 | Mayo Clinic basic stretches + routine additions + triceps, figure-four, doorway, strap stretches + towel, chair and step versions + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
+| Stretches | 38 | Mayo Clinic basic stretches + routine additions + triceps, biceps, wrist flexor (batch 26: nothing stretched biceps and forearms), figure-four, doorway, strap stretches + towel, chair and step versions + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
 | Core | 40 | planks (incl. knee plank), hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 41 | Pilates ring (chest press, inner thigh squeeze); all 34 classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick… and the advanced ones, batch 23: Open Leg Rocker, Corkscrew, Jackknife, Boomerang…); band versions |
 | Balance | 15 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, side stepping, balance walk, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 23 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-225 are rep-based, 129 timed; 126 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
+225 are rep-based, 131 timed; 127 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -409,8 +409,9 @@ too), `backThigh` (hamstrings), `lowerLegs` (calves, shins).
   × 1); × 1 primary, ½ secondary, ¼ stabilizer. Stretches don't count. Colours (`mgScale`): green to 2, amber 2–5, red
   above 5 (to 8), a gradient within each (`color-mix` of the `--mg-g0`…`--mg-r1` stops). The library's 20-minute
   workouts come out mostly amber, red for what each is for (Pilates core 11.9, kettlebell glutes 8.4) and yoga green.
-  Shown on a workout card (a small map and the three groups worked most) and in the editor ("Muscles worked",
-  collapsed: map, scale, each group's number).
+  Shown on a workout card (a small map, the three groups worked most and what it stretches) and in the editor
+  ("Muscles worked", collapsed: map, scale, each group's number). Every group one of its exercises stretches is
+  outlined in dashed blue, as on an exercise's map, and marked "stretched" in the list (owner, Oct 2026).
 - **Exercise cards** have no map (a small one in the corner came out with the owner's review, Sep 2026); the card's
   label adds "Works …" (its primary groups) for screen readers. `.results>.pose-card` use `content-visibility: auto`
   (added with that map, kept: the long list renders faster).
