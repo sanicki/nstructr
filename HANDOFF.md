@@ -283,7 +283,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
 | `dumbbell` | `hand`, `axis` `lr` (bar left–right) / `fb` (front–back) / `ud` (upright), relative to the body | Drawn end-on when the bar points at the camera; drawn with its arm (behind the body when the arm is). |
 | `kettlebell` | `hand` or `hands[]` | In one hand it hangs in line with the forearm; held in both (by the horns) straight down, turning from one to the other as it's passed (`kettlebellAt`). Held in both behind the head or back, it's drawn behind the body there (Kettlebell Halo). A step's `holds` overrides which hands hold it (passing it hand to hand). |
 | `barbell` | `from`, `to` (hands) | Projected in 3D: the end plate from the side, the full bar from the front. |
-| `bar` | `y` (height), `z`, `width` 90 | A pull-up bar, drawn in front of the hands that hold it (end-on, a dot). Hang from it with `anchor` a hand, `anchorY` the bar's `y`, `anchorX` half the grip width. The exercise page's view grows upwards to show it (still square). Equipment "Pull-up bar" (its own kind). |
+| `bar` | `y` (height), `z`, `width` 90 | A pull-up bar, drawn in front of the hands that hold it (end-on, a dot). Hang from it with `anchor` a hand, `anchorY` the bar's `y`, `anchorX` half the grip width. The exercise page's view grows upwards to show it (still square), as it does whenever the head would go above the top (standing on a bench; arms overhead may reach 20 px past it). Equipment "Pull-up bar" (its own kind). |
 
 `equipment` must match the props (build check 2d): every listed towel, wall, door anchor, chair, bench, step, band,
 dumbbell, barbell or kettlebell is drawn, every drawn one is listed, and each item is spelled one way across the

@@ -171,12 +171,13 @@ function stepScreen(r, seg = S.seg, dx = 0) {
 }
 /* the screen x range of a sequence: every step's body, walls and surfaces */
 function sequenceSpan(R, seg, dx = 0, centre = false) {
-  let minX = Infinity, maxX = -Infinity, minY = Infinity;
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, headY = Infinity;
   for (const r of R) {
     // (a travelling exercise is drawn with the view following the pelvis: each step centred on it)
     const Q = stepScreen(r, seg, dx);
     if (centre) { const d = W / 2 - Q.pelvis.x; for (const k in Q) Q[k].x += d; }
     for (const k of POINTS) { minX = Math.min(minX, Q[k].x); maxX = Math.max(maxX, Q[k].x); minY = Math.min(minY, Q[k].y); }
+    headY = Math.min(headY, Q.headTop.y);
     for (const wl of R.walls || []) if (wl) { const w = wallOnScreen(wl, r.cam); if (w.show > 0.02) { minX = Math.min(minX, w.x + dx - 6); maxX = Math.max(maxX, w.x + dx + 6); } }
     for (const sh of surfaceShapes(r.supports || R.supports, r.cam)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); }   // (a rolling ball moves)
     // a ball carried or thrown (where the step's "holds" puts it), all of it
@@ -189,7 +190,7 @@ function sequenceSpan(R, seg, dx = 0, centre = false) {
   }
   for (const s of R.supports || []) minY = Math.min(minY, FLOOR - s.h - (s.backHeight || 0));
   for (const b of R.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 6);
-  return { minX, maxX, minY };
+  return { minX, maxX, minY, headY };
 }
 function rebuild() {
   if (!S.ex) { S.resolved = []; return; }
@@ -203,11 +204,12 @@ function rebuild() {
   S.bandRest = bandRestLengths(S.props, S.resolved, S.seg);
   S.travel = !!S.ex.travel; S.off = { x: 0, z: 0 };
   // Frame the whole sequence: one constant horizontal shift so every keyframe stays on stage (nothing slides)
-  const { minX, maxX, minY } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
+  const { minX, maxX, minY, headY } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   // the stage is 400 square with the floor near the bottom; something higher (a pull-up bar) widens the view, still square
-  // (only when clearly beyond the top: arms overhead just reach it and keep the usual view)
-  const top = isFinite(minY) && minY < -20 ? minY - 16 : 0, side = 400 - top;
+  // (only when clearly beyond the top: arms overhead just reach it and keep the usual view; the head never goes off it,
+  // e.g. standing on a bench)
+  const top = isFinite(minY) && (minY < -20 || headY < 8) ? Math.min(minY, headY - 8) - 16 : 0, side = 400 - top;
   scene.setAttribute('viewBox', `${(W - side) / 2} ${top} ${side} ${side}`); syncLimbWidth();
   S.idx = Math.min(S.idx, S.resolved.length - 1);
   S.shownIdx = -1;
