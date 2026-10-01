@@ -58,11 +58,71 @@
       }
     },
     {
-      "name": "Walk out to a plank",
-      "cue": "Walk your hands forward to a plank.",
+      "name": "Walk your hands out",
+      "cue": "Walk your hands forward, one at a time.",
       "camera": 90,
-      "durationMs": 2500,
-      "holdMs": 300,
+      "durationMs": 800,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "toeL",
+      "pose": {
+        "root": [29.5, 0, 0],
+        "torso": [92.25, 0, 0],
+        "hipL": [-1.5, 0, 0],
+        "hipR": [-1.5, 0, 0],
+        "shoulderL": [105.75, 0, 0],
+        "shoulderR": [140, 0, 0],
+        "ankleL": 8,
+        "ankleR": 8,
+        "neck": [10, 0, 0]
+      }
+    },
+    {
+      "name": "Left hand forward",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "toeL",
+      "pose": {
+        "root": [34, 0, 0],
+        "torso": [85, 0, 0],
+        "hipL": [0, 0, 0],
+        "hipR": [0, 0, 0],
+        "shoulderL": [133, 0, 0],
+        "shoulderR": [133, 0, 0],
+        "ankleL": 10,
+        "ankleR": 10,
+        "neck": [10, 0, 0]
+      },
+      "quiet": true
+    },
+    {
+      "name": "Right hand forward",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "toeL",
+      "pose": {
+        "root": [46, 0, 0],
+        "torso": [54.25, 0, 0],
+        "hipL": [-7.25, 0, 0],
+        "hipR": [-7.25, 0, 0],
+        "shoulderL": [81, 0, 0],
+        "shoulderR": [118.5, 0, 0],
+        "ankleL": 16,
+        "ankleR": 16,
+        "neck": [10, 0, 0]
+      },
+      "quiet": true
+    },
+    {
+      "name": "Plank",
+      "cue": "Body in one straight line, hands under your shoulders.",
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 400,
       "phase": "rep",
       "anchor": "toeL",
       "touch": [
@@ -83,10 +143,70 @@
     },
     {
       "name": "Walk back in",
-      "cue": "Walk your hands back to your feet.",
+      "cue": "Walk your hands back toward your feet, one at a time.",
       "camera": 90,
-      "durationMs": 2500,
-      "holdMs": 300,
+      "durationMs": 800,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "toeL",
+      "pose": {
+        "root": [46, 0, 0],
+        "torso": [54.25, 0, 0],
+        "hipL": [-7.25, 0, 0],
+        "hipR": [-7.25, 0, 0],
+        "shoulderL": [118.5, 0, 0],
+        "shoulderR": [81, 0, 0],
+        "ankleL": 16,
+        "ankleR": 16,
+        "neck": [10, 0, 0]
+      }
+    },
+    {
+      "name": "Left hand back",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "toeL",
+      "pose": {
+        "root": [34, 0, 0],
+        "torso": [85, 0, 0],
+        "hipL": [0, 0, 0],
+        "hipR": [0, 0, 0],
+        "shoulderL": [133, 0, 0],
+        "shoulderR": [133, 0, 0],
+        "ankleL": 10,
+        "ankleR": 10,
+        "neck": [10, 0, 0]
+      },
+      "quiet": true
+    },
+    {
+      "name": "Right hand back",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 100,
+      "phase": "rep",
+      "anchor": "toeL",
+      "pose": {
+        "root": [29.5, 0, 0],
+        "torso": [92.25, 0, 0],
+        "hipL": [-1.5, 0, 0],
+        "hipR": [-1.5, 0, 0],
+        "shoulderL": [140, 0, 0],
+        "shoulderR": [105.75, 0, 0],
+        "ankleL": 8,
+        "ankleR": 8,
+        "neck": [10, 0, 0]
+      },
+      "quiet": true
+    },
+    {
+      "name": "Hands by your feet",
+      "cue": "Hands back by your feet.",
+      "camera": 90,
+      "durationMs": 800,
+      "holdMs": 200,
       "phase": "rep",
       "anchor": "ankleL",
       "plant": ["L", "R"],
@@ -107,7 +227,8 @@
         "shoulderR": [185, 0, 0],
         "kneeL": 12,
         "kneeR": 12
-      }
+      },
+      "quiet": true
     }
   ],
   "measure": "reps",
