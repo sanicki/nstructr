@@ -377,7 +377,7 @@ Plank (side view): root [66,0,0], shoulders [66,0,0], anchor "handR". On the bac
 POINTS: pelvis, spine, neckBase, head, headTop, headLow (forehead), hipL/R, kneeL/R, ankleL/R, toeL/R, footL/R (ball of foot), shoulderL/R, elbowL/R, handL/R, armpitL/R, backL/R.
 
 EQUIPMENT (props):
-band: {type: "band", from: "footL", to: "handL"}, optional via: ["armpitR"], restLength
+band: {type: "band", from: "footL", to: "handL"}, optional via: ["armpitR"], restLength. ONE band is ONE prop, through every point it passes: under both feet with an end in each hand is {from: "handL", via: ["footL", "footR"], to: "handR"}; round the back is {from: "handR", via: ["armpitR", "backR", "backL", "armpitL"], to: "handL"}
 door anchor (a band tied to a door): {type: "wall", z: 150} for the door and a band from a spot on it, {type: "band", from: {z: 150, y: 110}, to: "handR"} (y = height); equipment "Door anchor"
 towel: {type: "towel", from: "handR", to: "handL"}; yoga strap the same way, {type: "strap", from: "handL", via: ["footL"], to: "handR"} (round a foot)
 yoga block: {type: "block", x: 25, z: 3}: a small surface 41 high on end; a hand rests on it with touch (e.g. {point: "handR", adjust: "torso.side"})

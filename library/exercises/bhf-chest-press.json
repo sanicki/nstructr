@@ -25,14 +25,8 @@
     {
       "type": "band",
       "from": "handR",
-      "via": ["armpitR"],
-      "to": "backR"
-    },
-    {
-      "type": "band",
-      "from": "handL",
-      "via": ["armpitL"],
-      "to": "backL"
+      "via": ["armpitR", "backR", "backL", "armpitL"],
+      "to": "handL"
     }
   ],
   "keyframes": [
