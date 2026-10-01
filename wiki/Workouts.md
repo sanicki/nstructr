@@ -56,6 +56,8 @@ If you stop a workout part-way, a **Resume** card at the top takes you back to w
 - a muscle the exercise is for counts the whole set, one that helps counts ½, one that steadies you ¼; stretches
   don't count;
 - a block's rounds multiply it; doing only one side counts half;
+- a **dashed blue outline** marks every muscle group one of the workout's exercises stretches (the card says what it
+  stretches too), so a stretching workout shows which groups it reaches;
 - it's an estimate: the app can't know how heavy the weight is or how hard you worked.
 
 ### An exercise's settings

@@ -409,8 +409,9 @@ too), `backThigh` (hamstrings), `lowerLegs` (calves, shins).
   × 1); × 1 primary, ½ secondary, ¼ stabilizer. Stretches don't count. Colours (`mgScale`): green to 2, amber 2–5, red
   above 5 (to 8), a gradient within each (`color-mix` of the `--mg-g0`…`--mg-r1` stops). The library's 20-minute
   workouts come out mostly amber, red for what each is for (Pilates core 11.9, kettlebell glutes 8.4) and yoga green.
-  Shown on a workout card (a small map and the three groups worked most) and in the editor ("Muscles worked",
-  collapsed: map, scale, each group's number).
+  Shown on a workout card (a small map, the three groups worked most and what it stretches) and in the editor
+  ("Muscles worked", collapsed: map, scale, each group's number). Every group one of its exercises stretches is
+  outlined in dashed blue, as on an exercise's map, and marked "stretched" in the list (owner, Oct 2026).
 - **Exercise cards** have no map (a small one in the corner came out with the owner's review, Sep 2026); the card's
   label adds "Works …" (its primary groups) for screen readers. `.results>.pose-card` use `content-visibility: auto`
   (added with that map, kept: the long list renders faster).

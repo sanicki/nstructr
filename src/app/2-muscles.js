@@ -67,14 +67,19 @@ const MG_SCALE = `<div class="mg-scale" aria-hidden="true"><div class="mg-bar"><
 function workoutMusclesHTML(w, compact) {
   const items = w.blocks.flatMap(b => b.items), rated = items.filter(it => musclesOf(exById(it.ex)));
   if (!rated.length) return '';
+  // every group one of its exercises stretches: outlined in dashed blue, as on an exercise's own map
+  const st = new Set(rated.flatMap(it => musclesOf(exById(it.ex)).stretches));
   const t = workoutMuscles(w), on = MUSCLE_GROUPS.filter(g => t[g] >= 0.05), unrated = items.length - rated.length;
-  const top = [...on].sort((a, b) => t[b] - t[a]).slice(0, 3);
-  const label = 'Muscle map, estimated work in set-equivalents. ' + on.map(g => `${MUSCLE_NAMES[g]}: ${mgNum(t[g])}`).join('. ');
-  const fig = muscleFigure(g => mgScale(t[g]), () => false, label);
-  if (compact) return `<div class="mg-card">${fig.replace(/<text[^>]*>[^<]*<\/text>/g, '').replace('viewBox="0 0 400 326"', 'viewBox="0 8 400 296"')}<p class="body-small">${top.length ? `Most work: ${top.map(g => MUSCLE_NAMES[g].toLowerCase()).join(', ').replace(/^./, c => c.toUpperCase())}` : ''}</p></div>`;
-  const list = MUSCLE_HEADS.map(([h, gs]) => { const x = gs.filter(g => t[g] >= 0.05);
-    return x.length ? `<li><b>${h}:</b> ${x.map(g => MUSCLE_NAMES[g] === h ? mgNum(t[g]) : `${MUSCLE_NAMES[g].toLowerCase()} ${mgNum(t[g])}`).join('; ')}</li>` : ''; }).join('');
-  return `${fig}${MG_SCALE}<p class="body-small muted mg-note">Estimated work, in sets: green up to 2, amber 2–5, red above 5. A set near the suggested reps counts 1; muscles that help count ½, those that steady you ¼; stretches don't count.${unrated ? ` ${plural(unrated, { one: '# exercise has', other: '# exercises have' })} no muscle ratings.` : ''}</p>
+  const top = [...on].sort((a, b) => t[b] - t[a]).slice(0, 3), stList = MUSCLE_GROUPS.filter(g => st.has(g));
+  const label = 'Muscle map, estimated work in set-equivalents. ' + on.map(g => `${MUSCLE_NAMES[g]}: ${mgNum(t[g])}`).join('. ') +
+    (stList.length ? `. Stretched: ${stList.length === MUSCLE_GROUPS.length ? 'every group' : stList.map(g => MUSCLE_NAMES[g]).join(', ')}` : '');
+  const fig = muscleFigure(g => mgScale(t[g]), g => st.has(g), label);
+  const stText = stList.length === MUSCLE_GROUPS.length ? 'every muscle group' : stList.length > 3 ? `${stList.length} muscle groups` : stList.map(g => MUSCLE_NAMES[g].toLowerCase()).join(', ');
+  if (compact) return `<div class="mg-card">${fig.replace(/<text[^>]*>[^<]*<\/text>/g, '').replace('viewBox="0 0 400 326"', 'viewBox="0 8 400 296"')}<p class="body-small">${top.length ? `Most work: ${top.map(g => MUSCLE_NAMES[g].toLowerCase()).join(', ').replace(/^./, c => c.toUpperCase())}` : ''}${top.length && stList.length ? '<br>' : ''}${stList.length ? `Stretches ${stText}` : ''}</p></div>`;
+  const words = g => [t[g] >= 0.05 ? mgNum(t[g]) : '', st.has(g) ? 'stretched' : ''].filter(Boolean).join(', ');
+  const list = MUSCLE_HEADS.map(([h, gs]) => { const x = gs.filter(g => t[g] >= 0.05 || st.has(g));
+    return x.length ? `<li><b>${h}:</b> ${x.map(g => MUSCLE_NAMES[g] === h ? words(g) : `${MUSCLE_NAMES[g].toLowerCase()} ${words(g)}`).join('; ')}</li>` : ''; }).join('');
+  return `${fig}${MG_SCALE}${stList.length ? `<div class="mg-legend body-small" aria-hidden="true">${mgSwatch('var(--mg-empty)', true, 'Stretched')}</div>` : ''}<p class="body-small muted mg-note">Estimated work, in sets: green up to 2, amber 2–5, red above 5. A set near the suggested reps counts 1; muscles that help count ½, those that steady you ¼. Stretches don't add to the sets: a dashed blue outline marks every group the workout stretches.${unrated ? ` ${plural(unrated, { one: '# exercise has', other: '# exercises have' })} no muscle ratings.` : ''}</p>
     <ul class="mg-list body-medium">${list}</ul>`;
 }
 /* "Works the front of thighs and glutes" for a card's label */
