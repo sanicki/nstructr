@@ -20,7 +20,9 @@ const JOINTS = [
   ['shoulderL', 'Left shoulder', ['Forward', 'Out to the side', 'Turn out']], ['elbowL', 'Left elbow', ['Bend']],
   ['shoulderR', 'Right shoulder', ['Forward', 'Out to the side', 'Turn out']], ['elbowR', 'Right elbow', ['Bend']],
   ['hipL', 'Left hip', ['Forward', 'Out to the side', 'Turn out']], ['kneeL', 'Left knee', ['Bend']], ['ankleL', 'Left ankle', ['Point toes']],
-  ['hipR', 'Right hip', ['Forward', 'Out to the side', 'Turn out']], ['kneeR', 'Right knee', ['Bend']], ['ankleR', 'Right ankle', ['Point toes']]
+  ['hipR', 'Right hip', ['Forward', 'Out to the side', 'Turn out']], ['kneeR', 'Right knee', ['Bend']], ['ankleR', 'Right ankle', ['Point toes']],
+  // the shoulder girdle: + lifts the shoulder (and so the whole arm) toward the ear, a shrug; − pulls it down
+  ['shrugL', 'Left shoulder lift', ['Lift']], ['shrugR', 'Right shoulder lift', ['Lift']]
 ];
 const JOINT_KEYS = JOINTS.map(j => j[0]);
 const BALL = new Set(JOINTS.filter(j => j[2].length === 3).map(j => j[0]));
@@ -113,7 +115,9 @@ function fk(pose, seg, F) {
   P.headTop = at(P.neckBase, Mn, 0, seg.neck + 2 * seg.head, 0);
   P.headLow = { x: P.head.x, y: P.head.y - seg.head, z: P.head.z };   // lowest point of the head, whatever its orientation
   for (const s of ['L', 'R']) {
-    const k = sgn(s), sh = at(P.spine, Mc, k * seg.shoulderHalf, upper - SHOULDER_DROP, 0);
+    // (a shrug turns the collarbone up about the top of the breastbone: the shoulder rises and comes in a little)
+    const k = sgn(s), lift = num(pose['shrug' + s]) * D2R;
+    const sh = at(P.spine, Mc, k * seg.shoulderHalf * Math.cos(lift), upper - SHOULDER_DROP + seg.shoulderHalf * Math.sin(lift), 0);
     const Ms = mm(Mc, ballM(pose['shoulder' + s], s)), elbow = at(sh, Ms, 0, -seg.upperArm, 0);
     const Me = mm(Ms, rx(-pose['elbow' + s])), hand = at(elbow, Me, 0, -seg.lowerArm, 0);
     Object.assign(P, { ['shoulder' + s]: sh, ['elbow' + s]: elbow, ['hand' + s]: hand,

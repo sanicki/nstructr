@@ -1,6 +1,6 @@
 # NstructR
 
-Exercise animations and workouts with a 3D stick figure: 356 exercises (yoga, bodyweight, core, Pilates, bands,
+Exercise animations and workouts with a 3D stick figure: 358 exercises (yoga, bodyweight, core, Pilates, bands,
 free weights, chair-based, stretches, balance), linked to their easier, harder and other-equipment versions, each
 with a map of the muscles it works and stretches (and a workout's total), and a workout player built to be used
 from the floor — including on the cover screen of a foldable flip phone — with optional voice coaching and a swap to

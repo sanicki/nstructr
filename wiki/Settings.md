@@ -23,18 +23,18 @@ Seconds of rest between the sets of an exercise done in more than one set, in ev
 Default 10. (Rest between circuit rounds is set on each block.)
 
 ### Instruction
-**Silent**, **Beeps**, **Voice** or **Coach** (the default): see [Working out → Instruction](Working-out.md#instruction). Also used
-by the exercise page (Voice and Coach read each step's cue once, then count).
+**Silent**, **Beeps**, **Coach** or **Instructor** (the default): see [Working out → Instruction](Working-out.md#instruction). Also used
+by the exercise page (Coach and Instructor read each step's cue once, then count).
 
 ### Words of encouragement
-Shown with **Coach** (on at first). Coach varies its words: **Begin**, **Ready** or **Go** to start; **Last one**,
+Shown with **Instructor** (on at first). Instructor varies its words: **Begin**, **Ready** or **Go** to start; **Last one**,
 **One more** or **Last rep** for the last rep; and now and then **Good**, **Keep going**, **Breathe** or **Doing
 great**: in place of about 1 in 5 counts (never the first or the last; 1 in 10 right after a count that was replaced),
 and every 10 seconds of a hold, 4 times in 10 (never at halfway or in the last 10 seconds). The same word is never
 used twice in a row ("Good. Breathe. Good.", not "Good. Good."). Off: always "Begin", the numbers and "Last one".
 
 ### Text-to-speech speed
-How fast Voice and Coach speak, from **0.5×** to **3.0×** in steps of 0.1 (**1.0×** is the voice's normal speed).
+How fast Coach and Instructor speak, from **0.5×** to **3.0×** in steps of 0.1 (**1.0×** is the voice's normal speed).
 Tap − or +, or hold one to keep going; you hear a short sample at the new speed.
 
 ### Full screen

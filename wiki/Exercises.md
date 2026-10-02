@@ -2,7 +2,7 @@
 
 [← User guide](Home.md)
 
-The **Exercises** tab is the library: 356 exercises, each animated step by step, with written instructions.
+The **Exercises** tab is the library: 358 exercises, each animated step by step, with written instructions.
 
 <img src="images/exercises.png" width="300" alt="The Exercises tab: search, collection and equipment filters, Group by collection, shelves">
 
@@ -108,7 +108,7 @@ or for one workout while you're doing it ([Working out](Working-out.md#too-easy-
 The exercise page follows your **Instruction** setting (see [Settings](Settings.md#instruction)):
 
 - **Silent** and **Beeps**: quiet.
-- **Voice** and **Coach**: the first time through, each step's cue is read out and the figure waits until it's
+- **Coach** and **Instructor**: the first time through, each step's cue is read out and the figure waits until it's
   finished; after that it counts your reps. Pausing, switching side or direction, or leaving the page stops it.
 
 ### Share an exercise

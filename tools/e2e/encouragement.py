@@ -13,9 +13,9 @@ async def main():
         pg = await b.new_page(viewport={'width': 412, 'height': 860}); pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/settings', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         await pg.click('[data-setsound="voice"]')
-        print('Voice: toggle hidden    ', await pg.evaluate("$('#setEncourageRow').hidden"))
+        print('Coach: toggle hidden    ', await pg.evaluate("$('#setEncourageRow').hidden"))
         await pg.click('[data-setsound="coach"]')
-        print('Coach: toggle, on       ', await pg.evaluate("[$('#setEncourageRow').hidden, $('#setEncourage').checked]"), '<- [False, True]')
+        print('Instructor: toggle, on  ', await pg.evaluate("[$('#setEncourageRow').hidden, $('#setEncourage').checked]"), '<- [False, True]')
         # reps: 8 reps, the random numbers cycle; < 0.2 swaps a count (< 0.1 right after a swap)
         await pg.evaluate(SAY)
         async def reps(rand):

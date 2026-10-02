@@ -594,6 +594,14 @@
             },
             "ankleR": {
               "type": "number"
+            },
+            "shrugL": {
+              "type": "number",
+              "description": "Shoulder lift (a shrug), degrees: + raises the shoulder toward the ear (up to about 35), − pulls it down."
+            },
+            "shrugR": {
+              "type": "number",
+              "description": "As shrugL, the right shoulder."
             }
           },
           "additionalProperties": false

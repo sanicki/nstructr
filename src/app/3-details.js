@@ -3,7 +3,7 @@
 $('#formatRef').innerHTML = `
       <p>A file holds one exercise (or <code>{"format":"nstructr/exercise","exercises":[...]}</code> for several), with <code>"version":2</code>, an <code>id</code>, a <code>name</code> and a list of <code>keyframes</code>. Your own exercises' ids start with <code>u-</code> (like <code>u-banded-pull-apart</code>) so they never clash with the library; imported exercises without it get it added. Files in the older 2D format (version 1) can't be read.</p>
       <p> Each keyframe is a pose the figure moves into over <code>durationMs</code> and then holds for <code>holdMs</code>.</p>
-      <p><code>pose</code> sets joint angles in degrees. The figure is jointed like an artist's mannequin. Ball joints take three numbers, <code>[forward, side, turn]</code>: ${JOINTS.filter(j => j[2].length === 3).map(j => `<code>${j[0]}</code>`).join(' ')}. Hinges take one: ${JOINTS.filter(j => j[2].length === 1).map(j => `<code>${j[0]}</code>`).join(' ')}. At 0 the figure stands straight, arms hanging. Signs follow the body, not the screen, so a pose looks the same from any camera: for a hip or shoulder, + forward swings the limb forward, + side lifts it out to its own side, + turn turns it out; for <code>root</code>, <code>torso</code>, <code>chest</code> and <code>neck</code>, + forward bends forward, + side leans to the right, + turn turns to the left. Knees and elbows bend with +; <code>ankleL</code>/<code>ankleR</code> + points the toes.</p>
+      <p><code>pose</code> sets joint angles in degrees. The figure is jointed like an artist's mannequin. Ball joints take three numbers, <code>[forward, side, turn]</code>: ${JOINTS.filter(j => j[2].length === 3).map(j => `<code>${j[0]}</code>`).join(' ')}. Hinges take one: ${JOINTS.filter(j => j[2].length === 1).map(j => `<code>${j[0]}</code>`).join(' ')}. At 0 the figure stands straight, arms hanging. Signs follow the body, not the screen, so a pose looks the same from any camera: for a hip or shoulder, + forward swings the limb forward, + side lifts it out to its own side, + turn turns it out; for <code>root</code>, <code>torso</code>, <code>chest</code> and <code>neck</code>, + forward bends forward, + side leans to the right, + turn turns to the left. Knees and elbows bend with +; <code>ankleL</code>/<code>ankleR</code> + points the toes; <code>shrugL</code>/<code>shrugR</code> + lifts the shoulder toward the ear (a shrug, up to about 35).</p>
       <p><code>camera</code> is where you watch from, in degrees around the figure: <code>90</code> the side (facing right on screen), <code>0</code> the front. Between steps the camera turns. <code>anchor</code> pins a point (like <code>ankleL</code>) to the floor (<code>anchorX</code> sideways, <code>anchorZ</code> forward, from the middle of the stage), <code>plant</code> keeps a foot flat, and <code>touch</code> turns one joint until a point reaches the floor, for example <code>{"point":"toeR","adjust":"hipR"}</code> (a ball joint's forward number) or <code>"hipR.side"</code>. Without an anchor, the lowest point rests on the floor. Crossing legs need nothing special: a leg that's behind the other is drawn behind it.</p>
       <p>Optional: <code>floorGuide</code> draws a top-down star, and each keyframe's <code>guide.direction</code> (degrees clockwise from straight ahead) highlights one line. <code>bilateral</code> adds a Left/Right switch; write the keyframes for one side and the other is the mirror image.</p>
       <p>Equipment: <code>props</code> lists items drawn with the figure. A resistance band is <code>{"type":"band","from":"footL","to":"handL"}</code>. Either end can be a body point (<code>footL</code>/<code>footR</code> is the ball of the foot, <code>armpitL</code>/<code>armpitR</code> just under the shoulder, <code>backL</code>/<code>backR</code> across the shoulder blades) or a fixed spot such as <code>{"z":120,"y":40}</code> (px forward of the stage centre, and up from the floor; <code>x</code> is sideways). The band is just taut at its shortest and thins as it stretches; set <code>restLength</code> to choose its slack length yourself, and <code>via</code> to route it around body points (like behind the back). A towel is <code>{"type":"towel","from":"handR","to":"handL"}</code> and doesn't stretch. A wall is <code>{"type":"wall","at":"handR","keyframe":1}</code>: it stands where that body point is in that step and stays put, in front of or behind the figure; add <code>"beside":true</code> for a wall at its side. A wall is a line when you see it edge-on and fades as the camera turns to face it.</p>
@@ -136,8 +136,8 @@ function closeEditor() {
 $('#editPoseBtn').addEventListener('click', () => (XC.editing ? closeEditor() : openEditor()));
 
 /* ---------- Sound in the exercise player ----------
-   It follows the Instruction setting: Silent and Beeps stay quiet (there are no rests or holds to beep for); Voice and
-   Coach read each step's cue on the first pass through the exercise (the step waits for its line), then count the
+   It follows the Instruction setting: Silent and Beeps stay quiet (there are no rests or holds to beep for); Coach and
+   Instructor read each step's cue on the first pass through the exercise (the step waits for its line), then count the
    reps. Pausing stops the voice; a new side or direction starts a new first pass. */
 const XS = { speaking: false, token: 0, last: '' };
 const LOOP_KEY = 'nstructr-loop-v1', EXMUTE_KEY = 'nstructr-exmute-v1';
@@ -157,7 +157,7 @@ $('#loopBtn').addEventListener('click', () => {
   snack(loopOn() ? 'Loop on: the exercise repeats' : 'Loop off: once through, then it stops');
 });
 $('#muteBtn').addEventListener('click', () => {
-  if (!(WK.sound === 'voice' || WK.sound === 'coach')) { snack('The exercise voice follows Settings → Instruction: choose Voice or Coach.', 5000); return; }
+  if (!(WK.sound === 'voice' || WK.sound === 'coach')) { snack('The exercise voice follows Settings → Instruction: choose Coach or Instructor.', 5000); return; }
   setPref(EXMUTE_KEY, exMuted() ? 'off' : 'on'); renderExToggles();
   if (exMuted()) exHush(); else if (S.playing) { XS.last = ''; exStepSound(S.idx); }
 });
@@ -217,7 +217,7 @@ function setRate(v, preview = true) {
     try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance('This is how fast I speak.'); u.lang = LANG; u.rate = speechRate(); speechSynthesis.speak(u); } catch (e) { }
   }, 400);
 }
-/* Coach's words of encouragement (on unless turned off) */
+/* Instructor's words of encouragement (on unless turned off) */
 const encourageOn = () => pref(ENCOURAGE_KEY, 'on') !== 'off';
 const restGap = () => { const v = parseFloat(pref(REST_KEY, '5')); return v >= 0 ? v : 5; };
 /* seconds of rest between sets of an exercise, in every workout (a setting since Sep 2026; items' "rest" is ignored) */
@@ -227,7 +227,7 @@ function applyTheme(t) {
 }
 function renderSettings() {
   const seg = (id, key, opts, cur) => { $(id).innerHTML = opts.map(([v, l]) => `<button class="stateful" data-${key}="${v}" aria-pressed="${String(v) === String(cur)}"><span class="icon">check</span>${l}</button>`).join(''); };
-  seg('#setSound', 'setsound', [['off', 'Silent'], ['beeps', 'Beeps'], ['voice', 'Voice'], ['coach', 'Coach']], WK.sound);
+  seg('#setSound', 'setsound', SOUND_MODES.map(m => [m[0], m[2]]), WK.sound);
   seg('#setTheme', 'settheme', [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']], pref(THEME_KEY, 'system'));
   $('#setFullscreen').checked = wantFullscreen();
   $('#setAutoplay').checked = pref(AUTOPLAY_KEY, 'on') !== 'off';

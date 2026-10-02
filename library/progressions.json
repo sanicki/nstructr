@@ -49,6 +49,7 @@
     {"name": "Turkish get-up", "ids": ["bw-get-up", "fw-db-turkish-get-up", "kb-turkish-get-up"]},
     {"name": "Bent-over row", "ids": ["band-bent-over-row", "fw-db-row", "fw-bb-row"]},
     {"name": "Upright row", "ids": ["band-upright-row", "fw-db-upright-row", "fw-bb-upright-row"]},
+    {"name": "Shrug", "ids": ["str-shoulder-shrug", "band-shrug"]},
     {"name": "Overhead press", "ids": ["band-overhead-press", "fw-db-press", "kb-overhead-press", "fw-bb-press"]},
     {"name": "Front raise", "ids": ["band-front-raise", "fw-db-front-raise"]},
     {"name": "Lateral raise", "ids": ["bhf-lateral-raise", "fw-db-lateral"]},

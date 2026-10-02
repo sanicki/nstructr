@@ -1,0 +1,83 @@
+{
+  "$schema": "../../schema/exercise.schema.json",
+  "version": 2,
+  "id": "band-shrug",
+  "name": "Band Shrug",
+  "otherNames": ["Resistance Band Shrug"],
+  "category": "Strength",
+  "focus": "Upper back and neck",
+  "collections": ["Resistance band"],
+  "equipment": ["Resistance band"],
+  "muscles": {"upperBack": 3},
+  "description": "Standing on the middle of a resistance band with an end in each hand at your sides, lift your shoulders straight up toward your ears against the band, pause, then lower them slowly.",
+  "source": {
+    "url": "https://www.trainwell.net/exercises/band-shrug",
+    "title": "Trainwell: Band Shrug",
+    "note": "Described in our own words. Stick-figure approximation."
+  },
+  "setup": ["Stand on the middle of the band, feet hip-width apart.", "Hold an end in each hand, arms straight at your sides, palms in."],
+  "cues": ["Shoulders straight up, not rolled.", "Arms stay straight.", "Lower slowly."],
+  "prescription": {
+    "reps": "12–15",
+    "note": "Arms stay straight; the shoulders move straight up and down, not rolled. Keep the band tight at the bottom."
+  },
+  "keyframes": [
+    {
+      "camera": 0,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "name": "Stand on the band",
+      "cue": "Stand on the middle of the band, an end in each hand at your sides.",
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "setup",
+      "pose": {
+        "shoulderL": [0, 4, 0],
+        "shoulderR": [0, 4, 0]
+      }
+    },
+    {
+      "camera": 0,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "name": "Shrug",
+      "cue": "Lift both shoulders straight up toward your ears.",
+      "durationMs": 1200,
+      "holdMs": 1000,
+      "phase": "rep",
+      "pose": {
+        "shoulderL": [0, 4, 0],
+        "shoulderR": [0, 4, 0],
+        "shrugL": 32,
+        "shrugR": 32
+      }
+    },
+    {
+      "camera": 0,
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "name": "Lower",
+      "cue": "Lower your shoulders slowly.",
+      "durationMs": 1200,
+      "holdMs": 300,
+      "phase": "rep",
+      "pose": {
+        "shoulderL": [0, 4, 0],
+        "shoulderR": [0, 4, 0]
+      }
+    }
+  ],
+  "props": [
+    {
+      "type": "band",
+      "from": "handL",
+      "via": ["footL", "footR"],
+      "to": "handR"
+    }
+  ],
+  "measure": "reps",
+  "defaults": {
+    "reps": 12
+  },
+  "repName": "shrug"
+}
