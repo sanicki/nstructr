@@ -7,6 +7,7 @@
   "category": "Arm Balance",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "startPosition": "other",
   "muscles": {"shoulders": 2, "chest": 2, "triceps": 2, "core": 3},
   "description": "Twisted arm balance with both knees stacked on one arm.",
   "source": {

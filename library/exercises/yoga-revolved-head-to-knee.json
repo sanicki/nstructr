@@ -7,6 +7,7 @@
   "category": "Seated",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "startPosition": "seated",
   "muscles": {},
   "stretches": ["lowerBack", "core", "frontThigh", "backThigh"],
   "description": "Seated side bend over one straight leg with the top arm reaching overhead.",

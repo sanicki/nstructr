@@ -25,6 +25,14 @@
       "type": "string",
       "minLength": 1
     },
+    "startPosition": {
+      "enum": ["standing", "kneeling", "all-fours", "seated", "supine", "prone", "side-lying", "plank", "other"],
+      "description": "The position it starts in, when the one worked out from the first step is wrong (src/positions.js). \"other\": none of these. Between exercises the workout player moves through the at-rest pose of a shared position."
+    },
+    "endPosition": {
+      "enum": ["standing", "kneeling", "all-fours", "seated", "supine", "prone", "side-lying", "plank", "other"],
+      "description": "The position it ends in, when the one worked out from the last step is wrong (see startPosition)."
+    },
     "otherNames": {
       "type": "array",
       "items": {
