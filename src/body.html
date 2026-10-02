@@ -360,6 +360,7 @@ anchor: the point pinned to the floor, e.g. "ankleL" (keeps feet, hands or seat 
 touch: [{point: "toeR", adjust: "hipR"}] turns "adjust" until "point" touches the floor ("hipR.side" for its side number)
 reach: [{hand: "handR", to: "ankleR"}] puts a hand on a body point, or to: "wall" or "chair"; optional dx, dy, dz
 keep: ["ankleL", "ankleR"] keeps those where they were in the previous step
+slide: ["ankleL"] that foot (or hand) slides along the floor into this step instead of stepping
 lift: a jump, both feet off the floor: how high the whole figure is (40); short durationMs (350)
 anchorY: hanging from a bar: the anchored hand is held at this height (the bar's y) instead of on the floor; anchorZ: the bar's z
 pose: {joint: angles}

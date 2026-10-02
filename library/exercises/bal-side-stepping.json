@@ -67,32 +67,10 @@
       }
     },
     {
-      "name": "Left foot comes in",
-      "camera": 0,
-      "durationMs": 450,
-      "holdMs": 0,
-      "phase": "rep",
-      "anchor": "ankleR",
-      "plant": ["R"],
-      "pose": {
-        "shoulderL": [-27.5, 0, 0],
-        "elbowL": 69.4,
-        "shoulderR": [-27.5, 0, 0],
-        "elbowR": 69.4,
-        "kneeL": 44,
-        "kneeR": 6,
-        "ankleL": 8,
-        "ankleR": -3,
-        "hipL": [24, 7, 0],
-        "hipR": [3, 7, 0]
-      },
-      "quiet": true
-    },
-    {
       "name": "Bring your left foot in",
       "cue": "Bring your left foot in to meet it.",
       "camera": 0,
-      "durationMs": 500,
+      "durationMs": 900,
       "holdMs": 200,
       "phase": "rep",
       "anchor": "ankleR",
@@ -108,7 +86,8 @@
         "ankleR": -3,
         "hipL": [3, 2, 0],
         "hipR": [3, 2, 0]
-      }
+      },
+      "slide": ["ankleL"]
     }
   ],
   "bilateral": {
