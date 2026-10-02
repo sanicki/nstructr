@@ -1,5 +1,5 @@
 // Batch 27 (Oct 2026): the Shoulder Shrug, standing (UMM Health describes it seated; the owner asked for standing).
-// Uses the shoulder lift joint added for it (shrugL/R, src/core.js).
+// Uses the shoulder lift joint added for it (shrugL/R, src/core.js). Then its band version (owner, Oct 2026).
 // node tools/research.cjs variants tools/variants/batch-27-shrug.cjs [id...]
 const note = 'Described in our own words. The source does it sitting in a chair; this is the same move standing.';
 const arms = { shoulderL: [0, 4, 0], shoulderR: [0, 4, 0] };
@@ -19,4 +19,19 @@ module.exports = [
     setup: ['Stand tall, feet hip-width apart, weight even.', 'Arms relaxed by your sides.'],
     cues: ['Shoulders straight up, not forward.', 'Head and neck still.', 'Let them drop all the way.'],
     source: { url: 'https://www.ummhealth.org/health-library/shoulder-shrug-exercise', title: 'UMM Health: Shoulder shrug exercise', note } },
+  // standing on the middle of the band, an end in each hand at your sides; the same shrug against the band
+  { id: 'band-shrug', base: 'str-shoulder-shrug', name: 'Band Shrug', otherNames: ['Resistance Band Shrug'],
+    category: 'Strength', focus: 'Upper back and neck', collections: ['Resistance band'], equipment: ['Resistance band'],
+    props: [{ type: 'band', from: 'handL', via: ['footL', 'footR'], to: 'handR' }],
+    edit: ex => {
+      const w = [['Stand on the band', 'Stand on the middle of the band, an end in each hand at your sides.'],
+        ['Shrug', 'Lift both shoulders straight up toward your ears.'], ['Lower', 'Lower your shoulders slowly.']];
+      ex.keyframes.forEach((k, i) => { [k.name, k.cue] = w[i]; k.holdMs = i === 1 ? 1000 : i === 2 ? 300 : k.holdMs; });
+    },
+    over: { bilateral: null, measure: 'reps', holdStep: null, defaults: { reps: 12 }, repName: 'shrug',
+      prescription: { reps: '12–15', note: 'Arms stay straight; the shoulders move straight up and down, not rolled. Keep the band tight at the bottom.' } },
+    description: 'Standing on the middle of a resistance band with an end in each hand at your sides, lift your shoulders straight up toward your ears against the band, pause, then lower them slowly.',
+    setup: ['Stand on the middle of the band, feet hip-width apart.', 'Hold an end in each hand, arms straight at your sides, palms in.'],
+    cues: ['Shoulders straight up, not rolled.', 'Arms stay straight.', 'Lower slowly.'],
+    source: { url: 'https://www.trainwell.net/exercises/band-shrug', title: 'Trainwell: Band Shrug', note: 'Described in our own words. Stick-figure approximation.' } },
 ];

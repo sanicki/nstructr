@@ -24,14 +24,14 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **357 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Instructor on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Instructor). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **358 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Instructor on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Instructor). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
 | Yoga | 90 | Yoga Journal pose list + chair and wall versions (incl. Chair Warrior I and II, Chair Eagle; Handstand, Headstand and Forearm Stand at the wall) + common poses (Cobra, lunges, Goddess, Bound Angle Forward Bend…) + block and strap versions (incl. Cow Face arms with a strap) |
 | Free weights | 65 | dumbbell, kettlebell (incl. around the world, clean, Turkish get-up), barbell, medicine ball (incl. equipment versions of bodyweight moves), farmer's carry; dumbbell and barbell versions of other exercises (batch 21) |
 | Bodyweight | 43 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
-| Resistance band | 38 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) + band Pilates (Hundred, Leg Circles, Roll-Up) |
+| Resistance band | 39 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) + band Pilates (Hundred, Leg Circles, Roll-Up) + band shrug (batch 27) |
 | Chair-based | 29 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga, chair-supported stretches… |
 | Stretches | 39 | Mayo Clinic basic stretches + routine additions + triceps, biceps, wrist flexor, shoulder shrug (batch 27, standing; the shoulder lift joint `shrugL/R` was added for it) (batch 26: nothing stretched biceps and forearms), figure-four, doorway, strap stretches + towel, chair and step versions + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
 | Core | 40 | planks (incl. knee plank), hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
@@ -39,7 +39,7 @@ Library today: **357 exercises, 5 workouts** (20-minute beginner's yoga, Pilates
 | Balance | 15 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, side stepping, balance walk, clock reach, single-leg RDL, pistol squat |
 | Warm-up | 24 | arm and hip circles, shoulder shrug, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-226 are rep-based, 131 timed; 127 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
+227 are rep-based, 131 timed; 127 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---

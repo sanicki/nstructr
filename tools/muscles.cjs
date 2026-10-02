@@ -254,6 +254,7 @@ const EX = {
   'step-calf-stretch': ['stretch', { s: 'll' }], 'str-doorway-chest-stretch': ['stretch', { s: 'ch sh' }],
   'str-figure-four': ['stretch', { s: 'gl' }], 'str-triceps-stretch': ['stretch', { s: 'tr sh' }],
   'str-shoulder-shrug': ['shrug'],
+  'band-shrug': ['shrug'],
   'str-biceps-stretch': ['stretch', { s: 'bi ch sh' }], 'str-wrist-flexor-stretch': ['stretch', { s: 'bi' }],
   'towel-calf-stretch': ['stretch', { s: 'll' }], 'towel-chest-stretch': ['stretch', { s: 'ch sh' }],
   'towel-hamstring-curl': ['hamCurl'], 'towel-hamstring-stretch': ['stretch', { s: 'bt' }],

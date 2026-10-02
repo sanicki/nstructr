@@ -21,6 +21,14 @@ comes off this list. How things work, and why past decisions were made, is in [H
   - When other languages ship, **Unspecified** becomes the default AI provider (not Gemini).
   - Right-to-left layout (Arabic, Hebrew, Persian, Urdu) only if one of those is chosen.
 
+## Library
+
+- **Found but not added** (standing item, owner Oct 2026: stays here even when empty): the ⏳ versions in
+  [docs/equipment-equivalents.md](docs/equipment-equivalents.md), for the owner to pick from. Today:
+  - Shoulder Shrug: seated in a chair; dumbbell and barbell shrugs.
+  - Standing Biceps Stretch: Wall Biceps Stretch.
+  - Wrist Flexor Stretch: against a wall.
+
 ## Deferred
 
 - **Exercise machines** (deferred by the owner, Sep 2026): cable stations first, then leg press and lat pulldown, then

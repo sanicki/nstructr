@@ -36,6 +36,8 @@ node tools/research.cjs names <file.json>     # a renamed exercise keeps its old
 For each heading the report says has no version: search for an **established** version (described under that name
 by a reputable source, not invented). Record every finding in `docs/equipment-equivalents.md` (✅ added,
 ⏳ found but not added yet, — none), with the source.
+Do this for every new exercise, also other positions (seated, standing, against a wall). List every ⏳ under
+"Found but not added" in `ROADMAP.md` (that item stays on the roadmap); take an entry off when it is added.
 
 To add one, write a definition (see `tools/variants/batch-1.cjs` and `batch-2.cjs`): `base` = the library exercise
 with the same movement, `edit` = what changes (arms hanging with dumbbells: shoulder forward = the torso's lean),

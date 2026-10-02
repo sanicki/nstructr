@@ -10,10 +10,11 @@ async def main():
         pg = await b.new_page(viewport={'width': 412, 'height': 860}); pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/exercises', wait_until='domcontentloaded'); await pg.wait_for_timeout(800)
         print('import respelled        ', await pg.evaluate("""normalizeImport({ exercises: [{ ...findInDb('band-clamshell'), id: 'u-new', name: 'New',
-          equipment: ['RESISTANCE  band', 'mat', 'Resistance band', 'Foam roller'] }] })[0].equipment"""), "<- ['Resistance band', 'Mat', 'Foam roller']")
+          equipment: ['RESISTANCE  band', 'mat', 'Resistance band', 'Foam roller'] }] })[0].equipment"""), "<- ['Resistance band', 'Yoga mat', 'Foam roller']")
         await pg.evaluate("""S.lib.items.push({ ...findInDb('band-clamshell'), id: 'u-old', name: 'Banded Lying Leg Abduction', equipment: ['resistance band'] });
           E.coll = 'All'; renderExplore()""")
         await pg.click('#fEquip [data-equip="Resistance band"]'); await pg.wait_for_timeout(200)
+        await pg.fill('#search', 'leg abduction'); await pg.wait_for_timeout(400)   # the list draws in chunks: narrow it
         print('one band filter, listed ', await pg.evaluate("""[[...document.querySelectorAll('#fEquip [data-equip]')].map(x => x.dataset.equip).filter(x => /band/i.test(x)),
           $('#exploreBody').innerText.includes('Banded Lying Leg Abduction')]"""), "<- [['Resistance band'], True]")
         print('errors', errs); await b.close()
