@@ -9,13 +9,13 @@
   "collections": ["Resistance band"],
   "equipment": ["Resistance band"],
   "muscles": {"upperBack": 1, "lowerBack": 2, "core": 1, "frontThigh": 1, "glutes": 3, "backThigh": 2},
-  "description": "A band hip hinge: standing on the band, hold the ends near your knees, push your hips back until your torso is nearly level, then squeeze your glutes to stand.",
+  "description": "A band hip hinge: standing on the band, hinge down and take the ends short so the band is taut, then squeeze your glutes to stand. Each rep, push your hips back until your torso is nearly level, then stand again against the band.",
   "source": {
     "url": "https://www.girlsgonestrong.com/videos/strength-training/band-resisted-romanian-deadlift/",
     "title": "Band-Resisted Romanian Deadlift (Girls Gone Strong)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": ["Stand on the middle of the band, feet hip-width apart.", "Hold the ends short, near your knees, so there's tension."],
+  "setup": ["Stand on the middle of the band, feet hip-width apart.", "Hinge down and take the ends short, near your knees, so the band is taut, then stand up."],
   "cues": ["Flat back, soft knees, chest open.", "Push your hips straight back.", "Squeeze your glutes and drive your hips forward to stand."],
   "prescription": {
     "reps": "12–15",
@@ -23,8 +23,29 @@
   },
   "keyframes": [
     {
-      "name": "Stand tall",
-      "cue": "Band taut, hands near your knees.",
+      "name": "Take the band",
+      "cue": "Hinge down and take the ends short, near your knees, so the band is taut.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 500,
+      "phase": "setup",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "torso": [80, 0, 0],
+        "shoulderL": [84, 0, 0],
+        "shoulderR": [84, 0, 0],
+        "hipL": [18, 0, 0],
+        "kneeL": 22,
+        "ankleL": -4,
+        "hipR": [18, 0, 0],
+        "kneeR": 22,
+        "ankleR": -4
+      }
+    },
+    {
+      "name": "Stand",
+      "cue": "Squeeze your glutes and drive your hips forward to stand tall.",
       "camera": 90,
       "durationMs": 1800,
       "holdMs": 300,
@@ -55,6 +76,20 @@
         "hipR": [18, 0, 0],
         "kneeR": 22,
         "ankleR": -4
+      }
+    },
+    {
+      "name": "Stand tall",
+      "cue": "Stand up and step off the band.",
+      "camera": 90,
+      "durationMs": 1800,
+      "holdMs": 300,
+      "phase": "finish",
+      "anchor": "ankleL",
+      "plant": ["L", "R"],
+      "pose": {
+        "shoulderL": [6, 0, 0],
+        "shoulderR": [6, 0, 0]
       }
     }
   ],
