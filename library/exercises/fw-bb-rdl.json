@@ -31,15 +31,8 @@
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
-        "torso": [-2, 0, 0],
         "shoulderL": [8, 0, 0],
-        "shoulderR": [8, 0, 0],
-        "hipL": [6, 0, 0],
-        "kneeL": 15,
-        "ankleL": -4,
-        "hipR": [6, 0, 0],
-        "kneeR": 15,
-        "ankleR": -4
+        "shoulderR": [8, 0, 0]
       }
     },
     {
