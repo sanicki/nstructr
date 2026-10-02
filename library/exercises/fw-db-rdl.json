@@ -46,14 +46,14 @@
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
-        "torso": [74, 0, 0],
-        "shoulderL": [74, 0, 0],
-        "shoulderR": [74, 0, 0],
-        "hipL": [34, 0, 0],
-        "kneeL": 15,
+        "torso": [72, 0, 0],
+        "shoulderL": [80, 0, 0],
+        "shoulderR": [80, 0, 0],
+        "hipL": [18, 0, 0],
+        "kneeL": 22,
         "ankleL": -4,
-        "hipR": [34, 0, 0],
-        "kneeR": 15,
+        "hipR": [18, 0, 0],
+        "kneeR": 22,
         "ankleR": -4
       }
     }

@@ -15,7 +15,7 @@
     "title": "Band-Resisted Romanian Deadlift (Girls Gone Strong)",
     "note": "From your full-body routine, described in our own words. Stick-figure approximation."
   },
-  "setup": ["Stand on the middle of the band, feet hip-width apart.", "Hinge down and take the ends short, just below your knees, so the band is taut, then stand up."],
+  "setup": ["Stand on the middle of the band, feet hip-width apart.", "Hinge down and take the ends short, near your knees, so the band is taut, then stand up."],
   "cues": ["Flat back, soft knees, chest open.", "Push your hips straight back.", "Squeeze your glutes and drive your hips forward to stand."],
   "prescription": {
     "reps": "12–15",
@@ -24,7 +24,7 @@
   "keyframes": [
     {
       "name": "Take the band",
-      "cue": "Hinge down and take the ends short, just below your knees, so the band is taut.",
+      "cue": "Hinge down and take the ends short, near your knees, so the band is taut.",
       "camera": 90,
       "durationMs": 1800,
       "holdMs": 500,
@@ -32,14 +32,14 @@
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
-        "torso": [74, 0, 0],
-        "shoulderL": [74, 0, 0],
-        "shoulderR": [74, 0, 0],
-        "hipL": [34, 0, 0],
-        "kneeL": 15,
+        "torso": [80, 0, 0],
+        "shoulderL": [84, 0, 0],
+        "shoulderR": [84, 0, 0],
+        "hipL": [18, 0, 0],
+        "kneeL": 22,
         "ankleL": -4,
-        "hipR": [34, 0, 0],
-        "kneeR": 15,
+        "hipR": [18, 0, 0],
+        "kneeR": 22,
         "ankleR": -4
       }
     },
@@ -67,14 +67,14 @@
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
-        "torso": [74, 0, 0],
-        "shoulderL": [74, 0, 0],
-        "shoulderR": [74, 0, 0],
-        "hipL": [34, 0, 0],
-        "kneeL": 15,
+        "torso": [80, 0, 0],
+        "shoulderL": [84, 0, 0],
+        "shoulderR": [84, 0, 0],
+        "hipL": [18, 0, 0],
+        "kneeL": 22,
         "ankleL": -4,
-        "hipR": [34, 0, 0],
-        "kneeR": 15,
+        "hipR": [18, 0, 0],
+        "kneeR": 22,
         "ankleR": -4
       }
     },
