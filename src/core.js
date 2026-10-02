@@ -400,9 +400,11 @@ function slideContacts(a, b, e, pose, seg, pos, pinned) {
     if (a.cam !== b.cam && ch.root === 'hip') continue;                // legs don't step while the camera turns between views
     if (!onA) continue;                                                // only limbs resting on a surface at both ends
     if (Math.abs(b.pose[ch.mid + ch.s] - a.pose[ch.mid + ch.s]) > 160) continue;   // a leg folding right over swings, it doesn't step
-    // a foot or hand that has somewhere to go is lifted and set down again (a step), not dragged along the floor
+    // a foot or hand that has somewhere to go is lifted and set down again (a step), not dragged along the floor;
+    // unless the step it moves into says it slides ("slide": a foot drawn in along the floor, Side Stepping)
     const travel = Math.hypot(B[tip].x - A[tip].x, B[tip].z - A[tip].z), climb = Math.abs(sa - sb);
-    const arc = (travel > 15 || climb > 3 ? Math.max(Math.min(35, travel * 0.35), climb ? climb + 14 : 0) : 0) * Math.sin(Math.PI * e);
+    const slides = (b.slide || []).includes(tip) && !climb;
+    const arc = (!slides && (travel > 15 || climb > 3) ? Math.max(Math.min(35, travel * 0.35), climb ? climb + 14 : 0) : 0) * Math.sin(Math.PI * e);
     // fade the slide in and out so the limb meets both keyframes exactly
     reachTip(pose, seg, pos, ch, { x: lerp(A[tip].x, B[tip].x, e), y: lerp(sa, sb, e) + arc, z: lerp(A[tip].z, B[tip].z, e) }, Math.min(1, 4 * e * (1 - e)));
   }
@@ -635,7 +637,7 @@ function resolveKeyframe(kf, seg, ex = {}) {
     if (Math.abs(gap) > 2) misses.push({ point: t.point, adjust: t.adjust, gap });
   }
   return {
-    pose, cam, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], reach: kf.reach || [], holds: Array.isArray(kf.holds) ? kf.holds : null, ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
+    pose, cam, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], slide: kf.slide || [], reach: kf.reach || [], holds: Array.isArray(kf.holds) ? kf.holds : null, ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
     dur: kf.durationMs == null ? 1000 : Math.max(0, num(kf.durationMs)), hold: Math.max(0, kf.holdMs == null ? 500 : num(kf.holdMs))
   };
 }
@@ -1023,6 +1025,7 @@ function mirrorKeyframe(kf) {
     ...kf, pose: mirrorPose(kf.pose),
     anchor: swapSide(kf.anchor),
     plant: (kf.plant || []).map(swapSide),
+    ...(kf.slide ? { slide: kf.slide.map(swapSide) } : {}),
     touch: (kf.touch || []).map(t => ({ ...t, point: swapSide(t.point), adjust: swapSide(jointRef(t.adjust).j) + (String(t.adjust).includes('.') ? '.' + t.adjust.split('.')[1] : '') })),
     keep: (kf.keep || []).map(k => (typeof k === 'string' ? swapSide(k) : { ...k, point: swapSide(k.point) })),
     reach: (kf.reach || []).map(r => ({ ...r, hand: swapSide(r.hand), to: swapSide(r.to), ...(r.dx != null ? { dx: -num(r.dx) } : {}) })),

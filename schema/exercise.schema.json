@@ -317,6 +317,11 @@
         "lift": {
           "type": "number"
         },
+        "slide": {
+          "type": "array",
+          "description": "Feet or hands that slide along the floor into this step instead of stepping (lifted in an arc): e.g. [\"ankleL\"].",
+          "items": {"enum": ["ankleL", "ankleR", "handL", "handR"]}
+        },
         "plant": {
           "type": "array",
           "items": {
