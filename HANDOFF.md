@@ -240,7 +240,8 @@ start); the move from a rep's end into the next rep's start begins from the end 
 (`travelStep`), so it's the step it is, not a slide back. The player adds the reps' distance so far (`S.off` on the
 exercise page, `S.offs[i]` per step of a workout plan), keeps the pelvis centred on screen, and draws tick marks on
 the floor every 60 px (`#floorTicks`) so moving over them reads as moving. The checks judge the loop move the same
-way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry.
+way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry, Side Stepping (Oct 2026: it stepped out and back with the
+same foot; now the other foot comes in to meet it, lifting on a quiet in-between step).
 
 **Keyframe** (one pose the figure moves into):
 
