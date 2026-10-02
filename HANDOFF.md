@@ -624,11 +624,13 @@ representations that rotate the short, natural way) over adding a known issue; i
 
 ### 8.4 Sound
 - Modes (labels renamed Oct 2026: Voice → Coach, Coach → Instructor; stored values `voice`/`coach` unchanged): Silent, Beeps (3-2-1 before rests/holds end, chime on switching), Coach (exercise name, side/direction
-  switches, rests, "next"), **Instructor**.
-- **Instructor**: before each exercise (and each side/direction), a **guided run-through** — one pass through every
+  switches, rests, "next", then the counted reps below), **Instructor**.
+- **Coach and Instructor** both count: counts, "Last one", "Halfway", "10 seconds" and words of encouragement are
+  **dropped if something is already being said** (never talk over). (Oct 2026: before, only Instructor counted;
+  Coach — then "Voice" — said names, switches and rests only. `say()` lost its `coachOnly` flag.)
+- **Instructor** adds, before each exercise (and each side/direction), a **guided run-through** — one pass through every
   step, reading each step's cue; each step waits for **whichever takes longer, its line or its animation**
-  (`S.canAdvance`). Then counted reps: counts, "Last one", "Halfway", "10 seconds" are **dropped if something
-  is already being said** (never talk over). Timed exercises: setup steps, then the held step's cue and "Now hold for N seconds" as the hold starts; the countdown waits for that line (`S.holdWait`), and the time estimate counts it (~2.5 words a second at the speech rate). (Sep 2026: before, the held step's cue — how to get into the pose — was never read.)
+  (`S.canAdvance`). Then the counted reps. Timed exercises: setup steps, then the held step's cue and "Now hold for N seconds" as the hold starts; the countdown waits for that line (`S.holdWait`), and the time estimate counts it (~2.5 words a second at the speech rate). (Sep 2026: before, the held step's cue — how to get into the pose — was never read.)
 - Speech is **queued, never cancelled**, except on skip/stop. Routing cancels speech only when *leaving* the exercise
   page (`exHush`) or the workout player: until Sep 2026 any route away from the exercise page's view hushed, which cut
   off every workout's first line as the player opened (`autoplay_first_speech.py`). Each line's promise resolves on `onend`, with a
@@ -905,7 +907,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-exmute-v1` | the exercise page's spoken cues muted unless `"off"` (default muted since Sep 2026; overlay Mute toggle; the voice also needs Sound = Coach/Instructor) |
 | `nstructr-group-collections-v1` | `"on"`: the Exercises tab groups All collections by collection; otherwise one A–Z list (default since Sep 2026; the tab's own switch) |
 | `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Coach and Instructor (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
-| `nstructr-encourage-v1` | Instructor's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Instructor; `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
+| `nstructr-encourage-v1` | Coach's and Instructor's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach and Instructor (Instructor only until Oct 2026); `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 10, 0–300; Settings > Workouts; 20 until Sep 2026). Workout items' `rest` is ignored |
 | `nstructr-install-hint-v1` | the install tip: `due` once a workout was started, `shown` once offered (or installed). Per device, not in backups |

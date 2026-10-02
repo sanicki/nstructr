@@ -2,18 +2,20 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
-# Coach's words of encouragement (Settings > Instruction > Coach > Words of encouragement, on at first):
+# Coach's and Instructor's words of encouragement (Settings > Instruction > Coach or Instructor > Words of encouragement, on at first):
 # "Begin" and "Last one" from their synonyms; a count (never the first or last) replaced 20% of the time, 10% for the
 # rep after one that was (until one isn't); during a hold, every 10 s a 40% chance, never at halfway or in the last 10 s.
 # A word is never the same as the last one picked for that moment. Off: the plain words. WP.random is stubbed.
-SAY = "window.SAID = []; say = (t, coachOnly) => { if (!coachOnly || WK.sound === 'coach') SAID.push(t); return Promise.resolve(); }; renderWpCount = renderWpCount;"
+SAY = "window.SAID = []; say = t => { if (WK.sound === 'voice' || WK.sound === 'coach') SAID.push(t); return Promise.resolve(); }; renderWpCount = renderWpCount;"
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
         pg = await b.new_page(viewport={'width': 412, 'height': 860}); pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/settings', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
+        await pg.click('[data-setsound="beeps"]')
+        print('Beeps: toggle hidden    ', await pg.evaluate("$('#setEncourageRow').hidden"), '<- True')
         await pg.click('[data-setsound="voice"]')
-        print('Coach: toggle hidden    ', await pg.evaluate("$('#setEncourageRow').hidden"))
+        print('Coach: toggle shown     ', await pg.evaluate("$('#setEncourageRow').hidden"), '<- False')
         await pg.click('[data-setsound="coach"]')
         print('Instructor: toggle, on  ', await pg.evaluate("[$('#setEncourageRow').hidden, $('#setEncourage').checked]"), '<- [False, True]')
         # reps: 8 reps, the random numbers cycle; < 0.2 swaps a count (< 0.1 right after a swap)
@@ -27,6 +29,9 @@ async def main():
         print('reps, random 0.05       ', await reps('[0.05]'), '<- a cheer every middle rep (< 0.1), never the same word twice in a row')
         print('reps, random 0.5        ', await reps('[0.5]'), '<- a start word, counts, a last word (never the one used just before)')
         print('reps, random 0.9        ', await reps('[0.9]'), '<- the same, other words')
+        await pg.evaluate("setSound('voice')")
+        print('Coach counts too        ', await reps('[0.5]'), '<- a start word, counts, a last word (Coach counts since Oct 2026)')
+        await pg.evaluate("setSound('coach')")
         # a 60 s hold, random always 0 (always cheers where allowed): which seconds speak?
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
         await pg.evaluate("localStorage.setItem('nstructr-rest-between-v1','0'); WK.hinted = true; WK.list.push({id:'h',name:'H',blocks:[{id:'b',name:'B',items:[{...newItem(exById('core-forearm-plank')),seconds:60}]}]}); saveWorkouts(); startWorkout(wkById('h'),0)")

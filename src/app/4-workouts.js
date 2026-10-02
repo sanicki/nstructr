@@ -511,10 +511,11 @@ function beep(freq = 880, ms = 120) {
 }
 /* Speak a line. Lines queue up instead of cutting each other off. Returns a promise that resolves when the
    line has been spoken (or straight away if sound is off), so the guided run-through can wait for it.
-   dropIfBusy: skip this line if something is still being said (rep counts, milestones). */
-function say(text, coachOnly = false, { dropIfBusy = false } = {}) {
-  if (text && !(coachOnly && WK.sound !== 'coach')) caption(text);
-  const on = (WK.sound === 'voice' || WK.sound === 'coach') && !(coachOnly && WK.sound !== 'coach') && 'speechSynthesis' in window;
+   dropIfBusy: skip this line if something is still being said (rep counts, milestones). Coach and Instructor say the
+   same lines (counts, milestones, encouragement since Oct 2026); only Instructor adds the walk-through. */
+function say(text, { dropIfBusy = false } = {}) {
+  if (text) caption(text);
+  const on = (WK.sound === 'voice' || WK.sound === 'coach') && 'speechSynthesis' in window;
   if (!on || !text) return Promise.resolve();
   try {
     if (dropIfBusy && (speechSynthesis.speaking || speechSynthesis.pending)) return Promise.resolve();
@@ -721,7 +722,7 @@ function runCurrent(announce) {
   S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Now hold for N seconds"
   onWorkStep(0);
 }
-/* Instructor's words, varied when words of encouragement are on: a random "Begin" and "Last one", and now and then a word of
+/* Coach's and Instructor's words, varied when words of encouragement are on: a random "Begin" and "Last one", and now and then a word of
    encouragement in place of a count (never the first or last) or every 10 s of a hold (never at halfway or in the
    last 10 s). WP.random can be replaced (tests). */
 const COACH_WORDS = { begin: ['Begin', 'Ready', 'Go'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
@@ -742,10 +743,10 @@ function onWorkStep(i) {
   if (m.say) speakGuided(m.say);
   if (m.repNo && m.alt !== 1) {
     WP.rep = m.repNo;
-    // coach counts the reps: "Begin", 2, 3 … "Last one". Numbers are skipped if it's already talking; "Begin" never is
+    // Coach and Instructor count the reps: "Begin", 2, 3 … "Last one". Numbers are skipped if it's already talking; "Begin" never is
     const first = WP.rep === 1, last = WP.rep === m.repOf;
     if (first) WP.cheered = false;
-    say(first ? coachWord('begin') : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), true, { dropIfBusy: !first });
+    say(first ? coachWord('begin') : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), { dropIfBusy: !first });
   }
   renderWpCount();
 }
@@ -950,13 +951,13 @@ function renderWpCount() {
       $('#wpCount').textContent = fmtTime(left);
       if (left <= 3 && left > 0 && !WP.beeped['h' + left]) { WP.beeped['h' + left] = 1; beep(left === 1 ? 880 : 660); }
       if (S.t >= r.dur) {
-        if (m.seconds >= 30 && left <= Math.round(m.seconds / 2) && left > 10 && !WP.beeped.half) { WP.beeped.half = 1; say('Halfway', true, { dropIfBusy: true }); }
-        if (m.seconds >= 20 && left <= 10 && left > 3 && !WP.beeped.ten) { WP.beeped.ten = 1; say('10 seconds', true, { dropIfBusy: true }); }
+        if (m.seconds >= 30 && left <= Math.round(m.seconds / 2) && left > 10 && !WP.beeped.half) { WP.beeped.half = 1; say('Halfway', { dropIfBusy: true }); }
+        if (m.seconds >= 20 && left <= 10 && left > 3 && !WP.beeped.ten) { WP.beeped.ten = 1; say('10 seconds', { dropIfBusy: true }); }
         // every 10 s held, a 40% chance of a word of encouragement: not where "Halfway" is said, not in the last 10 s
         const mark = Math.floor((m.seconds - left) / 10) * 10, half = m.seconds >= 30 ? Math.round(m.seconds / 2) : -1;
         if (mark >= 10 && left > 10 && !WP.beeped['c' + mark]) {
           WP.beeped['c' + mark] = 1;
-          if (Math.abs(m.seconds - mark - half) > 5 && cheerChance(0.4)) say(coachWord('cheer'), true, { dropIfBusy: true });
+          if (Math.abs(m.seconds - mark - half) > 5 && cheerChance(0.4)) say(coachWord('cheer'), { dropIfBusy: true });
         }
       }
     } else $('#wpCount').textContent = fmtTime(cur.item.seconds);
