@@ -32,14 +32,14 @@
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
-        "torso": [73, 0, 0],
-        "shoulderL": [73, 0, 0],
-        "shoulderR": [73, 0, 0],
-        "hipL": [36, 0, 0],
-        "kneeL": 18,
+        "torso": [74, 0, 0],
+        "shoulderL": [74, 0, 0],
+        "shoulderR": [74, 0, 0],
+        "hipL": [34, 0, 0],
+        "kneeL": 15,
         "ankleL": -4,
-        "hipR": [36, 0, 0],
-        "kneeR": 18,
+        "hipR": [34, 0, 0],
+        "kneeR": 15,
         "ankleR": -4
       }
     },
@@ -53,13 +53,14 @@
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
+        "torso": [-2, 0, 0],
         "shoulderL": [6, 0, 0],
         "shoulderR": [6, 0, 0],
         "hipL": [6, 0, 0],
-        "kneeL": 10,
+        "kneeL": 15,
         "ankleL": -4,
         "hipR": [6, 0, 0],
-        "kneeR": 10,
+        "kneeR": 15,
         "ankleR": -4
       }
     },
@@ -73,14 +74,14 @@
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
-        "torso": [73, 0, 0],
-        "shoulderL": [73, 0, 0],
-        "shoulderR": [73, 0, 0],
-        "hipL": [36, 0, 0],
-        "kneeL": 18,
+        "torso": [74, 0, 0],
+        "shoulderL": [74, 0, 0],
+        "shoulderR": [74, 0, 0],
+        "hipL": [34, 0, 0],
+        "kneeL": 15,
         "ankleL": -4,
-        "hipR": [36, 0, 0],
-        "kneeR": 18,
+        "hipR": [34, 0, 0],
+        "kneeR": 15,
         "ankleR": -4
       }
     },
@@ -94,13 +95,14 @@
       "anchor": "ankleL",
       "plant": ["L", "R"],
       "pose": {
+        "torso": [-2, 0, 0],
         "shoulderL": [6, 0, 0],
         "shoulderR": [6, 0, 0],
         "hipL": [6, 0, 0],
-        "kneeL": 10,
+        "kneeL": 15,
         "ankleL": -4,
         "hipR": [6, 0, 0],
-        "kneeR": 10,
+        "kneeR": 15,
         "ankleR": -4
       }
     }
