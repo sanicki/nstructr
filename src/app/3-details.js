@@ -170,7 +170,7 @@ function exStepSound(i) {
     if (r.quiet || !(r.cue || r.name)) return;
     XS.speaking = true; const token = ++XS.token;
     say(r.cue || r.name).then(() => { if (XS.token === token) XS.speaking = false; });
-  } else if (i === (S.phase ? S.phase.start : 0) && S.ex.measure !== 'time') say(String(S.rep), false, { dropIfBusy: true });
+  } else if (i === (S.phase ? S.phase.start : 0) && S.ex.measure !== 'time') say(String(S.rep), { dropIfBusy: true });
 }
 function exHush() { XS.token++; XS.speaking = false; XS.last = ''; try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } }
 
@@ -217,7 +217,7 @@ function setRate(v, preview = true) {
     try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance('This is how fast I speak.'); u.lang = LANG; u.rate = speechRate(); speechSynthesis.speak(u); } catch (e) { }
   }, 400);
 }
-/* Instructor's words of encouragement (on unless turned off) */
+/* Coach's and Instructor's words of encouragement (on unless turned off) */
 const encourageOn = () => pref(ENCOURAGE_KEY, 'on') !== 'off';
 const restGap = () => { const v = parseFloat(pref(REST_KEY, '5')); return v >= 0 ? v : 5; };
 /* seconds of rest between sets of an exercise, in every workout (a setting since Sep 2026; items' "rest" is ignored) */
@@ -233,13 +233,13 @@ function renderSettings() {
   $('#setAutoplay').checked = pref(AUTOPLAY_KEY, 'on') !== 'off';
   $('#setRest').value = restGap(); $('#setRestSets').value = restSets(); setRate(speechRate(), false);
   $('#setAuthoring').checked = authoring();
-  $('#setEncourage').checked = encourageOn(); $('#setEncourageRow').hidden = WK.sound !== 'coach';
+  $('#setEncourage').checked = encourageOn(); $('#setEncourageRow').hidden = !['voice', 'coach'].includes(WK.sound);
   renderPersistNote();
 }
 $('#view-settings').addEventListener('click', e => {
   const b = e.target.closest('[data-setsound], [data-settheme]'); if (!b) return;
   const d = b.dataset;
-  if (d.setsound) { setSound(d.setsound); $('#setEncourageRow').hidden = d.setsound !== 'coach'; }
+  if (d.setsound) { setSound(d.setsound); $('#setEncourageRow').hidden = !['voice', 'coach'].includes(d.setsound); }
   if (d.settheme) { setPref(THEME_KEY, d.settheme); applyTheme(d.settheme); }
   b.parentElement.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
 });

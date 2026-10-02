@@ -27,7 +27,7 @@ Default 10. (Rest between circuit rounds is set on each block.)
 by the exercise page (Coach and Instructor read each step's cue once, then count).
 
 ### Words of encouragement
-Shown with **Instructor** (on at first). Instructor varies its words: **Begin**, **Ready** or **Go** to start; **Last one**,
+Shown with **Coach** and **Instructor** (on at first). They vary their words: **Begin**, **Ready** or **Go** to start; **Last one**,
 **One more** or **Last rep** for the last rep; and now and then **Good**, **Keep going**, **Breathe** or **Doing
 great**: in place of about 1 in 5 counts (never the first or the last; 1 in 10 right after a count that was replaced),
 and every 10 seconds of a hold, 4 times in 10 (never at halfway or in the last 10 seconds). The same word is never
