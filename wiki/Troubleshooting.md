@@ -3,7 +3,7 @@
 [← User guide](Home.md)
 
 **I can't hear anything.**
-Check **Settings → Instruction** is Voice or Coach, the phone isn't on silent, and media volume is up. The voice is the
+Check **Settings → Instruction** is Coach or Instructor, the phone isn't on silent, and media volume is up. The voice is the
 phone's text-to-speech: in Android, *Settings → Accessibility → Text-to-speech* should have an engine and a
 voice installed. Some apps' built-in browsers (opening the link from a chat app) can't speak: open it in Chrome.
 

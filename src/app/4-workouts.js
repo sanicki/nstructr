@@ -534,7 +534,9 @@ function caption(text) {
   clearTimeout(CAP_T); CAP_T = setTimeout(() => el.classList.remove('show'), 1800 + text.split(/\s+/).length * 380);
 }
 function hush() { try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } WP.speaking = false; }
-const SOUND_MODES = [['off', 'volume_off', 'Silent'], ['beeps', 'notifications', 'Beeps'], ['voice', 'record_voice_over', 'Voice'], ['coach', 'sports', 'Coach']];
+/* the Instruction setting. Stored values stay as they were (HANDOFF §11); the names changed Oct 2026: 'voice' is shown
+   as "Coach" (was "Voice"), 'coach' as "Instructor" (was "Coach") */
+const SOUND_MODES = [['off', 'volume_off', 'Silent'], ['beeps', 'notifications', 'Beeps'], ['voice', 'record_voice_over', 'Coach'], ['coach', 'sports', 'Instructor']];
 function setSound(mode) {
   WK.sound = mode; try { localStorage.setItem(SOUND_KEY, mode); } catch (e) { }
   const m = SOUND_MODES.find(x => x[0] === mode) || SOUND_MODES[1];
@@ -603,7 +605,7 @@ function buildPlan(item, segInfo) {
     if (first) { g(V0[ph.start]); holdCued = ph.start === h; }
   } else ph.setup.forEach(i => push(V0[i], { phase: 'setup' }));
   if (ex.measure === 'time') {
-    // Coach reads the held step's own cue (how to get into the pose) as it starts, then the time
+    // Instructor reads the held step's own cue (how to get into the pose) as it starts, then the time
     const holdSay = () => `${holdCued || V0[h].quiet ? '' : cueOf(V0[h]) + ' '}${plural(item.seconds, { one: 'Now hold for # second.', other: 'Now hold for # seconds.' })}`.replace(/([^.!?])\s+Now/, '$1. Now');
     ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(guided ? { say: holdSay() } : {}) } : { phase: 'rep' }));
   } else {
@@ -664,7 +666,7 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
 }
 function current() { return WP.flat[WP.i]; }
 /* Swap to an easier or harder version, for this session only (the workout asks at the end whether to keep it): the
-   item, in every round still to come, becomes the new exercise; the set starts again, with Coach's run-through. */
+   item, in every round still to come, becomes the new exercise; the set starts again, with Instructor's run-through. */
 function swapInSession(item, to) {
   const u = item.uid, n = swapItem(item, to);
   if (!WP.orig[u]) WP.orig[u] = item;
@@ -719,7 +721,7 @@ function runCurrent(announce) {
   S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Now hold for N seconds"
   onWorkStep(0);
 }
-/* Coach's words, varied when words of encouragement are on: a random "Begin" and "Last one", and now and then a word of
+/* Instructor's words, varied when words of encouragement are on: a random "Begin" and "Last one", and now and then a word of
    encouragement in place of a count (never the first or last) or every 10 s of a hold (never at halfway or in the
    last 10 s). WP.random can be replaced (tests). */
 const COACH_WORDS = { begin: ['Begin', 'Ready', 'Go'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };

@@ -121,7 +121,7 @@ async def main():
         await shot(pg, 'edit-poses')
         await pg.evaluate("closeEditor(); localStorage.setItem('nstructr-authoring-v1','off'); applyAuthoring()")
         # Settings
-        await pg.evaluate("setSound('coach'); go('#/settings'); scrollTo(0,0)"); await pg.wait_for_timeout(300)   # Coach: shows Words of encouragement
+        await pg.evaluate("setSound('coach'); go('#/settings'); scrollTo(0,0)"); await pg.wait_for_timeout(300)   # Instructor: shows Words of encouragement
         await pg.evaluate("document.querySelector('.navbar').style.display='none'")   # it's fixed: it would land mid-page in a full-page shot
         await shot(pg, 'settings', full=True)
         await pg.evaluate("document.querySelector('.navbar').style.display=''")

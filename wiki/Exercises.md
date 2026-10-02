@@ -108,7 +108,7 @@ or for one workout while you're doing it ([Working out](Working-out.md#too-easy-
 The exercise page follows your **Instruction** setting (see [Settings](Settings.md#instruction)):
 
 - **Silent** and **Beeps**: quiet.
-- **Voice** and **Coach**: the first time through, each step's cue is read out and the figure waits until it's
+- **Coach** and **Instructor**: the first time through, each step's cue is read out and the figure waits until it's
   finished; after that it counts your reps. Pausing, switching side or direction, or leaving the page stops it.
 
 ### Share an exercise

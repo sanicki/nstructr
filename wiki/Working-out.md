@@ -31,8 +31,8 @@ When the exercise has an easier or harder version, the controls show **Easier** 
 
 <img src="images/player-swap.png" width="300" alt="The controls with Easier and Harder under the play buttons">
 
-- Tap one to switch to that version. It starts the set again from the first rep (or 0:00), with Coach's run-through
-  if Coach is on; what you'd done doesn't carry over. The rest of that exercise's sets, and later rounds, use it too.
+- Tap one to switch to that version. It starts the set again from the first rep (or 0:00), with Instructor's run-through
+  if Instructor is on; what you'd done doesn't carry over. The rest of that exercise's sets, and later rounds, use it too.
 - The swap is only for this workout. When you leave the player, you're asked **Keep these changes in the
   workout?** Keep saves them (for a library workout, in your own copy); **Don't keep** leaves the workout as it was.
 - **Resume** keeps a swap. In **History**, sets you finished before swapping count as the exercise you did them as.
@@ -40,7 +40,7 @@ When the exercise has an easier or harder version, the controls show **Easier** 
 ## Rests
 
 Between exercises (and sets and rounds) a big countdown shows what's next. **+15 s** adds time; **Skip** moves
-on. Beeps count down the last 3 seconds in Beeps, Voice and Coach modes.
+on. Beeps count down the last 3 seconds in Beeps, Coach and Instructor modes.
 
 <img src="images/rest.png" width="300" alt="A rest: countdown, what's next, +15 s and Skip">
 
@@ -50,8 +50,8 @@ on. Beeps count down the last 3 seconds in Beeps, Voice and Coach modes.
 |---|---|
 | **Silent** | Nothing. Captions still show what would be said. |
 | **Beeps** | A 3-2-1 before rests and holds end, a chime when switching |
-| **Voice** | The exercise's name, side and direction switches, rests, what's next |
-| **Coach** (the default) | Voice, plus a **guided run-through** of each exercise: one slow pass reading every step's cue (for a hold, the pose's cue, then the countdown starts), then counted reps ("Halfway", "Last one"), with [words of encouragement](Settings.md#words-of-encouragement) |
+| **Coach** | The exercise's name, side and direction switches, rests, what's next |
+| **Instructor** (the default) | Coach, plus a **guided run-through** of each exercise: one slow pass reading every step's cue (for a hold, the pose's cue, then the countdown starts), then counted reps ("Halfway", "Last one"), with [words of encouragement](Settings.md#words-of-encouragement) |
 
 The voice is your phone's own text-to-speech, so it works offline. It never talks over itself: a count is skipped
 rather than interrupting a sentence. Its speed is a setting ([Text-to-speech speed](Settings.md#text-to-speech-speed)). Pausing stops it; playing again re-reads the current step.
