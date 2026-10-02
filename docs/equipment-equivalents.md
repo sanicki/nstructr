@@ -92,6 +92,7 @@ For a new exercise, the same research: `.claude/skills/exercise-research/SKILL.m
 | Chest stretch (wall) | ✅ Towel Chest Stretch |
 | Cross-Body Shoulder Stretch | Shoulder Stretch with Towel (in library) |
 | Standing Biceps Stretch (batch 26) | ⏳ Wall Biceps Stretch (palm on a wall behind you at shoulder height, turn away; Hinge Health's "standing chest stretch" stretches the biceps the same way) |
+| Shoulder Shrug (batch 27, standing) | ⏳ seated in a chair (the UMM Health source's own version) · ⏳ dumbbell, barbell and band shrugs (ExRx: shrugs load the upper trapezius) |
 | Wrist Flexor Stretch (batch 26) | ⏳ against a wall (palm flat on it, fingers down, lean in) |
 | Thread the Needle (batch 20) | — |
 | IT Band Stretch, Neck Stretch, Knee-to-Chest | — |

@@ -24,7 +24,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **356 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **357 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Coach on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Coach). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -33,13 +33,13 @@ Library today: **356 exercises, 5 workouts** (20-minute beginner's yoga, Pilates
 | Bodyweight | 43 | squats, stability ball bridge, lunges (incl. walking), push-ups, pull-up bar (pull-up, chin-up, dead hang, hanging knee raise), step-up, calf raises, tibialis raise, clamshell, bench dip, good morning, jump squat, pistol squat… |
 | Resistance band | 38 | lateral band walk, 10 BHF standing exercises + seated row + routine additions + banded versions + door anchor (face pull, row, chest press, pushdown, Pallof press, woodchop) + band Pilates (Hundred, Leg Circles, Roll-Up) |
 | Chair-based | 29 | NHS chair/sitting exercises, chair dip, chair push-up, chair yoga, chair-supported stretches… |
-| Stretches | 38 | Mayo Clinic basic stretches + routine additions + triceps, biceps, wrist flexor (batch 26: nothing stretched biceps and forearms), figure-four, doorway, strap stretches + towel, chair and step versions + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
+| Stretches | 39 | Mayo Clinic basic stretches + routine additions + triceps, biceps, wrist flexor, shoulder shrug (batch 27, standing; the shoulder lift joint `shrugL/R` was added for it) (batch 26: nothing stretched biceps and forearms), figure-four, doorway, strap stretches + towel, chair and step versions + foam roller (calves, hamstrings, quads, upper back, glutes, IT band, lats) |
 | Core | 40 | planks (incl. knee plank), hanging knee raise, stability ball (crunch, bridge, seated march), medicine ball (Russian twist, slam), bird dog, dead bug, crunch, bicycle, Russian twist, hollow hold, Pallof press, woodchop… |
 | Pilates | 41 | Pilates ring (chest press, inner thigh squeeze); all 34 classical mat exercises (Leg Circles: Side and Direction, with a compass; Roll-Over, Saw, Side Kick… and the advanced ones, batch 23: Open Leg Rocker, Corkscrew, Jackknife, Boomerang…); band versions |
 | Balance | 15 | Half Moon with a block, seated march on a stability ball, Star Excursion, Warrior III and Tree at the wall, single-leg stand, tandem stance, heel-to-toe walk, side stepping, balance walk, clock reach, single-leg RDL, pistol squat |
-| Warm-up | 23 | arm and hip circles, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
+| Warm-up | 24 | arm and hip circles, shoulder shrug, leg swings, inchworm, torso twists, butt kicks, jumping jacks, high knees, jump squat, foam rolling |
 
-225 are rep-based, 131 timed; 127 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
+226 are rep-based, 131 timed; 127 are two-sided (`bilateral`); 11 have `direction`. Common exercises per collection
 still to add, and equipment to track: `docs/collection-research.md`. Equipment versions of library exercises: `docs/equipment-equivalents.md` (what was found, what's added, what's next).
 
 ---
@@ -175,7 +175,8 @@ All in `src/core.js`. Format v2 (Sep 2026): a 3D figure, jointed like an artist'
   The figure is ~310 units tall ≈ 170 cm (≈ 1.8 units/cm) — use this to size equipment.
 - **Joints** (degrees, relative to the parent). Ball joints take `[forward, side, turn]`: `root` (whole body),
   `torso`, `chest`, `neck`, `shoulderL/R`, `hipL/R`. Hinges take one number: `elbowL/R`, `kneeL/R` (bend; 0 =
-  straight, they only bend the way a body's do), `ankleL/R` (+ = toes pointed). At 0 the figure stands straight,
+  straight, they only bend the way a body's do), `ankleL/R` (+ = toes pointed), `shrugL/R` (Oct 2026: the shoulder girdle; + lifts the shoulder, and so the arm,
+  toward the ear about the top of the breastbone, a shrug; flexible range −15…45, `tools/rom.cjs`). At 0 the figure stands straight,
   arms hanging. **Signs follow the body, not the screen**, so a pose means the same from any camera:
   - hip / shoulder: forward + swings the limb forward (90 = straight ahead, 180 = overhead), side + lifts it out to
     its own side, turn + turns it out. Left and right use the same signs.

@@ -84,6 +84,7 @@ like this; Yoga Journal's pose pages and the Mayo Clinic stretches name what eac
 | facePull | shoulders 3, upperBack 2, biceps 1 | – | [ExRx: Cable Rear Delt Row (and the reverse flies beside it)](https://exrx.net/WeightExercises/DeltoidPosterior/CBRearDeltRow) | Band Face Pull |
 | extRot | shoulders 3, upperBack 1 | – | *own* | Dumb Waiter; Side-Lying Dumbbell External Rotation |
 | curl | biceps 3, shoulders 1, upperBack 1 | – | [ExRx: Dumbbell Curl](https://exrx.net/WeightExercises/Biceps/DBCurl) | Band Bicep Curl; Barbell Curl; Dumbbell Biceps Curl |
+| shrug | upperBack 3 | – | [ExRx: Dumbbell Shrug](https://exrx.net/WeightExercises/TrapeziusUpper/DBShrug) | Shoulder Shrug |
 | deadHang | biceps 3, upperBack 1, shoulders 1, core 1 | upperBack, shoulders | *own* | Dead Hang (stretches sh ub) |
 | farmer | biceps 3, upperBack 3, core 2, shoulders 1, glutes 1, frontThigh 1, lowerLegs 1 | – | *own* | Farmer's Carry |
 | suitcase | core 3, biceps 3, upperBack 2, shoulders 1, glutes 1, frontThigh 1, lowerLegs 1 | – | *own* | Kettlebell Suitcase Carry |

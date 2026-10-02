@@ -13,8 +13,8 @@ const w = a => ((a % 360) + 540) % 360 - 180;
    the pelvis and spine helping. The figure has no shoulder blades, which give a real arm about 30° more: the
    shoulder's flexible range includes them. */
 const ROM = {
-  normal: { hip: { forward: 120, back: 30, out: 45, across: 30, turn: [-40, 45] }, knee: [0, 135], shoulder: { back: 60, across: 40, turn: [-70, 90] }, elbow: [0, 150] },
-  flexible: { hip: { forward: 170, back: 60, out: 95, across: 45, turn: [-60, 90] }, knee: [-10, 165], shoulder: { back: 110, across: 60, turn: [-90, 110] }, elbow: [-10, 170] }
+  normal: { hip: { forward: 120, back: 30, out: 45, across: 30, turn: [-40, 45] }, knee: [0, 135], shoulder: { back: 60, across: 40, turn: [-70, 90] }, elbow: [0, 150], shrug: [-10, 35] },
+  flexible: { hip: { forward: 170, back: 60, out: 95, across: 45, turn: [-60, 90] }, knee: [-10, 165], shoulder: { back: 110, across: 60, turn: [-90, 110] }, elbow: [-10, 170], shrug: [-15, 45] }
 };
 const D = 180 / Math.PI;
 /* where a limb points (u, in its parent's frame) and its turn about its own axis (swing–twist) */
@@ -62,6 +62,7 @@ function outOfRange(pose, which) {
     if (sh.elevation < 150) up(`shoulder${s} across`, sh.across, L.shoulder.across);
     chk(`shoulder${s} turn`, sh.twist, L.shoulder.turn);
     chk(`elbow${s}`, w(pose['elbow' + s]), L.elbow);
+    chk(`shrug${s}`, w(pose['shrug' + s] || 0), L.shrug);
   }
   return out;
 }
