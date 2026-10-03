@@ -692,7 +692,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 ### 8.3c Equipment changes (Oct 2026, owner's choice of options 1–4, then one setting)
 - The figure's equipment fades in and out between exercises (§8.3b), but the person has to put things down and fetch
   others. `equipmentChange(from, to)` (`src/app/4-workouts.js`): what is put down and fetched (the library's equipment
-  in `EQUIP`, with words: "Put the dumbbells down", "Bring a chair"; the yoga mat stays down; Dumbbell and Dumbbells
+  in `EQUIP`, with words: "Put the dumbbells down", "Pick up the kettlebell"; for furniture and the wall "Position yourself by your chair" (owner, Oct 2026); the yoga mat stays down; Dumbbell and Dumbbells
   count as one) and the time: the **Equipment transition time** (Settings, under Rest between sets, 15 s at first,
   `nstructr-equip-time-v1`). A first version gave each piece its own allowance (5/10/20 s, the longest + 3 s per other
   piece); the owner preferred one number the person sets over time they didn't choose.

@@ -23,7 +23,7 @@ async def main():
         await pg.fill('#setEquipTime', '15'); await pg.dispatch_event('#setEquipTime', 'change')
         print('changes                 ', await pg.evaluate("""[['fw-db-curl', 'chair-arm-raises'], ['bw-squat', 'bw-glute-bridge'], ['band-standing-row', 'band-face-pull'], ['band-overhead-triceps', 'band-standing-row'], ['fw-db-curl', 'fw-db-rdl']]
           .map(([a, c]) => { const x = equipmentChange(exById(a), exById(c)); return x && [x.seconds, x.lines.join(' / ')]; })"""))
-        print("  <- [15, put the dumbbells down / bring a chair], none (no equipment), none (the same), [15, set up the door anchor], none (dumbbells both)")
+        print("  <- [15, put the dumbbells down / position yourself by your chair], none (no equipment), none (the same), [15, set up your door anchor], none (dumbbells both)")
         print('estimate counts it      ', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['fw-db-curl', 'chair-arm-raises'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
           return [equipmentSeconds(w), Math.round(workoutSeconds(w) - w.blocks.reduce((s, x) => s + blockSeconds(x, w), 0))]; })()"""), '<- [30, 30] (15 s checklist + 15 s change)')
         # timed: the checklist, then the change
@@ -34,7 +34,7 @@ async def main():
         print('  said                  ', await pg.evaluate("SAID.slice(-1)"))
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("WP.phase === 'rest'", timeout=20000); await pg.evaluate("S.speed = 1")
-        print('change rest             ', await pg.evaluate("[$('#wpRestLabel').textContent, $('#wpRestEquip').textContent, Math.round(WP.restLeft), $('[data-wact=\"restSkip\"]').textContent]"), "<- ['Rest', 'Put the dumbbells down · Bring a chair', 20 (5 + 15), 'Skip']")
+        print('change rest             ', await pg.evaluate("[$('#wpRestLabel').textContent, $('#wpRestEquip').textContent, Math.round(WP.restLeft), $('[data-wact=\"restSkip\"]').textContent]"), "<- ['Rest', 'Put the dumbbells down · Position yourself by your chair', 20 (5 + 15), 'Skip']")
         print('  said                  ', await pg.evaluate("SAID.slice(-1)"))
         # pause at equipment changes: waits for Ready
         await pg.evaluate("hush(); WP.phase = 'done'; setPref(EQUIP_PAUSE_KEY, 'on')")
@@ -44,7 +44,7 @@ async def main():
         print('  12 s later, still     ', await pg.evaluate("WP.phase"), '<- rest')
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("WP.phase === 'rest'", timeout=20000); await pg.evaluate("S.speed = 1")
-        print('  change: waits, says   ', await pg.evaluate("[WP.waitReady, SAID.slice(-1)[0]]"), "<- [True, '… Bring a chair. Tap Ready when you're set.']")
+        print('  change: waits, says   ', await pg.evaluate("[WP.waitReady, SAID.slice(-1)[0]]"), "<- [True, '… Position yourself by your chair. Tap Ready when you're set.']")
         await pg.wait_for_timeout(2500)
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_function("WP.phase === 'work'", timeout=10000)
         print('  Ready: next exercise  ', await pg.evaluate("S.ex.id"), '<- chair-arm-raises')

@@ -91,25 +91,27 @@ const workoutEquipment = w => [...new Set(w.blocks.flatMap(b => b.items).flatMap
    gets the "Equipment transition time" (Settings, one number the person sets; the time estimate counts it), the rest
    screen and the voice say what to do, and a workout with equipment starts with a "Get ready" checklist that long. With
    "Pause at equipment changes" it waits for Ready instead of counting down. The yoga mat stays down. get / drop: what
-   to say. */
+   to say: pick up and put down what's easy to carry; position yourself by furniture and the wall. */
 const EQUIP = {
-  Dumbbells: { get: 'Get the dumbbells', drop: 'Put the dumbbells down' },
-  Kettlebell: { get: 'Get the kettlebell', drop: 'Put the kettlebell down' },
-  'Medicine ball': { get: 'Get the medicine ball', drop: 'Put the medicine ball down' },
-  'Resistance band': { get: 'Get the resistance band', drop: 'Put the band down' },
-  Towel: { get: 'Get a towel', drop: 'Put the towel down' },
-  'Yoga block': { get: 'Get a yoga block', drop: 'Put the block down' },
-  'Yoga strap': { get: 'Get the yoga strap', drop: 'Put the strap down' },
-  'Pilates ring': { get: 'Get the Pilates ring', drop: 'Put the ring down' },
-  Barbell: { get: 'Get the barbell', drop: 'Put the barbell down' },
-  Chair: { get: 'Bring a chair' },
-  Bench: { get: 'Go to the bench' },
-  Step: { get: 'Get the step' },
-  Wall: { get: 'Go to a wall' },
-  'Stability ball': { get: 'Get the stability ball', drop: 'Roll the ball aside' },
-  'Foam roller': { get: 'Get the foam roller', drop: 'Put the roller aside' },
-  'Door anchor': { get: 'Set up the door anchor' },
-  'Pull-up bar': { get: 'Go to the pull-up bar' }
+  // easy to pick up and put down
+  Dumbbells: { get: 'Pick up the dumbbells', drop: 'Put the dumbbells down' },
+  Kettlebell: { get: 'Pick up the kettlebell', drop: 'Put the kettlebell down' },
+  'Medicine ball': { get: 'Pick up the medicine ball', drop: 'Put the medicine ball down' },
+  'Resistance band': { get: 'Pick up the resistance band', drop: 'Put the band down' },
+  Towel: { get: 'Pick up a towel', drop: 'Put the towel down' },
+  'Yoga block': { get: 'Pick up a yoga block', drop: 'Put the block down' },
+  'Yoga strap': { get: 'Pick up the yoga strap', drop: 'Put the strap down' },
+  'Pilates ring': { get: 'Pick up the Pilates ring', drop: 'Put the ring down' },
+  Barbell: { get: 'Pick up the barbell', drop: 'Put the barbell down' },
+  'Stability ball': { get: 'Pick up the stability ball', drop: 'Put the ball down' },
+  'Foam roller': { get: 'Pick up the foam roller', drop: 'Put the roller down' },
+  // too big to carry about: you go to them (owner, Oct 2026: "position yourself by your chair")
+  Chair: { get: 'Position yourself by your chair' },
+  Bench: { get: 'Position yourself by your bench' },
+  Step: { get: 'Position yourself by your step' },
+  Wall: { get: 'Position yourself by your wall' },
+  'Pull-up bar': { get: 'Position yourself under your pull-up bar' },
+  'Door anchor': { get: 'Set up your door anchor' }
 };
 const fetchKey = q => q === 'Dumbbell' ? 'Dumbbells' : q;                     // one dumbbell or two: the same to fetch
 const equipOf = ex => new Set(((ex && ex.equipment) || []).map(fetchKey).filter(q => EQUIP[q]));
