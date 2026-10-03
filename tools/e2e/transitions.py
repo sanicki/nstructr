@@ -5,7 +5,8 @@ from playwright.async_api import async_playwright
 # Between exercises (src/positions.js, stagePlan in src/app/4-workouts.js): two exercises in the same position (Squat ->
 # Lateral Raise, both standing; the camera turns from the side to the front) move through the at-rest pose, the frame
 # glides and nothing jumps; a change of position (standing -> lying on the back) follows the moves between positions
-# (sit down, lie back) with no jump; equipment (a chair) crossfades; with a rest, the move happens during the rest (a
+# (sit down, lie back) with no jump; to a chair, up to standing beside it as it fades in; no position (a foam roller)
+# and Clamshell's mirrored other side crossfade; with a rest, the move happens during the rest (a
 # rest that ends first waits) and stops in the next exercise's first pose.
 WK = """(rest => { localStorage.setItem('nstructr-rest-between-v1', String(rest)); WK.hinted = true; setSound('off');
   const it = id => ({ ...newItem(exById(id)), reps: 2 });
@@ -56,10 +57,22 @@ async def main():
         print('change of position      ', way, "<- Standing, Squat, Sit back, Seated, Lying on your back")
         print('  no snaps, one picture ', snaps(fr), max(f['n'] for f in fr), '<- [] 1')
         print('  no weights or band    ', await pg.evaluate("document.querySelector('#propsFront').innerHTML.length"), '<- (Glute Bridge has none) 0')
-        # Glute Bridge -> Chair Arm Raises: a chair, a crossfade
+        # Glute Bridge -> Chair Arm Raises: up to standing in front of the chair, which fades in as the figure sits on it
         await pg.evaluate("wpAction('nextItem')")
-        fr = await pg.evaluate(WATCH, 600)
-        print('equipment: crossfade    ', fr[0]['trans'], max(f['n'] for f in fr), fr[-1]['n'], '<- 0 2 1')
+        way = await pg.evaluate("S.resolved.slice(0, S.trans).map(r => r.name)")
+        print('to a chair              ', way[-1], await pg.evaluate("posOf(exById('chair-arm-raises')).start"), "<- Standing standing (you walk up to furniture)")
+        await pg.wait_for_function("S.idx === S.trans && S.t > S.resolved[S.trans].dur * 0.3 && S.t < S.resolved[S.trans].dur * 0.7", timeout=15000)
+        print('  chair fading in       ', await pg.evaluate("[+$('#propsBack').style.opacity > 0 && +$('#propsBack').style.opacity < 1, $('#propsBack').innerHTML.includes('surface')]"), '<- [True, True]')
+        # no position to go through (a foam roller exercise): a crossfade; Clamshell's other side (mirrored, the head the
+        # other way): a crossfade, not a flip through the air
+        await pg.evaluate("hush(); WP.phase = 'done'")
+        await pg.evaluate("""(() => { localStorage.setItem('nstructr-rest-between-v1', '0'); WK.list = WK.list.filter(w => w.id !== 't');
+          WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [{ ...newItem(exById('roller-hamstrings')), reps: 1 }, { ...newItem(exById('side-clamshell')), reps: 1, sides: 'both' }] }] });
+          saveWorkouts(); startWorkout(wkById('t'), 0); })()"""); await pg.wait_for_timeout(400)
+        await pg.evaluate("wpAction('nextItem')"); fr = await pg.evaluate(WATCH, 500)
+        print('no position: crossfade  ', fr[0]['trans'], max(f['n'] for f in fr), '<- 0 2')
+        await pg.wait_for_timeout(300); await pg.evaluate("S.idx = S.resolved.length - 1; S.t = S.resolved[S.idx].dur; onWorkEnd()"); fr = await pg.evaluate(WATCH, 1500)
+        print('Clamshell other side    ', fr[0]['trans'], max(f['n'] for f in fr), snaps(fr), '<- 0 2 [] (a crossfade, no flip)')
         # with a rest: the move happens in the rest and waits in the first pose
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(5)'); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_timeout(2500)        # through the squats quickly

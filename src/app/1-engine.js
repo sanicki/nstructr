@@ -437,9 +437,17 @@ function draw() {
   drawFloorTicks(P, f.cam);
   applyPose(Q);
   S.curCam = f.cam; S.frameSupports = f.supports; S.grip = gripAt(a, b, e); S.held = heldAt(a, b, e, P);
-  // a workout's way into the next exercise: its band or weights are picked up as it arrives, not carried there
-  if (S.props && S.props.length && !(S.mode === 'workout' && S.idx < (S.trans || 0))) drawProps(P, Q, f.pose, f.cam);
-  else if (S.props && S.props.length) clearProps();
+  // a workout's way into the next exercise: the last exercise's equipment fades out over the first step, the next one's
+  // (chair, band, weights) fades in over the step into it, nothing is carried on the way
+  const tr = S.mode === 'workout' ? S.trans || 0 : 0, moving = S.idx < tr;
+  if (moving) {
+    clearProps();
+    const o = S.oldProps;
+    if (o && S.idx === 0 && e < 1) { const g = `<g transform="translate(${(S.shiftX - o.shift).toFixed(1)} 0)" opacity="${(1 - e).toFixed(2)}">`; $('#propsBack').innerHTML = g + o.back + '</g>'; $('#propsFront').innerHTML = g + o.front + '</g>'; }
+  } else if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);
+  else if (tr) clearProps();
+  const fadeIn = tr && S.idx === tr ? e.toFixed(2) : '';
+  for (const id of ['propsBack', 'propsFront']) { const el = $('#' + id); if (el.style.opacity !== fadeIn) el.style.opacity = fadeIn; }
   drawGuide(a, b, e);
   if (S.mode !== 'workout' && EX_SHOW_PROGRESS) $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';
   // hold countdown for long holds (stretches), in real seconds at the current speed

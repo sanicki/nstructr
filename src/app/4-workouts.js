@@ -627,6 +627,7 @@ function buildPlan(item, segInfo) {
    a position it can't place) the old picture crossfades into the new one. Oct 2026. */
 const POS_CACHE = new WeakMap();                                 // per exercise object: an edited exercise is worked out again
 const posOf = ex => { if (!POS_CACHE.has(ex)) POS_CACHE.set(ex, POSITIONS_EX.positionsOf(ex)); return POS_CACHE.get(ex); };
+const SIDE_CAM = 90;
 const REST_MS = 1000, ARRIVE_MS = 800, XFADE_MS = 350;
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 // the frames from one exercise into the next, or null (a crossfade): through the at-rest pose of the position the last
@@ -634,24 +635,40 @@ const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').match
 // stand -> half kneel -> kneel -> all fours -> lie down…). They stand halfway between where the last exercise left the
 // figure and where the next one starts (at their own spot on the floor the figure, and the view following it, would go
 // out there and back: a bounce), and the camera turns from the last exercise's to the next one's along the way.
-function transitionFrames(fromEx, toEx, fromLast, toFirst) {
-  const a = posOf(fromEx).end, b = posOf(toEx).start;
-  if (!a || !b || a === 'side-lying' || b === 'side-lying' || POSITIONS_EX.onEquipment(fromEx) || POSITIONS_EX.onEquipment(toEx)) return null;   // side-lying: which side differs
-  const route = POSITIONS_EX.positionPath(a, b); if (!route) return null;
-  const seg = { ...DEFAULT_SEGMENTS };
+function transitionFrames(fromEx, toEx, fromLast, toFirst, onlyIfMoving = false) {
+  const seg = { ...DEFAULT_SEGMENTS }, at = f => { const g = frameAt(f, f, 1, seg); return fkAt(g.pose, seg, g.pos); };
+  let a = posOf(fromEx).end, b = posOf(toEx).start;
+  if (!a || !b) return null;
+  const A = at(fromLast), B = at(toFirst);
+  // lying on the side: which side this exercise (or this side of it) lies on
+  if (a === 'side-lying') a = POSITIONS_EX.lyingSide(A, seg);
+  if (b === 'side-lying') b = POSITIONS_EX.lyingSide(B, seg);
+  // a side-lying exercise's other side is mirrored, head the other way: no honest move between them (a crossfade)
+  if (a.startsWith('side-lying') && b.startsWith('side-lying') && a !== b) return onlyIfMoving ? 'fade' : null;
+  const route = POSITIONS_EX.positionPath(a, b); if (!route || (onlyIfMoving && !route.length)) return null;
   const kfs = [{ name: POSITIONS_EX.LABELS[a], ...POSITIONS_EX.REST[a], durationMs: REST_MS, holdMs: route.length ? 0 : 150 }, ...route.map((k, i) => ({ ...k, holdMs: i === route.length - 1 ? 150 : 0 }))];
   // lying face down, the arms are by the sides in some exercises (Cobra) and overhead in others (Superman): the last rest
   // pose takes the next exercise's, so they move as the body lowers rather than sweep through the floor after
   if (b === 'prone') { const last = kfs[kfs.length - 1], arm = {}; for (const j of ['shoulderL', 'shoulderR', 'elbowL', 'elbowR']) if (toFirst.pose[j] != null) arm[j] = toFirst.pose[j]; kfs[kfs.length - 1] = { ...last, pose: { ...last.pose, ...arm } }; }
-  const R = resolveSequence(kfs, seg, { keyframes: kfs }, []);
-  const at = f => { const g = frameAt(f, f, 1, seg); return fkAt(g.pose, seg, g.pos); }, pelvis = f => at(f).pelvis;
+  const R = resolveSequence(kfs, seg, { keyframes: kfs }, []);                // on the floor: no equipment on the way
   // each step takes as long as the body has to travel (standing to a crouch is a long way, kneeling to all fours short)
-  const far = (A, B) => Math.max(...['head', 'pelvis', 'handL', 'handR', 'ankleL', 'ankleR'].map(k => V3.dist(A[k], B[k])));
-  R.forEach((r, i) => { r.dur = Math.round(Math.min(1500, Math.max(600, 350 + 5 * far(at(i ? R[i - 1] : fromLast), at(r))))); });
-  const p0 = pelvis(fromLast), p1 = pelvis(toFirst), q0 = pelvis(R[0]), q1 = pelvis(R[R.length - 1]);
-  const dx = (p0.x + p1.x) / 2 - (q0.x + q1.x) / 2, dz = (p0.z + p1.z) / 2 - (q0.z + q1.z) / 2;
-  return R.map((r, i) => ({ ...r, rule: { ...r.rule, x: num(r.rule.x) + dx, z: num(r.rule.z) + dz }, step: -1,
-    cam: fromLast.cam + (toFirst.cam - fromLast.cam) * (i + 1) / R.length }));
+  const far = (P, Q) => Math.max(...['head', 'pelvis', 'handL', 'handR', 'ankleL', 'ankleR'].map(k => V3.dist(P[k], Q[k])));
+  // where each end is: the feet when standing (in front of the chair, under the bar, not in or on them), else the pelvis.
+  // The first rest pose is where the last exercise left the figure, the last where the next one starts, the steps
+  // between spread along the way; a single rest pose (the same position) stands halfway
+  const spot = (P, pos) => pos === 'standing' ? V3.lerp(P.ankleL, P.ankleR, .5) : P.pelvis;
+  const RP = R.map(at), n = R.length;
+  const s0 = V3.sub(spot(A, a), spot(RP[0], a)), s1 = V3.sub(spot(B, b), spot(RP[n - 1], b));
+  R.forEach((r, i) => { r.dur = Math.round(Math.min(1500, Math.max(600, 350 + 5 * far(i ? RP[i - 1] : A, RP[i])))); });
+  // lying on the back runs head to toe away from the camera's usual side view, lying on the side across it: on the way
+  // to or from the side the camera turns a quarter so the back-lying steps are seen lengthwise too
+  const lyingBack = kfs.map(k => k.name === POSITIONS_EX.LABELS.supine || k.name === 'Arm up');
+  const sideTurn = i => !lyingBack[i] ? 0 : (b.startsWith('side-lying') ? SIDE_CAM * (b === 'side-lying' ? 1 : -1) : a.startsWith('side-lying') ? SIDE_CAM * (a === 'side-lying' ? 1 : -1) : 0);
+  return R.map((r, i) => {
+    const d = V3.lerp(s0, s1, n > 1 ? i / (n - 1) : .5);
+    return { ...r, rule: { ...r.rule, x: num(r.rule.x) + d.x, z: num(r.rule.z) + d.z }, step: -1,
+      cam: fromLast.cam + (toFirst.cam - fromLast.cam) * (i + 1) / n + sideTurn(i) };   // the camera turns from the last exercise's to the next one's
+  });
 }
 // during a rest: the figure is still moving into the next exercise's first pose
 const onTheWay = () => WP.phase === 'rest' && S.trans > 0 && (S.idx < S.trans || S.t < S.resolved[S.trans].dur);
@@ -660,15 +677,21 @@ function stagePlan(p) {
   const prevEx = S.ex, exChanged = !S.ex || S.ex.id !== p.ex.id;
   const fromBox = scene.getAttribute('viewBox'), drawnX = S.drawnX;
   let plan = p.plan, meta = p.meta, trans = 0, fade = false;
-  if (prevLast && exChanged && !reducedMotion()) {
-    const way = transitionFrames(prevEx, p.ex, prevLast, plan[0]);
+  // a new exercise; or the same one's other side when that is another position (Clamshell: from one side, onto the back,
+  // onto the other; straight across it flipped through the air)
+  if (prevLast && !reducedMotion() && (exChanged || prevEx)) {
+    let way = transitionFrames(prevEx, p.ex, prevLast, plan[0], !exChanged);
+    if (way === 'fade') { way = null; fade = true; }
     if (way) {
       const arrive = { ...plan[0], dur: Math.max(plan[0].dur, ARRIVE_MS) };    // into the first step from the last rest pose
       plan = Object.assign([...way, arrive, ...plan.slice(1)], { walls: plan.walls, supports: plan.supports });
       meta = [...way.map(() => ({ phase: 'transition' })), ...meta]; trans = way.length;
-    } else fade = true;
+    } else if (exChanged) fade = true;
   }
   if (fade) crossfadeScene();
+  // the last exercise's equipment (and band or weights) fades out as the figure leaves it; the next one's fades in as it
+  // arrives (draw in src/app/1-engine.js)
+  S.oldProps = trans ? { back: $('#propsBack').innerHTML, front: $('#propsFront').innerHTML, shift: S.shiftX } : null;
   S.mode = 'workout'; S.ex = p.ex; S.seg = p.seg; S.props = p.props; S.tempo = p.tempo; S.speed = 1;
   S.resolved = plan; S.planMeta = meta; S.trans = trans; S.idx = 0; S.prev = null; S.from = prevLast; S.planDone = false; S.t = 0;
   S.bandRest = bandRestLengths(S.props, plan, S.seg);
@@ -685,7 +708,7 @@ function stagePlan(p) {
   if (exChanged) { buildFigure(); buildGuide(); }
   frameScene(own);
   S.glide = null;
-  if (S.from && exChanged && !trans) { S.from = null; return; }   // a cut: the new exercise starts from its own first position
+  if (S.from && (exChanged || fade) && !trans) { S.from = null; return; }   // a cut: the new exercise (or side) starts from its own first position
   if (!S.from || reducedMotion() || !isFinite(drawnX)) return;
   // carrying on from the last pose (the next exercise, set or side): the figure goes from where it was on screen to
   // where it will be in one smooth move, whatever way the body goes (a side is placed elsewhere; a travelling exercise

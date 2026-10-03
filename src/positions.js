@@ -4,12 +4,13 @@
    which way the trunk and chest face), or given by the exercise's startPosition / endPosition when that guess is wrong.
    Between two exercises the workout player moves the figure through the "at rest" pose of each position (REST) and,
    when the position changes, along the quickest route of moves between positions (MOVES, positionPath), so it never
-   jumps; an exercise on equipment (bench, chair, step, ball, roller, wall, bar), lying on the side, or a pair it can't
-   place, crossfades instead. */
+   jumps. Furniture (chair, bench, step, wall, bar) is walked up to: sitting or lying on it, or the hands on it, starts
+   and ends standing beside it. A position it can't place (a foam roller under the calves) and a side-lying exercise's
+   mirrored other side crossfade instead. */
 (function (root) {
   // in the browser core.js's top-level names are shared script globals (a const isn't on window)
   const C = typeof module !== 'undefined' ? require('./core.js')
-    : { resolveSequence, DEFAULT_SEGMENTS, frameAt, fkAt, place, supportAt, surfacesFrom };
+    : { resolveSequence, DEFAULT_SEGMENTS, frameAt, fkAt, place, supportAt, surfacesFrom, mirrorKeyframe };
   const POSITIONS = ['standing', 'kneeling', 'all-fours', 'seated', 'supine', 'prone', 'side-lying', 'plank'];
   const LABELS = { standing: 'Standing', kneeling: 'Kneeling', 'all-fours': 'All fours', seated: 'Seated', supine: 'Lying on your back',
     prone: 'Lying face down', 'side-lying': 'Lying on your side', plank: 'Plank' };
@@ -61,6 +62,9 @@
       SIT_BACK] },
     // roll down onto the back, knees bent
     { a: 'seated', b: 'supine', via: [] },
+    // lift the arm that goes under the head, then roll onto that side (sliding it along the floor read as a slip)
+    { a: 'supine', b: 'side-lying', via: [{ ...REST.supine, name: 'Arm up', pose: { ...REST.supine.pose, shoulderL: [90, 0, 0] } }] },
+    { a: 'supine', b: 'side-lying-r', via: [{ ...REST.supine, name: 'Arm up', pose: { ...REST.supine.pose, shoulderR: [90, 0, 0] } }] },
     // knees up, rock forward onto the feet with the hands down, knees down: tabletop (stays on the floor between the
     // positions facing up and those facing down)
     { a: 'seated', b: 'all-fours', via: [SIT_BACK, CROUCH] }
@@ -83,6 +87,14 @@
       }
     }
     return best[b] ? best[b].path : null;
+  }
+  // lying on the other side: the same rest pose mirrored (an exercise's right side lies on the other side)
+  REST['side-lying-r'] = C.mirrorKeyframe({ name: 'side-lying', ...REST['side-lying'] });
+  LABELS['side-lying-r'] = LABELS['side-lying'];
+  /* which side a body lies on, as a REST key: the side whose shoulder is lower, compared with the rest pose's */
+  function lyingSide(P, seg) {
+    const r = pointsOf(C.resolveSequence([{ name: 's', ...REST['side-lying'] }], seg, {}, [])[0], seg), restLow = r.shoulderL.y < r.shoulderR.y;
+    return (P.shoulderL.y < P.shoulderR.y) === restLow ? 'side-lying' : 'side-lying-r';
   }
   const sub = (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z });
   const len = v => Math.hypot(v.x, v.y, v.z) || 1;
@@ -113,17 +125,34 @@
   /* an exercise's start and end positions (its first side and direction, as written) */
   function positionsOf(ex) {
     const seg = C.DEFAULT_SEGMENTS, R = C.resolveSequence(ex.keyframes, seg, ex, ex.props || []);
-    const guess = r => { try { return classify(pointsOf(r, seg)); } catch (e) { return null; } };
+    // on furniture (sitting on a chair, lying on a bench, hands or feet up on one, hanging from a bar) you start and end
+    // standing beside it: that's where a workout's way in and out goes; on the floor with a ball or roller, as usual
+    const guess = r => { try {
+      const P = pointsOf(r, seg), up = RAISED.some(k => P[k] && C.supportAt(P[k]) > 35 && P[k].y - C.supportAt(P[k]) < 8);
+      return up ? 'standing' : classify(P);
+    } catch (e) { return null; } };
     const given = v => v === 'other' ? null : POSITIONS.includes(v) ? v : undefined;      // "other": none of these (a crossfade)
-    const start = given(ex.startPosition) !== undefined ? given(ex.startPosition) : guess(R[0]);
+    let start = given(ex.startPosition) !== undefined ? given(ex.startPosition) : guess(R[0]);
     // a last frame it can't place (a bridge at the top, a forward fold) is where the reps come back to, when nothing
     // follows them: the start
     let end = given(ex.endPosition) !== undefined ? given(ex.endPosition) : guess(R[R.length - 1]);
-    if (end === null && given(ex.endPosition) === undefined && !ex.keyframes.some(k => k.phase === 'finish')) end = start;
+    const finish = ex.keyframes.some(k => k.phase === 'finish');
+    if (end === null && given(ex.endPosition) === undefined && !finish) end = start;
+    // on furniture nothing else fits: you go to it standing (a handstand against the wall, hanging from the bar); and with
+    // no finish step the reps come back to where they started (a bridge with the heels on a chair ends lying down)
+    if (onFurniture(ex)) {
+      if (start === null && given(ex.startPosition) === undefined) start = 'standing';
+      if (given(ex.endPosition) === undefined && (!finish || end === null)) end = start;
+    }
     return { start, end };
   }
   /* equipment the body rests on or moves against (a hand-held weight or band doesn't count) */
   const onEquipment = ex => C.surfacesFrom(ex.props || []).length > 0 || (ex.props || []).some(p => p.type === 'wall' || p.type === 'bar');
+  /* furniture you walk up to: chair, bench, step, wall, bar (not a ball, roller or block on the floor) */
+  const FURNITURE = ['chair', 'bench', 'step', 'wall', 'bar'];
+  const onFurniture = ex => (ex.props || []).some(p => FURNITURE.includes(p.type));
+  // sitting or lying on it, or the hands on it (feet up on a bench or ball: you lie or plank on the floor first)
+  const RAISED = ['pelvis', 'spine', 'neckBase', 'handL', 'handR'];
   /* each rest pose, resolved on its own: no misses, and it is the position it rests in (the build checks this) */
   function checkRest() {
     const seg = C.DEFAULT_SEGMENTS, out = [];
@@ -134,6 +163,6 @@
     }
     return out;
   }
-  const api = { POSITIONS, LABELS, REST, MOVES, positionPath, classify, positionsOf, onEquipment, checkRest };
+  const api = { POSITIONS, LABELS, REST, MOVES, positionPath, classify, positionsOf, onEquipment, onFurniture, lyingSide, pointsOf, checkRest };
   if (typeof module !== 'undefined') module.exports = api; else root.POSITIONS_EX = api;
 })(typeof window !== 'undefined' ? window : globalThis);
