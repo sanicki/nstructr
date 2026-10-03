@@ -913,7 +913,9 @@ function runCurrent(announce) {
     if (cur.item.sides && cur.item.sides !== 'alternate' && bl) bits.push(bl[segInfo.side]);
     if (cur.item.dir && cur.item.dir !== 'alternate' && dl) bits.push(dl[segInfo.dir]);
     const named = WK.sound !== 'coach' ? bits.join('. ') + '.' : WP.seg > 0 ? bits[0] + '.' : '';   // NstructR+: "Switch sides." then the guided run-through
-    if (WP.equipChange) { const ch = WP.equipChange; setTimeout(() => say(`${ch.lines.join('. ')}.`).then(() => { if (named) say(named); }), EQUIP_PAD * 1000); }
+    // (both at once: queued only after the equipment line had been said, the name could come after "Ready… Begin.",
+    // which the first step queues once the move in, timed from an estimate of that line, is over)
+    if (WP.equipChange) { const ch = WP.equipChange; setTimeout(() => { say(`${ch.lines.join('. ')}.`); if (named) say(named); }, EQUIP_PAD * 1000); }
     else if (named) say(named);
   }
   WP.equipChange = null;
@@ -975,7 +977,7 @@ function onWorkEnd() {
   finishWorkout();
 }
 /* the equipment words, after half a second of silence */
-function sayEquipment(ch, tail = '') { setTimeout(() => say(`${ch.lines.join('. ')}.${tail}`), EQUIP_PAD * 1000); }
+function sayEquipment(ch, tail = '') { return new Promise(res => setTimeout(() => say(`${ch.lines.join('. ')}.${tail}`).then(res), EQUIP_PAD * 1000)); }
 /* ch: an equipment change ({ seconds, lines }, equipmentChange) or, for kind 'start', the checklist ({ seconds: 0,
    lines: ["You'll need …"] }): the rest gets its seconds added and says its lines; with "Pause at equipment changes" it
    waits for Ready instead of counting down to the next exercise */
@@ -1004,7 +1006,10 @@ function startRest(seconds, kind, ch = null) {
   const rest = WP.waitReady ? '' : plural(Math.ceil(seconds), { one: 'Rest # second.', other: 'Rest # seconds.' });
   const first = (title ? `${WP.w.name}.` : kind === 'set' ? rest : kind === 'round' ? `Round ${fmtNum(cur.round)} done. ${rest}` : `${rest} Next: ${ex.name}.`).trim();
   const token = WP.restToken = (WP.restToken || 0) + 1;
-  say(first).then(() => { if (ch && WP.restToken === token && WP.phase === 'rest') sayEquipment(ch, WP.waitReady ? " Tap Ready when you're set." : ''); });
+  // the title card stays until it has said all of it (a voice can be slower than its estimate), then half a second more
+  WP.restTalking = title;
+  say(first).then(() => ch && WP.restToken === token && WP.phase === 'rest' ? sayEquipment(ch, WP.waitReady ? " Tap Ready when you're set." : '') : null)
+    .then(() => { if (WP.restToken === token && WP.restTalking) { WP.restTalking = false; WP.restLeft = Math.max(WP.restLeft, EQUIP_PAD); } });
   beep(520, 200);
 }
 /* ---------- history ---------- */
@@ -1196,7 +1201,7 @@ setInterval(() => {
     const left = Math.max(0, Math.ceil(WP.restLeft));
     if (WP.restKind !== 'start') $('#wpRestTime').textContent = fmtTime(left);   // the title card has no countdown
     if (left <= 3 && left > 0 && !WP.beeped['r' + left]) { WP.beeped['r' + left] = 1; beep(left === 1 ? 880 : 660); }
-    if (WP.restLeft <= 0 && !onTheWay()) runCurrent(true);
+    if (WP.restLeft <= 0 && !onTheWay() && !WP.restTalking) runCurrent(true);
   } else if (WP.phase === 'rest') WP.restLast = performance.now();
   if (WP.phase === 'work') renderWpCount();
 }, 200);

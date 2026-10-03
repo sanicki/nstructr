@@ -505,7 +505,11 @@ function frameAt(a, b, e, seg) {
   // if one step's pin is also resting at the same spot in the other step, use it for the whole move (no sliding)
   const rule = sharedPin(a, b, seg);
   SUPPORTS = frameSupports;
-  const pa = place(pose, seg, rule || a.rule, false), pb = place(pose, seg, rule || b.rule, false);
+  // each end is placed on its own surfaces: between two exercises the next one's (a wall) don't have the last one's
+  // (the chair seat under the hands of an incline push-up): placed on the floor instead, the feet went through it and
+  // the floor clamp bent the legs (a jump at the start of the move). A rolling roller is where it is at this moment.
+  const own = (r, f) => { if (r.supports === frameSupports || !r.supports || frameSupports !== (b.supports || a.supports)) return f(); SUPPORTS = r.supports; const out = f(); SUPPORTS = frameSupports; return out; };
+  const pa = own(a, () => place(pose, seg, rule || a.rule, false)), pb = own(b, () => place(pose, seg, rule || b.rule, false));
   const pos = V3.lerp(pa, pb, e);
   const lift = lerp(num(a.rule.lift), num(b.rule.lift), e);
   const pinned = rule ? [rule.anchor] : [a.rule.anchor, b.rule.anchor];
