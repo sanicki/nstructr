@@ -128,7 +128,8 @@ function equipmentChange(fromEx, toEx) {
   const put = [...a].filter(q => !b.has(q)), got = [...b].filter(q => !a.has(q)), all = [...put, ...got];
   if (!all.length) return null;
   const lines = [...put.map(q => EQUIP[q].drop).filter(Boolean), ...got.map(q => EQUIP[q].get)];
-  return { seconds: equipSpoken(lines), lines };
+  // stepping away from furniture (a chair to nothing) has nothing to do or say: no change (it said a lone "." before)
+  return lines.length ? { seconds: equipSpoken(lines), lines } : null;
 }
 // everything a workout (from one of its exercises on) uses, for the "Get ready" checklist
 const neededFrom = (flat, i) => [...new Set(flat.slice(i).flatMap(e => [...equipOf(exById(e.item.ex))]))];
@@ -568,7 +569,8 @@ function beep(freq = 880, ms = 120) {
    dropIfBusy: skip this line if something is still being said (rep counts, milestones). Coach and Instructor say the
    same lines (counts, milestones, encouragement since Oct 2026); only Instructor adds the walk-through. */
 function say(text, { dropIfBusy = false } = {}) {
-  if (text) caption(text);
+  if (!/[\p{L}\p{N}]/u.test(text || '')) return Promise.resolve();   // nothing to say (a voice reads a lone "." as "dot")
+  caption(text);
   const on = (WK.sound === 'voice' || WK.sound === 'coach') && 'speechSynthesis' in window;
   if (!on || !text) return Promise.resolve();
   try {
