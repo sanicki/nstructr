@@ -2,6 +2,7 @@ import asyncio, os, json
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # the exercise player follows the Sound setting: Silent/Beeps say nothing; NstructR/NstructR+ read each step's cue on the
 # first pass (the step waits for it), then count reps; pausing stops the voice; a new side restarts the first pass
 FAKE = """window.SPOKEN=[]; window.CANCELS=0; Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{
@@ -23,7 +24,7 @@ async def main():
             await pg.evaluate("setPlaying(false); go('#/exercises')"); await pg.wait_for_timeout(300)
         await pg.evaluate("setSound('voice'); SPOKEN.length=0; go('#/play/bw-squat')"); await pg.wait_for_timeout(700)
         n = await pg.evaluate("S.resolved.length")
-        print('voice: first cue       ', await pg.evaluate("[SPOKEN, S.idx, XS.speaking]"), '<- step waits while speaking')
+        check('voice: first cue', await pg.evaluate("[SPOKEN, S.idx, XS.speaking]"), [['Feet hip-width apart.'], 0, True], 'step waits while speaking')
         await pg.wait_for_timeout(1500 * n + 3000)
         cues = await pg.evaluate("S.resolved.map(r=>r.quiet ? null : (r.cue||r.name)).filter(Boolean)")
         said = await pg.evaluate("SPOKEN")
@@ -32,7 +33,7 @@ async def main():
         print('then counts reps       ', await pg.evaluate(f"SPOKEN.slice({len(cues)})"), '| rep', await pg.evaluate("S.rep"))
         c0 = await pg.evaluate("CANCELS")
         await pg.evaluate("setPlaying(false)"); await pg.wait_for_timeout(200)
-        print('pause stops voice      ', await pg.evaluate(f"[CANCELS > {c0}, speechSynthesis.speaking, XS.speaking]"))
+        check('pause stops voice', await pg.evaluate(f"[CANCELS > {c0}, speechSynthesis.speaking, XS.speaking]"), [True, False, False])
         # a bilateral exercise: switching side starts the first pass again
         await pg.evaluate("SPOKEN.length=0; go('#/play/bw-reverse-lunge')"); await pg.wait_for_timeout(400)
         side = await pg.evaluate("!$('#sideCtl').hidden")
@@ -44,6 +45,6 @@ async def main():
         # leaving the player stops speech
         c1 = await pg.evaluate("CANCELS")
         await pg.evaluate("go('#/exercises')"); await pg.wait_for_timeout(300)
-        print('leave stops voice      ', await pg.evaluate(f"CANCELS > {c1}"))
-        print('errors', errs); await b.close()
+        check('leave stops voice', await pg.evaluate(f"CANCELS > {c1}"), True)
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

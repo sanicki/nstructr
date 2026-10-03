@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # "Ready… Begin." waits where the figure is (the end of the setup or of NstructR+'s demonstration; with neither, the
 # position a rep ends in), and the rep's first move comes with "1". Oct 2026: it moved into the rep's first step, so
 # Side Stepping took its first step before "Begin".
@@ -33,8 +34,8 @@ async def main():
             ready = [f for f in fr if f['ready']]
             moved = len(set(f['bones'] for f in ready)) - 1 if ready else None   # how many times the drawing changed
             first = next((f for f in fr if f['rep'] == 1), None)
-            print(mode.ljust(6), 'during Ready… Begin.: figure changed', moved, 'times over', len(ready), 'frames <- 0',
-                  '| "1" said as rep 1 starts:', first and first['said'], "<- '1' (then the first side step)")
+            check(f'{mode}: still during Ready', [moved, len(ready) > 20], [0, True], 'the figure never changes, over 20+ frames')
+            check(f'{mode}: "1" as rep 1 starts', first and first['said'], '1')
             await ctx.close()
         # every reps exercise: the ready step is the frame before it, held (no move), or with nothing before it the rep's end
         ctx = await b.new_context(viewport={'width': 412, 'height': 860}, service_workers='block'); pg = await ctx.new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
@@ -49,6 +50,6 @@ async def main():
               if (r > 0 ? (R.dur !== 0 || JSON.stringify(R.pose) !== JSON.stringify(p.plan[r - 1].pose)) : R.step !== phaseInfo(ex.keyframes).end) out.push(mode + ' ' + ex.id);
             } }
           return out; })()""")
-        print('every reps exercise: ready step holds still', bad[:8], len(bad), '<- [] 0')
-        print('errors', errs); await b.close()
+        check('every reps exercise: ready holds still', bad, [])
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

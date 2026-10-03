@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch(); pg=await b.new_page(viewport={'width':1280,'height':860}); errs=[]
@@ -12,16 +13,16 @@ async def main():
           window.SpeechSynthesisUtterance=function(t){this.text=t};""")
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
         await pg.evaluate("""(()=>{WK.list.push({id:'s4',name:'S',blocks:[{id:'b',name:'B',items:[{...newItem(exById('star-excursion-4-point')),reps:1,sides:'both'}]}]}); setSound('coach'); startWorkout(wkById('s4'));})()""")
-        labels=[]; last=None
-        for k in range(1200):
-            await pg.evaluate("S.speed=6"); await pg.wait_for_timeout(20)
-            lab=await pg.evaluate("$('#guideLabel').textContent")
-            if lab and lab!=last: labels.append(lab); last=lab
-            if await pg.evaluate("WP.phase==='done'"): break
-        print('coach said:', await pg.evaluate("SP.log"))
-        print('compass labels shown:', labels)
+        # every change of the guide label, recorded in the page (polling from here misses short ones under load)
+        await pg.evaluate("S.speed=6; window.LABELS=[]; const el=$('#guideLabel'); new MutationObserver(() => { const t=el.textContent; if (t && t!==LABELS.at(-1)) LABELS.push(t); }).observe(el, {childList:true, characterData:true, subtree:true})")
+        await pg.wait_for_function("WP.phase==='done'", timeout=120000)
+        labels=await pg.evaluate("LABELS")
+        said = await pg.evaluate("SP.log"); print('coach said:', said)
+        check('coach said the exercise name first', said[:1], lambda v: v and 'Star' in v[0])
+        check('coach called each reach', [w for w in said if w in ('Forward', 'Right', 'Back', 'Left') or w.lower() in ('forward.', 'right.', 'back.', 'left.')], lambda v: len(v) >= 4, 'at least 4 compass calls')
+        check('compass labels shown:', labels, ['Forward', 'Right', 'Back', 'Left', 'Forward', 'Right', 'Back', 'Left', 'Forward', 'Left', 'Back', 'Right', 'Forward', 'Left', 'Back', 'Right'])
         await pg.goto(URL + '#/play/star-excursion-balance', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
         await pg.evaluate("setPlaying(false); S.idx=2; S.t=S.resolved[2].dur; draw()"); await pg.wait_for_timeout(100)
         await pg.locator('.stage').screenshot(path='/tmp/star_guide.png')
-        print('errors', errs); await b.close()
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

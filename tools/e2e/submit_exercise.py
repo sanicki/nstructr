@@ -2,6 +2,7 @@ import asyncio, os, json, urllib.parse
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # submitting an exercise to the library (src/app/5-submit.js): a copy renamed only -> another name; an unchanged copy
 # -> nothing to submit; a changed copy -> changes to it; one that moves the same as a library exercise -> name /
 # changes (not new: a duplicate can't be); a changed copy with its own name -> changes or new; something new -> new. Continue opens the prefilled GitHub issue form.
@@ -38,7 +39,7 @@ async def main():
         print('  issue link', len(u), 'chars |', {k: v[0][:40] for k, v in q.items()})
         # the exercise link inside decodes back to the exercise
         back = await pg.evaluate(f"unpackLink({json.dumps(q['exercise'][0].split('#/link/')[1])}).then(r => [r.kind, r.data.exercises[0].name, r.data.exercises[0].basedOn])")
-        print('  decodes to', back)
+        check('decodes to', back, ['e', 'Parallel Squat', 'bw-squat'])
         await plan('u-taken'); await pg.click('#submitDialog [data-close]')
         await plan('u-same'); await pg.click('#submitDialog [data-close]')
         await plan('u-changed'); await pg.click('#submitDialog [data-close]')
@@ -52,13 +53,13 @@ async def main():
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
         await pg.click('[data-wtoggle="lib:beginner-yoga-20"]'); await pg.click('[data-wcustom="lib:beginner-yoga-20"]'); await pg.wait_for_timeout(300)
         await pg.click('[data-share-wk="@edit"]'); await pg.wait_for_timeout(300)
-        print('workout    ', await pg.evaluate("[$('#shareSubmit').disabled, $('#shareSoon').textContent]"))
+        check('workout', await pg.evaluate("[$('#shareSubmit').disabled, $('#shareSoon').textContent]"), [True, "Workouts can't be submitted to the library yet."])
         # the cover screen
         await pg.set_viewport_size({'width': 360, 'height': 398})
         await pg.click('#shareDialog [data-close]'); await pg.evaluate("go('#/play/u-dup')"); await pg.wait_for_timeout(300)
         await pg.click('#shareExBtn'); await pg.click('#shareSubmit'); await pg.wait_for_timeout(300)
-        print('360x398     sideways scroll:', await pg.evaluate("(() => { const d = $('#submitDialog'); return d.scrollWidth > d.clientWidth; })()"))
+        check('360x398     sideways scroll:', await pg.evaluate("(() => { const d = $('#submitDialog'); return d.scrollWidth > d.clientWidth; })()"), False)
         await pg.screenshot(path=os.environ.get('SHOT', '/tmp/submit.png'))
-        print('errors', errs)
+        check('errors', errs, [])
         await b.close()
 asyncio.run(main())

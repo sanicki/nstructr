@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch(); pg=await b.new_page(viewport={'width':1280,'height':860}); errs=[]
@@ -25,5 +26,5 @@ async def main():
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
         await pg.evaluate("""(()=>{WK.list.push({id:'c',name:'C',blocks:[{id:'b',name:'B',items:[{...newItem(exById('wu-arm-circles')),reps:3,dir:'A'}]}]}); startWorkout(wkById('c')); S.playing=false;})()""")
         await pg.wait_for_timeout(100); await sample('3 circles in a workout')
-        print(errs); await b.close()
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

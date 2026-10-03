@@ -1,3 +1,5 @@
 node_modules/
 _site/
 library/index.json
+e2e-output/
+__pycache__/

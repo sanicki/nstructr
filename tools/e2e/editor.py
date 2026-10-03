@@ -3,6 +3,7 @@ import asyncio, os
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 import json
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 ASK_JS = """setInterval(() => { const d = document.getElementById('askDialog'); if (!d || !d.open) return;   // answers NstructR's confirm dialog
   (window.ASKED = window.ASKED || []).push(document.getElementById('askTitle').textContent + ' | ' + document.getElementById('askText').textContent.split('\\n').pop());
   document.getElementById(window.ASK_NO ? 'askNo' : 'askYes').click(); }, 40)"""
@@ -24,7 +25,7 @@ async def main():
         bx=await pg.query_selector('#pickList input'); await bx.check()
         await pg.click('#pickAdd'); await pg.wait_for_timeout(300)
         names=await pg.evaluate("EDIT.blocks[0].items.map(i=>exById(i.ex).name)")
-        print('added:', names)
+        check('added:', names, ['Bulgarian Split Squat', 'Band Squat', 'Burpee', 'Feet-Elevated Plank'])
         # drag the last item to the top
         handles=await pg.query_selector_all('#wkBlocks .wi [data-handle]')
         src=await handles[-1].bounding_box(); dst=await handles[0].bounding_box()
@@ -33,28 +34,29 @@ async def main():
             y=src['y']+(dst['y']-10-src['y'])*k/11
             await pg.mouse.move(src['x']+src['width']/2, y); await pg.wait_for_timeout(20)
         await pg.mouse.up(); await pg.wait_for_timeout(200)
-        print('after drag:', await pg.evaluate("EDIT.blocks[0].items.map(i=>exById(i.ex).name)"))
+        check('after drag:', await pg.evaluate("EDIT.blocks[0].items.map(i=>exById(i.ex).name)"), ['Feet-Elevated Plank', 'Bulgarian Split Squat', 'Band Squat', 'Burpee'])
         # menu: move down + duplicate + remove
         u=await pg.evaluate("EDIT.blocks[0].items[0].uid")
         await pg.click(f'[data-imenu="{u}"]'); await pg.click('[data-mact="down"]'); await pg.wait_for_timeout(100)
         await pg.click(f'[data-imenu="{u}"]'); await pg.click('[data-mact="dup"]'); await pg.wait_for_timeout(100)
-        print('after move down + duplicate:', await pg.evaluate("EDIT.blocks[0].items.map(i=>exById(i.ex).name)"))
+        check('after move down + duplicate:', await pg.evaluate("EDIT.blocks[0].items.map(i=>exById(i.ex).name)"), ['Bulgarian Split Squat', 'Feet-Elevated Plank', 'Feet-Elevated Plank', 'Band Squat', 'Burpee'])
         # add block + move an item across blocks by menu
         await pg.click('[data-wact="addBlock"]'); await pg.wait_for_timeout(100)
         last=await pg.evaluate("EDIT.blocks[0].items[EDIT.blocks[0].items.length-1].uid")
         await pg.click(f'[data-imenu="{last}"]'); await pg.click('[data-mact="down"]'); await pg.wait_for_timeout(100)
-        print('blocks:', await pg.evaluate("EDIT.blocks.map(b=>[b.name,b.items.map(i=>exById(i.ex).name)])"))
+        check('blocks:', await pg.evaluate("EDIT.blocks.map(b=>[b.name,b.items.map(i=>exById(i.ex).name)])"), [['Block 1', ['Bulgarian Split Squat', 'Feet-Elevated Plank', 'Feet-Elevated Plank', 'Band Squat']], ['Block 2', ['Burpee']]])
         # export -> delete -> re-import
         exported=await pg.evaluate("workoutJSON(EDIT)")
         await pg.click('[data-wact="deleteWorkout"]'); await pg.wait_for_timeout(300)
-        print('after delete:', await pg.evaluate("WK.list.map(w=>w.name)"))
+        check('after delete:', await pg.evaluate("WK.list.map(w=>w.name)"), [])
         await pg.evaluate(f"importAndShow([[{json.dumps(exported)}, 'w.json']])"); await pg.wait_for_timeout(300)
-        print('after import:', await pg.evaluate("WK.list.map(w=>w.name)"), await pg.evaluate("location.hash.slice(0,12)"))
+        check('after import:', await pg.evaluate("WK.list.map(w=>w.name)"), ['Morning Mobility'])
+        check('shows the imported workout', await pg.evaluate("location.hash"), lambda h: h.startswith('#/workout/'))
         # persistence across reload + resume
         await pg.evaluate("startWorkout(WK.list[0], 0)"); await pg.wait_for_timeout(300)
         await pg.evaluate("WP.i=5; saveSession()")
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
-        print('resume banner:', await pg.inner_text('#resumeSlot'))
-        print('workouts after reload:', await pg.evaluate("WK.list.map(w=>w.name)"))
-        print('errors', errs); await b.close()
+        check('resume banner:', await pg.inner_text('#resumeSlot'), lambda t: 'Resume Morning Mobility' in t)
+        check('workouts after reload:', await pg.evaluate("WK.list.map(w=>w.name)"), ['Morning Mobility'])
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

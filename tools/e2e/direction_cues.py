@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # the other direction (B) plays the rep steps in reverse; each step's words still name where the body is, so the
 # cue matches the compass (Hip Circles counterclockwise said "Backward" at the front until Sep 2026)
 async def main():
@@ -16,5 +17,5 @@ async def main():
                 rows = await pg.evaluate("S.resolved.map(r => [r.cue || '', r.guide ? r.guide.label : '']).filter(x => x[0] && x[1])")
                 bad = [r for r in rows if r[1].split()[0].lower() not in r[0].lower() and not (r[1] == 'Up' and ('up' in r[0].lower() or 'ceiling' in r[0].lower()))]
                 print(f'{ex:<16} {d}', rows, '| cue ≠ compass:', bad)
-        print('errors', errs); await b.close()
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

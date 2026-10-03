@@ -2,6 +2,7 @@ import asyncio, os, re
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # Step calls (a keyframe's "call", Oct 2026 pilot): in the counted reps of NstructR and NstructR+, a step with a call says
 # it as it starts ("1 … Forward. Right. Back. Left."); never on the rep's first step (the count's), skipped if it's still
 # talking (the count wins); the other side swaps left and right; Silent and Beeps say nothing; the NstructR+ run-through
@@ -26,34 +27,6 @@ async def run(b, mode, item, errs):
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
-        star = {'ex': 'star-excursion-4-point', 'o': "{ reps: 2, sides: 'both' }"}
-        log = await run(b, 'voice', star, errs)
-        counted = [t for t in log if re.fullmatch(r'\d|Last one|Forward|Right|Back|Left|Switch sides.*', t)]
-        print('star, NstructR          ', ' '.join(counted))
-        print("  <- 1 Forward Right Back Left Last one Forward Right Back Left Switch sides… 1 Forward Left Back Right Last one Forward Left Back Right")
-        print('                          (the right leg reaches left where the left leg reached right)')
-        log = await run(b, 'coach', star, errs)
-        i = log.index('Ready… Begin.')
-        print('star, NstructR+: run-through reads cues', [t[:40] for t in log[0:3]], "<- ['4-Point Star Excursion, Left leg. Watch me…', 'Lift the right foot. …', 'Forward. Bend the standing knee …']")
-        print('  then calls            ', ' '.join(log[i + 1:i + 6]), '<- 1 Forward Right Back Left')
-        log = await run(b, 'beeps', star, errs)
-        print('star, Beeps             ', log, '<- [] (nothing said)')
-        log = await run(b, 'voice', {'ex': 'bal-clock-reach', 'o': '{ reps: 2 }'}, errs)
-        i = log.index('Ready… Begin.')
-        print('clock reach             ', ' '.join(log[i + 1:]), "<- 1 Side Down and back Last one Side Down and back … (no call on the count's step)")
-        log = await run(b, 'voice', {'ex': 'kb-turkish-get-up', 'o': '{ reps: 1 }'}, errs)
-        i = log.index('Ready… Begin.')
-        print('get-up                  ', ' · '.join(log[i + 1:-1]), '<- 1 · Elbow · Hand · Hips · Sweep · Kneel · Stand · Kneel · Hand down · Leg through · Sit · Elbow')
-        # the library's other calls (Oct 2026): cat-cow; Around the World the other way round (the count takes the step
-        # it starts on, its call isn't said)
-        log = await run(b, 'voice', {'ex': 'yoga-cat-cow', 'o': '{ reps: 2 }'}, errs)
-        i = log.index('Ready… Begin.')
-        print('cat-cow                 ', ' '.join(log[i + 1:i + 7]), '<- 1 Cow Cat Last one Cow Cat')
-        log = await run(b, 'voice', {'ex': 'kb-around-the-world', 'o': "{ reps: 1, dir: 'B' }"}, errs)
-        i = log.index('Ready… Begin.')
-        print('around the world, back  ', ' '.join(log[i + 1:i + 4]), "<- 1 Behind Right (it starts on Left, where the count is)")
-        # NstructR+ demonstrates an exercise when you come to it and each side the first time it comes up; not again for
-        # its next sets; again when it comes back later ("Watch me first." on each appearance's first demonstration)
         async def demos(items):
             ctx = await b.new_context(viewport={'width': 412, 'height': 860}, service_workers='block'); pg = await ctx.new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
             await pg.add_init_script(VOICE)
@@ -65,13 +38,37 @@ async def main():
             await pg.wait_for_function("WP.phase === 'done'", timeout=180000)
             out = (await pg.evaluate("DEMO.filter((d, i) => d !== DEMO[i - 1])"), [t[:40] for t in await pg.evaluate("SP.log") if 'Watch me first' in t], [t[:24] for t in await pg.evaluate("SP.log") if t.startswith('Push-Up') or t.startswith('Set ')])
             await ctx.close(); return out
-        d, w, n = await demos("[{ ...newItem(exById('bw-pushup')), reps: 2, sets: 3 }]")
-        print('push-ups, 3 sets        ', d, w, "<- set 1 demo, sets 2 and 3 no demo; Watch me first once")
-        print('  then "Set 2", "Set 3"  ', n, "<- ['Push-Up. Watch me first. …'] and Set 2. / Set 3. (not the name again)")
-        d, w, n2 = await demos("[{ ...newItem(exById('star-excursion-4-point')), reps: 1, sides: 'both', sets: 2 }]")
-        print('  said                  ', [t[:44] for t in n2], "<- ['Set 2. Left leg.'] (then 'Switch sides. Right leg.' as in set 1)")
-        print('star, both sides, 2 sets', d, w, "<- set 1 and set 1 side 2 demo; set 2 (both sides) no demo; Watch me first once")
-        d, w, n = await demos("['bw-pushup', 'core-crunch', 'bw-pushup'].map(id => ({ ...newItem(exById(id)), reps: 2 }))")
-        print('push-ups, crunches, push-ups', d, len(w), "<- ['pushup set 1: demo', 'crunch set 1: demo', 'pushup set 1: demo'] 3 (Watch me first each time)")
-        print('errors', errs); await b.close()
+        # every run in its own browser context, all at once (about two minutes, the get-up the longest)
+        star = {'ex': 'star-excursion-4-point', 'o': "{ reps: 2, sides: 'both' }"}
+        (voice, coach, beeps, clock, getup, catcow, atw, push3, star2, ppp) = await asyncio.gather(
+            run(b, 'voice', star, errs), run(b, 'coach', star, errs), run(b, 'beeps', star, errs),
+            run(b, 'voice', {'ex': 'bal-clock-reach', 'o': '{ reps: 2 }'}, errs), run(b, 'voice', {'ex': 'kb-turkish-get-up', 'o': '{ reps: 1 }'}, errs),
+            run(b, 'voice', {'ex': 'yoga-cat-cow', 'o': '{ reps: 2 }'}, errs), run(b, 'voice', {'ex': 'kb-around-the-world', 'o': "{ reps: 1, dir: 'B' }"}, errs),
+            demos("[{ ...newItem(exById('bw-pushup')), reps: 2, sets: 3 }]"),
+            demos("[{ ...newItem(exById('star-excursion-4-point')), reps: 1, sides: 'both', sets: 2 }]"),
+            demos("['bw-pushup', 'core-crunch', 'bw-pushup'].map(id => ({ ...newItem(exById(id)), reps: 2 }))"))
+        after = lambda log: log[log.index('Ready… Begin.') + 1:]
+        # the right leg reaches left where the left leg reached right
+        check('star, NstructR', ' '.join(t for t in voice if re.fullmatch(r'\d|Last one|Forward|Right|Back|Left|Switch sides.*', t)),
+              lambda t: re.fullmatch(r'1 Forward Right Back Left Last one Forward Right Back Left Switch sides.* 1 Forward Left Back Right Last one Forward Left Back Right', t))
+        check('star, NstructR+: run-through reads cues', [t[:24] for t in coach[0:3]], ['4-Point Star Excursion, ', 'Lift the right foot. Kee', 'Forward. Bend the standi'])
+        check('  then calls', after(coach)[:5], ['1', 'Forward', 'Right', 'Back', 'Left'])
+        check('star, Beeps: nothing said', beeps, [])
+        check("clock reach (no call on the count's step)", after(clock)[:6], ['1', 'Side', 'Down and back', 'Last one', 'Side', 'Down and back'])
+        check('get-up', after(getup)[:12], ['1', 'Elbow', 'Hand', 'Hips', 'Sweep', 'Kneel', 'Stand', 'Kneel', 'Hand down', 'Leg through', 'Sit', 'Elbow'])
+        check('cat-cow', after(catcow)[:6], ['1', 'Cow', 'Cat', 'Last one', 'Cow', 'Cat'])
+        # the other way round the count takes the step it starts on (Left), so its call isn't said
+        check('around the world, back', after(atw)[:3], ['1', 'Behind', 'Right'])
+        # NstructR+ demonstrates once per appearance and side; later sets say "Set N", not the name again
+        d, w, n = push3
+        check('push-ups, 3 sets: demos', d, ['pushup set 1: demo', 'pushup set 2: no demo', 'pushup set 3: no demo'])
+        check('  Watch me first once', len(w), 1)
+        check('  then "Set 2", "Set 3"', [t[:9] for t in n], ['Push-Up. ', 'Set 2.', 'Set 3.'])
+        d, w, n2 = star2
+        check('star, both sides, 2 sets', d, ['excursion-4-point set 1: demo', 'excursion-4-point set 1 side 2: demo', 'excursion-4-point set 2: no demo', 'excursion-4-point set 2 side 2: no demo'])
+        check('  Watch me first once', len(w), 1)
+        check('  set 2 said', [t[:17] for t in n2], ['Set 2. Left leg.'])
+        d, w, n = ppp
+        check('push-ups, crunches, push-ups', [d, len(w)], [['pushup set 1: demo', 'crunch set 1: demo', 'pushup set 1: demo'], 3])
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

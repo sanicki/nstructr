@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # Yoga block and strap: a block is a small surface the hand rests on (touch); a strap is drawn like the towel. As
 # played: the hand is on the block's top (41), the block and the strap are drawn (player and thumbnail), and the
 # Exercises filter has them as equipment.
@@ -27,6 +28,6 @@ async def main():
             print(f'{id:28} strap drawn', await pg.evaluate("document.querySelectorAll('#scene .strap').length"),
                   '| thumbnail', await pg.evaluate(f"poseThumbSVG(exById('{id}'), exById('{id}').keyframes[1]).includes('tst')"))
         await pg.goto(URL + '#/exercises', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
-        print('equipment filter         ', await pg.evaluate("[...document.querySelectorAll('#fEquip [data-equip]')].map(x => x.dataset.equip).filter(x => /Yoga (block|strap)/.test(x))"))
-        print('errors', errs); await b.close()
+        check('equipment filter', await pg.evaluate("[...document.querySelectorAll('#fEquip [data-equip]')].map(x => x.dataset.equip).filter(x => /Yoga (block|strap)/.test(x))"), ['Yoga block', 'Yoga strap'])
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

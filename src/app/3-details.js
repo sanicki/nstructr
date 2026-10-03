@@ -205,6 +205,10 @@ function holdRepeat(box, sel, nudge) {
 }
 /* text-to-speech speed (SpeechSynthesisUtterance.rate): 0.5–3 in steps of 0.1, 1 = the voice's normal speed */
 const speechRate = () => { const v = parseFloat(pref(SPEECH_RATE_KEY, '1')); return v >= 0.5 && v <= 3 ? v : 1; };
+// how long a line takes to say: ~2.5 words a second at 1.0× (the one estimate: workout times, the equipment pause, how
+// long to wait for a voice that doesn't report back, how long a caption stays)
+const SPEECH_WPS = 2.5;
+const speechSeconds = (text, rate = speechRate()) => String(text || '').split(/\s+/).filter(Boolean).length / SPEECH_WPS / rate;
 let RATE_T = 0;
 function setRate(v, preview = true) {
   v = Math.min(3, Math.max(0.5, Math.round((+v || 1) * 10) / 10));

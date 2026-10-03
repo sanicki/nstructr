@@ -2,6 +2,7 @@ import asyncio, os, json
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 ASK_JS = """setInterval(() => { const d = document.getElementById('askDialog'); if (!d || !d.open) return;   // answers NstructR's confirm dialog
   (window.ASKED = window.ASKED || []).push(document.getElementById('askTitle').textContent + ' | ' + document.getElementById('askText').textContent.split('\\n').pop());
   document.getElementById(window.ASK_NO ? 'askNo' : 'askYes').click(); }, 40)"""
@@ -22,32 +23,32 @@ async def main():
           return JSON.stringify({ items: [same, changed, own] }); })()""")
         await pg.evaluate(f"localStorage.setItem('pose-player-library-v1', {json.dumps(old)}); localStorage.removeItem('nstructr-bookmarks-v1')")
         await pg.goto(URL + '#/exercises', wait_until='domcontentloaded'); await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
-        print('after the move          ', await pg.evaluate("[S.lib.items.map(x=>x.id+':'+x.name), [...BOOKMARKS]]"))
-        print('changed copy kept       ', await pg.evaluate("[exById('u-bw-reverse-lunge-copy').keyframes[0].pose.neck, exById('u-bw-reverse-lunge-copy').basedOn]"))
-        print('chips                   ', await pg.evaluate("[...document.querySelectorAll('#fCollection .filter')].slice(0,5).map(x=>x.textContent.replace('check',''))"))
-        print('shelves                 ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .section-head h2')].slice(0,4).map(x=>x.textContent)"))
+        check('after the move', await pg.evaluate("[S.lib.items.map(x=>x.id+':'+x.name), [...BOOKMARKS]]"), [['u-bw-reverse-lunge-copy:Reverse Lunge (copy)', 'u-my-raise:My Raise'], ['bw-squat', 'u-bw-reverse-lunge-copy', 'u-my-raise']])
+        check('changed copy kept', await pg.evaluate("[exById('u-bw-reverse-lunge-copy').keyframes[0].pose.neck, exById('u-bw-reverse-lunge-copy').basedOn]"), [20, 'bw-reverse-lunge'])
+        check('chips', await pg.evaluate("[...document.querySelectorAll('#fCollection .filter')].slice(0,5).map(x=>x.textContent.replace('check',''))"), ['All collections', 'Bookmarked (3)', 'My exercises (2)', 'Balance', 'Bodyweight'])
+        check('shelves', await pg.evaluate("[...document.querySelectorAll('#exploreBody .section-head h2')].slice(0,4).map(x=>x.textContent)"), ['Bookmarked3', 'My exercises2', 'Balance15', 'Bodyweight43'])
         await pg.click('[data-coll="My exercises"]'); await pg.wait_for_timeout(200)
-        print('My exercises            ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"))
+        check('My exercises', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"), ['My Raise', 'Reverse Lunge (copy)'])
         await pg.click('#exploreBody [data-act="ai"]'); await pg.wait_for_timeout(200)
-        print('Create with AI here     ', await pg.evaluate("[$('#aiDialog').open, $('#aiTitle').textContent]"), '<- as on Workouts')
+        check('Create with AI here', await pg.evaluate("[$('#aiDialog').open, $('#aiTitle').textContent]"), [True, 'Create with AI'], 'as on Workouts')
         await pg.evaluate("$('#aiDialog').close()")
         # the move happens once: a second load changes nothing
         await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
-        print('second load             ', await pg.evaluate("[S.lib.items.length, BOOKMARKS.size]"))
+        check('second load', await pg.evaluate("[S.lib.items.length, BOOKMARKS.size]"), [2, 3])
         # unbookmarking your own keeps it in My exercises
         await pg.evaluate("go('#/play/u-my-raise')"); await pg.wait_for_timeout(300)
         await pg.click('#saveBtn'); await pg.wait_for_timeout(150)
         await pg.evaluate("E.coll='My exercises'; go('#/exercises')"); await pg.wait_for_timeout(200)
-        print('unbookmarked, still mine', await pg.evaluate("[isBookmarked('u-my-raise'), [...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)]"))
+        check('unbookmarked, still mine', await pg.evaluate("[isBookmarked('u-my-raise'), [...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)]"), [False, ['My Raise', 'Reverse Lunge (copy)']])
         await pg.evaluate("E.coll='Bookmarked'; renderExplore()"); await pg.wait_for_timeout(100)
-        print('Bookmarked              ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"))
+        check('Bookmarked', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x=>x.textContent)"), ['Reverse Lunge (copy)', 'Squat'])
         # deleting: asks, and names the workouts that use it
         await pg.evaluate("WK.list.push({id:'w1',name:'Calves',blocks:[{id:'b',name:'B',items:[newItem(exById('u-my-raise'))]}]}); saveWorkouts(); go('#/play/u-my-raise')"); await pg.wait_for_timeout(300)
         await pg.evaluate("document.querySelector('#aboutPanel [data-del]').click()"); await pg.wait_for_timeout(300)
-        print('delete                  ', [a.split(' | ')[-1][:70] for a in await pg.evaluate('window.ASKED || []')], await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash, E.coll]"))
+        check('delete', [[a.split(' | ')[-1][:70] for a in await pg.evaluate('window.ASKED || []')], await pg.evaluate("[S.lib.items.map(x=>x.id), location.hash, E.coll]")], [['It\'s used in "Calves", which will show it as missing.'], [['u-bw-reverse-lunge-copy'], '#/exercises', 'My exercises']], 'asks (used in a workout), deletes, back to My exercises')
         # importing an unchanged library exercise just bookmarks it; your own lands in My exercises
         lib = await pg.evaluate("JSON.stringify({format:'nstructr/exercise', version:1, exercises:[findInDb('core-forearm-plank')]})")
         await pg.evaluate(f"importAndShow([[{json.dumps(lib)}, 'x.json']])"); await pg.wait_for_timeout(300)
-        print('import library exercise ', await pg.evaluate("[isBookmarked('core-forearm-plank'), S.lib.items.some(x=>x.id==='core-forearm-plank')]"))
-        print('errors', errs); await b.close()
+        check('import library exercise', await pg.evaluate("[isBookmarked('core-forearm-plank'), S.lib.items.some(x=>x.id==='core-forearm-plank')]"), [False, False])
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

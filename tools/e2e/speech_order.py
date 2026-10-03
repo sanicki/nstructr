@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # With a voice slower than the app's estimate (2.5 words a second; a phone's voice can be slower), Oct 2026:
 # - the workout title card stays until it has said its name and "You'll need …" (it moved on mid-sentence);
 # - an equipment change with no rest says what to do, then the exercise's name, then "Ready… Begin." (the name was
@@ -28,11 +29,11 @@ async def main():
         await pg.wait_for_function("WP.phase === 'work'", timeout=30000)
         log = await pg.evaluate("SP.log")
         said = [l for l in log if l['text'].startswith("You'll need")][0]
-        print('title card: stayed      ', said.get('end', 1e12) <= await pg.evaluate("performance.now()"), "<- True (moved on after \"You'll need: …\" was said, not in the middle)")
+        check('title card: stayed', said.get('end', 1e12) <= await pg.evaluate("performance.now()"), True, "moved on after \"You'll need: …\" was said, not in the middle")
         await pg.wait_for_function("(i => i >= 0 && SP.log.length >= i + 3)(SP.log.findIndex(l => l.text.startsWith('Put the dumbbells down')))", timeout=60000)
         log = [l['text'] for l in await pg.evaluate("SP.log")]
         i = next(k for k, t in enumerate(log) if t.startswith('Put the dumbbells down'))
-        print('no rest, change: order  ', log[i:i + 3], "<- ['Put the dumbbells down. Position yourself by your chair.', 'Seated Arm Raises.', 'Ready… Begin.']")
+        check('no rest, change: order', log[i:i + 3], ['Put the dumbbells down. Position yourself by your chair.', 'Seated Arm Raises.', 'Ready… Begin.'])
         await ctx.close()
         ctx = await b.new_context(viewport={'width': 412, 'height': 860}, service_workers='block'); pg = await ctx.new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.add_init_script(VOICE.replace('MS', '450').replace('LAT', '300'))   # a slowish phone voice, slow to start
@@ -43,7 +44,8 @@ async def main():
           saveWorkouts(); startWorkout(wkById('s')); })()""")
         await pg.wait_for_function("WP.phase === 'done' && !SP.busy && !SP.queue.length", timeout=90000)
         log = [l['text'] for l in await pg.evaluate("SP.log")]
+        COACH, LAST = await pg.evaluate("COACH_WORDS.cheer"), await pg.evaluate("COACH_WORDS.last")
         sw = log.index('Switch sides. Left arm, right leg.')
-        print('after Switch sides      ', log[sw + 1:sw + 6], "<- ['Ready… Begin.', '1', '2', a cheer, a last word] (no count missing)")
-        print('errors', errs); await b.close()
+        check('after Switch sides', log[sw + 1:sw + 6], lambda l: l[:3] == ['Ready… Begin.', '1', '2'] and l[3] in COACH and l[4] in LAST, "['Ready… Begin.', '1', '2', a cheer, a last word] (no count missing)")
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

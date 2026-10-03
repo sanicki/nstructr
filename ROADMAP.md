@@ -16,10 +16,17 @@ comes off this list. How things work, and why past decisions were made, is in [H
   - Library text gets a translation file per language; cues say `{side}` / `{other}` instead of swapping the words
     left and right; equipment and collections become keys with translated names.
   - **Simplified Chinese first**, and mainland China is a target (owner, Sep 2026). So: count characters, not words,
-    where speech length is estimated; fix `repWord()` (no "s" outside English); rely on the phone's Chinese font
+    in `speechSeconds` (the one speech-length estimate); fix `repWord()` (no "s" outside English); rely on the phone's Chinese font
     (`:lang(zh)`); bundle Roboto Flex and Material Symbols instead of loading them from Google Fonts (blocked there).
   - When other languages ship, **Unspecified** becomes the default AI provider (not Gemini).
   - Right-to-left layout (Arabic, Hebrew, Persian, Urdu) only if one of those is chosen.
+- **Workout player: the figure shifts when the header changes height** (found Oct 2026): the stage sits below the
+  header (`layoutWp`), whose height depends on the exercise's name wrapping beside the count, so changing exercise moves
+  the whole figure (2 px with fallback fonts, ~17 px with Roboto on CI: Side Stepping → Neck Stretch). Options:
+  reserve the header's tallest form (costs cover-screen height) or keep the stage put for the whole workout.
+- **Exercises tab speed**: opening it draws all 358 thumbnails: 4.6 s on a slow phone (CPU 4×; 17 ms each, every
+  thumbnail resolves its whole exercise). Draw them as they scroll into view, and/or cache each one. Startup itself is
+  fine (1.3–1.9 s at 4–6× on a repeat visit), so no lazy-loading of the library (`tools/perf.py`, Oct 2026).
 
 ## Library
 
@@ -33,8 +40,6 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 - **Exercise machines** (deferred by the owner, Sep 2026): cable stations first, then leg press and lat pulldown, then
   cardio machines.
-- **Browser tests in CI**: today the build's checks run on every pull request, but the browser tests only print their
-  results and are run by hand. Plan in HANDOFF §13.
 - **The engine as its own package** (MIT, browser 3D figure posing): split out when a second app needs it. The owner's
   interest for a follow-up app: **choreography and coaching diagrams**. A first demo could be pose export for AI
   image generation. Plan in HANDOFF §13.
