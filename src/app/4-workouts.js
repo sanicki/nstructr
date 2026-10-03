@@ -126,9 +126,9 @@ function equipmentChange(fromEx, toEx) {
   const a = equipOf(fromEx), b = equipOf(toEx);
   const put = [...a].filter(q => !b.has(q)), got = [...b].filter(q => !a.has(q)), all = [...put, ...got];
   if (!all.length) return null;
-  const lines = [...put.map(q => EQUIP[q].drop).filter(Boolean), ...got.map(q => EQUIP[q].get)];
+  const drop = put.map(q => EQUIP[q].drop).filter(Boolean), get = got.map(q => EQUIP[q].get), lines = [...drop, ...get];
   // stepping away from furniture (a chair to nothing) has nothing to do or say: no change (it said a lone "." before)
-  return lines.length ? { seconds: equipSpoken(lines), lines } : null;
+  return lines.length ? { seconds: equipSpoken(lines), lines, drop, get } : null;
 }
 /* the side lying down in an exercise's first step, as written ('left' or 'right'; mirrored for its right side) */
 function lyingSideWord(ex, side = 'L') {
@@ -137,14 +137,15 @@ function lyingSideWord(ex, side = 'L') {
     return (P.shoulderL.y < P.shoulderR.y) === (side !== 'R') ? 'left' : 'right';
   } catch (e) { return ''; }
 }
-/* what changes from one exercise to the next: the equipment, then the position (Oct 2026: "Put the band down. Lower to
-   the floor and roll onto your back."): { seconds, lines, equipment } or null. equipment: there's equipment to deal
+/* what changes from one exercise to the next, in the order you do it (owner, Oct 2026): put down what you're done with,
+   change position, pick up what's next ("Put the dumbbells down. Sit down on your mat with feet flat or legs crossed.
+   Pick up the resistance band."): { seconds, lines, equipment } or null. equipment: there's equipment to deal
    with ("Pause at equipment changes" waits only for that). side: the next exercise's first side ('L' or 'R'), so a line
    to lying on the side names it; none for an estimate (the same length) */
 function exerciseChange(fromEx, toEx, side = null) {
   const eq = equipmentChange(fromEx, toEx), a = fromEx && posOf(fromEx).end, b = toEx && posOf(toEx).start;
   const pos = positionLine(a, b, side && b && b.startsWith('side-lying') ? lyingSideWord(toEx, side) : '').replace(/\.$/, '');
-  const lines = [...(eq ? eq.lines : []), ...(pos ? [pos] : [])];
+  const lines = [...(eq ? eq.drop : []), ...(pos ? [pos] : []), ...(eq ? eq.get : [])];
   return lines.length ? { seconds: equipSpoken(lines), lines, equipment: !!eq } : null;
 }
 // everything a workout (from one of its exercises on) uses, for the title card

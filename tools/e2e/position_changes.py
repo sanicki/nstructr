@@ -4,7 +4,7 @@ URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 from check import check, near, below, at_least, has, all_true
 # Position changes (owner, Oct 2026): from one exercise to the next in another position (src/positions.js) NstructR and
-# NstructR+ say how to get there while the figure moves, like an equipment change (after the equipment lines): with a
+# NstructR+ say how to get there while the figure moves, like an equipment change (between putting down and picking up): with a
 # rest after "Rest N seconds. Next: …", with no rest while the move, slowed to last as long, plays. Every pair of
 # positions has a line (POS_SAY, the ways into inversions composed with their neighbour on the route); a line to lying
 # on the side names the side the next exercise lies on. "Pause at equipment changes" doesn't wait for a position alone.
@@ -27,9 +27,9 @@ async def main():
         check('changes', await pg.evaluate("""[['bw-squat', 'bw-glute-bridge', 'L'], ['fw-db-squat', 'band-glute-bridge', 'L'], ['bw-squat', 'bw-reverse-lunge', 'L'], ['bw-squat', 'side-clamshell', 'L'], ['bw-squat', 'side-clamshell', 'R']]
           .map(([a, c, s]) => { const x = exerciseChange(exById(a), exById(c), s); return x && [x.lines.join(' / '), x.equipment]; })"""),
               [['Lower to the floor and roll onto your back', False],
-               ['Put the dumbbells down / Pick up the resistance band / Lower to the floor and roll onto your back', True],
+               ['Put the dumbbells down / Lower to the floor and roll onto your back / Pick up the resistance band', True],
                None, ['Lower to your left side, stacking your hips and knees', False], ['Lower to your right side, stacking your hips and knees', False]],
-              'equipment first, then the position; none standing to standing; the side lain on')
+              'put down, change position, pick up; none standing to standing; the side lain on')
         check('estimate counts it', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['bw-squat', 'bw-glute-bridge'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
           return equipmentSeconds(w); })()"""), 4.6, '0.5 + 9 words at 2.5 a second + 0.5')
         # with a rest: after the rest line

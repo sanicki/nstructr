@@ -726,10 +726,11 @@ representations that rotate the short, natural way) over adding a known issue; i
 - Not chosen (offered): showing the changes in the workout editor and grouping exercises by equipment.
 
 ### 8.3d Position changes (Oct 2026, owner's lines)
-- Between exercises in different positions (§8.3b) NstructR and NstructR+ say how to get there, after any equipment
-  lines and timed the same way (`exerciseChange(from, to, side)` in `4-workouts.js` returns `{ seconds, lines,
-  equipment }`; `onWorkEnd`, the rest and the estimate use it): "Put the dumbbells down. Pick up the resistance band.
-  Lower to the floor and roll onto your back." Shown on the rest screen and captioned in every mode.
+- Between exercises in different positions (§8.3b) NstructR and NstructR+ say how to get there, in the order you do it
+  (owner): put down, change position, pick up; timed like an equipment change (`exerciseChange(from, to, side)` in
+  `4-workouts.js` returns `{ seconds, lines, equipment }`, from `equipmentChange`'s `drop` and `get`; `onWorkEnd`, the
+  rest and the estimate use it): "Put the dumbbells down. Lower to the floor and roll onto your back. Pick up the
+  resistance band." Shown on the rest screen and captioned in every mode.
 - The words (`4b-speech.js`): `POS_SAY[from][to]` for the eight floor and standing positions (the owner's 56 lines;
   "lay" corrected to "lie"); a line to lying on the side names the side the next exercise's first side lies on
   (`{side}`, `lyingSideWord`: the lower shoulder of its first step, mirrored for an item done right side first); between
