@@ -3,7 +3,7 @@
   "version": 2,
   "id": "beginner-pilates-20",
   "name": "20-Minute Beginner's Pilates",
-  "description": "A beginner's Pilates mat class, about 20 minutes, with no equipment: the classical beginner opening (Hundred, Roll-Up, Leg Circles, Rolling Like a Ball), the first of the abdominal series and Spine Stretch, then beginner basics for the hips, trunk and back.",
+  "description": "A beginner's Pilates mat class, about 20 minutes, with no equipment: the classical beginner opening (Hundred, Roll-Up, Leg Circles, Rolling Like a Ball), the first of the abdominal series, Spine Stretch, Saw and Spine Twist, then beginner basics for the hips, trunk and back, a plank and a rest in Child's Pose.",
   "blocks": [
     {
       "name": "Classical warm-up",
@@ -46,6 +46,14 @@
         {
           "ex": "pil-spine-stretch",
           "reps": 5
+        },
+        {
+          "ex": "pil-saw",
+          "reps": 5
+        },
+        {
+          "ex": "pil-spine-twist",
+          "reps": 5
         }
       ]
     },
@@ -58,13 +66,17 @@
           "sets": 2
         },
         {
+          "ex": "pil-shoulder-bridge",
+          "reps": 4
+        },
+        {
           "ex": "core-dead-bug",
-          "reps": 6,
+          "reps": 8,
           "sides": "alternate"
         },
         {
           "ex": "core-bird-dog",
-          "reps": 6,
+          "reps": 8,
           "sides": "alternate"
         },
         {
@@ -82,11 +94,23 @@
           "sides": "both"
         },
         {
+          "ex": "pil-single-leg-kick",
+          "reps": 8
+        },
+        {
           "ex": "pil-swimming",
           "reps": 30
         },
         {
+          "ex": "pil-swan",
+          "reps": 5
+        },
+        {
           "ex": "core-forearm-plank",
+          "seconds": 60
+        },
+        {
+          "ex": "yoga-child",
           "seconds": 45
         }
       ]

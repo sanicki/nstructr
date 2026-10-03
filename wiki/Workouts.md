@@ -11,7 +11,7 @@ The **Workouts** tab has three parts:
   its exercise page), **Edit** and **Share**, and any safety notes at the bottom. Tap ▶ to start.
 - **Library workouts**: ready-made routines. Start one as it is, or tap **Customize** to make your own copy. There
   are 20-minute beginner's workouts for yoga and Pilates (a mat, nothing else), resistance band (one band), free
-  weights (dumbbells) and kettlebell (one bell). The 20 minutes are with **NstructR+** (Settings › Instruction); without it they take 15–17.
+  weights (dumbbells) and kettlebell (one bell). The 20 minutes are with **NstructR**, the default (Settings › Instruction); **NstructR+** adds a few minutes of demonstrations. They fit a small space: nothing walks across the room.
 - **History**: finished workouts, with the date, how long they took and how many exercises you did. Delete an
   entry with its bin, or **Clear** all of them.
 

@@ -24,7 +24,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **358 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with NstructR+ on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without NstructR+). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **358 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with NstructR, the default since Oct 2026, at the default rests (5 s, 10 s); a few minutes more with NstructR+'s demonstrations; made for a small space: nothing that walks across the room, no Lateral Band Walk or carries (Oct 2026)). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -1008,7 +1008,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-bookmarks-v1` | ids of bookmarked exercises, library or own (a flag; library ones aren't copied, so library fixes reach them) |
 | `motion-guide-workouts-v1` | `{list: [...]}` user workouts (runtime form with uids) |
 | `motion-guide-session-v1` | `{wid, i, swaps?}` resume point; `swaps` = the session's Easier/Harder swaps (item uid → exercise id, Sep 2026) |
-| `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name; since Oct 2026 `voice` is shown as **NstructR** (was "Voice", then "Coach") and `coach` as **NstructR+** (was "Coach", then "Instructor"), the values unchanged). Default **coach** (beeps until Sep 2026): the 20-minute workouts are timed with NstructR+ |
+| `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name; since Oct 2026 `voice` is shown as **NstructR** (was "Voice", then "Coach") and `coach` as **NstructR+** (was "Coach", then "Instructor"), the values unchanged). Default **voice** (NstructR) since Oct 2026 (beeps until Sep 2026, then coach, NstructR+); a stored choice stays: the 20-minute workouts are timed with NstructR |
 | `motion-guide-log-v1` | history sessions (capped at 500) |
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
 | `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |

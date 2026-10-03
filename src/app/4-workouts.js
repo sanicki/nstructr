@@ -29,7 +29,8 @@ function hydrateWorkout(fw) {
     }))
   };
 }
-const WK = { list: loadWorkouts(), sound: (() => { try { return localStorage.getItem(SOUND_KEY) || 'coach'; } catch (e) { return 'coach'; } })() };
+// the Instruction setting: NstructR ('voice') by default since Oct 2026 (NstructR+ until then); a choice already made stays
+const WK = { list: loadWorkouts(), sound: (() => { try { return localStorage.getItem(SOUND_KEY) || 'voice'; } catch (e) { return 'voice'; } })() };
 function saveWorkouts() { try { localStorage.setItem(WK_KEY, JSON.stringify({ list: WK.list })); } catch (e) { } }
 /* Library workouts aren't copied into the user's list: they're shown in their own section, so library updates
    reach everyone. Their runtime ids carry a "lib:" prefix so they never clash with the user's workouts (older
