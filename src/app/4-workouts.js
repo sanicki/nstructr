@@ -53,26 +53,18 @@ const stepMs = k => (k.durationMs || 0) + (k.holdMs == null ? 500 : k.holdMs);
 /* one rep at the exercise's own pace, in seconds; a workout item's "tempo" divides it (2 = twice as fast) */
 function repSeconds(ex) { const ph = phaseInfo(ex.keyframes); return ph.rep.reduce((s, i) => s + stepMs(ex.keyframes[i]), 0) / 1000; }
 const round1 = x => Math.round(x * 10) / 10;
+/* An item's time: its coaching script (src/coach.js) timed, the moves at the item's tempo and the lines at the speech
+   rate (a step that waits for its line takes the longer of the two), for each set, side and direction; NstructR+'s
+   demonstration once for each side or direction in the first set ("Watch me first." once); the rests between sets. */
 function itemSeconds(item) {
   const ex = exById(item.ex); if (!ex) return 0;
-  const kfs = ex.keyframes, ph = phaseInfo(kfs), t = item.tempo || 1;
-  const sum = idx => idx.reduce((s, i) => s + stepMs(kfs[i]), 0) / 1000 / t;
   const segs = (item.sides === 'both' ? 2 : 1) * (item.dir === 'both' ? 2 : 1);
-  const alt = (item.sides === 'alternate' ? 2 : 1) * (item.dir === 'alternate' ? 2 : 1);
-  const work = ex.measure === 'time'
-    ? item.seconds + sum(ph.setup) + sum(ph.finish) + (kfs[ex.holdStep || ph.start].durationMs || 0) / 1000 / t
-    : sum(ph.setup) + sum(ph.finish) + sum(ph.rep) * item.reps * alt;
-  // NstructR+: + ~2 s of speech a step. With a voice, a hold waits for its line (NstructR+: the pose's cue, then
-  // "Ready… Hold for N seconds") and reps for "Ready… Begin"
+  const versions = item.sides === 'alternate' || item.dir === 'alternate' ? [ex.keyframes, ex.keyframes] : [ex.keyframes];
   const voiced = WK.sound === 'voice' || WK.sound === 'coach';
-  const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
-  const holdLine = hk && voiced ? Math.max(0, speechSeconds(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} ${SAY.readyHold(item.seconds)}`) - (hk.durationMs || 0) / 1000 / t) : 0;
-  // "Ready… Begin." where it is; with no setup and no demonstration, while it gets into the position a rep ends in
-  const readyLine = !hk && voiced ? Math.max(speechSeconds(SAY.readyBegin), ph.setup.length || WK.sound === 'coach' ? 0 : (kfs[ph.end].durationMs || 0) / 1000 / t) : 0;
-  const guide = holdLine + readyLine;
-  // NstructR+'s demonstration: each side or direction once, in the first set ("Watch me first." once)
-  const demo = WK.sound === 'coach' ? segs * (sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt)) + speechSeconds(SAY.watchFirst) : 0;
-  return item.sets * segs * (work + guide) + demo + (item.sets - 1) * restSets();
+  const timed = guided => COACH.scriptSeconds(COACH.setScript(versions, { measure: ex.measure, reps: item.reps, seconds: item.seconds, holdStep: ex.holdStep,
+    voiced, guided, title: ex.name, watch: false, words: scriptWords() }), versions, { tempo: item.tempo || 1, speech: t => speechSeconds(t) });
+  const set = timed(false), demo = WK.sound === 'coach' ? segs * (timed(true) - set) + speechSeconds(SAY.watchFirst) : 0;
+  return item.sets * segs * set + demo + (item.sets - 1) * restSets();
 }
 function blockSeconds(b, w) {
   const r = b.rounds || 1, one = b.items.reduce((s, it) => s + itemSeconds(it), 0) + Math.max(0, b.items.length - 1) * restGap();

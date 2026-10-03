@@ -101,7 +101,7 @@
   ],
   "cues": ["Lift the hips.", "Lower the bottom knee for support.", "Repeat on the other side."],
   "measure": "time",
-  "holdStep": 1,
+  "holdStep": 2,
   "defaults": {
     "seconds": 30
   },

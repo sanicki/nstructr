@@ -18,9 +18,9 @@ function segName(ex, item, x) {                     // "Right leg, across first"
   return bits.join(', ');
 }
 function resolveVersion(ex, seg, side, dir) {
-  const props = side === 'R' ? mirrorProps(ex.props) : (ex.props || []);
-  const R = resolveSequence(versionOf(ex, side, dir), seg, ex, props);
-  return { R, props };
+  const props = side === 'R' ? mirrorProps(ex.props) : (ex.props || []), kfs = versionOf(ex, side, dir);
+  const R = resolveSequence(kfs, seg, ex, props);
+  return { R, props, kfs };
 }
 function segLabel(ex, item, segInfo) {
   const bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels, bits = [];
@@ -31,60 +31,29 @@ function segLabel(ex, item, segInfo) {
 // what NstructR+ has demonstrated: this appearance of the exercise (WP.i, its id: a swap is new) and, with segInfo, a side
 // or direction of it
 const demoKeyOf = (item, segInfo) => `${WP.i}:${item.ex}` + (segInfo ? `:${segInfo.side || ''}${segInfo.dir || ''}` : '');
+/* the words the coaching script takes from the app */
+const scriptWords = () => ({ readyBegin: SAY.readyBegin, watchFirst: SAY.watchFirst, readyHold: SAY.readyHold });
+/* one set (one side or direction of it) of a workout item: the coaching script (src/coach.js: the steps and what's said
+   as each starts) and each step's resolved pose */
 function buildPlan(item, segInfo) {
-  const ex = exById(item.ex), seg = { ...DEFAULT_SEGMENTS };
-  const ph = phaseInfo(ex.keyframes), tempo = item.tempo || 1;
-  const altSide = item.sides === 'alternate', altDir = item.dir === 'alternate';
+  const ex = exById(item.ex), seg = { ...DEFAULT_SEGMENTS }, tempo = item.tempo || 1;
   const versions = [];
-  if (altSide) versions.push(resolveVersion(ex, seg, 'L', segInfo.dir), resolveVersion(ex, seg, 'R', segInfo.dir));
-  else if (altDir) versions.push(resolveVersion(ex, seg, segInfo.side, 'A'), resolveVersion(ex, seg, segInfo.side, 'B'));
+  if (item.sides === 'alternate') versions.push(resolveVersion(ex, seg, 'L', segInfo.dir), resolveVersion(ex, seg, 'R', segInfo.dir));
+  else if (item.dir === 'alternate') versions.push(resolveVersion(ex, seg, segInfo.side, 'A'), resolveVersion(ex, seg, segInfo.side, 'B'));
   else versions.push(resolveVersion(ex, seg, segInfo.side, segInfo.dir));
-  const plan = [], meta = [];
-  const push = (r, m = {}) => { plan.push(r); meta.push(m); };
   // NstructR+ demonstrates an exercise when you come to it, and each side or direction the first time it comes up; not
   // again for its next sets (owner, Oct 2026). A new appearance (later in the workout, a later round, a swap to an
   // easier or harder version) is demonstrated again: WP.shown holds what this appearance has shown (runCurrent)
   const shown = WP.shown || new Set(), demoKey = demoKeyOf(item, segInfo);
-  const V0 = versions[0].R, guided = WK.sound === 'coach' && !shown.has(demoKey), voiced = WK.sound === 'coach' || WK.sound === 'voice';
-  const cueOf = r => r.cue || r.name || '';
-  const h = ex.measure === 'time' ? (ex.holdStep != null ? ex.holdStep : ph.start) : null;
-  let holdCued = false;                                          // the run-through already read the held step's cue
-  if (guided) {
-    // walk through the exercise once, step by step: each step waits for both its animation and its spoken cue
-    const label = segLabel(ex, item, segInfo);
-    let first = true;
-    // an instant step (like the seam where a circle starts again) has nothing to show, so it only carries the title
-    // its first line names it; this appearance's first demonstration also says to watch, not join in yet ("Squat. Watch
-    // me first. Feet hip-width apart."; owner, Oct 2026)
-    const watch = !shown.has(demoKeyOf(item)) ? SAY.watchFirst + ' ' : '';
-    const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ${watch}` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
-    ph.setup.forEach(i => g(V0[i]));
-    if (ex.measure === 'time') ph.rep.filter(i => i !== h).forEach(i => g(V0[i]));
-    else versions.forEach(v => ph.rep.forEach(i => g(v.R[i])));
-    if (first) { g(V0[ph.start]); holdCued = ph.start === h; }
-  } else ph.setup.forEach(i => push(V0[i], { phase: 'setup' }));
-  if (ex.measure === 'time') {
-    // with a voice the count starts after "Ready… Hold for N seconds." (NstructR+ first reads the held step's own cue,
-    // how to get into the pose, unless the run-through just did)
-    const cue = guided && !holdCued && !V0[h].quiet ? cueOf(V0[h]).trim() : '';
-    const holdSay = () => `${cue ? cue + (/[.!?…]$/.test(cue) ? ' ' : '. ') : ''}${SAY.readyHold(item.seconds)}`;
-    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(voiced ? { say: holdSay() } : {}) } : { phase: 'rep' }));
-  } else {
-    // with a voice, "Ready… Begin." and the count ("1", "2" …) starts once it's said. It waits where the figure is (the
-    // end of the setup or the demonstration); with nothing before it, in the position a rep ends in, as before every
-    // other rep. (Oct 2026: it moved into the rep's first step, which for Side Stepping is the first step: taken before
-    // "Begin")
-    const before = plan[plan.length - 1];
-    if (voiced) push(before ? { ...before, dur: 0, hold: 0 } : { ...V0[ph.end], hold: 0 }, { phase: 'ready', ready: true, say: SAY.readyBegin });
-    const total = item.reps * versions.length;
-    for (let k = 0; k < total; k++) {
-      const V = versions[k % versions.length].R;
-      // a step's call ("Forward", "Out to the right") as it starts; never on the rep's first step, where the count is said
-      ph.rep.forEach((i, j) => push(V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && CALL_OK.test(V[i].call || '') ? { call: V[i].call } : {}) }));
-    }
-  }
-  const VL = versions[versions.length - 1].R;
-  ph.finish.forEach(i => push(VL[i], { phase: 'finish' }));
+  const guided = WK.sound === 'coach' && !shown.has(demoKey), label = segLabel(ex, item, segInfo);
+  const meta = COACH.setScript(versions.map(v => v.kfs), { measure: ex.measure, reps: item.reps, seconds: item.seconds, holdStep: ex.holdStep,
+    voiced: WK.sound === 'coach' || WK.sound === 'voice', guided, title: `${ex.name}${label ? ', ' + label : ''}`,
+    watch: !shown.has(demoKeyOf(item)), words: scriptWords() });
+  const plan = meta.map(st => {
+    const r = versions[st.v].R[st.k];
+    return st.still ? { ...r, dur: 0, hold: 0 } : st.noPause ? { ...r, hold: 0 } : st.phase === 'hold' ? { ...r, hold: item.seconds * 1000 * tempo } : r;
+  });
+  const V0 = versions[0].R;
   plan.walls = V0.walls; plan.supports = V0.supports;
   return { plan, meta, ex, seg, props: versions[0].props, tempo, demoKey: guided ? demoKey : null };
 }

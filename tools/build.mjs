@@ -159,6 +159,41 @@ if (!args.has('--no-checks') && !errors.length) {
   console.log(`positions: ${PX.MOVES.length} moves between them, checked both ways; starts and ends: ${Object.entries(count).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(', ')}`);
   if (unplaced.length) console.log(`positions: not placed, so a crossfade (add startPosition/endPosition, "other" if none fits): ${unplaced.join(', ')}`);
 }
+// ---------- 2c3. the coaching script (src/coach.js): for every exercise, alone and alternating, with and without a voice
+// and NstructR+'s demonstration, what's said comes in the right order: the demonstration (starting with the name), then
+// "Ready… Begin." once, then the counts 1, 2, 3 in order ("and" between alternating halves), never a call on a count's
+// step; a timed exercise's hold line is said once, and the countdown waits for it ----------
+if (!args.has('--no-checks') && !errors.length) {
+  const CO = require('../src/coach.js'), n0 = errors.length;
+  const words = { readyBegin: 'Ready… Begin.', watchFirst: 'Watch me first.', readyHold: n => `Ready… Hold for ${n} seconds.` };
+  let scripts = 0;
+  for (const ex of exercises) for (const alt of [false, true]) for (const voiced of [false, true]) for (const guided of voiced ? [false, true] : [false]) {
+    const versions = alt ? [ex.keyframes, ex.keyframes] : [ex.keyframes], reps = 3, bad = m => errors.push(`${ex.id} (script${alt ? ', alternating' : ''}${voiced ? ', voiced' : ''}${guided ? ', demonstrated' : ''}): ${m}`);
+    const steps = CO.setScript(versions, { measure: ex.measure, reps, seconds: 30, holdStep: ex.holdStep, voiced, guided, title: ex.name, watch: true, words });
+    scripts++;
+    if (steps.some(st => !versions[st.v] || !versions[st.v][st.k])) { bad('a step points at no keyframe'); continue; }
+    const lines = steps.flatMap((st, i) => st.lines.map(l => ({ ...l, i, phase: st.phase })));
+    if (guided && !(lines[0] && lines[0].text && lines[0].text.startsWith(`${ex.name}. Watch me first.`))) bad('the demonstration does not start with the name and "Watch me first."');
+    if (ex.measure === 'time') {
+      const holds = lines.filter(l => l.gate === 'hold');
+      if (holds.length !== (voiced ? 1 : 0) || (voiced && !holds[0].text.endsWith(words.readyHold(30)))) bad(`${holds.length} hold line(s)`);
+      if (lines.some(l => l.count || l.and)) bad('a timed exercise counts');
+    } else {
+      const ready = lines.filter(l => l.text === words.readyBegin), counts = lines.filter(l => l.count), first = lines.findIndex(l => l.count);
+      if (ready.length !== (voiced ? 1 : 0)) bad(`"Ready… Begin." said ${ready.length} times`);
+      if (voiced && lines.indexOf(ready[0]) > first) bad('"Ready… Begin." after the count started');
+      if (counts.map(l => l.count).join() !== Array.from({ length: reps }, (_, i) => i + 1).join()) bad(`counts ${counts.map(l => l.count).join(', ')}`);
+      if (counts.some(l => l.gate !== (l.count === 1 ? 'keep' : 'drop'))) bad('a count that waits, or a "1" that can be dropped');
+      if (lines.filter(l => l.and).length !== (alt ? reps : 0)) bad('"and" between alternating halves');
+      if (steps.some(st => st.lines.some(l => l.count || l.and) && st.lines.some(l => l.text && l.gate === 'drop'))) bad('a call on a count\'s step');
+      if (lines.some(l => l.phase === 'guide' && l.gate !== 'wait')) bad('a demonstration line that is not waited for');
+    }
+    const t = CO.scriptSeconds(steps, versions);
+    if (!(t > 0 && Number.isFinite(t))) bad(`takes ${t} s`);
+  }
+  const n = errors.length - n0;
+  console.log(n ? `coaching script: ${n} problem(s)` : `coaching script: ${scripts} scripts, every one in order`);
+}
 // ---------- 2d. equipment: what's listed is drawn and what's drawn is listed, spelled one way (the Exercises filter) ----------
 if (!args.has('--no-checks') && !errors.length) {
   const DRAWN = { roller: /foam roller/, ball: /stability ball|swiss ball|exercise ball/, medball: /medicine ball|med ball/, ring: /pilates ring|magic circle/, bar: /pull-?up bar|chin-?up bar|\bbar\b/, block: /block/, strap: /strap/, towel: /towel/, wall: /wall|door/, chair: /chair/, bench: /bench/, step: /step/, band: /band/, dumbbell: /dumbbell/, barbell: /barbell/, kettlebell: /kettlebell/ };
@@ -180,7 +215,7 @@ if (!args.has('--no-checks') && !errors.length) {
 // the app's scripts share one global scope (src/app/*.js are classic scripts; the single file joins them): a name declared
 // twice at the top level breaks the app (const/let/class: nothing runs) or quietly replaces the first (function)
 {
-  const files = ['src/core.js', 'src/similar.js', 'src/positions.js', 'src/thumb.js', ...fs.readdirSync(path.join(ROOT, 'src/app')).filter(f => f.endsWith('.js')).sort().map(f => `src/app/${f}`)];
+  const files = ['src/core.js', 'src/similar.js', 'src/positions.js', 'src/coach.js', 'src/thumb.js', ...fs.readdirSync(path.join(ROOT, 'src/app')).filter(f => f.endsWith('.js')).sort().map(f => `src/app/${f}`)];
   const seen = new Map(); let n0 = errors.length;
   for (const f of files) rd(f).split('\n').forEach((line, i) => {
     const m = line.match(/^(?:async\s+)?(?:function\*?|class|const|let|var)\s+([A-Za-z_$][\w$]*)/) || line.match(/^(?:const|let|var)\s+\{([^}=]*)\}\s*=/);
@@ -208,7 +243,7 @@ copy('src'); copy('library'); copy('schema'); copy('icons'); copy('manifest.webm
 fs.rmSync(path.join(SITE, 'src/sw.js'));
 const appFiles = fs.readdirSync(path.join(ROOT, 'src/app')).filter(f => f.endsWith('.js')).sort();
 const head = rd('src/head.html'), body = rd('src/body.html');
-const scripts = ['src/core.js', 'src/similar.js', 'src/positions.js', 'src/thumb.js', 'src/vendor/qrcode.js', ...appFiles.map(f => `src/app/${f}`)];
+const scripts = ['src/core.js', 'src/similar.js', 'src/positions.js', 'src/coach.js', 'src/thumb.js', 'src/vendor/qrcode.js', ...appFiles.map(f => `src/app/${f}`)];
 // the installable app: manifest, icons, and a service worker that caches everything it needs
 const pwaHead = head.replace('</title>', `</title>
 <link rel="manifest" href="manifest.webmanifest">

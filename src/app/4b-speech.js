@@ -81,7 +81,6 @@ const SAY = {
   tapReady: "Tap Ready when you're set.",                         // "Pause at equipment changes"
   need: list => `You'll need: ${list}`,                           // the title card's checklist
 };
-const CALL_OK = /^[^0-9\s]+( [^0-9\s]+){0,2}$/;                // a step call: 1-3 words, no numbers (an imported one too)
 // the first of each is the plain word, said when words of encouragement are off. Cheers stay short: one in place of a
 // count that is still being said when the next count comes drops it. (More words, owner, Oct 2026.)
 const CHEERS = ['Good', 'Keep going', 'Breathe', 'Doing great', 'Nice', 'Steady', "That's it", 'Nice work', 'Looking good'];

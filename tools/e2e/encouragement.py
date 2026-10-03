@@ -36,7 +36,7 @@ async def main():
         async def reps(rand):
             return await pg.evaluate(f"""(() => {{ const r = {rand}; let i = 0; WP.random = () => r[i++ % r.length]; SAID.length = 0;
               const keep = renderWpCount; renderWpCount = () => {{}};
-              for (let k = 1; k <= 8; k++) {{ S.planMeta = [{{ repNo: k, repOf: 8 }}]; onWorkStep(0); }}
+              S.planMeta = COACH.setScript([[{{}}]], {{ measure: 'reps', reps: 8, words: scriptWords() }}); S.planMeta.forEach((_, i) => onWorkStep(i));
               renderWpCount = keep; return SAID.slice(); }})()""")
         check('reps, random 0.15', await reps('[0.15]'), counts({2, 4, 6}), 'the rep after a cheer needs < 0.1')
         check('reps, random 0.05', await reps('[0.05]'), counts({2, 3, 4, 5, 6, 7}), 'a cheer every middle rep, never the same twice in a row')
@@ -46,7 +46,7 @@ async def main():
         async def alt(rand):
             return await pg.evaluate(f"""(() => {{ const r = {rand}; let i = 0; WP.random = () => r[i++ % r.length]; SAID.length = 0;
               const keep = renderWpCount; renderWpCount = () => {{}};
-              for (let k = 1; k <= 4; k++) for (const a of [0, 1]) {{ S.planMeta = [{{ repNo: k, repOf: 4, alt: a }}]; onWorkStep(0); }}
+              S.planMeta = COACH.setScript([[{{}}], [{{}}]], {{ measure: 'reps', reps: 4, words: scriptWords() }}); S.planMeta.forEach((_, i) => onWorkStep(i));
               renderWpCount = keep; return SAID.slice(); }})()""")
         check('alternating, random 0.5', await alt('[0.5]'), lambda x: x[:6] == ['1', 'and', '2', 'and', '3', 'and'] and x[6] in LAST and x[7] == 'and', "['1', 'and', '2', 'and', '3', 'and', a last word, 'and']")
         check('alternating, random 0.15', await alt('[0.15]'), lambda x: x[0] == '1' and x[1] in CHEER and x[2] == '2' and x[3] in CHEER and x[4] == '3' and x[5] in CHEER and x[6] in LAST, '1, cheer, 2, cheer, 3, cheer, a last word: an and can be a cheer')

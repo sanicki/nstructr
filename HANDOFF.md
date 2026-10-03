@@ -111,6 +111,9 @@ src/
   head.html           <head>, all CSS (Material 3 tokens, player, workouts, cover-screen rules)
   body.html           all markup: views, dialogs, <template id="aiPrompt">
   core.js             engine: figure model, FK, placement, IK, transitions, props, surfaces (no DOM)
+  coach.js            the coaching script: one set of one exercise as steps and the lines said as each starts, with
+                      their gates (wait / hold / keep / drop); its timing (the workout estimates); no DOM, runs under
+                      Node (the build checks every exercise's speech order; §8.4)
   thumb.js            static SVG thumbnail of an exercise; its limbs are filled capsules, not stroked lines: Chrome on
                       Android drew some thick round-capped lines (the lower legs of Barbell Curl and Barbell RDL) as
                       hairlines, live or as an image (tried and dropped), Sep 2026
@@ -737,6 +740,19 @@ representations that rotate the short, natural way) over adding a known issue; i
 - Not chosen (offered): showing the changes in the workout editor and grouping exercises by equipment.
 
 ### 8.4 Sound
+- **The coaching script** (`src/coach.js`, Oct 2026): `COACH.setScript(versions, options)` turns one set of one
+  exercise (one side or direction of it) into steps — which keyframe of which version, its phase — each with the lines
+  said as it starts and a **gate**: `wait` (the next step waits for it: the run-through's cues, "Ready… Begin."),
+  `hold` (the hold's countdown waits for it), `keep` (the first count: queued, never dropped), `drop` (the other counts,
+  "and", step calls: skipped while it's talking). Counts are `{ count, of }`: the player picks "1", the number, "Last
+  one" or a word of encouragement. `buildPlan` (`4c-plan.js`) resolves each step's pose; `onWorkStep`
+  (`4d-player.js`) says its lines; `itemSeconds` times the same script (`COACH.scriptSeconds`: a step that waits for
+  a line takes the longer of its move and the line at the speech rate; NstructR+'s demonstration timed from its real
+  cues, not a flat 2 s a step). The words come from the app's `SAY` table (`4b-speech.js`). The build runs it for every
+  exercise, alone and alternating, with and without a voice and the demonstration, and checks the order (the name
+  and "Watch me first." first, "Ready… Begin." once before "1", counts in order, "and" between alternating halves, no
+  call on a count's step, one hold line, and that a timed exercise's `holdStep` is one of its rep steps: Bound Angle,
+  Side Plank and Wheel pointed at a setup step and never held in a workout until Oct 2026).
 - Modes (labels renamed twice in Oct 2026: Voice → Coach → **NstructR**, Coach → Instructor → **NstructR+**; stored values `voice`/`coach` unchanged): Silent, Beeps (3-2-1 before rests/holds end, chime on switching), NstructR (exercise name, side/direction
   switches, rests, "next", then the counted reps below), **NstructR+**.
 - **NstructR and NstructR+** both count: counts, "Last one", "Halfway", "10 seconds" and words of encouragement are

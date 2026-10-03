@@ -93,23 +93,23 @@ function runCurrent(announce) {
   S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Ready… Hold for N seconds"
   onWorkStep(0);
 }
+/* a step starts: say its lines (the coaching script, src/coach.js). NstructR and NstructR+ count the reps: 1, 2, 3 …
+   "Last one"; a middle count or an alternating rep's "and" (Oct 2026: "1 and 2 and 3…") can be a word of encouragement
+   instead ("1 and 2 Good 3…"); a step call says what comes next in a multi-step rep ("1 … Forward. Right. Back. Left.").
+   A line the next step or the hold waits for is spoken as the run-through's (speakGuided); the others are dropped if
+   it's still talking (the count wins), except "1". */
 function onWorkStep(i) {
   const m = S.planMeta[i] || {};
-  if (m.say) speakGuided(m.say);
-  if (m.repNo && m.alt !== 1) {
-    WP.rep = m.repNo;
-    // NstructR and NstructR+ count the reps: 1, 2, 3 … "Last one". Numbers are skipped if it's already talking; "1" never is
-    const first = WP.rep === 1, last = WP.rep === m.repOf;
-    if (first) WP.cheered = false;
-    say(first ? '1' : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), { dropIfBusy: !first });
-  } else if (m.repNo && m.alt) {
-    // alternating sides or directions: a rep is one side then the other, so the other half is "and" ("1 and 2 and 3…";
-    // Oct 2026); like a middle count, it can be a word of encouragement instead ("1 and 2 Good 3…")
-    say(repCheer() ? coachWord('cheer') : SAY.and, { dropIfBusy: true });
+  for (const l of m.lines || []) {
+    if (l.gate === 'wait' || l.gate === 'hold') speakGuided(l.text);
+    else if (l.count) {
+      WP.rep = l.count;
+      const first = l.count === 1, last = l.count === l.of;
+      if (first) WP.cheered = false;
+      say(first ? '1' : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(l.count), { dropIfBusy: l.gate === 'drop' });
+    } else if (l.and) say(repCheer() ? coachWord('cheer') : SAY.and, { dropIfBusy: true });
+    else say(l.text, { dropIfBusy: l.gate === 'drop' });
   }
-  // a step call: what comes next in a multi-step rep ("1 … Forward. Right. Back. Left."); like a count, skipped if it's
-  // still talking (the count wins)
-  if (m.call) say(m.call, { dropIfBusy: true });
   renderWpCount();
 }
 function onWorkEnd() {
