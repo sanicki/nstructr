@@ -689,25 +689,30 @@ representations that rotate the short, natural way) over adding a known issue; i
 - The build checks every move both ways with `tools/checks.cjs` and `tools/rom.cjs`, like an exercise (the sit-back pose
   floated 24 px and crouch → plank flipped a thigh until fitted and given the kick-back step).
 
-### 8.3c Equipment changes (Oct 2026, owner's choice of options 1–4, then one setting)
+### 8.3c Equipment changes (Oct 2026, owner's choice of options 1–4, then the time from the words)
 - The figure's equipment fades in and out between exercises (§8.3b), but the person has to put things down and fetch
   others. `equipmentChange(from, to)` (`src/app/4-workouts.js`): what is put down and fetched (the library's equipment
-  in `EQUIP`, with words: "Put the dumbbells down", "Pick up the kettlebell"; for furniture and the wall "Position yourself by your chair" (owner, Oct 2026); the yoga mat stays down; Dumbbell and Dumbbells
-  count as one) and the time: the **Equipment transition time** (Settings, under Rest between sets, 5 s at first,
-  `nstructr-equip-time-v1`). A first version gave each piece its own allowance (5/10/20 s, the longest + 3 s per other
-  piece); the owner preferred one number the person sets over time they didn't choose.
-- **The rest gets longer** by it (`onWorkEnd` → `startRest(seconds, kind, change)`, also before a new round); the rest
-  screen shows what to do under "Next:" (`#wpRestEquip`) and Coach / Instructor say it after the rest line. Next (skip
-  to the next exercise) has no rest, as before.
-- **"Get ready"**: a workout that uses any of it starts with a rest of the transition time (`kind: 'start'`): "First:
-  …", "You'll need: dumbbells and chair" (from where it starts, so a resumed workout lists what's left). At 0 s it's
-  skipped (unless pausing).
-- **Time estimate** (`workoutSeconds` + `equipmentSeconds`): the checklist and every change in the order the player runs
-  (rounds and blocks included). The library's band, free weights and kettlebell workouts gain the checklist only (no
-  changes inside).
+  in `EQUIP`, with words: pick up / put down what's easy to carry, "Put the dumbbells down", "Pick up the kettlebell";
+  for furniture and the wall "Position yourself by your chair" (owner); the yoga mat stays down; Dumbbell and Dumbbells
+  count as one) and the time: **what it takes to say it**, with half a second of silence before and after
+  (`equipSpoken`: 0.5 + words ÷ 2.5 a second ÷ the speech speed + 0.5; dumbbells → chair, 9 words: 4.6 s).
+- History: first an allowance per piece (5/10/20 s, the longest + 3 s per other piece), then one Equipment transition
+  time the person set (Settings, `nstructr-equip-time-v1`, 15 then 5 s); the owner then asked for the spoken length
+  instead and the setting went (its stored value is ignored).
+- **With a rest** (`onWorkEnd` → `startRest(seconds, kind, change)`, also before a new round): the rest gets longer by
+  it; the rest screen shows what to do under "Next:" (`#wpRestEquip`); Coach / Instructor say the rest line, then after
+  half a second the equipment words (`sayEquipment`).
+- **With no rest** (0 between exercises, or a round rest of 0): no rest screen. `WP.equipChange` makes `runCurrent`
+  say the words (after half a second; captioned, then the exercise's name) and `stagePlan(p, minMs)` slows the way
+  into the next exercise (the transition frames and the step into the first pose, §8.3b) to last at least that long;
+  with no way in (a crossfade, reduced motion) the first pose waits that long (a held copy of it, `phase:
+  'transition'`, so the new equipment fades in after it).
+- **"Get ready"**: a workout that uses any of it starts with a rest timed the same way for "You'll need: dumbbells and
+  chair" (`checklistLine`; from where it starts, so a resumed workout lists what's left), with "First: …".
+- **Time estimate** (`workoutSeconds` + `equipmentSeconds`): the checklist and every change in the order the player runs.
 - **Pause at equipment changes** (Settings, under Words of encouragement, off at first, `nstructr-equip-pause-v1`): at a
-  change (and the checklist) the rest doesn't count down (`WP.waitReady`): the time is hidden, +15 s goes, Skip reads
-  Ready, the voice adds "Tap Ready when you're set." The estimate still counts the transition time.
+  change (and the checklist) a rest screen that waits for Ready (`WP.waitReady`; also with no rest): the time is hidden,
+  +15 s goes, Skip reads Ready, the voice adds "Tap Ready when you're set."
 - Not chosen (offered): showing the changes in the workout editor and grouping exercises by equipment.
 
 ### 8.4 Sound
@@ -997,7 +1002,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Coach and Instructor (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
 | `nstructr-encourage-v1` | Coach's and Instructor's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach and Instructor (Instructor only until Oct 2026); `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
 | `nstructr-equip-pause-v1` | "Pause at equipment changes", `on`/`off` (default off; Settings > Workouts, under Words of encouragement; the backup's `settings.equipPause`): at an equipment change, and at the "Get ready" checklist, the rest waits for Ready instead of counting down (§8.3c) |
-| `nstructr-equip-time-v1` | Equipment transition time, seconds 0–300 (default 5; Settings > Workouts, under Rest between sets; the backup's `settings.equipTime`): added to the rest at an equipment change, and the length of the "Get ready" checklist (§8.3c) |
+| `nstructr-equip-time-v1` | retired (Oct 2026): Equipment transition time, a setting for a day; now the time is what it takes to say what to do (§8.3c). A stored value is ignored |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 10, 0–300; Settings > Workouts; 20 until Sep 2026). Workout items' `rest` is ignored |
 | `nstructr-install-hint-v1` | the install tip: `due` once a workout was started, `shown` once offered (or installed). Per device, not in backups |
@@ -1023,7 +1028,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback, the dialog's four buttons), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: the shins are stacked by depth, a front-view reach across the body is behind), `exercise_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay, page order, labels, Edit with the figure pinned, Done), `direction_cues` (the other direction keeps each step's words, so cues match the compass), `circles_order_toggles` (Leg Circles' 8 points with 4 steps; quiet steps hidden from the step number, list and ◀ ▶; a workout item's order of sides/directions, saved, shared, and the switch announced; Loop off stops at the end, Play restarts; Mute), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `equipment_changes` (the transition time setting and words, the estimate, "Get ready", the longer rest and what's said, Pause at equipment changes waits for Ready, backup, the cover screen), `transitions` (same position: through the rest pose, frame glides, no jump; change of position: crossfade; with a rest: moves during it; Side Stepping → Neck Stretch both sides: no jump, the figure and the view's middle never turn back; reduced motion: cut), `exercise_sound` (Silent/Beeps quiet, Coach reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `direction_cues` (the other direction keeps each step's words, so cues match the compass), `circles_order_toggles` (Leg Circles' 8 points with 4 steps; quiet steps hidden from the step number, list and ◀ ▶; a workout item's order of sides/directions, saved, shared, and the switch announced; Loop off stops at the end, Play restarts; Mute), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `equipment_changes` (the time from the words, the estimate, with no rest: no rest screen and a slowed move, "Get ready", the longer rest and what's said, Pause at equipment changes waits for Ready, backup, the cover screen), `transitions` (same position: through the rest pose, frame glides, no jump; change of position: crossfade; with a rest: moves during it; Side Stepping → Neck Stretch both sides: no jump, the figure and the view's middle never turn back; reduced motion: cut), `exercise_sound` (Silent/Beeps quiet, Coach reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /
