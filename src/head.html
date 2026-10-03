@@ -184,6 +184,9 @@ main{display:block;min-width:0}
 .segmented button .icon{font-size:18px;display:none}
 .segmented button[aria-pressed="true"] .icon{display:inline-block}
 .segmented[hidden]{display:none}
+/* a narrow phone (the 360 px cover screen): tighter, and the pressed one shows by its colour alone, so Silent · Beeps ·
+   NstructR · NstructR+ fit (they ran 33 px off the side) */
+@media (max-width:400px){.segmented button{padding:0 10px}.segmented button[aria-pressed="true"] .icon{display:none}}
 
 /* ===== Cards, chips, lists ===== */
 .card{background:var(--md-surface-container);border-radius:var(--shape-m);padding:16px}
@@ -700,6 +703,7 @@ body[data-view="wplay"]{overflow:hidden;background:var(--md-surface)}
 .fs .wp-rest[hidden],.fs .wp-done[hidden]{display:none}
 .fs .wp-big{margin:0;font-size:clamp(64px,30vmin,200px);line-height:1;font-weight:700;font-variant-numeric:tabular-nums;color:var(--wp-fg)}
 .ov-next{margin:0;font-size:clamp(16px,5.5vmin,30px);color:var(--ov-dim)}
+.wp-title{margin:0;max-width:18ch;font-size:clamp(24px,9vmin,48px);font-weight:700;line-height:1.15;text-wrap:balance}
 .ov-equip{margin:0;max-width:30ch;font-size:clamp(15px,5vmin,26px);font-weight:600;color:inherit}
 .ov-rest-btns{display:flex;gap:12px;margin-top:6px}
 .ov-pill{min-width:96px;height:clamp(48px,14vmin,64px);padding:0 22px;border-radius:32px;font-size:clamp(16px,5vmin,22px);font-weight:600;color:var(--wp-fg);background:var(--wp-btn)}

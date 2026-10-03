@@ -2,7 +2,7 @@ import asyncio, json, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 # imported / shared content can't inject HTML or script: every text field of an exercise and a workout carries an
-# <img onerror> payload through import, the lists, the editor, the exercise page, the workout player (Coach) and a
+# <img onerror> payload through import, the lists, the editor, the exercise page, the workout player (NstructR) and a
 # share link; and a source link that isn't http(s) isn't shown as a link
 from playwright.async_api import async_playwright
 P = lambda k: f'<img src=x onerror="window.PWNED=(window.PWNED||[]).concat(\'{k}\')">'

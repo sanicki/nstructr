@@ -2,7 +2,7 @@ import asyncio, os, json
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
-# the exercise player follows the Sound setting: Silent/Beeps say nothing; Coach/Instructor read each step's cue on the
+# the exercise player follows the Sound setting: Silent/Beeps say nothing; NstructR/NstructR+ read each step's cue on the
 # first pass (the step waits for it), then count reps; pausing stops the voice; a new side restarts the first pass
 FAKE = """window.SPOKEN=[]; window.CANCELS=0; Object.defineProperty(window,'speechSynthesis',{configurable:true,value:{
   speaking:false, pending:false, getVoices(){ return []; }, speak(u){ SPOKEN.push(u.text); this.speaking=true; this._u=u; setTimeout(()=>{ if(this._u===u){ this.speaking=false; this._u=null; u.onend&&u.onend(); } }, 1500); },

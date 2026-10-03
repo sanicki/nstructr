@@ -24,7 +24,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **358 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with Instructor on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without Instructor). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **358 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with NstructR+ on (its run-through before each set and side) at the default rests (5 s, 10 s); about 15–17 minutes without NstructR+). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -84,7 +84,7 @@ Roadmap step 1 (§13) is **done** apart from going live (item 6 below). What's d
   (and bare single exercise/workout objects) still import.
 - Browser tests ported to `tools/e2e/` (Python Playwright), pointed at a URL via `NSTRUCTR_URL`.
 - Verified: build passes; both builds load 136 exercises, seed the routine, play exercises, run the full 24-item
-  routine to completion; old and bare files import; gestures, editor, Instructor speech, layout, floor height and
+  routine to completion; old and bare files import; gestures, editor, NstructR+ speech, layout, floor height and
   arm-circle continuity tests pass against the served build.
 
 **Step 3 (simpler UI) is built**: three tabs (Workouts, Exercises, Settings), the exercise player's
@@ -220,7 +220,7 @@ The schemas in `schema/` are authoritative for structure. This section is the me
   "endPosition": "other",              // from the steps is wrong ("other": none fits); see §8.3b
   "category": "Strength", "focus": "Thighs and glutes",
   "equipment": ["Wall"],               // free text, used for filters and the "You'll need" list
-  "description": "…", "setup": ["…"], "cues": ["…"],   // cues[0] is also spoken by Instructor
+  "description": "…", "setup": ["…"], "cues": ["…"],   // cues[0] is also spoken by NstructR+
   "source": { "url": "…", "title": "…", "note": "…" },
   "prescription": { "reps": "8–12 each leg", "note": "…" },  // display text only ("3 rounds each leg" is fine)
   "measure": "reps" | "time",          // how a workout counts it
@@ -250,13 +250,13 @@ same foot; now the other foot comes in to meet it, lifting on a quiet in-between
 
 | Field | Meaning |
 |---|---|
-| `name`, `cue` | Step name and one instruction. Instructor reads `cue` during the run-through. Keep cues short and speakable. |
+| `name`, `cue` | Step name and one instruction. NstructR+ reads `cue` during the run-through. Keep cues short and speakable. |
 | `camera` | Degrees around the vertical: `90` side view (default), `0` front view. The camera turns between steps. |
 | `durationMs` | Time to move into this pose. Default 1000. **0 = instant** (used where two steps are the same position, e.g. 540° ≡ 180° in arm circles). |
 | `holdMs` | Time held. Default 500. A hold ≥ 3000 ms makes an exercise timed (see `measure`). |
 | `ease` | `"smooth"` (default, ease-in-out) or `"linear"` (constant speed — circles). |
 | `phase` | `"setup"` (played once first), `"rep"` (one rep; for timed exercises the hold), `"finish"` (once at the end). No phases = the whole loop is one rep. |
-| `quiet` | Instructor doesn't read this step (in-between points of a circle). |
+| `quiet` | NstructR+ doesn't read this step (in-between points of a circle). |
 | `anchor`, `anchorX`, `anchorZ` | Point pinned to the floor/surface at world (anchorX, anchorZ) (sideways, forward; default 0, 0). Without an anchor the pelvis is there and the lowest point rests on the floor. For an exercise whose camera turns, put the point where it looks the same from both (the Star Excursions pin the standing foot at x −40, z 40). |
 | `lift` | Airborne (a jump): the whole figure that far above where it would rest, anchor or not; the move into and out of it rises and lands smoothly. The checks count it as meant, not floating. Short steps (300–400 ms): Jump Squat 45, Jumping Jacks 20, High Knees 6 (a hop as the standing foot swaps, with `anchorX` keeping the pelvis still). |
 | `anchorY` | Hanging (Sep 2026): the anchor (a hand on a pull-up bar) is held at this height instead of on the floor; a move with a hanging step at either end is only kept out of the floor, not rested on it, and a hanging step isn't re-pinned to a contact it shares with the step before. The checks expect the anchor at anchorY. Pull-Up, Chin-Up, Dead Hang, Hanging Knee Raise (bar at 385: hands overhead reach 361 standing). Getting on and off (`withMount` in `tools/variants/batch-11-hanging.cjs`): stand, reach up with the arms as they'll hang, bend the knees (a crouch), jump to the bar (450 ms); let go and land deep with the arms still up (knees 85°), then stand and lower them. Between two hanging steps the hand that isn't the anchor is held where it grips (`frameAt`), so it doesn't slide along the bar. |
@@ -516,7 +516,7 @@ differently.
   Step names and cues are **not** changed: they name positions ("Forward.", "Across your body."), which stay the
   same whichever way the circle runs. (Until Sep 2026 "forward/backward/clockwise" were swapped, so Hip Circles
   counterclockwise said "Backward" at the front.) Write cues on direction exercises as positions, not as the motion.
-- `S.canAdvance` gates advancing (used by Instructor's run-through).
+- `S.canAdvance` gates advancing (used by NstructR+'s run-through).
 
 ---
 
@@ -562,7 +562,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 ### 8.1 Product
 - **Workouts are the focus**; Workouts is the first and default tab. Tabs: Workouts, Exercises, Settings
   (old links `#/explore`, `#/saved`, `#/create` redirect).
-- Instructor counts reps "Begin", 2, 3 … "Last one" ("Begin" is never dropped for overlapping speech).
+- NstructR and NstructR+ say **"Ready… Begin."** as the figure gets into the starting pose; the count waits for it (a `ready` step, `S.canAdvance`), then 1, 2, 3 … "Last one" ("1" is never dropped for overlapping speech). Holds: **"Ready… Hold for N seconds."**, and the countdown waits for it. (Oct 2026: before, rep 1 was said as "Begin", "Ready" or "Go", the count started with no warning, and only NstructR+ said "Now hold for N seconds".)
 - One repo; library and app together. Contributions via **in-app Submit → GitHub issue form → bot PR**, plus
   **share links** (both roadmap).
 - Content: exercises are written **in our own words**, citing sources (Yoga Journal, BHF, Mayo Clinic, NHS,
@@ -583,7 +583,7 @@ representations that rotate the short, natural way) over adding a known issue; i
   order only when both have the same); resets the pace (`tempo`) to the new exercise's own.
 - **Workout player**: **Easier** and **Harder** buttons in the control overlay, under the play controls (never on
   the rest screen: you only know it's too easy or hard once you're doing it). Other equipment isn't offered there.
-  - A swap restarts the current set from the first rep / 0:00, with Instructor's run-through when Instructor is on; nothing
+  - A swap restarts the current set from the first rep / 0:00, with NstructR+'s run-through when NstructR+ is on; nothing
     done carries over. The item, in every round still to come, is the new exercise.
   - **For that session only**: the workout isn't changed (`WP.swaps` item uid → exercise id, `WP.orig` the items
     before; saved with the session, so Resume keeps them). Leaving the player (finished or not) asks "Keep these
@@ -602,7 +602,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 - Full screen, app bars hidden, **follows the theme** (`--wp-*` variables on `.fs`): dark = navy `#0b1422`, body
   `#eef3f1`, right side teal `#57d6c6`, left orange `#f2a65a`; light = `#f8f9ff`, body `#191c20`, teal `#00897b`,
   orange `#d2680f`.
-- Pausing stops the voice immediately (`hush()`); resuming an Instructor run-through step reads its line again.
+- Pausing stops the voice immediately (`hush()`); resuming an NstructR+ run-through step reads its line again.
   Exiting (hold ✕, or finishing) always returns to the Workouts list.
 - The camera frames each exercise tightly (`frameScene`: viewBox from head-top to floor over the whole plan).
 - Stacked from the top: title band (name, up to 2 lines on short screens; block/set lines hidden when height
@@ -701,30 +701,34 @@ representations that rotate the short, natural way) over adding a known issue; i
   time the person set (Settings, `nstructr-equip-time-v1`, 15 then 5 s); the owner then asked for the spoken length
   instead and the setting went (its stored value is ignored).
 - **With a rest** (`onWorkEnd` → `startRest(seconds, kind, change)`, also before a new round): the rest gets longer by
-  it; the rest screen shows what to do under "Next:" (`#wpRestEquip`); Coach / Instructor say the rest line, then after
+  it; the rest screen shows what to do under "Next:" (`#wpRestEquip`); NstructR / NstructR+ say the rest line, then after
   half a second the equipment words (`sayEquipment`).
 - **With no rest** (0 between exercises, or a round rest of 0): no rest screen. `WP.equipChange` makes `runCurrent`
   say the words (after half a second; captioned, then the exercise's name) and `stagePlan(p, minMs)` slows the way
   into the next exercise (the transition frames and the step into the first pose, §8.3b) to last at least that long;
   with no way in (a crossfade, reduced motion) the first pose waits that long (a held copy of it, `phase:
   'transition'`, so the new equipment fades in after it).
-- **"Get ready"**: a workout that uses any of it starts with a rest timed the same way for "You'll need: dumbbells and
-  chair" (`checklistLine`; from where it starts, so a resumed workout lists what's left), with "First: …".
-- **Time estimate** (`workoutSeconds` + `equipmentSeconds`): the checklist and every change in the order the player runs.
+- **Workout title card** (owner: "You'll need" belongs on a workout title card, not on the first exercise's card): a
+  workout that uses any of it starts with the rest screen as a title card (`kind: 'start'`): label "Workout", the
+  workout's name (`#wpRestTitle`), "You'll need: dumbbells and chair" (`checklistLine`; from where it starts, so a
+  resumed workout lists what's left); no countdown (the ticker leaves it alone: `WP.restKind`), no +15 s, the button
+  reads Start (Ready when pausing). It says the name, then after half a second the list, and lasts that long
+  (`equipSpoken([name, list])`); then the first exercise starts and names itself as usual.
+- **Time estimate** (`workoutSeconds` + `equipmentSeconds`): the title card and every change in the order the player runs.
 - **Pause at equipment changes** (Settings, under Words of encouragement, off at first, `nstructr-equip-pause-v1`): at a
   change (and the checklist) a rest screen that waits for Ready (`WP.waitReady`; also with no rest): the time is hidden,
   +15 s goes, Skip reads Ready, the voice adds "Tap Ready when you're set."
 - Not chosen (offered): showing the changes in the workout editor and grouping exercises by equipment.
 
 ### 8.4 Sound
-- Modes (labels renamed Oct 2026: Voice → Coach, Coach → Instructor; stored values `voice`/`coach` unchanged): Silent, Beeps (3-2-1 before rests/holds end, chime on switching), Coach (exercise name, side/direction
-  switches, rests, "next", then the counted reps below), **Instructor**.
-- **Coach and Instructor** both count: counts, "Last one", "Halfway", "10 seconds" and words of encouragement are
-  **dropped if something is already being said** (never talk over). (Oct 2026: before, only Instructor counted;
-  Coach — then "Voice" — said names, switches and rests only. `say()` lost its `coachOnly` flag.)
-- **Instructor** adds, before each exercise (and each side/direction), a **guided run-through** — one pass through every
+- Modes (labels renamed twice in Oct 2026: Voice → Coach → **NstructR**, Coach → Instructor → **NstructR+**; stored values `voice`/`coach` unchanged): Silent, Beeps (3-2-1 before rests/holds end, chime on switching), NstructR (exercise name, side/direction
+  switches, rests, "next", then the counted reps below), **NstructR+**.
+- **NstructR and NstructR+** both count: counts, "Last one", "Halfway", "10 seconds" and words of encouragement are
+  **dropped if something is already being said** (never talk over). (Oct 2026: before, only NstructR+ counted;
+  NstructR — then "Voice" — said names, switches and rests only. `say()` lost its `coachOnly` flag.)
+- **NstructR+** adds, before each exercise (and each side/direction), a **guided run-through** — one pass through every
   step, reading each step's cue; each step waits for **whichever takes longer, its line or its animation**
-  (`S.canAdvance`). Then the counted reps. Timed exercises: setup steps, then the held step's cue and "Now hold for N seconds" as the hold starts; the countdown waits for that line (`S.holdWait`), and the time estimate counts it (~2.5 words a second at the speech rate). (Sep 2026: before, the held step's cue — how to get into the pose — was never read.)
+  (`S.canAdvance`). Then the counted reps. Timed exercises: setup steps, then the held step's cue and "Ready… Hold for N seconds." as the hold starts (NstructR says the second part only); the countdown waits for that line (`S.holdWait`), and the time estimate counts it, and "Ready… Begin." before reps (~2.5 words a second at the speech rate). (Sep 2026: before, the held step's cue — how to get into the pose — was never read.)
 - Speech is **queued, never cancelled**, except on skip/stop. Routing cancels speech only when *leaving* the exercise
   page (`exHush`) or the workout player: until Sep 2026 any route away from the exercise page's view hushed, which cut
   off every workout's first line as the player opened (`autoplay_first_speech.py`). Each line's promise resolves on `onend`, with a
@@ -830,7 +834,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 - In the exercise player, a stage `<div id="stageBox">` is **moved** into the workout player (`moveStage`) and
   back; the scene's viewBox is reset on leaving (`resetScene`).
 - The time estimate counts movement and rests only (the owner's routine estimates 28 min vs. the routine's own
-  35–40); Instructor adds ~2 s per run-through step.
+  35–40); NstructR+ adds ~2 s per run-through step.
 - Pages from a **private** repo needs a paid GitHub plan (as far as known) — relevant if the owner goes private.
 
 ---
@@ -860,7 +864,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
   do it** (setup, form, then the time estimate "About N s per round, each side", the source link and note, and the
   prescription note),
   **Steps (n)** (collapsed), and the editor when open.
-  - **Sound** follows the Sound setting: Silent / Beeps say nothing; Coach / Instructor read each step's cue on the
+  - **Sound** follows the Sound setting: Silent / Beeps say nothing; NstructR / NstructR+ read each step's cue on the
     first pass (the step waits for it: `S.canAdvance`), then count reps (not for timed exercises). Pausing,
     changing side/direction or leaving the page stops the voice (`exHush()`); a new side/direction starts the
     first pass again. Code: `XS`, `exStepSound()`, `exHush()` in `3-details.js`.
@@ -988,7 +992,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-bookmarks-v1` | ids of bookmarked exercises, library or own (a flag; library ones aren't copied, so library fixes reach them) |
 | `motion-guide-workouts-v1` | `{list: [...]}` user workouts (runtime form with uids) |
 | `motion-guide-session-v1` | `{wid, i, swaps?}` resume point; `swaps` = the session's Easier/Harder swaps (item uid → exercise id, Sep 2026) |
-| `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name; since Oct 2026 `voice` is shown as **Coach** (was "Voice") and `coach` as **Instructor** (was "Coach"), the values unchanged). Default **coach** (beeps until Sep 2026): the 20-minute workouts are timed with Instructor |
+| `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name; since Oct 2026 `voice` is shown as **NstructR** (was "Voice", then "Coach") and `coach` as **NstructR+** (was "Coach", then "Instructor"), the values unchanged). Default **coach** (beeps until Sep 2026): the 20-minute workouts are timed with NstructR+ |
 | `motion-guide-log-v1` | history sessions (capped at 500) |
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
 | `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |
@@ -998,11 +1002,11 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-ai-app-v1` | the AI app Create with AI opens (`gemini` until one is picked; `claude`, `chatgpt`…) |
 | `nstructr-ai-equipment-v1` | Create with AI, Plan a workout: the equipment kinds picked, JSON list (`[]` until changed; `["wall"]` until Sep 2026) |
 | `nstructr-loop-v1` | `"off"`: the exercise page plays once through (setup, one rep, finish), then stops (overlay Loop toggle) |
-| `nstructr-exmute-v1` | the exercise page's spoken cues muted unless `"off"` (default muted since Sep 2026; overlay Mute toggle; the voice also needs Sound = Coach/Instructor) |
+| `nstructr-exmute-v1` | the exercise page's spoken cues muted unless `"off"` (default muted since Sep 2026; overlay Mute toggle; the voice also needs Sound = NstructR/NstructR+) |
 | `nstructr-group-collections-v1` | `"on"`: the Exercises tab groups All collections by collection; otherwise one A–Z list (default since Sep 2026; the tab's own switch) |
-| `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Coach and Instructor (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
-| `nstructr-encourage-v1` | Coach's and Instructor's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach and Instructor (Instructor only until Oct 2026); `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
-| `nstructr-equip-pause-v1` | "Pause at equipment changes", `on`/`off` (default off; Settings > Workouts, under Words of encouragement; the backup's `settings.equipPause`): at an equipment change, and at the "Get ready" checklist, the rest waits for Ready instead of counting down (§8.3c) |
+| `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for NstructR and NstructR+ (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
+| `nstructr-encourage-v1` | NstructR's and NstructR+'s words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with NstructR and NstructR+ (NstructR+ only until Oct 2026); `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Last one (rep 1 is always "1", after "Ready… Begin."; Oct 2026), a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
+| `nstructr-equip-pause-v1` | "Pause at equipment changes", `on`/`off` (default off; Settings > Workouts, under Words of encouragement; the backup's `settings.equipPause`): at an equipment change, and at the workout title card, the rest waits for Ready instead of counting down (§8.3c) |
 | `nstructr-equip-time-v1` | retired (Oct 2026): Equipment transition time, a setting for a day; now the time is what it takes to say what to do (§8.3c). A stored value is ignored |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 10, 0–300; Settings > Workouts; 20 until Sep 2026). Workout items' `rest` is ignored |
@@ -1029,13 +1033,13 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback, the dialog's four buttons), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: the shins are stacked by depth, a front-view reach across the body is behind), `exercise_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay, page order, labels, Edit with the figure pinned, Done), `direction_cues` (the other direction keeps each step's words, so cues match the compass), `circles_order_toggles` (Leg Circles' 8 points with 4 steps; quiet steps hidden from the step number, list and ◀ ▶; a workout item's order of sides/directions, saved, shared, and the switch announced; Loop off stops at the end, Play restarts; Mute), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `equipment_changes` (the time from the words, the estimate, with no rest: no rest screen and a slowed move, "Get ready", the longer rest and what's said, Pause at equipment changes waits for Ready, backup, the cover screen), `transitions` (same position: through the rest pose, frame glides, no jump; change of position: crossfade; with a rest: moves during it; Side Stepping → Neck Stretch both sides: no jump, the figure and the view's middle never turn back; reduced motion: cut), `exercise_sound` (Silent/Beeps quiet, Coach reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `direction_cues` (the other direction keeps each step's words, so cues match the compass), `circles_order_toggles` (Leg Circles' 8 points with 4 steps; quiet steps hidden from the step number, list and ◀ ▶; a workout item's order of sides/directions, saved, shared, and the switch announced; Loop off stops at the end, Play restarts; Mute), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `equipment_changes` (the time from the words, the estimate, the workout title card, with no rest: no rest screen and a slowed move, the longer rest and what's said, Pause at equipment changes waits for Ready, backup, the cover screen), `transitions` (same position: through the rest pose, frame glides, no jump; change of position: crossfade; with a rest: moves during it; Side Stepping → Neck Stretch both sides: no jump, the figure and the view's middle never turn back; reduced motion: cut), `exercise_sound` (Silent/Beeps quiet, NstructR reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /
   caption / figure never overlap on cover, phone, landscape), `floor_height_cover` (floor ≥ 23% above bottom),
   `arm_circles_continuity` (constant angular speed, never reverses), `star_excursion_coach`, `variations` (linked
-  variations: exercise page, editor swaps, player swaps with Instructor, session and Resume, history, Keep these changes).
+  variations: exercise page, editor swaps, player swaps with NstructR+, session and Resume, history, Keep these changes).
   They print results rather than assert; read the output. Install with a Playwright version matching the
   Chromium you have (Claude Code's cloud sandbox: `pip install playwright==1.56.0 pillow`, no `playwright install`). Turning them into asserting tests is worthwhile.
 
@@ -1158,7 +1162,7 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
    (collapsible) → Edit. Labels **Side**, **Direction**, **Speed** on the selectors (Leg Circles would be a good
    exercise needing both Side and Direction: add it, from https://pilatesology.com/pilatesology-encyclopedia-leg-circles/
    described in our own words). The exercise player follows the Sound setting (Silent / Beeps: quiet;
-   Coach / Instructor: read each step's cue on the first pass, then count reps). **Edit details** (words) for everyone
+   NstructR / NstructR+: read each step's cue on the first pass, then count reps). **Edit details** (words) for everyone
    on their own exercises and copies; Advanced exercise editor adds poses and camera. Also: Start goes straight into a workout
    (no popup; safety notes on the card and in the editor), Import only in Settings. Leg Circles added in the next PR (`pil-leg-circles`).
 5. ✅ **Create with AI** (deep links, no keys): one screen: what it is (a name, a written routine, a YouTube link, a

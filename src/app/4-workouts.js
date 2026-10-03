@@ -61,10 +61,13 @@ function itemSeconds(item) {
   const work = ex.measure === 'time'
     ? item.seconds + sum(ph.setup) + sum(ph.finish) + (kfs[ex.holdStep || ph.start].durationMs || 0) / 1000 / t
     : sum(ph.setup) + sum(ph.finish) + sum(ph.rep) * item.reps * alt;
-  // + ~2 s of speech a step; a hold also waits for its line (the pose's cue and "Now hold for N seconds", ~2.5 words a second)
+  // NstructR+: + ~2 s of speech a step. With a voice, a hold waits for its line (NstructR+: the pose's cue, then
+  // "Ready… Hold for N seconds", ~2.5 words a second) and reps for "Ready… Begin"
+  const voiced = WK.sound === 'voice' || WK.sound === 'coach', words = s => s.split(/\s+/).filter(Boolean).length / 2.5 / speechRate();
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
-  const holdLine = hk ? Math.max(0, `${hk.quiet ? '' : hk.cue || hk.name || ''} ${plural(item.seconds, { one: 'Now hold for # second.', other: 'Now hold for # seconds.' })}`.split(/\s+/).filter(Boolean).length / 2.5 / speechRate() - (hk.durationMs || 0) / 1000 / t) : 0;
-  const guide = WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) + holdLine : 0;
+  const holdLine = hk && voiced ? Math.max(0, words(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
+  const readyLine = !hk && voiced ? Math.max(0, words(READY_BEGIN) - (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;
+  const guide = (WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) : 0) + holdLine + readyLine;
   return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
 }
 function blockSeconds(b, w) {
@@ -92,7 +95,7 @@ const workoutEquipment = w => [...new Set(w.blocks.flatMap(b => b.items).flatMap
    your chair."), half a second (EQUIP_PAD; the words timed at the speech speed, as the time estimate does). With a rest
    it's added to the rest, which shows and says what to do; with no rest there's no rest screen: the words are said
    (and captioned) while the figure moves into the next exercise, and that move is slowed to last at least as long. A
-   workout with equipment starts with a "Get ready" checklist timed the same way. With "Pause at equipment changes" it
+   workout with equipment starts with a title card (its name, what you'll need) timed the same way. With "Pause at equipment changes" it
    waits for Ready instead (a rest screen even with no rest). The yoga mat stays down. get / drop: what to say: pick up
    and put down what's easy to carry; position yourself by furniture and the wall. */
 const EQUIP = {
@@ -131,13 +134,13 @@ function equipmentChange(fromEx, toEx) {
   // stepping away from furniture (a chair to nothing) has nothing to do or say: no change (it said a lone "." before)
   return lines.length ? { seconds: equipSpoken(lines), lines } : null;
 }
-// everything a workout (from one of its exercises on) uses, for the "Get ready" checklist
+// everything a workout (from one of its exercises on) uses, for the title card
 const neededFrom = (flat, i) => [...new Set(flat.slice(i).flatMap(e => [...equipOf(exById(e.item.ex))]))];
 const listWords = xs => xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`;
 const equipPauseOn = () => pref(EQUIP_PAUSE_KEY, 'off') === 'on';
 /* the time the equipment adds to a workout: the changes between its exercises in order, and the checklist */
 function equipmentSeconds(w) {
-  const flat = flattenWorkout(w), need = flat.length ? neededFrom(flat, 0) : []; let t = need.length ? equipSpoken([checklistLine(need)]) : 0;
+  const flat = flattenWorkout(w), need = flat.length ? neededFrom(flat, 0) : []; let t = need.length ? equipSpoken([w.name, checklistLine(need)]) : 0;   // the title card: its name, then the list
   for (let i = 1; i < flat.length; i++) { const c = equipmentChange(exById(flat[i - 1].item.ex), exById(flat[i].item.ex)); if (c) t += c.seconds; }
   return t;
 }
@@ -566,8 +569,8 @@ function beep(freq = 880, ms = 120) {
 }
 /* Speak a line. Lines queue up instead of cutting each other off. Returns a promise that resolves when the
    line has been spoken (or straight away if sound is off), so the guided run-through can wait for it.
-   dropIfBusy: skip this line if something is still being said (rep counts, milestones). Coach and Instructor say the
-   same lines (counts, milestones, encouragement since Oct 2026); only Instructor adds the walk-through. */
+   dropIfBusy: skip this line if something is still being said (rep counts, milestones). NstructR and NstructR+ say the
+   same lines (counts, milestones, encouragement since Oct 2026); only NstructR+ adds the walk-through. */
 function say(text, { dropIfBusy = false } = {}) {
   if (!/[\p{L}\p{N}]/u.test(text || '')) return Promise.resolve();   // nothing to say (a voice reads a lone "." as "dot")
   caption(text);
@@ -591,9 +594,9 @@ function caption(text) {
   clearTimeout(CAP_T); CAP_T = setTimeout(() => el.classList.remove('show'), 1800 + text.split(/\s+/).length * 380);
 }
 function hush() { try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } WP.speaking = false; }
-/* the Instruction setting. Stored values stay as they were (HANDOFF §11); the names changed Oct 2026: 'voice' is shown
-   as "Coach" (was "Voice"), 'coach' as "Instructor" (was "Coach") */
-const SOUND_MODES = [['off', 'volume_off', 'Silent'], ['beeps', 'notifications', 'Beeps'], ['voice', 'record_voice_over', 'Coach'], ['coach', 'sports', 'Instructor']];
+/* the Instruction setting. Stored values stay as they were (HANDOFF §11); the names changed twice in Oct 2026: 'voice' is
+   shown as "NstructR" (was "Voice", then "Coach"), 'coach' as "NstructR+" (was "Coach", then "Instructor") */
+const SOUND_MODES = [['off', 'volume_off', 'Silent'], ['beeps', 'notifications', 'Beeps'], ['voice', 'record_voice_over', 'NstructR'], ['coach', 'sports', 'NstructR+']];
 function setSound(mode) {
   WK.sound = mode; try { localStorage.setItem(SOUND_KEY, mode); } catch (e) { }
   const m = SOUND_MODES.find(x => x[0] === mode) || SOUND_MODES[1];
@@ -646,7 +649,7 @@ function buildPlan(item, segInfo) {
   else versions.push(resolveVersion(ex, seg, segInfo.side, segInfo.dir));
   const plan = [], meta = [];
   const push = (r, m = {}) => { plan.push(r); meta.push(m); };
-  const V0 = versions[0].R, guided = WK.sound === 'coach';
+  const V0 = versions[0].R, guided = WK.sound === 'coach', voiced = guided || WK.sound === 'voice';
   const cueOf = r => r.cue || r.name || '';
   const h = ex.measure === 'time' ? (ex.holdStep != null ? ex.holdStep : ph.start) : null;
   let holdCued = false;                                          // the run-through already read the held step's cue
@@ -662,14 +665,18 @@ function buildPlan(item, segInfo) {
     if (first) { g(V0[ph.start]); holdCued = ph.start === h; }
   } else ph.setup.forEach(i => push(V0[i], { phase: 'setup' }));
   if (ex.measure === 'time') {
-    // Instructor reads the held step's own cue (how to get into the pose) as it starts, then the time
-    const holdSay = () => `${holdCued || V0[h].quiet ? '' : cueOf(V0[h]) + ' '}${plural(item.seconds, { one: 'Now hold for # second.', other: 'Now hold for # seconds.' })}`.replace(/([^.!?])\s+Now/, '$1. Now');
-    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(guided ? { say: holdSay() } : {}) } : { phase: 'rep' }));
+    // with a voice the count starts after "Ready… Hold for N seconds." (NstructR+ first reads the held step's own cue,
+    // how to get into the pose, unless the run-through just did)
+    const cue = guided && !holdCued && !V0[h].quiet ? cueOf(V0[h]).trim() : '';
+    const holdSay = () => `${cue ? cue + (/[.!?…]$/.test(cue) ? ' ' : '. ') : ''}Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`;
+    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(voiced ? { say: holdSay() } : {}) } : { phase: 'rep' }));
   } else {
+    // with a voice, "Ready… Begin." as it gets into the starting pose; the count ("1", "2" …) starts once it's said
+    if (voiced) push({ ...V0[ph.start], hold: 0 }, { phase: 'ready', ready: true, say: READY_BEGIN });
     const total = item.reps * versions.length;
     for (let k = 0; k < total; k++) {
       const V = versions[k % versions.length].R;
-      ph.rep.forEach((i, j) => push(V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null }));
+      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0 } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null }));
     }
   }
   const VL = versions[versions.length - 1].R;
@@ -849,15 +856,15 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound); keepStorage(); installDue();
   go(`#/wplay/${encodeURIComponent(w.id)}`);
   S.mode = 'start';                                               // no transition into the first exercise
-  // a workout with equipment starts with what to have at hand ("Get ready"), then the first exercise
+  // a workout with equipment starts with a title card: its name and what to have at hand, then the first exercise
   const need = neededFrom(WP.flat, WP.i);
-  if (need.length) { WP.phase = 'work'; const lines = [checklistLine(need)]; startRest(0, 'start', { seconds: equipSpoken(lines), lines }); }
+  if (need.length) { WP.phase = 'work'; const lines = [checklistLine(need)]; startRest(0, 'start', { seconds: equipSpoken([w.name, ...lines]), lines }); }
   else runCurrent(true);
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
 }
 function current() { return WP.flat[WP.i]; }
 /* Swap to an easier or harder version, for this session only (the workout asks at the end whether to keep it): the
-   item, in every round still to come, becomes the new exercise; the set starts again, with Instructor's run-through. */
+   item, in every round still to come, becomes the new exercise; the set starts again, with NstructR+'s run-through. */
 function swapInSession(item, to) {
   const u = item.uid, n = swapItem(item, to);
   if (!WP.orig[u]) WP.orig[u] = item;
@@ -905,19 +912,20 @@ function runCurrent(announce) {
     if (segs.length > 1 && WP.seg > 0) { const prev = segs[WP.seg - 1]; bits[0] = prev.side !== segInfo.side ? (prev.dir !== segInfo.dir ? 'Switch sides and direction' : 'Switch sides') : 'Switch direction'; }   // what actually changed
     if (cur.item.sides && cur.item.sides !== 'alternate' && bl) bits.push(bl[segInfo.side]);
     if (cur.item.dir && cur.item.dir !== 'alternate' && dl) bits.push(dl[segInfo.dir]);
-    const named = WK.sound !== 'coach' ? bits.join('. ') + '.' : WP.seg > 0 ? bits[0] + '.' : '';   // Instructor: "Switch sides." then the guided run-through
+    const named = WK.sound !== 'coach' ? bits.join('. ') + '.' : WP.seg > 0 ? bits[0] + '.' : '';   // NstructR+: "Switch sides." then the guided run-through
     if (WP.equipChange) { const ch = WP.equipChange; setTimeout(() => say(`${ch.lines.join('. ')}.`).then(() => { if (named) say(named); }), EQUIP_PAD * 1000); }
     else if (named) say(named);
   }
   WP.equipChange = null;
-  S.canAdvance = i => !(S.planMeta[i] && S.planMeta[i].guided && WP.speaking);
-  S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Now hold for N seconds"
+  S.canAdvance = i => !(S.planMeta[i] && (S.planMeta[i].guided || S.planMeta[i].ready) && WP.speaking);   // the run-through's cues, "Ready… Begin"
+  S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Ready… Hold for N seconds"
   onWorkStep(0);
 }
-/* Coach's and Instructor's words, varied when words of encouragement are on: a random "Begin" and "Last one", and now and then a word of
-   encouragement in place of a count (never the first or last) or every 10 s of a hold (never at halfway or in the
-   last 10 s). WP.random can be replaced (tests). */
-const COACH_WORDS = { begin: ['Begin', 'Ready', 'Go'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
+/* NstructR's and NstructR+'s words: "Ready… Begin." before the count (it starts at "1"; Oct 2026), varied when words of
+   encouragement are on: a random "Last one", and now and then a word of encouragement in place of a count (never the
+   first or last) or every 10 s of a hold (never at halfway or in the last 10 s). WP.random can be replaced (tests). */
+const READY_BEGIN = 'Ready… Begin.';
+const COACH_WORDS = { last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
 const coachRandom = () => (WP.random || Math.random)();
 // a word isn't picked twice in a row for the same moment ("Good. Breathe. Good.", never "Good. Good.")
 const COACH_LAST = {};
@@ -935,10 +943,10 @@ function onWorkStep(i) {
   if (m.say) speakGuided(m.say);
   if (m.repNo && m.alt !== 1) {
     WP.rep = m.repNo;
-    // Coach and Instructor count the reps: "Begin", 2, 3 … "Last one". Numbers are skipped if it's already talking; "Begin" never is
+    // NstructR and NstructR+ count the reps: 1, 2, 3 … "Last one". Numbers are skipped if it's already talking; "1" never is
     const first = WP.rep === 1, last = WP.rep === m.repOf;
     if (first) WP.cheered = false;
-    say(first ? coachWord('begin') : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), { dropIfBusy: !first });
+    say(first ? '1' : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), { dropIfBusy: !first });
   }
   renderWpCount();
 }
@@ -978,11 +986,15 @@ function startRest(seconds, kind, ch = null) {
   WP.waitReady = !!ch && equipPauseOn();
   const cur = current(), ex = exById(cur.item.ex);
   $('#wpRest').hidden = false; $('#wpControls').classList.remove('show');
-  $('#wpRestLabel').textContent = kind === 'start' ? 'Get ready' : kind === 'set' ? 'Rest before the next set' : kind === 'round' ? `Rest before round ${cur.round + 1} of ${cur.rounds}` : 'Rest';
-  $('#wpRestNext').textContent = kind === 'start' ? `First: ${ex.name}` : kind === 'set' ? `Next: set ${WP.set + 1} of ${cur.item.sets}` : `Next: ${ex.name}`;
+  // 'start': the workout's title card, what you'll need for it (not the first exercise: that has its own start); no
+  // countdown, Start (Ready when pausing)
+  const title = kind === 'start'; WP.restKind = kind;
+  $('#wpRestLabel').textContent = title ? 'Workout' : kind === 'set' ? 'Rest before the next set' : kind === 'round' ? `Rest before round ${cur.round + 1} of ${cur.rounds}` : 'Rest';
+  $('#wpRestTitle').textContent = title ? WP.w.name : ''; $('#wpRestTitle').hidden = !title;
+  $('#wpRestNext').textContent = title ? '' : kind === 'set' ? `Next: set ${WP.set + 1} of ${cur.item.sets}` : `Next: ${ex.name}`; $('#wpRestNext').hidden = title;
   $('#wpRestEquip').textContent = ch ? ch.lines.join(' · ') : ''; $('#wpRestEquip').hidden = !ch;
-  $('#wpRestTime').textContent = WP.waitReady ? '' : fmtTime(Math.ceil(seconds)); $('#wpRestTime').hidden = WP.waitReady;
-  $('[data-wact="restSkip"]').textContent = WP.waitReady ? 'Ready' : 'Skip'; $('[data-wact="restMore"]').hidden = WP.waitReady;
+  $('#wpRestTime').textContent = WP.waitReady || title ? '' : fmtTime(Math.ceil(seconds)); $('#wpRestTime').hidden = WP.waitReady || title;
+  $('[data-wact="restSkip"]').textContent = WP.waitReady ? 'Ready' : title ? 'Start' : 'Skip'; $('[data-wact="restMore"]').hidden = WP.waitReady || title;
   // show where the next exercise starts: moving there through the at-rest pose when it can, or straight there
   stagePlan(buildPlan(cur.item, itemSegments(cur.item)[0]));
   S.onStep = null; S.onPlanEnd = null; S.planDone = false;
@@ -990,7 +1002,7 @@ function startRest(seconds, kind, ch = null) {
   else { S.playing = false; S.t = S.resolved[0].dur; }
   renderWpInfo();
   const rest = WP.waitReady ? '' : plural(Math.ceil(seconds), { one: 'Rest # second.', other: 'Rest # seconds.' });
-  const first = (kind === 'start' ? `First: ${ex.name}.` : kind === 'set' ? rest : kind === 'round' ? `Round ${fmtNum(cur.round)} done. ${rest}` : `${rest} Next: ${ex.name}.`).trim();
+  const first = (title ? `${WP.w.name}.` : kind === 'set' ? rest : kind === 'round' ? `Round ${fmtNum(cur.round)} done. ${rest}` : `${rest} Next: ${ex.name}.`).trim();
   const token = WP.restToken = (WP.restToken || 0) + 1;
   say(first).then(() => { if (ch && WP.restToken === token && WP.phase === 'rest') sayEquipment(ch, WP.waitReady ? " Tap Ready when you're set." : ''); });
   beep(520, 200);
@@ -1182,7 +1194,7 @@ setInterval(() => {
   else if (WP.phase === 'rest' && !WP.paused) {
     const now = performance.now(); WP.restLeft -= (now - WP.restLast) / 1000; WP.restLast = now;
     const left = Math.max(0, Math.ceil(WP.restLeft));
-    $('#wpRestTime').textContent = fmtTime(left);
+    if (WP.restKind !== 'start') $('#wpRestTime').textContent = fmtTime(left);   // the title card has no countdown
     if (left <= 3 && left > 0 && !WP.beeped['r' + left]) { WP.beeped['r' + left] = 1; beep(left === 1 ? 880 : 660); }
     if (WP.restLeft <= 0 && !onTheWay()) runCurrent(true);
   } else if (WP.phase === 'rest') WP.restLast = performance.now();

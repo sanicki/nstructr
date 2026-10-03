@@ -31,8 +31,8 @@ When the exercise has an easier or harder version, the controls show **Easier** 
 
 <img src="images/player-swap.png" width="300" alt="The controls with Easier and Harder under the play buttons">
 
-- Tap one to switch to that version. It starts the set again from the first rep (or 0:00), with Instructor's run-through
-  if Instructor is on; what you'd done doesn't carry over. The rest of that exercise's sets, and later rounds, use it too.
+- Tap one to switch to that version. It starts the set again from the first rep (or 0:00), with NstructR+'s run-through
+  if NstructR+ is on; what you'd done doesn't carry over. The rest of that exercise's sets, and later rounds, use it too.
 - The swap is only for this workout. When you leave the player, you're asked **Keep these changes in the
   workout?** Keep saves them (for a library workout, in your own copy); **Don't keep** leaves the workout as it was.
 - **Resume** keeps a swap. In **History**, sets you finished before swapping count as the exercise you did them as.
@@ -40,13 +40,14 @@ When the exercise has an easier or harder version, the controls show **Easier** 
 ## Rests
 
 Between exercises (and sets and rounds) a big countdown shows what's next. **+15 s** adds time; **Skip** moves
-on. Beeps count down the last 3 seconds in Beeps, Coach and Instructor modes.
+on. Beeps count down the last 3 seconds in Beeps, NstructR and NstructR+ modes.
 
 ### Equipment
 
-A workout that uses equipment starts with **Get ready**: what you'll need (for example "dumbbells and chair") and the
-first exercise. When the next exercise needs other equipment, it says what to do, on the screen and in Coach and
-Instructor modes: "Put the dumbbells down · Position yourself by your chair", and gives you as long as that takes to
+A workout that uses equipment starts with a title card: the workout's name and what you'll need (for example
+"dumbbells and chair"). It's said aloud too, and the workout carries on once it has been said; **Start** begins
+straight away. When the next exercise needs other equipment, it says what to do, on the screen and in NstructR and
+NstructR+ modes: "Put the dumbbells down · Position yourself by your chair", and gives you as long as that takes to
 say, with half a second before and after (about 4–5 seconds; longer at a slower
 [text-to-speech speed](Settings.md#text-to-speech-speed)). With a rest, that's added to the rest. With no rest between
 exercises there's no rest screen: the figure takes that long to move into the next exercise while the words are said
@@ -60,8 +61,8 @@ and shown. The workout's time includes it. The yoga mat stays down, so it doesn'
 |---|---|
 | **Silent** | Nothing. Captions still show what would be said. |
 | **Beeps** | A 3-2-1 before rests and holds end, a chime when switching |
-| **Coach** | The exercise's name, side and direction switches, rests, what's next; counted reps ("Begin", 2, 3 … "Last one"), "Halfway" and "10 seconds" in holds, with [words of encouragement](Settings.md#words-of-encouragement) |
-| **Instructor** (the default) | Coach, plus a **guided run-through** of each exercise first: one slow pass reading every step's cue (for a hold, the pose's cue, then the countdown starts) |
+| **NstructR** | The exercise's name, side and direction switches, rests, what's next; "Ready… Begin." then counted reps (1, 2, 3 … "Last one"), "Ready… Hold for 30 seconds." then "Halfway" and "10 seconds" in holds, with [words of encouragement](Settings.md#words-of-encouragement) |
+| **NstructR+** (the default) | NstructR, plus a **guided run-through** of each exercise first: one slow pass reading every step's cue (for a hold, the pose's cue, then "Ready… Hold for 30 seconds." and the countdown starts) |
 
 The voice is your phone's own text-to-speech, so it works offline. It never talks over itself: a count is skipped
 rather than interrupting a sentence. Its speed is a setting ([Text-to-speech speed](Settings.md#text-to-speech-speed)). Pausing stops it; playing again re-reads the current step.

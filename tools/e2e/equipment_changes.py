@@ -6,7 +6,7 @@ from playwright.async_api import async_playwright
 # it takes to say what to do, with half a second of silence before and after (0.5 + words / 2.5 a second + 0.5). With a
 # rest it's added to the rest, which shows and says it after the rest line; with no rest there's no rest screen: it's
 # said while the move into the next exercise, slowed to last at least that long, plays. A workout with equipment starts
-# with a "Get ready" checklist timed the same way; the time estimate counts both; "Pause at equipment changes" (Settings,
+# with a title card (its name and what you'll need, not the first exercise) timed the same way; the time estimate counts both; "Pause at equipment changes" (Settings,
 # under Words of encouragement) waits for Ready instead. Works on the cover screen.
 SAY = "window.SAID = []; say = t => { SAID.push(t); return Promise.resolve(); };"
 WK = """((ids, rest) => { localStorage.setItem('nstructr-rest-between-v1', String(rest)); WK.hinted = true;
@@ -24,13 +24,13 @@ async def main():
           .map(([a, c]) => { const x = equipmentChange(exById(a), exById(c)); return x && [x.seconds, x.lines.join(' / ')]; })"""))
         print("  <- [4.6 (0.5 + 9 words at 2.5 a second + 0.5), put the dumbbells down / position yourself by your chair], none (no equipment), none (the same), [3, set up your door anchor], none (dumbbells both), none (a chair to nothing: nothing to say)")
         print('estimate counts it      ', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['fw-db-curl', 'chair-arm-raises'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
-          return [equipmentSeconds(w), Math.round(workoutSeconds(w) - w.blocks.reduce((s, x) => s + blockSeconds(x, w), 0))]; })()"""), '<- [7.6, 8] (3 s checklist + 4.6 s change)')
+          return [equipmentSeconds(w), Math.round(workoutSeconds(w) - w.blocks.reduce((s, x) => s + blockSeconds(x, w), 0))]; })()"""), '<- [8, 8] (3.4 s title card: "E. You\'ll need: dumbbells and chair." + 4.6 s change)')
         # timed: the checklist, then the change
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_function("typeof equipPauseOn === 'function'"); await pg.wait_for_timeout(300); await pg.evaluate(SAY)
         await pg.evaluate(WK + "(['fw-db-curl', 'chair-arm-raises'], 5)"); await pg.wait_for_timeout(300)
-        print('get ready               ', await pg.evaluate("[WP.phase, $('#wpRestLabel').textContent, $('#wpRestNext').textContent, $('#wpRestEquip').textContent, $('#wpRestTime').textContent]"))
-        print("  <- ['rest', 'Get ready', 'First: Dumbbell Biceps Curl'-ish, \"You'll need: dumbbells and chair\", '0:03']")
-        await pg.wait_for_timeout(700); print('  said (then 0.5 s, the list)', await pg.evaluate("SAID.slice(-2)"))
+        print('title card              ', await pg.evaluate("[WP.phase, $('#wpRestLabel').textContent, $('#wpRestTitle').textContent, $('#wpRestEquip').textContent, $('#wpRestNext').hidden, $('#wpRestTime').hidden, $('[data-wact=\"restSkip\"]').textContent]"))
+        print("  <- ['rest', 'Workout', 'T', \"You'll need: dumbbells and chair\", True (no exercise name), True (no countdown), 'Start']")
+        await pg.wait_for_timeout(700); print('  said (then 0.5 s, the list)', await pg.evaluate("SAID.slice(-2)"), "<- ['T.', \"You'll need: dumbbells and chair.\"]")
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("WP.phase === 'rest'", timeout=20000); await pg.evaluate("S.speed = 1")
         print('change rest             ', await pg.evaluate("[$('#wpRestLabel').textContent, $('#wpRestEquip').textContent, Math.round(WP.restLeft), $('[data-wact=\"restSkip\"]').textContent]"), "<- ['Rest', 'Put the dumbbells down · Position yourself by your chair', 10 (5 + 4.6), 'Skip']")
@@ -40,7 +40,7 @@ async def main():
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("S.ex.id === 'chair-arm-raises'", timeout=20000); await pg.evaluate("S.speed = 1"); await pg.wait_for_timeout(800)
         print('no rest: no rest screen ', await pg.evaluate("[WP.phase, $('#wpRest').hidden, S.trans > 0, S.resolved.slice(0, S.trans + 1).reduce((t, r, i) => t + r.dur + (i < S.trans ? r.hold : 0), 0) >= 4600]"), '<- [work, True, True, True] (the move lasts >= 4.6 s)')
-        print('  said while moving     ', await pg.evaluate("SAID.slice(-2)"), "<- [..., 'Put the dumbbells down. Position yourself by your chair.'] (Instructor names it in the walk-through)")
+        print('  said while moving     ', await pg.evaluate("SAID.slice(-2)"), "<- [..., 'Put the dumbbells down. Position yourself by your chair.'] (NstructR+ names it in the walk-through)")
         # pause at equipment changes: waits for Ready
         await pg.evaluate("hush(); WP.phase = 'done'; setPref(EQUIP_PAUSE_KEY, 'on')")
         await pg.evaluate(WK + "(['fw-db-curl', 'chair-arm-raises'], 0)"); await pg.wait_for_timeout(300)
