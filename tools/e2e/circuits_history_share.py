@@ -34,7 +34,7 @@ async def main():
               ['work', 2, 'Circuit, round 2 of 2'], ['rest', 3, 'Circuit, round 2 of 2'], ['work', 3, 'Circuit, round 2 of 2'], ['rest', 4, 'Finisher'], ['work', 4, 'Finisher'], ['done', 4, 'Finisher']])
         check('rest before round 2 says so', [x[3] for x in seen if x[1] == 2], has('Rest before round 2 of 2'))
         spoken = await pg.evaluate("SPOKEN"); print('spoken:', spoken)
-        check('round end announced', spoken, has('Round 1 done. Rest 2 seconds.'))
+        check('round end announced', spoken, lambda v: any(t.startswith('Round 1 done. Rest ') for t in v), 'Round 1 done. Rest … (2 s and the change of position)')
         check('each appearance demonstrated', [t for t in spoken if 'Watch me first' in t], lambda v: len(v) == 5)
         # history after finishing
         await pg.click('[data-wact="finish"]'); await pg.wait_for_timeout(300)

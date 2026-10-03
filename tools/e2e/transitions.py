@@ -68,10 +68,11 @@ async def main():
         check('to a chair', [way[-1], await pg.evaluate("posOf(exById('chair-arm-raises')).start")], ['Standing', 'standing'], 'you walk up to furniture')
         await pg.wait_for_function("S.idx === S.trans && S.t > S.resolved[S.trans].dur * 0.3 && S.t < S.resolved[S.trans].dur * 0.7", timeout=15000)
         check('  chair fading in', await pg.evaluate("[+$('#propsBack').style.opacity > 0 && +$('#propsBack').style.opacity < 1, $('#propsBack').innerHTML.includes('surface')]"), [True, True])
-        # no position to go through (a foam roller exercise): a crossfade; Clamshell's other side (mirrored, the head the
-        # other way): a crossfade, not a flip through the air
+        # no position to go through ("other"; the library has none left since Oct 2026, so one is marked here): a
+        # crossfade; Clamshell's other side (mirrored, the head the other way): a crossfade, not a flip through the air
         await pg.evaluate("hush(); WP.phase = 'done'")
         await pg.evaluate("""(() => { localStorage.setItem('nstructr-rest-between-v1', '0'); WK.list = WK.list.filter(w => w.id !== 't');
+          exById('roller-hamstrings').endPosition = 'other';
           WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [{ ...newItem(exById('roller-hamstrings')), reps: 1 }, { ...newItem(exById('side-clamshell')), reps: 1, sides: 'both' }] }] });
           saveWorkouts(); startWorkout(wkById('t'), 0); })()"""); await pg.wait_for_timeout(400)
         await pg.evaluate("wpAction('nextItem')"); fr = await pg.evaluate(WATCH, 500)
@@ -89,7 +90,8 @@ async def main():
         # a rest shorter than the move (1 s; Lateral Raise -> Glute Bridge takes about 5): the rest waits until it's there
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(1)'); await pg.wait_for_timeout(300)
         await pg.evaluate("wpAction('nextItem'); S.speed = 20"); await pg.wait_for_timeout(2500); await pg.evaluate("S.speed = 1")
-        await pg.wait_for_function("WP.phase === 'rest' && S.ex.id === 'bw-glute-bridge'", timeout=15000); await pg.wait_for_timeout(2000)
+        # (the rest also gets the time to say the change of position, Oct 2026: cut it short so it runs out mid-move)
+        await pg.wait_for_function("WP.phase === 'rest' && S.ex.id === 'bw-glute-bridge'", timeout=15000); await pg.evaluate("WP.restLeft = Math.min(WP.restLeft, 0.3)"); await pg.wait_for_timeout(1500)
         check('short rest: still moving', await pg.evaluate("[WP.phase, WP.restLeft <= 0, S.idx < S.trans]"), ['rest', True, True])
         await pg.wait_for_function("WP.phase === 'work'", timeout=10000)
         check('  then starts, arrived', await pg.evaluate("[WP.phase, S.planMeta[0].phase !== 'transition']"), ['work', True])

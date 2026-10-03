@@ -123,22 +123,22 @@ function onWorkEnd() {
   logItem(cur);
   if (WP.i < WP.flat.length - 1) {
     WP.i++; saveSession();
-    const nx = WP.flat[WP.i], ch = equipmentChange(exById(cur.item.ex), exById(nx.item.ex));
+    const nx = WP.flat[WP.i], ch = exerciseChange(exById(cur.item.ex), exById(nx.item.ex), itemSegments(nx.item)[0].side);
     const rest = nx.firstOfRound ? (nx.block.roundRest != null ? nx.block.roundRest : 30) : restGap();
     // no rest between: no rest screen; the move into the next exercise takes as long as saying what to do
-    if (ch && rest <= 0 && !equipPauseOn()) { WP.equipChange = ch; return runCurrent(true); }
+    if (ch && rest <= 0 && !(ch.equipment && equipPauseOn())) { WP.equipChange = ch; return runCurrent(true); }
     return startRest(rest, nx.firstOfRound ? 'round' : 'item', ch);
   }
   finishWorkout();
 }
-/* ch: an equipment change ({ seconds, lines }, equipmentChange) or, for kind 'start', the checklist ({ seconds: 0,
-   lines: ["You'll need …"] }): the rest gets its seconds added and says its lines; with "Pause at equipment changes" it
-   waits for Ready instead of counting down to the next exercise */
+/* ch: a change of equipment or position ({ seconds, lines, equipment }, exerciseChange) or, for kind 'start', the
+   checklist ({ seconds: 0, lines: ["You'll need …"] }): the rest gets its seconds added and says its lines; with "Pause
+   at equipment changes" it waits for Ready instead of counting down to the next exercise (not for a position alone) */
 function startRest(seconds, kind, ch = null) {
   if (ch) seconds += ch.seconds;
   if (seconds <= 0) return runCurrent(true);
   WP.phase = 'rest'; WP.restLeft = seconds; WP.restLast = performance.now(); WP.beeped = {}; S.canAdvance = null; S.holdWait = null;
-  WP.waitReady = !!ch && equipPauseOn();
+  WP.waitReady = !!ch && ch.equipment !== false && equipPauseOn();   // (a change of position alone doesn't wait)
   const cur = current(), ex = exById(cur.item.ex);
   $('#wpRest').hidden = false; $('#wpControls').classList.remove('show');
   // 'start': the workout's title card, what you'll need for it (not the first exercise: that has its own start); no

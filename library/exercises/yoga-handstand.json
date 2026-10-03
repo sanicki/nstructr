@@ -7,8 +7,6 @@
   "category": "Balancing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
-  "startPosition": "other",
-  "endPosition": "other",
   "muscles": {"shoulders": 3, "chest": 1, "upperBack": 2, "triceps": 2, "core": 2},
   "description": "Full inversion balancing on the hands with the body vertical.",
   "source": {
@@ -39,8 +37,8 @@
       ],
       "pose": {
         "torso": [135, 0, 0],
-        "shoulderL": [-180, 0, 0],
-        "shoulderR": [-180, 0, 0],
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0],
         "hipL": [-27.3, 0, 0],
         "ankleL": -27.3,
         "hipR": [-27.3, 0, 0],
@@ -56,8 +54,8 @@
       "phase": "rep",
       "pose": {
         "root": [180, 0, 0],
-        "shoulderL": [-180, 0, 0],
-        "shoulderR": [-180, 0, 0]
+        "shoulderL": [180, 0, 0],
+        "shoulderR": [180, 0, 0]
       }
     }
   ],

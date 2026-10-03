@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 # quick and central: speech and workouts, transitions, the cover screen, the tabs, imports and sharing, offline
 FAST = ['ready_still', 'speech_order', 'encouragement', 'equipment_changes', 'test_run', 'reps_sets_sides', 'transitions',
-        'tabs_settings_player', 'gestures_cover', 'layout_overlap', 'library_and_ids', 'workouts_tab', 'exercises_tab',
+        'position_changes', 'tabs_settings_player', 'gestures_cover', 'layout_overlap', 'library_and_ids', 'workouts_tab', 'exercises_tab',
         'security_imports', 'share_links', 'pwa_offline_backup', 'muscles', 'variations']
 # need the internet (source links, AI apps): never run by default
 ONLINE = []

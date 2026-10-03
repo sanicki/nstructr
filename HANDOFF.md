@@ -616,12 +616,21 @@ representations that rotate the short, natural way) over adding a known issue; i
 ### 8.3b Between exercises: positions and at-rest poses (Oct 2026, owner's request)
 - Before, the next exercise cut in: the figure, the camera angle and the frame all jumped (a deliberate `S.from = null`).
 - **Positions** (`src/positions.js`, shared by the app and the build): standing, kneeling, all fours, seated, lying on the
-  back (`supine`), face down (`prone`), on the side (`side-lying`), plank. Each exercise's start and end position is
+  back (`supine`), face down (`prone`), on the side (`side-lying`), plank, and three ways into inversions and arm
+  balances: a squat with the hands down (`squat`: Crow, Side Crow, Firefly), Downward Dog (`down-dog`: Handstand, Pike
+  Push-Up, the end of Downward Dog), Dolphin (`dolphin`: Headstand, Forearm Stand). Each exercise's start and end position is
   worked out from its first and last frames (what touches the floor, the trunk's angle, which way the chest faces, the
   thighs toward or away from the head); a last frame it can't place, with no finish step, counts as the start (the reps
-  come back there: a bridge at the top, a forward fold). `startPosition` / `endPosition` override it (`"other"`: none
-  fits, e.g. headstands, handstands, crow from a squat). The build checks the rest poses and prints the counts and any
-  exercise it can't place (not on equipment) so it gets an override.
+  come back there: a bridge at the top, a forward fold). Downward Dog and Dolphin need the hips over the hands or
+  forearms, the chest facing down and the hands well ahead of the feet (more than 1.1 leg lengths: Down Dog is ~1.35, a
+  standing fold ≤ 0.9; bridges face up); the squat, the feet and hands down with both legs bent (hip to ankle under 0.6
+  of the leg). At a wall or on furniture these three count as standing (you walk up to it). `startPosition` /
+  `endPosition` override the guess (`"other"`: none fits, a crossfade; no library exercise needs it). Leg Pull and the
+  calf and hamstring foam roller rolls are set to `seated` (their sources start sitting, legs long). The build checks
+  the rest poses and prints the counts and any exercise it can't place (not on equipment) so it gets an override.
+- The three ways in have the exercises' own first steps as their rest poses, written the same way: a blend between two
+  ways of writing one pose (a shoulder at 135° and at −225°) swings the arm round, so Forearm Stand's and Handstand's
+  shoulders were shifted by 360° in every step (the same motion).
 - **At-rest poses** (`REST`): one per position, copied from a library exercise's first step (Mountain, Camel, Cat-Cow
   tabletop, Staff, Corpse with knees bent, Superman with arms down, Clamshell, Push-Up plank), so they face the way the
   library does (every position's exercises turned out to face one way, Oct 2026 survey).
@@ -664,7 +673,10 @@ representations that rotate the short, natural way) over adding a known issue; i
   tabletop the shins flicked up), plank ↔ face down, standing ↔ plank (Burpee's
   squat with the hands down and kick back), standing ↔ seated (Squat's low point, then a fitted "sit back": seat, feet
   and hands down), seated ↔ on the back, seated ↔ all fours (sit back, rock forward into the crouch, knees down: it keeps
-  the floor positions facing up and down joined without standing up). `positionPath` takes the quickest route (Dijkstra
+  the floor positions facing up and down joined without standing up), standing ↔ squat (Burpee's crouch), standing ↔
+  Downward Dog (a forward fold, then walk the hands out), all fours ↔ Downward Dog (tuck the toes, the ankle set by the
+  toes touching, so they stay put as the hips lift), all fours ↔ Dolphin (toes tucked, forearms down, upper arms
+  straight down, then lift the hips). `positionPath` takes the quickest route (Dijkstra
   by steps): standing → on the back is squat, sit back, sit, lie back; on the back → face down is sit up, sit back,
   crouch, all fours, lower down, lie down (the longest). Supine ↔ either side: arm up, roll (above).
 - `transitionFrames` resolves [the last position's rest pose, …route] as one sequence, shifts it to stand between the two
@@ -679,7 +691,8 @@ representations that rotate the short, natural way) over adding a known issue; i
 
 ### 8.3c Equipment changes (Oct 2026, owner's choice of options 1–4, then the time from the words)
 - The figure's equipment fades in and out between exercises (§8.3b), but the person has to put things down and fetch
-  others. `equipmentChange(from, to)` (`src/app/4-workouts.js`): what is put down and fetched (the library's equipment
+  others. `equipmentChange(from, to)` (`src/app/4-workouts.js`; the player uses `exerciseChange`, which adds the change of
+  position, §8.3d): what is put down and fetched (the library's equipment
   in `EQUIP`, with words: pick up / put down what's easy to carry, "Put the dumbbells down", "Pick up the kettlebell";
   for furniture and the wall "Position yourself by your chair" (owner); the yoga mat stays down; Dumbbell and Dumbbells
   count as one; leaving furniture for nothing, e.g. a chair to no equipment, has nothing to say and is no change: it
@@ -711,6 +724,22 @@ representations that rotate the short, natural way) over adding a known issue; i
   change (and the checklist) a rest screen that waits for Ready (`WP.waitReady`; also with no rest): the time is hidden,
   +15 s goes, Skip reads Ready, the voice adds "Tap Ready when you're set."
 - Not chosen (offered): showing the changes in the workout editor and grouping exercises by equipment.
+
+### 8.3d Position changes (Oct 2026, owner's lines)
+- Between exercises in different positions (§8.3b) NstructR and NstructR+ say how to get there, in the order you do it
+  (owner): put down, change position, pick up; timed like an equipment change (`exerciseChange(from, to, side)` in
+  `4-workouts.js` returns `{ seconds, lines, equipment }`, from `equipmentChange`'s `drop` and `get`; `onWorkEnd`, the
+  rest and the estimate use it): "Put the dumbbells down. Lower to the floor and roll onto your back. Pick up the
+  resistance band." Shown on the rest screen and captioned in every mode.
+- The words (`4b-speech.js`): `POS_SAY[from][to]` for the eight floor and standing positions (the owner's 56 lines;
+  "lay" corrected to "lie"); a line to lying on the side names the side the next exercise's first side lies on
+  (`{side}`, `lyingSideWord`: the lower shoulder of its first step, mirrored for an item done right side first); between
+  the two sides, "Roll over onto your left side.". The three ways into inversions are reached through a neighbour on the
+  quickest route (`POSITIONS_EX.positionRoute`): `POS_OUT` (out of it to that neighbour), then `POS_SAY` between the
+  first and last of the eight on the route, then `POS_INTO` ("Supine → Downward Dog": "Roll to one side, press up, and
+  stand tall. Fold forward and walk your hands out to Downward Dog."). Every pair has a line
+  (`tools/e2e/position_changes.py`).
+- "Pause at equipment changes" waits for equipment only (`ch.equipment`): a change of position alone counts down.
 
 ### 8.4 Sound
 - **The coaching script** (`src/coach.js`, Oct 2026): `COACH.setScript(versions, options)` turns one set of one

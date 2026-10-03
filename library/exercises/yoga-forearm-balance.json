@@ -7,8 +7,6 @@
   "category": "Inversion",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
-  "startPosition": "other",
-  "endPosition": "other",
   "muscles": {"shoulders": 3, "upperBack": 2, "triceps": 1, "core": 2},
   "stretches": ["chest"],
   "description": "Forearm balance with the legs stacked over the shoulders.",
@@ -40,9 +38,9 @@
       ],
       "pose": {
         "torso": [135, 0, 0],
-        "shoulderL": [-225, 0, 0],
+        "shoulderL": [135, 0, 0],
         "elbowL": 90,
-        "shoulderR": [-225, 0, 0],
+        "shoulderR": [135, 0, 0],
         "elbowR": 90,
         "hipL": [-39.8, 0, 0],
         "ankleL": -39.8,
@@ -60,9 +58,9 @@
       "pose": {
         "root": [180, 0, 0],
         "neck": [-70, 0, 0],
-        "shoulderL": [-180, 0, 0],
+        "shoulderL": [180, 0, 0],
         "elbowL": 90,
-        "shoulderR": [-180, 0, 0],
+        "shoulderR": [180, 0, 0],
         "elbowR": 90
       }
     }

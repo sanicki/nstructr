@@ -113,3 +113,97 @@ function speakGuided(text) {
 }
 /* the equipment words, after half a second of silence */
 function sayEquipment(ch, tail = '') { return new Promise(res => setTimeout(() => say(`${ch.lines.join('. ')}.${tail}`).then(res), EQUIP_PAD * 1000)); }
+/* Changing position between exercises (owner, Oct 2026): what to do, said like an equipment change while the figure
+   moves (src/positions.js). POS_SAY[from][to] for the eight floor and standing positions (the owner's lines; "{side}"
+   becomes "left" or "right", the side the next exercise lies on); the ways into inversions and arm balances (squat,
+   Downward Dog, Dolphin) are reached from a neighbouring position on the route, so their lines say how to get in or out
+   from there (POS_INTO, POS_OUT) after or before the line to that neighbour. */
+const POS_SAY = {
+  standing: {
+    supine: 'Lower to the floor and roll onto your back.',
+    seated: 'Sit down on your mat with feet flat or legs crossed.',
+    prone: 'Walk your hands out and lie flat on your stomach.',
+    'all-fours': 'Hinge at the hips, bend your knees, and come to table top.',
+    plank: 'Hinge forward, plant your hands, and step back to plank.',
+    'side-lying': 'Lower to your {side} side, stacking your hips and knees.',
+    kneeling: 'Lower your back knee down and bring both knees to the mat.' },
+  supine: {
+    standing: 'Roll to one side, press up, and stand tall.',
+    seated: 'Tuck your chin and roll up to a seat.',
+    prone: 'Roll over onto your stomach.',
+    'all-fours': 'Hug knees to chest, roll onto your side, and press up to table top.',
+    plank: 'Roll to your side, plant your hands, and step back to plank.',
+    'side-lying': 'Roll onto your {side} side, stacking hips and shoulders.',
+    kneeling: 'Roll onto your side, press up, and kneel high.' },
+  seated: {
+    standing: 'Plant your feet and press up to stand.',
+    supine: 'Lie back onto your mat.',
+    prone: 'Swing your legs around and lie flat on your stomach.',
+    'all-fours': 'Cross your ankles, roll forward, and plant your hands on table top.',
+    plank: 'Swing your legs back, plant your hands, and step into plank.',
+    'side-lying': 'Lie down on your {side} side, keeping hips stacked.',
+    kneeling: 'Shift your weight forward onto your knees.' },
+  prone: {
+    standing: 'Press into your hands, step forward, and stand.',
+    supine: 'Flip over onto your back.',
+    seated: 'Press through your hands and sit back on your hips.',
+    'all-fours': 'Press your chest up and bring your hips over your knees.',
+    plank: 'Tuck your toes, engage your core, and press up to plank.',
+    'side-lying': 'Roll onto your {side} side, bending your elbow to support your head.',
+    kneeling: 'Press back onto your knees and lift your torso tall.' },
+  'all-fours': {
+    standing: 'Tuck your toes, step forward, and rise to stand.',
+    supine: 'Swing your legs around and roll onto your back.',
+    seated: 'Shift your hips back to sit on your heels or mat.',
+    prone: 'Walk your hands forward and lower your hips to the mat.',
+    plank: 'Step your feet back one at a time into plank.',
+    'side-lying': 'Lower your {side} hip to the mat and slide into a side lie.',
+    kneeling: 'Walk your hands in and stack your shoulders over your knees.' },
+  plank: {
+    standing: 'Step your feet to your hands and roll up to stand.',
+    supine: 'Lower down, turn over, and lie on your back.',
+    seated: 'Bring your knees down and swing your legs forward into a seat.',
+    prone: 'Lower your body all the way down to the mat.',
+    'all-fours': 'Lower your knees directly under your hips.',
+    'side-lying': 'Lower your knees, drop your {side} hip, and lie on your side.',
+    kneeling: 'Drop your knees and lift your chest high.' },
+  'side-lying': {
+    standing: 'Press into your hand, swing your feet around, and stand.',
+    supine: 'Roll onto your back.',
+    seated: 'Press through your top hand and sit up.',
+    prone: 'Roll onto your stomach.',
+    'all-fours': 'Press up onto hands and knees.',
+    plank: 'Roll onto your belly, plant hands, tuck toes, and press to plank.',
+    'side-lying': 'Roll over onto your {side} side.',
+    kneeling: 'Press into your hand and come up onto your knees.' },
+  kneeling: {
+    standing: 'Step one foot forward and press up to stand.',
+    supine: 'Shift your hips to one side, sit, and lie back.',
+    seated: 'Sit your hips back onto your heels or the floor.',
+    prone: 'Walk your hands out and lower your chest to the mat.',
+    'all-fours': 'Hinge forward and plant your hands under your shoulders.',
+    plank: 'Plant your hands and step your feet back into plank.',
+    'side-lying': 'Lower your {side} hip to the side and extend down onto the mat.' }
+};
+const POS_INTO = {
+  squat: { standing: 'Squat down and plant your hands on the floor.' },
+  'down-dog': { standing: 'Fold forward and walk your hands out to Downward Dog.', 'all-fours': 'Tuck your toes and lift your hips into Downward Dog.' },
+  dolphin: { 'all-fours': 'Lower onto your forearms, tuck your toes, and lift your hips into Dolphin.' }
+};
+const POS_OUT = {
+  squat: { standing: 'Lift your hands and stand up.' },
+  'down-dog': { standing: 'Walk your feet to your hands and roll up to stand.', 'all-fours': 'Lower your knees to table top.' },
+  dolphin: { 'all-fours': 'Lower your knees and come up onto your hands.' }
+};
+/* what to say to get from position a to b (POSITIONS_EX keys; side: 'left' or 'right' when b is lying on the side), or ''
+   ("side-lying-r" is the other side: the same words) */
+function positionLine(a, b, side = '') {
+  const key = p => (p && p.startsWith('side-lying') ? 'side-lying' : p);
+  if (!a || !b || a === b) return '';
+  const stops = (POSITIONS_EX.positionRoute(a, b) || [a, b]).map(key), core = stops.filter(p => POS_SAY[p]);
+  const from = core[0], to = core[core.length - 1], parts = [];
+  if (!POS_SAY[stops[0]]) parts.push((POS_OUT[stops[0]] || {})[stops[1]]);
+  if (from && to && from !== to || key(a) === 'side-lying' && key(b) === 'side-lying') parts.push((POS_SAY[from] || {})[to]);
+  if (!POS_SAY[stops[stops.length - 1]]) parts.push((POS_INTO[stops[stops.length - 1]] || {})[stops[stops.length - 2]]);
+  return parts.filter(Boolean).join(' ').replace(/\{side\} /g, side ? side + ' ' : '');
+}

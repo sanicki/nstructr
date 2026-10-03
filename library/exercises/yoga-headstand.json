@@ -7,8 +7,6 @@
   "category": "Balancing",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
-  "startPosition": "other",
-  "endPosition": "other",
   "muscles": {"shoulders": 3, "upperBack": 2, "triceps": 1, "core": 2},
   "description": "Inversion balancing on the forearms and the crown of the head.",
   "source": {

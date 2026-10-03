@@ -255,6 +255,17 @@ By the HANDOFF section that describes the current behaviour.
 
 - Oct 2026: the name was queued only once the equipment line had been said; with a slow voice the move in, timed from the estimate, was over first and the exercise's "Ready… Begin." came before its name.
 
+### 8.3b Between exercises: positions and at-rest poses
+
+- Oct 2026: ten exercises had no position (Crow, Side Crow, Firefly, Handstand, Headstand, Forearm Stand, Pike Push-Up
+  set to `"other"`; Leg Pull too; the calf and hamstring foam roller rolls couldn't be placed) and crossfaded in and out.
+  Compared in filmstrips (owner): the nearest existing position (blending straight from its rest pose into the first
+  step) flailed the legs (Kneeling → Dolphin, tabletop → Downward Dog) and swung a leg through the squat; new
+  positions on a route of moves didn't. Owner's choice: `seated` for the three that start sitting, new `squat`,
+  `down-dog` and `dolphin` positions for the rest. The build's move checks then caught Child's Pose → Dolphin (the hands
+  slid 134 px) and tabletop → Downward Dog (the toes slid 21 px, as in the Downward Dog exercise, a known issue there):
+  replaced by forearms down from all fours and a toe tuck.
+
 ### 8.4 Sound
 
 - Oct 2026: the coaching script's build check found Bound Angle, Side Plank and Wheel with `holdStep` on a setup step: in a workout they were never held; now the pose. The run-through used to be estimated at a flat 2 s a step; it's timed from its cues now.
