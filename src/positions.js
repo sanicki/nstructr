@@ -95,9 +95,12 @@
   ];
   const STEP_MS = 900;
   /* the quickest route from one position to another: the steps after a's rest pose up to and including b's, or null */
-  function positionPath(a, b) {
-    if (a === b) return [];
-    const best = { [a]: { ms: 0, path: [] } }, todo = [a];
+  function positionPath(a, b) { const r = route(a, b); return r && r.path; }
+  /* the positions that quickest route passes through, a and b included (["supine", "seated", "standing"]), or null */
+  function positionRoute(a, b) { const r = route(a, b); return r && r.stops; }
+  function route(a, b) {
+    if (a === b) return { path: [], stops: [a] };
+    const best = { [a]: { ms: 0, path: [], stops: [a] } }, todo = [a];
     while (todo.length) {
       todo.sort((x, y) => best[x].ms - best[y].ms);
       const at = todo.shift();
@@ -107,10 +110,10 @@
         const to = fwd ? m.b : m.a, via = fwd ? m.via : [...m.via].reverse();
         const steps = [...via, { name: LABELS[to], ...REST[to] }].map(k => ({ durationMs: STEP_MS, holdMs: 0, ...k }));
         const ms = best[at].ms + steps.length * STEP_MS;
-        if (!best[to] || ms < best[to].ms) { best[to] = { ms, path: [...best[at].path, ...steps] }; todo.push(to); }
+        if (!best[to] || ms < best[to].ms) { best[to] = { ms, path: [...best[at].path, ...steps], stops: [...best[at].stops, to] }; todo.push(to); }
       }
     }
-    return best[b] ? best[b].path : null;
+    return best[b] || null;
   }
   // lying on the other side: the same rest pose mirrored (an exercise's right side lies on the other side)
   REST['side-lying-r'] = C.mirrorKeyframe({ name: 'side-lying', ...REST['side-lying'] });
@@ -200,6 +203,6 @@
     }
     return out;
   }
-  const api = { POSITIONS, LABELS, REST, MOVES, positionPath, classify, positionsOf, onEquipment, onFurniture, lyingSide, pointsOf, checkRest };
+  const api = { POSITIONS, LABELS, REST, MOVES, positionPath, positionRoute, classify, positionsOf, onEquipment, onFurniture, lyingSide, pointsOf, checkRest };
   if (typeof module !== 'undefined') module.exports = api; else root.POSITIONS_EX = api;
 })(typeof window !== 'undefined' ? window : globalThis);

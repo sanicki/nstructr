@@ -46,7 +46,8 @@ and nothing as an exercise ends. Either way the count starts with "Ready… Begi
 ### Pause at equipment changes
 
 Off at first. When the next exercise needs other equipment (and at the title card of a workout with
-equipment), the workout waits until you tap **Ready** instead of carrying on once it has said what to do. See
+equipment), the workout waits until you tap **Ready** instead of carrying on once it has said what to do (not for a
+change of position alone). See
 [Working out → Equipment](Working-out.md#equipment).
 
 ### Text-to-speech speed

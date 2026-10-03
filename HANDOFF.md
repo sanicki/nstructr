@@ -691,7 +691,8 @@ representations that rotate the short, natural way) over adding a known issue; i
 
 ### 8.3c Equipment changes (Oct 2026, owner's choice of options 1–4, then the time from the words)
 - The figure's equipment fades in and out between exercises (§8.3b), but the person has to put things down and fetch
-  others. `equipmentChange(from, to)` (`src/app/4-workouts.js`): what is put down and fetched (the library's equipment
+  others. `equipmentChange(from, to)` (`src/app/4-workouts.js`; the player uses `exerciseChange`, which adds the change of
+  position, §8.3d): what is put down and fetched (the library's equipment
   in `EQUIP`, with words: pick up / put down what's easy to carry, "Put the dumbbells down", "Pick up the kettlebell";
   for furniture and the wall "Position yourself by your chair" (owner); the yoga mat stays down; Dumbbell and Dumbbells
   count as one; leaving furniture for nothing, e.g. a chair to no equipment, has nothing to say and is no change: it
@@ -723,6 +724,21 @@ representations that rotate the short, natural way) over adding a known issue; i
   change (and the checklist) a rest screen that waits for Ready (`WP.waitReady`; also with no rest): the time is hidden,
   +15 s goes, Skip reads Ready, the voice adds "Tap Ready when you're set."
 - Not chosen (offered): showing the changes in the workout editor and grouping exercises by equipment.
+
+### 8.3d Position changes (Oct 2026, owner's lines)
+- Between exercises in different positions (§8.3b) NstructR and NstructR+ say how to get there, after any equipment
+  lines and timed the same way (`exerciseChange(from, to, side)` in `4-workouts.js` returns `{ seconds, lines,
+  equipment }`; `onWorkEnd`, the rest and the estimate use it): "Put the dumbbells down. Pick up the resistance band.
+  Lower to the floor and roll onto your back." Shown on the rest screen and captioned in every mode.
+- The words (`4b-speech.js`): `POS_SAY[from][to]` for the eight floor and standing positions (the owner's 56 lines;
+  "lay" corrected to "lie"); a line to lying on the side names the side the next exercise's first side lies on
+  (`{side}`, `lyingSideWord`: the lower shoulder of its first step, mirrored for an item done right side first); between
+  the two sides, "Roll over onto your left side.". The three ways into inversions are reached through a neighbour on the
+  quickest route (`POSITIONS_EX.positionRoute`): `POS_OUT` (out of it to that neighbour), then `POS_SAY` between the
+  first and last of the eight on the route, then `POS_INTO` ("Supine → Downward Dog": "Roll to one side, press up, and
+  stand tall. Fold forward and walk your hands out to Downward Dog."). Every pair has a line
+  (`tools/e2e/position_changes.py`).
+- "Pause at equipment changes" waits for equipment only (`ch.equipment`): a change of position alone counts down.
 
 ### 8.4 Sound
 - **The coaching script** (`src/coach.js`, Oct 2026): `COACH.setScript(versions, options)` turns one set of one

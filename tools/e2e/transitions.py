@@ -90,7 +90,8 @@ async def main():
         # a rest shorter than the move (1 s; Lateral Raise -> Glute Bridge takes about 5): the rest waits until it's there
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(1)'); await pg.wait_for_timeout(300)
         await pg.evaluate("wpAction('nextItem'); S.speed = 20"); await pg.wait_for_timeout(2500); await pg.evaluate("S.speed = 1")
-        await pg.wait_for_function("WP.phase === 'rest' && S.ex.id === 'bw-glute-bridge'", timeout=15000); await pg.wait_for_timeout(2000)
+        # (the rest also gets the time to say the change of position, Oct 2026: cut it short so it runs out mid-move)
+        await pg.wait_for_function("WP.phase === 'rest' && S.ex.id === 'bw-glute-bridge'", timeout=15000); await pg.evaluate("WP.restLeft = Math.min(WP.restLeft, 0.3)"); await pg.wait_for_timeout(1500)
         check('short rest: still moving', await pg.evaluate("[WP.phase, WP.restLeft <= 0, S.idx < S.trans]"), ['rest', True, True])
         await pg.wait_for_function("WP.phase === 'work'", timeout=10000)
         check('  then starts, arrived', await pg.evaluate("[WP.phase, S.planMeta[0].phase !== 'transition']"), ['work', True])

@@ -55,6 +55,14 @@ and shown. The workout's time includes it. The yoga mat stays down, so it doesn'
 **[Pause at equipment changes](Settings.md#pause-at-equipment-changes)** on, the workout waits for you to tap
 **Ready** instead.
 
+### Changing position
+
+When the next exercise starts in another position (standing, kneeling, on all fours, sitting, lying on your back,
+front or side, plank, a squat with the hands down, Downward Dog or Dolphin), it also says how to get there while the
+figure moves, after any equipment: "Lower to the floor and roll onto your back.", "Lower to your left side, stacking
+your hips and knees." It's timed the same way as an equipment change (added to the rest, or the move takes that long
+with no rest) and shown on the rest screen. **Pause at equipment changes** doesn't wait for a change of position alone.
+
 ## Instruction
 
 | Mode | You hear |
