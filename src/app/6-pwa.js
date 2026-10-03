@@ -65,11 +65,11 @@ const BACKUP_FORMAT = 'nstructr/backup';
 /* every setting and remembered choice, by the name it has in a backup: [name, storage key, kind, default]
    (on/off switches are true/false in the file; the Instruction, speech speed and encouragement are handled on their own) */
 const BACKUP_PREFS = [
-  ['restBetween', REST_KEY, 'seconds', 5], ['restSets', REST_SETS_KEY, 'seconds', 10],
+  ['restBetween', REST_KEY, 'seconds', 5], ['restSets', REST_SETS_KEY, 'seconds', 10], ['equipTime', EQUIP_TIME_KEY, 'seconds', 5],
   ['theme', THEME_KEY, ['system', 'light', 'dark'], 'system'], ['fullscreen', FS_KEY, 'switch', true],
   ['autoplay', AUTOPLAY_KEY, 'switch', true], ['authoring', AUTHOR_KEY, 'switch', false],
   ['exerciseLoop', LOOP_KEY, 'switch', true], ['exerciseMute', EXMUTE_KEY, 'switch', true],
-  ['groupCollections', GROUP_KEY, 'switch', false],
+  ['groupCollections', GROUP_KEY, 'switch', false], ['equipPause', EQUIP_PAUSE_KEY, 'switch', false],
   ['aiApp', AI_KEY, AI_APPS.map(a => a.id), 'gemini'], ['aiEquipment', AI_EQUIP_KEY, 'list', []],
   ['libraryOrder', LIB_ORDER_KEY, 'list', null]
 ];

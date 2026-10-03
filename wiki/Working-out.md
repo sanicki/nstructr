@@ -42,19 +42,15 @@ When the exercise has an easier or harder version, the controls show **Easier** 
 Between exercises (and sets and rounds) a big countdown shows what's next. **+15 s** adds time; **Skip** moves
 on. Beeps count down the last 3 seconds in Beeps, Coach and Instructor modes.
 
-<img src="images/rest.png" width="300" alt="A rest: countdown, what's next, +15 s and Skip">
+### Equipment
 
-**From one exercise to the next** the figure doesn't jump. When the next exercise starts in the position the last one
-ended in (both standing, both on all fours, both lying on your back…), the figure eases back to a relaxed pose in that
-position, then moves into the next exercise, and the view turns and zooms with it: during the rest if there is one, or
-in about a second and a half if the rest is 0. When the position changes, it gets there the way you would: standing to
-lying on your back, it squats, sits back, sits and lies down; from all fours to standing, it kneels up, steps one foot
-forward and stands. That takes a few seconds; in a short rest, the next exercise starts once the figure is in place.
-Equipment you sit, lie or lean on (a chair, bench, wall or bar) is walked up to: the figure stands up from the last
-exercise as its equipment fades away, then sits, lies or leans as the next one's fades in. Lying on your side, it lies
-on its back and rolls over. The picture fades from one exercise to the other only when there's no position to go
-through (a foam roller under the legs) or between the two sides of a side-lying exercise (the other side is drawn as a
-mirror image). With your device's *reduce motion* setting on, it simply switches.
+A workout that uses equipment starts with **Get ready**: what you'll need (for example "dumbbells and chair") and the
+first exercise. When the next exercise needs other equipment, the rest is longer by the
+[equipment transition time](Settings.md#equipment-transition-time) and says what to do, on the screen and in Coach and
+Instructor modes: "Put the dumbbells down · Position yourself by your chair". **Get ready** lasts that long too. The workout's time
+includes both. The yoga mat stays down, so it doesn't count. With
+**[Pause at equipment changes](Settings.md#pause-at-equipment-changes)** on, the workout waits for you to tap
+**Ready** instead.
 
 ## Instruction
 

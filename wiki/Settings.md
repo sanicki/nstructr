@@ -22,6 +22,11 @@ going) or type a number, from 0 to 300. Default 5.
 Seconds of rest between the sets of an exercise done in more than one set, in every workout. Same controls.
 Default 10. (Rest between circuit rounds is set on each block.)
 
+### Equipment transition time
+Seconds added to the rest when the next exercise needs other equipment (time to put things down and get the next),
+and the length of **Get ready** before a workout that uses any. Same controls. Default 5. See
+[Working out → Equipment](Working-out.md#equipment).
+
 ### Instruction
 **Silent**, **Beeps**, **Coach** or **Instructor** (the default): see [Working out → Instruction](Working-out.md#instruction). Also used
 by the exercise page (Coach and Instructor read each step's cue once, then count).
@@ -32,6 +37,12 @@ Shown with **Coach** and **Instructor** (on at first). They vary their words: **
 great**: in place of about 1 in 5 counts (never the first or the last; 1 in 10 right after a count that was replaced),
 and every 10 seconds of a hold, 4 times in 10 (never at halfway or in the last 10 seconds). The same word is never
 used twice in a row ("Good. Breathe. Good.", not "Good. Good."). Off: always "Begin", the numbers and "Last one".
+
+### Pause at equipment changes
+
+Off at first. When the next exercise needs other equipment (and at the **Get ready** list before a workout with
+equipment), the workout waits until you tap **Ready** instead of adding the equipment transition time. See
+[Working out → Equipment](Working-out.md#equipment).
 
 ### Text-to-speech speed
 How fast Coach and Instructor speak, from **0.5×** to **3.0×** in steps of 0.1 (**1.0×** is the voice's normal speed).
