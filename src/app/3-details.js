@@ -175,7 +175,7 @@ function exStepSound(i) {
 function exHush() { XS.token++; XS.speaking = false; XS.last = ''; try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } }
 
 /* ---------- Settings ---------- */
-const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1', SPEECH_RATE_KEY = 'nstructr-speech-rate-v1', ENCOURAGE_KEY = 'nstructr-encourage-v1', EQUIP_PAUSE_KEY = 'nstructr-equip-pause-v1', EQUIP_TIME_KEY = 'nstructr-equip-time-v1';
+const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1', SPEECH_RATE_KEY = 'nstructr-speech-rate-v1', ENCOURAGE_KEY = 'nstructr-encourage-v1', EQUIP_PAUSE_KEY = 'nstructr-equip-pause-v1';
 const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
 const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
@@ -222,7 +222,6 @@ const encourageOn = () => pref(ENCOURAGE_KEY, 'on') !== 'off';
 const restGap = () => { const v = parseFloat(pref(REST_KEY, '5')); return v >= 0 ? v : 5; };
 /* seconds of rest between sets of an exercise, in every workout (a setting since Sep 2026; items' "rest" is ignored) */
 const restSets = () => { const v = parseFloat(pref(REST_SETS_KEY, '10')); return v >= 0 ? v : 10; };
-const equipTime = () => { const v = parseFloat(pref(EQUIP_TIME_KEY, '5')); return v >= 0 ? v : 5; };   // an equipment change (Oct 2026)
 function applyTheme(t) {
   if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
 }
@@ -232,7 +231,7 @@ function renderSettings() {
   seg('#setTheme', 'settheme', [['system', 'System'], ['light', 'Light'], ['dark', 'Dark']], pref(THEME_KEY, 'system'));
   $('#setFullscreen').checked = wantFullscreen();
   $('#setAutoplay').checked = pref(AUTOPLAY_KEY, 'on') !== 'off';
-  $('#setRest').value = restGap(); $('#setRestSets').value = restSets(); $('#setEquipTime').value = equipTime(); setRate(speechRate(), false);
+  $('#setRest').value = restGap(); $('#setRestSets').value = restSets(); setRate(speechRate(), false);
   $('#setAuthoring').checked = authoring();
   $('#setEncourage').checked = encourageOn(); $('#setEncourageRow').hidden = !['voice', 'coach'].includes(WK.sound);
   $('#setEquipPause').checked = equipPauseOn();
@@ -256,14 +255,13 @@ $('#bugLink').addEventListener('click', e => { e.currentTarget.href = `${BUG_URL
 $('#setEncourage').addEventListener('change', e => setPref(ENCOURAGE_KEY, e.target.checked ? 'on' : 'off'));
 $('#setEquipPause').addEventListener('change', e => setPref(EQUIP_PAUSE_KEY, e.target.checked ? 'on' : 'off'));
 $('#setAutoplay').addEventListener('change', e => setPref(AUTOPLAY_KEY, e.target.checked ? 'on' : 'off'));
-const REST_FIELDS = { between: [REST_KEY, '#setRest', () => restGap()], sets: [REST_SETS_KEY, '#setRestSets', () => restSets()], equip: [EQUIP_TIME_KEY, '#setEquipTime', () => equipTime()] };
+const REST_FIELDS = { between: [REST_KEY, '#setRest', () => restGap()], sets: [REST_SETS_KEY, '#setRestSets', () => restSets()] };
 function setRest(which, v) {
   v = Math.min(300, Math.max(0, Math.round(+v || 0)));
   const [key, field] = REST_FIELDS[which]; setPref(key, String(v)); $(field).value = v;
 }
 $('#setRest').addEventListener('change', e => setRest('between', e.target.value));
 $('#setRestSets').addEventListener('change', e => setRest('sets', e.target.value));
-$('#setEquipTime').addEventListener('change', e => setRest('equip', e.target.value));
 holdRepeat($('#view-settings'), '[data-rate-delta]', b => setRate(speechRate() + +b.dataset.rateDelta / 10));
 holdRepeat($('#view-settings'), '[data-rest-delta]', b => setRest(b.dataset.restKey, REST_FIELDS[b.dataset.restKey][2]() + +b.dataset.restDelta));
 $('#setAuthoring').addEventListener('change', e => { setPref(AUTHOR_KEY, e.target.checked ? 'on' : 'off'); applyAuthoring(); snack(e.target.checked ? 'Advanced exercise editor on: the Edit button (pencil) on any exercise now shows the poses and camera too' : 'Advanced exercise editor off', 6000); });

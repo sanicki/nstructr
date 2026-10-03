@@ -45,10 +45,12 @@ on. Beeps count down the last 3 seconds in Beeps, Coach and Instructor modes.
 ### Equipment
 
 A workout that uses equipment starts with **Get ready**: what you'll need (for example "dumbbells and chair") and the
-first exercise. When the next exercise needs other equipment, the rest is longer by the
-[equipment transition time](Settings.md#equipment-transition-time) and says what to do, on the screen and in Coach and
-Instructor modes: "Put the dumbbells down · Position yourself by your chair". **Get ready** lasts that long too. The workout's time
-includes both. The yoga mat stays down, so it doesn't count. With
+first exercise. When the next exercise needs other equipment, it says what to do, on the screen and in Coach and
+Instructor modes: "Put the dumbbells down · Position yourself by your chair", and gives you as long as that takes to
+say, with half a second before and after (about 4–5 seconds; longer at a slower
+[text-to-speech speed](Settings.md#text-to-speech-speed)). With a rest, that's added to the rest. With no rest between
+exercises there's no rest screen: the figure takes that long to move into the next exercise while the words are said
+and shown. The workout's time includes it. The yoga mat stays down, so it doesn't count. With
 **[Pause at equipment changes](Settings.md#pause-at-equipment-changes)** on, the workout waits for you to tap
 **Ready** instead.
 

@@ -87,11 +87,14 @@ function flattenWorkout(w) {
 }
 const workoutEquipment = w => [...new Set(w.blocks.flatMap(b => b.items).flatMap(it => (exById(it.ex) || {}).equipment || []))].sort();
 /* ---------- Equipment changes (Oct 2026) ----------
-   Between two exercises with different equipment the person has to put things down and get or set up others, so the rest
-   gets the "Equipment transition time" (Settings, one number the person sets; the time estimate counts it), the rest
-   screen and the voice say what to do, and a workout with equipment starts with a "Get ready" checklist that long. With
-   "Pause at equipment changes" it waits for Ready instead of counting down. The yoga mat stays down. get / drop: what
-   to say: pick up and put down what's easy to carry; position yourself by furniture and the wall. */
+   Between two exercises with different equipment the person has to put things down and get or set up others. The time
+   for it is what it takes to say so: half a second of silence, the words ("Put the dumbbells down. Position yourself by
+   your chair."), half a second (EQUIP_PAD; the words timed at the speech speed, as the time estimate does). With a rest
+   it's added to the rest, which shows and says what to do; with no rest there's no rest screen: the words are said
+   (and captioned) while the figure moves into the next exercise, and that move is slowed to last at least as long. A
+   workout with equipment starts with a "Get ready" checklist timed the same way. With "Pause at equipment changes" it
+   waits for Ready instead (a rest screen even with no rest). The yoga mat stays down. get / drop: what to say: pick up
+   and put down what's easy to carry; position yourself by furniture and the wall. */
 const EQUIP = {
   // easy to pick up and put down
   Dumbbells: { get: 'Pick up the dumbbells', drop: 'Put the dumbbells down' },
@@ -113,6 +116,10 @@ const EQUIP = {
   'Pull-up bar': { get: 'Position yourself under your pull-up bar' },
   'Door anchor': { get: 'Set up your door anchor' }
 };
+const EQUIP_PAD = 0.5;
+// how long the words take to say, with the silence before and after (~2.5 words a second at 1.0×)
+const equipSpoken = lines => EQUIP_PAD + lines.join(' ').split(/\s+/).filter(Boolean).length / 2.5 / speechRate() + EQUIP_PAD;
+const checklistLine = need => `You'll need: ${listWords(need.map(q => q.toLowerCase()))}`;
 const fetchKey = q => q === 'Dumbbell' ? 'Dumbbells' : q;                     // one dumbbell or two: the same to fetch
 const equipOf = ex => new Set(((ex && ex.equipment) || []).map(fetchKey).filter(q => EQUIP[q]));
 /* what changes from one exercise to the next: { seconds, lines } or null */
@@ -120,7 +127,8 @@ function equipmentChange(fromEx, toEx) {
   const a = equipOf(fromEx), b = equipOf(toEx);
   const put = [...a].filter(q => !b.has(q)), got = [...b].filter(q => !a.has(q)), all = [...put, ...got];
   if (!all.length) return null;
-  return { seconds: equipTime(), lines: [...put.map(q => EQUIP[q].drop).filter(Boolean), ...got.map(q => EQUIP[q].get)] };
+  const lines = [...put.map(q => EQUIP[q].drop).filter(Boolean), ...got.map(q => EQUIP[q].get)];
+  return { seconds: equipSpoken(lines), lines };
 }
 // everything a workout (from one of its exercises on) uses, for the "Get ready" checklist
 const neededFrom = (flat, i) => [...new Set(flat.slice(i).flatMap(e => [...equipOf(exById(e.item.ex))]))];
@@ -128,7 +136,7 @@ const listWords = xs => xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(',
 const equipPauseOn = () => pref(EQUIP_PAUSE_KEY, 'off') === 'on';
 /* the time the equipment adds to a workout: the changes between its exercises in order, and the checklist */
 function equipmentSeconds(w) {
-  const flat = flattenWorkout(w); let t = flat.length && neededFrom(flat, 0).length ? equipTime() : 0;
+  const flat = flattenWorkout(w), need = flat.length ? neededFrom(flat, 0) : []; let t = need.length ? equipSpoken([checklistLine(need)]) : 0;
   for (let i = 1; i < flat.length; i++) { const c = equipmentChange(exById(flat[i - 1].item.ex), exById(flat[i].item.ex)); if (c) t += c.seconds; }
   return t;
 }
@@ -718,7 +726,7 @@ function transitionFrames(fromEx, toEx, fromLast, toFirst, onlyIfMoving = false)
 }
 // during a rest: the figure is still moving into the next exercise's first pose
 const onTheWay = () => WP.phase === 'rest' && S.trans > 0 && (S.idx < S.trans || S.t < S.resolved[S.trans].dur);
-function stagePlan(p) {
+function stagePlan(p, minMs = 0) {
   const prevLast = S.mode === 'workout' && S.resolved.length ? S.resolved[S.idx] : null;
   const prevEx = S.ex, exChanged = !S.ex || S.ex.id !== p.ex.id;
   const fromBox = scene.getAttribute('viewBox'), drawnX = S.drawnX;
@@ -733,6 +741,13 @@ function stagePlan(p) {
       plan = Object.assign([...way, arrive, ...plan.slice(1)], { walls: plan.walls, supports: plan.supports });
       meta = [...way.map(() => ({ phase: 'transition' })), ...meta]; trans = way.length;
     } else if (exChanged) fade = true;
+  }
+  // an equipment change with no rest: the way into the next exercise lasts at least as long as saying what to do; with no
+  // way in (a crossfade, reduced motion) the first pose waits that long
+  if (minMs > 0) {
+    const span = plan.slice(0, trans + 1).reduce((t, r, i) => t + r.dur + (i < trans ? r.hold : 0), 0);
+    if (trans && span < minMs) { const k = minMs / span; plan = Object.assign(plan.map((r, i) => i <= trans ? { ...r, dur: Math.round(r.dur * k), hold: i < trans ? Math.round(r.hold * k) : r.hold } : r), { walls: plan.walls, supports: plan.supports }); }
+    else if (!trans) { plan = Object.assign([{ ...plan[0], dur: 0, hold: minMs, step: -1 }, ...plan], { walls: plan.walls, supports: plan.supports }); meta = [{ phase: 'transition' }, ...meta]; trans = 1; }
   }
   if (fade) crossfadeScene();
   // the last exercise's equipment (and band or weights) fades out as the figure leaves it; the next one's fades in as it
@@ -834,7 +849,7 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   S.mode = 'start';                                               // no transition into the first exercise
   // a workout with equipment starts with what to have at hand ("Get ready"), then the first exercise
   const need = neededFrom(WP.flat, WP.i);
-  if (need.length) { WP.phase = 'work'; startRest(equipTime(), 'start', { seconds: 0, lines: [`You'll need: ${listWords(need.map(q => q.toLowerCase()))}`] }); }
+  if (need.length) { WP.phase = 'work'; const lines = [checklistLine(need)]; startRest(0, 'start', { seconds: equipSpoken(lines), lines }); }
   else runCurrent(true);
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
 }
@@ -875,7 +890,7 @@ function runCurrent(announce) {
   const segs = itemSegments(cur.item);
   const segInfo = segs[WP.seg] || segs[0];
   const p = buildPlan(cur.item, segInfo);
-  stagePlan(p);
+  stagePlan(p, WP.equipChange ? WP.equipChange.seconds * 1000 : 0);
   WP.phase = 'work'; WP.beeped = {}; WP.rep = 0;
   $('#wpRest').hidden = true; $('#wpDone').hidden = true;
   S.playing = true; setWpPlay(true);
@@ -888,9 +903,11 @@ function runCurrent(announce) {
     if (segs.length > 1 && WP.seg > 0) { const prev = segs[WP.seg - 1]; bits[0] = prev.side !== segInfo.side ? (prev.dir !== segInfo.dir ? 'Switch sides and direction' : 'Switch sides') : 'Switch direction'; }   // what actually changed
     if (cur.item.sides && cur.item.sides !== 'alternate' && bl) bits.push(bl[segInfo.side]);
     if (cur.item.dir && cur.item.dir !== 'alternate' && dl) bits.push(dl[segInfo.dir]);
-    if (WK.sound !== 'coach') say(bits.join('. ') + '.');
-    else if (WP.seg > 0) say(bits[0] + '.');                  // "Switch sides." then the guided run-through for the new side
+    const named = WK.sound !== 'coach' ? bits.join('. ') + '.' : WP.seg > 0 ? bits[0] + '.' : '';   // Instructor: "Switch sides." then the guided run-through
+    if (WP.equipChange) { const ch = WP.equipChange; setTimeout(() => say(`${ch.lines.join('. ')}.`).then(() => { if (named) say(named); }), EQUIP_PAD * 1000); }
+    else if (named) say(named);
   }
+  WP.equipChange = null;
   S.canAdvance = i => !(S.planMeta[i] && S.planMeta[i].guided && WP.speaking);
   S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Now hold for N seconds"
   onWorkStep(0);
@@ -940,11 +957,15 @@ function onWorkEnd() {
   if (WP.i < WP.flat.length - 1) {
     WP.i++; saveSession();
     const nx = WP.flat[WP.i], ch = equipmentChange(exById(cur.item.ex), exById(nx.item.ex));
-    if (nx.firstOfRound) return startRest(nx.block.roundRest != null ? nx.block.roundRest : 30, 'round', ch);
-    return startRest(restGap(), 'item', ch);
+    const rest = nx.firstOfRound ? (nx.block.roundRest != null ? nx.block.roundRest : 30) : restGap();
+    // no rest between: no rest screen; the move into the next exercise takes as long as saying what to do
+    if (ch && rest <= 0 && !equipPauseOn()) { WP.equipChange = ch; return runCurrent(true); }
+    return startRest(rest, nx.firstOfRound ? 'round' : 'item', ch);
   }
   finishWorkout();
 }
+/* the equipment words, after half a second of silence */
+function sayEquipment(ch, tail = '') { setTimeout(() => say(`${ch.lines.join('. ')}.${tail}`), EQUIP_PAD * 1000); }
 /* ch: an equipment change ({ seconds, lines }, equipmentChange) or, for kind 'start', the checklist ({ seconds: 0,
    lines: ["You'll need …"] }): the rest gets its seconds added and says its lines; with "Pause at equipment changes" it
    waits for Ready instead of counting down to the next exercise */
@@ -967,8 +988,9 @@ function startRest(seconds, kind, ch = null) {
   else { S.playing = false; S.t = S.resolved[0].dur; }
   renderWpInfo();
   const rest = WP.waitReady ? '' : plural(Math.ceil(seconds), { one: 'Rest # second.', other: 'Rest # seconds.' });
-  const todo = ch ? ` ${ch.lines.join('. ')}.${WP.waitReady ? " Tap Ready when you're set." : ''}` : '';
-  say((kind === 'start' ? `First: ${ex.name}.` : kind === 'set' ? rest : kind === 'round' ? `Round ${fmtNum(cur.round)} done. ${rest}` : `${rest} Next: ${ex.name}.`).trim() + todo);
+  const first = (kind === 'start' ? `First: ${ex.name}.` : kind === 'set' ? rest : kind === 'round' ? `Round ${fmtNum(cur.round)} done. ${rest}` : `${rest} Next: ${ex.name}.`).trim();
+  const token = WP.restToken = (WP.restToken || 0) + 1;
+  say(first).then(() => { if (ch && WP.restToken === token && WP.phase === 'rest') sayEquipment(ch, WP.waitReady ? " Tap Ready when you're set." : ''); });
   beep(520, 200);
 }
 /* ---------- history ---------- */
