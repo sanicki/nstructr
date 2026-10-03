@@ -63,15 +63,15 @@ function itemSeconds(item) {
     ? item.seconds + sum(ph.setup) + sum(ph.finish) + (kfs[ex.holdStep || ph.start].durationMs || 0) / 1000 / t
     : sum(ph.setup) + sum(ph.finish) + sum(ph.rep) * item.reps * alt;
   // NstructR+: + ~2 s of speech a step. With a voice, a hold waits for its line (NstructR+: the pose's cue, then
-  // "Ready… Hold for N seconds", ~2.5 words a second) and reps for "Ready… Begin"
-  const voiced = WK.sound === 'voice' || WK.sound === 'coach', words = s => s.split(/\s+/).filter(Boolean).length / 2.5 / speechRate();
+  // "Ready… Hold for N seconds") and reps for "Ready… Begin"
+  const voiced = WK.sound === 'voice' || WK.sound === 'coach';
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
-  const holdLine = hk && voiced ? Math.max(0, words(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
+  const holdLine = hk && voiced ? Math.max(0, speechSeconds(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
   // "Ready… Begin." where it is; with no setup and no demonstration, while it gets into the position a rep ends in
-  const readyLine = !hk && voiced ? Math.max(words(READY_BEGIN), ph.setup.length || WK.sound === 'coach' ? 0 : (kfs[ph.end].durationMs || 0) / 1000 / t) : 0;
+  const readyLine = !hk && voiced ? Math.max(speechSeconds(READY_BEGIN), ph.setup.length || WK.sound === 'coach' ? 0 : (kfs[ph.end].durationMs || 0) / 1000 / t) : 0;
   const guide = holdLine + readyLine;
   // NstructR+'s demonstration: each side or direction once, in the first set ("Watch me first." once)
-  const demo = WK.sound === 'coach' ? segs * (sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt)) + words(WATCH_FIRST) : 0;
+  const demo = WK.sound === 'coach' ? segs * (sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt)) + speechSeconds(WATCH_FIRST) : 0;
   return item.sets * segs * (work + guide) + demo + (item.sets - 1) * restSets();
 }
 function blockSeconds(b, w) {
@@ -124,8 +124,8 @@ const EQUIP = {
   'Door anchor': { get: 'Set up your door anchor' }
 };
 const EQUIP_PAD = 0.5;
-// how long the words take to say, with the silence before and after (~2.5 words a second at 1.0×)
-const equipSpoken = lines => EQUIP_PAD + lines.join(' ').split(/\s+/).filter(Boolean).length / 2.5 / speechRate() + EQUIP_PAD;
+// how long the words take to say, with the silence before and after
+const equipSpoken = lines => EQUIP_PAD + speechSeconds(lines.join(' ')) + EQUIP_PAD;
 const checklistLine = need => `You'll need: ${listWords(need.map(q => q.toLowerCase()))}`;
 const fetchKey = q => q === 'Dumbbell' ? 'Dumbbells' : q;                     // one dumbbell or two: the same to fetch
 const equipOf = ex => new Set(((ex && ex.equipment) || []).map(fetchKey).filter(q => EQUIP[q]));
@@ -591,7 +591,8 @@ function say(text, { dropIfBusy = false } = {}) {
       // start reported, after the lines queued before it should be done too). Oct 2026: counted from when it was
       // queued, a line behind others gave up before it was said: "Ready… Begin." let the count start early, "1" came
       // late and "2" was dropped as it was still talking ("1. 3.")
-      const ms = 1500 + text.split(/\s+/).length * 450 / Math.min(1, speechRate()), now = performance.now();
+      // (generous: 1.5 s plus an eighth more than the estimate, and never shorter than at 1.0×)
+      const ms = 1500 + 1125 * speechSeconds(text, Math.min(1, speechRate())), now = performance.now();
       SAY_UNTIL = Math.max(now, SAY_UNTIL) + ms;
       timer = setTimeout(fin, SAY_UNTIL - now);
       u.onstart = () => { clearTimeout(timer); timer = setTimeout(fin, ms); };
@@ -603,7 +604,7 @@ let CAP_T = 0;
 function caption(text) {
   const el = $('#wpCaption'); if (!el) return;
   el.innerHTML = `<span>${esc(text)}</span>`; el.classList.add('show');
-  clearTimeout(CAP_T); CAP_T = setTimeout(() => el.classList.remove('show'), 1800 + text.split(/\s+/).length * 380);
+  clearTimeout(CAP_T); CAP_T = setTimeout(() => el.classList.remove('show'), 1800 + 950 * speechSeconds(text, 1));
 }
 function hush() { try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } WP.speaking = false; SAY_UNTIL = 0; }
 /* the Instruction setting. Stored values stay as they were (HANDOFF §11); the names changed twice in Oct 2026: 'voice' is
