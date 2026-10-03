@@ -125,6 +125,7 @@
     {
       "name": "Roll back",
       "cue": "Roll back to your shoulder blades.",
+      "call": "Roll back",
       "camera": 60,
       "durationMs": 1000,
       "holdMs": 100,
@@ -224,6 +225,7 @@
     {
       "name": "Roll up",
       "cue": "Roll up and balance.",
+      "call": "Roll up",
       "camera": 60,
       "durationMs": 1000,
       "holdMs": 300,

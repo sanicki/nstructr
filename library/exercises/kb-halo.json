@@ -92,6 +92,7 @@
     {
       "name": "Right side",
       "cue": "Past your right ear.",
+      "call": "Right",
       "camera": 0,
       "durationMs": 450,
       "holdMs": 0,
@@ -159,6 +160,7 @@
     {
       "name": "Behind",
       "cue": "Behind your head.",
+      "call": "Behind",
       "camera": 0,
       "durationMs": 450,
       "holdMs": 0,
@@ -226,6 +228,7 @@
     {
       "name": "Left side",
       "cue": "Past your left ear.",
+      "call": "Left",
       "camera": 0,
       "durationMs": 450,
       "holdMs": 0,

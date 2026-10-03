@@ -44,6 +44,14 @@ async def main():
         log = await run(b, 'voice', {'ex': 'kb-turkish-get-up', 'o': '{ reps: 1 }'}, errs)
         i = log.index('Ready… Begin.')
         print('get-up                  ', ' · '.join(log[i + 1:-1]), '<- 1 · Elbow · Hand · Hips · Sweep · Kneel · Stand · Kneel · Hand down · Leg through · Sit · Elbow')
+        # the library's other calls (Oct 2026): cat-cow; Around the World the other way round (the count takes the step
+        # it starts on, its call isn't said)
+        log = await run(b, 'voice', {'ex': 'yoga-cat-cow', 'o': '{ reps: 2 }'}, errs)
+        i = log.index('Ready… Begin.')
+        print('cat-cow                 ', ' '.join(log[i + 1:i + 7]), '<- 1 Cow Cat Last one Cow Cat')
+        log = await run(b, 'voice', {'ex': 'kb-around-the-world', 'o': "{ reps: 1, dir: 'B' }"}, errs)
+        i = log.index('Ready… Begin.')
+        print('around the world, back  ', ' '.join(log[i + 1:i + 4]), "<- 1 Behind Right (it starts on Left, where the count is)")
         # NstructR+ demonstrates an exercise when you come to it and each side the first time it comes up; not again for
         # its next sets; again when it comes back later ("Watch me first." on each appearance's first demonstration)
         async def demos(items):

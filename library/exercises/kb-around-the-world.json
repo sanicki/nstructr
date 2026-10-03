@@ -55,6 +55,7 @@
     {
       "name": "Round the right side",
       "cue": "Right hand takes it round your right side.",
+      "call": "Right",
       "camera": 30,
       "durationMs": 700,
       "holdMs": 0,
@@ -80,6 +81,7 @@
     {
       "name": "Pass behind",
       "cue": "Pass it to your left hand behind your back.",
+      "call": "Behind",
       "camera": 30,
       "durationMs": 700,
       "holdMs": 0,
@@ -111,6 +113,7 @@
     {
       "name": "Round the left side",
       "cue": "Left hand brings it round your left side.",
+      "call": "Left",
       "camera": 30,
       "durationMs": 700,
       "holdMs": 0,

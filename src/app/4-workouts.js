@@ -699,7 +699,7 @@ function buildPlan(item, segInfo) {
       // a step's call ("Forward", "Out to the right") as it starts; never on the rep's first step, where the count is said.
       // Rep 1's first step is already in place after "Ready… Begin.": it waits as long as the move would have taken, so
       // the rep keeps its rhythm and "1" has time before the next step's call
-      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0, hold: V[i].hold + V[i].dur } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && V[i].call ? { call: V[i].call } : {}) }));
+      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0, hold: V[i].hold + V[i].dur } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && CALL_OK.test(V[i].call || '') ? { call: V[i].call } : {}) }));
     }
   }
   const VL = versions[versions.length - 1].R;
@@ -957,6 +957,7 @@ function runCurrent(announce) {
    a finished phrase as each set (and side) ends ("Last one. Finished!"; Oct 2026).
    WP.random can be replaced (tests). */
 const READY_BEGIN = 'Ready… Begin.', WATCH_FIRST = 'Watch me first.';
+const CALL_OK = /^[^0-9\s]+( [^0-9\s]+){0,2}$/;                // a step call: 1-3 words, no numbers (an imported one too)
 // the first of each is the plain word, said when words of encouragement are off. Cheers stay short: one in place of a
 // count that is still being said when the next count comes drops it. (More words, owner, Oct 2026.)
 const CHEERS = ['Good', 'Keep going', 'Breathe', 'Doing great', 'Nice', 'Steady', "That's it", 'Nice work', 'Looking good'];

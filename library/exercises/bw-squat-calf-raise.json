@@ -35,6 +35,7 @@
     {
       "name": "Squat",
       "cue": "Sit your hips back and down.",
+      "call": "Squat",
       "camera": 90,
       "durationMs": 1800,
       "holdMs": 200,
@@ -56,6 +57,7 @@
     {
       "name": "Stand up",
       "cue": "Drive up through your heels.",
+      "call": "Stand",
       "camera": 90,
       "durationMs": 1600,
       "holdMs": 0,
@@ -67,6 +69,7 @@
     {
       "name": "Calf raise",
       "cue": "Rise onto the balls of your feet.",
+      "call": "Heels up",
       "camera": 90,
       "durationMs": 1000,
       "holdMs": 400,

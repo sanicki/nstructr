@@ -60,6 +60,7 @@
     {
       "name": "Down",
       "cue": "Circle them down.",
+      "call": "Down",
       "camera": 25,
       "durationMs": 1400,
       "holdMs": 200,
@@ -77,6 +78,7 @@
     {
       "name": "To the left",
       "cue": "Round to the left.",
+      "call": "Left",
       "camera": 25,
       "durationMs": 1400,
       "holdMs": 200,
@@ -95,6 +97,7 @@
     {
       "name": "Up",
       "cue": "And back up to the middle.",
+      "call": "Up",
       "camera": 25,
       "durationMs": 1400,
       "holdMs": 300,

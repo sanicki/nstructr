@@ -52,6 +52,7 @@
     {
       "name": "Row right",
       "cue": "Pull the right dumbbell to your hip.",
+      "call": "Right",
       "camera": 90,
       "durationMs": 1500,
       "holdMs": 300,
@@ -109,6 +110,7 @@
     {
       "name": "Row left",
       "cue": "Now pull the left dumbbell to your hip.",
+      "call": "Left",
       "camera": 90,
       "durationMs": 1500,
       "holdMs": 300,

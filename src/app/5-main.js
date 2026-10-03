@@ -124,7 +124,9 @@ $('#view-player').addEventListener('change', e => {
     return;
   }
   if (el.dataset.sfield) {
-    const k = el.dataset.sfield, v = el.value.trim(), i = S.idx;
+    const k = el.dataset.sfield, v = el.value.trim().replace(/\s+/g, ' '), i = S.idx;
+    // a call is a word or three, never a number (it would sound like a count): HANDOFF §3
+    if (k === 'call' && v && !/^[^0-9\s]+( [^0-9\s]+){0,2}$/.test(v)) { snack('A call is 1 to 3 words, with no numbers (they would sound like a count).', 5000); el.value = S.ex.keyframes[i].call || ''; return; }
     if (!editExercise(ex => { const kf = ex.keyframes[i]; if (v) kf[k] = v; else delete kf[k]; })) return;
     rebuild(); S.shownIdx = -1; renderPlayerInfo(); draw();
   }
@@ -144,7 +146,8 @@ function updateEditor() {
           <button class="stateful" data-view="front"><span class="icon">check</span>Front</button></div>
         <div class="segmented" id="edStepSeg" role="group" aria-label="Change by">${[1, 5, 15].map(n => `<button class="stateful" data-edstep="${n}"><span class="icon">check</span>${n}°</button>`).join('')}</div></div>
       <div class="step-text"><label class="field"><span class="field-label">Step name</span><input id="edStepName" data-sfield="name" autocomplete="off"></label>
-        <label class="field"><span class="field-label">Spoken cue</span><input id="edStepCue" data-sfield="cue" autocomplete="off"></label></div>
+        <label class="field"><span class="field-label">Spoken cue</span><input id="edStepCue" data-sfield="cue" autocomplete="off"></label>
+        <label class="field"><span class="field-label">Spoken call (optional, 1–3 words)</span><input id="edStepCall" data-sfield="call" autocomplete="off" maxlength="40"></label></div>
       <p class="body-small muted" id="edNote" style="margin:0 0 8px"></p>
       <div class="joints authoring-only">${POSE_ROWS.map(({ key, label }) => `<div class="joint" data-jrow="${key}"><span class="jl">${label}</span>
         <button class="icon-btn stateful jbtn" data-jdelta="-1" data-joint="${key}" aria-label="${label}: less"><span class="icon">remove</span></button>
@@ -160,6 +163,7 @@ function updateEditor() {
   // the step's words as written (for the first side; the other side's left/right are swapped for you)
   if (document.activeElement !== $('#edStepName')) $('#edStepName').value = kf.name || '';
   if (document.activeElement !== $('#edStepCue')) $('#edStepCue').value = kf.cue || '';
+  if (document.activeElement !== $('#edStepCall')) $('#edStepCall').value = kf.call || '';
   const labels = (S.ex.bilateral && S.ex.bilateral.labels) || {};
   $('#edNote').textContent = (findInDb(S.ex.id) ? 'Your first change makes your own copy of this exercise, "(copy)", and leaves the library one as it is. ' : 'Changes are saved as you go. ')
     + (!authoring() ? 'Step words are written for the first side; the other side swaps left and right for you.'

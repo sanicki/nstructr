@@ -70,6 +70,7 @@
     {
       "name": "Straighten your left leg",
       "cue": "Lift your left foot and straighten the leg.",
+      "call": "Straighten",
       "camera": 90,
       "durationMs": 1500,
       "holdMs": 300,
@@ -109,6 +110,7 @@
     {
       "name": "Point your toes",
       "cue": "Point your toes away from you.",
+      "call": "Point",
       "camera": 90,
       "durationMs": 1200,
       "holdMs": 1200,
@@ -149,6 +151,7 @@
     {
       "name": "Toes toward you",
       "cue": "Pull your toes back toward you.",
+      "call": "Flex",
       "camera": 90,
       "durationMs": 1500,
       "holdMs": 1200,

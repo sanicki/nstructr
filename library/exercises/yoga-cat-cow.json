@@ -50,6 +50,7 @@
     {
       "name": "Cow",
       "cue": "Inhale: drop the belly, lift the chest and tailbone, look forward.",
+      "call": "Cow",
       "camera": 90,
       "durationMs": 2800,
       "holdMs": 600,
@@ -83,6 +84,7 @@
     {
       "name": "Cat",
       "cue": "Exhale: round the back toward the ceiling and drop the head.",
+      "call": "Cat",
       "camera": 90,
       "durationMs": 3200,
       "holdMs": 600,
