@@ -616,12 +616,21 @@ representations that rotate the short, natural way) over adding a known issue; i
 ### 8.3b Between exercises: positions and at-rest poses (Oct 2026, owner's request)
 - Before, the next exercise cut in: the figure, the camera angle and the frame all jumped (a deliberate `S.from = null`).
 - **Positions** (`src/positions.js`, shared by the app and the build): standing, kneeling, all fours, seated, lying on the
-  back (`supine`), face down (`prone`), on the side (`side-lying`), plank. Each exercise's start and end position is
+  back (`supine`), face down (`prone`), on the side (`side-lying`), plank, and three ways into inversions and arm
+  balances: a squat with the hands down (`squat`: Crow, Side Crow, Firefly), Downward Dog (`down-dog`: Handstand, Pike
+  Push-Up, the end of Downward Dog), Dolphin (`dolphin`: Headstand, Forearm Stand). Each exercise's start and end position is
   worked out from its first and last frames (what touches the floor, the trunk's angle, which way the chest faces, the
   thighs toward or away from the head); a last frame it can't place, with no finish step, counts as the start (the reps
-  come back there: a bridge at the top, a forward fold). `startPosition` / `endPosition` override it (`"other"`: none
-  fits, e.g. headstands, handstands, crow from a squat). The build checks the rest poses and prints the counts and any
-  exercise it can't place (not on equipment) so it gets an override.
+  come back there: a bridge at the top, a forward fold). Downward Dog and Dolphin need the hips over the hands or
+  forearms, the chest facing down and the hands well ahead of the feet (more than 1.1 leg lengths: Down Dog is ~1.35, a
+  standing fold ≤ 0.9; bridges face up); the squat, the feet and hands down with both legs bent (hip to ankle under 0.6
+  of the leg). At a wall or on furniture these three count as standing (you walk up to it). `startPosition` /
+  `endPosition` override the guess (`"other"`: none fits, a crossfade; no library exercise needs it). Leg Pull and the
+  calf and hamstring foam roller rolls are set to `seated` (their sources start sitting, legs long). The build checks
+  the rest poses and prints the counts and any exercise it can't place (not on equipment) so it gets an override.
+- The three ways in have the exercises' own first steps as their rest poses, written the same way: a blend between two
+  ways of writing one pose (a shoulder at 135° and at −225°) swings the arm round, so Forearm Stand's and Handstand's
+  shoulders were shifted by 360° in every step (the same motion).
 - **At-rest poses** (`REST`): one per position, copied from a library exercise's first step (Mountain, Camel, Cat-Cow
   tabletop, Staff, Corpse with knees bent, Superman with arms down, Clamshell, Push-Up plank), so they face the way the
   library does (every position's exercises turned out to face one way, Oct 2026 survey).
@@ -664,7 +673,10 @@ representations that rotate the short, natural way) over adding a known issue; i
   tabletop the shins flicked up), plank ↔ face down, standing ↔ plank (Burpee's
   squat with the hands down and kick back), standing ↔ seated (Squat's low point, then a fitted "sit back": seat, feet
   and hands down), seated ↔ on the back, seated ↔ all fours (sit back, rock forward into the crouch, knees down: it keeps
-  the floor positions facing up and down joined without standing up). `positionPath` takes the quickest route (Dijkstra
+  the floor positions facing up and down joined without standing up), standing ↔ squat (Burpee's crouch), standing ↔
+  Downward Dog (a forward fold, then walk the hands out), all fours ↔ Downward Dog (tuck the toes, the ankle set by the
+  toes touching, so they stay put as the hips lift), all fours ↔ Dolphin (toes tucked, forearms down, upper arms
+  straight down, then lift the hips). `positionPath` takes the quickest route (Dijkstra
   by steps): standing → on the back is squat, sit back, sit, lie back; on the back → face down is sit up, sit back,
   crouch, all fours, lower down, lie down (the longest). Supine ↔ either side: arm up, roll (above).
 - `transitionFrames` resolves [the last position's rest pose, …route] as one sequence, shifts it to stand between the two

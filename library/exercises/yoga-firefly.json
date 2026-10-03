@@ -7,7 +7,6 @@
   "category": "Arm Balance",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
-  "startPosition": "other",
   "muscles": {"shoulders": 2, "chest": 2, "triceps": 3, "core": 3, "frontThigh": 2},
   "stretches": ["backThigh"],
   "description": "Arm balance with the legs extended wide and forward over the arms.",

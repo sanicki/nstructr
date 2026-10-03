@@ -93,6 +93,8 @@
       "z": 100
     }
   ],
+  "startPosition": "seated",
+  "endPosition": "seated",
   "measure": "time",
   "defaults": {
     "seconds": 45

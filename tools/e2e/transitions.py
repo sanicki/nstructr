@@ -68,10 +68,11 @@ async def main():
         check('to a chair', [way[-1], await pg.evaluate("posOf(exById('chair-arm-raises')).start")], ['Standing', 'standing'], 'you walk up to furniture')
         await pg.wait_for_function("S.idx === S.trans && S.t > S.resolved[S.trans].dur * 0.3 && S.t < S.resolved[S.trans].dur * 0.7", timeout=15000)
         check('  chair fading in', await pg.evaluate("[+$('#propsBack').style.opacity > 0 && +$('#propsBack').style.opacity < 1, $('#propsBack').innerHTML.includes('surface')]"), [True, True])
-        # no position to go through (a foam roller exercise): a crossfade; Clamshell's other side (mirrored, the head the
-        # other way): a crossfade, not a flip through the air
+        # no position to go through ("other"; the library has none left since Oct 2026, so one is marked here): a
+        # crossfade; Clamshell's other side (mirrored, the head the other way): a crossfade, not a flip through the air
         await pg.evaluate("hush(); WP.phase = 'done'")
         await pg.evaluate("""(() => { localStorage.setItem('nstructr-rest-between-v1', '0'); WK.list = WK.list.filter(w => w.id !== 't');
+          exById('roller-hamstrings').endPosition = 'other';
           WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [{ ...newItem(exById('roller-hamstrings')), reps: 1 }, { ...newItem(exById('side-clamshell')), reps: 1, sides: 'both' }] }] });
           saveWorkouts(); startWorkout(wkById('t'), 0); })()"""); await pg.wait_for_timeout(400)
         await pg.evaluate("wpAction('nextItem')"); fr = await pg.evaluate(WATCH, 500)
