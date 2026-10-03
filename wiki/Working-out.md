@@ -44,6 +44,13 @@ on. Beeps count down the last 3 seconds in Beeps, Coach and Instructor modes.
 
 <img src="images/rest.png" width="300" alt="A rest: countdown, what's next, +15 s and Skip">
 
+**From one exercise to the next** the figure doesn't jump. When the next exercise starts in the position the last one
+ended in (both standing, both on all fours, both lying on your back…), the figure eases back to a relaxed pose in that
+position, then moves into the next exercise, and the view turns and zooms with it: during the rest if there is one, or
+in about a second and a half if the rest is 0. When the position changes (standing to the floor) or the exercise uses a
+bench, chair, wall or other equipment you rest on, the picture fades from one to the other. With your device's
+*reduce motion* setting on, it simply switches.
+
 ## Instruction
 
 | Mode | You hear |

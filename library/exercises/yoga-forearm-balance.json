@@ -7,6 +7,8 @@
   "category": "Inversion",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "startPosition": "other",
+  "endPosition": "other",
   "muscles": {"shoulders": 3, "upperBack": 2, "triceps": 1, "core": 2},
   "stretches": ["chest"],
   "description": "Forearm balance with the legs stacked over the shoulders.",

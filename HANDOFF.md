@@ -216,6 +216,8 @@ The schemas in `schema/` are authoritative for structure. This section is the me
                                        // Chaturanga, Deadlift); the formal or older one is another name; yoga lists
                                        // its Sanskrit name first; no name belongs to two exercises
   "collections": ["Bodyweight"],       // library only: where the Exercises tab shows it (can be several); users' own have none
+  "startPosition": "seated",           // optional, rarely needed: the position it starts / ends in when the one worked out
+  "endPosition": "other",              // from the steps is wrong ("other": none fits); see §8.3b
   "category": "Strength", "focus": "Thighs and glutes",
   "equipment": ["Wall"],               // free text, used for filters and the "You'll need" list
   "description": "…", "setup": ["…"], "cues": ["…"],   // cues[0] is also spoken by Instructor
@@ -622,6 +624,30 @@ representations that rotate the short, natural way) over adding a known issue; i
   app (then Chrome shows no notice). Chrome's own "exit full screen" notice can't be moved by the page.
 - Screen Wake Lock while working out; re-acquired on visibility change. Session saved per exercise for Resume.
 
+### 8.3b Between exercises: positions and at-rest poses (Oct 2026, owner's request)
+- Before, the next exercise cut in: the figure, the camera angle and the frame all jumped (a deliberate `S.from = null`).
+- **Positions** (`src/positions.js`, shared by the app and the build): standing, kneeling, all fours, seated, lying on the
+  back (`supine`), face down (`prone`), on the side (`side-lying`), plank. Each exercise's start and end position is
+  worked out from its first and last frames (what touches the floor, the trunk's angle, which way the chest faces, the
+  thighs toward or away from the head); a last frame it can't place, with no finish step, counts as the start (the reps
+  come back there: a bridge at the top, a forward fold). `startPosition` / `endPosition` override it (`"other"`: none
+  fits, e.g. headstands, handstands, crow from a squat). The build checks the rest poses and prints the counts and any
+  exercise it can't place (not on equipment) so it gets an override.
+- **At-rest poses** (`REST`): one per position, copied from a library exercise's first step (Mountain, Camel, Cat-Cow
+  tabletop, Staff, Corpse with knees bent, Superman with arms down, Clamshell, Push-Up plank), so they face the way the
+  library does (every position's exercises turned out to face one way, Oct 2026 survey).
+- **Workout player** (`stagePlan`): when one exercise ends in the position the next starts in, neither rests on equipment
+  (`onEquipment`: a surface, wall or bar; hand-held weights and bands don't count) and it isn't side-lying (the side may
+  differ), the plan starts with that rest pose (1 s, camera already the next exercise's) and the first step lasts at
+  least 0.8 s; `S.trans` = 1, its meta `phase: 'transition'`. The frame glides (`glideView`: old frame → one that also
+  fits the rest pose → the exercise's own, with `S.shiftX`) instead of being set. Otherwise the old picture crossfades
+  into the new one (0.35 s, a clone of the scene; `crossfadeScene`). Reduced motion: cuts, as before. The first exercise
+  of a workout has nothing to come from (`S.mode = 'start'`).
+- With a rest, the move plays during the rest and stops in the next exercise's first step (`S.canAdvance`); after the
+  rest the same exercise is staged again with no transition. With no rest, a same-position change adds about 1–2 s (not
+  in the time estimate); the next exercise's band or weights are drawn from the start of the move.
+- Not done yet: position-change moves (ROADMAP).
+
 ### 8.4 Sound
 - Modes (labels renamed Oct 2026: Voice → Coach, Coach → Instructor; stored values `voice`/`coach` unchanged): Silent, Beeps (3-2-1 before rests/holds end, chime on switching), Coach (exercise name, side/direction
   switches, rests, "next", then the counted reps below), **Instructor**.
@@ -933,7 +959,7 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   second device, Not now/Add, id clash, QR, damaged link, no-CompressionStream fallback, the dialog's four buttons), `editing_text_layers` (no copy without a change, editing words, delete asks; plays a full round of
   both Star Excursions on both sides: the shins are stacked by depth, a front-view reach across the body is behind), `exercise_editor_workout_fixes` (steppers, copy on first edit, undo/revert/discard,
   pause stops speech, exit to list, "(copy)" names), `tabs_settings_player` (tabs, old links, Saved filter, settings persist,
-  player overlay, page order, labels, Edit with the figure pinned, Done), `direction_cues` (the other direction keeps each step's words, so cues match the compass), `circles_order_toggles` (Leg Circles' 8 points with 4 steps; quiet steps hidden from the step number, list and ◀ ▶; a workout item's order of sides/directions, saved, shared, and the switch announced; Loop off stops at the end, Play restarts; Mute), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `exercise_sound` (Silent/Beeps quiet, Coach reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
+  player overlay, page order, labels, Edit with the figure pinned, Done), `direction_cues` (the other direction keeps each step's words, so cues match the compass), `circles_order_toggles` (Leg Circles' 8 points with 4 steps; quiet steps hidden from the step number, list and ◀ ▶; a workout item's order of sides/directions, saved, shared, and the switch announced; Loop off stops at the end, Play restarts; Mute), `autoplay_first_speech` (a workout's first line isn't cancelled; leaving an exercise page stops its voice; Autoplay setting; copy-only AI apps), `audit_fixes` (Material confirm dialog: Cancel/Esc keep, Delete deletes; leaving a workout by Esc or a screen reader's click; one `<main>`; 48 px targets), `security_imports` (HTML/script in every text field of a shared exercise and workout never runs; no `javascript:` source links), `triage_filters_pace` (rest setting in 1 s steps with hold-to-repeat, type/equipment rows, equipment kept across collections, seconds per rep, rest row only with 2+ sets), `create_with_ai` (kinds, input needed, link filled in vs copied, fenced/workout/in-library/not-JSON answers, AI app and rest settings, cover screen, Half Roll-Back band), `transitions` (same position: through the rest pose, frame glides, no jump; change of position: crossfade; with a rest: moves during it; reduced motion: cut), `exercise_sound` (Silent/Beeps quiet, Coach reads the first pass with steps waiting then counts, pause/side/leave stop it), `pwa_offline_backup` (against `/`, via `NSTRUCTR_SITE`: manifest, icons,
   offline reload, backup round trip), `library_and_ids` (library workouts, Customize, resume/exit, `u-` renames,
   newer-version files refused), `coach_speech` (guided steps wait for speech; nothing cancelled),
   `gestures_cover` (two-tap controls, swipes, hold-to-exit, Start goes straight in), `layout_overlap` (title /

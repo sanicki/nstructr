@@ -122,6 +122,20 @@ if (!args.has('--no-checks') && !errors.length) {
   const d = errors.length;
   console.log(d ? `duplicates: ${d}` : `duplicates: none (${variants} variant pair(s): same motion, other equipment or measure)`);
 }
+// ---------- 2c2. starting and ending positions (src/positions.js): the workout player moves between exercises through the
+// at-rest pose of a shared position; each rest pose must hold up, and the build says how many exercises it can place ----------
+if (!args.has('--no-checks') && !errors.length) {
+  const PX = require('../src/positions.js');
+  for (const m of PX.checkRest()) errors.push(`rest pose ${m}`);
+  const count = {}, unplaced = [];
+  for (const ex of exercises) {
+    const p = PX.positionsOf(ex);
+    for (const k of [p.start, p.end]) count[k || 'other'] = (count[k || 'other'] || 0) + 1;
+    if ((!p.start || !p.end) && !PX.onEquipment(ex) && ex.startPosition !== 'other' && ex.endPosition !== 'other') unplaced.push(`${ex.id} (${p.start || '?'} → ${p.end || '?'})`);
+  }
+  console.log(`positions (starts and ends): ${Object.entries(count).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(', ')}`);
+  if (unplaced.length) console.log(`positions: not placed, so a crossfade (add startPosition/endPosition, "other" if none fits): ${unplaced.join(', ')}`);
+}
 // ---------- 2d. equipment: what's listed is drawn and what's drawn is listed, spelled one way (the Exercises filter) ----------
 if (!args.has('--no-checks') && !errors.length) {
   const DRAWN = { roller: /foam roller/, ball: /stability ball|swiss ball|exercise ball/, medball: /medicine ball|med ball/, ring: /pilates ring|magic circle/, bar: /pull-?up bar|chin-?up bar|\bbar\b/, block: /block/, strap: /strap/, towel: /towel/, wall: /wall|door/, chair: /chair/, bench: /bench/, step: /step/, band: /band/, dumbbell: /dumbbell/, barbell: /barbell/, kettlebell: /kettlebell/ };
@@ -156,7 +170,7 @@ copy('src'); copy('library'); copy('schema'); copy('icons'); copy('manifest.webm
 fs.rmSync(path.join(SITE, 'src/sw.js'));
 const appFiles = fs.readdirSync(path.join(ROOT, 'src/app')).filter(f => f.endsWith('.js')).sort();
 const head = rd('src/head.html'), body = rd('src/body.html');
-const scripts = ['src/core.js', 'src/similar.js', 'src/thumb.js', 'src/vendor/qrcode.js', ...appFiles.map(f => `src/app/${f}`)];
+const scripts = ['src/core.js', 'src/similar.js', 'src/positions.js', 'src/thumb.js', 'src/vendor/qrcode.js', ...appFiles.map(f => `src/app/${f}`)];
 // the installable app: manifest, icons, and a service worker that caches everything it needs
 const pwaHead = head.replace('</title>', `</title>
 <link rel="manifest" href="manifest.webmanifest">

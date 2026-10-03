@@ -7,6 +7,7 @@
   "category": "Arm Balance",
   "collections": ["Yoga"],
   "equipment": ["Yoga mat"],
+  "startPosition": "other",
   "muscles": {"shoulders": 2, "chest": 2, "biceps": 1, "triceps": 2, "core": 3, "frontThigh": 1},
   "description": "Arm balance with the knees resting high on the upper arms and the feet lifted.",
   "source": {

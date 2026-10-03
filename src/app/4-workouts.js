@@ -621,33 +621,101 @@ function buildPlan(item, segInfo) {
   plan.walls = V0.walls; plan.supports = V0.supports;
   return { plan, meta, ex, seg, props: versions[0].props, tempo };
 }
+/* Between two exercises the figure doesn't jump: when one ends in the position the next starts in (standing, all
+   fours, lying on the back…; src/positions.js), it moves through that position's at-rest pose into the next exercise,
+   and the camera turns and the frame pans and zooms with it. Otherwise (a change of position, equipment it rests on,
+   a position it can't place) the old picture crossfades into the new one. Oct 2026. */
+const POS_CACHE = new WeakMap();                                 // per exercise object: an edited exercise is worked out again
+const posOf = ex => { if (!POS_CACHE.has(ex)) POS_CACHE.set(ex, POSITIONS_EX.positionsOf(ex)); return POS_CACHE.get(ex); };
+const REST_MS = 1000, ARRIVE_MS = 800, XFADE_MS = 350;
+const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+// the at-rest frame both exercises pass through, or null when they don't share a position
+function restFrame(fromEx, toEx, toFirst) {
+  const a = posOf(fromEx).end, b = posOf(toEx).start;
+  if (!a || a !== b || a === 'side-lying' || POSITIONS_EX.onEquipment(fromEx) || POSITIONS_EX.onEquipment(toEx)) return null;   // side-lying: which side differs
+  const kf = { name: POSITIONS_EX.LABELS[b], durationMs: REST_MS, holdMs: 150, ...POSITIONS_EX.REST[b] };
+  const r = resolveSequence([kf], { ...DEFAULT_SEGMENTS }, { keyframes: [kf] }, [])[0];
+  return { ...r, cam: toFirst.cam, step: -1 };                    // turn to the next exercise's camera on the way
+}
 function stagePlan(p) {
   const prevLast = S.mode === 'workout' && S.resolved.length ? S.resolved[S.idx] : null;
-  const exChanged = !S.ex || S.ex.id !== p.ex.id;
+  const prevEx = S.ex, exChanged = !S.ex || S.ex.id !== p.ex.id;
+  const fromBox = scene.getAttribute('viewBox'), fromShift = S.shiftX;
+  let plan = p.plan, meta = p.meta, trans = 0, fade = false;
+  if (prevLast && exChanged && !reducedMotion()) {
+    const rest = restFrame(prevEx, p.ex, plan[0]);
+    if (rest) {
+      const arrive = { ...plan[0], dur: Math.max(plan[0].dur, ARRIVE_MS) };    // into the first step from the rest pose
+      plan = Object.assign([rest, arrive, ...plan.slice(1)], { walls: plan.walls, supports: plan.supports });
+      meta = [{ phase: 'transition' }, ...meta]; trans = 1;
+    } else fade = true;
+  }
+  if (fade) crossfadeScene();
   S.mode = 'workout'; S.ex = p.ex; S.seg = p.seg; S.props = p.props; S.tempo = p.tempo; S.speed = 1;
-  S.resolved = p.plan; S.planMeta = p.meta; S.idx = 0; S.prev = null; S.from = prevLast; S.planDone = false; S.t = 0;
-  S.bandRest = bandRestLengths(S.props, p.plan, S.seg);
+  S.resolved = plan; S.planMeta = meta; S.trans = trans; S.idx = 0; S.prev = null; S.from = prevLast; S.planDone = false; S.t = 0;
+  S.bandRest = bandRestLengths(S.props, plan, S.seg);
   // travelling: how far along each step of the plan is (each rep carries on from where the last one ended)
   S.travel = !!p.ex.travel; S.phase = phaseInfo(p.ex.keyframes); S.offs = [{ x: 0, z: 0 }];
-  for (let i = 1; i < p.plan.length; i++) {
-    const a = p.plan[i - 1], b = p.plan[i], o = S.offs[i - 1];
+  for (let i = 1; i < plan.length; i++) {
+    const a = plan[i - 1], b = plan[i], o = S.offs[i - 1];
     const d = S.travel && a.step === S.phase.end && b.step === S.phase.start ? travelOf(a, b, S.seg) : { x: 0, z: 0 };
     S.offs.push({ x: o.x + d.x, z: o.z + d.z });
   }
-  const { minX, maxX } = sequenceSpan(p.plan, S.seg, 0, S.travel);
+  const own = plan.slice(trans);                                   // the frame fits the exercise, not the way into it
+  const { minX, maxX } = sequenceSpan(own, S.seg, 0, S.travel);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   if (exChanged) { buildFigure(); buildGuide(); }
-  frameScene(p.plan);
-  if (S.from && exChanged) S.from = null;         // a new exercise starts from its own first position
+  frameScene(own);
+  // the frame glides from the old one to one that fits the rest pose too, then settles on the exercise's own
+  if (trans) glideView(fromBox, fromShift, [[boxFor(plan), REST_MS], [scene.getAttribute('viewBox'), ARRIVE_MS]]);
+  else if (S.from && exChanged) S.from = null;                     // a cut: the new exercise starts from its own first position
+}
+/* pan and zoom from the old frame through each [viewBox, ms] in turn, and slide the figure's sideways shift with it */
+let GLIDE = 0;
+function glideView(fromBox, fromShift, legs) {
+  const nums = b => (b || '').split(' ').map(Number), ok = v => v.length === 4 && !v.some(isNaN);
+  const pts = [nums(fromBox), ...legs.map(l => nums(l[0]))], toShift = S.shiftX, total = legs.reduce((t, l) => t + l[1], 0);
+  if (!pts.every(ok)) return;
+  const t0 = performance.now(), id = ++GLIDE, ease = x => x < .5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2;
+  const step = now => {
+    if (id !== GLIDE || S.view !== 'wplay') return;
+    let t = now - t0, k = 0;
+    while (k < legs.length - 1 && t > legs[k][1]) { t -= legs[k][1]; k++; }
+    const e = ease(Math.min(1, t / legs[k][1])), a = pts[k], b = pts[k + 1];
+    scene.setAttribute('viewBox', a.map((v, i) => (v + (b[i] - v) * e).toFixed(1)).join(' '));
+    if (!S.travel) S.shiftX = fromShift + (toShift - fromShift) * ease(Math.min(1, (now - t0) / total));
+    syncLimbWidth();
+    if (now - t0 < total) requestAnimationFrame(step);
+  };
+  S.shiftX = fromShift; scene.setAttribute('viewBox', fromBox);
+  requestAnimationFrame(step);
+}
+/* the picture as it is fades out over the new one as it fades in */
+function crossfadeScene() {
+  GLIDE++;
+  if (!scene.parentNode || !scene.getBoundingClientRect().width) return;
+  const old = scene.cloneNode(true);
+  old.removeAttribute('id'); old.querySelectorAll('[id]').forEach(n => n.removeAttribute('id'));
+  old.setAttribute('aria-hidden', 'true'); old.removeAttribute('role'); old.removeAttribute('aria-label');
+  old.style.cssText += `;position:absolute;left:${scene.offsetLeft}px;top:${scene.offsetTop}px;width:${scene.offsetWidth}px;height:${scene.offsetHeight}px;margin:0;pointer-events:none`;
+  scene.parentNode.insertBefore(old, scene.nextSibling);
+  const a = old.animate([{ opacity: 1 }, { opacity: 0 }], { duration: XFADE_MS, easing: 'ease-in-out' });
+  a.onfinish = a.oncancel = () => old.remove();
+  scene.animate([{ opacity: 0 }, { opacity: 1 }], { duration: XFADE_MS, easing: 'ease-in-out' });
 }
 
 /* In the workout player the camera frames the whole exercise tightly (head to floor, both ends of the move),
    so the figure is as big as the screen allows. The overlays sit in bands above and below it. */
-function frameScene(plan) {
+function boxFor(plan) {
   const { minX, maxX, minY } = sequenceSpan(plan, S.seg, S.shiftX, S.travel);
-  if (!isFinite(minX)) return;
+  if (!isFinite(minX)) return null;
   const pad = 26, top = minY - 20 - pad, h = FLOOR + 16 - top, wv = Math.max(maxX - minX + pad * 2, 120);
-  scene.setAttribute('viewBox', `${(minX + maxX) / 2 - wv / 2} ${top} ${wv} ${h}`);
+  return `${(minX + maxX) / 2 - wv / 2} ${top} ${wv} ${h}`;
+}
+function frameScene(plan) {
+  GLIDE++;
+  const box = boxFor(plan); if (!box) return;
+  scene.setAttribute('viewBox', box);
   syncLimbWidth();
 }
 function resetScene() { scene.setAttribute('viewBox', '0 0 400 400'); syncLimbWidth(); }
@@ -662,6 +730,7 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   WP.i = Math.min(fromIndex, WP.flat.length - 1); WP.set = 0; WP.seg = 0; WP.started = Date.now(); WP.phase = 'work';
   unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound); keepStorage(); installDue();
   go(`#/wplay/${encodeURIComponent(w.id)}`);
+  S.mode = 'start';                                               // no transition into the first exercise
   runCurrent(true);
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
 }
@@ -779,10 +848,11 @@ function startRest(seconds, kind) {
   $('#wpRest').hidden = false; $('#wpControls').classList.remove('show');
   $('#wpRestLabel').textContent = kind === 'set' ? 'Rest before the next set' : kind === 'round' ? `Rest before round ${cur.round + 1} of ${cur.rounds}` : 'Rest';
   $('#wpRestNext').textContent = kind === 'set' ? `Next: set ${WP.set + 1} of ${cur.item.sets}` : `Next: ${ex.name}`;
-  // show where the next exercise starts
+  // show where the next exercise starts: moving there through the at-rest pose when it can, or straight there
   stagePlan(buildPlan(cur.item, itemSegments(cur.item)[0]));
-  S.playing = false; S.t = S.resolved[0].dur; S.planDone = false;
-  S.onStep = null; S.onPlanEnd = null;
+  S.onStep = null; S.onPlanEnd = null; S.planDone = false;
+  if (S.trans) { S.playing = true; S.t = 0; S.canAdvance = i => i < S.trans; }    // stops once it's in the first step
+  else { S.playing = false; S.t = S.resolved[0].dur; }
   renderWpInfo();
   const rest = plural(seconds, { one: 'Rest # second.', other: 'Rest # seconds.' });
   say(kind === 'set' ? rest : kind === 'round' ? `Round ${fmtNum(cur.round)} done. ${rest}` : `${rest} Next: ${ex.name}.`);

@@ -1,0 +1,57 @@
+import asyncio, os
+# point at a served build, e.g.  python3 -m http.server 8000 -d _site
+URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
+from playwright.async_api import async_playwright
+# Between exercises (src/positions.js, stagePlan in src/app/4-workouts.js): two exercises in the same position (Squat ->
+# Lateral Raise, both standing; the camera turns from the side to the front) move through the at-rest pose, the frame
+# glides and nothing jumps; a change of position (standing -> lying on the back) crossfades; with a rest, the move
+# happens during the rest and stops in the next exercise's first pose.
+WK = """(rest => { localStorage.setItem('nstructr-rest-between-v1', String(rest)); WK.hinted = true; setSound('off');
+  const it = id => ({ ...newItem(exById(id)), reps: 2 });
+  WK.list = WK.list.filter(w => w.id !== 't'); WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [it('bw-squat'), it('bhf-lateral-raise'), it('bw-glute-bridge')] }] });
+  saveWorkouts(); startWorkout(wkById('t'), 0); })"""
+# every animation frame for ms: where the head is on screen, the viewBox, the number of scene pictures
+WATCH = """ms => new Promise(res => { const out = [], t0 = performance.now();
+  const f = now => { const h = document.querySelector('#scene circle.head').getBoundingClientRect();
+    out.push({ t: now - t0, x: h.x + h.width / 2, y: h.y + h.height / 2, vb: scene.getAttribute('viewBox'), n: document.querySelectorAll('svg.scene').length, idx: S.idx, trans: S.trans });
+    if (now - t0 < ms) requestAnimationFrame(f); else res(out); };
+  requestAnimationFrame(f); })"""
+def jump(fr):
+    return round(max((((b['x'] - a['x']) ** 2 + (b['y'] - a['y']) ** 2) ** 0.5 for a, b in zip(fr, fr[1:])), default=0), 1)
+async def main():
+    async with async_playwright() as p:
+        b = await p.chromium.launch(); errs = []
+        pg = await b.new_page(viewport={'width': 412, 'height': 860}); pg.on('pageerror', lambda e: errs.append(str(e)))
+        await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
+        print('positions               ', await pg.evaluate("['bw-squat', 'bhf-lateral-raise', 'bw-glute-bridge'].map(id => { const p = posOf(exById(id)); return p.start + '>' + p.end; })"))
+        # no rest: Squat -> Lateral Raise (same position, side camera -> front)
+        await pg.evaluate(WK + '(0)'); await pg.wait_for_timeout(1500)
+        print('first exercise: no move ', await pg.evaluate('S.trans'), '<- 0 (nothing to come from)')
+        await pg.evaluate("wpAction('nextItem')")
+        fr = await pg.evaluate(WATCH, 2200)
+        vbs = sorted(set(f['vb'] for f in fr))
+        print('same position: moves    ', fr[0]['trans'], await pg.evaluate("[S.planMeta[0].phase, S.resolved[0].name]"), '<- 1, transition through Standing')
+        print('  frame glides          ', len(vbs), 'viewBoxes <- many (not one cut)')
+        print('  largest step (px)     ', jump(fr), '<- small: no jump')
+        print('  one picture           ', max(f['n'] for f in fr), '<- 1 (no crossfade)')
+        print('  ends in the exercise  ', await pg.evaluate("S.idx >= S.trans"), '<- True')
+        # Lateral Raise -> Glute Bridge: standing to lying, a crossfade
+        await pg.evaluate("wpAction('nextItem')")
+        fr = await pg.evaluate(WATCH, 600)
+        print('change of position      ', fr[0]['trans'], '<- 0, a crossfade')
+        print('  two pictures, then one', max(f['n'] for f in fr), fr[-1]['n'], '<- 2 1')
+        # with a rest: the move happens in the rest and waits in the first pose
+        await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(5)'); await pg.wait_for_timeout(300)
+        await pg.evaluate("S.speed = 20"); await pg.wait_for_timeout(2500)        # through the squats quickly
+        await pg.evaluate("S.speed = 1"); await pg.wait_for_function("WP.phase === 'rest'", timeout=15000)
+        await pg.wait_for_timeout(2600)
+        print('rest: moved, waiting    ', await pg.evaluate("[WP.phase, S.trans, S.idx, S.playing, S.planDone, S.ex.id]"), "<- ['rest', 1, 1, True, False, 'bhf-lateral-raise']")
+        await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(200)
+        print('after the rest          ', await pg.evaluate("[WP.phase, S.trans, S.planMeta[0].phase]"), "<- ['work', 0, not 'transition']")
+        # reduced motion: cuts
+        await pg.emulate_media(reduced_motion='reduce')
+        await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(0)'); await pg.wait_for_timeout(300)
+        await pg.evaluate("wpAction('nextItem')"); await pg.wait_for_timeout(100)
+        print('reduced motion          ', await pg.evaluate("[S.trans, document.querySelectorAll('svg.scene').length]"), '<- [0, 1]')
+        print('errors', errs); await b.close()
+asyncio.run(main())
