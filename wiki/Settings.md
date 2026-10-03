@@ -35,7 +35,7 @@ used twice in a row ("Good. Breathe. Good.", not "Good. Good."). Off: always "Be
 
 ### Pause at equipment changes
 
-Off at first. When the next exercise needs other equipment (and at the **Get ready** list before a workout with
+Off at first. When the next exercise needs other equipment (and at the title card of a workout with
 equipment), the workout waits until you tap **Ready** instead of carrying on once it has said what to do. See
 [Working out → Equipment](Working-out.md#equipment).
 
