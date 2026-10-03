@@ -24,7 +24,7 @@ Default 10. (Rest between circuit rounds is set on each block.)
 
 ### Equipment transition time
 Seconds added to the rest when the next exercise needs other equipment (time to put things down and get the next),
-and the length of **Get ready** before a workout that uses any. Same controls. Default 15. See
+and the length of **Get ready** before a workout that uses any. Same controls. Default 5. See
 [Working out → Equipment](Working-out.md#equipment).
 
 ### Instruction

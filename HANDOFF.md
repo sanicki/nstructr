@@ -693,7 +693,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 - The figure's equipment fades in and out between exercises (§8.3b), but the person has to put things down and fetch
   others. `equipmentChange(from, to)` (`src/app/4-workouts.js`): what is put down and fetched (the library's equipment
   in `EQUIP`, with words: "Put the dumbbells down", "Pick up the kettlebell"; for furniture and the wall "Position yourself by your chair" (owner, Oct 2026); the yoga mat stays down; Dumbbell and Dumbbells
-  count as one) and the time: the **Equipment transition time** (Settings, under Rest between sets, 15 s at first,
+  count as one) and the time: the **Equipment transition time** (Settings, under Rest between sets, 5 s at first,
   `nstructr-equip-time-v1`). A first version gave each piece its own allowance (5/10/20 s, the longest + 3 s per other
   piece); the owner preferred one number the person sets over time they didn't choose.
 - **The rest gets longer** by it (`onWorkEnd` → `startRest(seconds, kind, change)`, also before a new round); the rest
@@ -997,7 +997,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Coach and Instructor (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
 | `nstructr-encourage-v1` | Coach's and Instructor's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach and Instructor (Instructor only until Oct 2026); `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
 | `nstructr-equip-pause-v1` | "Pause at equipment changes", `on`/`off` (default off; Settings > Workouts, under Words of encouragement; the backup's `settings.equipPause`): at an equipment change, and at the "Get ready" checklist, the rest waits for Ready instead of counting down (§8.3c) |
-| `nstructr-equip-time-v1` | Equipment transition time, seconds 0–300 (default 15; Settings > Workouts, under Rest between sets; the backup's `settings.equipTime`): added to the rest at an equipment change, and the length of the "Get ready" checklist (§8.3c) |
+| `nstructr-equip-time-v1` | Equipment transition time, seconds 0–300 (default 5; Settings > Workouts, under Rest between sets; the backup's `settings.equipTime`): added to the rest at an equipment change, and the length of the "Get ready" checklist (§8.3c) |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |
 | `nstructr-rest-sets-v1` | seconds of rest between sets, in every workout (default 10, 0–300; Settings > Workouts; 20 until Sep 2026). Workout items' `rest` is ignored |
 | `nstructr-install-hint-v1` | the install tip: `due` once a workout was started, `shown` once offered (or installed). Per device, not in backups |
