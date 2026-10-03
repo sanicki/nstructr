@@ -629,13 +629,18 @@ const POS_CACHE = new WeakMap();                                 // per exercise
 const posOf = ex => { if (!POS_CACHE.has(ex)) POS_CACHE.set(ex, POSITIONS_EX.positionsOf(ex)); return POS_CACHE.get(ex); };
 const REST_MS = 1000, ARRIVE_MS = 800, XFADE_MS = 350;
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-// the at-rest frame both exercises pass through, or null when they don't share a position
-function restFrame(fromEx, toEx, toFirst) {
+// the at-rest frame both exercises pass through, or null when they don't share a position. It stands halfway between
+// where the last exercise left the figure and where the next one starts (its own spot on the floor would take the
+// figure, and the view following it, out there and back: a bounce)
+function restFrame(fromEx, toEx, fromLast, toFirst) {
   const a = posOf(fromEx).end, b = posOf(toEx).start;
   if (!a || a !== b || a === 'side-lying' || POSITIONS_EX.onEquipment(fromEx) || POSITIONS_EX.onEquipment(toEx)) return null;   // side-lying: which side differs
-  const kf = { name: POSITIONS_EX.LABELS[b], durationMs: REST_MS, holdMs: 150, ...POSITIONS_EX.REST[b] };
-  const r = resolveSequence([kf], { ...DEFAULT_SEGMENTS }, { keyframes: [kf] }, [])[0];
-  return { ...r, cam: toFirst.cam, step: -1 };                    // turn to the next exercise's camera on the way
+  const seg = { ...DEFAULT_SEGMENTS }, kf = { name: POSITIONS_EX.LABELS[b], durationMs: REST_MS, holdMs: 150, ...POSITIONS_EX.REST[b] };
+  const r = resolveSequence([kf], seg, { keyframes: [kf] }, [])[0];
+  const pelvis = f => { const g = frameAt(f, f, 1, seg); return fkAt(g.pose, seg, g.pos).pelvis; };
+  const p0 = pelvis(fromLast), p1 = pelvis(toFirst), pr = pelvis(r);
+  const rule = { ...r.rule, x: num(r.rule.x) + (p0.x + p1.x) / 2 - pr.x, z: num(r.rule.z) + (p0.z + p1.z) / 2 - pr.z };
+  return { ...r, rule, cam: toFirst.cam, step: -1 };              // turn to the next exercise's camera on the way
 }
 function stagePlan(p) {
   const prevLast = S.mode === 'workout' && S.resolved.length ? S.resolved[S.idx] : null;
@@ -643,7 +648,7 @@ function stagePlan(p) {
   const fromBox = scene.getAttribute('viewBox'), drawnX = S.drawnX;
   let plan = p.plan, meta = p.meta, trans = 0, fade = false;
   if (prevLast && exChanged && !reducedMotion()) {
-    const rest = restFrame(prevEx, p.ex, plan[0]);
+    const rest = restFrame(prevEx, p.ex, prevLast, plan[0]);
     if (rest) {
       const arrive = { ...plan[0], dur: Math.max(plan[0].dur, ARRIVE_MS) };    // into the first step from the rest pose
       plan = Object.assign([rest, arrive, ...plan.slice(1)], { walls: plan.walls, supports: plan.supports });
@@ -666,42 +671,42 @@ function stagePlan(p) {
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   if (exChanged) { buildFigure(); buildGuide(); }
   frameScene(own);
-  S.followOff = 0;
+  S.glide = null;
   if (S.from && exChanged && !trans) { S.from = null; return; }   // a cut: the new exercise starts from its own first position
-  if (!S.from || reducedMotion()) return;
-  // carrying on from the last pose (the next exercise, set or side): the figure stays where it was on screen (a side
-  // is placed elsewhere; a travelling exercise had moved along) and the frame glides to the new one, through one that
-  // also fits the rest pose when it passes through one
-  const f = frameAt(S.from, S.from, 1, S.seg), q = project(fkAt(f.pose, S.seg, f.pos), f.cam).pelvis.x;
-  const fromShift = isFinite(drawnX) ? drawnX - q : S.shiftX;
-  glideView(fromBox, fromShift, scene.getAttribute('viewBox'), trans ? REST_MS + ARRIVE_MS : Math.max(plan[0].dur, 600), trans ? boxFor(plan) : null,
-    isFinite(drawnX) ? drawnX - W / 2 : 0);
+  if (!S.from || reducedMotion() || !isFinite(drawnX)) return;
+  // carrying on from the last pose (the next exercise, set or side): the figure goes from where it was on screen to
+  // where it will be in one smooth move, whatever way the body goes (a side is placed elsewhere; a travelling exercise
+  // had moved along; the rest pose is between), and the frame zooms to the new one around the middle of the screen
+  const first = frameAt(plan[trans], plan[trans], 1, S.seg), x1 = S.travel ? W / 2 : project(fkAt(first.pose, S.seg, first.pos), first.cam).pelvis.x + S.shiftX;
+  const steps = plan.slice(0, trans + 1).map((r, i) => r.dur + (i < trans ? r.hold : 0)), total = steps.reduce((t, d) => t + d, 0);
+  const ms = Math.max(total / (S.tempo || 1), 600);
+  if (total > 0) S.glide = { steps, total, last: trans, x0: drawnX, x1, toShift: S.shiftX };
+  glideView(fromBox, scene.getAttribute('viewBox'), ms, trans ? boxFor([plan[0]]) : null);
 }
-/* pan and zoom from the old frame to the new one in one smooth move (one ease from start to end: it never stops on the
-   way), widening on the way if needed so a pose passed through (viaBox) stays in view; the figure's sideways shift
-   slides with it */
+/* zoom (and pan) from the old frame to the new one in one smooth move (one ease from start to end: it never stops on
+   the way); if a pose passed through (viaBox) is bigger than the frame halfway, the halfway frame grows to fit it,
+   around its own middle, so the view breathes out and in rather than swinging sideways */
 let GLIDE = 0;
-function glideView(fromBox, fromShift, toBox, ms, viaBox, followFrom = 0) {
+function glideView(fromBox, toBox, ms, viaBox) {
   const nums = b => (b || '').split(' ').map(Number), ok = v => v.length === 4 && !v.some(isNaN);
-  const a = nums(fromBox), c = nums(toBox), toShift = S.shiftX;
+  const a = nums(fromBox), c = nums(toBox), v = nums(viaBox);
   if (!ok(a) || !ok(c)) return;
-  // the halfway frame: halfway between the two, grown to take in viaBox (as [x, y, w, h])
-  let m = a.map((v, i) => (v + c[i]) / 2);
-  const v = nums(viaBox);
-  if (ok(v)) { const x0 = Math.min(m[0], v[0]), y0 = Math.min(m[1], v[1]); m = [x0, y0, Math.max(m[0] + m[2], v[0] + v[2]) - x0, Math.max(m[1] + m[3], v[1] + v[3]) - y0]; }
+  let m = a.map((x, i) => (x + c[i]) / 2);
+  if (ok(v)) {
+    const w = Math.max(m[2], v[2]), h = Math.max(m[3], v[3]);
+    m = [m[0] + m[2] / 2 - w / 2, m[1] + m[3] - h, w, h];          // wider about the middle, taller upward (the floor stays put)
+  }
   // a quadratic curve through the halfway frame: smooth, no stop in the middle
   const at = u => a.map((x, i) => { const k = 2 * m[i] - (x + c[i]) / 2; return (1 - u) * (1 - u) * x + 2 * u * (1 - u) * k + u * u * c[i]; });
-  const t0 = performance.now(), id = ++GLIDE, ease = x => x < .5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2;
+  const t0 = performance.now(), id = ++GLIDE;
   const step = now => {
     if (id !== GLIDE || S.view !== 'wplay') return;
-    const u = ease(Math.min(1, (now - t0) / ms));
+    const u = easeGlide(Math.min(1, (now - t0) / ms));
     scene.setAttribute('viewBox', at(u).map(x => x.toFixed(1)).join(' '));
-    if (!S.travel) S.shiftX = fromShift + (toShift - fromShift) * u;
-    else S.followOff = followFrom * (1 - u);                        // a travelling exercise's view follows the figure
     syncLimbWidth();
     if (now - t0 < ms) requestAnimationFrame(step);
   };
-  S.shiftX = fromShift; S.followOff = S.travel ? followFrom : 0; scene.setAttribute('viewBox', fromBox);
+  scene.setAttribute('viewBox', fromBox);
   requestAnimationFrame(step);
 }
 /* the picture as it is fades out over the new one as it fades in */

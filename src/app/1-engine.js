@@ -415,6 +415,7 @@ function drawFloorTicks(P, cam) {
   }
   g.innerHTML = out;
 }
+const easeGlide = x => x < .5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2;
 function draw() {
   const n = S.resolved.length, b = S.resolved[S.idx];
   const a = S.prev != null && S.resolved[S.prev] ? S.resolved[S.prev] : (S.from || b);
@@ -422,7 +423,14 @@ function draw() {
   const raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
   const e = easeAt(b.ease, raw);
   const f = travelFrame(a, b, e), P = fkAt(f.pose, S.seg, f.pos), Q = project(P, f.cam);
-  if (S.travel) S.shiftX = W / 2 - Q.pelvis.x + (S.followOff || 0);   // followOff: easing in from where a workout's last exercise left it                  // the view follows the figure over a marked floor
+  // a workout carrying on into its next plan steers the figure across the screen in one smooth move (S.glide, from
+  // glideView); otherwise a travelling exercise's view follows the figure
+  if (S.glide) {
+    // how far through the steps into the first pose (by the plan, not the clock: a step may wait for a spoken line)
+    const g = S.glide, done = S.idx > g.last ? g.total : g.steps.slice(0, S.idx).reduce((t, d) => t + d, 0) + Math.min(S.t, g.steps[S.idx]), u = Math.min(1, done / g.total);
+    if (u >= 1) { S.shiftX = S.travel ? W / 2 - Q.pelvis.x : g.toShift; S.glide = null; } else S.shiftX = g.x0 + (g.x1 - g.x0) * easeGlide(u) - Q.pelvis.x;
+  }
+  else if (S.travel) S.shiftX = W / 2 - Q.pelvis.x;                  // the view follows the figure over a marked floor
   for (const k in Q) Q[k].x += S.shiftX;
   S.drawnX = Q.pelvis.x;                                         // where the figure is on screen (a workout's next plan carries on from there)
   drawFloorTicks(P, f.cam);

@@ -13,9 +13,17 @@ WK = """(rest => { localStorage.setItem('nstructr-rest-between-v1', String(rest)
 # every animation frame for ms: where the head is on screen, the viewBox, the number of scene pictures
 WATCH = """ms => new Promise(res => { const out = [], t0 = performance.now();
   const f = now => { const h = document.querySelector('#scene circle.head').getBoundingClientRect();
-    out.push({ t: now - t0, x: h.x + h.width / 2, y: h.y + h.height / 2, vb: scene.getAttribute('viewBox'), n: document.querySelectorAll('svg.scene').length, idx: S.idx, trans: S.trans, ex: S.ex.id + (WP.seg ? ' (2nd side)' : '') });
+    out.push({ t: now - t0, x: h.x + h.width / 2, y: h.y + h.height / 2, vb: scene.getAttribute('viewBox'), n: document.querySelectorAll('svg.scene').length, px: S.drawnX, idx: S.idx, trans: S.trans, ex: S.ex.id + (WP.seg ? ' (2nd side)' : '') });
     if (now - t0 < ms) requestAnimationFrame(f); else res(out); };
   requestAnimationFrame(f); })"""
+def rev(vals, th=0.5):
+    # how many times a path turns back (wiggles under th px ignored)
+    n, sign, ext = 0, 0, vals[0]
+    for v in vals[1:]:
+        if sign >= 0 and v > ext: ext = v; sign = sign or 1
+        elif sign <= 0 and v < ext: ext = v; sign = sign or -1
+        elif abs(v - ext) > th: n += 1; sign = -sign; ext = v
+    return n
 def jump(fr):
     return round(max((((b['x'] - a['x']) ** 2 + (b['y'] - a['y']) ** 2) ** 0.5 for a, b in zip(fr, fr[1:])), default=0), 1)
 async def main():
@@ -55,6 +63,10 @@ async def main():
           WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [{ ...newItem(exById('bal-side-stepping')), reps: 2 }, { ...newItem(exById('mayo-neck')), seconds: 3, sides: 'both' }] }] });
           saveWorkouts(); startWorkout(wkById('t'), 0); })()""")
         fr = await pg.evaluate(WATCH, 22000)
+        # into the neck stretch: the figure's place on screen and the view's middle each move one way only (Oct 2026:
+        # the rest pose stood at its own spot, so the figure and the view went out to it and back: a bounce)
+        into = [f for f in fr if f['ex'] == 'mayo-neck'][:120]
+        print('into neck: no back-and-forth', rev([f['px'] for f in into]), rev([float(f['vb'].split()[0]) + float(f['vb'].split()[2]) / 2 for f in into]), '<- 0 0 (figure, view middle)')
         print('side stepping, neck L/R ', jump(fr), sorted(set((f['ex'] if 'ex' in f else '') for f in fr)) or '', '<- largest step small (was 104 px)')
         # reduced motion: cuts
         await pg.emulate_media(reduced_motion='reduce')

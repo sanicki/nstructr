@@ -224,7 +224,7 @@ function selectExercise(id) {
   if (!S.ex) return false;
   S.seg = { ...DEFAULT_SEGMENTS };
   ED.orig = null;
-  S.side = 'L'; S.dir = 'A'; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.holdWait = null; S.speed = 1;
+  S.side = 'L'; S.dir = 'A'; S.glide = null; S.idx = 0; S.prev = null; S.from = null; S.rep = 1; S.planDone = false; S.tempo = 1; S.onStep = null; S.onPlanEnd = null; S.canAdvance = null; S.holdWait = null; S.speed = 1;
   const dirs = S.ex.direction && S.ex.direction.labels;
   $('#dirCtl').hidden = !dirs;
   if (dirs) document.querySelectorAll('#dirSeg button').forEach(b => { b.querySelector('.lbl').textContent = dirs[b.dataset.dir]; b.setAttribute('aria-pressed', String(b.dataset.dir === 'A')); });
