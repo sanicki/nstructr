@@ -5,6 +5,7 @@ from playwright.async_api import async_playwright
 # NstructR's and NstructR+'s words of encouragement (Settings > Instruction > NstructR or NstructR+ > Words of encouragement, on at first):
 # the count starts at "1" (after "Ready… Begin.", never varied; Oct 2026), "Last one" from its synonyms; a count (never the first or last) replaced 20% of the time, 10% for the
 # rep after one that was (until one isn't); during a hold, every 10 s a 40% chance, never at halfway or in the last 10 s.
+# An alternating rep's other half says "and" ("1 and 2 and 3"), which a cheer can replace too.
 # A word is never the same as the last one picked for that moment. Off: the plain words. WP.random is stubbed.
 SAY = "window.SAID = []; say = t => { if (WK.sound === 'voice' || WK.sound === 'coach') SAID.push(t); return Promise.resolve(); }; renderWpCount = renderWpCount;"
 async def main():
@@ -29,6 +30,14 @@ async def main():
         print('reps, random 0.05       ', await reps('[0.05]'), '<- a cheer every middle rep (< 0.1), never the same word twice in a row')
         print('reps, random 0.5        ', await reps('[0.5]'), '<- 1, counts, a last word (never the one used just before)')
         print('reps, random 0.9        ', await reps('[0.9]'), '<- the same, other words')
+        # alternating sides: each rep is one side then the other; the other half says "and" (a cheer can replace it)
+        async def alt(rand):
+            return await pg.evaluate(f"""(() => {{ const r = {rand}; let i = 0; WP.random = () => r[i++ % r.length]; SAID.length = 0;
+              const keep = renderWpCount; renderWpCount = () => {{}};
+              for (let k = 1; k <= 4; k++) for (const a of [0, 1]) {{ S.planMeta = [{{ repNo: k, repOf: 4, alt: a }}]; onWorkStep(0); }}
+              renderWpCount = keep; return SAID.slice(); }})()""")
+        print('alternating, random 0.5 ', await alt('[0.5]'), "<- ['1', 'and', '2', 'and', '3', 'and', a last word, 'and']")
+        print('alternating, random 0.15', await alt('[0.15]'), "<- 1, cheer, 2, cheer…: an and can be a cheer too")
         await pg.evaluate("setSound('voice')")
         print('NstructR counts too        ', await reps('[0.5]'), '<- 1, counts, a last word (NstructR counts since Oct 2026)')
         await pg.evaluate("setSound('coach')")
