@@ -640,7 +640,7 @@ function restFrame(fromEx, toEx, toFirst) {
 function stagePlan(p) {
   const prevLast = S.mode === 'workout' && S.resolved.length ? S.resolved[S.idx] : null;
   const prevEx = S.ex, exChanged = !S.ex || S.ex.id !== p.ex.id;
-  const fromBox = scene.getAttribute('viewBox'), fromShift = S.shiftX;
+  const fromBox = scene.getAttribute('viewBox'), drawnX = S.drawnX;
   let plan = p.plan, meta = p.meta, trans = 0, fade = false;
   if (prevLast && exChanged && !reducedMotion()) {
     const rest = restFrame(prevEx, p.ex, plan[0]);
@@ -666,28 +666,42 @@ function stagePlan(p) {
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   if (exChanged) { buildFigure(); buildGuide(); }
   frameScene(own);
-  // the frame glides from the old one to one that fits the rest pose too, then settles on the exercise's own
-  if (trans) glideView(fromBox, fromShift, [[boxFor(plan), REST_MS], [scene.getAttribute('viewBox'), ARRIVE_MS]]);
-  else if (S.from && exChanged) S.from = null;                     // a cut: the new exercise starts from its own first position
+  S.followOff = 0;
+  if (S.from && exChanged && !trans) { S.from = null; return; }   // a cut: the new exercise starts from its own first position
+  if (!S.from || reducedMotion()) return;
+  // carrying on from the last pose (the next exercise, set or side): the figure stays where it was on screen (a side
+  // is placed elsewhere; a travelling exercise had moved along) and the frame glides to the new one, through one that
+  // also fits the rest pose when it passes through one
+  const f = frameAt(S.from, S.from, 1, S.seg), q = project(fkAt(f.pose, S.seg, f.pos), f.cam).pelvis.x;
+  const fromShift = isFinite(drawnX) ? drawnX - q : S.shiftX;
+  glideView(fromBox, fromShift, scene.getAttribute('viewBox'), trans ? REST_MS + ARRIVE_MS : Math.max(plan[0].dur, 600), trans ? boxFor(plan) : null,
+    isFinite(drawnX) ? drawnX - W / 2 : 0);
 }
-/* pan and zoom from the old frame through each [viewBox, ms] in turn, and slide the figure's sideways shift with it */
+/* pan and zoom from the old frame to the new one in one smooth move (one ease from start to end: it never stops on the
+   way), widening on the way if needed so a pose passed through (viaBox) stays in view; the figure's sideways shift
+   slides with it */
 let GLIDE = 0;
-function glideView(fromBox, fromShift, legs) {
+function glideView(fromBox, fromShift, toBox, ms, viaBox, followFrom = 0) {
   const nums = b => (b || '').split(' ').map(Number), ok = v => v.length === 4 && !v.some(isNaN);
-  const pts = [nums(fromBox), ...legs.map(l => nums(l[0]))], toShift = S.shiftX, total = legs.reduce((t, l) => t + l[1], 0);
-  if (!pts.every(ok)) return;
+  const a = nums(fromBox), c = nums(toBox), toShift = S.shiftX;
+  if (!ok(a) || !ok(c)) return;
+  // the halfway frame: halfway between the two, grown to take in viaBox (as [x, y, w, h])
+  let m = a.map((v, i) => (v + c[i]) / 2);
+  const v = nums(viaBox);
+  if (ok(v)) { const x0 = Math.min(m[0], v[0]), y0 = Math.min(m[1], v[1]); m = [x0, y0, Math.max(m[0] + m[2], v[0] + v[2]) - x0, Math.max(m[1] + m[3], v[1] + v[3]) - y0]; }
+  // a quadratic curve through the halfway frame: smooth, no stop in the middle
+  const at = u => a.map((x, i) => { const k = 2 * m[i] - (x + c[i]) / 2; return (1 - u) * (1 - u) * x + 2 * u * (1 - u) * k + u * u * c[i]; });
   const t0 = performance.now(), id = ++GLIDE, ease = x => x < .5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2;
   const step = now => {
     if (id !== GLIDE || S.view !== 'wplay') return;
-    let t = now - t0, k = 0;
-    while (k < legs.length - 1 && t > legs[k][1]) { t -= legs[k][1]; k++; }
-    const e = ease(Math.min(1, t / legs[k][1])), a = pts[k], b = pts[k + 1];
-    scene.setAttribute('viewBox', a.map((v, i) => (v + (b[i] - v) * e).toFixed(1)).join(' '));
-    if (!S.travel) S.shiftX = fromShift + (toShift - fromShift) * ease(Math.min(1, (now - t0) / total));
+    const u = ease(Math.min(1, (now - t0) / ms));
+    scene.setAttribute('viewBox', at(u).map(x => x.toFixed(1)).join(' '));
+    if (!S.travel) S.shiftX = fromShift + (toShift - fromShift) * u;
+    else S.followOff = followFrom * (1 - u);                        // a travelling exercise's view follows the figure
     syncLimbWidth();
-    if (now - t0 < total) requestAnimationFrame(step);
+    if (now - t0 < ms) requestAnimationFrame(step);
   };
-  S.shiftX = fromShift; scene.setAttribute('viewBox', fromBox);
+  S.shiftX = fromShift; S.followOff = S.travel ? followFrom : 0; scene.setAttribute('viewBox', fromBox);
   requestAnimationFrame(step);
 }
 /* the picture as it is fades out over the new one as it fades in */
