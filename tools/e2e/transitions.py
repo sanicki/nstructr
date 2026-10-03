@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # Between exercises (src/positions.js, stagePlan in src/app/4-workouts.js): two exercises in the same position (Squat ->
 # Lateral Raise, both standing; the camera turns from the side to the front) move through the at-rest pose, the frame
 # glides and nothing jumps; a change of position (standing -> lying on the back) follows the moves between positions
@@ -38,31 +39,31 @@ async def main():
         b = await p.chromium.launch(); errs = []
         pg = await b.new_page(viewport={'width': 412, 'height': 860}); pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
-        print('positions               ', await pg.evaluate("['bw-squat', 'bhf-lateral-raise', 'bw-glute-bridge'].map(id => { const p = posOf(exById(id)); return p.start + '>' + p.end; })"))
+        check('positions', await pg.evaluate("['bw-squat', 'bhf-lateral-raise', 'bw-glute-bridge'].map(id => { const p = posOf(exById(id)); return p.start + '>' + p.end; })"), ['standing>standing', 'standing>standing', 'supine>supine'])
         # no rest: Squat -> Lateral Raise (same position, side camera -> front)
         await pg.evaluate(WK + '(0)'); await pg.wait_for_timeout(1500)
-        print('first exercise: no move ', await pg.evaluate('S.trans'), '<- 0 (nothing to come from)')
+        check('first exercise: no move', await pg.evaluate('S.trans'), 0, 'nothing to come from')
         await pg.evaluate("wpAction('nextItem')")
         fr = await pg.evaluate(WATCH, 2200)
         vbs = sorted(set(f['vb'] for f in fr))
-        print('same position: moves    ', fr[0]['trans'], await pg.evaluate("[S.planMeta[0].phase, S.resolved[0].name]"), '<- 1, transition through Standing')
-        print('  frame glides          ', len(vbs), 'viewBoxes <- many (not one cut)')
-        print('  largest step (px)     ', jump(fr), '<- small: no jump')
-        print('  one picture           ', max(f['n'] for f in fr), '<- 1 (no crossfade)')
-        print('  ends in the exercise  ', await pg.evaluate("S.idx >= S.trans"), '<- True')
+        check('same position: moves', [fr[0]['trans'], *await pg.evaluate("[S.planMeta[0].phase, S.resolved[0].name]")], [1, 'transition', 'Standing'], 'through Standing')
+        check('  frame glides (viewBoxes)', len(vbs), at_least(20), 'many, not one cut')
+        check('  largest step (px)', jump(fr), below(4), 'small: no jump')
+        check('  one picture', max(f['n'] for f in fr), 1, 'no crossfade')
+        check('  ends in the exercise', await pg.evaluate("S.idx >= S.trans"), True)
         # Lateral Raise -> Glute Bridge: standing to lying on the back, along the moves between positions
         await pg.evaluate("wpAction('nextItem')")
         way = await pg.evaluate("S.resolved.slice(0, S.trans).map(r => r.name)")
         fr = await pg.evaluate(WATCH, 6500)
-        print('change of position      ', way, "<- Standing, Squat, Sit back, Seated, Lying on your back")
-        print('  no snaps, one picture ', snaps(fr), max(f['n'] for f in fr), '<- [] 1')
-        print('  no weights or band    ', await pg.evaluate("document.querySelector('#propsFront').innerHTML.length"), '<- (Glute Bridge has none) 0')
+        check('change of position', way, ['Standing', 'Squat', 'Sit back', 'Seated', 'Lying on your back'])
+        check('  no snaps, one picture', [snaps(fr), max(f['n'] for f in fr)], [[], 1])
+        check('  no weights or band', await pg.evaluate("document.querySelector('#propsFront').innerHTML.length"), 0, 'Glute Bridge has none')
         # Glute Bridge -> Chair Arm Raises: up to standing in front of the chair, which fades in as the figure sits on it
         await pg.evaluate("wpAction('nextItem')")
         way = await pg.evaluate("S.resolved.slice(0, S.trans).map(r => r.name)")
-        print('to a chair              ', way[-1], await pg.evaluate("posOf(exById('chair-arm-raises')).start"), "<- Standing standing (you walk up to furniture)")
+        check('to a chair', [way[-1], await pg.evaluate("posOf(exById('chair-arm-raises')).start")], ['Standing', 'standing'], 'you walk up to furniture')
         await pg.wait_for_function("S.idx === S.trans && S.t > S.resolved[S.trans].dur * 0.3 && S.t < S.resolved[S.trans].dur * 0.7", timeout=15000)
-        print('  chair fading in       ', await pg.evaluate("[+$('#propsBack').style.opacity > 0 && +$('#propsBack').style.opacity < 1, $('#propsBack').innerHTML.includes('surface')]"), '<- [True, True]')
+        check('  chair fading in', await pg.evaluate("[+$('#propsBack').style.opacity > 0 && +$('#propsBack').style.opacity < 1, $('#propsBack').innerHTML.includes('surface')]"), [True, True])
         # no position to go through (a foam roller exercise): a crossfade; Clamshell's other side (mirrored, the head the
         # other way): a crossfade, not a flip through the air
         await pg.evaluate("hush(); WP.phase = 'done'")
@@ -70,24 +71,24 @@ async def main():
           WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [{ ...newItem(exById('roller-hamstrings')), reps: 1 }, { ...newItem(exById('side-clamshell')), reps: 1, sides: 'both' }] }] });
           saveWorkouts(); startWorkout(wkById('t'), 0); })()"""); await pg.wait_for_timeout(400)
         await pg.evaluate("wpAction('nextItem')"); fr = await pg.evaluate(WATCH, 500)
-        print('no position: crossfade  ', fr[0]['trans'], max(f['n'] for f in fr), '<- 0 2')
+        check('no position: crossfade', [fr[0]['trans'], max(f['n'] for f in fr)], [0, 2])
         await pg.wait_for_timeout(300); await pg.evaluate("S.idx = S.resolved.length - 1; S.t = S.resolved[S.idx].dur; onWorkEnd()"); fr = await pg.evaluate(WATCH, 1500)
-        print('Clamshell other side    ', fr[0]['trans'], max(f['n'] for f in fr), snaps(fr), '<- 0 2 [] (a crossfade, no flip)')
+        check('Clamshell other side', [fr[0]['trans'], max(f['n'] for f in fr), snaps(fr)], [0, 2, []], 'a crossfade, no flip')
         # with a rest: the move happens in the rest and waits in the first pose
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(5)'); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_timeout(2500)        # through the squats quickly
         await pg.evaluate("S.speed = 1"); await pg.wait_for_function("WP.phase === 'rest'", timeout=15000)
         await pg.wait_for_timeout(2600)
-        print('rest: moved, waiting    ', await pg.evaluate("[WP.phase, S.trans, S.idx, S.playing, S.planDone, S.ex.id]"), "<- ['rest', 1, 1, True, False, 'bhf-lateral-raise']")
+        check('rest: moved, waiting', await pg.evaluate("[WP.phase, S.trans, S.idx, S.playing, S.planDone, S.ex.id]"), ['rest', 1, 1, True, False, 'bhf-lateral-raise'])
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(200)
-        print('after the rest          ', await pg.evaluate("[WP.phase, S.trans, S.planMeta[0].phase]"), "<- ['work', 0, not 'transition']")
+        check('after the rest', await pg.evaluate("[WP.phase, S.trans, S.planMeta[0].phase !== 'transition']"), ['work', 0, True])
         # a rest shorter than the move (1 s; Lateral Raise -> Glute Bridge takes about 5): the rest waits until it's there
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(1)'); await pg.wait_for_timeout(300)
         await pg.evaluate("wpAction('nextItem'); S.speed = 20"); await pg.wait_for_timeout(2500); await pg.evaluate("S.speed = 1")
         await pg.wait_for_function("WP.phase === 'rest' && S.ex.id === 'bw-glute-bridge'", timeout=15000); await pg.wait_for_timeout(2000)
-        print('short rest: still moving', await pg.evaluate("[WP.phase, WP.restLeft <= 0, S.idx < S.trans]"), "<- ['rest', True, True]")
+        check('short rest: still moving', await pg.evaluate("[WP.phase, WP.restLeft <= 0, S.idx < S.trans]"), ['rest', True, True])
         await pg.wait_for_function("WP.phase === 'work'", timeout=10000)
-        print('  then starts, arrived  ', await pg.evaluate("[WP.phase, S.planMeta[0].phase !== 'transition']"), "<- ['work', True]")
+        check('  then starts, arrived', await pg.evaluate("[WP.phase, S.planMeta[0].phase !== 'transition']"), ['work', True])
         # the owner's case (Oct 2026): Side Stepping (travels) -> Neck Stretch, both sides: before, the figure jumped 88 px
         # into the neck stretch (the travel was forgotten) and 104 px between its sides (a side is placed elsewhere)
         await pg.evaluate("hush(); WP.phase = 'done'")
@@ -98,8 +99,8 @@ async def main():
         # into the neck stretch: the figure's place on screen and the view's middle each move one way only (Oct 2026:
         # the rest pose stood at its own spot, so the figure and the view went out to it and back: a bounce)
         into = [f for f in fr if f['ex'] == 'mayo-neck'][:120]
-        print('into neck: no back-and-forth', rev([f['px'] for f in into]), rev([float(f['vb'].split()[0]) + float(f['vb'].split()[2]) / 2 for f in into]), '<- 0 0 (figure, view middle)')
-        print('side stepping, neck L/R ', jump(fr), sorted(set((f['ex'] if 'ex' in f else '') for f in fr)) or '', '<- largest step small (was 104 px)')
+        check('into neck: no back-and-forth', [rev([f['px'] for f in into]), rev([float(f['vb'].split()[0]) + float(f['vb'].split()[2]) / 2 for f in into])], [0, 0], 'figure, view middle')
+        check('side stepping, neck L/R: step', jump(fr), below(4), 'largest step small (was 104 px)')
         # Chair Incline Push-Up -> Tibialis Raise (owner, Oct 2026): the move's first frame placed the push-up on the next
         # exercise's surfaces (a wall, no chair), so the hands went to the floor, the feet under it, and the floor clamp
         # bent both legs: the far leg popped out. Each end is placed on its own surfaces now.
@@ -108,13 +109,13 @@ async def main():
           WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: ['chair-incline-pushup', 'wall-tibialis-raise'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] });
           saveWorkouts(); startWorkout(wkById('t'), 0); if (WP.restKind === 'start') wpAction('restSkip'); })()"""); await pg.wait_for_timeout(300)
         await pg.evaluate("S.idx = S.resolved.length - 1; S.t = S.resolved[S.idx].dur; onWorkEnd(); S.playing = false")
-        print('push-up -> tibialis: legs', await pg.evaluate("""(() => { const a = S.from, b = S.resolved[0], f0 = frameAt(a, b, 0, S.seg), f1 = frameAt(a, b, 0.002, S.seg);
+        check('push-up -> tibialis: legs', await pg.evaluate("""(() => { const a = S.from, b = S.resolved[0], f0 = frameAt(a, b, 0, S.seg), f1 = frameAt(a, b, 0.002, S.seg);
           const P0 = fkAt(f0.pose, S.seg, f0.pos), P1 = fkAt(f1.pose, S.seg, f1.pos);
-          return Math.round(Math.max(...['kneeL', 'kneeR', 'ankleL', 'ankleR', 'toeL', 'toeR'].map(k => Math.hypot(P1[k].x - P0[k].x, P1[k].y - P0[k].y, P1[k].z - P0[k].z)))); })()"""), '<- under 2 (was 61: a knee and foot jumped up)')
+          return Math.round(Math.max(...['kneeL', 'kneeR', 'ankleL', 'ankleR', 'toeL', 'toeR'].map(k => Math.hypot(P1[k].x - P0[k].x, P1[k].y - P0[k].y, P1[k].z - P0[k].z)))); })()"""), below(2), 'under 2 (was 61: a knee and foot jumped up)')
         # reduced motion: cuts
         await pg.emulate_media(reduced_motion='reduce')
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(0)'); await pg.wait_for_timeout(300)
         await pg.evaluate("wpAction('nextItem')"); await pg.wait_for_timeout(100)
-        print('reduced motion          ', await pg.evaluate("[S.trans, document.querySelectorAll('svg.scene').length]"), '<- [0, 1]')
-        print('errors', errs); await b.close()
+        check('reduced motion', await pg.evaluate("[S.trans, document.querySelectorAll('svg.scene').length]"), [0, 1])
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

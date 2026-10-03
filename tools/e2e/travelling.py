@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # Travelling ("travel": true): each rep carries on from where the last one ended. Played for a few reps: the figure
 # only ever moves forward over the floor (backward, for a walk played Backward) (no slide back at the loop), the view keeps it centred, and the floor
 # ticks scroll. The same in a workout.
@@ -33,9 +34,9 @@ async def main():
         # in a workout: the plan's reps carry on too
         await pg.evaluate("localStorage.setItem('nstructr-rest-between-v1','0'); WK.hinted = true; setSound('off'); WK.list.push({id:'t',name:'T',blocks:[{id:'b',name:'B',items:[{...newItem(exById('bw-walking-lunge')),reps:3}]}]}); saveWorkouts(); go('#/workouts')")
         await pg.wait_for_timeout(300); await pg.evaluate("startWorkout(wkById('t'),0)"); await pg.wait_for_timeout(400)
-        print('workout offsets (z)     ', await pg.evaluate("S.offs.map(o => Math.round(o.z))"))
+        check('workout offsets (z)', await pg.evaluate("S.offs.map(o => Math.round(o.z))"), [0, 0, 0, 0, 375, 375, 375, 375, 749, 749, 749, 749, 749])
         await run(pg, 'workout: walking lunge', 'z', 4)
         await pg.goto(URL + '#/play/bw-squat', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
-        print('not travelling: ticks   ', await pg.evaluate("$('#floorTicks').children.length"))
-        print('errors', errs); await b.close()
+        check('not travelling: ticks', await pg.evaluate("$('#floorTicks').children.length"), 0)
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

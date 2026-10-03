@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # A weight passed from hand to hand (Kettlebell Around the World): each step's "holds" says which hands hold it; the
 # bell is at that hand, or between both at a pass, and moves from one grip to the next; passed behind the back it's
 # drawn behind the body; the other direction and the thumbnail work too.
@@ -18,8 +19,8 @@ async def main():
             await pg.evaluate(f"S.prev = {(i - 1) % 4}; S.idx = {i}")
             print('step', i, await pg.evaluate(f"({state})(1)"))
         await pg.evaluate("S.prev = 0; S.idx = 1")
-        print('halfway front -> right', await pg.evaluate(f"({state})(0.5)"), '<- grip between both and the right hand')
-        print('thumbnail has the bell   ', await pg.evaluate("poseThumbSVG(exById('kb-around-the-world'), exById('kb-around-the-world').keyframes[1]).includes('wt')"))
-        print('direction B steps        ', await pg.evaluate("reverseReps(exById('kb-around-the-world').keyframes).map(k => [k.name, (k.holds || []).join('+')])"))
-        print('errors', errs); await b.close()
+        check('halfway front -> right', await pg.evaluate(f"({state})(0.5)"), ['Round the right side', '{"handL":0.25,"handR":0.75}', 'bell to handL/handR px', 38, 39, 'behind body', False], 'grip between both and the right hand')
+        check('thumbnail has the bell', await pg.evaluate("poseThumbSVG(exById('kb-around-the-world'), exById('kb-around-the-world').keyframes[1]).includes('wt')"), True)
+        check('direction B steps', await pg.evaluate("reverseReps(exById('kb-around-the-world').keyframes).map(k => [k.name, (k.holds || []).join('+')])"), [['Round the left side', 'handL'], ['Pass behind', 'handL+handR'], ['Round the right side', 'handR'], ['Pass in front', 'handL+handR']])
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

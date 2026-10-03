@@ -10,7 +10,7 @@ The user guide is `wiki/*.md` (screenshots: `tools/wiki_screenshots.py` → `wik
 - `npm install` (once) · `node tools/build.mjs` (validate + animation checks + bundle + `_site/`)
 - `node tools/build.mjs --check-only` (what CI runs on PRs) · `--no-checks` (fast UI iteration)
 - Serve: `python3 -m http.server 8000 -d _site` → `/` (fetches `library/index.json`) or `/nstructr.html` (single file)
-- Browser tests: `NSTRUCTR_URL=http://127.0.0.1:8000/nstructr.html python3 tools/e2e/<test>.py` (they print, read the output)
+- Browser tests (after a build): `python3 tools/e2e/run.py` (the fast set CI runs on PRs) · `--all` (nightly) · `run.py <test> …`; output in `e2e-output/`. One alone: `NSTRUCTR_URL=http://127.0.0.1:8000/nstructr.html python3 tools/e2e/<test>.py`. New checks use `check()` (`tools/e2e/check.py`), not bare prints
 
 ## Rules
 - `library/exercises/*.json` and `library/workouts/*.json` are the source of truth. File name = `id`. Library ids never start with `u-` (reserved for users).

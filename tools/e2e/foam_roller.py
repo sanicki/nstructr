@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # Foam roller: drawn in the player and the thumbnails (a filled circle end-on); the shin, thigh, back, flank or seat
 # rests on it at both ends of the roll and all the way between (rolling, not floating); the roller rolls along the
 # floor half as far as the body and turns as it goes (a line across its end); a workout item is timed; Exercises
@@ -25,13 +26,13 @@ async def main():
               const el = $('#scene .surface.roller'), r = el.getBBox(), d = el.getAttribute('d'); return [Math.round(r.x + r.width / 2), d.slice(d.lastIndexOf('M'))]; })""")
             print(f'{"":18} roller middle and turn line at 0, ½, 1:', [r[0] for r in rolled], '| turn line changes', len(set(r[1] for r in rolled)) == 3)
         # a workout item: timed (seconds, not reps), rolling back and forth
-        print('in a workout            ', await pg.evaluate("(() => { const it = newItem(exById('roller-calves')); return [it.seconds, it.reps, exById('roller-calves').measure]; })()"))
+        check('in a workout', await pg.evaluate("(() => { const it = newItem(exById('roller-calves')); return [it.seconds, it.reps, exById('roller-calves').measure]; })()"), [45, 10, 'time'])
         await pg.goto(URL + '#/exercises', wait_until='domcontentloaded'); await pg.wait_for_timeout(600)
         await pg.fill('#search', 'foam'); await pg.wait_for_timeout(300)
-        print('search "foam"           ', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x => x.textContent)"))
-        print('equipment filter        ', await pg.evaluate("[...document.querySelectorAll('[data-equip]')].map(x => x.dataset.equip).filter(x => /roller/i.test(x))"))
+        check('search "foam"', await pg.evaluate("[...document.querySelectorAll('#exploreBody .pose-card .t')].map(x => x.textContent)"), ['Foam Roller Calf Roll', 'Foam Roller Glute Roll', 'Foam Roller Hamstring Roll', 'Foam Roller IT Band Roll', 'Foam Roller Lat Roll', 'Foam Roller Quad Roll', 'Foam Roller Upper Back Roll'])
+        check('equipment filter', await pg.evaluate("[...document.querySelectorAll('[data-equip]')].map(x => x.dataset.equip).filter(x => /roller/i.test(x))"), ['Foam roller'])
         await pg.set_viewport_size({'width': 360, 'height': 398})
         await pg.goto(URL + '#/play/roller-quads', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
-        print('360x398 sideways scroll ', await pg.evaluate("document.documentElement.scrollWidth > innerWidth"))
-        print('errors', errs); await b.close()
+        check('360x398 sideways scroll', await pg.evaluate("document.documentElement.scrollWidth > innerWidth"), False)
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

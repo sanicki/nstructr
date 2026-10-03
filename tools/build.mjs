@@ -177,6 +177,21 @@ if (!args.has('--no-checks') && !errors.length) {
   const n = errors.length - n0;
   console.log(n ? `equipment: ${n} problem(s)` : 'equipment: every listed item is drawn, every drawn one listed');
 }
+// the app's scripts share one global scope (src/app/*.js are classic scripts; the single file joins them): a name declared
+// twice at the top level breaks the app (const/let/class: nothing runs) or quietly replaces the first (function)
+{
+  const files = ['src/core.js', 'src/similar.js', 'src/positions.js', 'src/thumb.js', ...fs.readdirSync(path.join(ROOT, 'src/app')).filter(f => f.endsWith('.js')).sort().map(f => `src/app/${f}`)];
+  const seen = new Map(); let n0 = errors.length;
+  for (const f of files) rd(f).split('\n').forEach((line, i) => {
+    const m = line.match(/^(?:async\s+)?(?:function\*?|class|const|let|var)\s+([A-Za-z_$][\w$]*)/) || line.match(/^(?:const|let|var)\s+\{([^}=]*)\}\s*=/);
+    if (!m) return;
+    const names = /^(?:const|let|var)\s+\{/.test(line) ? m[1].split(',').map(x => x.split(':').pop().trim()).filter(Boolean) : [m[1]];
+    for (const name of names) { if (seen.has(name)) errors.push(`${f}:${i + 1}: "${name}" is already declared at ${seen.get(name)} (the app's scripts share one global scope)`); else seen.set(name, `${f}:${i + 1}`); }
+  });
+  try { new (require('vm').Script)(files.concat(['src/vendor/qrcode.js']).map(rd).join('\n;\n'), { filename: 'nstructr.html' }); }
+  catch (e) { errors.push(`the app's scripts don't load as one: ${e.message}`); }
+  console.log(errors.length > n0 ? `scripts: ${errors.length - n0} problem(s)` : `scripts: ${seen.size} top-level names, none declared twice`);
+}
 if (warnings.length) console.warn('\n' + warnings.map(w => '⚠ ' + w).join('\n') + '\n');
 if (errors.length) { console.error('\n' + errors.map(e => '✗ ' + e).join('\n')); process.exit(1); }
 if (args.has('--check-only')) process.exit(0);

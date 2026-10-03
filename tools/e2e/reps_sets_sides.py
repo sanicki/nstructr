@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch(); pg=await b.new_page(viewport={'width':1280,'height':860}); errs=[]
@@ -21,5 +22,13 @@ async def main():
             if key!=last: log.append(st); last=key
             if st[0]=='done': break
         for l in log: print(l)
-        print('errors', errs); await b.close()
+        rows = {(l[0], l[1], l[2], l[4], l[5]) for l in log}
+        # each exercise counts all the way: both sets of squats, the alternating ones by whole reps (one side then the other)
+        check('squats: 2 sets of 3', [('work', 0, s, f'Set {s + 1} of 2', '3/3reps') in rows for s in (0, 1)], [True, True])
+        check('bird dog: 2 alternating', ('work', 1, 0, 'Alternating sides', '2/2reps') in rows, True)
+        check('arm circles: 2 alternating', ('work', 2, 0, 'Alternating directions', '2/2circles') in rows, True)
+        check('wall sit pull-apart: 4', ('work', 3, 0, '', '4/4pull-aparts') in rows, True)
+        check('plank counts down', [r for r in rows if r[1] == 4 and r[0] == 'work' and r[4].startswith('0:0')] != [], True)
+        check('rests between, then done', [log[0][0], log[-1][0], sorted({l[1] for l in log if l[0] == 'rest'})], ['rest', 'done', [0, 1, 2, 3, 4]])
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

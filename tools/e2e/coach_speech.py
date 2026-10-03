@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch(); pg=await b.new_page(viewport={'width':1280,'height':860}); errs=[]
@@ -29,7 +30,7 @@ async def main():
             await pg.wait_for_timeout(100)
             if await pg.evaluate("WP.phase==='done'"): break
         steps=await pg.evaluate("STEPLOG"); sp=await pg.evaluate("SP")
-        print('cancels during the workout:', sp['cancels'])
+        check('cancels during the workout:', sp['cancels'], 0)
         print('spoken, in order:'); 
         for l in sp['log']: print('   ', round(l['start']), '-', round(l.get('end',0)), '|', l['text'])
         # for each guided step: did it wait for its own line to finish?
@@ -40,5 +41,5 @@ async def main():
             line=next((l for l in sp['log'] if l['text'].endswith(s['say'][-20:]) and abs(l['start']-s['t'])<400), None)
             if line and steps[i+1]['t'] < line.get('end',1e12)-15: bad+=1; print('   advanced early:', s['say'][:50])
         print('guided steps that moved on before their line finished:', bad, 'of', sum(1 for s in steps if s['guided']))
-        print('errors', errs); await b.close()
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

@@ -1038,8 +1038,11 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
 
 - `node tools/build.mjs` — schema + references + animation checks (3D) + range of motion (≈ 25 s).
 - `tools/viewer3d.html` (serve the repo root) plays any exercise with a camera you can turn.
-- `tools/e2e/*.py` (Python Playwright; `pip install playwright && playwright install chromium`), against a
-  served build via `NSTRUCTR_URL`:
+- `tools/e2e/*.py` (Python Playwright; `pip install -r tools/e2e/requirements.txt && playwright install chromium`):
+  `python3 tools/e2e/run.py` builds nothing, serves `_site/` itself and runs the fast set (`--all` for every test,
+  or name tests); one test alone runs against a served build via `NSTRUCTR_URL`. Each checks its results with
+  `check(label, actual, wanted)` (`tools/e2e/check.py`; `near`, `below`, `at_least`, `has` for tolerances) and exits
+  non-zero if any is wrong. Pull requests run the fast set, every test runs nightly (§13 item 7). The tests:
   `routine_full` (all 24 items to completion), `reps_sets_sides` (sets, rests, alternate sides/directions,
   nested reps, holds), `editor` (create, picker, drag, menus, blocks, export/import, resume),
   `circuits_history_share`, `exercises_tab` (the move from Saved, chips/shelves order, bookmark vs own,
@@ -1086,16 +1089,12 @@ What's still open, in order, is **[ROADMAP.md](ROADMAP.md)**: the one to-do list
    read or written. See `docs/3d-skeleton.md`. **Follow-up done (Sep 2026): the problem poses** —
    the 34 exercises past what a flexible body can do after the conversion were fixed (see `docs/3d-skeleton.md`,
    "The range check"), and the build now rejects poses past "flexible".
-7. **CI tests** — **deferred** (owner, Sep 2026: the build's checks on every pull request are enough for now). Today CI runs `node tools/build.mjs` (schemas, animation checks, range of motion) on
-   every pull request, but the browser tests (`tools/e2e/*.py`) and `tools/audit.py` are only run by hand. Plan:
-   - make each e2e test **assert**: today they print results for a person to read; give each an expected outcome and a
-     non-zero exit code on failure (keep the printout for diagnosis);
-   - a workflow job on pull requests: build, serve `_site/`, install Python Playwright with its Chromium, run every
-     e2e test (in parallel where they don't share state) and `tools/audit.py` (axe, 48 px targets, text size, sideways
-     scroll), uploading screenshots and output as artifacts on failure;
-   - keep flaky, network-dependent checks (source links) manual; decide whether `tools/perf.py` gets a budget (CI
-     machines vary) or stays informational;
-   - when picked up again: ideally before submissions grow, so contributions are checked end to end.
+7. ✅ **CI tests** (Oct 2026): every browser test checks its results (`check()` in `tools/e2e/check.py`: a ✗ line and a
+   non-zero exit on a wrong value; the printout stays for diagnosis), and `tools/e2e/run.py` serves `_site/` and runs
+   them in parallel. Pull requests run the fast set (`FAST` in `run.py`: speech, workouts, transitions, the cover
+   screen, tabs, imports and sharing, offline; about 2 minutes) in the `browser-tests` job of `build.yml`; every test
+   runs nightly (`e2e-nightly.yml`). Output is uploaded on failure. Still by hand: `tools/audit.py` and `tools/perf.py`
+   (machine-dependent), and anything needing the internet (source links).
 8. **Submission pipeline** — **exercises done** (Sep 2026, §8.8); **workouts later** (owner: exercises first). For
    workouts: the same issue form with a workout link, each of its own exercises going through the exercise rules.
 9. **Content**: ✅ **foam roller** (Sep 2026): a `roller` surface, segment touches and rolling (§5, §6.2); calves,

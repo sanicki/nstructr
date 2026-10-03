@@ -2,6 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 # Hanging (a pull-up bar, both hands on it through every hang move (the one that isn't the anchor too); {type: "bar", y}; a hanging step anchors a hand with anchorY): as played, the hand stays on
 # the bar through every move between hanging steps, the body hangs (feet off the floor) and nothing goes through the
 # floor; the view grows to show the bar, and the bar is drawn (in the player and the thumbnail).
@@ -28,5 +29,5 @@ async def main():
         print('thumbnail has the bar    ', await pg.evaluate("poseThumbSVG(exById('bar-pull-up'), exById('bar-pull-up').keyframes[1]).includes('tbar')"))
         await pg.goto(URL + '#/play/bw-squat', wait_until='domcontentloaded'); await pg.wait_for_timeout(400)
         print('usual view elsewhere     ', await pg.evaluate("$('#scene').getAttribute('viewBox')"))
-        print('errors', errs); await b.close()
+        check('errors', errs, []); await b.close()
 asyncio.run(main())

@@ -3,6 +3,7 @@ import asyncio, os
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 import json
 from playwright.async_api import async_playwright
+from check import check, near, below, at_least, has, all_true
 async def main():
     async with async_playwright() as p:
         b=await p.chromium.launch(); errs=[]
@@ -20,9 +21,10 @@ async def main():
             name=await pg.evaluate("S.ex.name"); worst.append((round(gap*100,1), name))
             if i in (0,3,11,12,14,23): p_=f'/tmp/fl_{i}.png'; await pg.screenshot(path=p_); shots.append(p_)
         worst.sort()
-        print('floor height above the bottom edge (% of screen), lowest five:', worst[:5])
-        print('highest:', worst[-1])
-        print(errs); await b.close()
+        print('lowest five', worst[:5], '| highest', worst[-1])
+        check('floor height above the bottom edge (% of screen), lowest', worst[0][0], at_least(20))
+        check('floor height, highest', worst[-1][0], below(40))
+        check('errors', errs, []); await b.close()
         from PIL import Image
         ims=[Image.open(s).resize((180,199)) for s in shots]
         o=Image.new('RGB',(190*len(ims),199),'white')
