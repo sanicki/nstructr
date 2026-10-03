@@ -3,13 +3,18 @@
   "version": 2,
   "id": "beginner-kettlebell-20",
   "name": "20-Minute Beginner's Kettlebell",
-  "description": "A full-body workout with one kettlebell for beginners, about 20 minutes: a halo and goblet squats to warm up, the deadlift, Romanian deadlift and swing, a row and press for each arm, lunges and sumo squats, then a carry and twists. Start with a light bell.",
+  "description": "A full-body workout with one kettlebell for beginners, about 20 minutes, in a small space: a halo, around the world and goblet squats to warm up, the deadlift, Romanian deadlift and swing, a row and press for each arm, lunges, sumo and goblet squats, then twists. Start with a light bell.",
   "blocks": [
     {
       "name": "Warm up",
       "items": [
         {
           "ex": "kb-halo",
+          "reps": 6,
+          "dir": "both"
+        },
+        {
+          "ex": "kb-around-the-world",
           "reps": 5,
           "dir": "both"
         },
@@ -34,8 +39,8 @@
         },
         {
           "ex": "fw-kb-swing",
-          "reps": 10,
-          "sets": 2
+          "reps": 12,
+          "sets": 3
         }
       ]
     },
@@ -45,14 +50,14 @@
         {
           "ex": "kb-single-arm-row",
           "reps": 8,
-          "sides": "both",
-          "sets": 2
+          "sets": 2,
+          "sides": "both"
         },
         {
           "ex": "kb-overhead-press",
           "reps": 6,
-          "sides": "both",
-          "sets": 2
+          "sets": 2,
+          "sides": "both"
         }
       ]
     },
@@ -62,12 +67,17 @@
         {
           "ex": "kb-goblet-reverse-lunge",
           "reps": 6,
-          "sides": "alternate",
-          "sets": 2
+          "sets": 2,
+          "sides": "alternate"
         },
         {
           "ex": "kb-sumo-squat",
           "reps": 10,
+          "sets": 2
+        },
+        {
+          "ex": "fw-kb-goblet-squat",
+          "reps": 8,
           "sets": 2
         }
       ]
@@ -76,13 +86,9 @@
       "name": "Finish",
       "items": [
         {
-          "ex": "kb-suitcase-carry",
-          "reps": 15,
-          "sides": "both"
-        },
-        {
           "ex": "kb-russian-twist",
-          "reps": 12
+          "reps": 12,
+          "sets": 2
         }
       ]
     }

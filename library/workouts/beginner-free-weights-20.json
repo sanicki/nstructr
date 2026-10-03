@@ -3,7 +3,7 @@
   "version": 2,
   "id": "beginner-free-weights-20",
   "name": "20-Minute Beginner's Free Weights",
-  "description": "A full-body dumbbell workout for beginners, about 20 minutes: two sets each of squats, chest presses, rows, hinges, overhead presses, lunges, curls and triceps extensions, then a carry. Start light; you should finish each set with two or three reps to spare.",
+  "description": "A full-body dumbbell workout for beginners, about 20 minutes, in a small space: two sets each of squats, chest presses, rows, hinges, overhead presses, lunges, curls and triceps extensions, then glute bridges and a dead bug. Start light; you should finish each set with two or three reps to spare.",
   "blocks": [
     {
       "name": "Legs, chest and back",
@@ -41,8 +41,8 @@
         {
           "ex": "fw-db-reverse-lunge",
           "reps": 8,
-          "sides": "alternate",
-          "sets": 2
+          "sets": 2,
+          "sides": "alternate"
         },
         {
           "ex": "fw-db-curl",
@@ -60,8 +60,14 @@
       "name": "Finish",
       "items": [
         {
-          "ex": "fw-farmers-carry",
-          "reps": 20
+          "ex": "fw-db-glute-bridge",
+          "reps": 12,
+          "sets": 2
+        },
+        {
+          "ex": "fw-db-dead-bug",
+          "reps": 6,
+          "sides": "alternate"
         }
       ]
     }

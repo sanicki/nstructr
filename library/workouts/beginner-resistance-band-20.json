@@ -3,7 +3,7 @@
   "version": 2,
   "id": "beginner-resistance-band-20",
   "name": "20-Minute Beginner's Resistance Band",
-  "description": "A full-body workout with one resistance band for beginners, about 20 minutes: pull-aparts and side steps to warm up, squats, deadlifts and bridges, rows and presses, then arms. Pick a light band; you should finish each set with two or three reps to spare.",
+  "description": "A full-body workout with one resistance band for beginners, about 20 minutes, in a small space: pull-aparts and standing hip abductions to warm up, squats, deadlifts, bridges and clamshells, rows and presses, then arms. Pick a light band; you should finish each set with two or three reps to spare.",
   "blocks": [
     {
       "name": "Warm up",
@@ -13,8 +13,8 @@
           "reps": 12
         },
         {
-          "ex": "band-lateral-walk",
-          "reps": 10,
+          "ex": "bhf-abduction",
+          "reps": 12,
           "sides": "both"
         }
       ]
@@ -36,6 +36,11 @@
           "ex": "band-glute-bridge",
           "reps": 12,
           "sets": 2
+        },
+        {
+          "ex": "band-clamshell",
+          "reps": 12,
+          "sides": "both"
         }
       ]
     },
