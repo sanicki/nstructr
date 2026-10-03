@@ -571,6 +571,7 @@ function beep(freq = 880, ms = 120) {
    line has been spoken (or straight away if sound is off), so the guided run-through can wait for it.
    dropIfBusy: skip this line if something is still being said (rep counts, milestones). NstructR and NstructR+ say the
    same lines (counts, milestones, encouragement since Oct 2026); only NstructR+ adds the walk-through. */
+let SAY_UNTIL = 0;                                               // when the lines queued so far should all have been said
 function say(text, { dropIfBusy = false } = {}) {
   if (!/[\p{L}\p{N}]/u.test(text || '')) return Promise.resolve();   // nothing to say (a voice reads a lone "." as "dot")
   caption(text);
@@ -579,10 +580,17 @@ function say(text, { dropIfBusy = false } = {}) {
   try {
     if (dropIfBusy && (speechSynthesis.speaking || speechSynthesis.pending)) return Promise.resolve();
     return new Promise(res => {
-      let done = false; const fin = () => { if (!done) { done = true; res(); } };
+      let done = false, timer = 0; const fin = () => { if (!done) { done = true; clearTimeout(timer); res(); } };
       const u = new SpeechSynthesisUtterance(text); u.lang = LANG; u.rate = speechRate();   // the voice for the text's language, not the phone's
       u.onend = fin; u.onerror = fin;
-      setTimeout(fin, 1500 + text.split(/\s+/).length * 450 / Math.min(1, speechRate()));      // never wait forever on a voice that doesn't report back
+      // never wait forever on a voice that doesn't report back: give up this long after the line starts (or, with no
+      // start reported, after the lines queued before it should be done too). Oct 2026: counted from when it was
+      // queued, a line behind others gave up before it was said: "Ready… Begin." let the count start early, "1" came
+      // late and "2" was dropped as it was still talking ("1. 3.")
+      const ms = 1500 + text.split(/\s+/).length * 450 / Math.min(1, speechRate()), now = performance.now();
+      SAY_UNTIL = Math.max(now, SAY_UNTIL) + ms;
+      timer = setTimeout(fin, SAY_UNTIL - now);
+      u.onstart = () => { clearTimeout(timer); timer = setTimeout(fin, ms); };
       try { speechSynthesis.speak(u); } catch (e) { fin(); }        // a throw here would otherwise leave a guided step waiting forever
     });
   } catch (e) { return Promise.resolve(); }
@@ -593,7 +601,7 @@ function caption(text) {
   el.innerHTML = `<span>${esc(text)}</span>`; el.classList.add('show');
   clearTimeout(CAP_T); CAP_T = setTimeout(() => el.classList.remove('show'), 1800 + text.split(/\s+/).length * 380);
 }
-function hush() { try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } WP.speaking = false; }
+function hush() { try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } WP.speaking = false; SAY_UNTIL = 0; }
 /* the Instruction setting. Stored values stay as they were (HANDOFF §11); the names changed twice in Oct 2026: 'voice' is
    shown as "NstructR" (was "Voice", then "Coach"), 'coach' as "NstructR+" (was "Coach", then "Instructor") */
 const SOUND_MODES = [['off', 'volume_off', 'Silent'], ['beeps', 'notifications', 'Beeps'], ['voice', 'record_voice_over', 'NstructR'], ['coach', 'sports', 'NstructR+']];
