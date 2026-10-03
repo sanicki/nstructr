@@ -40,7 +40,7 @@ async def main():
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("S.ex.id === 'chair-arm-raises'", timeout=20000); await pg.evaluate("S.speed = 1"); await pg.wait_for_timeout(800)
         print('no rest: no rest screen ', await pg.evaluate("[WP.phase, $('#wpRest').hidden, S.trans > 0, S.resolved.slice(0, S.trans + 1).reduce((t, r, i) => t + r.dur + (i < S.trans ? r.hold : 0), 0) >= 4600]"), '<- [work, True, True, True] (the move lasts >= 4.6 s)')
-        print('  said while moving     ', await pg.evaluate("SAID.slice(-2)"), "<- [..., 'Put the dumbbells down. Position yourself by your chair.'] (Instructor names it in the walk-through)")
+        print('  said while moving     ', await pg.evaluate("SAID.slice(-2)"), "<- [..., 'Put the dumbbells down. Position yourself by your chair.'] (NstructR+ names it in the walk-through)")
         # pause at equipment changes: waits for Ready
         await pg.evaluate("hush(); WP.phase = 'done'; setPref(EQUIP_PAUSE_KEY, 'on')")
         await pg.evaluate(WK + "(['fw-db-curl', 'chair-arm-raises'], 0)"); await pg.wait_for_timeout(300)

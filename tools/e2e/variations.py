@@ -4,7 +4,7 @@ URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 # Linked variations (library/progressions.json): the exercise page's Easier / Harder / Other equipment; a copy of a
 # library exercise has its original's links; the workout editor swaps an item (sets, sides and measure handled); the
-# workout player's Easier / Harder in the controls restart the item with Coach's run-through, only for that session
+# workout player's Easier / Harder in the controls restart the item with NstructR's run-through, only for that session
 # (Resume keeps them), history has both exercises, and "Keep these changes?" saves them (a library workout: in a copy).
 async def main():
     async with async_playwright() as p:
@@ -40,7 +40,7 @@ async def main():
         await pg.click('[data-iedit="p"]'); await pg.wait_for_timeout(200)
         await pg.click('#itemForm [data-swapto="bw-pushup"]'); await pg.click('#itemDialog [data-close]'); await pg.wait_for_timeout(300)
         print('cancel keeps the item     ', await pg.evaluate("wkById('v').blocks[0].items[0].ex"))
-        # --- player (cover screen size), Coach on
+        # --- player (cover screen size), NstructR on
         await pg.set_viewport_size({'width': 360, 'height': 398})
         await pg.evaluate("setSound('coach'); window.SAID = []; startWorkout(wkById('v'))"); await pg.wait_for_timeout(600)
         await pg.evaluate("showControls(true)"); await pg.wait_for_timeout(300)

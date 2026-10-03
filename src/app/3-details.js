@@ -136,8 +136,8 @@ function closeEditor() {
 $('#editPoseBtn').addEventListener('click', () => (XC.editing ? closeEditor() : openEditor()));
 
 /* ---------- Sound in the exercise player ----------
-   It follows the Instruction setting: Silent and Beeps stay quiet (there are no rests or holds to beep for); Coach and
-   Instructor read each step's cue on the first pass through the exercise (the step waits for its line), then count the
+   It follows the Instruction setting: Silent and Beeps stay quiet (there are no rests or holds to beep for); NstructR and
+   NstructR+ read each step's cue on the first pass through the exercise (the step waits for its line), then count the
    reps. Pausing stops the voice; a new side or direction starts a new first pass. */
 const XS = { speaking: false, token: 0, last: '' };
 const LOOP_KEY = 'nstructr-loop-v1', EXMUTE_KEY = 'nstructr-exmute-v1';
@@ -157,7 +157,7 @@ $('#loopBtn').addEventListener('click', () => {
   snack(loopOn() ? 'Loop on: the exercise repeats' : 'Loop off: once through, then it stops');
 });
 $('#muteBtn').addEventListener('click', () => {
-  if (!(WK.sound === 'voice' || WK.sound === 'coach')) { snack('The exercise voice follows Settings → Instruction: choose Coach or Instructor.', 5000); return; }
+  if (!(WK.sound === 'voice' || WK.sound === 'coach')) { snack('The exercise voice follows Settings → Instruction: choose NstructR or NstructR+.', 5000); return; }
   setPref(EXMUTE_KEY, exMuted() ? 'off' : 'on'); renderExToggles();
   if (exMuted()) exHush(); else if (S.playing) { XS.last = ''; exStepSound(S.idx); }
 });
@@ -217,7 +217,7 @@ function setRate(v, preview = true) {
     try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance('This is how fast I speak.'); u.lang = LANG; u.rate = speechRate(); speechSynthesis.speak(u); } catch (e) { }
   }, 400);
 }
-/* Coach's and Instructor's words of encouragement (on unless turned off) */
+/* NstructR's and NstructR+'s words of encouragement (on unless turned off) */
 const encourageOn = () => pref(ENCOURAGE_KEY, 'on') !== 'off';
 const restGap = () => { const v = parseFloat(pref(REST_KEY, '5')); return v >= 0 ? v : 5; };
 /* seconds of rest between sets of an exercise, in every workout (a setting since Sep 2026; items' "rest" is ignored) */

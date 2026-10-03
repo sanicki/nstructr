@@ -13,7 +13,7 @@ you edit, and **Done** closes the editor.
   setup, form cues, suggested reps, note, what a rep is called, side and direction names, and source. Then
   **Muscles**: for each of the 11 groups, how much it works it (not worked, stabilizer, secondary or primary) and
   whether it's **Stretched**; the map in About changes as you go.
-- **Each step**: its name and the **spoken cue** (the line read out in Coach and Instructor modes). Use ‹ › to move
+- **Each step**: its name and the **spoken cue** (the line read out in NstructR and NstructR+ modes). Use ‹ › to move
   between steps.
 - Write steps for the first side only; the other side swaps left and right for you.
 

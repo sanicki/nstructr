@@ -2,7 +2,7 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
-# Coach's and Instructor's words of encouragement (Settings > Instruction > Coach or Instructor > Words of encouragement, on at first):
+# NstructR's and NstructR+'s words of encouragement (Settings > Instruction > NstructR or NstructR+ > Words of encouragement, on at first):
 # the count starts at "1" (after "Ready… Begin.", never varied; Oct 2026), "Last one" from its synonyms; a count (never the first or last) replaced 20% of the time, 10% for the
 # rep after one that was (until one isn't); during a hold, every 10 s a 40% chance, never at halfway or in the last 10 s.
 # A word is never the same as the last one picked for that moment. Off: the plain words. WP.random is stubbed.
@@ -15,9 +15,9 @@ async def main():
         await pg.click('[data-setsound="beeps"]')
         print('Beeps: toggle hidden    ', await pg.evaluate("$('#setEncourageRow').hidden"), '<- True')
         await pg.click('[data-setsound="voice"]')
-        print('Coach: toggle shown     ', await pg.evaluate("$('#setEncourageRow').hidden"), '<- False')
+        print('NstructR: toggle shown  ', await pg.evaluate("$('#setEncourageRow').hidden"), '<- False')
         await pg.click('[data-setsound="coach"]')
-        print('Instructor: toggle, on  ', await pg.evaluate("[$('#setEncourageRow').hidden, $('#setEncourage').checked]"), '<- [False, True]')
+        print('NstructR+: toggle, on  ', await pg.evaluate("[$('#setEncourageRow').hidden, $('#setEncourage').checked]"), '<- [False, True]')
         # reps: 8 reps, the random numbers cycle; < 0.2 swaps a count (< 0.1 right after a swap)
         await pg.evaluate(SAY)
         async def reps(rand):
@@ -30,7 +30,7 @@ async def main():
         print('reps, random 0.5        ', await reps('[0.5]'), '<- 1, counts, a last word (never the one used just before)')
         print('reps, random 0.9        ', await reps('[0.9]'), '<- the same, other words')
         await pg.evaluate("setSound('voice')")
-        print('Coach counts too        ', await reps('[0.5]'), '<- 1, counts, a last word (Coach counts since Oct 2026)')
+        print('NstructR counts too        ', await reps('[0.5]'), '<- 1, counts, a last word (NstructR counts since Oct 2026)')
         await pg.evaluate("setSound('coach')")
         # a 60 s hold, random always 0 (always cheers where allowed): which seconds speak?
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)

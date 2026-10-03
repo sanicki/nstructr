@@ -61,7 +61,7 @@ function itemSeconds(item) {
   const work = ex.measure === 'time'
     ? item.seconds + sum(ph.setup) + sum(ph.finish) + (kfs[ex.holdStep || ph.start].durationMs || 0) / 1000 / t
     : sum(ph.setup) + sum(ph.finish) + sum(ph.rep) * item.reps * alt;
-  // Instructor: + ~2 s of speech a step. With a voice, a hold waits for its line (Instructor: the pose's cue, then
+  // NstructR+: + ~2 s of speech a step. With a voice, a hold waits for its line (NstructR+: the pose's cue, then
   // "Ready… Hold for N seconds", ~2.5 words a second) and reps for "Ready… Begin"
   const voiced = WK.sound === 'voice' || WK.sound === 'coach', words = s => s.split(/\s+/).filter(Boolean).length / 2.5 / speechRate();
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
@@ -569,8 +569,8 @@ function beep(freq = 880, ms = 120) {
 }
 /* Speak a line. Lines queue up instead of cutting each other off. Returns a promise that resolves when the
    line has been spoken (or straight away if sound is off), so the guided run-through can wait for it.
-   dropIfBusy: skip this line if something is still being said (rep counts, milestones). Coach and Instructor say the
-   same lines (counts, milestones, encouragement since Oct 2026); only Instructor adds the walk-through. */
+   dropIfBusy: skip this line if something is still being said (rep counts, milestones). NstructR and NstructR+ say the
+   same lines (counts, milestones, encouragement since Oct 2026); only NstructR+ adds the walk-through. */
 function say(text, { dropIfBusy = false } = {}) {
   if (!/[\p{L}\p{N}]/u.test(text || '')) return Promise.resolve();   // nothing to say (a voice reads a lone "." as "dot")
   caption(text);
@@ -594,9 +594,9 @@ function caption(text) {
   clearTimeout(CAP_T); CAP_T = setTimeout(() => el.classList.remove('show'), 1800 + text.split(/\s+/).length * 380);
 }
 function hush() { try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } WP.speaking = false; }
-/* the Instruction setting. Stored values stay as they were (HANDOFF §11); the names changed Oct 2026: 'voice' is shown
-   as "Coach" (was "Voice"), 'coach' as "Instructor" (was "Coach") */
-const SOUND_MODES = [['off', 'volume_off', 'Silent'], ['beeps', 'notifications', 'Beeps'], ['voice', 'record_voice_over', 'Coach'], ['coach', 'sports', 'Instructor']];
+/* the Instruction setting. Stored values stay as they were (HANDOFF §11); the names changed twice in Oct 2026: 'voice' is
+   shown as "NstructR" (was "Voice", then "Coach"), 'coach' as "NstructR+" (was "Coach", then "Instructor") */
+const SOUND_MODES = [['off', 'volume_off', 'Silent'], ['beeps', 'notifications', 'Beeps'], ['voice', 'record_voice_over', 'NstructR'], ['coach', 'sports', 'NstructR+']];
 function setSound(mode) {
   WK.sound = mode; try { localStorage.setItem(SOUND_KEY, mode); } catch (e) { }
   const m = SOUND_MODES.find(x => x[0] === mode) || SOUND_MODES[1];
@@ -665,7 +665,7 @@ function buildPlan(item, segInfo) {
     if (first) { g(V0[ph.start]); holdCued = ph.start === h; }
   } else ph.setup.forEach(i => push(V0[i], { phase: 'setup' }));
   if (ex.measure === 'time') {
-    // with a voice the count starts after "Ready… Hold for N seconds." (Instructor first reads the held step's own cue,
+    // with a voice the count starts after "Ready… Hold for N seconds." (NstructR+ first reads the held step's own cue,
     // how to get into the pose, unless the run-through just did)
     const cue = guided && !holdCued && !V0[h].quiet ? cueOf(V0[h]).trim() : '';
     const holdSay = () => `${cue ? cue + (/[.!?…]$/.test(cue) ? ' ' : '. ') : ''}Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`;
@@ -864,7 +864,7 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
 }
 function current() { return WP.flat[WP.i]; }
 /* Swap to an easier or harder version, for this session only (the workout asks at the end whether to keep it): the
-   item, in every round still to come, becomes the new exercise; the set starts again, with Instructor's run-through. */
+   item, in every round still to come, becomes the new exercise; the set starts again, with NstructR+'s run-through. */
 function swapInSession(item, to) {
   const u = item.uid, n = swapItem(item, to);
   if (!WP.orig[u]) WP.orig[u] = item;
@@ -912,7 +912,7 @@ function runCurrent(announce) {
     if (segs.length > 1 && WP.seg > 0) { const prev = segs[WP.seg - 1]; bits[0] = prev.side !== segInfo.side ? (prev.dir !== segInfo.dir ? 'Switch sides and direction' : 'Switch sides') : 'Switch direction'; }   // what actually changed
     if (cur.item.sides && cur.item.sides !== 'alternate' && bl) bits.push(bl[segInfo.side]);
     if (cur.item.dir && cur.item.dir !== 'alternate' && dl) bits.push(dl[segInfo.dir]);
-    const named = WK.sound !== 'coach' ? bits.join('. ') + '.' : WP.seg > 0 ? bits[0] + '.' : '';   // Instructor: "Switch sides." then the guided run-through
+    const named = WK.sound !== 'coach' ? bits.join('. ') + '.' : WP.seg > 0 ? bits[0] + '.' : '';   // NstructR+: "Switch sides." then the guided run-through
     if (WP.equipChange) { const ch = WP.equipChange; setTimeout(() => say(`${ch.lines.join('. ')}.`).then(() => { if (named) say(named); }), EQUIP_PAD * 1000); }
     else if (named) say(named);
   }
@@ -921,7 +921,7 @@ function runCurrent(announce) {
   S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Ready… Hold for N seconds"
   onWorkStep(0);
 }
-/* Coach's and Instructor's words: "Ready… Begin." before the count (it starts at "1"; Oct 2026), varied when words of
+/* NstructR's and NstructR+'s words: "Ready… Begin." before the count (it starts at "1"; Oct 2026), varied when words of
    encouragement are on: a random "Last one", and now and then a word of encouragement in place of a count (never the
    first or last) or every 10 s of a hold (never at halfway or in the last 10 s). WP.random can be replaced (tests). */
 const READY_BEGIN = 'Ready… Begin.';
@@ -943,7 +943,7 @@ function onWorkStep(i) {
   if (m.say) speakGuided(m.say);
   if (m.repNo && m.alt !== 1) {
     WP.rep = m.repNo;
-    // Coach and Instructor count the reps: 1, 2, 3 … "Last one". Numbers are skipped if it's already talking; "1" never is
+    // NstructR and NstructR+ count the reps: 1, 2, 3 … "Last one". Numbers are skipped if it's already talking; "1" never is
     const first = WP.rep === 1, last = WP.rep === m.repOf;
     if (first) WP.cheered = false;
     say(first ? '1' : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), { dropIfBusy: !first });

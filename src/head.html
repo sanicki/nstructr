@@ -184,6 +184,9 @@ main{display:block;min-width:0}
 .segmented button .icon{font-size:18px;display:none}
 .segmented button[aria-pressed="true"] .icon{display:inline-block}
 .segmented[hidden]{display:none}
+/* a narrow phone (the 360 px cover screen): tighter, and the pressed one shows by its colour alone, so Silent · Beeps ·
+   NstructR · NstructR+ fit (they ran 33 px off the side) */
+@media (max-width:400px){.segmented button{padding:0 10px}.segmented button[aria-pressed="true"] .icon{display:none}}
 
 /* ===== Cards, chips, lists ===== */
 .card{background:var(--md-surface-container);border-radius:var(--shape-m);padding:16px}
