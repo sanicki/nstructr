@@ -925,9 +925,11 @@ function runCurrent(announce) {
 }
 /* NstructR's and NstructR+'s words: "Ready… Begin." before the count (it starts at "1"; Oct 2026), varied when words of
    encouragement are on: a random "Last one", and now and then a word of encouragement in place of a count (never the
-   first or last) or every 10 s of a hold (never at halfway or in the last 10 s). WP.random can be replaced (tests). */
+   first or last) or of an alternating rep's "and", or every 10 s of a hold (never at halfway or in the last 10 s), and
+   a finished phrase as each set (and side) ends ("Last one. Finished!"; Oct 2026).
+   WP.random can be replaced (tests). */
 const READY_BEGIN = 'Ready… Begin.';
-const COACH_WORDS = { last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
+const COACH_WORDS = { done: ['Great job!', 'Fantastic!', 'Keep it up!', 'Finished!'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
 const coachRandom = () => (WP.random || Math.random)();
 // a word isn't picked twice in a row for the same moment ("Good. Breathe. Good.", never "Good. Good.")
 const COACH_LAST = {};
@@ -949,6 +951,10 @@ function onWorkStep(i) {
     const first = WP.rep === 1, last = WP.rep === m.repOf;
     if (first) WP.cheered = false;
     say(first ? '1' : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), { dropIfBusy: !first });
+  } else if (m.repNo && m.alt) {
+    // alternating sides or directions: a rep is one side then the other, so the other half is "and" ("1 and 2 and 3…";
+    // Oct 2026); like a middle count, it can be a word of encouragement instead ("1 and 2 Good 3…")
+    say(repCheer() ? coachWord('cheer') : 'and', { dropIfBusy: true });
   }
   renderWpCount();
 }
@@ -960,6 +966,7 @@ function speakGuided(text) {
 }
 function onWorkEnd() {
   const cur = current(); if (!cur) return;
+  if (encourageOn() && (WK.sound === 'voice' || WK.sound === 'coach')) say(coachWord('done'));
   const segs = itemSegments(cur.item);
   if (WP.seg < segs.length - 1) { WP.seg++; beep(660, 160); return runCurrent(true); }
   WP.seg = 0;
