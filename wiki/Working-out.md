@@ -42,6 +42,22 @@ When the exercise has an easier or harder version, the controls show **Easier** 
 Between exercises (and sets and rounds) a big countdown shows what's next. **+15 s** adds time; **Skip** moves
 on. Beeps count down the last 3 seconds in Beeps, Coach and Instructor modes.
 
+### Equipment
+
+A workout that uses equipment starts with **Get ready**: what you'll need (for example "dumbbells and chair") and the
+first exercise, for 10 seconds. When the next exercise needs other equipment, the rest gets longer and says what to do,
+on the screen and in Coach and Instructor modes: "Put the dumbbells down · Bring a chair". The extra time:
+
+| Equipment | Extra time |
+|---|---|
+| Something you hold: dumbbells, kettlebell, medicine ball, band, towel, yoga block or strap, Pilates ring | 5 s |
+| Something you bring or go to: barbell, chair, bench, step, wall, stability ball, foam roller | 10 s |
+| Something you set up: door anchor, pull-up bar | 20 s |
+
+When several things change, it's the longest of them plus 3 s for each other one. The workout's time includes it. The
+yoga mat stays down, so it adds nothing. With **[Pause at equipment changes](Settings.md#pause-at-equipment-changes)**
+on, the workout waits for you to tap **Ready** instead.
+
 <img src="images/rest.png" width="300" alt="A rest: countdown, what's next, +15 s and Skip">
 
 **From one exercise to the next** the figure doesn't jump. When the next exercise starts in the position the last one

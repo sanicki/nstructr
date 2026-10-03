@@ -33,6 +33,12 @@ great**: in place of about 1 in 5 counts (never the first or the last; 1 in 10 r
 and every 10 seconds of a hold, 4 times in 10 (never at halfway or in the last 10 seconds). The same word is never
 used twice in a row ("Good. Breathe. Good.", not "Good. Good."). Off: always "Begin", the numbers and "Last one".
 
+### Pause at equipment changes
+
+Off at first. When the next exercise needs other equipment (and at the **Get ready** list before a workout with
+equipment), the workout waits until you tap **Ready** instead of adding time to the rest. See
+[Working out → Equipment](Working-out.md#equipment).
+
 ### Text-to-speech speed
 How fast Coach and Instructor speak, from **0.5×** to **3.0×** in steps of 0.1 (**1.0×** is the voice's normal speed).
 Tap − or +, or hold one to keep going; you hear a short sample at the new speed.

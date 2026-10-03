@@ -175,7 +175,7 @@ function exStepSound(i) {
 function exHush() { XS.token++; XS.speaking = false; XS.last = ''; try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) { } }
 
 /* ---------- Settings ---------- */
-const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1', SPEECH_RATE_KEY = 'nstructr-speech-rate-v1', ENCOURAGE_KEY = 'nstructr-encourage-v1';
+const THEME_KEY = 'nstructr-theme-v1', SPEED_KEY = 'nstructr-speed-v1', AUTHOR_KEY = 'nstructr-authoring-v1', REST_KEY = 'nstructr-rest-between-v1', REST_SETS_KEY = 'nstructr-rest-sets-v1', AUTOPLAY_KEY = 'nstructr-autoplay-v1', SPEECH_RATE_KEY = 'nstructr-speech-rate-v1', ENCOURAGE_KEY = 'nstructr-encourage-v1', EQUIP_PAUSE_KEY = 'nstructr-equip-pause-v1';
 const pref = (k, d) => { try { return localStorage.getItem(k) || d; } catch (e) { return d; } };
 const setPref = (k, v) => { try { localStorage.setItem(k, v); } catch (e) { } };
 const authoring = () => pref(AUTHOR_KEY, 'off') === 'on';
@@ -234,6 +234,7 @@ function renderSettings() {
   $('#setRest').value = restGap(); $('#setRestSets').value = restSets(); setRate(speechRate(), false);
   $('#setAuthoring').checked = authoring();
   $('#setEncourage').checked = encourageOn(); $('#setEncourageRow').hidden = !['voice', 'coach'].includes(WK.sound);
+  $('#setEquipPause').checked = equipPauseOn();
   renderPersistNote();
 }
 $('#view-settings').addEventListener('click', e => {
@@ -252,6 +253,7 @@ function bugDevice() {
 }
 $('#bugLink').addEventListener('click', e => { e.currentTarget.href = `${BUG_URL}&device=${encodeURIComponent(bugDevice())}`; });
 $('#setEncourage').addEventListener('change', e => setPref(ENCOURAGE_KEY, e.target.checked ? 'on' : 'off'));
+$('#setEquipPause').addEventListener('change', e => setPref(EQUIP_PAUSE_KEY, e.target.checked ? 'on' : 'off'));
 $('#setAutoplay').addEventListener('change', e => setPref(AUTOPLAY_KEY, e.target.checked ? 'on' : 'off'));
 function setRest(which, v) {
   v = Math.min(300, Math.max(0, Math.round(+v || 0)));
