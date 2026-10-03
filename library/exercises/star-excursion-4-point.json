@@ -75,6 +75,7 @@
     {
       "name": "Reach forward",
       "cue": "Forward. Bend the standing knee and tap lightly.",
+      "call": "Forward",
       "camera": 90,
       "durationMs": 700,
       "holdMs": 450,
@@ -134,6 +135,7 @@
     {
       "name": "Reach right",
       "cue": "Out to the right.",
+      "call": "Right",
       "camera": 0,
       "durationMs": 700,
       "holdMs": 450,
@@ -190,6 +192,7 @@
     {
       "name": "Reach back",
       "cue": "Straight back.",
+      "call": "Back",
       "camera": 90,
       "durationMs": 700,
       "holdMs": 450,
@@ -276,6 +279,7 @@
     {
       "name": "Reach left",
       "cue": "Left, crossing behind your standing leg.",
+      "call": "Left",
       "camera": 0,
       "durationMs": 700,
       "holdMs": 450,

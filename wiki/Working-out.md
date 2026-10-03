@@ -61,7 +61,7 @@ and shown. The workout's time includes it. The yoga mat stays down, so it doesn'
 |---|---|
 | **Silent** | Nothing. Captions still show what would be said. |
 | **Beeps** | A 3-2-1 before rests and holds end, a chime when switching |
-| **NstructR** | The exercise's name, side and direction switches, rests, what's next; "Ready… Begin." then counted reps (1, 2, 3 … "Last one"; alternating sides or directions, where a rep is one side then the other: "1 and 2 and 3 …"), "Ready… Hold for 30 seconds." then "Halfway" and "10 seconds" in holds, with [words of encouragement](Settings.md#words-of-encouragement) |
+| **NstructR** | The exercise's name, side and direction switches, rests, what's next; "Ready… Begin." then counted reps (1, 2, 3 … "Last one"; in some multi-step exercises a word for each move, like a star excursion's "1 … Forward. Right. Back. Left."; alternating sides or directions, where a rep is one side then the other: "1 and 2 and 3 …"), "Ready… Hold for 30 seconds." then "Halfway" and "10 seconds" in holds, with [words of encouragement](Settings.md#words-of-encouragement) |
 | **NstructR+** (the default) | NstructR, plus a **guided run-through** of each exercise first: one slow pass reading every step's cue (for a hold, the pose's cue, then "Ready… Hold for 30 seconds." and the countdown starts) |
 
 The voice is your phone's own text-to-speech, so it works offline. It never talks over itself: a count is skipped

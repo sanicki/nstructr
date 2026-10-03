@@ -248,6 +248,11 @@
         "cue": {
           "type": "string"
         },
+        "call": {
+          "type": "string",
+          "pattern": "^[^0-9\\s]+( [^0-9\\s]+){0,2}$",
+          "description": "Step call (Oct 2026): one to three words said as this step starts during the counted reps (NstructR and NstructR+), so you know what comes next in a multi-step rep: \"Forward\", \"Out to the right\". Not on the rep's first step (the count is said there) and never a number (it would sound like a count). Written for the first side; the other side swaps left and right. Only where the next move isn't obvious (a star excursion's directions, a get-up's stages)."
+        },
         "camera": {
           "type": "number",
           "description": "Camera, in degrees around the vertical: 90 = side view (the figure faces screen-right), 0 = front view. Default 90."

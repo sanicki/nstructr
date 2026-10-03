@@ -66,7 +66,7 @@ function itemSeconds(item) {
   const voiced = WK.sound === 'voice' || WK.sound === 'coach', words = s => s.split(/\s+/).filter(Boolean).length / 2.5 / speechRate();
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
   const holdLine = hk && voiced ? Math.max(0, words(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
-  const readyLine = !hk && voiced ? Math.max(0, words(READY_BEGIN) - (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;
+  const readyLine = !hk && voiced ? Math.max(words(READY_BEGIN), (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;   // (into the starting pose while it's said; rep 1 then waits that move's time)
   const guide = (WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) : 0) + holdLine + readyLine;
   return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
 }
@@ -684,7 +684,10 @@ function buildPlan(item, segInfo) {
     const total = item.reps * versions.length;
     for (let k = 0; k < total; k++) {
       const V = versions[k % versions.length].R;
-      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0 } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null }));
+      // a step's call ("Forward", "Out to the right") as it starts; never on the rep's first step, where the count is said.
+      // Rep 1's first step is already in place after "Ready… Begin.": it waits as long as the move would have taken, so
+      // the rep keeps its rhythm and "1" has time before the next step's call
+      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0, hold: V[i].hold + V[i].dur } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && V[i].call ? { call: V[i].call } : {}) }));
     }
   }
   const VL = versions[versions.length - 1].R;
@@ -975,6 +978,9 @@ function onWorkStep(i) {
     // Oct 2026); like a middle count, it can be a word of encouragement instead ("1 and 2 Good 3…")
     say(repCheer() ? coachWord('cheer') : 'and', { dropIfBusy: true });
   }
+  // a step call: what comes next in a multi-step rep ("1 … Forward. Right. Back. Left."); like a count, skipped if it's
+  // still talking (the count wins)
+  if (m.call) say(m.call, { dropIfBusy: true });
   renderWpCount();
 }
 /* the guided run-through: a step waits until its cue has been read out */

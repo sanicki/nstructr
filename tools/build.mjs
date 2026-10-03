@@ -53,6 +53,18 @@ for (const w of workouts) w.blocks.forEach((b, bi) => b.items.forEach((it, ii) =
 for (const ex of exercises) ex.keyframes.forEach((k, i) => (k.keep || []).forEach(x => {
   if (typeof x === 'object' && x.keyframe >= ex.keyframes.length) errors.push(`${ex.id}: keyframes[${i}].keep points at step ${x.keyframe}, which doesn't exist`);
 }));
+// step calls (HANDOFF §3): said as the step starts in the counted reps, so one must fit in the step and isn't on the
+// rep's first step (the count is said there)
+for (const ex of exercises) {
+  const rep = ex.keyframes.map((k, i) => ((k.phase || 'rep') === 'rep' ? i : -1)).filter(i => i >= 0);
+  ex.keyframes.forEach((k, i) => {
+    if (!k.call) return;
+    const words = k.call.split(' ').length, ms = (k.durationMs == null ? 1000 : k.durationMs) + (k.holdMs == null ? 500 : k.holdMs);
+    if ((k.phase || 'rep') !== 'rep' || ex.measure === 'time') errors.push(`${ex.id}: keyframes[${i}].call: calls are said in counted reps only (a rep step of a reps exercise)`);
+    else if (i === rep[0]) errors.push(`${ex.id}: keyframes[${i}].call: the rep's first step has the count, not a call`);
+    if (words / 2.5 * 1000 > ms) errors.push(`${ex.id}: keyframes[${i}].call "${k.call}" takes about ${(words / 2.5).toFixed(1)} s to say; the step lasts ${ms / 1000} s`);
+  });
+}
 // one name for each piece of equipment: a mat is "Yoga mat" (src/similar.js)
 { const { isMat, MAT } = require('../src/similar.js');
   for (const ex of exercises) for (const q of ex.equipment || []) if (isMat(q) && q !== MAT) errors.push(`${ex.id}: equipment "${q}": call it "${MAT}"`); }
