@@ -694,7 +694,8 @@ representations that rotate the short, natural way) over adding a known issue; i
   others. `equipmentChange(from, to)` (`src/app/4-workouts.js`): what is put down and fetched (the library's equipment
   in `EQUIP`, with words: pick up / put down what's easy to carry, "Put the dumbbells down", "Pick up the kettlebell";
   for furniture and the wall "Position yourself by your chair" (owner); the yoga mat stays down; Dumbbell and Dumbbells
-  count as one) and the time: **what it takes to say it**, with half a second of silence before and after
+  count as one; leaving furniture for nothing, e.g. a chair to no equipment, has nothing to say and is no change: it
+  said a lone ".", read out as "dot"; `say()` also skips any text with no letter or digit) and the time: **what it takes to say it**, with half a second of silence before and after
   (`equipSpoken`: 0.5 + words ÷ 2.5 a second ÷ the speech speed + 0.5; dumbbells → chair, 9 words: 4.6 s).
 - History: first an allowance per piece (5/10/20 s, the longest + 3 s per other piece), then one Equipment transition
   time the person set (Settings, `nstructr-equip-time-v1`, 15 then 5 s); the owner then asked for the spoken length

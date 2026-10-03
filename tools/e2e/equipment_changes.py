@@ -20,9 +20,9 @@ async def main():
         print('setting under encouragement', await pg.evaluate("$('#setEncourageRow').nextElementSibling.id"), '<- setEquipPauseRow')
         print('  off at first          ', await pg.evaluate("$('#setEquipPause').checked"), '<- False')
         print('no transition setting   ', await pg.evaluate("!!document.querySelector('#setEquipTime')"), '<- False (the time is the words)')
-        print('changes                 ', await pg.evaluate("""[['fw-db-curl', 'chair-arm-raises'], ['bw-squat', 'bw-glute-bridge'], ['band-standing-row', 'band-face-pull'], ['band-overhead-triceps', 'band-standing-row'], ['fw-db-curl', 'fw-db-rdl']]
+        print('changes                 ', await pg.evaluate("""[['fw-db-curl', 'chair-arm-raises'], ['bw-squat', 'bw-glute-bridge'], ['band-standing-row', 'band-face-pull'], ['band-overhead-triceps', 'band-standing-row'], ['fw-db-curl', 'fw-db-rdl'], ['chair-arm-raises', 'bw-squat']]
           .map(([a, c]) => { const x = equipmentChange(exById(a), exById(c)); return x && [x.seconds, x.lines.join(' / ')]; })"""))
-        print("  <- [4.6 (0.5 + 9 words at 2.5 a second + 0.5), put the dumbbells down / position yourself by your chair], none (no equipment), none (the same), [3, set up your door anchor], none (dumbbells both)")
+        print("  <- [4.6 (0.5 + 9 words at 2.5 a second + 0.5), put the dumbbells down / position yourself by your chair], none (no equipment), none (the same), [3, set up your door anchor], none (dumbbells both), none (a chair to nothing: nothing to say)")
         print('estimate counts it      ', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['fw-db-curl', 'chair-arm-raises'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
           return [equipmentSeconds(w), Math.round(workoutSeconds(w) - w.blocks.reduce((s, x) => s + blockSeconds(x, w), 0))]; })()"""), '<- [7.6, 8] (3 s checklist + 4.6 s change)')
         # timed: the checklist, then the change
@@ -58,6 +58,12 @@ async def main():
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + "(['bw-squat', 'bw-pushup'], 5)"); await pg.wait_for_timeout(300)
         print('no equipment: no list   ', await pg.evaluate("WP.phase"), '<- work')
         # backup
+        # leaving a chair for an exercise with no equipment: nothing to say (it said a lone ".", read out as "dot")
+        await pg.evaluate("hush(); WP.phase = 'done'; setPref(EQUIP_PAUSE_KEY, 'off'); SAID.length = 0"); await pg.evaluate(WK + "(['chair-arm-raises', 'bw-squat'], 5)"); await pg.wait_for_timeout(300)
+        await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
+        await pg.evaluate("S.speed = 20"); await pg.wait_for_function("WP.phase === 'rest'", timeout=20000); await pg.evaluate("S.speed = 1"); await pg.wait_for_timeout(800)
+        print('chair -> none: no "."   ', await pg.evaluate("[$('#wpRestEquip').hidden, SAID.every(t => /[\\p{L}\\p{N}]/u.test(t)), SAID.slice(-1)[0]]"), "<- [True, True, 'Rest 5 seconds. Next: Squat.']")
+        await pg.evaluate("setPref(EQUIP_PAUSE_KEY, 'on')")
         print('backup                  ', await pg.evaluate("[backupData().settings.equipPause, 'equipTime' in backupData().settings]"), '<- [True, False]')
         await b.close()
         # the cover screen: everything on the rest screen in view
