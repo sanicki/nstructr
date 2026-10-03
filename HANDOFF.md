@@ -742,6 +742,14 @@ representations that rotate the short, natural way) over adding a known issue; i
 - Captions show every line (even in Silent). Uses the browser's built-in voices (offline once installed). May
   not work inside some in-app viewers; test in Chrome.
 
+### 8.4b Speed on a slow phone (`tools/perf.py`, Oct 2026)
+- **Startup** to the Workouts tab ready (360×398): repeat visit (service worker cache) 0.5 s, 1.4 s at CPU 4×, 1.9 s at
+  6×; first visit on slow 4G 7–8.5 s (the download: the single file is 1.27 MB, `library/index.json` 738 KB, both
+  before compression). Both builds are about the same; the library's JSON parses in ~60 ms at 4×. So the library and
+  scripts load at startup as they do: lazy-loading them wouldn't save much.
+- **Exercises tab**: drawing all 358 thumbnails takes ~4.6 s at 4× (17 ms each: each resolves its exercise's whole
+  sequence); on ROADMAP.
+
 ### 8.5 Engine choices worth knowing
 - Two-segment spine (lower/upper back) so cat-cow, bridges and curls look right.
 - A real 3D figure (format v2, Sep 2026), still drawn as SVG lines: no WebGL, no library, one file. Until then the

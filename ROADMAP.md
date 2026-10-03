@@ -16,10 +16,13 @@ comes off this list. How things work, and why past decisions were made, is in [H
   - Library text gets a translation file per language; cues say `{side}` / `{other}` instead of swapping the words
     left and right; equipment and collections become keys with translated names.
   - **Simplified Chinese first**, and mainland China is a target (owner, Sep 2026). So: count characters, not words,
-    where speech length is estimated; fix `repWord()` (no "s" outside English); rely on the phone's Chinese font
+    in `speechSeconds` (the one speech-length estimate); fix `repWord()` (no "s" outside English); rely on the phone's Chinese font
     (`:lang(zh)`); bundle Roboto Flex and Material Symbols instead of loading them from Google Fonts (blocked there).
   - When other languages ship, **Unspecified** becomes the default AI provider (not Gemini).
   - Right-to-left layout (Arabic, Hebrew, Persian, Urdu) only if one of those is chosen.
+- **Exercises tab speed**: opening it draws all 358 thumbnails: 4.6 s on a slow phone (CPU 4×; 17 ms each, every
+  thumbnail resolves its whole exercise). Draw them as they scroll into view, and/or cache each one. Startup itself is
+  fine (1.3–1.9 s at 4–6× on a repeat visit), so no lazy-loading of the library (`tools/perf.py`, Oct 2026).
 
 ## Library
 
