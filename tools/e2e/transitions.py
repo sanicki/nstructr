@@ -11,7 +11,7 @@ from playwright.async_api import async_playwright
 WK = """(rest => { localStorage.setItem('nstructr-rest-between-v1', String(rest)); WK.hinted = true; setSound('off');
   const it = id => ({ ...newItem(exById(id)), reps: 2 });
   WK.list = WK.list.filter(w => w.id !== 't'); WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [it('bw-squat'), it('bhf-lateral-raise'), it('bw-glute-bridge'), it('chair-arm-raises')] }] });
-  saveWorkouts(); startWorkout(wkById('t'), 0); })"""
+  saveWorkouts(); startWorkout(wkById('t'), 0); if (WP.restKind === 'start') wpAction('restSkip'); })"""   # past the title card (the workout has a chair)
 # every animation frame for ms: where the head is on screen, the viewBox, the number of scene pictures
 WATCH = """ms => new Promise(res => { const out = [], t0 = performance.now();
   const f = now => { const h = document.querySelector('#scene circle.head').getBoundingClientRect();

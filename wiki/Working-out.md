@@ -61,8 +61,8 @@ and shown. The workout's time includes it. The yoga mat stays down, so it doesn'
 |---|---|
 | **Silent** | Nothing. Captions still show what would be said. |
 | **Beeps** | A 3-2-1 before rests and holds end, a chime when switching |
-| **Coach** | The exercise's name, side and direction switches, rests, what's next; counted reps ("Begin", 2, 3 … "Last one"), "Halfway" and "10 seconds" in holds, with [words of encouragement](Settings.md#words-of-encouragement) |
-| **Instructor** (the default) | Coach, plus a **guided run-through** of each exercise first: one slow pass reading every step's cue (for a hold, the pose's cue, then the countdown starts) |
+| **Coach** | The exercise's name, side and direction switches, rests, what's next; "Ready… Begin." then counted reps (1, 2, 3 … "Last one"), "Ready… Hold for 30 seconds." then "Halfway" and "10 seconds" in holds, with [words of encouragement](Settings.md#words-of-encouragement) |
+| **Instructor** (the default) | Coach, plus a **guided run-through** of each exercise first: one slow pass reading every step's cue (for a hold, the pose's cue, then "Ready… Hold for 30 seconds." and the countdown starts) |
 
 The voice is your phone's own text-to-speech, so it works offline. It never talks over itself: a count is skipped
 rather than interrupting a sentence. Its speed is a setting ([Text-to-speech speed](Settings.md#text-to-speech-speed)). Pausing stops it; playing again re-reads the current step.

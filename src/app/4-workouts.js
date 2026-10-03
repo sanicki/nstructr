@@ -61,10 +61,13 @@ function itemSeconds(item) {
   const work = ex.measure === 'time'
     ? item.seconds + sum(ph.setup) + sum(ph.finish) + (kfs[ex.holdStep || ph.start].durationMs || 0) / 1000 / t
     : sum(ph.setup) + sum(ph.finish) + sum(ph.rep) * item.reps * alt;
-  // + ~2 s of speech a step; a hold also waits for its line (the pose's cue and "Now hold for N seconds", ~2.5 words a second)
+  // Instructor: + ~2 s of speech a step. With a voice, a hold waits for its line (Instructor: the pose's cue, then
+  // "Ready… Hold for N seconds", ~2.5 words a second) and reps for "Ready… Begin"
+  const voiced = WK.sound === 'voice' || WK.sound === 'coach', words = s => s.split(/\s+/).filter(Boolean).length / 2.5 / speechRate();
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
-  const holdLine = hk ? Math.max(0, `${hk.quiet ? '' : hk.cue || hk.name || ''} ${plural(item.seconds, { one: 'Now hold for # second.', other: 'Now hold for # seconds.' })}`.split(/\s+/).filter(Boolean).length / 2.5 / speechRate() - (hk.durationMs || 0) / 1000 / t) : 0;
-  const guide = WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) + holdLine : 0;
+  const holdLine = hk && voiced ? Math.max(0, words(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
+  const readyLine = !hk && voiced ? Math.max(0, words(READY_BEGIN) - (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;
+  const guide = (WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) : 0) + holdLine + readyLine;
   return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
 }
 function blockSeconds(b, w) {
@@ -646,7 +649,7 @@ function buildPlan(item, segInfo) {
   else versions.push(resolveVersion(ex, seg, segInfo.side, segInfo.dir));
   const plan = [], meta = [];
   const push = (r, m = {}) => { plan.push(r); meta.push(m); };
-  const V0 = versions[0].R, guided = WK.sound === 'coach';
+  const V0 = versions[0].R, guided = WK.sound === 'coach', voiced = guided || WK.sound === 'voice';
   const cueOf = r => r.cue || r.name || '';
   const h = ex.measure === 'time' ? (ex.holdStep != null ? ex.holdStep : ph.start) : null;
   let holdCued = false;                                          // the run-through already read the held step's cue
@@ -662,14 +665,18 @@ function buildPlan(item, segInfo) {
     if (first) { g(V0[ph.start]); holdCued = ph.start === h; }
   } else ph.setup.forEach(i => push(V0[i], { phase: 'setup' }));
   if (ex.measure === 'time') {
-    // Instructor reads the held step's own cue (how to get into the pose) as it starts, then the time
-    const holdSay = () => `${holdCued || V0[h].quiet ? '' : cueOf(V0[h]) + ' '}${plural(item.seconds, { one: 'Now hold for # second.', other: 'Now hold for # seconds.' })}`.replace(/([^.!?])\s+Now/, '$1. Now');
-    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(guided ? { say: holdSay() } : {}) } : { phase: 'rep' }));
+    // with a voice the count starts after "Ready… Hold for N seconds." (Instructor first reads the held step's own cue,
+    // how to get into the pose, unless the run-through just did)
+    const cue = guided && !holdCued && !V0[h].quiet ? cueOf(V0[h]).trim() : '';
+    const holdSay = () => `${cue ? cue + (/[.!?…]$/.test(cue) ? ' ' : '. ') : ''}Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`;
+    ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(voiced ? { say: holdSay() } : {}) } : { phase: 'rep' }));
   } else {
+    // with a voice, "Ready… Begin." as it gets into the starting pose; the count ("1", "2" …) starts once it's said
+    if (voiced) push({ ...V0[ph.start], hold: 0 }, { phase: 'ready', ready: true, say: READY_BEGIN });
     const total = item.reps * versions.length;
     for (let k = 0; k < total; k++) {
       const V = versions[k % versions.length].R;
-      ph.rep.forEach((i, j) => push(V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null }));
+      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0 } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null }));
     }
   }
   const VL = versions[versions.length - 1].R;
@@ -910,14 +917,15 @@ function runCurrent(announce) {
     else if (named) say(named);
   }
   WP.equipChange = null;
-  S.canAdvance = i => !(S.planMeta[i] && S.planMeta[i].guided && WP.speaking);
-  S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Now hold for N seconds"
+  S.canAdvance = i => !(S.planMeta[i] && (S.planMeta[i].guided || S.planMeta[i].ready) && WP.speaking);   // the run-through's cues, "Ready… Begin"
+  S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Ready… Hold for N seconds"
   onWorkStep(0);
 }
-/* Coach's and Instructor's words, varied when words of encouragement are on: a random "Begin" and "Last one", and now and then a word of
-   encouragement in place of a count (never the first or last) or every 10 s of a hold (never at halfway or in the
-   last 10 s). WP.random can be replaced (tests). */
-const COACH_WORDS = { begin: ['Begin', 'Ready', 'Go'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
+/* Coach's and Instructor's words: "Ready… Begin." before the count (it starts at "1"; Oct 2026), varied when words of
+   encouragement are on: a random "Last one", and now and then a word of encouragement in place of a count (never the
+   first or last) or every 10 s of a hold (never at halfway or in the last 10 s). WP.random can be replaced (tests). */
+const READY_BEGIN = 'Ready… Begin.';
+const COACH_WORDS = { last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
 const coachRandom = () => (WP.random || Math.random)();
 // a word isn't picked twice in a row for the same moment ("Good. Breathe. Good.", never "Good. Good.")
 const COACH_LAST = {};
@@ -935,10 +943,10 @@ function onWorkStep(i) {
   if (m.say) speakGuided(m.say);
   if (m.repNo && m.alt !== 1) {
     WP.rep = m.repNo;
-    // Coach and Instructor count the reps: "Begin", 2, 3 … "Last one". Numbers are skipped if it's already talking; "Begin" never is
+    // Coach and Instructor count the reps: 1, 2, 3 … "Last one". Numbers are skipped if it's already talking; "1" never is
     const first = WP.rep === 1, last = WP.rep === m.repOf;
     if (first) WP.cheered = false;
-    say(first ? coachWord('begin') : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), { dropIfBusy: !first });
+    say(first ? '1' : last ? coachWord('last') : repCheer() ? coachWord('cheer') : String(WP.rep), { dropIfBusy: !first });
   }
   renderWpCount();
 }

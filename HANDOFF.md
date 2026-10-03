@@ -562,7 +562,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 ### 8.1 Product
 - **Workouts are the focus**; Workouts is the first and default tab. Tabs: Workouts, Exercises, Settings
   (old links `#/explore`, `#/saved`, `#/create` redirect).
-- Instructor counts reps "Begin", 2, 3 … "Last one" ("Begin" is never dropped for overlapping speech).
+- Coach and Instructor say **"Ready… Begin."** as the figure gets into the starting pose; the count waits for it (a `ready` step, `S.canAdvance`), then 1, 2, 3 … "Last one" ("1" is never dropped for overlapping speech). Holds: **"Ready… Hold for N seconds."**, and the countdown waits for it. (Oct 2026: before, rep 1 was said as "Begin", "Ready" or "Go", the count started with no warning, and only Instructor said "Now hold for N seconds".)
 - One repo; library and app together. Contributions via **in-app Submit → GitHub issue form → bot PR**, plus
   **share links** (both roadmap).
 - Content: exercises are written **in our own words**, citing sources (Yoga Journal, BHF, Mayo Clinic, NHS,
@@ -728,7 +728,7 @@ representations that rotate the short, natural way) over adding a known issue; i
   Coach — then "Voice" — said names, switches and rests only. `say()` lost its `coachOnly` flag.)
 - **Instructor** adds, before each exercise (and each side/direction), a **guided run-through** — one pass through every
   step, reading each step's cue; each step waits for **whichever takes longer, its line or its animation**
-  (`S.canAdvance`). Then the counted reps. Timed exercises: setup steps, then the held step's cue and "Now hold for N seconds" as the hold starts; the countdown waits for that line (`S.holdWait`), and the time estimate counts it (~2.5 words a second at the speech rate). (Sep 2026: before, the held step's cue — how to get into the pose — was never read.)
+  (`S.canAdvance`). Then the counted reps. Timed exercises: setup steps, then the held step's cue and "Ready… Hold for N seconds." as the hold starts (Coach says the second part only); the countdown waits for that line (`S.holdWait`), and the time estimate counts it, and "Ready… Begin." before reps (~2.5 words a second at the speech rate). (Sep 2026: before, the held step's cue — how to get into the pose — was never read.)
 - Speech is **queued, never cancelled**, except on skip/stop. Routing cancels speech only when *leaving* the exercise
   page (`exHush`) or the workout player: until Sep 2026 any route away from the exercise page's view hushed, which cut
   off every workout's first line as the player opened (`autoplay_first_speech.py`). Each line's promise resolves on `onend`, with a
@@ -1005,7 +1005,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-exmute-v1` | the exercise page's spoken cues muted unless `"off"` (default muted since Sep 2026; overlay Mute toggle; the voice also needs Sound = Coach/Instructor) |
 | `nstructr-group-collections-v1` | `"on"`: the Exercises tab groups All collections by collection; otherwise one A–Z list (default since Sep 2026; the tab's own switch) |
 | `nstructr-speech-rate-v1` | text-to-speech speed, 0.5–3 (steps of 0.1; default 1): `SpeechSynthesisUtterance.rate` for Coach and Instructor (Settings > Workouts, under Instruction; in the backup's `settings.speechRate`) |
-| `nstructr-encourage-v1` | Coach's and Instructor's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach and Instructor (Instructor only until Oct 2026); `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Begin and Last one, a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
+| `nstructr-encourage-v1` | Coach's and Instructor's words of encouragement, `on`/`off` (default on; Settings > Workouts, under Instruction, shown with Coach and Instructor (Instructor only until Oct 2026); `COACH_WORDS` in `src/app/4-workouts.js`: synonyms for Last one (rep 1 is always "1", after "Ready… Begin."; Oct 2026), a cheer for 20% of middle counts (10% for the rep after one that cheered, until one doesn't: `repCheer()`, `WP.cheered`) and 40% of a hold's 10-second marks, not near halfway or in the last 10 s; never the word picked last time for the same moment (`COACH_LAST`); the backup's `settings.encourage`) |
 | `nstructr-equip-pause-v1` | "Pause at equipment changes", `on`/`off` (default off; Settings > Workouts, under Words of encouragement; the backup's `settings.equipPause`): at an equipment change, and at the workout title card, the rest waits for Ready instead of counting down (§8.3c) |
 | `nstructr-equip-time-v1` | retired (Oct 2026): Equipment transition time, a setting for a day; now the time is what it takes to say what to do (§8.3c). A stored value is ignored |
 | `nstructr-autoplay-v1` | `"off"`: exercises wait for Play when opened (Settings > Exercises; reduced motion also stops autoplay) |

@@ -3,7 +3,7 @@ import asyncio, os
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 # Coach's and Instructor's words of encouragement (Settings > Instruction > Coach or Instructor > Words of encouragement, on at first):
-# "Begin" and "Last one" from their synonyms; a count (never the first or last) replaced 20% of the time, 10% for the
+# the count starts at "1" (after "Ready… Begin.", never varied; Oct 2026), "Last one" from its synonyms; a count (never the first or last) replaced 20% of the time, 10% for the
 # rep after one that was (until one isn't); during a hold, every 10 s a 40% chance, never at halfway or in the last 10 s.
 # A word is never the same as the last one picked for that moment. Off: the plain words. WP.random is stubbed.
 SAY = "window.SAID = []; say = t => { if (WK.sound === 'voice' || WK.sound === 'coach') SAID.push(t); return Promise.resolve(); }; renderWpCount = renderWpCount;"
@@ -25,12 +25,12 @@ async def main():
               const keep = renderWpCount; renderWpCount = () => {{}};
               for (let k = 1; k <= 8; k++) {{ S.planMeta = [{{ repNo: k, repOf: 8 }}]; onWorkStep(0); }}
               renderWpCount = keep; return SAID.slice(); }})()""")
-        print('reps, random 0.15       ', await reps('[0.15]'), '<- Begin, cheer, count, cheer, count…: the rep after a cheer needs < 0.1')
+        print('reps, random 0.15       ', await reps('[0.15]'), '<- 1, cheer, count, cheer, count…: the rep after a cheer needs < 0.1')
         print('reps, random 0.05       ', await reps('[0.05]'), '<- a cheer every middle rep (< 0.1), never the same word twice in a row')
-        print('reps, random 0.5        ', await reps('[0.5]'), '<- a start word, counts, a last word (never the one used just before)')
+        print('reps, random 0.5        ', await reps('[0.5]'), '<- 1, counts, a last word (never the one used just before)')
         print('reps, random 0.9        ', await reps('[0.9]'), '<- the same, other words')
         await pg.evaluate("setSound('voice')")
-        print('Coach counts too        ', await reps('[0.5]'), '<- a start word, counts, a last word (Coach counts since Oct 2026)')
+        print('Coach counts too        ', await reps('[0.5]'), '<- 1, counts, a last word (Coach counts since Oct 2026)')
         await pg.evaluate("setSound('coach')")
         # a 60 s hold, random always 0 (always cheers where allowed): which seconds speak?
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
@@ -45,6 +45,6 @@ async def main():
         print('hold 60 s, random 0.5   ', await hold(0.5), '<- no cheers (40% chance missed)')
         await pg.evaluate("setPref(ENCOURAGE_KEY, 'off')")
         print('off: hold               ', await hold(0), '<- Halfway and 10 seconds only')
-        print('off: reps               ', await reps('[0.05]'), '<- plain Begin, numbers, Last one')
+        print('off: reps               ', await reps('[0.05]'), '<- 1, numbers, Last one')
         print('errors', errs); await b.close()
 asyncio.run(main())
