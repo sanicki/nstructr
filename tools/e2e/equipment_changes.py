@@ -2,10 +2,10 @@ import asyncio, os
 # point at a served build, e.g.  python3 -m http.server 8000 -d _site
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
-# Equipment changes (src/app/4-workouts.js, Oct 2026): from one exercise to the next with other equipment the rest gets an
-# allowance (the longest of what changes, +3 s for each other item) and says what to put down and get; a workout with
-# equipment starts with a "Get ready" checklist; the time estimate counts both; "Pause at equipment changes" (Settings,
-# under Words of encouragement) waits for Ready instead. Works on the cover screen.
+# Equipment changes (src/app/4-workouts.js, Oct 2026): from one exercise to the next with other equipment the rest gets
+# the "Equipment transition time" (Settings, under Rest between sets; 15 s at first) and says what to put down and get; a
+# workout with equipment starts with a "Get ready" checklist that long; the time estimate counts both; "Pause at
+# equipment changes" (Settings, under Words of encouragement) waits for Ready instead. Works on the cover screen.
 SAY = "window.SAID = []; say = t => { SAID.push(t); return Promise.resolve(); };"
 WK = """((ids, rest) => { localStorage.setItem('nstructr-rest-between-v1', String(rest)); WK.hinted = true;
   WK.list = WK.list.filter(w => w.id !== 't'); WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: ids.map(id => ({ ...newItem(exById(id)), reps: 1 })) }] });
@@ -17,20 +17,24 @@ async def main():
         await pg.goto(URL + '#/settings', wait_until='domcontentloaded'); await pg.wait_for_function("typeof equipPauseOn === 'function'"); await pg.wait_for_timeout(300)
         print('setting under encouragement', await pg.evaluate("$('#setEncourageRow').nextElementSibling.id"), '<- setEquipPauseRow')
         print('  off at first          ', await pg.evaluate("$('#setEquipPause').checked"), '<- False')
+        print('transition time setting ', await pg.evaluate("[$('#setRestSets').closest('.setting').nextElementSibling.querySelector('input').id, $('#setEquipTime').value]"), "<- ['setEquipTime', '15']")
+        await pg.click('[data-rest-key="equip"][data-rest-delta="1"]')
+        print('  + steps it            ', await pg.evaluate("[equipTime(), $('#setEquipTime').value]"), "<- [16, '16']")
+        await pg.fill('#setEquipTime', '15'); await pg.dispatch_event('#setEquipTime', 'change')
         print('changes                 ', await pg.evaluate("""[['fw-db-curl', 'chair-arm-raises'], ['bw-squat', 'bw-glute-bridge'], ['band-standing-row', 'band-face-pull'], ['band-overhead-triceps', 'band-standing-row'], ['fw-db-curl', 'fw-db-rdl']]
           .map(([a, c]) => { const x = equipmentChange(exById(a), exById(c)); return x && [x.seconds, x.lines.join(' / ')]; })"""))
-        print("  <- [13, put the dumbbells down / bring a chair], none (no equipment), none (the same), [20, set up the door anchor], none (dumbbells both)")
+        print("  <- [15, put the dumbbells down / bring a chair], none (no equipment), none (the same), [15, set up the door anchor], none (dumbbells both)")
         print('estimate counts it      ', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['fw-db-curl', 'chair-arm-raises'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
-          return [equipmentSeconds(w), Math.round(workoutSeconds(w) - w.blocks.reduce((s, x) => s + blockSeconds(x, w), 0))]; })()"""), '<- [23, 23] (10 s checklist + 13 s change)')
+          return [equipmentSeconds(w), Math.round(workoutSeconds(w) - w.blocks.reduce((s, x) => s + blockSeconds(x, w), 0))]; })()"""), '<- [30, 30] (15 s checklist + 15 s change)')
         # timed: the checklist, then the change
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_function("typeof equipPauseOn === 'function'"); await pg.wait_for_timeout(300); await pg.evaluate(SAY)
         await pg.evaluate(WK + "(['fw-db-curl', 'chair-arm-raises'], 5)"); await pg.wait_for_timeout(300)
         print('get ready               ', await pg.evaluate("[WP.phase, $('#wpRestLabel').textContent, $('#wpRestNext').textContent, $('#wpRestEquip').textContent, $('#wpRestTime').textContent]"))
-        print("  <- ['rest', 'Get ready', 'First: Dumbbell Biceps Curl'-ish, \"You'll need: dumbbells and chair\", '0:10']")
+        print("  <- ['rest', 'Get ready', 'First: Dumbbell Biceps Curl'-ish, \"You'll need: dumbbells and chair\", '0:15']")
         print('  said                  ', await pg.evaluate("SAID.slice(-1)"))
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("WP.phase === 'rest'", timeout=20000); await pg.evaluate("S.speed = 1")
-        print('change rest             ', await pg.evaluate("[$('#wpRestLabel').textContent, $('#wpRestEquip').textContent, Math.round(WP.restLeft), $('[data-wact=\"restSkip\"]').textContent]"), "<- ['Rest', 'Put the dumbbells down · Bring a chair', 18 (5 + 13), 'Skip']")
+        print('change rest             ', await pg.evaluate("[$('#wpRestLabel').textContent, $('#wpRestEquip').textContent, Math.round(WP.restLeft), $('[data-wact=\"restSkip\"]').textContent]"), "<- ['Rest', 'Put the dumbbells down · Bring a chair', 20 (5 + 15), 'Skip']")
         print('  said                  ', await pg.evaluate("SAID.slice(-1)"))
         # pause at equipment changes: waits for Ready
         await pg.evaluate("hush(); WP.phase = 'done'; setPref(EQUIP_PAUSE_KEY, 'on')")
@@ -48,7 +52,7 @@ async def main():
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + "(['bw-squat', 'bw-pushup'], 5)"); await pg.wait_for_timeout(300)
         print('no equipment: no list   ', await pg.evaluate("WP.phase"), '<- work')
         # backup
-        print('backup                  ', await pg.evaluate("backupData().settings.equipPause"), '<- True')
+        print('backup                  ', await pg.evaluate("[backupData().settings.equipPause, backupData().settings.equipTime]"), '<- [True, 15]')
         await b.close()
         # the cover screen: everything on the rest screen in view
         b = await p.chromium.launch(); ctx = await b.new_context(viewport={'width': 360, 'height': 398}, device_scale_factor=2.63, has_touch=True, service_workers='block'); pg = await ctx.new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))

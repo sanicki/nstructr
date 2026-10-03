@@ -88,28 +88,28 @@ function flattenWorkout(w) {
 const workoutEquipment = w => [...new Set(w.blocks.flatMap(b => b.items).flatMap(it => (exById(it.ex) || {}).equipment || []))].sort();
 /* ---------- Equipment changes (Oct 2026) ----------
    Between two exercises with different equipment the person has to put things down and get or set up others, so the rest
-   gets longer by an allowance (and the time estimate with it), the rest screen and the voice say what to do, and a
-   workout with equipment starts with a "Get ready" checklist. With "Pause at equipment changes" (Settings) it waits for
-   Ready instead of counting down. The yoga mat stays down. s: seconds it takes (hand-held 5, brought or gone to 10,
-   set up 20); get / drop: what to say. */
+   gets the "Equipment transition time" (Settings, one number the person sets; the time estimate counts it), the rest
+   screen and the voice say what to do, and a workout with equipment starts with a "Get ready" checklist that long. With
+   "Pause at equipment changes" it waits for Ready instead of counting down. The yoga mat stays down. get / drop: what
+   to say. */
 const EQUIP = {
-  Dumbbells: { s: 5, get: 'Get the dumbbells', drop: 'Put the dumbbells down' },
-  Kettlebell: { s: 5, get: 'Get the kettlebell', drop: 'Put the kettlebell down' },
-  'Medicine ball': { s: 5, get: 'Get the medicine ball', drop: 'Put the medicine ball down' },
-  'Resistance band': { s: 5, get: 'Get the resistance band', drop: 'Put the band down' },
-  Towel: { s: 5, get: 'Get a towel', drop: 'Put the towel down' },
-  'Yoga block': { s: 5, get: 'Get a yoga block', drop: 'Put the block down' },
-  'Yoga strap': { s: 5, get: 'Get the yoga strap', drop: 'Put the strap down' },
-  'Pilates ring': { s: 5, get: 'Get the Pilates ring', drop: 'Put the ring down' },
-  Barbell: { s: 10, get: 'Get the barbell', drop: 'Put the barbell down' },
-  Chair: { s: 10, get: 'Bring a chair' },
-  Bench: { s: 10, get: 'Go to the bench' },
-  Step: { s: 10, get: 'Get the step' },
-  Wall: { s: 10, get: 'Go to a wall' },
-  'Stability ball': { s: 10, get: 'Get the stability ball', drop: 'Roll the ball aside' },
-  'Foam roller': { s: 10, get: 'Get the foam roller', drop: 'Put the roller aside' },
-  'Door anchor': { s: 20, get: 'Set up the door anchor' },
-  'Pull-up bar': { s: 20, get: 'Go to the pull-up bar' }
+  Dumbbells: { get: 'Get the dumbbells', drop: 'Put the dumbbells down' },
+  Kettlebell: { get: 'Get the kettlebell', drop: 'Put the kettlebell down' },
+  'Medicine ball': { get: 'Get the medicine ball', drop: 'Put the medicine ball down' },
+  'Resistance band': { get: 'Get the resistance band', drop: 'Put the band down' },
+  Towel: { get: 'Get a towel', drop: 'Put the towel down' },
+  'Yoga block': { get: 'Get a yoga block', drop: 'Put the block down' },
+  'Yoga strap': { get: 'Get the yoga strap', drop: 'Put the strap down' },
+  'Pilates ring': { get: 'Get the Pilates ring', drop: 'Put the ring down' },
+  Barbell: { get: 'Get the barbell', drop: 'Put the barbell down' },
+  Chair: { get: 'Bring a chair' },
+  Bench: { get: 'Go to the bench' },
+  Step: { get: 'Get the step' },
+  Wall: { get: 'Go to a wall' },
+  'Stability ball': { get: 'Get the stability ball', drop: 'Roll the ball aside' },
+  'Foam roller': { get: 'Get the foam roller', drop: 'Put the roller aside' },
+  'Door anchor': { get: 'Set up the door anchor' },
+  'Pull-up bar': { get: 'Go to the pull-up bar' }
 };
 const fetchKey = q => q === 'Dumbbell' ? 'Dumbbells' : q;                     // one dumbbell or two: the same to fetch
 const equipOf = ex => new Set(((ex && ex.equipment) || []).map(fetchKey).filter(q => EQUIP[q]));
@@ -118,17 +118,15 @@ function equipmentChange(fromEx, toEx) {
   const a = equipOf(fromEx), b = equipOf(toEx);
   const put = [...a].filter(q => !b.has(q)), got = [...b].filter(q => !a.has(q)), all = [...put, ...got];
   if (!all.length) return null;
-  return { seconds: Math.max(...all.map(q => EQUIP[q].s)) + 3 * (all.length - 1),
-    lines: [...put.map(q => EQUIP[q].drop).filter(Boolean), ...got.map(q => EQUIP[q].get)] };
+  return { seconds: equipTime(), lines: [...put.map(q => EQUIP[q].drop).filter(Boolean), ...got.map(q => EQUIP[q].get)] };
 }
-const GET_READY_S = 10;
 // everything a workout (from one of its exercises on) uses, for the "Get ready" checklist
 const neededFrom = (flat, i) => [...new Set(flat.slice(i).flatMap(e => [...equipOf(exById(e.item.ex))]))];
 const listWords = xs => xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`;
 const equipPauseOn = () => pref(EQUIP_PAUSE_KEY, 'off') === 'on';
 /* the time the equipment adds to a workout: the changes between its exercises in order, and the checklist */
 function equipmentSeconds(w) {
-  const flat = flattenWorkout(w); let t = flat.length && neededFrom(flat, 0).length ? GET_READY_S : 0;
+  const flat = flattenWorkout(w); let t = flat.length && neededFrom(flat, 0).length ? equipTime() : 0;
   for (let i = 1; i < flat.length; i++) { const c = equipmentChange(exById(flat[i - 1].item.ex), exById(flat[i].item.ex)); if (c) t += c.seconds; }
   return t;
 }
@@ -834,7 +832,7 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   S.mode = 'start';                                               // no transition into the first exercise
   // a workout with equipment starts with what to have at hand ("Get ready"), then the first exercise
   const need = neededFrom(WP.flat, WP.i);
-  if (need.length) { WP.phase = 'work'; startRest(GET_READY_S, 'start', { seconds: 0, lines: [`You'll need: ${listWords(need.map(q => q.toLowerCase()))}`] }); }
+  if (need.length) { WP.phase = 'work'; startRest(equipTime(), 'start', { seconds: 0, lines: [`You'll need: ${listWords(need.map(q => q.toLowerCase()))}`] }); }
   else runCurrent(true);
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
 }
