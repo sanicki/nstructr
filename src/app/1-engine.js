@@ -422,8 +422,9 @@ function draw() {
   const raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
   const e = easeAt(b.ease, raw);
   const f = travelFrame(a, b, e), P = fkAt(f.pose, S.seg, f.pos), Q = project(P, f.cam);
-  if (S.travel) S.shiftX = W / 2 - Q.pelvis.x;                  // the view follows the figure over a marked floor
+  if (S.travel) S.shiftX = W / 2 - Q.pelvis.x + (S.followOff || 0);   // followOff: easing in from where a workout's last exercise left it                  // the view follows the figure over a marked floor
   for (const k in Q) Q[k].x += S.shiftX;
+  S.drawnX = Q.pelvis.x;                                         // where the figure is on screen (a workout's next plan carries on from there)
   drawFloorTicks(P, f.cam);
   applyPose(Q);
   S.curCam = f.cam; S.frameSupports = f.supports; S.grip = gripAt(a, b, e); S.held = heldAt(a, b, e, P);

@@ -13,7 +13,7 @@ WK = """(rest => { localStorage.setItem('nstructr-rest-between-v1', String(rest)
 # every animation frame for ms: where the head is on screen, the viewBox, the number of scene pictures
 WATCH = """ms => new Promise(res => { const out = [], t0 = performance.now();
   const f = now => { const h = document.querySelector('#scene circle.head').getBoundingClientRect();
-    out.push({ t: now - t0, x: h.x + h.width / 2, y: h.y + h.height / 2, vb: scene.getAttribute('viewBox'), n: document.querySelectorAll('svg.scene').length, idx: S.idx, trans: S.trans });
+    out.push({ t: now - t0, x: h.x + h.width / 2, y: h.y + h.height / 2, vb: scene.getAttribute('viewBox'), n: document.querySelectorAll('svg.scene').length, idx: S.idx, trans: S.trans, ex: S.ex.id + (WP.seg ? ' (2nd side)' : '') });
     if (now - t0 < ms) requestAnimationFrame(f); else res(out); };
   requestAnimationFrame(f); })"""
 def jump(fr):
@@ -48,6 +48,14 @@ async def main():
         print('rest: moved, waiting    ', await pg.evaluate("[WP.phase, S.trans, S.idx, S.playing, S.planDone, S.ex.id]"), "<- ['rest', 1, 1, True, False, 'bhf-lateral-raise']")
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(200)
         print('after the rest          ', await pg.evaluate("[WP.phase, S.trans, S.planMeta[0].phase]"), "<- ['work', 0, not 'transition']")
+        # the owner's case (Oct 2026): Side Stepping (travels) -> Neck Stretch, both sides: before, the figure jumped 88 px
+        # into the neck stretch (the travel was forgotten) and 104 px between its sides (a side is placed elsewhere)
+        await pg.evaluate("hush(); WP.phase = 'done'")
+        await pg.evaluate("""(() => { localStorage.setItem('nstructr-rest-between-v1', '0'); setSound('off'); WK.list = WK.list.filter(w => w.id !== 't');
+          WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [{ ...newItem(exById('bal-side-stepping')), reps: 2 }, { ...newItem(exById('mayo-neck')), seconds: 3, sides: 'both' }] }] });
+          saveWorkouts(); startWorkout(wkById('t'), 0); })()""")
+        fr = await pg.evaluate(WATCH, 22000)
+        print('side stepping, neck L/R ', jump(fr), sorted(set((f['ex'] if 'ex' in f else '') for f in fr)) or '', '<- largest step small (was 104 px)')
         # reduced motion: cuts
         await pg.emulate_media(reduced_motion='reduce')
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(0)'); await pg.wait_for_timeout(300)
