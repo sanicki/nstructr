@@ -659,7 +659,8 @@ representations that rotate the short, natural way) over adding a known issue; i
   change of position about 2–7 s (not in the time estimate).
 - **Moves between positions** (step 4, Oct 2026; `MOVES` in `src/positions.js`): a small graph, each edge the steps
   between two rest poses, played either way, written from library poses: standing ↔ kneeling (Hip Flexor Stretch's half
-  kneel), kneeling ↔ all fours, all fours ↔ plank, all fours ↔ face down, plank ↔ face down, standing ↔ plank (Burpee's
+  kneel), kneeling ↔ all fours, all fours ↔ plank, all fours ↔ face down (through a fitted "lower down": straight from
+  tabletop the shins flicked up), plank ↔ face down, standing ↔ plank (Burpee's
   squat with the hands down and kick back), standing ↔ seated (Squat's low point, then a fitted "sit back": seat, feet
   and hands down), seated ↔ on the back, seated ↔ all fours (sit back, rock forward into the crouch, knees down: it keeps
   the floor positions facing up and down joined without standing up). `positionPath` takes the quickest route (Dijkstra
@@ -668,7 +669,9 @@ representations that rotate the short, natural way) over adding a known issue; i
 - `transitionFrames` resolves [the last position's rest pose, …route] as one sequence, shifts it to stand between the two
   exercises, turns the camera step by step from the last exercise's to the next one's, and times each step by how far
   the body travels (0.6–1.5 s: 350 ms + 5 ms per px of the farthest of head, pelvis, hands and feet). The next
-  exercise's band or weights aren't drawn until it arrives (`clearProps`). With a rest, a move longer than the rest
+  exercise's band or weights aren't drawn until it arrives (`clearProps`). Lying face down, the last rest pose takes the
+  next exercise's arms (by the sides for Cobra, overhead for Superman), so they move as the body lowers; between two
+  face-down exercises with different arms they still swing past the floor for a moment (not fixed). With a rest, a move longer than the rest
   makes it wait (`onTheWay`; Skip too): the exercise starts once the figure is there.
 - The build checks every move both ways with `tools/checks.cjs` and `tools/rom.cjs`, like an exercise (the sit-back pose
   floated 24 px and crouch → plank flipped a thigh until fitted and given the kick-back step).
