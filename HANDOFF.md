@@ -732,7 +732,11 @@ representations that rotate the short, natural way) over adding a known issue; i
   rest and the estimate use it): "Put the dumbbells down. Lower to the floor and roll onto your back. Pick up the
   resistance band." Shown on the rest screen and captioned in every mode.
 - The words (`4b-speech.js`): `POS_SAY[from][to]` for the eight floor and standing positions (the owner's 56 lines;
-  "lay" corrected to "lie"); a line to lying on the side names the side the next exercise's first side lies on
+  "lay" corrected to "lie"; where a line offered a choice, "with feet flat or legs crossed", "on your heels or mat", the
+  one said is how the next exercise sits: `seatStyle(ex)` from its first step's points (`startPoints`, cached per
+  exercise): both legs straight → legs out in front (or wide, ankles over 100 apart), one straight → one leg out, knees
+  wide → legs crossed (soles together when the ankles meet), knees in tight and high → hug your knees in, feet off the
+  floor → knees bent, shins and feet down under the seat → on your heels, else feet flat (`SEAT_HOW`)); a line to lying on the side names the side the next exercise's first side lies on
   (`{side}`, `lyingSideWord`: the lower shoulder of its first step, mirrored for an item done right side first); between
   the two sides, "Roll over onto your left side.". The three ways into inversions are reached through a neighbour on the
   quickest route (`POSITIONS_EX.positionRoute`): `POS_OUT` (out of it to that neighbour), then `POS_SAY` between the

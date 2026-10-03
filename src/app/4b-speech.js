@@ -121,7 +121,7 @@ function sayEquipment(ch, tail = '') { return new Promise(res => setTimeout(() =
 const POS_SAY = {
   standing: {
     supine: 'Lower to the floor and roll onto your back.',
-    seated: 'Sit down on your mat with feet flat or legs crossed.',
+    seated: seat => seat === 'heels' ? 'Kneel down and sit back on your heels.' : `Sit down on your mat ${SEAT_HOW[seat]}.`,
     prone: 'Walk your hands out and lie flat on your stomach.',
     'all-fours': 'Hinge at the hips, bend your knees, and come to table top.',
     plank: 'Hinge forward, plant your hands, and step back to plank.',
@@ -154,7 +154,7 @@ const POS_SAY = {
   'all-fours': {
     standing: 'Tuck your toes, step forward, and rise to stand.',
     supine: 'Swing your legs around and roll onto your back.',
-    seated: 'Shift your hips back to sit on your heels or mat.',
+    seated: seat => seat === 'heels' ? 'Shift your hips back to sit on your heels.' : `Shift your hips back and sit on your mat ${SEAT_HOW[seat]}.`,
     prone: 'Walk your hands forward and lower your hips to the mat.',
     plank: 'Step your feet back one at a time into plank.',
     'side-lying': 'Lower your {side} hip to the mat and slide into a side lie.',
@@ -179,12 +179,16 @@ const POS_SAY = {
   kneeling: {
     standing: 'Step one foot forward and press up to stand.',
     supine: 'Shift your hips to one side, sit, and lie back.',
-    seated: 'Sit your hips back onto your heels or the floor.',
+    seated: seat => seat === 'heels' ? 'Sit your hips back onto your heels.' : `Sit your hips down to the floor ${SEAT_HOW[seat]}.`,
     prone: 'Walk your hands out and lower your chest to the mat.',
     'all-fours': 'Hinge forward and plant your hands under your shoulders.',
     plank: 'Plant your hands and step your feet back into plank.',
     'side-lying': 'Lower your {side} hip to the side and extend down onto the mat.' }
 };
+// how the next exercise sits (seatStyle in 4-workouts.js): the owner's lines offered a choice ("with feet flat or legs
+// crossed", "on your heels or mat"); the one said is the one the next exercise starts in
+const SEAT_HOW = { long: 'with your legs out in front', wide: 'with your legs wide', flat: 'with your feet flat', bent: 'with your knees bent', crossed: 'with your legs crossed',
+  soles: 'with the soles of your feet together', tucked: 'and hug your knees in', 'one-leg': 'with one leg out in front' };
 const POS_INTO = {
   squat: { standing: 'Squat down and plant your hands on the floor.' },
   'down-dog': { standing: 'Fold forward and walk your hands out to Downward Dog.', 'all-fours': 'Tuck your toes and lift your hips into Downward Dog.' },
@@ -195,15 +199,15 @@ const POS_OUT = {
   'down-dog': { standing: 'Walk your feet to your hands and roll up to stand.', 'all-fours': 'Lower your knees to table top.' },
   dolphin: { 'all-fours': 'Lower your knees and come up onto your hands.' }
 };
-/* what to say to get from position a to b (POSITIONS_EX keys; side: 'left' or 'right' when b is lying on the side), or ''
-   ("side-lying-r" is the other side: the same words) */
-function positionLine(a, b, side = '') {
+/* what to say to get from position a to b (POSITIONS_EX keys), or '' ("side-lying-r" is the other side: the same words).
+   side: 'left' or 'right' when b is lying on the side; seat: how b sits when it's seated (SEAT_HOW's keys or 'heels') */
+function positionLine(a, b, side = '', seat = 'long') {
   const key = p => (p && p.startsWith('side-lying') ? 'side-lying' : p);
   if (!a || !b || a === b) return '';
   const stops = (POSITIONS_EX.positionRoute(a, b) || [a, b]).map(key), core = stops.filter(p => POS_SAY[p]);
   const from = core[0], to = core[core.length - 1], parts = [];
   if (!POS_SAY[stops[0]]) parts.push((POS_OUT[stops[0]] || {})[stops[1]]);
-  if (from && to && from !== to || key(a) === 'side-lying' && key(b) === 'side-lying') parts.push((POS_SAY[from] || {})[to]);
+  if (from && to && from !== to || key(a) === 'side-lying' && key(b) === 'side-lying') { const l = (POS_SAY[from] || {})[to]; parts.push(typeof l === 'function' ? l(seat) : l); }
   if (!POS_SAY[stops[stops.length - 1]]) parts.push((POS_INTO[stops[stops.length - 1]] || {})[stops[stops.length - 2]]);
   return parts.filter(Boolean).join(' ').replace(/\{side\} /g, side ? side + ' ' : '');
 }

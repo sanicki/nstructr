@@ -130,21 +130,40 @@ function equipmentChange(fromEx, toEx) {
   // stepping away from furniture (a chair to nothing) has nothing to do or say: no change (it said a lone "." before)
   return lines.length ? { seconds: equipSpoken(lines), lines, drop, get } : null;
 }
-/* the side lying down in an exercise's first step, as written ('left' or 'right'; mirrored for its right side) */
+/* the body in an exercise's first step, as written (world points; cached per exercise object, as the estimates use it) */
+const START_CACHE = new WeakMap();
+function startPoints(ex) {
+  if (!START_CACHE.has(ex)) { let P = null; try { const seg = { ...DEFAULT_SEGMENTS }; P = POSITIONS_EX.pointsOf(resolveSequence(ex.keyframes, seg, ex, ex.props || [])[0], seg); } catch (e) { } START_CACHE.set(ex, P); }
+  return START_CACHE.get(ex);
+}
+/* the side lying down in an exercise's first step ('left' or 'right'; mirrored for its right side) */
 function lyingSideWord(ex, side = 'L') {
-  try {
-    const seg = { ...DEFAULT_SEGMENTS }, P = POSITIONS_EX.pointsOf(resolveSequence(ex.keyframes, seg, ex, ex.props || [])[0], seg);
-    return (P.shoulderL.y < P.shoulderR.y) === (side !== 'R') ? 'left' : 'right';
-  } catch (e) { return ''; }
+  const P = startPoints(ex); if (!P) return '';
+  return (P.shoulderL.y < P.shoulderR.y) === (side !== 'R') ? 'left' : 'right';
+}
+/* how an exercise's first step sits (SEAT_HOW in 4b-speech.js): legs long or wide, one leg out, feet flat, knees bent
+   with the feet up, legs crossed, soles together, knees hugged in, or on the heels */
+function seatStyle(ex) {
+  const P = startPoints(ex); if (!P) return 'long';
+  const d = (a, b) => Math.hypot(a.x - b.x, a.y - b.y, a.z - b.z), flat = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
+  const knee = s => { const u = d(P['hip' + s], P['ankle' + s]), l = d(P['hip' + s], P['knee' + s]) + d(P['knee' + s], P['ankle' + s]); return u / l; };   // 1 straight
+  const up = k => P[k].y - supportAt(P[k]), straight = s => knee(s) > 0.95;
+  if (straight('L') && straight('R')) return flat(P.ankleL, P.ankleR) > 100 ? 'wide' : 'long';
+  if (straight('L') !== straight('R')) return 'one-leg';
+  if (up('kneeL') < 10 && up('kneeR') < 10 && up('ankleL') < 10 && flat(P.ankleL, P.pelvis) < 30) return 'heels';   // shins down, seat on the feet
+  const kneesWide = flat(P.kneeL, P.kneeR) > 60;
+  if (kneesWide) return flat(P.ankleL, P.ankleR) < 20 ? 'soles' : 'crossed';
+  if (knee('L') < 0.45 && knee('R') < 0.45 && up('kneeL') > 40) return 'tucked';             // knees in tight (Rolling Like a Ball)
+  return up('ankleL') > 10 && up('ankleR') > 10 ? 'bent' : 'flat';                           // feet up (Russian Twist) or down
 }
 /* what changes from one exercise to the next, in the order you do it (owner, Oct 2026): put down what you're done with,
-   change position, pick up what's next ("Put the dumbbells down. Sit down on your mat with feet flat or legs crossed.
+   change position, pick up what's next ("Put the dumbbells down. Sit down on your mat with your feet flat.
    Pick up the resistance band."): { seconds, lines, equipment } or null. equipment: there's equipment to deal
    with ("Pause at equipment changes" waits only for that). side: the next exercise's first side ('L' or 'R'), so a line
    to lying on the side names it; none for an estimate (the same length) */
 function exerciseChange(fromEx, toEx, side = null) {
   const eq = equipmentChange(fromEx, toEx), a = fromEx && posOf(fromEx).end, b = toEx && posOf(toEx).start;
-  const pos = positionLine(a, b, side && b && b.startsWith('side-lying') ? lyingSideWord(toEx, side) : '').replace(/\.$/, '');
+  const pos = positionLine(a, b, side && b && b.startsWith('side-lying') ? lyingSideWord(toEx, side) : '', b === 'seated' ? seatStyle(toEx) : 'long').replace(/\.$/, '');
   const lines = [...(eq ? eq.drop : []), ...(pos ? [pos] : []), ...(eq ? eq.get : [])];
   return lines.length ? { seconds: equipSpoken(lines), lines, equipment: !!eq } : null;
 }
