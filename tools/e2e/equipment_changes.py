@@ -28,8 +28,8 @@ async def main():
         # timed: the checklist, then the change
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_function("typeof equipPauseOn === 'function'"); await pg.wait_for_timeout(300); await pg.evaluate(SAY)
         await pg.evaluate(WK + "(['fw-db-curl', 'chair-arm-raises'], 5)"); await pg.wait_for_timeout(300)
-        print('title card              ', await pg.evaluate("[WP.phase, $('#wpRestLabel').textContent, $('#wpRestTitle').textContent, $('#wpRestEquip').textContent, $('#wpRestNext').hidden, $('#wpRestTime').hidden, $('[data-wact=\"restSkip\"]').textContent]"))
-        print("  <- ['rest', 'Workout', 'T', \"You'll need: dumbbells and chair\", True (no exercise name), True (no countdown), 'Start']")
+        print('title card              ', await pg.evaluate("[WP.phase, $('#wpRestLabel').textContent, $('#wpRestTitle').textContent, [...document.querySelectorAll('#wpRestEquip li')].map(l => l.textContent), $('#wpRestNext').hidden, $('#wpRestTime').hidden, $('[data-wact=\"restSkip\"]').textContent]"))
+        print("  <- ['rest', 'Workout', 'T', ['Dumbbells', 'Chair'] (You'll need: as bullets), True (no exercise name), True (no countdown), 'Start']")
         await pg.wait_for_timeout(700); print('  said (then 0.5 s, the list)', await pg.evaluate("SAID.slice(-2)"), "<- ['T.', \"You'll need: dumbbells and chair.\"]")
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("WP.phase === 'rest'", timeout=20000); await pg.evaluate("S.speed = 1")

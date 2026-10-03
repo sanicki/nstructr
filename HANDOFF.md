@@ -715,7 +715,8 @@ representations that rotate the short, natural way) over adding a known issue; i
   'transition'`, so the new equipment fades in after it).
 - **Workout title card** (owner: "You'll need" belongs on a workout title card, not on the first exercise's card): a
   workout that uses any of it starts with the rest screen as a title card (`kind: 'start'`): label "Workout", the
-  workout's name (`#wpRestTitle`), "You'll need: dumbbells and chair" (`checklistLine`; from where it starts, so a
+  workout's name (`#wpRestTitle`), "You'll need:" and the equipment as bullets (a list, two columns from 5 items;
+  owner, Oct 2026), said as one line, "You'll need: dumbbells and chair" (`checklistLine`; from where it starts, so a
   resumed workout lists what's left); no countdown (the ticker leaves it alone: `WP.restKind`), no +15 s, the button
   reads Start (Ready when pausing). It says the name, then after half a second the list, and lasts that long
   (`equipSpoken([name, list])`), or until the voice has finished, then half a second more (`WP.restTalking`; Oct 2026:

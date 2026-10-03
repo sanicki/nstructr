@@ -705,6 +705,9 @@ body[data-view="wplay"]{overflow:hidden;background:var(--md-surface)}
 .ov-next{margin:0;font-size:clamp(16px,5.5vmin,30px);color:var(--ov-dim)}
 .wp-title{margin:0;max-width:18ch;font-size:clamp(24px,9vmin,48px);font-weight:700;line-height:1.15;text-wrap:balance}
 .ov-equip{margin:0;max-width:30ch;font-size:clamp(15px,5vmin,26px);font-weight:600;color:inherit}
+.ov-equip-list{margin:4px auto 0;padding:0 0 0 1.2em;width:max-content;max-width:100%;text-align:left;columns:2;column-gap:2em}   /* the title card's list, bullets left, the block centred */
+.ov-equip-list:has(> li:nth-child(4):last-child),.ov-equip-list:not(:has(> li:nth-child(4))){columns:1}   /* one column up to 4 items */
+.ov-equip-list li{break-inside:avoid}
 .ov-rest-btns{display:flex;gap:12px;margin-top:6px}
 .ov-pill{min-width:96px;height:clamp(48px,14vmin,64px);padding:0 22px;border-radius:32px;font-size:clamp(16px,5vmin,22px);font-weight:600;color:var(--wp-fg);background:var(--wp-btn)}
 .ov-pill.primary{background:var(--ov-primary);color:var(--ov-on-primary)}

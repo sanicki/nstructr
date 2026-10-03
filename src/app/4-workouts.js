@@ -881,7 +881,7 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   S.mode = 'start';                                               // no transition into the first exercise
   // a workout with equipment starts with a title card: its name and what to have at hand, then the first exercise
   const need = neededFrom(WP.flat, WP.i);
-  if (need.length) { WP.phase = 'work'; const lines = [checklistLine(need)]; startRest(0, 'start', { seconds: equipSpoken([w.name, ...lines]), lines }); }
+  if (need.length) { WP.phase = 'work'; const lines = [checklistLine(need)]; startRest(0, 'start', { seconds: equipSpoken([w.name, ...lines]), lines, need }); }
   else runCurrent(true);
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
 }
@@ -1044,7 +1044,10 @@ function startRest(seconds, kind, ch = null) {
   $('#wpRestLabel').textContent = title ? 'Workout' : kind === 'set' ? 'Rest before the next set' : kind === 'round' ? `Rest before round ${cur.round + 1} of ${cur.rounds}` : 'Rest';
   $('#wpRestTitle').textContent = title ? WP.w.name : ''; $('#wpRestTitle').hidden = !title;
   $('#wpRestNext').textContent = title ? '' : kind === 'set' ? `Next: set ${WP.set + 1} of ${cur.item.sets}` : `Next: ${ex.name}`; $('#wpRestNext').hidden = title;
-  $('#wpRestEquip').textContent = ch ? ch.lines.join(' · ') : ''; $('#wpRestEquip').hidden = !ch;
+  // the title card lists what you'll need as bullets (owner, Oct 2026); an equipment change says what to do on one line
+  if (ch && ch.need) $('#wpRestEquip').innerHTML = `<span>You'll need:</span><ul class="ov-equip-list">${ch.need.map(q => `<li>${esc(q)}</li>`).join('')}</ul>`;
+  else $('#wpRestEquip').textContent = ch ? ch.lines.join(' · ') : '';
+  $('#wpRestEquip').hidden = !ch;
   $('#wpRestTime').textContent = WP.waitReady || title ? '' : fmtTime(Math.ceil(seconds)); $('#wpRestTime').hidden = WP.waitReady || title;
   $('[data-wact="restSkip"]').textContent = WP.waitReady ? 'Ready' : title ? 'Start' : 'Skip'; $('[data-wact="restMore"]').hidden = WP.waitReady || title;
   // show where the next exercise starts: moving there through the at-rest pose when it can, or straight there
