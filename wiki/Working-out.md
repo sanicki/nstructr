@@ -47,9 +47,11 @@ on. Beeps count down the last 3 seconds in Beeps, Coach and Instructor modes.
 **From one exercise to the next** the figure doesn't jump. When the next exercise starts in the position the last one
 ended in (both standing, both on all fours, both lying on your back…), the figure eases back to a relaxed pose in that
 position, then moves into the next exercise, and the view turns and zooms with it: during the rest if there is one, or
-in about a second and a half if the rest is 0. When the position changes (standing to the floor) or the exercise uses a
-bench, chair, wall or other equipment you rest on, the picture fades from one to the other. With your device's
-*reduce motion* setting on, it simply switches.
+in about a second and a half if the rest is 0. When the position changes, it gets there the way you would: standing to
+lying on your back, it squats, sits back, sits and lies down; from all fours to standing, it kneels up, steps one foot
+forward and stands. That takes a few seconds; in a short rest, the next exercise starts once the figure is in place.
+When an exercise uses a bench, chair, wall or other equipment you rest on, or you lie on your side, the picture fades
+from one to the other instead. With your device's *reduce motion* setting on, it simply switches.
 
 ## Instruction
 

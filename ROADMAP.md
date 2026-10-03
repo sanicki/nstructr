@@ -5,8 +5,6 @@ comes off this list. How things work, and why past decisions were made, is in [H
 
 ## App
 
-- **Position-change moves**: between exercises in different positions (standing → floor and back) the workout player
-  crossfades; short moves written once (stand → kneel → all fours → lie down, sit) would animate them instead.
 - **Workout submissions**: exercises can be submitted to the library; workouts can't yet.
 - **AI with your own API key**: Create with AI calls the provider directly instead of copy and paste; self-hosted models
   too. The provider list could come from [models.dev](https://models.dev).

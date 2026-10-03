@@ -629,30 +629,43 @@ const POS_CACHE = new WeakMap();                                 // per exercise
 const posOf = ex => { if (!POS_CACHE.has(ex)) POS_CACHE.set(ex, POSITIONS_EX.positionsOf(ex)); return POS_CACHE.get(ex); };
 const REST_MS = 1000, ARRIVE_MS = 800, XFADE_MS = 350;
 const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
-// the at-rest frame both exercises pass through, or null when they don't share a position. It stands halfway between
-// where the last exercise left the figure and where the next one starts (its own spot on the floor would take the
-// figure, and the view following it, out there and back: a bounce)
-function restFrame(fromEx, toEx, fromLast, toFirst) {
+// the frames from one exercise into the next, or null (a crossfade): through the at-rest pose of the position the last
+// ended in and, when the next starts in another, along the quickest route of moves between positions (src/positions.js:
+// stand -> half kneel -> kneel -> all fours -> lie down…). They stand halfway between where the last exercise left the
+// figure and where the next one starts (at their own spot on the floor the figure, and the view following it, would go
+// out there and back: a bounce), and the camera turns from the last exercise's to the next one's along the way.
+function transitionFrames(fromEx, toEx, fromLast, toFirst) {
   const a = posOf(fromEx).end, b = posOf(toEx).start;
-  if (!a || a !== b || a === 'side-lying' || POSITIONS_EX.onEquipment(fromEx) || POSITIONS_EX.onEquipment(toEx)) return null;   // side-lying: which side differs
-  const seg = { ...DEFAULT_SEGMENTS }, kf = { name: POSITIONS_EX.LABELS[b], durationMs: REST_MS, holdMs: 150, ...POSITIONS_EX.REST[b] };
-  const r = resolveSequence([kf], seg, { keyframes: [kf] }, [])[0];
-  const pelvis = f => { const g = frameAt(f, f, 1, seg); return fkAt(g.pose, seg, g.pos).pelvis; };
-  const p0 = pelvis(fromLast), p1 = pelvis(toFirst), pr = pelvis(r);
-  const rule = { ...r.rule, x: num(r.rule.x) + (p0.x + p1.x) / 2 - pr.x, z: num(r.rule.z) + (p0.z + p1.z) / 2 - pr.z };
-  return { ...r, rule, cam: toFirst.cam, step: -1 };              // turn to the next exercise's camera on the way
+  if (!a || !b || a === 'side-lying' || b === 'side-lying' || POSITIONS_EX.onEquipment(fromEx) || POSITIONS_EX.onEquipment(toEx)) return null;   // side-lying: which side differs
+  const route = POSITIONS_EX.positionPath(a, b); if (!route) return null;
+  const seg = { ...DEFAULT_SEGMENTS };
+  const kfs = [{ name: POSITIONS_EX.LABELS[a], ...POSITIONS_EX.REST[a], durationMs: REST_MS, holdMs: route.length ? 0 : 150 }, ...route.map((k, i) => ({ ...k, holdMs: i === route.length - 1 ? 150 : 0 }))];
+  // lying face down, the arms are by the sides in some exercises (Cobra) and overhead in others (Superman): the last rest
+  // pose takes the next exercise's, so they move as the body lowers rather than sweep through the floor after
+  if (b === 'prone') { const last = kfs[kfs.length - 1], arm = {}; for (const j of ['shoulderL', 'shoulderR', 'elbowL', 'elbowR']) if (toFirst.pose[j] != null) arm[j] = toFirst.pose[j]; kfs[kfs.length - 1] = { ...last, pose: { ...last.pose, ...arm } }; }
+  const R = resolveSequence(kfs, seg, { keyframes: kfs }, []);
+  const at = f => { const g = frameAt(f, f, 1, seg); return fkAt(g.pose, seg, g.pos); }, pelvis = f => at(f).pelvis;
+  // each step takes as long as the body has to travel (standing to a crouch is a long way, kneeling to all fours short)
+  const far = (A, B) => Math.max(...['head', 'pelvis', 'handL', 'handR', 'ankleL', 'ankleR'].map(k => V3.dist(A[k], B[k])));
+  R.forEach((r, i) => { r.dur = Math.round(Math.min(1500, Math.max(600, 350 + 5 * far(at(i ? R[i - 1] : fromLast), at(r))))); });
+  const p0 = pelvis(fromLast), p1 = pelvis(toFirst), q0 = pelvis(R[0]), q1 = pelvis(R[R.length - 1]);
+  const dx = (p0.x + p1.x) / 2 - (q0.x + q1.x) / 2, dz = (p0.z + p1.z) / 2 - (q0.z + q1.z) / 2;
+  return R.map((r, i) => ({ ...r, rule: { ...r.rule, x: num(r.rule.x) + dx, z: num(r.rule.z) + dz }, step: -1,
+    cam: fromLast.cam + (toFirst.cam - fromLast.cam) * (i + 1) / R.length }));
 }
+// during a rest: the figure is still moving into the next exercise's first pose
+const onTheWay = () => WP.phase === 'rest' && S.trans > 0 && (S.idx < S.trans || S.t < S.resolved[S.trans].dur);
 function stagePlan(p) {
   const prevLast = S.mode === 'workout' && S.resolved.length ? S.resolved[S.idx] : null;
   const prevEx = S.ex, exChanged = !S.ex || S.ex.id !== p.ex.id;
   const fromBox = scene.getAttribute('viewBox'), drawnX = S.drawnX;
   let plan = p.plan, meta = p.meta, trans = 0, fade = false;
   if (prevLast && exChanged && !reducedMotion()) {
-    const rest = restFrame(prevEx, p.ex, prevLast, plan[0]);
-    if (rest) {
-      const arrive = { ...plan[0], dur: Math.max(plan[0].dur, ARRIVE_MS) };    // into the first step from the rest pose
-      plan = Object.assign([rest, arrive, ...plan.slice(1)], { walls: plan.walls, supports: plan.supports });
-      meta = [{ phase: 'transition' }, ...meta]; trans = 1;
+    const way = transitionFrames(prevEx, p.ex, prevLast, plan[0]);
+    if (way) {
+      const arrive = { ...plan[0], dur: Math.max(plan[0].dur, ARRIVE_MS) };    // into the first step from the last rest pose
+      plan = Object.assign([...way, arrive, ...plan.slice(1)], { walls: plan.walls, supports: plan.supports });
+      meta = [...way.map(() => ({ phase: 'transition' })), ...meta]; trans = way.length;
     } else fade = true;
   }
   if (fade) crossfadeScene();
@@ -681,7 +694,7 @@ function stagePlan(p) {
   const steps = plan.slice(0, trans + 1).map((r, i) => r.dur + (i < trans ? r.hold : 0)), total = steps.reduce((t, d) => t + d, 0);
   const ms = Math.max(total / (S.tempo || 1), 600);
   if (total > 0) S.glide = { steps, total, last: trans, x0: drawnX, x1, toShift: S.shiftX };
-  glideView(fromBox, scene.getAttribute('viewBox'), ms, trans ? boxFor([plan[0]]) : null);
+  glideView(fromBox, scene.getAttribute('viewBox'), ms, trans ? boxFor(plan.slice(0, trans)) : null);
 }
 /* zoom (and pan) from the old frame to the new one in one smooth move (one ease from start to end: it never stops on
    the way); if a pose passed through (viaBox) is bigger than the frame halfway, the halfway frame grows to fit it,
@@ -1065,7 +1078,7 @@ setInterval(() => {
     const left = Math.max(0, Math.ceil(WP.restLeft));
     $('#wpRestTime').textContent = fmtTime(left);
     if (left <= 3 && left > 0 && !WP.beeped['r' + left]) { WP.beeped['r' + left] = 1; beep(left === 1 ? 880 : 660); }
-    if (WP.restLeft <= 0) runCurrent(true);
+    if (WP.restLeft <= 0 && !onTheWay()) runCurrent(true);
   } else if (WP.phase === 'rest') WP.restLast = performance.now();
   if (WP.phase === 'work') renderWpCount();
 }, 200);
@@ -1090,7 +1103,7 @@ function wpAction(act) {
   }
   if (act === 'easier' || act === 'harder') { swapCurrent(act); return; }
   if (act === 'restMore') { WP.restLeft += 15; return; }
-  if (act === 'restSkip') { if (WP.phase === 'rest') runCurrent(true); return; }
+  if (act === 'restSkip') { if (WP.phase === 'rest') { if (onTheWay()) WP.restLeft = 0; else runCurrent(true); } return; }   // still getting into position: starts as soon as it's there
   if (act === 'nextItem' || act === 'prevItem' || act === 'restSkip') hush();
   if (act === 'nextItem') { if (WP.i < WP.flat.length - 1) { WP.i++; WP.set = 0; WP.seg = 0; runCurrent(true); } else finishWorkout(); return; }
   if (act === 'prevItem') { WP.i = Math.max(0, WP.i - 1); WP.set = 0; WP.seg = 0; runCurrent(true); return; }
