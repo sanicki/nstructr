@@ -55,12 +55,13 @@ async def main():
               WK.list = WK.list.filter(w => w.id !== 'c'); WK.list.push({{ id: 'c', name: 'Demos', blocks: [{{ id: 'b', name: 'B', items: {items} }}] }});
               saveWorkouts(); startWorkout(wkById('c')); S.speed = 6; }})()""")
             await pg.wait_for_function("WP.phase === 'done'", timeout=180000)
-            out = (await pg.evaluate("DEMO.filter((d, i) => d !== DEMO[i - 1])"), [t[:40] for t in await pg.evaluate("SP.log") if 'Watch me first' in t], [t[:24] for t in await pg.evaluate("SP.log") if t.startswith('Push-Up')])
+            out = (await pg.evaluate("DEMO.filter((d, i) => d !== DEMO[i - 1])"), [t[:40] for t in await pg.evaluate("SP.log") if 'Watch me first' in t], [t[:24] for t in await pg.evaluate("SP.log") if t.startswith('Push-Up') or t.startswith('Set ')])
             await ctx.close(); return out
         d, w, n = await demos("[{ ...newItem(exById('bw-pushup')), reps: 2, sets: 3 }]")
         print('push-ups, 3 sets        ', d, w, "<- set 1 demo, sets 2 and 3 no demo; Watch me first once")
-        print('  named every set       ', n, "<- ['Push-Up. Watch me first. …', 'Push-Up.', 'Push-Up.'] (no demonstration: the name, as NstructR)")
-        d, w, n = await demos("[{ ...newItem(exById('star-excursion-4-point')), reps: 1, sides: 'both', sets: 2 }]")
+        print('  then "Set 2", "Set 3"  ', n, "<- ['Push-Up. Watch me first. …'] and Set 2. / Set 3. (not the name again)")
+        d, w, n2 = await demos("[{ ...newItem(exById('star-excursion-4-point')), reps: 1, sides: 'both', sets: 2 }]")
+        print('  said                  ', [t[:44] for t in n2], "<- ['Set 2. Left leg.'] (then 'Switch sides. Right leg.' as in set 1)")
         print('star, both sides, 2 sets', d, w, "<- set 1 and set 1 side 2 demo; set 2 (both sides) no demo; Watch me first once")
         d, w, n = await demos("['bw-pushup', 'core-crunch', 'bw-pushup'].map(id => ({ ...newItem(exById(id)), reps: 2 }))")
         print('push-ups, crunches, push-ups', d, len(w), "<- ['pushup set 1: demo', 'crunch set 1: demo', 'pushup set 1: demo'] 3 (Watch me first each time)")

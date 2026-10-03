@@ -873,7 +873,7 @@ function resetScene() { scene.setAttribute('viewBox', '0 0 400 400'); syncLimbWi
 function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   WP.w = w; WP.flat = flattenWorkout(w); WP.test = test; WP.log = test ? null : { start: Date.now(), done: [] }; WP.lastLogged = -1;
   if (!WP.flat.length) { snack('Add some exercises first.'); return; }
-  WP.swaps = {}; WP.orig = {}; WP.shown = new Set();
+  WP.swaps = {}; WP.orig = {}; WP.shown = new Set(); WP.named = new Set();
   for (const [u, id] of Object.entries(swaps || {})) { const e = WP.flat.find(x => x.item.uid === u), to = exById(id); if (e && to) swapInSession(e.item, to); }   // resumed: this session's swaps again
   WP.i = Math.min(fromIndex, WP.flat.length - 1); WP.set = 0; WP.seg = 0; WP.started = Date.now(); WP.phase = 'work';
   unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound); keepStorage(); installDue();
@@ -932,7 +932,9 @@ function runCurrent(announce) {
   renderWpInfo();
   if (announce) {
     const ex = p.ex, bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels;
-    const bits = [ex.name];
+    // the next set of the same exercise is "Set 2", not its name again (owner, Oct 2026); a new appearance or a swap names it
+    const again = WP.set > 0 && WP.named.has(demoKeyOf(cur.item));
+    const bits = [again ? `Set ${fmtNum(WP.set + 1)}` : ex.name];
     if (segs.length > 1 && WP.seg > 0) { const prev = segs[WP.seg - 1]; bits[0] = prev.side !== segInfo.side ? (prev.dir !== segInfo.dir ? 'Switch sides and direction' : 'Switch sides') : 'Switch direction'; }   // what actually changed
     if (cur.item.sides && cur.item.sides !== 'alternate' && bl) bits.push(bl[segInfo.side]);
     if (cur.item.dir && cur.item.dir !== 'alternate' && dl) bits.push(dl[segInfo.dir]);
@@ -943,6 +945,7 @@ function runCurrent(announce) {
     if (WP.equipChange) { const ch = WP.equipChange; setTimeout(() => { say(`${ch.lines.join('. ')}.`); if (named) say(named); }, EQUIP_PAD * 1000); }
     else if (named) say(named);
   }
+  WP.named.add(demoKeyOf(cur.item));                             // its name has been said: the next set is "Set 2"
   WP.equipChange = null;
   S.canAdvance = i => !(S.planMeta[i] && (S.planMeta[i].guided || S.planMeta[i].ready) && WP.speaking);   // the run-through's cues, "Ready… Begin"
   S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Ready… Hold for N seconds"
