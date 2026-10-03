@@ -8,7 +8,7 @@ from check import check, near, below, at_least, has, all_true
 # rep after one that was (until one isn't); during a hold, every 10 s a 40% chance, never at halfway or in the last 10 s.
 # As each set (and side) ends, after its last animation: a finished phrase (Great job! / Fantastic! / Finished! / …; on only).
 # Holds have their own cheers too (Stay with it, Hold it there …); "Halfway", "10 seconds" and the end of the workout are
-# varied as well (Oct 2026). The lists: COACH_WORDS in src/app/4-workouts.js; the first of each is the plain word.
+# varied as well (Oct 2026). The lists: COACH_WORDS in src/app/4b-speech.js; the first of each is the plain word.
 # An alternating rep's other half says "and" ("1 and 2 and 3"), which a cheer can replace too.
 # A word is never the same as the last one picked for that moment. Off: the plain words. WP.random is stubbed.
 SAY = "window.SAID = []; say = t => { if (WK.sound === 'voice' || WK.sound === 'coach') SAID.push(t); return Promise.resolve(); }; renderWpCount = renderWpCount;"

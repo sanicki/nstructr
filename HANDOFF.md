@@ -119,7 +119,12 @@ src/
   app/2-explore.js    Exercises tab (collections incl. Saved, filters, search, cards)
   app/2-links.js      linked variations: easier/harder/other equipment, swapping a workout item (§8.1b)
   app/3-details.js    exercise page info, its tap-for-controls overlay, Edit, its sound, Settings, format reference
-  app/4-workouts.js   workouts: storage, editor, plan builder, workout player, sound, history, sharing
+  app/4-workouts.js   workouts: storage, timing estimates, equipment changes, the list, editor, import/export
+  app/4b-speech.js    the workout player's sound: beeps, say() (queued lines), captions, the Instruction setting, every
+                      fixed spoken line (SAY, by key) and the words of encouragement (COACH_WORDS)
+  app/4c-plan.js      the plan of one set of one exercise (buildPlan: setup, demonstration, ready, reps/hold, finish),
+                      the move between exercises (stagePlan), framing the workout camera
+  app/4d-player.js    running a workout: WP state, the next exercise, counting, rests, history, gestures, the screen
   app/5-main.js       selection, import, routing, event wiring, boot() (defined here)
   app/5-ai.js          Create with AI: the prompt, AI apps and their links, reading the answer back
   app/5-share.js       share links: pack/unpack, share dialog with QR code, opening a link

@@ -3,7 +3,7 @@ import asyncio, os
 URL = os.environ.get('NSTRUCTR_URL', 'http://localhost:8000/nstructr.html')
 from playwright.async_api import async_playwright
 from check import check, near, below, at_least, has, all_true
-# Between exercises (src/positions.js, stagePlan in src/app/4-workouts.js): two exercises in the same position (Squat ->
+# Between exercises (src/positions.js, stagePlan in src/app/4c-plan.js): two exercises in the same position (Squat ->
 # Lateral Raise, both standing; the camera turns from the side to the front) move through the at-rest pose, the frame
 # glides and nothing jumps; a change of position (standing -> lying on the back) follows the moves between positions
 # (sit down, lie back) with no jump; to a chair, up to standing beside it as it fades in; no position (a foam roller)
