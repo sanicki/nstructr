@@ -20,10 +20,6 @@ comes off this list. How things work, and why past decisions were made, is in [H
     (`:lang(zh)`); bundle Roboto Flex and Material Symbols instead of loading them from Google Fonts (blocked there).
   - When other languages ship, **Unspecified** becomes the default AI provider (not Gemini).
   - Right-to-left layout (Arabic, Hebrew, Persian, Urdu) only if one of those is chosen.
-- **Workout player: the figure shifts when the header changes height** (found Oct 2026): the stage sits below the
-  header (`layoutWp`), whose height depends on the exercise's name wrapping beside the count, so changing exercise moves
-  the whole figure (2 px with fallback fonts, ~17 px with Roboto on CI: Side Stepping → Neck Stretch). Options:
-  reserve the header's tallest form (costs cover-screen height) or keep the stage put for the whole workout.
 - **Exercises tab speed**: opening it draws all 358 thumbnails: 4.6 s on a slow phone (CPU 4×; 17 ms each, every
   thumbnail resolves its whole exercise). Draw them as they scroll into view, and/or cache each one. Startup itself is
   fine (1.3–1.9 s at 4–6× on a repeat visit), so no lazy-loading of the library (`tools/perf.py`, Oct 2026).

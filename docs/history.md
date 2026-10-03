@@ -208,6 +208,10 @@ What was done (✅) and the plans behind it. Still-open plans are in HANDOFF §1
    (owner, Sep 2026); what that adds to the plan is on [ROADMAP.md](ROADMAP.md). Qwen, Doubao and Kimi were added
    to Create with AI's providers at the same time.
 
+11. ~~Should the workout player's stage stay put when the header changes height between exercises?~~ Decided: no.
+   The stage moves by up to 22 px on a phone (Plank → Overhead Triceps Stretch; none on the cover screen), which
+   reads as a camera zoom and isn't a problem (owner, Oct 2026).
+
 Still open (seated band row X, which machines first, status bar flicker): see [ROADMAP.md](ROADMAP.md). The status
 bar flicker (owner report, installed app on a flip phone) wasn't reproduced; likely Android's own behaviour in
 `display: fullscreen` (an edge swipe briefly reveals the system bars). If it matters, the option is
