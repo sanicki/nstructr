@@ -127,13 +127,24 @@ if (!args.has('--no-checks') && !errors.length) {
 if (!args.has('--no-checks') && !errors.length) {
   const PX = require('../src/positions.js');
   for (const m of PX.checkRest()) errors.push(`rest pose ${m}`);
+  // each move between positions, both ways, passes the same animation and range-of-motion checks as an exercise
+  { const { check } = require('./checks.cjs'), { pastFlexible } = require('./rom.cjs');
+    for (const m of PX.MOVES) for (const [a, b] of [[m.a, m.b], [m.b, m.a]]) {
+      const via = a === m.a ? m.via : [...m.via].reverse();
+      const kfs = [{ name: PX.LABELS[a], ...PX.REST[a] }, ...via, { name: PX.LABELS[b], ...PX.REST[b] }]
+        .map((k, i, all) => ({ durationMs: 900, holdMs: 0, camera: 90, ...k, phase: i === 0 ? 'setup' : i === all.length - 1 ? 'finish' : 'rep' }));
+      if (kfs.length === 2) kfs.splice(1, 0, { ...kfs[1], name: 'arrive', phase: 'rep', durationMs: 0 });
+      const ex = { id: `move ${a} > ${b}`, keyframes: kfs };
+      for (const x of check(ex)) errors.push(`move ${a} > ${b}: ${x.msg || x}`);
+      for (const x of pastFlexible(ex)) errors.push(`move ${a} > ${b}: "${x.name}" ${x.joint} ${x.value}° is past what a flexible body can do`);
+    } }
   const count = {}, unplaced = [];
   for (const ex of exercises) {
     const p = PX.positionsOf(ex);
     for (const k of [p.start, p.end]) count[k || 'other'] = (count[k || 'other'] || 0) + 1;
     if ((!p.start || !p.end) && !PX.onEquipment(ex) && ex.startPosition !== 'other' && ex.endPosition !== 'other') unplaced.push(`${ex.id} (${p.start || '?'} → ${p.end || '?'})`);
   }
-  console.log(`positions (starts and ends): ${Object.entries(count).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(', ')}`);
+  console.log(`positions: ${PX.MOVES.length} moves between them, checked both ways; starts and ends: ${Object.entries(count).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(', ')}`);
   if (unplaced.length) console.log(`positions: not placed, so a crossfade (add startPosition/endPosition, "other" if none fits): ${unplaced.join(', ')}`);
 }
 // ---------- 2d. equipment: what's listed is drawn and what's drawn is listed, spelled one way (the Exercises filter) ----------

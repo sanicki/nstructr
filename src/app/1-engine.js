@@ -264,6 +264,7 @@ function applyPose(Q) {
 }
 
 /* ---------- Equipment ---------- */
+function clearProps() { for (const el of document.querySelectorAll('#propsBack, #propsFront, #heldBall, #scene .wts')) if (el.firstChild) el.innerHTML = ''; }
 function drawProps(P, Q, pose, cam) {
   let back = '', front = '';
   const dx = S.shiftX, proj = p => { const q = project({ p }, cam).p; return { x: q.x + dx, y: q.y, d: q.d }; };
@@ -436,7 +437,9 @@ function draw() {
   drawFloorTicks(P, f.cam);
   applyPose(Q);
   S.curCam = f.cam; S.frameSupports = f.supports; S.grip = gripAt(a, b, e); S.held = heldAt(a, b, e, P);
-  if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);
+  // a workout's way into the next exercise: its band or weights are picked up as it arrives, not carried there
+  if (S.props && S.props.length && !(S.mode === 'workout' && S.idx < (S.trans || 0))) drawProps(P, Q, f.pose, f.cam);
+  else if (S.props && S.props.length) clearProps();
   drawGuide(a, b, e);
   if (S.mode !== 'workout' && EX_SHOW_PROGRESS) $('#progressBar').style.width = ((S.offsets[S.idx] + Math.min(S.t, b.dur + b.hold)) / S.total * 100).toFixed(2) + '%';
   // hold countdown for long holds (stretches), in real seconds at the current speed

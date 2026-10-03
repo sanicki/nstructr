@@ -638,7 +638,7 @@ representations that rotate the short, natural way) over adding a known issue; i
   library does (every position's exercises turned out to face one way, Oct 2026 survey).
 - **Workout player** (`stagePlan`): when one exercise ends in the position the next starts in, neither rests on equipment
   (`onEquipment`: a surface, wall or bar; hand-held weights and bands don't count) and it isn't side-lying (the side may
-  differ), the plan starts with that rest pose (1 s, camera already the next exercise's) and the first step lasts at
+  differ), the plan starts with that rest pose (and, for a change of position, the moves below) (1 s, camera already the next exercise's) and the first step lasts at
   least 0.8 s; `S.trans` = 1, its meta `phase: 'transition'`. The rest pose stands halfway between where the last
   exercise left the figure and where the next one starts (`restFrame` shifts its `rule.x/z`); at its own spot on the
   floor the figure, and the view, went out to it and back (the owner's "bounce", Oct 2026).
@@ -655,9 +655,26 @@ representations that rotate the short, natural way) over adding a known issue; i
   into the new one (0.35 s, a clone of the scene; `crossfadeScene`). Reduced motion: cuts, as before. The first exercise
   of a workout has nothing to come from (`S.mode = 'start'`).
 - With a rest, the move plays during the rest and stops in the next exercise's first step (`S.canAdvance`); after the
-  rest the same exercise is staged again with no transition. With no rest, a same-position change adds about 1–2 s (not
-  in the time estimate); the next exercise's band or weights are drawn from the start of the move.
-- Not done yet: position-change moves (ROADMAP).
+  rest the same exercise is staged again with no transition. With no rest, a same-position change adds about 1–2 s and a
+  change of position about 2–7 s (not in the time estimate).
+- **Moves between positions** (step 4, Oct 2026; `MOVES` in `src/positions.js`): a small graph, each edge the steps
+  between two rest poses, played either way, written from library poses: standing ↔ kneeling (Hip Flexor Stretch's half
+  kneel), kneeling ↔ all fours, all fours ↔ plank, all fours ↔ face down (through a fitted "lower down": straight from
+  tabletop the shins flicked up), plank ↔ face down, standing ↔ plank (Burpee's
+  squat with the hands down and kick back), standing ↔ seated (Squat's low point, then a fitted "sit back": seat, feet
+  and hands down), seated ↔ on the back, seated ↔ all fours (sit back, rock forward into the crouch, knees down: it keeps
+  the floor positions facing up and down joined without standing up). `positionPath` takes the quickest route (Dijkstra
+  by steps): standing → on the back is squat, sit back, sit, lie back; on the back → face down is sit up, sit back,
+  crouch, all fours, lie down (the longest, 5 steps). Side-lying has no moves (which side differs): it crossfades.
+- `transitionFrames` resolves [the last position's rest pose, …route] as one sequence, shifts it to stand between the two
+  exercises, turns the camera step by step from the last exercise's to the next one's, and times each step by how far
+  the body travels (0.6–1.5 s: 350 ms + 5 ms per px of the farthest of head, pelvis, hands and feet). The next
+  exercise's band or weights aren't drawn until it arrives (`clearProps`). Lying face down, the last rest pose takes the
+  next exercise's arms (by the sides for Cobra, overhead for Superman), so they move as the body lowers; between two
+  face-down exercises with different arms they still swing past the floor for a moment (not fixed). With a rest, a move longer than the rest
+  makes it wait (`onTheWay`; Skip too): the exercise starts once the figure is there.
+- The build checks every move both ways with `tools/checks.cjs` and `tools/rom.cjs`, like an exercise (the sit-back pose
+  floated 24 px and crouch → plank flipped a thigh until fitted and given the kick-back step).
 
 ### 8.4 Sound
 - Modes (labels renamed Oct 2026: Voice → Coach, Coach → Instructor; stored values `voice`/`coach` unchanged): Silent, Beeps (3-2-1 before rests/holds end, chime on switching), Coach (exercise name, side/direction

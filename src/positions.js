@@ -2,9 +2,10 @@
    Each exercise starts and ends in one of a few body positions: standing, kneeling, all fours, seated, lying on the back,
    lying face down, lying on the side, plank. It is worked out from the first and last frames (what touches the floor and
    which way the trunk and chest face), or given by the exercise's startPosition / endPosition when that guess is wrong.
-   Between two exercises the workout player moves the figure through the "at rest" pose of each position (REST), so it
-   never jumps; an exercise on equipment (bench, chair, step, ball, roller, wall, bar), or a pair it can't place, cuts
-   with a crossfade instead. */
+   Between two exercises the workout player moves the figure through the "at rest" pose of each position (REST) and,
+   when the position changes, along the quickest route of moves between positions (MOVES, positionPath), so it never
+   jumps; an exercise on equipment (bench, chair, step, ball, roller, wall, bar), lying on the side, or a pair it can't
+   place, crossfades instead. */
 (function (root) {
   // in the browser core.js's top-level names are shared script globals (a const isn't on window)
   const C = typeof module !== 'undefined' ? require('./core.js')
@@ -30,6 +31,59 @@
     plank: { anchor: 'handR', touch: [{ point: 'toeR', adjust: 'hipR' }, { point: 'toeL', adjust: 'hipL' }],   // Push-up: plank
       pose: { root: [66, 0, 0], shoulderL: [66, 0, 0], shoulderR: [66, 0, 0], hipL: [-8, 0, 0], ankleL: 24, hipR: [-8, 0, 0], ankleR: 24 } }
   };
+  /* Moves between positions (the edges of a small graph; each works both ways): the steps in between the two rest
+     poses, written once from library poses. A change of position takes the quickest route (positionPath), e.g. standing
+     to lying on the back: sit down, then lie back. Each move is checked by the build (tools/checks.cjs) both ways. */
+  const arms = { shoulderL: [8, 0, 0], shoulderR: [8, 0, 0] };
+  const CROUCH = { name: 'Squat, hands down', anchor: 'ankleL', plant: ['L', 'R'], touch: [{ point: 'handR', adjust: 'shoulderR' }, { point: 'handL', adjust: 'shoulderL' }],
+    pose: { torso: [70, 0, 0], neck: [-10, 0, 0], shoulderL: [80, 0, 0], shoulderR: [80, 0, 0], hipL: [100, 0, 0], kneeL: 110, ankleL: -20, hipR: [100, 0, 0], kneeR: 110, ankleR: -20 } };   // Burpee
+  const SIT_BACK = { name: 'Sit back', anchor: 'pelvis', plant: ['L', 'R'], touch: [{ point: 'handR', adjust: 'shoulderR' }, { point: 'handL', adjust: 'shoulderL' }],
+    pose: { root: [-42, 0, 0], shoulderL: [-30, 0, 0], shoulderR: [-30, 0, 0], hipL: [118, 0, 0], kneeL: 140, ankleL: 20, hipR: [118, 0, 0], kneeR: 140, ankleR: 20 } };   // seat, feet and hands down (fitted)
+  const KICK = { name: 'Step back', anchor: 'handR', quiet: true, pose: { root: [85, 0, 0], shoulderL: [85, 0, 0], shoulderR: [85, 0, 0], hipL: [60, 0, 0], kneeL: 80, hipR: [60, 0, 0], kneeR: 80 } };   // Burpee's kick back
+  const MOVES = [
+    // step one foot back and set that knee down (Hip Flexor Stretch's half kneel), then the front knee
+    { a: 'standing', b: 'kneeling', via: [{ name: 'Half kneel', anchor: 'kneeR', plant: ['L'], touch: [{ point: 'ankleL', adjust: 'hipL' }],
+      pose: { ...arms, hipL: [90, 0, 0], kneeL: 90, kneeR: 90, ankleR: 90 } }] },
+    // hands down in front: tabletop
+    { a: 'kneeling', b: 'all-fours', via: [] },
+    // knees back and legs long: plank
+    { a: 'all-fours', b: 'plank', via: [] },
+    // lower down onto the front: hips sink with the knees and toes still down (fitted), then the legs lie long (straight
+    // from tabletop the shins flicked up)
+    { a: 'all-fours', b: 'prone', via: [{ name: 'Lower down', anchor: 'kneeL', touch: [{ point: 'kneeR', adjust: 'hipR' }],
+      pose: { root: [89, 0, 0], shoulderL: [3, 0, 0], shoulderR: [3, 0, 0], elbowL: 57, elbowR: 57, hipL: [34, 0, 0], kneeL: 38, ankleL: 75, hipR: [34, 0, 0], kneeR: 38, ankleR: 75 } }] },
+    { a: 'plank', b: 'prone', via: [] },
+    // squat, hands to the floor (Burpee), then step back to plank
+    { a: 'standing', b: 'plank', via: [CROUCH, KICK] },
+    // squat (Squat's low point), sit back onto the floor with the hands behind, legs out (Staff)
+    { a: 'standing', b: 'seated', via: [
+      { name: 'Squat', anchor: 'ankleL', plant: ['L', 'R'], pose: { torso: [38, 0, 0], shoulderL: [60, 0, 0], shoulderR: [60, 0, 0], hipL: [88, 0, 0], kneeL: 102, ankleL: -14, hipR: [88, 0, 0], kneeR: 102, ankleR: -14 } },
+      SIT_BACK] },
+    // roll down onto the back, knees bent
+    { a: 'seated', b: 'supine', via: [] },
+    // knees up, rock forward onto the feet with the hands down, knees down: tabletop (stays on the floor between the
+    // positions facing up and those facing down)
+    { a: 'seated', b: 'all-fours', via: [SIT_BACK, CROUCH] }
+  ];
+  const STEP_MS = 900;
+  /* the quickest route from one position to another: the steps after a's rest pose up to and including b's, or null */
+  function positionPath(a, b) {
+    if (a === b) return [];
+    const best = { [a]: { ms: 0, path: [] } }, todo = [a];
+    while (todo.length) {
+      todo.sort((x, y) => best[x].ms - best[y].ms);
+      const at = todo.shift();
+      for (const m of MOVES) {
+        const fwd = m.a === at, back = m.b === at;
+        if (!fwd && !back) continue;
+        const to = fwd ? m.b : m.a, via = fwd ? m.via : [...m.via].reverse();
+        const steps = [...via, { name: LABELS[to], ...REST[to] }].map(k => ({ durationMs: STEP_MS, holdMs: 0, ...k }));
+        const ms = best[at].ms + steps.length * STEP_MS;
+        if (!best[to] || ms < best[to].ms) { best[to] = { ms, path: [...best[at].path, ...steps] }; todo.push(to); }
+      }
+    }
+    return best[b] ? best[b].path : null;
+  }
   const sub = (a, b) => ({ x: a.x - b.x, y: a.y - b.y, z: a.z - b.z });
   const len = v => Math.hypot(v.x, v.y, v.z) || 1;
   const cross = (a, b) => ({ x: a.y * b.z - a.z * b.y, y: a.z * b.x - a.x * b.z, z: a.x * b.y - a.y * b.x });
@@ -80,6 +134,6 @@
     }
     return out;
   }
-  const api = { POSITIONS, LABELS, REST, classify, positionsOf, onEquipment, checkRest };
+  const api = { POSITIONS, LABELS, REST, MOVES, positionPath, classify, positionsOf, onEquipment, checkRest };
   if (typeof module !== 'undefined') module.exports = api; else root.POSITIONS_EX = api;
 })(typeof window !== 'undefined' ? window : globalThis);
