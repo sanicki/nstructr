@@ -16,7 +16,9 @@ WK = """(rest => { localStorage.setItem('nstructr-rest-between-v1', String(rest)
 # every animation frame for ms: where the head is on screen, the viewBox, the number of scene pictures
 WATCH = """ms => new Promise(res => { const out = [], t0 = performance.now();
   const f = now => { const h = document.querySelector('#scene circle.head').getBoundingClientRect();
-    out.push({ t: now - t0, x: h.x + h.width / 2, y: h.y + h.height / 2, vb: scene.getAttribute('viewBox'), n: document.querySelectorAll('svg.scene').length, px: S.drawnX, idx: S.idx, trans: S.trans, ex: S.ex.id + (WP.seg ? ' (2nd side)' : '') });
+    // (relative to the stage: the header above it can change height between exercises, a separate matter)
+    const st = document.querySelector('#wpStageSlot'), o = st && S.view === 'wplay' ? st.getBoundingClientRect() : { x: 0, y: 0 };
+    out.push({ t: now - t0, x: h.x + h.width / 2 - o.x, y: h.y + h.height / 2 - o.y, vb: scene.getAttribute('viewBox'), n: document.querySelectorAll('svg.scene').length, px: S.drawnX, idx: S.idx, trans: S.trans, ex: S.ex.id + (WP.seg ? ' (2nd side)' : '') });
     if (now - t0 < ms) requestAnimationFrame(f); else res(out); };
   requestAnimationFrame(f); })"""
 def snaps(fr):
