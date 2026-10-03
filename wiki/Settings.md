@@ -30,8 +30,10 @@ by the exercise page (NstructR and NstructR+ read each step's cue once, then cou
 Shown with **NstructR** and **NstructR+** (on at first). They vary their words: **Last one**,
 **One more** or **Last rep** for the last rep; and now and then **Good**, **Keep going**, **Breathe** or **Doing
 great**: in place of about 1 in 5 counts (never the first or the last; the "and" of an alternating rep counts too; 1 in 10 right after a count that was replaced),
-and every 10 seconds of a hold, 4 times in 10 (never at halfway or in the last 10 seconds). The same word is never
-used twice in a row ("Good. Breathe. Good.", not "Good. Good."). Off: the numbers and "Last one". Either way the count starts with "Ready… Begin." and "1".
+and every 10 seconds of a hold, 4 times in 10 (never at halfway or in the last 10 seconds). As each set (and each side)
+ends, once its last move is done and before anything else, one of **Great job!**, **Fantastic!**, **Keep it up!** or
+**Finished!** ("Last one. … Finished!"). The same word is never
+used twice in a row ("Good. Breathe. Good.", not "Good. Good."). Off: the numbers and "Last one", and nothing as an exercise ends. Either way the count starts with "Ready… Begin." and "1".
 
 ### Pause at equipment changes
 
