@@ -636,12 +636,25 @@ representations that rotate the short, natural way) over adding a known issue; i
 - **At-rest poses** (`REST`): one per position, copied from a library exercise's first step (Mountain, Camel, Cat-Cow
   tabletop, Staff, Corpse with knees bent, Superman with arms down, Clamshell, Push-Up plank), so they face the way the
   library does (every position's exercises turned out to face one way, Oct 2026 survey).
-- **Workout player** (`stagePlan`): when one exercise ends in the position the next starts in, neither rests on equipment
-  (`onEquipment`: a surface, wall or bar; hand-held weights and bands don't count) and it isn't side-lying (the side may
-  differ), the plan starts with that rest pose (and, for a change of position, the moves below) (1 s, camera already the next exercise's) and the first step lasts at
-  least 0.8 s; `S.trans` = 1, its meta `phase: 'transition'`. The rest pose stands halfway between where the last
-  exercise left the figure and where the next one starts (`restFrame` shifts its `rule.x/z`); at its own spot on the
-  floor the figure, and the view, went out to it and back (the owner's "bounce", Oct 2026).
+- **Workout player** (`stagePlan`, `transitionFrames`): the plan starts with the rest pose of the position the last
+  exercise ended in and, for a change of position, the moves below; the first step lasts at least 0.8 s; `S.trans` =
+  the number of those frames, their meta `phase: 'transition'`. They are placed from where the last exercise left the
+  figure to where the next one starts (each `rule.x/z` shifted, spread along the way; one rest pose stands halfway): at
+  their own spot on the floor the figure, and the view, went out to it and back (the owner's "bounce", Oct 2026). A
+  standing end is placed by the feet (in front of the chair, under the bar), any other by the pelvis.
+- **Furniture** (Oct 2026, owner: "I would expect all of these to require pose changes"; until then any equipment
+  crossfaded): a chair, bench, step, wall or bar is walked up to (`onFurniture`). Sitting or lying on it, or the hands on
+  it (`RAISED` points on a surface over 35 px), counts as standing; on furniture an end nothing fits is standing (a wall
+  handstand, a hang) and, with no finish step, the end is the start (a bridge with the heels on a chair). Feet up on a
+  bench or ball stay the floor position (you lie or plank first). The route is on the floor; the last exercise's
+  equipment (and band or weights: the old props layers, `S.oldProps`) fades out over the first step and the next one's
+  fades in over the step into it (props layer opacity, `draw`).
+- **Lying on the side**: `side-lying` is the rest pose's side, `side-lying-r` its mirror (an exercise's right side;
+  `lyingSide` tells them apart by the lower shoulder); each rolls to and from lying on the back after lifting the arm
+  that goes under the head (sliding it along the floor read as a slip). The back-lying steps on the way are seen with
+  the camera a quarter turn round (`SIDE_CAM`): the library lies on the back head to toe away from the side view, on the
+  side across it. The two sides of one side-lying exercise are mirror images, head the other way, so its side switch
+  crossfades (it had flipped through the air). A side switch that changes position otherwise moves like a new exercise.
 - **Whenever a plan carries on from the last pose** (the next exercise through a rest pose, the next set, the other
   side), the figure goes from where it was on screen (`S.drawnX`, the pelvis, set by `draw`) to where it will be in one
   eased move, whatever way the body goes: `S.glide` steers `S.shiftX` each frame, by the plan's progress through the
@@ -665,7 +678,7 @@ representations that rotate the short, natural way) over adding a known issue; i
   and hands down), seated ↔ on the back, seated ↔ all fours (sit back, rock forward into the crouch, knees down: it keeps
   the floor positions facing up and down joined without standing up). `positionPath` takes the quickest route (Dijkstra
   by steps): standing → on the back is squat, sit back, sit, lie back; on the back → face down is sit up, sit back,
-  crouch, all fours, lie down (the longest, 5 steps). Side-lying has no moves (which side differs): it crossfades.
+  crouch, all fours, lower down, lie down (the longest). Supine ↔ either side: arm up, roll (above).
 - `transitionFrames` resolves [the last position's rest pose, …route] as one sequence, shifts it to stand between the two
   exercises, turns the camera step by step from the last exercise's to the next one's, and times each step by how far
   the body travels (0.6–1.5 s: 350 ms + 5 ms per px of the farthest of head, pelvis, hands and feet). The next

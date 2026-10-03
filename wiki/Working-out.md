@@ -50,8 +50,11 @@ position, then moves into the next exercise, and the view turns and zooms with i
 in about a second and a half if the rest is 0. When the position changes, it gets there the way you would: standing to
 lying on your back, it squats, sits back, sits and lies down; from all fours to standing, it kneels up, steps one foot
 forward and stands. That takes a few seconds; in a short rest, the next exercise starts once the figure is in place.
-When an exercise uses a bench, chair, wall or other equipment you rest on, or you lie on your side, the picture fades
-from one to the other instead. With your device's *reduce motion* setting on, it simply switches.
+Equipment you sit, lie or lean on (a chair, bench, wall or bar) is walked up to: the figure stands up from the last
+exercise as its equipment fades away, then sits, lies or leans as the next one's fades in. Lying on your side, it lies
+on its back and rolls over. The picture fades from one exercise to the other only when there's no position to go
+through (a foam roller under the legs) or between the two sides of a side-lying exercise (the other side is drawn as a
+mirror image). With your device's *reduce motion* setting on, it simply switches.
 
 ## Instruction
 
