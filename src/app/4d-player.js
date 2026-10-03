@@ -367,7 +367,7 @@ setInterval(() => {
 let LAST_DOWN_AT = 0;
 $('#wpRoot').addEventListener('pointerdown', () => { LAST_DOWN_AT = performance.now(); }, true);
 function wpAction(act) {
-  if (S.view === 'wplay' && ['pause', 'nextItem', 'prevItem', 'sound', 'easier', 'harder'].includes(act) && LAST_DOWN_AT && LAST_DOWN_AT < CTRL_SHOWN_AT) return;
+  if (S.view === 'wplay' && ['pause', 'nextItem', 'prevItem', 'sound', 'easier', 'harder'].includes(act) && LAST_DOWN_AT && LAST_DOWN_AT <= CTRL_SHOWN_AT) return;
   if (act === 'pause') {
     // pausing stops the voice mid-sentence; resuming a guided step reads its line again
     if (WP.phase === 'rest') { WP.paused = !WP.paused; if (WP.paused) hush(); setWpPlay(!WP.paused); toast(WP.paused ? 'Paused' : 'Resumed'); return; }

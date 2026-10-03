@@ -33,7 +33,9 @@ def rev(vals, th=0.5):
         elif abs(v - ext) > th: n += 1; sign = -sign; ext = v
     return n
 def jump(fr):
-    return round(max((((b['x'] - a['x']) ** 2 + (b['y'] - a['y']) ** 2) ** 0.5 for a, b in zip(fr, fr[1:])), default=0), 1)
+    # the largest move in one 60 fps frame (px): a slow machine's longer frames aren't counted as jumps, a real jump
+    # (a teleport in one frame) still is
+    return round(max((((b['x'] - a['x']) ** 2 + (b['y'] - a['y']) ** 2) ** 0.5 * 16.7 / max(16.7, b['t'] - a['t']) for a, b in zip(fr, fr[1:])), default=0), 1)
 async def main():
     async with async_playwright() as p:
         b = await p.chromium.launch(); errs = []
