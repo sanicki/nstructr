@@ -27,13 +27,21 @@ Default 10. (Rest between circuit rounds is set on each block.)
 by the exercise page (NstructR and NstructR+ read each step's cue once, then count).
 
 ### Words of encouragement
-Shown with **NstructR** and **NstructR+** (on at first). They vary their words: **Last one**,
-**One more** or **Last rep** for the last rep; and now and then **Good**, **Keep going**, **Breathe** or **Doing
-great**: in place of about 1 in 5 counts (never the first or the last; the "and" of an alternating rep counts too; 1 in 10 right after a count that was replaced),
-and every 10 seconds of a hold, 4 times in 10 (never at halfway or in the last 10 seconds). As each set (and each side)
-ends, once its last move is done and before anything else, one of **Great job!**, **Fantastic!**, **Keep it up!** or
-**Finished!** ("Last one. … Finished!"). The same word is never
-used twice in a row ("Good. Breathe. Good.", not "Good. Good."). Off: the numbers and "Last one", and nothing as an exercise ends. Either way the count starts with "Ready… Begin." and "1".
+Shown with **NstructR** and **NstructR+** (on at first). They vary what they say:
+
+| When | Words |
+|---|---|
+| The last rep | Last one · One more · Last rep · Final rep |
+| Now and then in place of a count (about 1 in 5, never the first or the last; 1 in 10 right after one; the "and" of an alternating rep too) | Good · Keep going · Breathe · Doing great · Nice · Steady · That's it · Nice work · Looking good |
+| Every 10 seconds of a hold, 4 times in 10 (never at halfway or in the last 10 seconds) | the words above, and Stay with it · Hold it there · Breathe easy · Relax your shoulders |
+| Halfway through a hold of 30 seconds or more | Halfway · Halfway there · Halfway. Keep it up |
+| 10 seconds before a hold of 20 seconds or more ends | 10 seconds · 10 seconds left · Last 10 seconds |
+| As each set (and each side) ends, once its last move is done and before anything else | Great job! · Fantastic! · Finished! · Well done! · Nice work! · Excellent! · Way to go! · Nailed it! |
+| The end of the workout | Workout complete. Well done. · Workout complete. Great work today. · That's the workout. Well done! |
+
+The same words are never picked twice in a row for the same moment ("Good. Breathe. Good.", not "Good. Good."). Off:
+the first words of each row ("Last one", "Halfway", "10 seconds", "Workout complete. Well done."), the plain numbers,
+and nothing as an exercise ends. Either way the count starts with "Ready… Begin." and "1".
 
 ### Pause at equipment changes
 

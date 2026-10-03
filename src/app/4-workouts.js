@@ -937,7 +937,18 @@ function runCurrent(announce) {
    a finished phrase as each set (and side) ends ("Last one. Finished!"; Oct 2026).
    WP.random can be replaced (tests). */
 const READY_BEGIN = 'Ready… Begin.';
-const COACH_WORDS = { done: ['Great job!', 'Fantastic!', 'Keep it up!', 'Finished!'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
+// the first of each is the plain word, said when words of encouragement are off. Cheers stay short: one in place of a
+// count that is still being said when the next count comes drops it. (More words, owner, Oct 2026.)
+const CHEERS = ['Good', 'Keep going', 'Breathe', 'Doing great', 'Nice', 'Steady', "That's it", 'Nice work', 'Looking good'];
+const COACH_WORDS = {
+  done: ['Great job!', 'Fantastic!', 'Finished!', 'Well done!', 'Nice work!', 'Excellent!', 'Way to go!', 'Nailed it!'],
+  last: ['Last one', 'One more', 'Last rep', 'Final rep'],
+  cheer: CHEERS,
+  holdCheer: [...CHEERS, 'Stay with it', 'Hold it there', 'Breathe easy', 'Relax your shoulders'],   // (a hold only)
+  half: ['Halfway', 'Halfway there', 'Halfway. Keep it up'],
+  ten: ['10 seconds', '10 seconds left', 'Last 10 seconds'],
+  end: ['Workout complete. Well done.', 'Workout complete. Great work today.', "That's the workout. Well done!"],
+};
 const coachRandom = () => (WP.random || Math.random)();
 // a word isn't picked twice in a row for the same moment ("Good. Breathe. Good.", never "Good. Good.")
 const COACH_LAST = {};
@@ -1069,7 +1080,7 @@ function finishWorkout() {
   $('#wpDoneText').textContent = `${WP.w.name}: ${plural(WP.flat.length, { one: '# exercise', other: '# exercises' })} in ${fmtMin((Date.now() - WP.started) / 1000)}.`;
   if (!WP.test) dropSession();
   wakeOff();
-  say('Workout complete. Well done.'); beep(880, 180); setTimeout(() => beep(1175, 260), 200);
+  say(coachWord('end')); beep(880, 180); setTimeout(() => beep(1175, 260), 200);
   renderWpInfo();
 }
 function setWpPlay(p) {
@@ -1190,13 +1201,13 @@ function renderWpCount() {
       $('#wpCount').textContent = fmtTime(left);
       if (left <= 3 && left > 0 && !WP.beeped['h' + left]) { WP.beeped['h' + left] = 1; beep(left === 1 ? 880 : 660); }
       if (S.t >= r.dur) {
-        if (m.seconds >= 30 && left <= Math.round(m.seconds / 2) && left > 10 && !WP.beeped.half) { WP.beeped.half = 1; say('Halfway', { dropIfBusy: true }); }
-        if (m.seconds >= 20 && left <= 10 && left > 3 && !WP.beeped.ten) { WP.beeped.ten = 1; say('10 seconds', { dropIfBusy: true }); }
+        if (m.seconds >= 30 && left <= Math.round(m.seconds / 2) && left > 10 && !WP.beeped.half) { WP.beeped.half = 1; say(coachWord('half'), { dropIfBusy: true }); }
+        if (m.seconds >= 20 && left <= 10 && left > 3 && !WP.beeped.ten) { WP.beeped.ten = 1; say(coachWord('ten'), { dropIfBusy: true }); }
         // every 10 s held, a 40% chance of a word of encouragement: not where "Halfway" is said, not in the last 10 s
         const mark = Math.floor((m.seconds - left) / 10) * 10, half = m.seconds >= 30 ? Math.round(m.seconds / 2) : -1;
         if (mark >= 10 && left > 10 && !WP.beeped['c' + mark]) {
           WP.beeped['c' + mark] = 1;
-          if (Math.abs(m.seconds - mark - half) > 5 && cheerChance(0.4)) say(coachWord('cheer'), { dropIfBusy: true });
+          if (Math.abs(m.seconds - mark - half) > 5 && cheerChance(0.4)) say(coachWord('holdCheer'), { dropIfBusy: true });
         }
       }
     } else $('#wpCount').textContent = fmtTime(cur.item.seconds);
