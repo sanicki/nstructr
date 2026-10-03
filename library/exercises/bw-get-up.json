@@ -55,6 +55,7 @@
     {
       "name": "Up onto your elbow",
       "cue": "Roll up onto your left elbow; eyes on the bell.",
+      "call": "Elbow",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -90,6 +91,7 @@
     {
       "name": "Up onto your hand",
       "cue": "Push up onto your left hand.",
+      "call": "Hand",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -161,6 +163,7 @@
     {
       "name": "Lift your hips",
       "cue": "Drive through your right foot to lift your hips high.",
+      "call": "Hips",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -268,6 +271,7 @@
     {
       "name": "Sweep the leg back",
       "cue": "Sweep your left leg back under you onto your knee.",
+      "call": "Sweep",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -303,6 +307,7 @@
     {
       "name": "Kneel up",
       "cue": "Lift your chest to kneeling, the bell still overhead.",
+      "call": "Kneel",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -338,6 +343,7 @@
     {
       "name": "Stand up",
       "cue": "Stand up; the bell stays straight up.",
+      "call": "Stand",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -373,6 +379,7 @@
     {
       "name": "Step back to kneeling",
       "cue": "Step your left leg back and lower to your knee.",
+      "call": "Kneel",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -408,6 +415,7 @@
     {
       "name": "Hand to the floor",
       "cue": "Reach your left hand to the floor beside you.",
+      "call": "Hand down",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -515,6 +523,7 @@
     {
       "name": "Leg through, hips high",
       "cue": "Swing your left leg through and hold your hips high.",
+      "call": "Leg through",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -586,6 +595,7 @@
     {
       "name": "Sit down",
       "cue": "Lower your hips to the floor.",
+      "call": "Sit",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,
@@ -621,6 +631,7 @@
     {
       "name": "Down to your elbow",
       "cue": "Lower onto your left elbow.",
+      "call": "Elbow",
       "camera": 30,
       "durationMs": 1500,
       "holdMs": 500,

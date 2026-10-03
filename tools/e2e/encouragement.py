@@ -5,8 +5,9 @@ from playwright.async_api import async_playwright
 # NstructR's and NstructR+'s words of encouragement (Settings > Instruction > NstructR or NstructR+ > Words of encouragement, on at first):
 # the count starts at "1" (after "Ready… Begin.", never varied; Oct 2026), "Last one" from its synonyms; a count (never the first or last) replaced 20% of the time, 10% for the
 # rep after one that was (until one isn't); during a hold, every 10 s a 40% chance, never at halfway or in the last 10 s.
-# As each set (and side) ends, a finished phrase: Great job! / Fantastic! / Keep it up! / Finished! (on only).
-# As each set (and side) ends, after its last animation: Great job! / Fantastic! / Keep it up! / Finished! (on only).
+# As each set (and side) ends, after its last animation: a finished phrase (Great job! / Fantastic! / Finished! / …; on only).
+# Holds have their own cheers too (Stay with it, Hold it there …); "Halfway", "10 seconds" and the end of the workout are
+# varied as well (Oct 2026). The lists: COACH_WORDS in src/app/4-workouts.js; the first of each is the plain word.
 # An alternating rep's other half says "and" ("1 and 2 and 3"), which a cheer can replace too.
 # A word is never the same as the last one picked for that moment. Off: the plain words. WP.random is stubbed.
 SAY = "window.SAID = []; say = t => { if (WK.sound === 'voice' || WK.sound === 'coach') SAID.push(t); return Promise.resolve(); }; renderWpCount = renderWpCount;"
@@ -57,15 +58,6 @@ async def main():
         await pg.evaluate("setPref(ENCOURAGE_KEY, 'off')")
         print('off: hold               ', await hold(0), '<- Halfway and 10 seconds only')
         print('off: reps               ', await reps('[0.05]'), '<- 1, numbers, Last one')
-        # a finished phrase as each set (and side) ends, on only: "Last one. Finished!"
-        async def done(on):
-            await pg.evaluate(f"""(() => {{ hush(); WP.phase = 'done'; setPref(ENCOURAGE_KEY, '{on}'); WP.random = () => 0.5; SAID.length = 0;
-              WK.list = WK.list.filter(w => w.id !== 'd'); WK.list.push({{ id: 'd', name: 'D', blocks: [{{ id: 'b', name: 'B', items: [{{ ...newItem(exById('core-dead-bug')), reps: 2, sides: 'both' }}] }}] }});
-              saveWorkouts(); startWorkout(wkById('d'), 0); S.speed = 20; }})()""")
-            await pg.wait_for_function("WP.phase === 'done'", timeout=60000)
-            return await pg.evaluate("SAID.filter(t => !/^(Ready|Dead Bug|[0-9]|and$)/.test(t))")
-        print('finished phrase, on     ', await done('on'), "<- ['Last …', 'Great job!' / 'Fantastic!' / 'Keep it up!' / 'Finished!', 'Switch sides…', 'Last …', another one, 'Workout complete. Well done.']")
-        print('finished phrase, off    ', await done('off'), "<- no phrase: ['Last one', 'Switch sides…', 'Last one', 'Workout complete. Well done.']")
         # a finished phrase as each set (and side) ends: when its last animation is over, before any move to what's next
         # (on only): "Last one. … Finished!"
         async def done(on):
@@ -74,8 +66,15 @@ async def main():
               WK.list = WK.list.filter(w => w.id !== 'd'); WK.list.push({{ id: 'd', name: 'D', blocks: [{{ id: 'b', name: 'B', items: [{{ ...newItem(exById('core-dead-bug')), reps: 2, sides: 'both' }}] }}] }});
               saveWorkouts(); startWorkout(wkById('d'), 0); S.speed = 20; }})()""")
             await pg.wait_for_function("WP.phase === 'done'", timeout=60000)
-            return await pg.evaluate("WHEN.filter(w => /!$/.test(w[0])).map(w => [w[0], 'plan over: ' + (w[4] && w[2] === w[3] - 1)])")
-        print('finished phrase, on     ', await done('on'), "<- 2 of Great job! / Fantastic! / Keep it up! / Finished!, each 'plan over: True' (after the last animation)")
-        print('finished phrase, off    ', await done('off'), "<- [] (Workout complete. Well done. only)")
+            return await pg.evaluate("WHEN.filter(w => COACH_WORDS.done.includes(w[0])).map(w => [w[0], 'plan over: ' + (w[4] && w[2] === w[3] - 1)])")
+        print('finished phrase, on     ', await done('on'), "<- 2 finished phrases (never Keep it up!), each 'plan over: True' (after the last animation)")
+        print('finished phrase, off    ', await done('off'), "<- []")
+        # the other lists: which words each moment can pick (random over the whole range), on and off
+        print('words, on               ', await pg.evaluate("""(() => { setPref(ENCOURAGE_KEY, 'on'); const out = {};
+          for (const k of ['last', 'done', 'cheer', 'holdCheer', 'half', 'ten', 'end']) { const seen = new Set(); for (let i = 0; i < 400; i++) { WP.random = () => (i * 0.6180339) % 1; seen.add(coachWord(k)); } out[k] = seen.size + '/' + COACH_WORDS[k].length; }
+          return out; })()"""), '<- every word of every list is used (n/n)')
+        print('words, off              ', await pg.evaluate("""(() => { setPref(ENCOURAGE_KEY, 'off'); return ['last', 'done', 'half', 'ten', 'end'].map(k => coachWord(k)); })()"""),
+              "<- ['Last one', (done isn't said when off), 'Halfway', '10 seconds', 'Workout complete. Well done.']")
+        print('Keep it up! gone        ', await pg.evaluate("Object.values(COACH_WORDS).flat().includes('Keep it up!')"), '<- False')
         print('errors', errs); await b.close()
 asyncio.run(main())

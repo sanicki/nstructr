@@ -645,7 +645,7 @@ function resolveKeyframe(kf, seg, ex = {}) {
     if (Math.abs(gap) > 2) misses.push({ point: t.point, adjust: t.adjust, gap });
   }
   return {
-    pose, cam, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], slide: kf.slide || [], reach: kf.reach || [], holds: Array.isArray(kf.holds) ? kf.holds : null, ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', quiet: !!kf.quiet,
+    pose, cam, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], slide: kf.slide || [], reach: kf.reach || [], holds: Array.isArray(kf.holds) ? kf.holds : null, ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', call: kf.call || '', quiet: !!kf.quiet,
     dur: kf.durationMs == null ? 1000 : Math.max(0, num(kf.durationMs)), hold: Math.max(0, kf.holdMs == null ? 500 : num(kf.holdMs))
   };
 }

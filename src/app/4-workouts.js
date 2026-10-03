@@ -66,9 +66,11 @@ function itemSeconds(item) {
   const voiced = WK.sound === 'voice' || WK.sound === 'coach', words = s => s.split(/\s+/).filter(Boolean).length / 2.5 / speechRate();
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
   const holdLine = hk && voiced ? Math.max(0, words(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
-  const readyLine = !hk && voiced ? Math.max(0, words(READY_BEGIN) - (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;
-  const guide = (WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) : 0) + holdLine + readyLine;
-  return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
+  const readyLine = !hk && voiced ? Math.max(words(READY_BEGIN), (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;   // (into the starting pose while it's said; rep 1 then waits that move's time)
+  const guide = holdLine + readyLine;
+  // NstructR+'s demonstration: each side or direction once, in the first set ("Watch me first." once)
+  const demo = WK.sound === 'coach' ? segs * (sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt)) + words(WATCH_FIRST) : 0;
+  return item.sets * segs * (work + guide) + demo + (item.sets - 1) * restSets();
 }
 function blockSeconds(b, w) {
   const r = b.rounds || 1, one = b.items.reduce((s, it) => s + itemSeconds(it), 0) + Math.max(0, b.items.length - 1) * restGap();
@@ -647,6 +649,9 @@ function segLabel(ex, item, segInfo) {
   if (item.dir === 'alternate') bits.push('alternating directions'); else if (item.dir && dl) bits.push(dl[segInfo.dir]);
   return bits.join(', ').toLowerCase();
 }
+// what NstructR+ has demonstrated: this appearance of the exercise (WP.i, its id: a swap is new) and, with segInfo, a side
+// or direction of it
+const demoKeyOf = (item, segInfo) => `${WP.i}:${item.ex}` + (segInfo ? `:${segInfo.side || ''}${segInfo.dir || ''}` : '');
 function buildPlan(item, segInfo) {
   const ex = exById(item.ex), seg = { ...DEFAULT_SEGMENTS };
   const ph = phaseInfo(ex.keyframes), tempo = item.tempo || 1;
@@ -657,7 +662,11 @@ function buildPlan(item, segInfo) {
   else versions.push(resolveVersion(ex, seg, segInfo.side, segInfo.dir));
   const plan = [], meta = [];
   const push = (r, m = {}) => { plan.push(r); meta.push(m); };
-  const V0 = versions[0].R, guided = WK.sound === 'coach', voiced = guided || WK.sound === 'voice';
+  // NstructR+ demonstrates an exercise when you come to it, and each side or direction the first time it comes up; not
+  // again for its next sets (owner, Oct 2026). A new appearance (later in the workout, a later round, a swap to an
+  // easier or harder version) is demonstrated again: WP.shown holds what this appearance has shown (runCurrent)
+  const shown = WP.shown || new Set(), demoKey = demoKeyOf(item, segInfo);
+  const V0 = versions[0].R, guided = WK.sound === 'coach' && !shown.has(demoKey), voiced = WK.sound === 'coach' || WK.sound === 'voice';
   const cueOf = r => r.cue || r.name || '';
   const h = ex.measure === 'time' ? (ex.holdStep != null ? ex.holdStep : ph.start) : null;
   let holdCued = false;                                          // the run-through already read the held step's cue
@@ -666,7 +675,10 @@ function buildPlan(item, segInfo) {
     const label = segLabel(ex, item, segInfo);
     let first = true;
     // an instant step (like the seam where a circle starts again) has nothing to show, so it only carries the title
-    const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
+    // its first line names it; this appearance's first demonstration also says to watch, not join in yet ("Squat. Watch
+    // me first. Feet hip-width apart."; owner, Oct 2026)
+    const watch = !shown.has(demoKeyOf(item)) ? WATCH_FIRST + ' ' : '';
+    const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ${watch}` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
     ph.setup.forEach(i => g(V0[i]));
     if (ex.measure === 'time') ph.rep.filter(i => i !== h).forEach(i => g(V0[i]));
     else versions.forEach(v => ph.rep.forEach(i => g(v.R[i])));
@@ -684,13 +696,16 @@ function buildPlan(item, segInfo) {
     const total = item.reps * versions.length;
     for (let k = 0; k < total; k++) {
       const V = versions[k % versions.length].R;
-      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0 } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null }));
+      // a step's call ("Forward", "Out to the right") as it starts; never on the rep's first step, where the count is said.
+      // Rep 1's first step is already in place after "Ready… Begin.": it waits as long as the move would have taken, so
+      // the rep keeps its rhythm and "1" has time before the next step's call
+      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0, hold: V[i].hold + V[i].dur } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && V[i].call ? { call: V[i].call } : {}) }));
     }
   }
   const VL = versions[versions.length - 1].R;
   ph.finish.forEach(i => push(VL[i], { phase: 'finish' }));
   plan.walls = V0.walls; plan.supports = V0.supports;
-  return { plan, meta, ex, seg, props: versions[0].props, tempo };
+  return { plan, meta, ex, seg, props: versions[0].props, tempo, demoKey: guided ? demoKey : null };
 }
 /* Between two exercises the figure doesn't jump: when one ends in the position the next starts in (standing, all
    fours, lying on the back…; src/positions.js), it moves through that position's at-rest pose into the next exercise,
@@ -858,7 +873,7 @@ function resetScene() { scene.setAttribute('viewBox', '0 0 400 400'); syncLimbWi
 function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   WP.w = w; WP.flat = flattenWorkout(w); WP.test = test; WP.log = test ? null : { start: Date.now(), done: [] }; WP.lastLogged = -1;
   if (!WP.flat.length) { snack('Add some exercises first.'); return; }
-  WP.swaps = {}; WP.orig = {};
+  WP.swaps = {}; WP.orig = {}; WP.shown = new Set(); WP.named = new Set();
   for (const [u, id] of Object.entries(swaps || {})) { const e = WP.flat.find(x => x.item.uid === u), to = exById(id); if (e && to) swapInSession(e.item, to); }   // resumed: this session's swaps again
   WP.i = Math.min(fromIndex, WP.flat.length - 1); WP.set = 0; WP.seg = 0; WP.started = Date.now(); WP.phase = 'work';
   unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound); keepStorage(); installDue();
@@ -907,6 +922,7 @@ function runCurrent(announce) {
   const segs = itemSegments(cur.item);
   const segInfo = segs[WP.seg] || segs[0];
   const p = buildPlan(cur.item, segInfo);
+  if (p.demoKey) { WP.shown.add(p.demoKey); WP.shown.add(demoKeyOf(cur.item)); }   // demonstrated: not again for the next sets
   stagePlan(p, WP.equipChange ? WP.equipChange.seconds * 1000 : 0);
   WP.phase = 'work'; WP.beeped = {}; WP.rep = 0;
   $('#wpRest').hidden = true; $('#wpDone').hidden = true;
@@ -916,16 +932,20 @@ function runCurrent(announce) {
   renderWpInfo();
   if (announce) {
     const ex = p.ex, bl = ex.bilateral && ex.bilateral.labels, dl = ex.direction && ex.direction.labels;
-    const bits = [ex.name];
+    // the next set of the same exercise is "Set 2", not its name again (owner, Oct 2026); a new appearance or a swap names it
+    const again = WP.set > 0 && WP.named.has(demoKeyOf(cur.item));
+    const bits = [again ? `Set ${fmtNum(WP.set + 1)}` : ex.name];
     if (segs.length > 1 && WP.seg > 0) { const prev = segs[WP.seg - 1]; bits[0] = prev.side !== segInfo.side ? (prev.dir !== segInfo.dir ? 'Switch sides and direction' : 'Switch sides') : 'Switch direction'; }   // what actually changed
     if (cur.item.sides && cur.item.sides !== 'alternate' && bl) bits.push(bl[segInfo.side]);
     if (cur.item.dir && cur.item.dir !== 'alternate' && dl) bits.push(dl[segInfo.dir]);
-    const named = WK.sound !== 'coach' ? bits.join('. ') + '.' : WP.seg > 0 ? bits[0] + '.' : '';   // NstructR+: "Switch sides." then the guided run-through
+    // NstructR+ demonstrating: "Switch sides." then the demonstration names it; not demonstrating (a later set): as NstructR
+    const named = WK.sound !== 'coach' || !p.demoKey ? bits.join('. ') + '.' : WP.seg > 0 ? bits[0] + '.' : '';
     // (both at once: queued only after the equipment line had been said, the name could come after "Ready… Begin.",
     // which the first step queues once the move in, timed from an estimate of that line, is over)
     if (WP.equipChange) { const ch = WP.equipChange; setTimeout(() => { say(`${ch.lines.join('. ')}.`); if (named) say(named); }, EQUIP_PAD * 1000); }
     else if (named) say(named);
   }
+  WP.named.add(demoKeyOf(cur.item));                             // its name has been said: the next set is "Set 2"
   WP.equipChange = null;
   S.canAdvance = i => !(S.planMeta[i] && (S.planMeta[i].guided || S.planMeta[i].ready) && WP.speaking);   // the run-through's cues, "Ready… Begin"
   S.holdWait = i => !!(S.planMeta[i] && S.planMeta[i].phase === 'hold' && S.planMeta[i].say && WP.speaking);   // the count starts after "Ready… Hold for N seconds"
@@ -936,8 +956,19 @@ function runCurrent(announce) {
    first or last) or of an alternating rep's "and", or every 10 s of a hold (never at halfway or in the last 10 s), and
    a finished phrase as each set (and side) ends ("Last one. Finished!"; Oct 2026).
    WP.random can be replaced (tests). */
-const READY_BEGIN = 'Ready… Begin.';
-const COACH_WORDS = { done: ['Great job!', 'Fantastic!', 'Keep it up!', 'Finished!'], last: ['Last one', 'One more', 'Last rep'], cheer: ['Good', 'Keep going', 'Breathe', 'Doing great'] };
+const READY_BEGIN = 'Ready… Begin.', WATCH_FIRST = 'Watch me first.';
+// the first of each is the plain word, said when words of encouragement are off. Cheers stay short: one in place of a
+// count that is still being said when the next count comes drops it. (More words, owner, Oct 2026.)
+const CHEERS = ['Good', 'Keep going', 'Breathe', 'Doing great', 'Nice', 'Steady', "That's it", 'Nice work', 'Looking good'];
+const COACH_WORDS = {
+  done: ['Great job!', 'Fantastic!', 'Finished!', 'Well done!', 'Nice work!', 'Excellent!', 'Way to go!', 'Nailed it!'],
+  last: ['Last one', 'One more', 'Last rep', 'Final rep'],
+  cheer: CHEERS,
+  holdCheer: [...CHEERS, 'Stay with it', 'Hold it there', 'Breathe easy', 'Relax your shoulders'],   // (a hold only)
+  half: ['Halfway', 'Halfway there', 'Halfway. Keep it up'],
+  ten: ['10 seconds', '10 seconds left', 'Last 10 seconds'],
+  end: ['Workout complete. Well done.', 'Workout complete. Great work today.', "That's the workout. Well done!"],
+};
 const coachRandom = () => (WP.random || Math.random)();
 // a word isn't picked twice in a row for the same moment ("Good. Breathe. Good.", never "Good. Good.")
 const COACH_LAST = {};
@@ -964,6 +995,9 @@ function onWorkStep(i) {
     // Oct 2026); like a middle count, it can be a word of encouragement instead ("1 and 2 Good 3…")
     say(repCheer() ? coachWord('cheer') : 'and', { dropIfBusy: true });
   }
+  // a step call: what comes next in a multi-step rep ("1 … Forward. Right. Back. Left."); like a count, skipped if it's
+  // still talking (the count wins)
+  if (m.call) say(m.call, { dropIfBusy: true });
   renderWpCount();
 }
 /* the guided run-through: a step waits until its cue has been read out */
@@ -1069,7 +1103,7 @@ function finishWorkout() {
   $('#wpDoneText').textContent = `${WP.w.name}: ${plural(WP.flat.length, { one: '# exercise', other: '# exercises' })} in ${fmtMin((Date.now() - WP.started) / 1000)}.`;
   if (!WP.test) dropSession();
   wakeOff();
-  say('Workout complete. Well done.'); beep(880, 180); setTimeout(() => beep(1175, 260), 200);
+  say(coachWord('end')); beep(880, 180); setTimeout(() => beep(1175, 260), 200);
   renderWpInfo();
 }
 function setWpPlay(p) {
@@ -1190,13 +1224,13 @@ function renderWpCount() {
       $('#wpCount').textContent = fmtTime(left);
       if (left <= 3 && left > 0 && !WP.beeped['h' + left]) { WP.beeped['h' + left] = 1; beep(left === 1 ? 880 : 660); }
       if (S.t >= r.dur) {
-        if (m.seconds >= 30 && left <= Math.round(m.seconds / 2) && left > 10 && !WP.beeped.half) { WP.beeped.half = 1; say('Halfway', { dropIfBusy: true }); }
-        if (m.seconds >= 20 && left <= 10 && left > 3 && !WP.beeped.ten) { WP.beeped.ten = 1; say('10 seconds', { dropIfBusy: true }); }
+        if (m.seconds >= 30 && left <= Math.round(m.seconds / 2) && left > 10 && !WP.beeped.half) { WP.beeped.half = 1; say(coachWord('half'), { dropIfBusy: true }); }
+        if (m.seconds >= 20 && left <= 10 && left > 3 && !WP.beeped.ten) { WP.beeped.ten = 1; say(coachWord('ten'), { dropIfBusy: true }); }
         // every 10 s held, a 40% chance of a word of encouragement: not where "Halfway" is said, not in the last 10 s
         const mark = Math.floor((m.seconds - left) / 10) * 10, half = m.seconds >= 30 ? Math.round(m.seconds / 2) : -1;
         if (mark >= 10 && left > 10 && !WP.beeped['c' + mark]) {
           WP.beeped['c' + mark] = 1;
-          if (Math.abs(m.seconds - mark - half) > 5 && cheerChance(0.4)) say(coachWord('cheer'), { dropIfBusy: true });
+          if (Math.abs(m.seconds - mark - half) > 5 && cheerChance(0.4)) say(coachWord('holdCheer'), { dropIfBusy: true });
         }
       }
     } else $('#wpCount').textContent = fmtTime(cur.item.seconds);

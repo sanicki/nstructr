@@ -53,6 +53,7 @@
     {
       "name": "3 o'clock",
       "cue": "Reach it out to the side.",
+      "call": "Side",
       "camera": 0,
       "durationMs": 1500,
       "holdMs": 300,
@@ -68,6 +69,7 @@
     {
       "name": "6 o'clock",
       "cue": "Reach it down and back behind you.",
+      "call": "Down and back",
       "camera": 0,
       "durationMs": 1500,
       "holdMs": 300,
