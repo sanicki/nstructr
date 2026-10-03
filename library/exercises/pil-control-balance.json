@@ -43,6 +43,7 @@
     {
       "name": "Roll over",
       "cue": "Roll your legs over your head, toes to the floor.",
+      "call": "Roll over",
       "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,
@@ -60,6 +61,7 @@
     {
       "name": "Right leg up",
       "cue": "Hold your left leg; lift the right leg straight up.",
+      "call": "Right leg",
       "camera": 90,
       "durationMs": 1400,
       "holdMs": 400,
@@ -85,6 +87,7 @@
     {
       "name": "Left leg up",
       "cue": "Switch: hold the right leg, lift the left leg.",
+      "call": "Left leg",
       "camera": 90,
       "durationMs": 1400,
       "holdMs": 400,
@@ -110,6 +113,7 @@
     {
       "name": "Both legs over",
       "cue": "Both feet down over your head, arms back down.",
+      "call": "Both legs over",
       "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,
@@ -127,6 +131,7 @@
     {
       "name": "Roll down",
       "cue": "Roll down one vertebra at a time.",
+      "call": "Roll down",
       "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,

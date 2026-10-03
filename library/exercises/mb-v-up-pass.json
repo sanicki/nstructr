@@ -65,6 +65,7 @@
     {
       "name": "Lower with it",
       "cue": "Lower your arms and legs, the ball overhead.",
+      "call": "Lower",
       "camera": 40,
       "durationMs": 1500,
       "holdMs": 300,
@@ -83,6 +84,7 @@
     {
       "name": "Pass it back",
       "cue": "Fold up and give the ball to your feet.",
+      "call": "Pass back",
       "camera": 40,
       "durationMs": 1300,
       "holdMs": 300,
@@ -105,6 +107,7 @@
     {
       "name": "Lower",
       "cue": "Lower your arms and legs, the ball between your feet.",
+      "call": "Lower",
       "camera": 40,
       "durationMs": 1500,
       "holdMs": 300,

@@ -43,6 +43,7 @@
     {
       "name": "Roll over",
       "cue": "Roll your legs over your head, toes toward the floor.",
+      "call": "Over",
       "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,
@@ -60,6 +61,7 @@
     {
       "name": "Shoot up",
       "cue": "Reach your legs straight up to the ceiling, weight on your shoulders.",
+      "call": "Up",
       "camera": 90,
       "durationMs": 1400,
       "holdMs": 400,
@@ -77,6 +79,7 @@
     {
       "name": "Roll down",
       "cue": "Roll down one vertebra at a time, legs straight up.",
+      "call": "Down",
       "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,

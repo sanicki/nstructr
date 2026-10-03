@@ -47,6 +47,7 @@
     {
       "name": "Roll back",
       "cue": "Roll back to your shoulder blades.",
+      "call": "Roll back",
       "camera": 90,
       "durationMs": 1000,
       "holdMs": 0,
@@ -68,6 +69,7 @@
     {
       "name": "Switch",
       "cue": "Switch the cross of your legs.",
+      "call": "Switch",
       "camera": 90,
       "durationMs": 500,
       "holdMs": 0,
@@ -89,6 +91,7 @@
     {
       "name": "Roll forward",
       "cue": "Roll up and over onto your knees, the top of your head touching down lightly.",
+      "call": "Forward",
       "camera": 90,
       "durationMs": 1400,
       "holdMs": 300,
@@ -110,6 +113,7 @@
     {
       "name": "Roll back up",
       "cue": "Roll back to balance.",
+      "call": "Up",
       "camera": 90,
       "durationMs": 1200,
       "holdMs": 300,

@@ -32,6 +32,7 @@
     {
       "name": "Hands to the floor",
       "cue": "Fold forward and put your hands on the floor.",
+      "call": "Hands down",
       "camera": 90,
       "durationMs": 1500,
       "holdMs": 300,
@@ -60,6 +61,7 @@
     {
       "name": "Walk your hands out",
       "cue": "Walk your hands forward, one at a time.",
+      "call": "Walk out",
       "camera": 90,
       "durationMs": 800,
       "holdMs": 100,
@@ -144,6 +146,7 @@
     {
       "name": "Walk back in",
       "cue": "Walk your hands back toward your feet, one at a time.",
+      "call": "Walk back",
       "camera": 90,
       "durationMs": 800,
       "holdMs": 100,

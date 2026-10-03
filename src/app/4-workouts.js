@@ -699,7 +699,7 @@ function buildPlan(item, segInfo) {
       // a step's call ("Forward", "Out to the right") as it starts; never on the rep's first step, where the count is said.
       // Rep 1's first step is already in place after "Ready… Begin.": it waits as long as the move would have taken, so
       // the rep keeps its rhythm and "1" has time before the next step's call
-      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0, hold: V[i].hold + V[i].dur } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && V[i].call ? { call: V[i].call } : {}) }));
+      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0, hold: V[i].hold + V[i].dur } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && CALL_OK.test(V[i].call || '') ? { call: V[i].call } : {}) }));
     }
   }
   const VL = versions[versions.length - 1].R;
@@ -881,7 +881,7 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   S.mode = 'start';                                               // no transition into the first exercise
   // a workout with equipment starts with a title card: its name and what to have at hand, then the first exercise
   const need = neededFrom(WP.flat, WP.i);
-  if (need.length) { WP.phase = 'work'; const lines = [checklistLine(need)]; startRest(0, 'start', { seconds: equipSpoken([w.name, ...lines]), lines }); }
+  if (need.length) { WP.phase = 'work'; const lines = [checklistLine(need)]; startRest(0, 'start', { seconds: equipSpoken([w.name, ...lines]), lines, need }); }
   else runCurrent(true);
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
 }
@@ -957,6 +957,7 @@ function runCurrent(announce) {
    a finished phrase as each set (and side) ends ("Last one. Finished!"; Oct 2026).
    WP.random can be replaced (tests). */
 const READY_BEGIN = 'Ready… Begin.', WATCH_FIRST = 'Watch me first.';
+const CALL_OK = /^[^0-9\s]+( [^0-9\s]+){0,2}$/;                // a step call: 1-3 words, no numbers (an imported one too)
 // the first of each is the plain word, said when words of encouragement are off. Cheers stay short: one in place of a
 // count that is still being said when the next count comes drops it. (More words, owner, Oct 2026.)
 const CHEERS = ['Good', 'Keep going', 'Breathe', 'Doing great', 'Nice', 'Steady', "That's it", 'Nice work', 'Looking good'];
@@ -1043,7 +1044,10 @@ function startRest(seconds, kind, ch = null) {
   $('#wpRestLabel').textContent = title ? 'Workout' : kind === 'set' ? 'Rest before the next set' : kind === 'round' ? `Rest before round ${cur.round + 1} of ${cur.rounds}` : 'Rest';
   $('#wpRestTitle').textContent = title ? WP.w.name : ''; $('#wpRestTitle').hidden = !title;
   $('#wpRestNext').textContent = title ? '' : kind === 'set' ? `Next: set ${WP.set + 1} of ${cur.item.sets}` : `Next: ${ex.name}`; $('#wpRestNext').hidden = title;
-  $('#wpRestEquip').textContent = ch ? ch.lines.join(' · ') : ''; $('#wpRestEquip').hidden = !ch;
+  // the title card lists what you'll need as bullets (owner, Oct 2026); an equipment change says what to do on one line
+  if (ch && ch.need) $('#wpRestEquip').innerHTML = `<span>You'll need:</span><ul class="ov-equip-list">${ch.need.map(q => `<li>${esc(q)}</li>`).join('')}</ul>`;
+  else $('#wpRestEquip').textContent = ch ? ch.lines.join(' · ') : '';
+  $('#wpRestEquip').hidden = !ch;
   $('#wpRestTime').textContent = WP.waitReady || title ? '' : fmtTime(Math.ceil(seconds)); $('#wpRestTime').hidden = WP.waitReady || title;
   $('[data-wact="restSkip"]').textContent = WP.waitReady ? 'Ready' : title ? 'Start' : 'Skip'; $('[data-wact="restMore"]').hidden = WP.waitReady || title;
   // show where the next exercise starts: moving there through the at-rest pose when it can, or straight there

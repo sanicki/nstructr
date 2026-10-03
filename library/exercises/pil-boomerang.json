@@ -68,6 +68,7 @@
     {
       "name": "Switch",
       "cue": "Open and switch the cross of the ankles.",
+      "call": "Switch",
       "camera": 90,
       "durationMs": 500,
       "holdMs": 0,
@@ -85,6 +86,7 @@
     {
       "name": "Teaser",
       "cue": "Roll up to balance in a V, arms reaching toward your feet.",
+      "call": "Teaser",
       "camera": 90,
       "durationMs": 2200,
       "holdMs": 400,
@@ -103,6 +105,7 @@
     {
       "name": "Lower the legs",
       "cue": "Lower the legs; the arms sweep down and behind your back.",
+      "call": "Legs down",
       "camera": 90,
       "durationMs": 1600,
       "holdMs": 200,
@@ -118,6 +121,7 @@
     {
       "name": "Fold forward",
       "cue": "Fold forward over your legs, arms lifting behind you.",
+      "call": "Fold",
       "camera": 90,
       "durationMs": 1600,
       "holdMs": 300,
@@ -136,6 +140,7 @@
     {
       "name": "Circle round",
       "cue": "Circle the arms out to the sides...",
+      "call": "Circle",
       "camera": 90,
       "durationMs": 900,
       "holdMs": 0,
@@ -154,6 +159,7 @@
     {
       "name": "Reach",
       "cue": "...and round to reach toward your feet.",
+      "call": "Reach",
       "camera": 90,
       "durationMs": 900,
       "holdMs": 200,
@@ -172,6 +178,7 @@
     {
       "name": "Sit up",
       "cue": "Roll up to sit tall, hands by your hips.",
+      "call": "Sit up",
       "camera": 90,
       "durationMs": 1600,
       "holdMs": 200,

@@ -5,7 +5,7 @@
 Tap the **pencil** at the top of an exercise page to edit it. The figure stays at the top of the screen while
 you edit, and **Done** closes the editor.
 
-<img src="images/edit-words.png" width="300" alt="Editing the words: step name and spoken cue">
+<img src="images/edit-words.png" width="300" alt="Editing the words: step name, spoken cue and spoken call">
 
 ## Changing the words (everyone)
 
@@ -15,6 +15,9 @@ you edit, and **Done** closes the editor.
   whether it's **Stretched**; the map in About changes as you go.
 - **Each step**: its name and the **spoken cue** (the line read out in NstructR and NstructR+ modes). Use ‹ › to move
   between steps.
+- **Spoken call** (optional): one to three words said as the step starts while the reps are counted, for exercises
+  with several moves a rep ("1 … Forward. Right. Back. Left."). Leave it empty unless the next move isn't obvious; it's
+  never said on a rep's first step (the count is there), and it can't be a number.
 - Write steps for the first side only; the other side swaps left and right for you.
 
 **Library exercises stay as they are.** Your first real change makes your own copy, "Name (copy)", in

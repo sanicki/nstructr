@@ -65,6 +65,7 @@
     {
       "name": "Cow",
       "cue": "Breathe in, lift your chest and gently arch your back.",
+      "call": "Cow",
       "camera": 90,
       "durationMs": 2000,
       "holdMs": 400,
@@ -107,6 +108,7 @@
     {
       "name": "Cat",
       "cue": "Breathe out, round your back and tuck your chin.",
+      "call": "Cat",
       "camera": 90,
       "durationMs": 2000,
       "holdMs": 400,

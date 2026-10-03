@@ -36,6 +36,7 @@
     {
       "name": "Roll down",
       "cue": "Roll down until your hands reach the floor.",
+      "call": "Roll down",
       "camera": 90,
       "durationMs": 2200,
       "holdMs": 300,
@@ -64,6 +65,7 @@
     {
       "name": "Walk out",
       "cue": "Walk your hands out to a plank.",
+      "call": "Walk out",
       "camera": 90,
       "durationMs": 2500,
       "holdMs": 300,
@@ -88,6 +90,7 @@
     {
       "name": "Push-up",
       "cue": "Elbows by your sides, lower and press up.",
+      "call": "Push-up",
       "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
@@ -118,6 +121,7 @@
     {
       "name": "Plank",
       "cue": "Press back up.",
+      "call": "Up",
       "camera": 90,
       "durationMs": 2000,
       "holdMs": 300,
@@ -146,6 +150,7 @@
     {
       "name": "Walk back",
       "cue": "Walk your hands back and roll up to standing.",
+      "call": "Walk back",
       "camera": 90,
       "durationMs": 2500,
       "holdMs": 300,

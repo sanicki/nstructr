@@ -70,6 +70,13 @@ stabilizer (3 / 2 / 1): search `exrx.net <exercise>` and map its muscles to the 
 pose, Pilates move or stretch is rated from its own source (Yoga Journal names what a pose strengthens and stretches).
 An equipment version rates like the rest of its group (the build warns otherwise). Unsure: ask the owner.
 
+## 5b. Step calls (`tools/calls.cjs`)
+A counted exercise with several steps a rep may need step calls (a keyframe's `call`, HANDOFF §3): 1–3 words said as the
+step starts ("1 … Forward. Right. Back. Left."). `node tools/calls.cjs <id>` shows its steps with a draft from the step
+names. Add calls only where the next move isn't obvious (a star excursion's directions, a get-up's stages, a Pilates
+sequence); not for a plain up–down or left–right rhythm, or steps too short to say a word in (the build checks the fit).
+Never on the rep's first step (the count is there), never a number. An equipment version gets the same calls.
+
 ## 6. Before the pull request
 - `node tools/build.mjs --check-only` passes.
 - The Create with AI prompt lists every exercise: check it still fits in a link (HANDOFF §10, "Create with AI":
