@@ -67,7 +67,7 @@ function itemSeconds(item) {
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
   const holdLine = hk && voiced ? Math.max(0, words(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
   const readyLine = !hk && voiced ? Math.max(words(READY_BEGIN), (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;   // (into the starting pose while it's said; rep 1 then waits that move's time)
-  const guide = (WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) : 0) + holdLine + readyLine;
+  const guide = (WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) + words(WATCH_FIRST) : 0) + holdLine + readyLine;
   return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
 }
 function blockSeconds(b, w) {
@@ -666,7 +666,8 @@ function buildPlan(item, segInfo) {
     const label = segLabel(ex, item, segInfo);
     let first = true;
     // an instant step (like the seam where a circle starts again) has nothing to show, so it only carries the title
-    const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
+    // its first line names it and says to watch, not join in yet ("Squat. Watch me first. Feet hip-width apart."; owner, Oct 2026)
+    const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ${WATCH_FIRST} ` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
     ph.setup.forEach(i => g(V0[i]));
     if (ex.measure === 'time') ph.rep.filter(i => i !== h).forEach(i => g(V0[i]));
     else versions.forEach(v => ph.rep.forEach(i => g(v.R[i])));
@@ -939,7 +940,7 @@ function runCurrent(announce) {
    first or last) or of an alternating rep's "and", or every 10 s of a hold (never at halfway or in the last 10 s), and
    a finished phrase as each set (and side) ends ("Last one. Finished!"; Oct 2026).
    WP.random can be replaced (tests). */
-const READY_BEGIN = 'Ready… Begin.';
+const READY_BEGIN = 'Ready… Begin.', WATCH_FIRST = 'Watch me first.';
 // the first of each is the plain word, said when words of encouragement are off. Cheers stay short: one in place of a
 // count that is still being said when the next count comes drops it. (More words, owner, Oct 2026.)
 const CHEERS = ['Good', 'Keep going', 'Breathe', 'Doing great', 'Nice', 'Steady', "That's it", 'Nice work', 'Looking good'];

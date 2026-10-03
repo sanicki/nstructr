@@ -736,7 +736,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 - **NstructR and NstructR+** both count: counts, "Last one", "Halfway", "10 seconds" and words of encouragement are
   **dropped if something is already being said** (never talk over). (Oct 2026: before, only NstructR+ counted;
   NstructR — then "Voice" — said names, switches and rests only. `say()` lost its `coachOnly` flag.)
-- **NstructR+** adds, before each exercise (and each side/direction), a **guided run-through** — one pass through every
+- **NstructR+** adds, before each exercise (and each side/direction), a **guided run-through** — its first line is the name and **"Watch me first."** (owner, Oct 2026: not to join in yet), then one pass through every
   step, reading each step's cue; each step waits for **whichever takes longer, its line or its animation**
   (`S.canAdvance`). Then the counted reps. Timed exercises: setup steps, then the held step's cue and "Ready… Hold for N seconds." as the hold starts (NstructR says the second part only); the countdown waits for that line (`S.holdWait`), and the time estimate counts it, and "Ready… Begin." before reps (~2.5 words a second at the speech rate). (Sep 2026: before, the held step's cue — how to get into the pose — was never read.)
 - **A line that never reports back** isn't waited on forever (`say()`): it gives up 1.5 s + 0.45 s a word (slower at a

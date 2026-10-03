@@ -33,7 +33,7 @@ async def main():
         print('                          (the right leg reaches left where the left leg reached right)')
         log = await run(b, 'coach', star, errs)
         i = log.index('Ready… Begin.')
-        print('star, NstructR+: run-through reads cues', [t[:40] for t in log[0:3]], "<- ['4-Point Star Excursion, Left leg. Left foot…', 'Lift the right foot. …', 'Forward. Bend the standing knee …']")
+        print('star, NstructR+: run-through reads cues', [t[:40] for t in log[0:3]], "<- ['4-Point Star Excursion, Left leg. Watch me…', 'Lift the right foot. …', 'Forward. Bend the standing knee …']")
         print('  then calls            ', ' '.join(log[i + 1:i + 6]), '<- 1 Forward Right Back Left')
         log = await run(b, 'beeps', star, errs)
         print('star, Beeps             ', log, '<- [] (nothing said)')
