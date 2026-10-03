@@ -100,6 +100,17 @@ async def main():
         into = [f for f in fr if f['ex'] == 'mayo-neck'][:120]
         print('into neck: no back-and-forth', rev([f['px'] for f in into]), rev([float(f['vb'].split()[0]) + float(f['vb'].split()[2]) / 2 for f in into]), '<- 0 0 (figure, view middle)')
         print('side stepping, neck L/R ', jump(fr), sorted(set((f['ex'] if 'ex' in f else '') for f in fr)) or '', '<- largest step small (was 104 px)')
+        # Chair Incline Push-Up -> Tibialis Raise (owner, Oct 2026): the move's first frame placed the push-up on the next
+        # exercise's surfaces (a wall, no chair), so the hands went to the floor, the feet under it, and the floor clamp
+        # bent both legs: the far leg popped out. Each end is placed on its own surfaces now.
+        await pg.evaluate("hush(); WP.phase = 'done'")
+        await pg.evaluate("""(() => { localStorage.setItem('nstructr-rest-between-v1', '0'); setSound('off'); WK.list = WK.list.filter(w => w.id !== 't');
+          WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: ['chair-incline-pushup', 'wall-tibialis-raise'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] });
+          saveWorkouts(); startWorkout(wkById('t'), 0); if (WP.restKind === 'start') wpAction('restSkip'); })()"""); await pg.wait_for_timeout(300)
+        await pg.evaluate("S.idx = S.resolved.length - 1; S.t = S.resolved[S.idx].dur; onWorkEnd(); S.playing = false")
+        print('push-up -> tibialis: legs', await pg.evaluate("""(() => { const a = S.from, b = S.resolved[0], f0 = frameAt(a, b, 0, S.seg), f1 = frameAt(a, b, 0.002, S.seg);
+          const P0 = fkAt(f0.pose, S.seg, f0.pos), P1 = fkAt(f1.pose, S.seg, f1.pos);
+          return Math.round(Math.max(...['kneeL', 'kneeR', 'ankleL', 'ankleR', 'toeL', 'toeR'].map(k => Math.hypot(P1[k].x - P0[k].x, P1[k].y - P0[k].y, P1[k].z - P0[k].z)))); })()"""), '<- under 2 (was 61: a knee and foot jumped up)')
         # reduced motion: cuts
         await pg.emulate_media(reduced_motion='reduce')
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + '(0)'); await pg.wait_for_timeout(300)
