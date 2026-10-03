@@ -67,7 +67,8 @@ function itemSeconds(item) {
   const voiced = WK.sound === 'voice' || WK.sound === 'coach', words = s => s.split(/\s+/).filter(Boolean).length / 2.5 / speechRate();
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
   const holdLine = hk && voiced ? Math.max(0, words(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
-  const readyLine = !hk && voiced ? Math.max(words(READY_BEGIN), (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;   // (into the starting pose while it's said; rep 1 then waits that move's time)
+  // "Ready… Begin." where it is; with no setup and no demonstration, while it gets into the position a rep ends in
+  const readyLine = !hk && voiced ? Math.max(words(READY_BEGIN), ph.setup.length || WK.sound === 'coach' ? 0 : (kfs[ph.end].durationMs || 0) / 1000 / t) : 0;
   const guide = holdLine + readyLine;
   // NstructR+'s demonstration: each side or direction once, in the first set ("Watch me first." once)
   const demo = WK.sound === 'coach' ? segs * (sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt)) + words(WATCH_FIRST) : 0;
@@ -692,15 +693,17 @@ function buildPlan(item, segInfo) {
     const holdSay = () => `${cue ? cue + (/[.!?…]$/.test(cue) ? ' ' : '. ') : ''}Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`;
     ph.rep.forEach(i => push(i === h ? { ...V0[i], hold: item.seconds * 1000 * tempo } : V0[i], i === h ? { phase: 'hold', seconds: item.seconds, ...(voiced ? { say: holdSay() } : {}) } : { phase: 'rep' }));
   } else {
-    // with a voice, "Ready… Begin." as it gets into the starting pose; the count ("1", "2" …) starts once it's said
-    if (voiced) push({ ...V0[ph.start], hold: 0 }, { phase: 'ready', ready: true, say: READY_BEGIN });
+    // with a voice, "Ready… Begin." and the count ("1", "2" …) starts once it's said. It waits where the figure is (the
+    // end of the setup or the demonstration); with nothing before it, in the position a rep ends in, as before every
+    // other rep. (Oct 2026: it moved into the rep's first step, which for Side Stepping is the first step: taken before
+    // "Begin")
+    const before = plan[plan.length - 1];
+    if (voiced) push(before ? { ...before, dur: 0, hold: 0 } : { ...V0[ph.end], hold: 0 }, { phase: 'ready', ready: true, say: READY_BEGIN });
     const total = item.reps * versions.length;
     for (let k = 0; k < total; k++) {
       const V = versions[k % versions.length].R;
-      // a step's call ("Forward", "Out to the right") as it starts; never on the rep's first step, where the count is said.
-      // Rep 1's first step is already in place after "Ready… Begin.": it waits as long as the move would have taken, so
-      // the rep keeps its rhythm and "1" has time before the next step's call
-      ph.rep.forEach((i, j) => push(voiced && k === 0 && j === 0 ? { ...V[i], dur: 0, hold: V[i].hold + V[i].dur } : V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && CALL_OK.test(V[i].call || '') ? { call: V[i].call } : {}) }));
+      // a step's call ("Forward", "Out to the right") as it starts; never on the rep's first step, where the count is said
+      ph.rep.forEach((i, j) => push(V[i], { phase: 'rep', repNo: j === 0 ? Math.floor(k / versions.length) + 1 : null, repOf: item.reps, alt: versions.length > 1 ? k % versions.length : null, ...(voiced && j > 0 && CALL_OK.test(V[i].call || '') ? { call: V[i].call } : {}) }));
     }
   }
   const VL = versions[versions.length - 1].R;
