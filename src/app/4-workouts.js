@@ -67,8 +67,8 @@ function itemSeconds(item) {
   const hk = ex.measure === 'time' ? kfs[ex.holdStep != null ? ex.holdStep : ph.start] : null;
   const holdLine = hk && voiced ? Math.max(0, words(`${WK.sound === 'coach' && !hk.quiet ? hk.cue || hk.name || '' : ''} Ready… ${plural(item.seconds, { one: 'Hold for # second.', other: 'Hold for # seconds.' })}`) - (hk.durationMs || 0) / 1000 / t) : 0;
   const readyLine = !hk && voiced ? Math.max(words(READY_BEGIN), (kfs[ph.start].durationMs || 0) / 1000 / t) : 0;   // (into the starting pose while it's said; rep 1 then waits that move's time)
-  const guide = (WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) + words(WATCH_FIRST) : 0) + holdLine + readyLine;
-  return item.sets * segs * (work + guide) + (item.sets - 1) * restSets();
+  const guide = (WK.sound === 'coach' ? sum(ph.setup) + sum(ph.rep) * alt + 2 * (ph.setup.length + ph.rep.length * alt) : 0) + holdLine + readyLine;
+  return item.sets * segs * (work + guide) + (WK.sound === 'coach' ? words(WATCH_FIRST) : 0) + (item.sets - 1) * restSets();   // ("Watch me first." once)
 }
 function blockSeconds(b, w) {
   const r = b.rounds || 1, one = b.items.reduce((s, it) => s + itemSeconds(it), 0) + Math.max(0, b.items.length - 1) * restGap();
@@ -666,8 +666,10 @@ function buildPlan(item, segInfo) {
     const label = segLabel(ex, item, segInfo);
     let first = true;
     // an instant step (like the seam where a circle starts again) has nothing to show, so it only carries the title
-    // its first line names it and says to watch, not join in yet ("Squat. Watch me first. Feet hip-width apart."; owner, Oct 2026)
-    const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ${WATCH_FIRST} ` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
+    // its first line names it; the exercise's first run-through (first set, first side or direction) also says to watch,
+    // not join in yet ("Squat. Watch me first. Feet hip-width apart."; owner, Oct 2026)
+    const watch = !WP.set && !WP.seg ? WATCH_FIRST + ' ' : '';
+    const g = (r, extra = {}) => { push(r, { phase: 'guide', guided: true, say: ((first ? `${ex.name}${label ? ', ' + label : ''}. ${watch}` : '') + (r.dur && !r.quiet ? cueOf(r) : '')).trim(), ...extra }); first = false; };
     ph.setup.forEach(i => g(V0[i]));
     if (ex.measure === 'time') ph.rep.filter(i => i !== h).forEach(i => g(V0[i]));
     else versions.forEach(v => ph.rep.forEach(i => g(v.R[i])));
