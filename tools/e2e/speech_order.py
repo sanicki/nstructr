@@ -33,7 +33,7 @@ async def main():
         await pg.wait_for_function("(i => i >= 0 && SP.log.length >= i + 3)(SP.log.findIndex(l => l.text.startsWith('Put the dumbbells down')))", timeout=60000)
         log = [l['text'] for l in await pg.evaluate("SP.log")]
         i = next(k for k, t in enumerate(log) if t.startswith('Put the dumbbells down'))
-        check('no rest, change: order', log[i:i + 3], ['Put the dumbbells down. Position yourself by your chair.', 'Seated Arm Raises.', 'Ready… Begin.'])
+        check('no rest, change: order', log[i:i + 3], ['Put the dumbbells down. Position yourself by your chair and sit on it.', 'Seated Arm Raises.', 'Ready… Begin.'])
         await ctx.close()
         ctx = await b.new_context(viewport={'width': 412, 'height': 860}, service_workers='block'); pg = await ctx.new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.add_init_script(VOICE.replace('MS', '450').replace('LAT', '300'))   # a slowish phone voice, slow to start

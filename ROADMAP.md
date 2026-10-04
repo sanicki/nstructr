@@ -20,6 +20,12 @@ comes off this list. How things work, and why past decisions were made, is in [H
     (`:lang(zh)`); bundle Roboto Flex and Material Symbols instead of loading them from Google Fonts (blocked there).
   - When other languages ship, **Unspecified** becomes the default AI provider (not Gemini).
   - Right-to-left layout (Arabic, Hebrew, Persian, Urdu) only if one of those is chosen.
+- **Planted points lifting mid-move** (found Oct 2026): a move blends two poses joint by joint, which doesn't keep a point
+  that's on the floor at both ends. Plank and Knee Plank are fixed (a quiet in-between step); still lifting: out of Knee
+  Plank to tabletop (a knee 6 px); into Side Plank (a hand 36 px), Kneeling Side Kick (a hand 34 px, a toe 24 px out)
+  and Knee Push-Up (a toe 26 px); out of Child's Pose (a toe), Puppy (a toe 27 px), Thread the Needle (a hand 23 px) and
+  Lizard (a toe 18 px). Better in the engine (hold such points during a move, as it holds a planted hand) than step by
+  step; the build's move checks should catch it (they check the ends only).
 - **Exercises tab speed**: opening it draws all 358 thumbnails: 4.6 s on a slow phone (CPU 4×; 17 ms each, every
   thumbnail resolves its whole exercise). Draw them as they scroll into view, and/or cache each one. Startup itself is
   fine (1.3–1.9 s at 4–6× on a repeat visit), so no lazy-loading of the library (`tools/perf.py`, Oct 2026).

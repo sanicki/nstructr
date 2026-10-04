@@ -23,10 +23,11 @@ async def main():
         check('no transition setting', await pg.evaluate("!!document.querySelector('#setEquipTime')"), False, 'the time is the words')
         check('changes', await pg.evaluate("""[['fw-db-curl', 'chair-arm-raises'], ['bw-squat', 'bw-glute-bridge'], ['band-standing-row', 'band-face-pull'], ['band-overhead-triceps', 'band-standing-row'], ['fw-db-curl', 'fw-db-rdl'], ['chair-arm-raises', 'bw-squat']]
           .map(([a, c]) => { const x = equipmentChange(exById(a), exById(c)); return x && [x.seconds, x.lines.join(' / ')]; })"""),
-              [[4.6, 'Put the dumbbells down / Position yourself by your chair'], None, None, [3, 'Set up your door anchor'], None, None],
-              '4.6 s = 0.5 + 9 words at 2.5 a second + 0.5; none with no equipment, the same, dumbbells both, or a chair to nothing')
+              [[6.2, 'Put the dumbbells down / Position yourself by your chair and sit on it'], None, [4.6, 'Anchor the band at face height, facing the anchor'],
+               [6.6, 'Set up your door anchor / Anchor the band at chest height, facing the anchor'], None, None],
+              '6.2 s = 0.5 + 13 words at 2.5 a second + 0.5; none with no equipment, dumbbells both, or a chair to nothing; the band kept but tied higher')
         check('estimate counts it', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['fw-db-curl', 'chair-arm-raises'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
-          return [equipmentSeconds(w), Math.round(workoutSeconds(w) - w.blocks.reduce((s, x) => s + blockSeconds(x, w), 0))]; })()"""), [8, 8], '3.4 s title card + 4.6 s change')
+          return [equipmentSeconds(w), Math.round(workoutSeconds(w) - w.blocks.reduce((s, x) => s + blockSeconds(x, w), 0))]; })()"""), [9.6, 10], '3.4 s title card + 6.2 s change')
         # timed: the checklist, then the change
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_function("typeof equipPauseOn === 'function'"); await pg.wait_for_timeout(300); await pg.evaluate(SAY)
         await pg.evaluate(WK + "(['fw-db-curl', 'chair-arm-raises'], 5)"); await pg.wait_for_timeout(300)
@@ -35,14 +36,14 @@ async def main():
         await pg.wait_for_timeout(700); check('  said (then the list)', await pg.evaluate("SAID.slice(-2)"), ['T.', "You'll need: dumbbells and chair."])
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("WP.phase === 'rest'", timeout=20000); await pg.evaluate("S.speed = 1")
-        check('change rest', await pg.evaluate("[$('#wpRestLabel').textContent, $('#wpRestEquip').textContent, Math.round(WP.restLeft), $('[data-wact=\"restSkip\"]').textContent]"), ['Rest', 'Put the dumbbells down · Position yourself by your chair', 10, 'Skip'], '10 = 5 + 4.6')
-        await pg.wait_for_timeout(700); check('  said', await pg.evaluate("SAID.slice(-2)"), ['Rest 10 seconds. Next: Seated Arm Raises.', 'Put the dumbbells down. Position yourself by your chair.'])
+        check('change rest', await pg.evaluate("[$('#wpRestLabel').textContent, $('#wpRestEquip').textContent, Math.round(WP.restLeft), $('[data-wact=\"restSkip\"]').textContent]"), ['Rest', 'Put the dumbbells down · Position yourself by your chair and sit on it', 11, 'Skip'], '11 = 5 + 6.2')
+        await pg.wait_for_timeout(700); check('  said', await pg.evaluate("SAID.slice(-2)"), ['Rest 12 seconds. Next: Seated Arm Raises.', 'Put the dumbbells down. Position yourself by your chair and sit on it.'])
         # no rest between exercises: no rest screen; the move into the chair exercise takes at least as long as the words
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + "(['fw-db-curl', 'chair-arm-raises'], 0)"); await pg.wait_for_timeout(300)
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("S.ex.id === 'chair-arm-raises'", timeout=20000); await pg.evaluate("S.speed = 1"); await pg.wait_for_timeout(800)
         check('no rest: no rest screen', await pg.evaluate("[WP.phase, $('#wpRest').hidden, S.trans > 0, S.resolved.slice(0, S.trans + 1).reduce((t, r, i) => t + r.dur + (i < S.trans ? r.hold : 0), 0) >= 4600]"), ['work', True, True, True], 'the move lasts 4.6 s or more')
-        check('  said while moving', await pg.evaluate("SAID.slice(-2)"), has('Put the dumbbells down. Position yourself by your chair.'))
+        check('  said while moving', await pg.evaluate("SAID.slice(-2)"), has('Put the dumbbells down. Position yourself by your chair and sit on it.'))
         # pause at equipment changes: waits for Ready
         await pg.evaluate("hush(); WP.phase = 'done'; setPref(EQUIP_PAUSE_KEY, 'on')")
         await pg.evaluate(WK + "(['fw-db-curl', 'chair-arm-raises'], 0)"); await pg.wait_for_timeout(300)
@@ -52,7 +53,7 @@ async def main():
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("WP.phase === 'rest'", timeout=20000); await pg.evaluate("S.speed = 1")
         await pg.wait_for_timeout(700)
-        check('  change: waits, says', await pg.evaluate("[WP.waitReady, SAID.slice(-1)[0]]"), [True, "Put the dumbbells down. Position yourself by your chair. Tap Ready when you're set."])
+        check('  change: waits, says', await pg.evaluate("[WP.waitReady, SAID.slice(-1)[0]]"), [True, "Put the dumbbells down. Position yourself by your chair and sit on it. Tap Ready when you're set."])
         await pg.wait_for_timeout(2500)
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_function("WP.phase === 'work'", timeout=10000)
         check('  Ready: next exercise', await pg.evaluate("S.ex.id"), 'chair-arm-raises')

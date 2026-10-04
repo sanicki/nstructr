@@ -158,6 +158,16 @@ if (!args.has('--no-checks') && !errors.length) {
   }
   console.log(`positions: ${PX.MOVES.length} moves between them, checked both ways; starts and ends: ${Object.entries(count).sort((a, b) => b[1] - a[1]).map(([k, n]) => `${k} ${n}`).join(', ')}`);
   if (unplaced.length) console.log(`positions: not placed, so a crossfade (add startPosition/endPosition, "other" if none fits): ${unplaced.join(', ')}`);
+  // where the equipment goes (said when it's picked up or moves between exercises): worked out, or the exercise's own
+  // "placement" (for equipment it lists)
+  const PLACED = ['Resistance band', 'Towel', 'Yoga strap', 'Pilates ring', 'Chair', 'Bench', 'Step', 'Stability ball', 'Foam roller', 'Wall'];
+  let placed = 0; const unknown = [];
+  for (const ex of exercises) {
+    const pl = PX.placementsOf(ex);
+    for (const q of Object.keys(ex.placement || {})) if (!(ex.equipment || []).includes(q)) errors.push(`${ex.id}: placement for "${q}", which it doesn't list as equipment`);
+    for (const q of (ex.equipment || []).filter(q => PLACED.includes(q))) { if (pl[q] || (ex.placement || {})[q]) placed++; else unknown.push(`${ex.id} (${q})`); }
+  }
+  console.log(`placements: ${placed} worked out or given${unknown.length ? `; none (nothing said where it goes; add "placement" if it needs saying): ${unknown.join(', ')}` : ''}`);
 }
 // ---------- 2c3. the coaching script (src/coach.js): for every exercise, alone and alternating, with and without a voice
 // and NstructR+'s demonstration, what's said comes in the right order: the demonstration (starting with the name), then

@@ -34,9 +34,23 @@ async def main():
         check('changes', await pg.evaluate("""[['bw-squat', 'bw-glute-bridge', 'L'], ['fw-db-squat', 'band-glute-bridge', 'L'], ['bw-squat', 'bw-reverse-lunge', 'L'], ['bw-squat', 'side-clamshell', 'L'], ['bw-squat', 'side-clamshell', 'R']]
           .map(([a, c, s]) => { const x = exerciseChange(exById(a), exById(c), s); return x && [x.lines.join(' / '), x.equipment]; })"""),
               [['Lower to the floor and roll onto your back', False],
-               ['Put the dumbbells down / Lower to the floor and roll onto your back / Pick up the resistance band', True],
+               ['Put the dumbbells down / Lower to the floor and roll onto your back / Pick up the resistance band and loop it around your thighs, just above the knees', True],
                None, ['Lower to your left side, stacking your hips and knees', False], ['Lower to your right side, stacking your hips and knees', False]],
-              'put down, change position, pick up; none standing to standing; the side lain on')
+              'put down, change position, pick up (and where it goes); none standing to standing; the side lain on')
+        # where the equipment goes (owner, Oct 2026): with picking it up, or on its own when it stays but moves (the same
+        # chair under the hands, then the feet); worked out from the props and what rests on the furniture (placementsOf)
+        check('placements', await pg.evaluate("""[['bench-incline-pushup', 'bench-decline-pushup'], ['bhf-bicep-curl', 'band-glute-bridge'], ['bw-squat', 'bhf-bicep-curl'], ['chair-dip', 'chair-incline-pushup'],
+          ['bw-squat', 'band-pallof-press'], ['bw-wall-pushup', 'bw-wall-sit'], ['chair-sit-to-stand', 'chair-calf-raise'], ['bhf-bicep-curl', 'band-overhead-press']]
+          .map(([a, c]) => { const x = exerciseChange(exById(a), exById(c), 'L'); return x && x.lines.join(' / '); })"""),
+              ['Hinge forward, plant your hands, and step back to plank / Put your feet up on the bench',
+               'Lower to the floor and roll onto your back / Loop the band around your thighs, just above the knees',
+               'Pick up the resistance band, then put both feet on the middle of it and hold the ends',
+               'Position yourself by your wall / Put your hands on the seat',
+               'Set up your door anchor / Pick up the resistance band and anchor it at chest height, side-on to the anchor',
+               'Stand with your back against the wall', 'Stand behind the chair, holding the back', None],
+              'what you go to before what you carry; nothing when it stays where it was')
+        check('  an exercise\'s own', await pg.evaluate("""(() => { const a = { ...exById('bhf-bicep-curl') }, c = { ...exById('band-glute-bridge'), placement: { 'Resistance band': 'put {it} on above your knees' } };
+          return exerciseChange(a, c).lines.slice(-1)[0]; })()"""), 'Put the band on above your knees')
         check('estimate counts it', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['bw-squat', 'bw-glute-bridge'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
           return equipmentSeconds(w); })()"""), 6, 'the change 0.5 + 9 words at 2.5 a second + 0.5 = 4.6, the title card 0.5 + 1 word + 0.5 = 1.4')
         # with a rest: after the rest line

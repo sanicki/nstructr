@@ -33,6 +33,12 @@
       "enum": ["standing", "kneeling", "all-fours", "seated", "supine", "prone", "side-lying", "plank", "squat", "down-dog", "dolphin", "other"],
       "description": "The position it ends in, when the one worked out from the last step is wrong (see startPosition)."
     },
+    "placement": {
+      "type": "object",
+      "propertyNames": { "minLength": 1 },
+      "additionalProperties": { "type": "string", "minLength": 1, "pattern": "^[a-z]" },
+      "description": "Where a piece of its equipment goes, when the one worked out from the first step (src/positions.js placementsOf) is missing or reads badly: equipment name to a lower-case phrase, {it} for the equipment (\"loop {it} around your thighs, just above the knees\"). The workout player says it when the equipment is picked up for this exercise, or stays from the last one but moves."
+    },
     "otherNames": {
       "type": "array",
       "items": {

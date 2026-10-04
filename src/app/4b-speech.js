@@ -199,6 +199,49 @@ const POS_OUT = {
   'down-dog': { standing: 'Walk your feet to your hands and roll up to stand.', 'all-fours': 'Lower your knees to table top.' },
   dolphin: { 'all-fours': 'Lower your knees and come up onto your hands.' }
 };
+/* where the next exercise has its equipment (POSITIONS_EX.placementsOf's keys; Oct 2026, owner: the same chair under
+   the hands, then the feet; a band in the hands, then around the knees): what to do, "{it}" the equipment. Said on its
+   own when the equipment stays ("Put your feet up on the bench."), or with picking it up ("Pick up the resistance band
+   and loop it around your thighs, just above the knees."). An exercise's own "placement" replaces one. */
+const PLACE_NOUN = { 'Resistance band': 'the band', Towel: 'the towel', 'Yoga strap': 'the strap', 'Pilates ring': 'the ring', Chair: 'the chair',
+  Bench: 'the bench', Step: 'the step', 'Stability ball': 'the ball', 'Foam roller': 'the roller', Wall: 'the wall' };
+const PLACE_HELD = {
+  hands: 'hold {it} in both hands', 'feet-hands': 'loop {it} around your feet and hold the ends', 'foot-hands': 'loop {it} around one foot and hold the ends',
+  'foot-hand': 'loop one end of {it} around your foot and hold the other end', 'back-hands': 'wrap {it} around your upper back and hold the ends',
+  ankles: 'loop {it} around your ankles', knees: 'loop {it} around your thighs, just above the knees', feet: 'loop {it} around your feet',
+  'ankle-hand': 'loop {it} around your ankle and hold the end', 'bar-knees': 'loop {it} over the bar and put your knees in it'
+};
+const PLACE_SAY = {
+  'Resistance band': { ...PLACE_HELD, 'feet-hands': 'put both feet on the middle of {it} and hold the ends', 'foot-hands': 'put one foot on the middle of {it} and hold the ends' },
+  Towel: { ...PLACE_HELD, ankles: 'put your heels on {it}' },
+  'Yoga strap': PLACE_HELD,
+  'Pilates ring': { hands: 'hold {it} between your hands', knees: 'put {it} between your knees' },
+  Chair: { sit: 'sit on {it}', hands: 'put your hands on the seat', 'hands-behind': 'put your hands on the front of the seat behind you',
+    feet: 'put your feet up on the seat', heels: 'rest your heels on the seat', 'one-foot': 'put one foot up on the seat', 'back-foot': 'rest your back foot on the seat',
+    'hold-back': 'stand behind {it}, holding the back', 'hold-back-one': 'stand beside {it}, one hand on the back', 'upper-back': 'rest your upper back against the seat' },
+  Bench: { sit: 'sit on {it}', lie: 'lie back on {it}', hands: 'put your hands on {it}', 'hands-behind': 'put your hands on the edge of {it} behind you',
+    feet: 'put your feet up on {it}', heels: 'rest your heels on {it}', 'one-foot': 'put one foot up on {it}', 'back-foot': 'rest your back foot on {it}',
+    'upper-back': 'rest your upper back against the edge of {it}', face: 'stand facing {it}' },
+  Step: { stand: 'stand on {it}', 'toes-edge': 'stand on the edge of {it}, heels off the back', face: 'stand facing {it}' },
+  'Stability ball': { sit: 'sit on {it}', lie: 'lie back on {it}', heels: 'rest your heels on {it}' },
+  'Foam roller': { calves: 'put {it} under your calves', 'thighs-back': 'put {it} under the backs of your thighs', 'thighs-front': 'put {it} under the fronts of your thighs',
+    'thigh-side': 'put {it} under the side of your thigh', glutes: 'sit on {it}', side: 'put {it} under your armpit', 'upper-back': 'put {it} under your upper back' },
+  Wall: { hands: 'put your hands on {it}', hand: 'put one hand on {it}', 'hand-beside': 'stand side-on to {it}, one hand on it', back: 'stand with your back against {it}',
+    forearm: 'put your forearm on {it}', 'forearm-beside': 'stand side-on to {it}, your forearm on it', legs: 'lie on your back with your legs up {it}',
+    leg: 'lie on your back with one leg up {it}', face: 'face {it}' }
+};
+// a band tied to a door anchor (anchor-hands/<height>/<way>)
+const ANCHOR_HEIGHT = { high: 'above head height', face: 'at face height', chest: 'at chest height', waist: 'at waist height', low: 'near the floor' };
+const ANCHOR_WAY = { ahead: 'facing the anchor', behind: 'with your back to the anchor', side: 'side-on to the anchor' };
+function placePhrase(q, key) {
+  const m = /^anchor-hands\/(\w+)\/(\w+)$/.exec(key || '');
+  if (m) return `anchor {it} ${ANCHOR_HEIGHT[m[1]]}, ${ANCHOR_WAY[m[2]]}`;
+  return (PLACE_SAY[q] || {})[key] || '';
+}
+// the phrase with "{it}" filled in: "it" after picking it up (", then" before a phrase with its own "and"), its name on
+// its own (capitalised)
+const placeWith = phrase => (/ and /.test(phrase) ? ', then ' : ' and ') + phrase.replace('{it}', 'it');
+const placeAlone = (phrase, q) => { const t = phrase.replace('{it}', PLACE_NOUN[q] || 'it'); return t[0].toUpperCase() + t.slice(1); };
 /* what to say to get from position a to b (POSITIONS_EX keys), or '' ("side-lying-r" is the other side: the same words).
    side: 'left' or 'right' when b is lying on the side; seat: how b sits when it's seated (SEAT_HOW's keys or 'heels') */
 function positionLine(a, b, side = '', seat = 'long') {
