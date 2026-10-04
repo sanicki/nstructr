@@ -101,6 +101,8 @@ async def main():
         await pg.evaluate("""(() => { localStorage.setItem('nstructr-rest-between-v1', '0'); setSound('off'); WK.list = WK.list.filter(w => w.id !== 't');
           WK.list.push({ id: 't', name: 'T', blocks: [{ id: 'b', name: 'B', items: [{ ...newItem(exById('bal-side-stepping')), reps: 2 }, { ...newItem(exById('mayo-neck')), seconds: 3, sides: 'both' }] }] });
           saveWorkouts(); startWorkout(wkById('t'), 0); })()""")
+        # (from the first exercise on: leaving the workout's title card rescales the stage, not a move between exercises)
+        await pg.wait_for_function("WP.phase === 'work'", timeout=15000)
         fr = await pg.evaluate(WATCH, 22000)
         # into the neck stretch: the figure's place on screen and the view's middle each move one way only (Oct 2026:
         # the rest pose stood at its own spot, so the figure and the view went out to it and back: a bounce)

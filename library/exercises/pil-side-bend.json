@@ -73,6 +73,8 @@
       }
     }
   ],
+  "startPosition": "other",
+  "endPosition": "other",
   "measure": "reps",
   "defaults": {
     "reps": 4

@@ -21,7 +21,7 @@ async def run(b, mode, item, errs):
     await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_function("typeof equipPauseOn === 'function'")
     await pg.evaluate(f"""(() => {{ localStorage.setItem('nstructr-rest-between-v1', '0'); localStorage.setItem('nstructr-rest-sets-v1', '0'); WK.hinted = true; setSound('{mode}'); setPref(ENCOURAGE_KEY, 'off');
       WK.list = WK.list.filter(w => w.id !== 'c'); WK.list.push({{ id: 'c', name: 'Calls', blocks: [{{ id: 'b', name: 'B', items: [{{ ...newItem(exById('{item['ex']}')), ...{item['o']} }}] }}] }});
-      saveWorkouts(); startWorkout(wkById('c')); }})()""")
+      saveWorkouts(); startWorkout(wkById('c')); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip'); }})()""")
     await pg.wait_for_function("WP.phase === 'done' && !SP.busy && !SP.queue.length", timeout=120000)
     log = await pg.evaluate("SP.log"); await ctx.close(); return log
 async def main():
@@ -34,7 +34,7 @@ async def main():
             await pg.evaluate(f"""(() => {{ localStorage.setItem('nstructr-rest-between-v1', '0'); localStorage.setItem('nstructr-rest-sets-v1', '0'); WK.hinted = true; setSound('coach'); setPref(ENCOURAGE_KEY, 'off');
               window.DEMO = []; const keep = onWorkStep; onWorkStep = i => {{ const m = S.planMeta[i] || {{}}; if (i === 0 || (i === S.trans)) DEMO.push(S.ex.id.replace(/^[a-z]+-/, '') + ' set ' + (WP.set + 1) + (WP.seg ? ' side 2' : '') + (S.planMeta.some(x => x.guided) ? ': demo' : ': no demo')); return keep(i); }};
               WK.list = WK.list.filter(w => w.id !== 'c'); WK.list.push({{ id: 'c', name: 'Demos', blocks: [{{ id: 'b', name: 'B', items: {items} }}] }});
-              saveWorkouts(); startWorkout(wkById('c')); S.speed = 6; }})()""")
+              saveWorkouts(); startWorkout(wkById('c')); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip'); S.speed = 6; }})()""")
             await pg.wait_for_function("WP.phase === 'done'", timeout=180000)
             out = (await pg.evaluate("DEMO.filter((d, i) => d !== DEMO[i - 1])"), [t[:40] for t in await pg.evaluate("SP.log") if 'Watch me first' in t], [t[:24] for t in await pg.evaluate("SP.log") if t.startswith('Push-Up') or t.startswith('Set ')])
             await ctx.close(); return out
@@ -51,7 +51,7 @@ async def main():
         # the right leg reaches left where the left leg reached right
         check('star, NstructR', ' '.join(t for t in voice if re.fullmatch(r'\d|Last one|Forward|Right|Back|Left|Switch sides.*', t)),
               lambda t: re.fullmatch(r'1 Forward Right Back Left Last one Forward Right Back Left Switch sides.* 1 Forward Left Back Right Last one Forward Left Back Right', t))
-        check('star, NstructR+: run-through reads cues', [t[:24] for t in coach[0:3]], ['4-Point Star Excursion, ', 'Lift the right foot. Kee', 'Forward. Bend the standi'])
+        check('star, NstructR+: run-through reads cues (after the workout title)', [t[:24] for t in coach[1:4]], ['4-Point Star Excursion, ', 'Lift the right foot. Kee', 'Forward. Bend the standi'])
         check('  then calls', after(coach)[:5], ['1', 'Forward', 'Right', 'Back', 'Left'])
         check('star, Beeps: nothing said', beeps, [])
         check("clock reach (no call on the count's step)", after(clock)[:6], ['1', 'Side', 'Down and back', 'Last one', 'Side', 'Down and back'])

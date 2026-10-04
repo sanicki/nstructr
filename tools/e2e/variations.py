@@ -43,7 +43,7 @@ async def main():
         check('cancel keeps the item', await pg.evaluate("wkById('v').blocks[0].items[0].ex"), 'bw-knee-pushup')
         # --- player (cover screen size), NstructR on
         await pg.set_viewport_size({'width': 360, 'height': 398})
-        await pg.evaluate("setSound('coach'); window.SAID = []; startWorkout(wkById('v'))"); await pg.wait_for_timeout(600)
+        await pg.evaluate("setSound('coach'); window.SAID = []; startWorkout(wkById('v')); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip')"); await pg.wait_for_timeout(600)
         await pg.evaluate("showControls(true)"); await pg.wait_for_timeout(300)
         pills = await pg.evaluate("[...document.querySelectorAll('#wpSwap .ov-pill')].map(x => [x.dataset.wact, x.getAttribute('aria-label')])")
         check('player pills (knee p-u)', pills, [['easier', 'Easier: Incline Push-Up'], ['harder', 'Harder: Push-Up']])
@@ -52,7 +52,7 @@ async def main():
         await pg.evaluate("WP.set = 1; WP.rep = 3"); await pg.wait_for_timeout(100)
         await pg.evaluate("LAST_DOWN_AT = performance.now() + 1; CTRL_SHOWN_AT = 0")
         await pg.click('#wpSwap [data-wact="harder"]'); await pg.wait_for_timeout(500)
-        check('after Harder', await pg.evaluate("[exById(current().item.ex).id, WP.set, WP.rep, WP.swaps, (S.planMeta[S.idx] || {}).guided, (window.SAID || []).slice(-1)[0]]"), ['bw-pushup', 1, 0, {'p': 'bw-pushup'}, None, 'Knee Push-Up. Watch me first. Body straight from knees to head.'])
+        check('after Harder', await pg.evaluate("[exById(current().item.ex).id, WP.set, WP.rep, WP.swaps, (S.planMeta[S.idx] || {}).guided, (window.SAID || []).includes('Knee Push-Up. Watch me first. Body straight from knees to head.')]"), ['bw-pushup', 1, 0, {'p': 'bw-pushup'}, None, True], 'the Knee Push-Up was demonstrated (after the workout title, Oct 2026)')
         check('workout untouched', await pg.evaluate("wkById('v').blocks[0].items[0].ex"), 'bw-knee-pushup')
         check('session saved', await pg.evaluate("loadSession()"), {'wid': 'v', 'i': 0, 'swaps': {'p': 'bw-pushup'}})
         check('history so far', await pg.evaluate("WP.log.done.map(d => [d.ex, d.sets])"), [['bw-knee-pushup', 1]])
@@ -65,7 +65,7 @@ async def main():
         await pg.click('#askYes'); await pg.wait_for_timeout(300)
         check('kept in the workout', await pg.evaluate("wkById('v').blocks[0].items.map(i => [i.ex, i.sets, i.reps])"), [['bw-pushup', 2, 5], ['core-forearm-plank', 1, 10]])
         # a library workout: a swap kept goes in a copy; Resume keeps a session's swaps
-        await pg.evaluate("(() => { const w = LIB_WK.find(w => w.blocks.some(b => b.items.some(i => linksOf(exById(i.ex)).harder.length))); window.LW = w; const i = flattenWorkout(w).findIndex(e => linksOf(exById(e.item.ex)).harder.length); startWorkout(w, i); swapCurrent('harder'); })()"); await pg.wait_for_timeout(300)
+        await pg.evaluate("(() => { const w = LIB_WK.find(w => w.blocks.some(b => b.items.some(i => linksOf(exById(i.ex)).harder.length))); window.LW = w; const i = flattenWorkout(w).findIndex(e => linksOf(exById(e.item.ex)).harder.length); startWorkout(w, i); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip'); swapCurrent('harder'); })()"); await pg.wait_for_timeout(300)
         s = await pg.evaluate("loadSession()")
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(700)
         await pg.click('#askNo'); await pg.wait_for_timeout(200)

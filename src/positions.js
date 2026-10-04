@@ -154,7 +154,10 @@
     if (seat && legsAlong > -0.4 && (up > 0.45 || (fy < -0.3 && legsAlong > 0.2)) && !trunkDown) return 'seated';     // sitting tall, or folded over the legs
     if (knees && !hands && !seat && up > 0.45) return 'kneeling';
     if (knees && hands && !seat && Math.abs(up) < 0.7) return 'all-fours';
-    if (hands && feet && !knees && !seat && Math.abs(up) < 0.7) return fy > 0.3 ? null : 'plank';   // face up on the hands: reverse plank
+    // on the hands and feet: plank facing down; face up (a reverse plank) none; facing sideways (Oct 2026: side planks
+    // counted as plank, and the move rolled the body a quarter turn through its legs) lying on the side with the hips
+    // low (propped on a forearm), else none
+    if (hands && feet && !knees && !seat && Math.abs(up) < 0.7) return fy < -0.5 ? 'plank' : fy > 0.3 ? null : P.pelvis.y - C.supportAt(P.pelvis) < 60 ? 'side-lying' : null;
     if ((trunkDown || seat) && Math.abs(up) < 0.6) return fy > 0.6 ? 'supine' : fy < -0.6 ? 'prone' : 'side-lying';
     return null;
   }

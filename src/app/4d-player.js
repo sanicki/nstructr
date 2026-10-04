@@ -21,10 +21,10 @@ function startWorkout(w, fromIndex = 0, swaps = null, test = false) {
   unlockAudio(); wakeOn(); enterFullscreen(); setSound(WK.sound); keepStorage(); installDue();
   go(`#/wplay/${encodeURIComponent(w.id)}`);
   S.mode = 'start';                                               // no transition into the first exercise
-  // a workout with equipment starts with a title card: its name and what to have at hand, then the first exercise
-  const need = neededFrom(WP.flat, WP.i);
-  if (need.length) { WP.phase = 'work'; const lines = [checklistLine(need)]; startRest(0, 'start', { seconds: equipSpoken([w.name, ...lines]), lines, need }); }
-  else runCurrent(true);
+  // every workout starts with a title card (owner, Oct 2026: not only those with equipment): its name and, with
+  // equipment, what to have at hand, then the first exercise
+  const need = neededFrom(WP.flat, WP.i), lines = need.length ? [checklistLine(need)] : [];
+  WP.phase = 'work'; startRest(0, 'start', { seconds: equipSpoken([w.name, ...lines]), lines, need, equipment: need.length > 0 });
   if (!WK.hinted) { WK.hinted = true; setTimeout(() => toast('Tap for controls'), 600); }
 }
 function current() { return WP.flat[WP.i]; }
@@ -132,7 +132,7 @@ function onWorkEnd() {
   finishWorkout();
 }
 /* ch: a change of equipment or position ({ seconds, lines, equipment }, exerciseChange) or, for kind 'start', the
-   checklist ({ seconds: 0, lines: ["You'll need …"] }): the rest gets its seconds added and says its lines; with "Pause
+   title card ({ seconds, lines: ["You'll need …"] or none, need }): the rest gets its seconds added and says its lines; with "Pause
    at equipment changes" it waits for Ready instead of counting down to the next exercise (not for a position alone) */
 function startRest(seconds, kind, ch = null) {
   if (ch) seconds += ch.seconds;
@@ -148,9 +148,9 @@ function startRest(seconds, kind, ch = null) {
   $('#wpRestTitle').textContent = title ? WP.w.name : ''; $('#wpRestTitle').hidden = !title;
   $('#wpRestNext').textContent = title ? '' : kind === 'set' ? `Next: set ${WP.set + 1} of ${cur.item.sets}` : `Next: ${ex.name}`; $('#wpRestNext').hidden = title;
   // the title card lists what you'll need as bullets (owner, Oct 2026); an equipment change says what to do on one line
-  if (ch && ch.need) $('#wpRestEquip').innerHTML = `<span>You'll need:</span><ul class="ov-equip-list">${ch.need.map(q => `<li>${esc(q)}</li>`).join('')}</ul>`;
+  if (ch && ch.need && ch.need.length) $('#wpRestEquip').innerHTML = `<span>You'll need:</span><ul class="ov-equip-list">${ch.need.map(q => `<li>${esc(q)}</li>`).join('')}</ul>`;
   else $('#wpRestEquip').textContent = ch ? ch.lines.join(' · ') : '';
-  $('#wpRestEquip').hidden = !ch;
+  $('#wpRestEquip').hidden = !ch || !ch.lines.length;
   $('#wpRestTime').textContent = WP.waitReady || title ? '' : fmtTime(Math.ceil(seconds)); $('#wpRestTime').hidden = WP.waitReady || title;
   $('[data-wact="restSkip"]').textContent = WP.waitReady ? 'Ready' : title ? 'Start' : 'Skip'; $('[data-wact="restMore"]').hidden = WP.waitReady || title;
   // show where the next exercise starts: moving there through the at-rest pose when it can, or straight there
@@ -164,7 +164,7 @@ function startRest(seconds, kind, ch = null) {
   const token = WP.restToken = (WP.restToken || 0) + 1;
   // the title card stays until it has said all of it (a voice can be slower than its estimate), then half a second more
   WP.restTalking = title;
-  say(first).then(() => ch && WP.restToken === token && WP.phase === 'rest' ? sayEquipment(ch, WP.waitReady ? ' ' + SAY.tapReady : '') : null)
+  say(first).then(() => ch && ch.lines.length && WP.restToken === token && WP.phase === 'rest' ? sayEquipment(ch, WP.waitReady ? ' ' + SAY.tapReady : '') : null)
     .then(() => { if (WP.restToken === token && WP.restTalking) { WP.restTalking = false; WP.restLeft = Math.max(WP.restLeft, EQUIP_PAD); } });
   beep(520, 200);
 }

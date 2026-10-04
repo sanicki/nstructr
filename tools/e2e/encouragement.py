@@ -55,7 +55,7 @@ async def main():
         await pg.evaluate("setSound('coach')")
         # a 60 s hold, random always 0 (always cheers where allowed): which seconds speak?
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
-        await pg.evaluate("localStorage.setItem('nstructr-rest-between-v1','0'); WK.hinted = true; WK.list.push({id:'h',name:'H',blocks:[{id:'b',name:'B',items:[{...newItem(exById('core-forearm-plank')),seconds:60}]}]}); saveWorkouts(); startWorkout(wkById('h'),0)")
+        await pg.evaluate("localStorage.setItem('nstructr-rest-between-v1','0'); WK.hinted = true; WK.list.push({id:'h',name:'H',blocks:[{id:'b',name:'B',items:[{...newItem(exById('core-forearm-plank')),seconds:60}]}]}); saveWorkouts(); startWorkout(wkById('h'),0); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip')")
         await pg.wait_for_timeout(300); await pg.evaluate(SAY)
         async def hold(rand):
             return await pg.evaluate(f"""(() => {{ WP.random = () => {rand}; SAID.length = 0; setPlaying(false);
@@ -73,7 +73,7 @@ async def main():
             await pg.evaluate(f"""(() => {{ hush(); WP.phase = 'done'; setPref(ENCOURAGE_KEY, '{on}'); WP.random = () => 0.5; SAID.length = 0;
               const keep = say; window.WHEN = []; say = (t, o) => {{ WHEN.push([t, S.ex && S.ex.id, S.idx, S.resolved.length, S.planDone, WP.phase]); return keep(t, o); }};
               WK.list = WK.list.filter(w => w.id !== 'd'); WK.list.push({{ id: 'd', name: 'D', blocks: [{{ id: 'b', name: 'B', items: [{{ ...newItem(exById('core-dead-bug')), reps: 2, sides: 'both' }}] }}] }});
-              saveWorkouts(); startWorkout(wkById('d'), 0); S.speed = 20; }})()""")
+              saveWorkouts(); startWorkout(wkById('d'), 0); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip'); S.speed = 20; }})()""")
             await pg.wait_for_function("WP.phase === 'done'", timeout=60000)
             return await pg.evaluate("WHEN.filter(w => COACH_WORDS.done.includes(w[0])).map(w => [w[0], 'plan over: ' + (w[4] && w[2] === w[3] - 1)])")
         check('finished phrase, on', await done('on'), lambda x: len(x) == 2 and all(w in W['done'] and over == 'plan over: true' for w, over in x), '2 finished phrases, each after the last animation')

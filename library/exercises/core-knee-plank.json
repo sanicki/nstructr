@@ -23,6 +23,68 @@
   },
   "keyframes": [
     {
+      "name": "Hands and knees",
+      "cue": "Start on your hands and knees.",
+      "camera": 90,
+      "durationMs": 1600,
+      "holdMs": 600,
+      "phase": "setup",
+      "anchor": "handR",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [75, 0, 0],
+        "shoulderL": [75, 0, 0],
+        "shoulderR": [75, 0, 0],
+        "hipL": [75, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [75, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    },
+    {
+      "name": "Lower to the forearms",
+      "quiet": true,
+      "camera": 90,
+      "durationMs": 900,
+      "holdMs": 0,
+      "phase": "setup",
+      "anchor": "kneeL",
+      "touch": [
+        {
+          "point": "kneeR",
+          "adjust": "hipR"
+        },
+        {
+          "point": "kneeL",
+          "adjust": "hipL"
+        }
+      ],
+      "pose": {
+        "root": [80, 0, 0],
+        "shoulderL": [80, 0, 0],
+        "elbowL": 40,
+        "shoulderR": [80, 0, 0],
+        "elbowR": 40,
+        "hipL": [80, 0, 0],
+        "kneeL": 90,
+        "ankleL": 90,
+        "hipR": [80, 0, 0],
+        "kneeR": 90,
+        "ankleR": 90
+      }
+    },
+    {
       "name": "Forearms and knees",
       "cue": "Elbows under your shoulders, knees on the floor.",
       "camera": 90,
@@ -88,7 +150,7 @@
     }
   ],
   "measure": "time",
-  "holdStep": 1,
+  "holdStep": 3,
   "defaults": {
     "seconds": 30
   },

@@ -268,6 +268,17 @@ By the HANDOFF section that describes the current behaviour.
 
 ### 8.4 Sound
 
+- Oct 2026: the title card was only for workouts with equipment; every workout has one now (owner). Plank and Knee Plank
+  went from tabletop straight to forearms and knees, a blend of two poses pinned at different points (hand, elbow) that
+  lifted a knee 15 px mid-move (the owner's "legs flash and twitch after tabletop"): they start on hands and knees now,
+  with a quiet step lowering to the forearms. Side planks counted as plank (chest facing sideways) and rolled a quarter
+  turn through the legs on the way in. The same exercise staged during a rest or the title card moved from the position
+  it ends in back to its start (Knee Push-Up from plank).
+- Oct 2026: with no setup and no demonstration, "Ready… Begin." waited in the step a rep ends in (set when Side Stepping
+  took its first step before "Begin"; it has a setup step now). For 192 exercises that was the effort: Band Pull Apart
+  with the arms apart, Squat at the bottom, Dumbbell Press overhead (owner's report). It waits in the rep's first step
+  now. The seated position lines offered a choice ("with feet flat or legs crossed"); they say how the next exercise
+  sits now.
 - Oct 2026: the coaching script's build check found Bound Angle, Side Plank and Wheel with `holdStep` on a setup step: in a workout they were never held; now the pose. The run-through used to be estimated at a flat 2 s a step; it's timed from its cues now.
 - Oct 2026: before, only NstructR+ counted; NstructR — then "Voice" — said names, switches and rests only. `say()` lost its `coachOnly` flag.
 - Sep 2026: before, the held step's cue — how to get into the pose — was never read.

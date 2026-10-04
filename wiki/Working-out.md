@@ -44,9 +44,9 @@ on. Beeps count down the last 3 seconds in Beeps, NstructR and NstructR+ modes.
 
 ### Equipment
 
-A workout that uses equipment starts with a title card: the workout's name and a list of what you'll need (for example
-dumbbells and a chair). It's said aloud too, and the workout carries on once all of it has been said; **Start** begins
-straight away. When the next exercise needs other equipment, it says what to do, on the screen and in NstructR and
+Every workout starts with a title card: the workout's name and, if it uses equipment, a list of what you'll need (for
+example dumbbells and a chair). It's said aloud too, and the workout carries on once all of it has been said; **Start**
+begins straight away. When the next exercise needs other equipment, it says what to do, on the screen and in NstructR and
 NstructR+ modes: "Put the dumbbells down · Position yourself by your chair", and gives you as long as that takes to
 say, with half a second before and after (about 4–5 seconds; longer at a slower
 [text-to-speech speed](Settings.md#text-to-speech-speed)). With a rest, that's added to the rest. With no rest between
@@ -60,8 +60,9 @@ and shown. The workout's time includes it. The yoga mat stays down, so it doesn'
 When the next exercise starts in another position (standing, kneeling, on all fours, sitting, lying on your back,
 front or side, plank, a squat with the hands down, Downward Dog or Dolphin), it also says how to get there while the
 figure moves: "Lower to the floor and roll onto your back.", "Lower to your left side, stacking your hips and knees."
-With equipment too, it comes in the order you'd do it: "Put the dumbbells down. Sit down on your mat with feet flat or
-legs crossed. Pick up the resistance band." It's timed the same way as an equipment change (added to the rest, or the move takes that long
+Sitting down, it says how the next exercise sits: legs out in front, legs wide, feet flat, knees bent, legs crossed,
+soles together, knees hugged in or on your heels. With equipment too, it comes in the order you'd do it: "Put the
+dumbbells down. Sit down on your mat with your feet flat. Pick up the resistance band." It's timed the same way as an equipment change (added to the rest, or the move takes that long
 with no rest) and shown on the rest screen. **Pause at equipment changes** doesn't wait for a change of position alone.
 
 ## Instruction

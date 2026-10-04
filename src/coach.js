@@ -16,6 +16,7 @@
   // a keyframe's move and pause as the engine plays them (resolveKeyframe's defaults)
   const moveMs = k => (k.durationMs == null ? 1000 : Math.max(0, +k.durationMs));
   const pauseMs = k => (k.holdMs == null ? 500 : Math.max(0, +k.holdMs));
+  const SAY_ONE_MS = 600;                                         // long enough to say "1" (an arrived step's least pause)
 
   /* versions: the keyframes of each version played in turn (one; two for alternating sides or directions), already
      mirrored or reversed for the side and direction.
@@ -24,7 +25,8 @@
      watchFirst, readyHold(n) } }.
      A step: { v, k, phase, lines, ... } plus what the player shows: guided, ready, say (a waited-for line), seconds
      (a hold), repNo, repOf, alt (which half of an alternating rep), call; still (the ready step: no move, no pause, where
-     the figure is) and noPause (the ready step with nothing before it: it moves into the rep's end pose). */
+     the figure is); arrived (with nothing before the ready step, the first rep's first step: already there, no move, but
+     its pause, at least SAY_ONE_MS, so "1" is said before the next step's move and call). */
   function setScript(versions, o) {
     const V0 = versions[0], n = versions.length, ph = C.phaseInfo(V0), steps = [];
     const push = (v, k, m) => steps.push({ v, k, lines: [], ...m });
@@ -53,10 +55,13 @@
       ph.rep.forEach(k => push(0, k, k === h ? { phase: 'hold', seconds: o.seconds, ...(o.voiced ? { say: text, lines: [{ text, gate: 'hold' }] } : {}) } : { phase: 'rep' }));
     } else {
       // with a voice, "Ready… Begin." and the count starts once it's said. It waits where the figure is (the end of the
-      // setup or the demonstration); with nothing before it, in the position a rep ends in, as before every other rep
+      // setup or the demonstration); with nothing before it, in the rep's first step, the way reps are written (Band Pull
+      // Apart: arms forward, not pulled apart; Squat: standing, not at the bottom), and the first rep starts from there:
+      // "1" with the move out of it (Oct 2026: it waited in the step a rep ends in, the effort for most exercises)
+      const before = steps[steps.length - 1], fromStart = o.voiced && !before;
       if (o.voiced) {
-        const before = steps[steps.length - 1], text = o.words.readyBegin;
-        push(before ? before.v : 0, before ? before.k : ph.end, { phase: 'ready', ready: true, say: text, lines: [{ text, gate: 'wait' }], ...(before ? { still: true } : { noPause: true }) });
+        const text = o.words.readyBegin;
+        push(before ? before.v : 0, before ? before.k : ph.start, { phase: 'ready', ready: true, say: text, lines: [{ text, gate: 'wait' }], still: true });
       }
       for (let i = 0; i < o.reps * n; i++) {
         const v = i % n, V = versions[v], alt = n > 1 ? v : null;
@@ -68,7 +73,7 @@
           // a step's call ("Forward", "Out to the right") as it starts; never on the rep's first step, where the count is
           const call = o.voiced && j > 0 && CALL_OK.test(V[k].call || '') ? V[k].call : null;
           if (call) lines.push({ text: call, gate: 'drop' });
-          push(v, k, { phase: 'rep', repNo, repOf: o.reps, alt, ...(call ? { call } : {}), lines });
+          push(v, k, { phase: 'rep', repNo, repOf: o.reps, alt, ...(call ? { call } : {}), ...(fromStart && i === 0 && j === 0 ? { arrived: true } : {}), lines });
         });
       }
     }
@@ -81,12 +86,12 @@
   function scriptSeconds(steps, versions, { tempo = 1, speech = text => String(text).split(/\s+/).filter(Boolean).length / WPS } = {}) {
     let t = 0;
     for (const st of steps) {
-      const kf = versions[st.v][st.k], move = st.still ? 0 : moveMs(kf) / 1000 / tempo;
+      const kf = versions[st.v][st.k], move = st.still || st.arrived ? 0 : moveMs(kf) / 1000 / tempo;
       const said = l => (l.text ? speech(l.text) : 0);
       const wait = st.lines.filter(l => l.gate === 'wait').reduce((s, l) => s + said(l), 0);
       const hold = st.lines.filter(l => l.gate === 'hold').reduce((s, l) => s + said(l), 0);
       if (st.phase === 'hold') t += Math.max(move, hold) + st.seconds;
-      else t += Math.max(move + (st.still || st.noPause ? 0 : pauseMs(kf) / 1000 / tempo), wait);
+      else t += Math.max(move + (st.still ? 0 : Math.max(pauseMs(kf) / tempo, st.arrived ? SAY_ONE_MS : 0) / 1000), wait);
     }
     return t;
   }
@@ -97,6 +102,6 @@
     return steps.flatMap(st => st.lines.map(l => (l.count ? (l.count === 1 ? '1' : l.count === l.of ? last : String(l.count)) : l.and ? and : l.text)));
   }
 
-  const api = { setScript, scriptSeconds, scriptLines, CALL_OK };
+  const api = { setScript, scriptSeconds, scriptLines, CALL_OK, SAY_ONE_MS };
   if (typeof module !== 'undefined') module.exports = api; else root.COACH = api;
 })(typeof window !== 'undefined' ? window : globalThis);

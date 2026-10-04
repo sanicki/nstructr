@@ -24,6 +24,13 @@ async def main():
                'Roll to one side, press up, and stand tall. Fold forward and walk your hands out to Downward Dog.',
                'Lower your knees and come up onto your hands. Tuck your toes, step forward, and rise to stand.',
                'Lower to your right side, stacking your hips and knees.'])
+        # a seated line says how the next exercise sits (the owner's lines offered a choice: "feet flat or legs crossed")
+        check('seated: how it sits', await pg.evaluate("['yoga-staff', 'yoga-seated-forward-bend', 'pil-saw', 'core-russian-twist', 'yoga-cow-face-arms-strap', 'pil-seal', 'pil-rolling-ball', 'seated-hamstring-stretch'].map(id => seatStyle(exById(id)))"),
+              ['flat', 'long', 'wide', 'bent', 'crossed', 'soles', 'tucked', 'one-leg'])
+        check('  the lines', await pg.evaluate("[['standing', 'flat'], ['all-fours', 'crossed'], ['kneeling', 'long'], ['standing', 'heels'], ['all-fours', 'heels'], ['kneeling', 'heels']].map(([a, h]) => positionLine(a, 'seated', '', h))"),
+              ['Sit down on your mat with your feet flat.', 'Shift your hips back and sit on your mat with your legs crossed.', 'Sit your hips down to the floor with your legs out in front.',
+               'Kneel down and sit back on your heels.', 'Shift your hips back to sit on your heels.', 'Sit your hips back onto your heels.'])
+        check('  no "or" left', await pg.evaluate("Object.values(POS_SAY).flatMap(Object.values).filter(l => typeof l === 'string' && / or /.test(l))"), [])
         check('changes', await pg.evaluate("""[['bw-squat', 'bw-glute-bridge', 'L'], ['fw-db-squat', 'band-glute-bridge', 'L'], ['bw-squat', 'bw-reverse-lunge', 'L'], ['bw-squat', 'side-clamshell', 'L'], ['bw-squat', 'side-clamshell', 'R']]
           .map(([a, c, s]) => { const x = exerciseChange(exById(a), exById(c), s); return x && [x.lines.join(' / '), x.equipment]; })"""),
               [['Lower to the floor and roll onto your back', False],
@@ -31,7 +38,7 @@ async def main():
                None, ['Lower to your left side, stacking your hips and knees', False], ['Lower to your right side, stacking your hips and knees', False]],
               'put down, change position, pick up; none standing to standing; the side lain on')
         check('estimate counts it', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['bw-squat', 'bw-glute-bridge'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
-          return equipmentSeconds(w); })()"""), 4.6, '0.5 + 9 words at 2.5 a second + 0.5')
+          return equipmentSeconds(w); })()"""), 6, 'the change 0.5 + 9 words at 2.5 a second + 0.5 = 4.6, the title card 0.5 + 1 word + 0.5 = 1.4')
         # with a rest: after the rest line
         await pg.evaluate(SAY); await pg.evaluate("setSound('voice'); setPref(EQUIP_PAUSE_KEY, 'on')")
         await pg.evaluate(WK + "(['bw-squat', 'bw-glute-bridge'], 5)"); await pg.wait_for_timeout(300)
@@ -47,7 +54,7 @@ async def main():
         # the same position: nothing to say
         await pg.evaluate("hush(); WP.phase = 'done'; SAID.length = 0"); await pg.evaluate(WK + "(['bw-squat', 'bw-reverse-lunge'], 0)"); await pg.wait_for_timeout(300)
         await pg.evaluate("S.speed = 20"); await pg.wait_for_function("S.ex.id === 'bw-reverse-lunge'", timeout=30000); await pg.wait_for_timeout(600)
-        check('same position: none', await pg.evaluate("SAID.filter(t => Object.values(POS_SAY).flatMap(Object.values).some(l => t.includes(l.split(',')[0].replace('{side} ', ''))))"), [], 'no position line said')
+        check('same position: none', await pg.evaluate("SAID.filter(t => Object.values(POS_SAY).flatMap(Object.values).map(l => typeof l === 'function' ? l('long') : l).some(l => t.includes(l.split(',')[0].replace('{side} ', ''))))"), [], 'no position line said')
         await pg.evaluate("hush(); WP.phase = 'done'; setPref(EQUIP_PAUSE_KEY, 'off')")
         check('errors', errs, []); await b.close()
 asyncio.run(main())

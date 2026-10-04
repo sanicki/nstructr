@@ -56,9 +56,11 @@ async def main():
         await pg.wait_for_timeout(2500)
         await pg.evaluate("wpAction('restSkip')"); await pg.wait_for_function("WP.phase === 'work'", timeout=10000)
         check('  Ready: next exercise', await pg.evaluate("S.ex.id"), 'chair-arm-raises')
-        # no equipment: no checklist; the same equipment: a plain rest
+        # no equipment: the title card without a checklist (every workout has one since Oct 2026); it carries on by itself
         await pg.evaluate("hush(); WP.phase = 'done'"); await pg.evaluate(WK + "(['bw-squat', 'bw-pushup'], 5)"); await pg.wait_for_timeout(300)
-        check('no equipment: no list', await pg.evaluate("WP.phase"), 'work')
+        check('no equipment: title, no list', await pg.evaluate("[WP.phase, WP.restKind, $('#wpRestTitle').textContent, $('#wpRestEquip').hidden, $('[data-wact=restSkip]').textContent]"), ['rest', 'start', 'T', True, 'Start'])
+        await pg.wait_for_function("WP.phase === 'work'", timeout=10000)
+        check('  then the first exercise', await pg.evaluate("S.ex.id"), 'bw-squat')
         # backup
         # leaving a chair for an exercise with no equipment: nothing to say (it said a lone ".", read out as "dot")
         await pg.evaluate("hush(); WP.phase = 'done'; setPref(EQUIP_PAUSE_KEY, 'off'); SAID.length = 0"); await pg.evaluate(WK + "(['chair-arm-raises', 'bw-squat'], 5)"); await pg.wait_for_timeout(300)
