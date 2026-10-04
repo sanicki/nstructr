@@ -196,6 +196,90 @@
   const onFurniture = ex => (ex.props || []).some(p => FURNITURE.includes(p.type));
   // sitting or lying on it, or the hands on it (feet up on a bench or ball: you lie or plank on the floor first)
   const RAISED = ['pelvis', 'spine', 'neckBase', 'handL', 'handR'];
+  /* Where each piece of equipment is in an exercise's first step (Oct 2026: said when it moves between exercises, the
+     same chair under the hands, then the feet): { 'Resistance band': 'feet-hands', Chair: 'sit', … }. Worked out from
+     the props (a band's ends and what it runs around) and from what rests on a surface (a chair, bench, step, ball or
+     roller) or touches the wall; a key, not words (the app words it: PLACE_SAY in 4b-speech.js). Equipment it can't
+     place has none. */
+  const HELD = { band: 'Resistance band', towel: 'Towel', strap: 'Yoga strap', ring: 'Pilates ring' };
+  const RESTS_ON = { chair: 'Chair', bench: 'Bench', step: 'Step', ball: 'Stability ball', roller: 'Foam roller' };
+  const part = k => typeof k !== 'string' ? 'anchor' : k.replace(/[LR]$/, '').replace(/^toe$/, 'foot').replace(/^armpit$/, 'back');
+  function placementsOf(ex) {
+    const seg = C.DEFAULT_SEGMENTS, props = ex.props || [], out = {};
+    let R, P;
+    try { R = C.resolveSequence(ex.keyframes, seg, ex, props); P = pointsOf(R[0], seg); } catch (e) { return out; }
+    const t = sub(P.neckBase, P.pelvis), f = cross(sub(P.shoulderR, P.shoulderL), t);          // the way the chest faces
+    const flatF = { x: f.x, z: f.z }, fl = Math.hypot(f.x, f.z) || 1;
+    // what a held one (band, towel, strap, ring) runs between and around, both sides as one: 'feet-hands' (standing on
+    // the middle, the ends in the hands), 'knees', 'anchor-hands/chest/ahead' (tied to a door, its height and which way)
+    for (const [type, name] of Object.entries(HELD)) {
+      const ps = props.filter(p => p.type === type); if (!ps.length) continue;
+      const ends = ps.flatMap(p => [p.from, ...(p.via || []), p.to]), parts = ends.map(part);
+      const n = k => new Set(ends.filter(e => part(e) === k)).size, has = k => parts.includes(k);
+      const kinds = [...new Set(parts)].sort().join('+');
+      let key = null;
+      if (has('anchor')) {
+        const a = ends.find(e => typeof e !== 'string'), y = +a.y || 0, d = { x: (+a.x || 0) - P.pelvis.x, z: (+a.z || 0) - P.pelvis.z };
+        const height = y >= P.headTop.y - 5 ? 'high' : y >= P.shoulderL.y + 15 ? 'face' : y >= (P.pelvis.y + P.shoulderL.y) / 2 ? 'chest' : y >= P.pelvis.y - 20 ? 'waist' : 'low';
+        const c = (d.x * flatF.x + d.z * flatF.z) / fl / (Math.hypot(d.x, d.z) || 1), way = c > 0.5 ? 'ahead' : c < -0.5 ? 'behind' : 'side';
+        key = kinds === 'anchor+hand' || kinds === 'anchor+back+hand' ? `anchor-hands/${height}/${way}` : kinds === 'anchor+knee' ? 'bar-knees' : null;
+      } else key = {
+        hand: n('hand') > 1 ? 'hands' : null, knee: 'knees', ankle: 'ankles', foot: n('foot') > 1 ? 'feet' : null,
+        'foot+hand': n('hand') > 1 ? (n('foot') > 1 ? 'feet-hands' : 'foot-hands') : 'foot-hand',
+        'back+hand': 'back-hands', 'ankle+hand': 'ankle-hand'
+      }[kinds] || null;
+      if (key) out[name] = key;
+    }
+    // what rests on a chair, bench, step, ball or roller: the points (and the middles of the thighs, shins and back)
+    // over it, touching it
+    const along = (a, b, e) => ({ x: P[a].x + (P[b].x - P[a].x) * e, y: P[a].y + (P[b].y - P[a].y) * e, z: P[a].z + (P[b].z - P[a].z) * e });
+    const Q = { ...P }, ALONG = [0.2, 0.35, 0.5, 0.65, 0.8];
+    for (const x of ['L', 'R']) ALONG.forEach((e, i) => { Q['thigh' + x + i] = along('hip' + x, 'knee' + x, e); Q['shin' + x + i] = along('knee' + x, 'ankle' + x, e); });
+    const thigh = Object.keys(Q).filter(k => k.startsWith('thigh')), shin = Object.keys(Q).filter(k => k.startsWith('shin'));
+    const fy = f.y / len(f), facing = Math.abs(fy) < 0.5 ? 'side' : fy > 0 ? 'up' : 'down';
+    const ahead = k => (P[k].x - P.pelvis.x) * flatF.x + (P[k].z - P.pelvis.z) * flatF.z > 0;
+    for (const s of R[0].supports || C.surfacesFrom(props)) {
+      const name = RESTS_ON[s.type]; if (!name || out[name]) continue;
+      const inside = q => s.type === 'ball' ? Math.hypot(q.x - s.cx, q.z - s.cz) < s.r : q.x >= s.x0 - 6 && q.x <= s.x1 + 6 && q.z >= s.z0 - 6 && q.z <= s.z1 + 6;
+      const on = k => Q[k] && inside(Q[k]) && C.supportAt(Q[k]) > 5 && Q[k].y - C.supportAt(Q[k]) < 12;
+      const any = (...ks) => ks.some(on), both = (a, b) => on(a + 'L') && on(a + 'R'), one = a => on(a + 'L') !== on(a + 'R');
+      let key = null;
+      if (s.type === 'roller') key = any('spine') || both('back') ? 'upper-back' : one('back') || one('armpit') ? 'side' : any('pelvis') ? 'glutes'
+        : any(...thigh) ? (facing === 'up' ? 'thighs-back' : facing === 'down' ? 'thighs-front' : 'thigh-side') : any(...shin, 'ankleL', 'ankleR') ? 'calves' : null;
+      else if (any('spine', 'neckBase')) key = 'lie';
+      else if (any('pelvis')) key = 'sit';
+      else if (s.type === 'ball' && any('footL', 'footR', 'toeL', 'toeR', 'ankleL', 'ankleR')) key = 'heels';
+      else if (any('backL', 'backR', 'armpitL', 'armpitR')) key = 'upper-back';
+      else if (any('footL', 'footR', 'toeL', 'toeR', 'ankleL', 'ankleR')) {
+        const feet = ['L', 'R'].filter(x => any('foot' + x, 'toe' + x, 'ankle' + x));
+        key = feet.length < 2 ? (ahead('foot' + feet[0]) ? 'one-foot' : 'back-foot')
+          : s.type === 'step' ? (any('ankleL', 'ankleR') ? 'stand' : 'toes-edge') : any('footL', 'footR', 'toeL', 'toeR') ? 'feet' : 'heels';
+      }
+      else if (any('handL', 'handR')) key = ahead(on('handL') ? 'handL' : 'handR') ? 'hands' : 'hands-behind';
+      else if (s.type === 'chair') {
+        // standing at the chair holding its backrest (one hand: beside it)
+        const g = { y: s.h + s.backHeight, z: s.back === 'behind' ? s.z0 : s.z1 };
+        const grip = ['handL', 'handR'].filter(k => Math.abs(P[k].y - g.y) < 15 && Math.abs(P[k].z - g.z) < 15);
+        key = grip.length > 1 ? 'hold-back' : grip.length ? 'hold-back-one' : null;
+      }
+      else if (s.type === 'step' || s.type === 'bench') key = 'face';
+      if (key) out[name] = key;
+    }
+    // the wall: what touches it, in the step its "at" names (hands, one hand side-on, the back, a forearm, the legs up
+    // it lying down); facing it (an inversion kicked up onto it, a ball thrown at it, holding a step's balance); none
+    // when it only holds a band's anchor or a chair
+    const w = props.find(p => p.type === 'wall');
+    if (w && w.at) {
+      const at = part(w.at), side = w.beside ? '-beside' : '';
+      let W = P;
+      try { W = pointsOf(R[w.keyframe || 0], seg); } catch (e) { }
+      const o = w.at.replace(/[LR]$/, m => (m === 'L' ? 'R' : 'L')), two = W[o] && Math.abs(w.beside ? W[o].x - W[w.at].x : W[o].z - W[w.at].z) < 10;
+      const key = at === 'hand' ? (two && !w.beside ? 'hands' : 'hand' + side) : at === 'back' ? 'back' : at === 'elbow' ? 'forearm' + side
+        : at === 'ankle' ? (facing === 'up' && P.pelvis.y < 40 ? (two ? 'legs' : 'leg') : 'face') : null;
+      if (key) out.Wall = key;
+    } else if (w && !out['Resistance band'] && !props.some(p => p.type === 'chair')) out.Wall = 'face';
+    return out;
+  }
   /* each rest pose, resolved on its own: no misses, and it is the position it rests in (the build checks this) */
   function checkRest() {
     const seg = C.DEFAULT_SEGMENTS, out = [];
@@ -206,6 +290,6 @@
     }
     return out;
   }
-  const api = { POSITIONS, LABELS, REST, MOVES, positionPath, positionRoute, classify, positionsOf, onEquipment, onFurniture, lyingSide, pointsOf, checkRest };
+  const api = { POSITIONS, LABELS, REST, MOVES, positionPath, positionRoute, classify, positionsOf, onEquipment, onFurniture, lyingSide, pointsOf, checkRest, placementsOf };
   if (typeof module !== 'undefined') module.exports = api; else root.POSITIONS_EX = api;
 })(typeof window !== 'undefined' ? window : globalThis);

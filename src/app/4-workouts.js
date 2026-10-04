@@ -121,14 +121,32 @@ const equipSpoken = lines => EQUIP_PAD + speechSeconds(lines.join(' ')) + EQUIP_
 const checklistLine = need => SAY.need(listWords(need.map(q => q.toLowerCase())));
 const fetchKey = q => q === 'Dumbbell' ? 'Dumbbells' : q;                     // one dumbbell or two: the same to fetch
 const equipOf = ex => new Set(((ex && ex.equipment) || []).map(fetchKey).filter(q => EQUIP[q]));
-/* what changes from one exercise to the next: { seconds, lines } or null */
+/* where each piece of an exercise's equipment is in its first step: { Chair: 'put your feet up on the seat', … } (with
+   "{it}"; PLACE_SAY in 4b-speech.js, worked out by POSITIONS_EX.placementsOf; the exercise's own "placement" first) */
+const PLACE_CACHE = new WeakMap();
+function placesOf(ex) {
+  if (!ex) return {};
+  if (!PLACE_CACHE.has(ex)) {
+    let keys = {}; try { keys = POSITIONS_EX.placementsOf(ex); } catch (e) { }
+    const out = {}, has = new Set(equipOf(ex));
+    for (const [q, k] of Object.entries(keys)) { const t = placePhrase(q, k); if (t && has.has(q)) out[q] = t; }
+    for (const [q, t] of Object.entries(ex.placement || {})) if (has.has(fetchKey(q)) && t) out[fetchKey(q)] = t;
+    PLACE_CACHE.set(ex, out);
+  }
+  return PLACE_CACHE.get(ex);
+}
+/* what changes from one exercise to the next: { seconds, lines, drop, get, place } or null. get: picking up what's new,
+   with where it goes ("Pick up the resistance band and loop it around your ankles"), what you go to first; place: what
+   stays but moves (the same chair, under the hands, then the feet: "Put your feet up on the seat"), once the new
+   things are there (by the wall, then the hands on the chair against it) */
 function equipmentChange(fromEx, toEx) {
-  const a = equipOf(fromEx), b = equipOf(toEx);
-  const put = [...a].filter(q => !b.has(q)), got = [...b].filter(q => !a.has(q)), all = [...put, ...got];
-  if (!all.length) return null;
-  const drop = put.map(q => EQUIP[q].drop).filter(Boolean), get = got.map(q => EQUIP[q].get), lines = [...drop, ...get];
+  const a = equipOf(fromEx), b = equipOf(toEx), pa = placesOf(fromEx), pb = placesOf(toEx);
+  // what you go to (a chair, the door anchor) before what you carry (the band you then tie to it)
+  const put = [...a].filter(q => !b.has(q)), got = [...b].filter(q => !a.has(q)).sort((x, y) => !!EQUIP[x].drop - !!EQUIP[y].drop);
+  const drop = put.map(q => EQUIP[q].drop).filter(Boolean), get = got.map(q => EQUIP[q].get + (pb[q] ? placeWith(pb[q]) : ''));
+  const place = [...b].filter(q => a.has(q) && pb[q] && pb[q] !== pa[q]).map(q => placeAlone(pb[q], q)), lines = [...drop, ...get, ...place];
   // stepping away from furniture (a chair to nothing) has nothing to do or say: no change (it said a lone "." before)
-  return lines.length ? { seconds: equipSpoken(lines), lines, drop, get } : null;
+  return lines.length ? { seconds: equipSpoken(lines), lines, drop, get, place } : null;
 }
 /* the body in an exercise's first step, as written (world points; cached per exercise object, as the estimates use it) */
 const START_CACHE = new WeakMap();
@@ -157,14 +175,14 @@ function seatStyle(ex) {
   return up('ankleL') > 10 && up('ankleR') > 10 ? 'bent' : 'flat';                           // feet up (Russian Twist) or down
 }
 /* what changes from one exercise to the next, in the order you do it (owner, Oct 2026): put down what you're done with,
-   change position, pick up what's next ("Put the dumbbells down. Sit down on your mat with your feet flat.
-   Pick up the resistance band."): { seconds, lines, equipment } or null. equipment: there's equipment to deal
+   change position, pick up what's next, move what stays ("Put the dumbbells down. Sit down on your mat with your feet
+   flat. Pick up the resistance band and loop it around your feet."): { seconds, lines, equipment } or null. equipment: there's equipment to deal
    with ("Pause at equipment changes" waits only for that). side: the next exercise's first side ('L' or 'R'), so a line
    to lying on the side names it; none for an estimate (the same length) */
 function exerciseChange(fromEx, toEx, side = null) {
   const eq = equipmentChange(fromEx, toEx), a = fromEx && posOf(fromEx).end, b = toEx && posOf(toEx).start;
   const pos = positionLine(a, b, side && b && b.startsWith('side-lying') ? lyingSideWord(toEx, side) : '', b === 'seated' ? seatStyle(toEx) : 'long').replace(/\.$/, '');
-  const lines = [...(eq ? eq.drop : []), ...(pos ? [pos] : []), ...(eq ? eq.get : [])];
+  const lines = [...(eq ? eq.drop : []), ...(pos ? [pos] : []), ...(eq ? [...eq.get, ...eq.place] : [])];
   return lines.length ? { seconds: equipSpoken(lines), lines, equipment: !!eq } : null;
 }
 // everything a workout (from one of its exercises on) uses, for the title card

@@ -47,7 +47,7 @@ on. Beeps count down the last 3 seconds in Beeps, NstructR and NstructR+ modes.
 Every workout starts with a title card: the workout's name and, if it uses equipment, a list of what you'll need (for
 example dumbbells and a chair). It's said aloud too, and the workout carries on once all of it has been said; **Start**
 begins straight away. When the next exercise needs other equipment, it says what to do, on the screen and in NstructR and
-NstructR+ modes: "Put the dumbbells down · Position yourself by your chair", and gives you as long as that takes to
+NstructR+ modes: "Put the dumbbells down · Position yourself by your chair and sit on it", and gives you as long as that takes to
 say, with half a second before and after (about 4–5 seconds; longer at a slower
 [text-to-speech speed](Settings.md#text-to-speech-speed)). With a rest, that's added to the rest. With no rest between
 exercises there's no rest screen: the figure takes that long to move into the next exercise while the words are said
@@ -62,8 +62,18 @@ front or side, plank, a squat with the hands down, Downward Dog or Dolphin), it 
 figure moves: "Lower to the floor and roll onto your back.", "Lower to your left side, stacking your hips and knees."
 Sitting down, it says how the next exercise sits: legs out in front, legs wide, feet flat, knees bent, legs crossed,
 soles together, knees hugged in or on your heels. With equipment too, it comes in the order you'd do it: "Put the
-dumbbells down. Sit down on your mat with your feet flat. Pick up the resistance band." It's timed the same way as an equipment change (added to the rest, or the move takes that long
+dumbbells down. Sit down on your mat with your feet flat. Pick up the resistance band, then put both feet on the middle of it and hold the ends." It's timed the same way as an equipment change (added to the rest, or the move takes that long
 with no rest) and shown on the rest screen. **Pause at equipment changes** doesn't wait for a change of position alone.
+
+### Where the equipment goes
+
+When the next exercise uses its equipment differently, it says so: picking something up says where it goes ("Pick up
+the resistance band and loop it around your thighs, just above the knees", "Set up your door anchor. Pick up the
+resistance band and anchor it at chest height, side-on to the anchor"), and equipment you already have says how it
+moves: from Incline Push-Up to Decline Push-Up on the same bench, "Put your feet up on the bench"; from Bicep Curl
+(standing on the band) to Glute Bridge, "Loop the band around your thighs, just above the knees"; from sitting on the
+chair to Calf Raises, "Stand behind the chair, holding the back". It's timed and shown like an equipment change, and
+**Pause at equipment changes** waits for it.
 
 ## Instruction
 

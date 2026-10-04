@@ -254,6 +254,11 @@ By the HANDOFF section that describes the current behaviour.
 ### 8.3c Equipment changes (Oct 2026, owner's choice of options 1–4, then the time from the words)
 
 - Oct 2026: the name was queued only once the equipment line had been said; with a slow voice the move in, timed from the estimate, was over first and the exercise's "Ready… Begin." came before its name.
+- Oct 2026: equipment that stayed from one exercise to the next was never mentioned, even when it moved (the same
+  chair under the hands for Incline Push-Up, then under the feet for Decline; a band in the hands, then around the
+  knees), and a pick-up line didn't say where it went ("Pick up the resistance band"). Owner's choices from the options
+  offered: lines worked out from the props with an optional per-exercise `placement`; the place folded into the pick-up
+  line when it's new; another spot on the same furniture counts as a move.
 
 ### 8.3b Between exercises: positions and at-rest poses
 

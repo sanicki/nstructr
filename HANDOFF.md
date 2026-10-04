@@ -734,7 +734,8 @@ representations that rotate the short, natural way) over adding a known issue; i
   (owner): put down, change position, pick up; timed like an equipment change (`exerciseChange(from, to, side)` in
   `4-workouts.js` returns `{ seconds, lines, equipment }`, from `equipmentChange`'s `drop` and `get`; `onWorkEnd`, the
   rest and the estimate use it): "Put the dumbbells down. Lower to the floor and roll onto your back. Pick up the
-  resistance band." Shown on the rest screen and captioned in every mode.
+  resistance band and loop it around your thighs, just above the knees." Shown on the rest screen and captioned in
+  every mode. Then what stays but moves (§8.3e).
 - The words (`4b-speech.js`): `POS_SAY[from][to]` for the eight floor and standing positions (the owner's 56 lines;
   "lay" corrected to "lie"; where a line offered a choice, "with feet flat or legs crossed", "on your heels or mat", the
   one said is how the next exercise sits: `seatStyle(ex)` from its first step's points (`startPoints`, cached per
@@ -748,6 +749,36 @@ representations that rotate the short, natural way) over adding a known issue; i
   stand tall. Fold forward and walk your hands out to Downward Dog."). Every pair has a line
   (`tools/e2e/position_changes.py`).
 - "Pause at equipment changes" waits for equipment only (`ch.equipment`): a change of position alone counts down.
+
+### 8.3e Where the equipment goes (Oct 2026, owner's choices)
+- Each exercise's equipment has a place in its first step: `POSITIONS_EX.placementsOf(ex)` (`src/positions.js`, pure)
+  returns keys, `{ 'Resistance band': 'feet-hands', Chair: 'sit', … }`, worked out from:
+  - a band, towel, strap or Pilates ring: what its ends and `via` points are, both sides as one (`hands`, `feet-hands`
+    standing or sitting on the middle with the ends in the hands, `foot-hands`, `foot-hand`, `back-hands`, `ankles`,
+    `knees`, `feet`, `ankle-hand`; tied to an anchor: `anchor-hands/<height>/<way>`, the height against the first step's
+    body (above the head, face, chest, waist, near the floor) and the anchor ahead, behind or to the side of the chest;
+    `bar-knees` for the assisted pull-up);
+  - a chair, bench, step, stability ball or foam roller: what rests on it (points, and along the thighs and shins, within
+    12 of the surface it's over, with the frame's own surfaces, so a rolled roller is where it is): lying (`lie`), the
+    seat (`sit`), the upper back (`upper-back`), both feet (`feet`; ankles only: `heels`; a step: `stand`, or toes only
+    `toes-edge`), one foot (`one-foot` ahead of the hips, else `back-foot`), the hands (`hands` ahead, `hands-behind`);
+    standing at a chair holding the top of its back (`hold-back`, one hand `hold-back-one`); nothing on a step or bench
+    (`face`); a roller under the `calves`, the thighs (`thighs-back` facing up, `thighs-front` down, `thigh-side`),
+    `glutes`, one armpit (`side`) or the `upper-back`;
+  - the wall: what its `at` point is, in its step (`hands` when both hands touch it, `hand`, `hand-beside`, `back`,
+    `forearm`, `forearm-beside`, the legs up it lying down `legs` / `leg`, else `face`); a wall with no `at` is `face`
+    unless it only holds a band's anchor or a chair.
+- The words (`4b-speech.js`): `PLACE_SAY[equipment][key]`, a phrase with `{it}` (`placePhrase`; the anchor's from
+  `ANCHOR_HEIGHT` and `ANCHOR_WAY`). An exercise's own `placement` (`{ "<equipment>": "phrase with {it}" }`, schema)
+  replaces it. `placesOf(ex)` (`4-workouts.js`, cached) has the phrases for the equipment it lists.
+- When it's said (`equipmentChange`): picking something up adds its place ("Pick up the Pilates ring and put it between
+  your knees"; ", then" before a phrase with its own "and"); what you go to (no `drop` in `EQUIP`: furniture, the wall,
+  the door anchor) comes before what you carry; equipment in both exercises whose phrase differs (another spot on the
+  same furniture counts) is said on its own after the pick-ups, `{it}` as its name: "Put your feet up on the bench."
+  The order: put down, position, pick up, move (`place`). Timed and shown like the rest of the change; it's an
+  equipment change for "Pause at equipment changes".
+- The build lists equipment with no place (`placements:` line): Ball Pass's ball (held), the wall Chair Incline Push-Up's
+  chair stands against. The first exercise's places aren't said (the title card lists what you need).
 
 ### 8.4 Sound
 - **The coaching script** (`src/coach.js`, Oct 2026): `COACH.setScript(versions, options)` turns one set of one
