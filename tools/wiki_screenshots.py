@@ -160,7 +160,7 @@ async def main():
         await pg.context.close()
         # --- the workout player, on a phone ---
         wp = await page(b)
-        await wp.evaluate("WK.hinted=true; setSound('voice'); startWorkout(LIB_WK[0], 6)"); await wp.wait_for_timeout(2500)
+        await wp.evaluate("WK.hinted=true; setSound('voice'); startWorkout(LIB_WK[0], 6); if (WP.restKind === 'start') wpAction('restSkip')"); await wp.wait_for_timeout(2500)
         await wp.evaluate(HIDE_SNACK); await shot(wp, 'player')
         box = await wp.evaluate("(()=>{const r=document.querySelector('.fs').getBoundingClientRect(); return [r.x+r.width/2, r.y+r.height/2]})()")
         await wp.touchscreen.tap(*box); await wp.wait_for_timeout(400)
@@ -168,7 +168,7 @@ async def main():
         await wp.evaluate("startRest(20, 'item')"); await wp.wait_for_timeout(1300); await wp.evaluate(HIDE_SNACK)
         await shot(wp, 'rest')
         # Easier / Harder in the controls (a Push-Up)
-        await wp.evaluate("WK.list.push({id:'pu', name:'Push-ups', blocks:[{id:'b', name:'Main', items:[newItem(exById('bw-pushup'))]}]}); startWorkout(wkById('pu'))"); await wp.wait_for_timeout(2500)
+        await wp.evaluate("WK.list.push({id:'pu', name:'Push-ups', blocks:[{id:'b', name:'Main', items:[newItem(exById('bw-pushup'))]}]}); startWorkout(wkById('pu')); if (WP.restKind === 'start') wpAction('restSkip')"); await wp.wait_for_timeout(2500)
         await wp.touchscreen.tap(*box); await wp.wait_for_timeout(400); await wp.evaluate(HIDE_SNACK)
         await shot(wp, 'player-swap')
         await wp.context.close()

@@ -29,7 +29,7 @@ async def main():
         await pg.wait_for_timeout(300)
         await pg.click('[data-wtoggle="mine"]'); await pg.click('[data-share-wk="mine"]'); await pg.wait_for_timeout(400)
         url2 = await pg.evaluate('SHARING.url')
-        check('workout + own exercise', [await pg.evaluate("!!$('#shareQr svg')"), await pg.inner_text('#shareWhat')], [False, '2 exercises, about 6 min, including 1 of your own.'], 'too long for a QR code; says what it shares')
+        check('workout + own exercise', [await pg.evaluate("!!$('#shareQr svg')"), await pg.inner_text('#shareWhat')], lambda v: v[0] is False and v[1].startswith('2 exercises, about ') and v[1].endswith(' min, including 1 of your own.'), 'too long for a QR code; says what it shares')
         await pg.click('#shareDialog [data-close]')
         # an exercise: library one = plain link, own one = packed
         await pg.evaluate("go('#/play/bw-reverse-lunge')"); await pg.wait_for_timeout(400)

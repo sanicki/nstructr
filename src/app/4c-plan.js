@@ -114,8 +114,11 @@ function stagePlan(p, minMs = 0) {
   const fromBox = scene.getAttribute('viewBox'), drawnX = S.drawnX;
   let plan = p.plan, meta = p.meta, trans = 0, fade = false;
   // a new exercise; or the same one's other side when that is another position (Clamshell: from one side, onto the back,
-  // onto the other; straight across it flipped through the air)
-  if (prevLast && !reducedMotion() && (exChanged || prevEx)) {
+  // onto the other; straight across it flipped through the air). Not the same exercise staged during a rest or the title
+  // card (no step callbacks then): the figure is already at its start (Oct 2026: it moved from the position the exercise
+  // ends in, Knee Push-Up from plank, back to where it already was)
+  const staged = !exChanged && S.onStep == null;
+  if (prevLast && !reducedMotion() && (exChanged || prevEx) && !staged) {
     let way = transitionFrames(prevEx, p.ex, prevLast, plan[0], !exChanged);
     if (way === 'fade') { way = null; fade = true; }
     if (way) {
@@ -136,7 +139,7 @@ function stagePlan(p, minMs = 0) {
   // arrives (draw in src/app/1-engine.js)
   S.oldProps = trans ? { back: $('#propsBack').innerHTML, front: $('#propsFront').innerHTML, shift: S.shiftX } : null;
   S.mode = 'workout'; S.ex = p.ex; S.seg = p.seg; S.props = p.props; S.tempo = p.tempo; S.speed = 1;
-  S.resolved = plan; S.planMeta = meta; S.trans = trans; S.idx = 0; S.prev = null; S.from = prevLast; S.planDone = false; S.t = 0;
+  S.resolved = plan; S.planMeta = meta; S.trans = trans; S.idx = 0; S.prev = null; S.from = staged ? null : prevLast; S.planDone = false; S.t = 0;   // (staged: already there)
   S.bandRest = bandRestLengths(S.props, plan, S.seg);
   // travelling: how far along each step of the plan is (each rep carries on from where the last one ended)
   S.travel = !!p.ex.travel; S.phase = phaseInfo(p.ex.keyframes); S.offs = [{ x: 0, z: 0 }];

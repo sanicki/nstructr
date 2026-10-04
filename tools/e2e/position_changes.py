@@ -38,7 +38,7 @@ async def main():
                None, ['Lower to your left side, stacking your hips and knees', False], ['Lower to your right side, stacking your hips and knees', False]],
               'put down, change position, pick up; none standing to standing; the side lain on')
         check('estimate counts it', await pg.evaluate("""(() => { const w = { id: 'e', name: 'E', blocks: [{ id: 'b', name: 'B', items: ['bw-squat', 'bw-glute-bridge'].map(id => ({ ...newItem(exById(id)), reps: 1 })) }] };
-          return equipmentSeconds(w); })()"""), 4.6, '0.5 + 9 words at 2.5 a second + 0.5')
+          return equipmentSeconds(w); })()"""), 6, 'the change 0.5 + 9 words at 2.5 a second + 0.5 = 4.6, the title card 0.5 + 1 word + 0.5 = 1.4')
         # with a rest: after the rest line
         await pg.evaluate(SAY); await pg.evaluate("setSound('voice'); setPref(EQUIP_PAUSE_KEY, 'on')")
         await pg.evaluate(WK + "(['bw-squat', 'bw-glute-bridge'], 5)"); await pg.wait_for_timeout(300)

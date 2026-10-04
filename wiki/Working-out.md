@@ -44,9 +44,9 @@ on. Beeps count down the last 3 seconds in Beeps, NstructR and NstructR+ modes.
 
 ### Equipment
 
-A workout that uses equipment starts with a title card: the workout's name and a list of what you'll need (for example
-dumbbells and a chair). It's said aloud too, and the workout carries on once all of it has been said; **Start** begins
-straight away. When the next exercise needs other equipment, it says what to do, on the screen and in NstructR and
+Every workout starts with a title card: the workout's name and, if it uses equipment, a list of what you'll need (for
+example dumbbells and a chair). It's said aloud too, and the workout carries on once all of it has been said; **Start**
+begins straight away. When the next exercise needs other equipment, it says what to do, on the screen and in NstructR and
 NstructR+ modes: "Put the dumbbells down · Position yourself by your chair", and gives you as long as that takes to
 say, with half a second before and after (about 4–5 seconds; longer at a slower
 [text-to-speech speed](Settings.md#text-to-speech-speed)). With a rest, that's added to the rest. With no rest between

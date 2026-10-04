@@ -173,7 +173,7 @@ const listWords = xs => xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(',
 const equipPauseOn = () => pref(EQUIP_PAUSE_KEY, 'off') === 'on';
 /* the time the changes add to a workout: what's said between its exercises (equipment, position), and the checklist */
 function equipmentSeconds(w) {
-  const flat = flattenWorkout(w), need = flat.length ? neededFrom(flat, 0) : []; let t = need.length ? equipSpoken([w.name, checklistLine(need)]) : 0;   // the title card: its name, then the list
+  const flat = flattenWorkout(w), need = flat.length ? neededFrom(flat, 0) : []; let t = flat.length ? equipSpoken([w.name, ...(need.length ? [checklistLine(need)] : [])]) : 0;   // the title card: its name, then the list
   for (let i = 1; i < flat.length; i++) { const c = exerciseChange(exById(flat[i - 1].item.ex), exById(flat[i].item.ex)); if (c) t += c.seconds; }
   return t;
 }

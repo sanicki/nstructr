@@ -19,7 +19,7 @@ async def main():
           localStorage.setItem('nstructr-rest-between-v1','1'); WK.list.push({id:'circ',name:'Circuit Test',blocks:[
             {id:'b1',name:'Circuit',rounds:2,roundRest:2,items:[mk('bw-squat',{reps:3}), mk('core-forearm-plank',{seconds:20})]},
             {id:'b2',name:'Finisher',items:[mk('bw-reverse-lunge',{reps:2,sides:'alternate'})]}]});
-          saveWorkouts(); setSound('coach'); startWorkout(wkById('circ'));})()""")
+          saveWorkouts(); setSound('coach'); startWorkout(wkById('circ')); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip');})()""")
         check('estimate', await pg.evaluate("fmtMin(workoutSeconds(wkById('circ')))"), lambda t: t.endswith('min'))
         check('flattened', await pg.evaluate("WP.flat.map(x=>x.block.name+' r'+(x.round+1)+' '+x.item.ex)"), ['Circuit r1 bw-squat', 'Circuit r1 core-forearm-plank', 'Circuit r2 bw-squat', 'Circuit r2 core-forearm-plank', 'Finisher r1 bw-reverse-lunge'])
         seen=[]; last=None
@@ -42,7 +42,7 @@ async def main():
         check('history entries', [len(log), {k:log[-1][k] for k in ['name','completed','exercisesDone','exercisesTotal']}, log[-1]['exercises'][0]],
               [1, {'name': 'Circuit Test', 'completed': True, 'exercisesDone': 5, 'exercisesTotal': 5}, {'ex': 'bw-squat', 'name': 'Squat', 'category': 'Strength', 'measure': 'reps', 'sets': 1, 'reps': 3, 'block': 'Circuit', 'round': 1}])
         # stop early -> partial entry
-        await pg.evaluate("startWorkout(wkById('circ'))"); await pg.wait_for_timeout(200)
+        await pg.evaluate("startWorkout(wkById('circ')); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip')"); await pg.wait_for_timeout(200)
         await pg.evaluate("S.speed=20"); await pg.wait_for_timeout(1500)
         await pg.evaluate("go('#/workouts')"); await pg.wait_for_timeout(300)
         log=await pg.evaluate("loadLog()"); check('after early stop:', [len(log), {k:log[-1][k] for k in ['completed','exercisesDone','exercisesTotal']}], [2, {'completed': False, 'exercisesDone': 1, 'exercisesTotal': 5}])

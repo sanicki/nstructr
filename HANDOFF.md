@@ -624,7 +624,9 @@ representations that rotate the short, natural way) over adding a known issue; i
   come back there: a bridge at the top, a forward fold). Downward Dog and Dolphin need the hips over the hands or
   forearms, the chest facing down and the hands well ahead of the feet (more than 1.1 leg lengths: Down Dog is ~1.35, a
   standing fold ≤ 0.9; bridges face up); the squat, the feet and hands down with both legs bent (hip to ankle under 0.6
-  of the leg). At a wall or on furniture these three count as standing (you walk up to it). `startPosition` /
+  of the leg). At a wall or on furniture these three count as standing (you walk up to it). Plank needs the chest facing down;
+  on the hands and feet facing sideways is lying on the side with the hips low (propped on a forearm: the IT band roll),
+  else none (a raised side plank: Pilates Side Bend is "other"). `startPosition` /
   `endPosition` override the guess (`"other"`: none fits, a crossfade; no library exercise needs it). Leg Pull and the
   calf and hamstring foam roller rolls are set to `seated` (their sources start sitting, legs long). The build checks
   the rest poses and prints the counts and any exercise it can't place (not on equipment) so it gets an override.
@@ -679,6 +681,8 @@ representations that rotate the short, natural way) over adding a known issue; i
   straight down, then lift the hips). `positionPath` takes the quickest route (Dijkstra
   by steps): standing → on the back is squat, sit back, sit, lie back; on the back → face down is sit up, sit back,
   crouch, all fours, lower down, lie down (the longest). Supine ↔ either side: arm up, roll (above).
+- The same exercise staged during a rest or the title card (`stagePlan` with no step callbacks) doesn't move again when
+  it starts: the figure is already at its start (it used to go from the position the exercise ends in).
 - `transitionFrames` resolves [the last position's rest pose, …route] as one sequence, shifts it to stand between the two
   exercises, turns the camera step by step from the last exercise's to the next one's, and times each step by how far
   the body travels (0.6–1.5 s: 350 ms + 5 ms per px of the farthest of head, pelvis, hands and feet). The next
@@ -709,12 +713,12 @@ representations that rotate the short, natural way) over adding a known issue; i
   into the next exercise (the transition frames and the step into the first pose, §8.3b) to last at least that long;
   with no way in (a crossfade, reduced motion) the first pose waits that long (a held copy of it, `phase:
   'transition'`, so the new equipment fades in after it).
-- **Workout title card** (owner: "You'll need" belongs on a workout title card, not on the first exercise's card): a
-  workout that uses any of it starts with the rest screen as a title card (`kind: 'start'`): label "Workout", the
-  workout's name (`#wpRestTitle`), "You'll need:" and the equipment as bullets (a list, two columns from 5 items;
+- **Workout title card** (owner: "You'll need" belongs on a workout title card, not on the first exercise's card; every
+  workout has one since Oct 2026, owner): every workout starts with the rest screen as a title card (`kind: 'start'`):
+  label "Workout", the workout's name (`#wpRestTitle`), with equipment "You'll need:" and the equipment as bullets (a list, two columns from 5 items;
   owner, Oct 2026), said as one line, "You'll need: dumbbells and chair" (`checklistLine`; from where it starts, so a
   resumed workout lists what's left); no countdown (the ticker leaves it alone: `WP.restKind`), no +15 s, the button
-  reads Start (Ready when pausing). It says the name, then after half a second the list, and lasts that long
+  reads Start (Ready when pausing, with equipment only: a title card without any carries on by itself). It says the name, then after half a second the list, and lasts that long
   (`equipSpoken([name, list])`), or until the voice has finished, then half a second more (`WP.restTalking`; Oct 2026:
   a voice slower than the estimate was cut off by the first exercise); then the first exercise starts and names
   itself as usual.

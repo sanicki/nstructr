@@ -12,7 +12,7 @@ async def main():
         pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         await pg.click('[data-wstart="lib:beginner-yoga-20"]'); await pg.wait_for_timeout(300)
-        check('Start goes straight in', await pg.evaluate("[location.hash.slice(0,8), WP.phase, !!$('#startDialog')]"), ['#/wplay/', 'work', False])
+        check('Start goes straight in', await pg.evaluate("[location.hash.slice(0,8), WP.phase, WP.restKind, !!$('#startDialog')]"), ['#/wplay/', 'rest', 'start', False], 'no sheet before: the player, at the workout title card (every workout has one since Oct 2026)')
         await pg.evaluate("exitWorkout()"); await pg.wait_for_timeout(300)
         check('Import on Workouts page', await pg.evaluate("!!document.querySelector('#view-workouts [data-act=import]')"), False)
         await pg.click('[data-wtoggle="lib:beginner-yoga-20"]'); await pg.wait_for_timeout(150)

@@ -8,7 +8,7 @@ async def main():
         b=await p.chromium.launch(); pg=await b.new_page(viewport={'width':360,'height':398}, device_scale_factor=2.63, has_touch=True, is_mobile=True); errs=[]
         pg.on('pageerror',lambda e: errs.append(str(e)))
         await pg.goto(URL, wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
-        await pg.evaluate("WK.hinted=true; setSound('beeps'); startWorkout(LIB_WK[0], 4)"); await pg.wait_for_timeout(600)
+        await pg.evaluate("WK.hinted=true; setSound('beeps'); startWorkout(LIB_WK[0], 4); if (WP.phase === 'rest' && WP.restKind === 'start') wpAction('restSkip')"); await pg.wait_for_timeout(600)
         st=lambda: pg.evaluate("({playing:S.playing, exercise:WP.i, controls:$('#wpControls').classList.contains('show')})")
         nb=await pg.evaluate("(()=>{const r=document.querySelector('[data-wact=nextItem]').getBoundingClientRect(); return [r.x+r.width/2, r.y+r.height/2]})()")
         pb=await pg.evaluate("(()=>{const r=$('#wpPlay').getBoundingClientRect(); return [r.x+r.width/2, r.y+r.height/2]})()")
@@ -42,6 +42,6 @@ async def main():
         await pg.evaluate("exitWorkout()"); await pg.wait_for_timeout(300)
         await pg.evaluate("go('#/workout/' + customizeWorkout(LIB_WK[0]).id)"); await pg.wait_for_timeout(300)
         await pg.click('[data-wact="start"]'); await pg.wait_for_timeout(300)
-        check('Start in the editor', await pg.evaluate("[location.hash.slice(0, 8), WP.phase]"), ['#/wplay/', 'work'])
+        check('Start in the editor', await pg.evaluate("[location.hash.slice(0, 8), WP.phase, WP.restKind]"), ['#/wplay/', 'rest', 'start'], 'straight into the player, at the workout title card')
         check('errors', errs, []); await b.close()
 asyncio.run(main())

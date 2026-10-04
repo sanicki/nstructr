@@ -17,7 +17,9 @@ async def main():
         await pg.evaluate(FAKE)
         await pg.evaluate("setSound('voice')")
         await pg.click('[data-wstart]'); await pg.wait_for_timeout(1500)
-        check('first line, not cut off', await pg.evaluate("[SPOKEN.filter(Boolean).slice(0,1), CANCELS.filter(Boolean)]"), [['Easy Pose.'], []], 'cancelled: none')
+        check('first lines, not cut off', await pg.evaluate("[SPOKEN.filter(Boolean).slice(0,1), CANCELS.filter(Boolean)]"), [["20-Minute Beginner's Yoga."], []], 'the workout title first; cancelled: none')
+        await pg.wait_for_timeout(2500)
+        check('  then the first exercise', await pg.evaluate("SPOKEN.filter(Boolean).slice(1,2)"), ['Easy Pose.'])
         await pg.evaluate("exitWorkout()"); await pg.wait_for_timeout(300)
         # coming from an exercise page that is speaking, to Workouts: that voice stops
         await pg.evaluate("SPOKEN.length=0; CANCELS.length=0; go('#/play/bw-squat')"); await pg.wait_for_timeout(600)
