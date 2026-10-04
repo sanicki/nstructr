@@ -37,7 +37,9 @@ async def main():
             check(f'{mode}: still during Ready', [moved, len(ready) > 20], [0, True], 'the figure never changes, over 20+ frames')
             check(f'{mode}: "1" as rep 1 starts', first and first['said'], '1')
             await ctx.close()
-        # every reps exercise: the ready step is the frame before it, held (no move), or with nothing before it the rep's end
+        # every reps exercise: the ready step is the frame before it, held (no move), or with nothing before it the rep's
+        # first step (how reps are written: arms forward before a pull-apart, standing before a squat; Oct 2026), and the
+        # first rep's first step is already there (no move, its pause kept for "1")
         ctx = await b.new_context(viewport={'width': 412, 'height': 860}, service_workers='block'); pg = await ctx.new_page(); pg.on('pageerror', lambda e: errs.append(str(e)))
         await pg.goto(URL + '#/workouts', wait_until='domcontentloaded'); await pg.wait_for_function("typeof equipPauseOn === 'function'")
         bad = await pg.evaluate("""(async () => { const idx = await (await fetch('library/index.json')).json(); const out = []; WP.shown = new Set();
@@ -47,7 +49,9 @@ async def main():
               let p; try { p = buildPlan(it, seg); } catch (e) { out.push(ex.id + ': ' + e.message); continue; }
               const r = p.meta.findIndex(m => m.ready); if (r < 0) { out.push(ex.id + ': no ready step'); continue; }
               const R = p.plan[r];
-              if (r > 0 ? (R.dur !== 0 || JSON.stringify(R.pose) !== JSON.stringify(p.plan[r - 1].pose)) : R.step !== phaseInfo(ex.keyframes).end) out.push(mode + ' ' + ex.id);
+              const F = p.plan[r + 1];
+              if (r > 0 ? (R.dur !== 0 || JSON.stringify(R.pose) !== JSON.stringify(p.plan[r - 1].pose))
+                : (R.step !== phaseInfo(ex.keyframes).start || R.dur !== 0 || F.dur !== 0 || F.step !== R.step || JSON.stringify(F.pose) !== JSON.stringify(R.pose))) out.push(mode + ' ' + ex.id);
             } }
           return out; })()""")
         check('every reps exercise: ready holds still', bad, [])

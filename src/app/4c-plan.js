@@ -51,7 +51,7 @@ function buildPlan(item, segInfo) {
     watch: !shown.has(demoKeyOf(item)), words: scriptWords() });
   const plan = meta.map(st => {
     const r = versions[st.v].R[st.k];
-    return st.still ? { ...r, dur: 0, hold: 0 } : st.noPause ? { ...r, hold: 0 } : st.phase === 'hold' ? { ...r, hold: item.seconds * 1000 * tempo } : r;
+    return st.still ? { ...r, dur: 0, hold: 0 } : st.arrived ? { ...r, dur: 0, hold: Math.max(r.hold, COACH.SAY_ONE_MS * tempo) } : st.phase === 'hold' ? { ...r, hold: item.seconds * 1000 * tempo } : r;
   });
   const V0 = versions[0].R;
   plan.walls = V0.walls; plan.supports = V0.supports;

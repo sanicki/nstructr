@@ -551,7 +551,7 @@ representations that rotate the short, natural way) over adding a known issue; i
 ### 8.1 Product
 - **Workouts are the focus**; Workouts is the first and default tab. Tabs: Workouts, Exercises, Settings
   (old links `#/explore`, `#/saved`, `#/create` redirect).
-- NstructR and NstructR+ say **"Ready… Begin."** while the figure waits where it is (the end of the setup or of the demonstration; with neither, in the position a rep ends in, as before every other rep), and the rep's first move comes with "1"; the count waits for it (a `ready` step, `S.canAdvance`), then 1, 2, 3 … "Last one" ("1" is never dropped for overlapping speech). Holds: **"Ready… Hold for N seconds."**, and the countdown waits for it.
+- NstructR and NstructR+ say **"Ready… Begin."** while the figure waits where it is (the end of the setup or of the demonstration; with neither, in the rep's first step, the way reps are written: arms forward before a Band Pull Apart, standing before a Squat; the first rep then starts from there, its first step not moving but pausing at least 0.6 s for "1"), and the rep's first move comes with "1"; the count waits for it (a `ready` step, `S.canAdvance`), then 1, 2, 3 … "Last one" ("1" is never dropped for overlapping speech). Holds: **"Ready… Hold for N seconds."**, and the countdown waits for it.
 - One repo; library and app together. Contributions via **in-app Submit → GitHub issue form → bot PR**, plus
   **share links** (both roadmap).
 - Content: exercises are written **in our own words**, citing sources (Yoga Journal, BHF, Mayo Clinic, NHS,
