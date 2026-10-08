@@ -5,22 +5,23 @@ function poseThumbSVG(ex, kf, opts = {}) {
   const idx = ex.keyframes.indexOf(kf);
   const r = idx >= 0 ? seq[idx] : resolveKeyframe(kf, seg, ex);
   SUPPORTS = r.supports || seq.supports || [];
-  const P = fkAt(r.pose, seg, place(r.pose, seg, r.rule)), Q = project(P, r.cam), cam = r.cam;
-  const proj = p => project({ p }, cam).p;
+  const P = fkAt(r.pose, seg, place(r.pose, seg, r.rule)), cam = r.cam, tilt = r.tilt, Q = project(P, cam, tilt);
+  const proj = p => project({ p }, cam, tilt).p;
   const pts = POINTS.map(k => Q[k]);
   let minX = Math.min(...pts.map(p => p.x)) - 26, maxX = Math.max(...pts.map(p => p.x)) + 26;
-  const walls = (seq.walls || []).map(wl => (wl ? wallOnScreen(wl, cam) : null));
+  const walls = (seq.walls || []).map(wl => (wl ? wallOnScreen(wl, cam, tilt) : null));
   for (const w of walls) if (w && w.show > 0.5) { minX = Math.min(minX, w.x - 12); maxX = Math.max(maxX, w.x + 12); }
-  const surfaces = surfaceShapes(r.supports || seq.supports || [], cam);   // (the step's own: a rolling ball has moved)
+  const surfaces = surfaceShapes(r.supports || seq.supports || [], cam, tilt);   // (the step's own: a rolling ball has moved)
   for (const s of surfaces) { minX = Math.min(minX, s.x0 - 8); maxX = Math.max(maxX, s.x1 + 8); }
-  let minY = Math.min(...pts.map(p => p.y)) - 26, maxY = FLOOR + 14;
+  let minY = Math.min(...pts.map(p => p.y)) - 26, maxY = Math.max(FLOOR + 14, ...pts.map(p => p.y + 14));   // (looking down, the near end is lower)
+  if (tilt) for (const s of surfaces) minY = Math.min(minY, s.y0 - 8);
   // a carried stability ball, all of it
   const held = heldAt(r, r, 1, P);
   for (const pr of (ex.props || []).filter(carried)) { const c = proj(held || P.handL), rad = num(pr.r) || 58;
     minX = Math.min(minX, c.x - rad - 6); maxX = Math.max(maxX, c.x + rad + 6); minY = Math.min(minY, c.y - rad - 6); }
   for (const b of seq.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 12);
   const w = maxX - minX, h = maxY - minY, s = Math.max(w, h, 150);
-  const vx = (minX + maxX) / 2 - s / 2, vy = maxY - s;
+  const vx = (minX + maxX) / 2 - s / 2, vy = tilt ? (minY + maxY) / 2 - s / 2 : maxY - s;   // (looking down: centred)
   // each limb a filled capsule (a bar with round ends, 10 wide), not a stroked line: Chrome on Android drew some thick
   // round-capped lines of these thumbnails (the lower legs of Barbell Curl and Barbell RDL) as hairlines, Sep 2026
   const L = (a, b, c) => { const A = Q[a], B = Q[b], r = 5, len = Math.hypot(B.x - A.x, B.y - A.y), f = n => n.toFixed(1);
@@ -43,7 +44,7 @@ function poseThumbSVG(ex, kf, opts = {}) {
     if (WEIGHT_TYPES.includes(pr.type)) { over += weightSVG(pr, P, M0, proj, pr.type === 'kettlebell' ? gripAt(r, r, 1) : null, pr.type === 'medball' ? heldAt(r, r, 1, P) : null); return ''; }
     if (pr.type === 'bar') { over += barSVG(pr, proj, 'tbar'); return ''; }
     if (pr.type === 'ring') { over += ringSVG(pr, P, proj, 'tring'); return ''; }
-    if (pr.type === 'wall') { const wl = walls[i]; return wl && wl.show > 0.5 ? `<line class="tw" x1="${wl.x.toFixed(1)}" y1="${FLOOR + 7}" x2="${wl.x.toFixed(1)}" y2="${(vy - 5).toFixed(1)}"/>` : ''; }
+    if (pr.type === 'wall') { const wl = walls[i]; return wl && wl.show > 0.5 ? `<line class="tw" x1="${wl.x.toFixed(1)}" y1="${(wl.y + 7).toFixed(1)}" x2="${wl.x.toFixed(1)}" y2="${(vy - 5).toFixed(1)}"/>` : ''; }
     let route = propRoute(P, pr);
     if (!route) return '';
     if (pr.type === 'strap') route = strapPoints(route, rest[i]);
@@ -60,5 +61,5 @@ function poseThumbSVG(ex, kf, opts = {}) {
   }).join('');
   const surf = surfaces.map(sh => `<path class="ts${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" d="${sh.d}"/>`).join('');
   return `<svg class="thumb" viewBox="${vx.toFixed(1)} ${vy.toFixed(1)} ${s.toFixed(1)} ${s.toFixed(1)}" aria-hidden="true">
-    <line x1="${vx}" y1="${FLOOR + 7}" x2="${vx + s}" y2="${FLOOR + 7}" class="tf"/>${surf}${back}${figure}${over}</svg>`;
+    ${tilt ? `<path class="tf tilted" d="${floorShape(cam, tilt, 200, vx, vx + s).d}"/>` : `<line x1="${vx}" y1="${FLOOR + 7}" x2="${vx + s}" y2="${FLOOR + 7}" class="tf"/>`}${surf}${back}${figure}${over}</svg>`;
 }

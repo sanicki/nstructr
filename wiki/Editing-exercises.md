@@ -31,7 +31,8 @@ suggest your change for everyone's library: **Share → Submit to library** ([ho
 ## Changing the poses (Advanced exercise editor)
 
 Turn on **Advanced exercise editor** in [Settings → Import & tools](Settings.md#import--tools) to also get the poses: the camera
-(**Side** or **Front**, or any angle in between), every joint with − / + buttons (hold to repeat; steps of 1°, 5° or
+(**Side** or **Front**, or any angle in between), the **camera tilt** (0 is level with the floor; 20–35 looks down from
+above, for poses flat on the floor), every joint with − / + buttons (hold to repeat; steps of 1°, 5° or
 15°), and the exercise's JSON.
 
 The figure is 3D, jointed like an artist's mannequin. Hips, shoulders, the back, the head and the whole body have

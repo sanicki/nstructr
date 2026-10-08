@@ -50,7 +50,7 @@ function ogImage(exercises) {
     // the held pose, as the thumbnails pick it (latest on a tie)
     let i = 0; ex.keyframes.forEach((k, j) => { if ((k.holdMs || 0) >= (ex.keyframes[i].holdMs || 0)) i = j; });
     const r = R[i];                                                      // (none of them stands on a surface)
-    const Q = C.project(C.fkAt(r.pose, seg, C.place(r.pose, seg, r.rule)), r.cam);
+    const Q = C.project(C.fkAt(r.pose, seg, C.place(r.pose, seg, r.rule)), r.cam, r.tilt);
     const xs = Object.values(Q).map(p => p.x), top = Math.min(...Object.values(Q).map(p => p.y)) - seg.head;
     figs.push({ Q, minX: Math.min(...xs) - 8, maxX: Math.max(...xs) + 8, top });
   }

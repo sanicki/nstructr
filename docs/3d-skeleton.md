@@ -32,7 +32,8 @@ A 3D skeleton removes the cause instead of patching each case.
 - **Forward kinematics** gives 3D points for every body point (the same names as today: `ankleL`, `toeR`,
   `handL`…).
 - A **camera** is just a rotation about the vertical axis (side = 90°, front = 0°, anything in between),
-  plus the existing framing. The view turning becomes a real turn: bodies stay rigid.
+  plus the existing framing. The view turning becomes a real turn: bodies stay rigid. (Since Oct 2026 it can also
+  tilt down from above, `tilt`: HANDOFF, the camera.)
 - **Drawing** stays SVG: project each bone's endpoints, then draw bones **sorted by depth** (far to near). The
   crossing leg is behind because it *is* behind. `layers` goes away.
 - Everything above the drawing keeps working on projected (or full 3D) points: floor and surfaces

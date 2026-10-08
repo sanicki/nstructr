@@ -103,7 +103,8 @@ function transitionFrames(fromEx, toEx, fromLast, toFirst, onlyIfMoving = false)
   return R.map((r, i) => {
     const d = V3.lerp(s0, s1, n > 1 ? i / (n - 1) : .5);
     return { ...r, rule: { ...r.rule, x: num(r.rule.x) + d.x, z: num(r.rule.z) + d.z }, step: -1,
-      cam: fromLast.cam + (toFirst.cam - fromLast.cam) * (i + 1) / n + sideTurn(i) };   // the camera turns from the last exercise's to the next one's
+      cam: fromLast.cam + (toFirst.cam - fromLast.cam) * (i + 1) / n + sideTurn(i),   // the camera turns from the last exercise's to the next one's
+      tilt: num(fromLast.tilt) + (num(toFirst.tilt) - num(fromLast.tilt)) * (i + 1) / n };   // (and tilts)
   });
 }
 // during a rest: the figure is still moving into the next exercise's first pose
@@ -159,7 +160,7 @@ function stagePlan(p, minMs = 0) {
   // carrying on from the last pose (the next exercise, set or side): the figure goes from where it was on screen to
   // where it will be in one smooth move, whatever way the body goes (a side is placed elsewhere; a travelling exercise
   // had moved along; the rest pose is between), and the frame zooms to the new one around the middle of the screen
-  const first = frameAt(plan[trans], plan[trans], 1, S.seg), x1 = S.travel ? W / 2 : project(fkAt(first.pose, S.seg, first.pos), first.cam).pelvis.x + S.shiftX;
+  const first = frameAt(plan[trans], plan[trans], 1, S.seg), x1 = S.travel ? W / 2 : project(fkAt(first.pose, S.seg, first.pos), first.cam, first.tilt).pelvis.x + S.shiftX;
   const steps = plan.slice(0, trans + 1).map((r, i) => r.dur + (i < trans ? r.hold : 0)), total = steps.reduce((t, d) => t + d, 0);
   const ms = Math.max(total / (S.tempo || 1), 600);
   if (total > 0) S.glide = { steps, total, last: trans, x0: drawnX, x1, toShift: S.shiftX };
@@ -208,9 +209,10 @@ function crossfadeScene() {
 /* In the workout player the camera frames the whole exercise tightly (head to floor, both ends of the move),
    so the figure is as big as the screen allows. The overlays sit in bands above and below it. */
 function boxFor(plan) {
-  const { minX, maxX, minY } = sequenceSpan(plan, S.seg, S.shiftX, S.travel);
+  const { minX, maxX, minY, maxY } = sequenceSpan(plan, S.seg, S.shiftX, S.travel);
   if (!isFinite(minX)) return null;
-  const pad = 26, top = minY - 20 - pad, h = FLOOR + 16 - top, wv = Math.max(maxX - minX + pad * 2, 120);
+  // (looking down from above, a body lying toward the camera reaches below the usual floor)
+  const pad = 26, top = minY - 20 - pad, h = Math.max(FLOOR + 16, maxY + 16) - top, wv = Math.max(maxX - minX + pad * 2, 120);
   return `${(minX + maxX) / 2 - wv / 2} ${top} ${wv} ${h}`;
 }
 function frameScene(plan) {

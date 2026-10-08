@@ -21,7 +21,7 @@
     {
       "name": "Lie on your back",
       "cue": "Knees bent, feet flat, arms wide.",
-      "camera": 60,
+      "camera": 75,
       "durationMs": 2000,
       "holdMs": 1000,
       "phase": "setup",
@@ -48,12 +48,13 @@
         "hipR": [45, 0, 0],
         "kneeR": 90,
         "ankleR": 45
-      }
+      },
+      "tilt": 30
     },
     {
       "name": "Draw the right knee in",
       "cue": "Stretch the left leg long and draw the right knee toward your chest.",
-      "camera": 60,
+      "camera": 75,
       "durationMs": 1600,
       "holdMs": 500,
       "phase": "setup",
@@ -65,12 +66,13 @@
         "shoulderR": [0, 80, 0],
         "hipR": [120, 0, 0],
         "kneeR": 110
-      }
+      },
+      "tilt": 30
     },
     {
       "name": "Supine Twist",
       "cue": "Right knee across to the left, shoulders down.",
-      "camera": 60,
+      "camera": 75,
       "durationMs": 2600,
       "holdMs": 5000,
       "phase": "rep",
@@ -83,7 +85,8 @@
         "shoulderR": [0, 80, 0],
         "hipR": [110, -40, 0],
         "kneeR": 90
-      }
+      },
+      "tilt": 30
     }
   ],
   "measure": "time",

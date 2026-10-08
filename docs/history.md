@@ -247,6 +247,12 @@ By the HANDOFF section that describes the current behaviour.
 - Oct 2026: it moved into the rep's first step, so Side Stepping took its first step before "Begin"; `tools/e2e/ready_still.py`
 - Oct 2026: before, rep 1 was said as "Begin", "Ready" or "Go", the count started with no warning, and only NstructR+ said "Now hold for N seconds".
 
+### Camera (Oct 2026)
+
+- Oct 2026: the camera only turned around the vertical, level with the floor, so poses flat on the floor drew as lines
+  along it (Supine Twist, owner: "does not appear correct"; it went to camera 60 first). Owner: add a tilt from above
+  (roadmap item, then implemented): Supine Twist uses camera 75, tilt 30.
+
 ### 8.3b Between exercises: positions and at-rest poses (Oct 2026, owner's request)
 
 - Oct 2026, owner: "I would expect all of these to require pose changes"; until then any equipment crossfaded
