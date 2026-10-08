@@ -103,6 +103,7 @@ main{display:block;min-width:0}
 .stage{position:relative;background:var(--md-surface-container-low);border-radius:var(--shape-xl);overflow:hidden}
 .stage svg.scene{display:block;width:100%;height:auto;max-height:62vh;margin:0 auto;aspect-ratio:1/1}
 .floor-line,.floor-ticks line{stroke:var(--md-outline-variant);stroke-width:2}
+.floor-line{fill:none}.floor-line.tilted{fill:var(--md-outline-variant);fill-opacity:.22;stroke-width:1.5}
 .shadow{fill:var(--md-on-surface);opacity:.08}
 .towel{fill:none;stroke:var(--towel);stroke-width:8;stroke-linecap:round;stroke-linejoin:round}
 .strap{fill:none;stroke:var(--strap);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
@@ -315,7 +316,7 @@ dialog .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}
 .thumb{display:block;width:100%;height:auto;aspect-ratio:1/1}
 .thumb line{stroke-linecap:round;stroke-width:10}
 .thumb .tL{fill:var(--md-tertiary)}.thumb .tR{fill:var(--md-primary)}.thumb .tc{fill:var(--md-on-surface)}   /* limbs: filled capsules (thumb.js) */
-.thumb .th{fill:var(--md-on-surface)}.thumb .tf{stroke:var(--md-outline-variant);stroke-width:3}
+.thumb .th{fill:var(--md-on-surface)}.thumb .tf{stroke:var(--md-outline-variant);stroke-width:3}.thumb .tf.tilted{fill:var(--md-outline-variant);fill-opacity:.22;stroke-width:2}
 dialog.library{padding:0;width:min(1000px,calc(100vw - 48px));height:min(860px,calc(100dvh - 48px));max-height:none;max-width:none;overflow:hidden}
 dialog.library[open]{display:flex;flex-direction:column}
 @media (max-width:600px){dialog.library{width:100vw;height:100dvh;border-radius:0;margin:0;
@@ -662,7 +663,7 @@ body[data-view="wplay"]{overflow:hidden;background:var(--md-surface)}
 .fs .scene .core .bone,.fs .scene .core.bone,.fs .scene .head{stroke:var(--wp-body);fill:var(--wp-body)}
 .fs .scene .side-R .bone{stroke:var(--wp-right)}.fs .scene .side-R .hand{fill:var(--wp-right)}
 .fs .scene .side-L .bone{stroke:var(--wp-left);opacity:1}.fs .scene .side-L .hand{fill:var(--wp-left)}
-.fs .scene .floor-line,.fs .scene .floor-ticks line{stroke:var(--wp-floor)}
+.fs .scene .floor-line,.fs .scene .floor-ticks line{stroke:var(--wp-floor)}.fs .scene .floor-line.tilted{fill:var(--wp-floor)}
 .fs .scene .shadow{fill:var(--wp-shadow);opacity:.06}
 .fs .guide{background:var(--wp-soft);top:0;bottom:auto;right:auto;left:8px}     /* top-left of the figure area */
 .fs .guide .body-small{color:var(--ov-dim)}

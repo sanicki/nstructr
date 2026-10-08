@@ -166,32 +166,32 @@ function versionOf(ex, side, dir) {
 /* where a resolved step's body points are on screen (its own camera; dx = the framing shift) */
 function stepScreen(r, seg = S.seg, dx = 0) {
   SUPPORTS = r.supports || SUPPORTS;
-  const Q = project(fkAt(r.pose, seg, place(r.pose, seg, r.rule)), r.cam);
+  const Q = project(fkAt(r.pose, seg, place(r.pose, seg, r.rule)), r.cam, r.tilt);
   if (dx) for (const k in Q) Q[k].x += dx;
   return Q;
 }
 /* the screen x range of a sequence: every step's body, walls and surfaces */
 function sequenceSpan(R, seg, dx = 0, centre = false) {
-  let minX = Infinity, maxX = -Infinity, minY = Infinity, headY = Infinity;
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity, headY = Infinity;
   for (const r of R) {
     // (a travelling exercise is drawn with the view following the pelvis: each step centred on it)
     const Q = stepScreen(r, seg, dx);
     if (centre) { const d = W / 2 - Q.pelvis.x; for (const k in Q) Q[k].x += d; }
-    for (const k of POINTS) { minX = Math.min(minX, Q[k].x); maxX = Math.max(maxX, Q[k].x); minY = Math.min(minY, Q[k].y); }
+    for (const k of POINTS) { minX = Math.min(minX, Q[k].x); maxX = Math.max(maxX, Q[k].x); minY = Math.min(minY, Q[k].y); maxY = Math.max(maxY, Q[k].y); }
     headY = Math.min(headY, Q.headTop.y);
-    for (const wl of R.walls || []) if (wl) { const w = wallOnScreen(wl, r.cam); if (w.show > 0.02) { minX = Math.min(minX, w.x + dx - 6); maxX = Math.max(maxX, w.x + dx + 6); } }
-    for (const sh of surfaceShapes(r.supports || R.supports, r.cam)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); }   // (a rolling ball moves)
+    for (const wl of R.walls || []) if (wl) { const w = wallOnScreen(wl, r.cam, r.tilt); if (w.show > 0.02) { minX = Math.min(minX, w.x + dx - 6); maxX = Math.max(maxX, w.x + dx + 6); } }
+    for (const sh of surfaceShapes(r.supports || R.supports, r.cam, r.tilt)) { minX = Math.min(minX, sh.x0 + dx - 6); maxX = Math.max(maxX, sh.x1 + dx + 6); if (r.tilt) minY = Math.min(minY, sh.y0); }   // (a rolling ball moves)
     // a ball carried or thrown (where the step's "holds" puts it), all of it
     const balls = (S.props || []).filter(pr => carried(pr) || pr.type === 'medball');
     if (balls.length && r.holds) {
       const c = heldAt(r, r, 1, fkAt(r.pose, seg, place(r.pose, seg, r.rule)));
-      if (c) for (const pr of balls) { const q = project({ c }, r.cam).c, rad = pr.type === 'medball' ? 20 : num(pr.r) || 58, x = q.x + dx + (centre ? W / 2 - Q.pelvis.x : 0);
+      if (c) for (const pr of balls) { const q = project({ c }, r.cam, r.tilt).c, rad = pr.type === 'medball' ? 20 : num(pr.r) || 58, x = q.x + dx + (centre ? W / 2 - Q.pelvis.x : 0);
         minX = Math.min(minX, x - rad - 6); maxX = Math.max(maxX, x + rad + 6); minY = Math.min(minY, q.y - rad); }
     }
   }
   for (const s of R.supports || []) minY = Math.min(minY, FLOOR - s.h - (s.backHeight || 0));
   for (const b of R.bars || []) minY = Math.min(minY, FLOOR - num(b.y) - 6);
-  return { minX, maxX, minY, headY };
+  return { minX, maxX, minY, maxY, headY };
 }
 function rebuild() {
   if (!S.ex) { S.resolved = []; return; }
@@ -205,12 +205,15 @@ function rebuild() {
   S.bandRest = bandRestLengths(S.props, S.resolved, S.seg);
   S.travel = !!S.ex.travel; S.off = { x: 0, z: 0 };
   // Frame the whole sequence: one constant horizontal shift so every keyframe stays on stage (nothing slides)
-  const { minX, maxX, minY, headY } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
+  const { minX, maxX, minY, maxY, headY } = sequenceSpan(S.resolved, S.seg, 0, S.travel);
   S.shiftX = isFinite(minX) ? W / 2 - (minX + maxX) / 2 : 0;
   // the stage is 400 square with the floor near the bottom; something higher (a pull-up bar) widens the view, still square
   // (only when clearly beyond the top: arms overhead just reach it and keep the usual view; the head never goes off it,
   // e.g. standing on a bench)
-  const top = isFinite(minY) && (minY < -20 || headY < 8) ? Math.min(minY, headY - 8) - 16 : 0, side = 400 - top;
+  // (looking down from above, the floor isn't a line near the bottom: the view, at the usual scale, is centred on the
+  // body and what it uses; it grows if they don't fit)
+  let top = isFinite(minY) && (minY < -20 || headY < 8) ? Math.min(minY, headY - 8) - 16 : 0, side = 400 - top;
+  if (S.resolved.some(r => r.tilt > 0) && isFinite(maxY)) { side = Math.max(400, maxY - minY + 64); top = (minY + maxY) / 2 - side / 2; }
   scene.setAttribute('viewBox', `${(W - side) / 2} ${top} ${side} ${side}`); syncLimbWidth();
   S.idx = Math.min(S.idx, S.resolved.length - 1);
   S.shownIdx = -1;
@@ -227,13 +230,13 @@ function buildFigure() {
   const extra = { 'elbowL-handL': '<circle class="hand" r="6.5" data-at="handL"/><g class="wts" data-hand="handL"></g>',
     'elbowR-handR': '<circle class="hand" r="6.5" data-at="handR"/><g class="wts" data-hand="handR"></g>', 'neckBase-head': `<circle class="head" r="${S.seg.head}" data-at="head"/>` };
   scene.innerHTML =
-    `<line class="floor-line" x1="${-5 * W}" y1="${FLOOR + 7}" x2="${6 * W}" y2="${FLOOR + 7}"/>` +
+    `<path class="floor-line" id="floorLine" d="${floorShape(90, 0, 0, -5 * W, 6 * W).d}"/>` +
     `<ellipse class="shadow" id="figShadow" cy="${FLOOR + 7}" rx="52" ry="6"/><g class="floor-ticks" id="floorTicks"></g>` +
     `<g id="propsBack"></g><g id="figRoot"><g id="heldBall"></g>` +
     BONES.map(bn => `<g class="${cls[bn.part]}" data-bone="${bn.id}"><line class="bone" vector-effect="non-scaling-stroke"/>${extra[bn.id] || ''}</g>`).join('') +
     `</g><g id="propsFront"></g>`;
   FIG.bones = BONES.map(bn => { const g = scene.querySelector(`[data-bone="${bn.id}"]`); return { ...bn, g, line: g.querySelector('line'), dots: [...g.querySelectorAll('[data-at]')] }; });
-  FIG.order = BONES.map(bn => bn.id);
+  FIG.order = BONES.map(bn => bn.id); FLOOR_TILT = 0;
 }
 
 /* keep every bone the same thickness at any zoom: scale the screen-pixel limbs to the scene's current scale */
@@ -265,11 +268,11 @@ function applyPose(Q) {
 
 /* ---------- Equipment ---------- */
 function clearProps() { for (const el of document.querySelectorAll('#propsBack, #propsFront, #heldBall, #scene .wts')) if (el.firstChild) el.innerHTML = ''; }
-function drawProps(P, Q, pose, cam) {
+function drawProps(P, Q, pose, cam, tilt = 0) {
   let back = '', front = '';
-  const dx = S.shiftX, proj = p => { const q = project({ p }, cam).p; return { x: q.x + dx, y: q.y, d: q.d }; };
+  const dx = S.shiftX, proj = p => { const q = project({ p }, cam, tilt).p; return { x: q.x + dx, y: q.y, d: q.d }; };
   // chairs, benches and steps sit behind the figure
-  for (const sh of surfaceShapes(S.frameSupports || S.resolved.supports || [], cam)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
+  for (const sh of surfaceShapes(S.frameSupports || S.resolved.supports || [], cam, tilt)) back += `<path class="surface${sh.solid ? ' solid' : ''}${sh.ball ? ' ball' : ''}${sh.roller ? ' roller' : ''}${sh.block ? ' block' : ''}" transform="translate(${dx.toFixed(1)} 0)" d="${sh.d}"/>`;
   const M0 = rootM(pose.root), wts = { handL: '', handR: '' };
   let held = '', heldD = 0;
   S.props.forEach((pr, i) => {
@@ -292,8 +295,8 @@ function drawProps(P, Q, pose, cam) {
     if (pr.type === 'wall') {
       const wl = S.resolved.walls[i]; if (!wl) return;
       // a wall seen edge-on is a line; one that faces the camera fades out as it turns
-      const w = wallOnScreen(wl, cam); if (w.show < 0.02) return;
-      back += `<line class="wall" style="opacity:${(0.55 * w.show).toFixed(2)}" x1="${(w.x + dx).toFixed(1)}" y1="${FLOOR + 7}" x2="${(w.x + dx).toFixed(1)}" y2="${FLOOR - 330}"/>`;
+      const w = wallOnScreen(wl, cam, tilt); if (w.show < 0.02) return;
+      back += `<line class="wall" style="opacity:${(0.55 * w.show).toFixed(2)}" x1="${(w.x + dx).toFixed(1)}" y1="${(w.y + 7).toFixed(1)}" x2="${(w.x + dx).toFixed(1)}" y2="${w.top.toFixed(1)}"/>`;
       return;
     }
     let pts = propRoute(P, pr);
@@ -403,18 +406,29 @@ function travelFrame(a, b, e) {
   return f;
 }
 /* marks on the floor every 60 px along the way it travels, so moving across it reads as moving */
-function drawFloorTicks(P, cam) {
+function drawFloorTicks(P, cam, tilt = 0) {
   const g = $('#floorTicks'); if (!g) return;
   if (!S.travel) { if (g.firstChild) g.innerHTML = ''; return; }
   let out = '';
   for (const ax of ['x', 'z']) {
     const at = P.pelvis[ax], k0 = Math.floor(at / 60);
     for (let k = k0 - 8; k <= k0 + 8; k++) {
-      const q = project({ p: { x: ax === 'x' ? k * 60 : P.pelvis.x, y: 0, z: ax === 'z' ? k * 60 : P.pelvis.z } }, cam).p;
-      out += `<line x1="${(q.x + S.shiftX).toFixed(1)}" y1="${FLOOR + 7}" x2="${(q.x + S.shiftX).toFixed(1)}" y2="${FLOOR + 17}"/>`;
+      const q = project({ p: { x: ax === 'x' ? k * 60 : P.pelvis.x, y: 0, z: ax === 'z' ? k * 60 : P.pelvis.z } }, cam, tilt).p;
+      out += `<line x1="${(q.x + S.shiftX).toFixed(1)}" y1="${(q.y + 7).toFixed(1)}" x2="${(q.x + S.shiftX).toFixed(1)}" y2="${(q.y + 17).toFixed(1)}"/>`;
     }
   }
   g.innerHTML = out;
+}
+/* the floor and the figure's shadow: a line seen level; looking down, a band of floor (FLOOR_REACH either side of the
+   stage centre) and the shadow a flatter circle on it under the pelvis */
+const FLOOR_REACH = 200;
+let FLOOR_TILT = 0;
+function drawFloor(P, cam, tilt = 0) {
+  const t = Math.round(num(tilt) * 10) / 10, sh = $('#figShadow');
+  if (t !== FLOOR_TILT) { FLOOR_TILT = t; const fl = $('#floorLine'); if (fl) { fl.setAttribute('d', floorShape(cam, t, FLOOR_REACH, -5 * W, 6 * W).d); fl.classList.toggle('tilted', t > 0); } }
+  if (!sh) return;
+  const st = Math.sin(t * D2R), y = project({ p: { x: P.pelvis.x, y: 0, z: P.pelvis.z } }, cam, t).p.y + 7;
+  sh.setAttribute('cy', y.toFixed(1)); sh.setAttribute('ry', Math.max(6, 52 * st).toFixed(1));
 }
 const easeGlide = x => x < .5 ? 2 * x * x : 1 - (-2 * x + 2) ** 2 / 2;
 function draw() {
@@ -423,7 +437,7 @@ function draw() {
   // "smooth" steps speed up and slow down; "linear" ones keep a constant speed; "in" speeds up, "out" slows (easeAt)
   const raw = b.dur ? Math.min(1, S.t / b.dur) : 1;
   const e = easeAt(b.ease, raw);
-  const f = travelFrame(a, b, e), P = fkAt(f.pose, S.seg, f.pos), Q = project(P, f.cam);
+  const f = travelFrame(a, b, e), P = fkAt(f.pose, S.seg, f.pos), Q = project(P, f.cam, f.tilt);
   // a workout carrying on into its next plan steers the figure across the screen in one smooth move (S.glide, from
   // glideView); otherwise a travelling exercise's view follows the figure
   if (S.glide) {
@@ -434,8 +448,8 @@ function draw() {
   else if (S.travel) S.shiftX = W / 2 - Q.pelvis.x;                  // the view follows the figure over a marked floor
   for (const k in Q) Q[k].x += S.shiftX;
   S.drawnX = Q.pelvis.x;                                         // where the figure is on screen (a workout's next plan carries on from there)
-  drawFloorTicks(P, f.cam);
-  applyPose(Q);
+  drawFloorTicks(P, f.cam, f.tilt);
+  applyPose(Q); drawFloor(P, f.cam, f.tilt);
   S.curCam = f.cam; S.frameSupports = f.supports; S.grip = gripAt(a, b, e); S.held = heldAt(a, b, e, P);
   // a workout's way into the next exercise: the last exercise's equipment fades out over the first step, the next one's
   // (chair, band, weights) fades in over the step into it, nothing is carried on the way
@@ -444,7 +458,7 @@ function draw() {
     clearProps();
     const o = S.oldProps;
     if (o && S.idx === 0 && e < 1) { const g = `<g transform="translate(${(S.shiftX - o.shift).toFixed(1)} 0)" opacity="${(1 - e).toFixed(2)}">`; $('#propsBack').innerHTML = g + o.back + '</g>'; $('#propsFront').innerHTML = g + o.front + '</g>'; }
-  } else if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam);
+  } else if (S.props && S.props.length) drawProps(P, Q, f.pose, f.cam, f.tilt);
   else if (tr) clearProps();
   const fadeIn = tr && S.idx === tr ? e.toFixed(2) : '';
   for (const id of ['propsBack', 'propsFront']) { const el = $('#' + id); if (el.style.opacity !== fadeIn) el.style.opacity = fadeIn; }

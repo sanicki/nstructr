@@ -16,8 +16,10 @@ async def main():
         for i in range(n):
             await pg.evaluate(f"startWorkout(LIB_WK[0], {i})"); await pg.wait_for_timeout(250)
             await pg.evaluate("S.speed=5"); await pg.wait_for_timeout(700)
-            # where the floor line lands on the screen, as a share of the screen height from the bottom
-            gap=await pg.evaluate("""(()=>{const l=scene.querySelector('.floor-line').getBoundingClientRect(); return (innerHeight - l.top)/innerHeight;})()""")
+            # where the bottom of the picture lands on the screen, as a share of the screen height from the bottom: the floor
+            # under the figure (the middle of its shadow, on the floor line seen level), or the figure where it reaches
+            # lower (looking down from above, the floor is a band and the near arm or leg is below the floor under the hips)
+            gap=await pg.evaluate("""(()=>{const l=$('#figShadow').getBoundingClientRect(), f=$('#figRoot').getBoundingClientRect(); return (innerHeight - Math.max((l.top + l.bottom) / 2, f.bottom))/innerHeight;})()""")
             name=await pg.evaluate("S.ex.name"); worst.append((round(gap*100,1), name))
             if i in (0,3,11,12,14,23): p_=f'/tmp/fl_{i}.png'; await pg.screenshot(path=p_); shots.append(p_)
         worst.sort()

@@ -1,12 +1,14 @@
 /* ===== Pose math (exercise format v2): a 3D figure, drawn as SVG =====
    The figure is jointed like an artist's mannequin (docs/3d-skeleton.md): ball joints at the hips, shoulders, spine
    and neck take three angles [forward, side, turn]; knees, elbows and ankles are hinges with one. Forward kinematics
-   gives every body point in 3D; a camera (a turn around the vertical) projects them, and the parts are drawn far to
-   near, so a leg crossing behind another is behind because it is.
+   gives every body point in 3D; a camera (a turn around the vertical, and a tilt down from above) projects them, and
+   the parts are drawn far to near, so a leg crossing behind another is behind because it is.
 
    World frame: x = the figure's right (as it starts), y = up, z = forward; the floor is y = 0 and the stage centre
-   is x = z = 0. Camera yaw: 90 = side view (the figure faces screen-right), 0 = front view (facing you).
-   Screen: x = CX + z·sin(yaw) − x·cos(yaw), y = FLOOR − y. */
+   is x = z = 0. Camera yaw: 90 = side view (the figure faces screen-right), 0 = front view (facing you); tilt: 0 =
+   level with the floor, + looking down from above (about the stage centre's floor, so a level camera is unchanged).
+   Screen: x = CX + z·sin(yaw) − x·cos(yaw), y = FLOOR − (y·cos(tilt) − d·sin(tilt)), d = x·sin(yaw) + z·cos(yaw)
+   (the depth toward the camera, before the tilt). */
 const W = 400, CX = 200, FLOOR = 360;
 const DEFAULT_SEGMENTS = { torso: 100, neck: 14, head: 18, upperArm: 55, lowerArm: 50, thigh: 80, shin: 80, foot: 22, shoulderHalf: 22, hipHalf: 12 };
 const SHOULDER_DROP = 4;
@@ -132,11 +134,28 @@ const moved = (P, pos) => { const Q = {}; for (const k in P) Q[k] = V3.add(P[k],
 /* body points in the world: the pose placed at pelvis position pos */
 const fkAt = (pose, seg, pos, F) => moved(fk(pose, seg, F), pos);
 
-/* the camera: screen x/y (y down, like SVG) and depth (larger = nearer the camera) */
-function project(P, yaw) {
-  const s = Math.sin(yaw * D2R), c = Math.cos(yaw * D2R), out = {};
-  for (const k in P) { const p = P[k]; out[k] = { x: CX + p.z * s - p.x * c, y: FLOOR - p.y, d: p.x * s + p.z * c }; }
+/* the camera: screen x/y (y down, like SVG) and depth (larger = nearer the camera). tilt: looking down from above (a
+   floor point nearer the camera is lower on the screen; a higher point is nearer) */
+function project(P, yaw, tilt = 0) {
+  const s = Math.sin(yaw * D2R), c = Math.cos(yaw * D2R), st = Math.sin(tilt * D2R), ct = Math.cos(tilt * D2R), out = {};
+  for (const k in P) { const p = P[k], d = p.x * s + p.z * c; out[k] = { x: CX + p.z * s - p.x * c, y: FLOOR - (p.y * ct - d * st), d: d * ct + p.y * st }; }
   return out;
+}
+/* the floor on screen: a line seen level; looking down, a band of floor reach px either side of the stage centre (in
+   depth), with its near and far edges. x0..x1: how wide. { d, y0, y1 } (y0 the far edge, y1 the near) */
+function floorShape(yaw, tilt, reach, x0, x1) {
+  const st = Math.sin(num(tilt) * D2R), f = FLOOR + 7, y0 = f - reach * st, y1 = f + reach * st;
+  if (st < 1e-3) return { d: `M${x0} ${f}L${x1} ${f}`, y0: f, y1: f };
+  return { d: `M${x0} ${y0.toFixed(1)}L${x1} ${y0.toFixed(1)}L${x1} ${y1.toFixed(1)}L${x0} ${y1.toFixed(1)}Z`, y0, y1 };
+}
+/* the outline around screen points (the convex hull), as a closed path */
+function hullPath(pts) {
+  const p = pts.slice().sort((a, b) => a.x - b.x || a.y - b.y), cr = (o, a, b) => (a.x - o.x) * (b.y - o.y) - (a.y - o.y) * (b.x - o.x);
+  const lo = [], hi = [];
+  for (const q of p) { while (lo.length > 1 && cr(lo[lo.length - 2], lo[lo.length - 1], q) <= 0) lo.pop(); lo.push(q); }
+  for (const q of p.slice().reverse()) { while (hi.length > 1 && cr(hi[hi.length - 2], hi[hi.length - 1], q) <= 0) hi.pop(); hi.push(q); }
+  const h = lo.slice(0, -1).concat(hi.slice(0, -1));
+  return 'M' + h.map(q => `${q.x.toFixed(1)} ${q.y.toFixed(1)}`).join('L') + 'Z';
 }
 /* the figure's parts, to be drawn far to near */
 const PARTS = {
@@ -226,8 +245,9 @@ function chairGrip() {
   const s = SUPPORTS.find(k => k.type === 'chair');
   return s ? { y: s.h + s.backHeight, z: s.back === 'behind' ? s.z0 : s.z1 } : null;
 }
-/* outline of each surface seen by the camera, for drawing */
-function surfaceShapes(sup, yaw) {
+/* outline of each surface seen by the camera, for drawing: { d, solid, x0, x1, y0 } (y0 its top on screen) */
+function surfaceShapes(sup, yaw, tilt = 0) {
+  if (num(tilt) > 0.01) return tiltedShapes(sup, yaw, num(tilt));
   const s = Math.sin(yaw * D2R), c = Math.cos(yaw * D2R), sx = (x, z) => CX + z * s - x * c;
   return (sup || []).map(k => {
     // (the floor line is drawn 7 below the floor the body rests on, for the feet's thickness: the ball reaches it, its top
@@ -236,7 +256,7 @@ function surfaceShapes(sup, yaw) {
       // a rolling ball: a line across it turns as it rolls (seen from the side; from the front it only moves)
       const ph = k.dz / k.r, ux = Math.cos(ph) * r * 0.8 * s, uy = Math.sin(ph) * r * 0.8;
       const line = k.rolls ? `M${(c - ux).toFixed(1)} ${(cy - uy).toFixed(1)}L${(c + ux).toFixed(1)} ${(cy + uy).toFixed(1)}` : '';
-      return { solid: true, ball: true, d: `M${c - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z` + line, x0: c - r, x1: c + r }; }
+      return { solid: true, ball: true, d: `M${c - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z` + line, x0: c - r, x1: c + r, y0: cy - r }; }
     // a foam roller: seen end-on a circle, from the front a bar, in between a bar with round ends (the near one outlined)
     if (k.type === 'roller') {
       const r = k.r + 3.5, cy = FLOOR + 7 - r, e0 = sx(k.x0, k.cz), e1 = sx(k.x1, k.cz), a = Math.min(e0, e1), b = Math.max(e0, e1), rx = Math.max(0.01, r * Math.abs(s));
@@ -246,14 +266,49 @@ function surfaceShapes(sup, yaw) {
       const d = `M${a} ${cy - r}L${b} ${cy - r}A${rx} ${r} 0 0 1 ${b} ${cy + r}L${a} ${cy + r}A${rx} ${r} 0 0 1 ${a} ${cy - r}Z` +
         `M${near} ${cy - r}A${rx} ${r} 0 0 1 ${near} ${cy + r}A${rx} ${r} 0 0 1 ${near} ${cy - r}` +
         `M${(near - ux).toFixed(1)} ${(cy - uy).toFixed(1)}L${(near + ux).toFixed(1)} ${(cy + uy).toFixed(1)}`;   // (same winding: stays filled)
-      return { solid: true, roller: true, d, x0: a - rx, x1: b + rx };
+      return { solid: true, roller: true, d, x0: a - rx, x1: b + rx, y0: cy - r };
     }
     const xs = [sx(k.x0, k.z0), sx(k.x1, k.z0), sx(k.x0, k.z1), sx(k.x1, k.z1)];
     const a = Math.min(...xs), b = Math.max(...xs), top = FLOOR - k.h, f = FLOOR + 7;
-    if (k.type === 'step' || k.type === 'block') return { solid: true, block: k.type === 'block', d: `M${a} ${f}L${a} ${top}L${b} ${top}L${b} ${f}Z`, x0: a, x1: b };
+    if (k.type === 'step' || k.type === 'block') return { solid: true, block: k.type === 'block', d: `M${a} ${f}L${a} ${top}L${b} ${top}L${b} ${f}Z`, x0: a, x1: b, y0: top };
     let d = `M${a} ${top}L${b} ${top}M${a + 5} ${top}L${a + 5} ${f}M${b - 5} ${top}L${b - 5} ${f}`;
     if (k.type === 'chair') { const bx = sx((k.x0 + k.x1) / 2, k.back === 'behind' ? k.z0 : k.z1); d += `M${bx} ${top}L${bx} ${top - k.backHeight}`; }
-    return { solid: false, d, x0: a, x1: b };
+    return { solid: false, d, x0: a, x1: b, y0: top - (k.type === 'chair' ? k.backHeight : 0) };
+  });
+}
+/* the same, looking down (tilt): a box as its outline and top, a bench or chair as its seat, legs and back, a ball a
+   circle, a roller a round-ended bar with its near end */
+function tiltedShapes(sup, yaw, tilt) {
+  const P = p => { const q = project({ p }, yaw, tilt).p; return p.y ? q : { ...q, y: q.y + 7 }; };   // (the floor drawn 7 lower, as level)
+  const f = n => n.toFixed(1), poly = qs => 'M' + qs.map(q => `${f(q.x)} ${f(q.y)}`).join('L') + 'Z', seg = (a, b) => `M${f(a.x)} ${f(a.y)}L${f(b.x)} ${f(b.y)}`;
+  const box = (q, done) => ({ ...done, x0: Math.min(...q.map(p => p.x)), x1: Math.max(...q.map(p => p.x)), y0: Math.min(...q.map(p => p.y)) });
+  return (sup || []).map(k => {
+    if (k.type === 'ball') {
+      const c = project({ c: { x: k.cx, y: k.r, z: k.cz } }, yaw, tilt).c, r = k.r + 3.5, cy = c.y + 7 - 3.5;
+      const ph = k.dz / k.r, ux = Math.cos(ph) * r * 0.8 * Math.sin(yaw * D2R), uy = Math.sin(ph) * r * 0.8;
+      const line = k.rolls ? `M${f(c.x - ux)} ${f(cy - uy)}L${f(c.x + ux)} ${f(cy + uy)}` : '';
+      return { solid: true, ball: true, d: `M${f(c.x - r)} ${f(cy)}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z` + line, x0: c.x - r, x1: c.x + r, y0: cy - r };
+    }
+    if (k.type === 'roller') {
+      // each end a circle (in the plane across the roller), drawn as points; the outline around both, and the near end
+      const r = k.r + 3.5, ring = x => Array.from({ length: 24 }, (_, i) => { const a = i / 24 * 2 * Math.PI;
+        const q = project({ p: { x, y: k.r + Math.sin(a) * r, z: k.cz + Math.cos(a) * r } }, yaw, tilt).p; return { ...q, y: q.y + 7 - 3.5 }; });
+      const e0 = ring(k.x0), e1 = ring(k.x1), near = e0[0].d + e0[12].d > e1[0].d + e1[12].d ? e0 : e1;
+      const ph = k.dz / k.r, cen = near.reduce((m, q) => ({ x: m.x + q.x / 24, y: m.y + q.y / 24 }), { x: 0, y: 0 }), sp = near[Math.round(((ph / (2 * Math.PI)) % 1 + 1) % 1 * 24) % 24];
+      return box([...e0, ...e1], { solid: true, roller: true, d: hullPath([...e0, ...e1]) + poly(near) + seg(cen, sp) });
+    }
+    const top = k.h, corners = y => [[k.x0, k.z0], [k.x1, k.z0], [k.x1, k.z1], [k.x0, k.z1]].map(([x, z]) => P({ x, y, z }));
+    const T = corners(top), B = corners(0);
+    if (k.type === 'step' || k.type === 'block') return box([...T, ...B], { solid: true, block: k.type === 'block', d: hullPath([...T, ...B]) + poly(T) });
+    // a bench or chair: the seat, and a leg down from each corner (5 in from it, as level)
+    const inset = (a, c) => ({ x: a.x + (c.x - a.x) * 0.08, y: a.y + (c.y - a.y) * 0.08 });
+    let d = poly(T) + T.map((t, i) => seg(inset(t, T[(i + 2) % 4]), inset(B[i], B[(i + 2) % 4]))).join('');
+    const pts = [...T, ...B];
+    if (k.type === 'chair') {
+      const z = k.back === 'behind' ? k.z0 : k.z1, b = [k.x0, k.x1].map(x => P({ x, y: top, z })), u = [k.x0, k.x1].map(x => P({ x, y: top + k.backHeight, z }));
+      d += poly([b[0], b[1], u[1], u[0]]); pts.push(...u);
+    }
+    return box(pts, { solid: false, d });
   });
 }
 
@@ -501,7 +556,7 @@ function frameAt(a, b, e, seg) {
   let frameSupports = SUPPORTS;
   // joints turn exactly as written (an angle may be written as e.g. -270 instead of 90 to pick the direction)
   const pose = lerpPose(a.pose, b.pose, e);
-  const cam = lerp(a.cam, b.cam, e);
+  const cam = lerp(a.cam, b.cam, e), tilt = lerp(num(a.tilt), num(b.tilt), e);
   // if one step's pin is also resting at the same spot in the other step, use it for the whole move (no sliding)
   const rule = sharedPin(a, b, seg);
   SUPPORTS = frameSupports;
@@ -589,7 +644,7 @@ function frameAt(a, b, e, seg) {
       reachTip(pose, seg, pos, ch, V3.lerp(A[tip], B[tip], e), 1);
     }
   }
-  return { pose, cam, pos, supports: frameSupports };
+  return { pose, cam, tilt, pos, supports: frameSupports };
 }
 
 /* a foot kept where it was (A: that step's world points): the leg reaches the ankle back, flat if planted (flat()), and
@@ -624,7 +679,7 @@ function solveTouch(pose, seg, rule, t, applyPlant) {
 
 function resolveKeyframe(kf, seg, ex = {}) {
   const pose = normPose(kf.pose);
-  const cam = kf.camera != null ? num(kf.camera) : 90;
+  const cam = kf.camera != null ? num(kf.camera) : 90, tilt = Math.max(0, Math.min(90, num(kf.tilt)));
   const plant = kf.plant || [];
   const auto = new Set();
   const applyPlant = () => { for (const s of plant) { pose['ankle' + s] = flatAnkle(pose, s, seg); auto.add('ankle' + s); } };
@@ -645,7 +700,7 @@ function resolveKeyframe(kf, seg, ex = {}) {
     if (Math.abs(gap) > 2) misses.push({ point: t.point, adjust: t.adjust, gap });
   }
   return {
-    pose, cam, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], slide: kf.slide || [], reach: kf.reach || [], holds: Array.isArray(kf.holds) ? kf.holds : null, ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', call: kf.call || '', quiet: !!kf.quiet,
+    pose, cam, tilt, rule, auto, misses, touch: kf.touch || [], plant: kf.plant || [], slide: kf.slide || [], reach: kf.reach || [], holds: Array.isArray(kf.holds) ? kf.holds : null, ease: kf.ease || 'smooth', guide: kf.guide || null, name: kf.name || '', cue: kf.cue || '', call: kf.call || '', quiet: !!kf.quiet,
     dur: kf.durationMs == null ? 1000 : Math.max(0, num(kf.durationMs)), hold: Math.max(0, kf.holdMs == null ? 500 : num(kf.holdMs))
   };
 }
@@ -828,7 +883,7 @@ function bandPathRoute(pts, Q, rest) {
   const stretch = routeLength(pts) / rest, f = n => n.toFixed(1);
   if (Q.length === 2 && stretch < 1) {
     const [a, b] = Q, sag = Math.sqrt(Math.max(0, rest * rest - routeLength(pts) ** 2)) / 2;
-    const mx = (a.x + b.x) / 2, my = Math.min((a.y + b.y) / 2 + sag, FLOOR + 3);
+    const mx = (a.x + b.x) / 2, my = Math.min((a.y + b.y) / 2 + sag, Math.max(FLOOR + 3, a.y + 3, b.y + 3));   // (not below the floor: looking down, the floor under a near end is lower)
     return { d: `M${f(a.x)} ${f(a.y)}Q${f(mx)} ${f(my)} ${f(b.x)} ${f(b.y)}`, width: 5, stretch };
   }
   return { d: 'M' + Q.map(p => `${f(p.x)} ${f(p.y)}`).join('L'), width: Math.max(2, 5 / Math.sqrt(Math.max(1, stretch))), stretch };
@@ -858,10 +913,13 @@ function wallsOf(props, R, seg) {
     return { axis, at: (typeof pr.at === 'string' && P[pr.at] ? P[pr.at][axis] : num(pr[axis])) + num(pr.offset) };
   });
 }
-/* where a wall is on screen, and how much it shows: a wall seen edge-on is a line; one facing the camera fades */
-function wallOnScreen(wl, yaw) {
-  const s = Math.sin(yaw * D2R), c = Math.cos(yaw * D2R);
-  return wl.axis === 'z' ? { x: CX + wl.at * s, show: Math.abs(s) } : { x: CX - wl.at * c, show: Math.abs(c) };
+/* where a wall is on screen, and how much it shows: a wall seen edge-on is a line; one facing the camera fades. y: the
+   floor at its foot (looking down, a wall further away stands higher on the screen); top: 330 up it */
+function wallOnScreen(wl, yaw, tilt = 0) {
+  const s = Math.sin(yaw * D2R), c = Math.cos(yaw * D2R), st = Math.sin(num(tilt) * D2R), ct = Math.cos(num(tilt) * D2R);
+  const w = wl.axis === 'z' ? { x: CX + wl.at * s, show: Math.abs(s), d: wl.at * c } : { x: CX - wl.at * c, show: Math.abs(c), d: wl.at * s };
+  const y = FLOOR + w.d * st;
+  return { x: w.x, show: w.show, y, top: y - 330 * ct };
 }
 
 /* Resolve a whole sequence and hand the floor contact over between steps: when a step pins a different point
@@ -1045,7 +1103,7 @@ function mirrorKeyframe(kf) {
 }
 
 if (typeof module !== 'undefined') module.exports = {
-  phaseInfo, reverseReps, easeAt, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute, bandSides,
+  phaseInfo, reverseReps, easeAt, floorShape, hullPath, weightSVG, kettlebellAt, gripAt, heldAt, carried, HOLD_POINTS, supportY, supportAt, surfacesFrom, surfaceShapes, chairGrip, mirrorProps, mirrorPose, bandRestLengths, bandPathRoute, bandSides,
   propRoute, propPoint, strapPoints, bandAnchors, anchorSVG, barSVG, ringSVG, resolveSequence, travelOf, travelStep, frameAt, groundY, fk, fkAt, place, project, drawOrder, boneOrder, BONES, partDepth, PARTS, resolveKeyframe, mirrorKeyframe, wallOnScreen,
   SEGMENTS, clearance, normPose, lerpPose, getJ, setJ, jointRef, rootM, ballM, limbAngles, V3, rx, mm, mtv, flatAnkle,
   DEFAULT_SEGMENTS, FLOOR, CX, W, CONTACT_POINTS, JOINT_KEYS, JOINTS, BALL, POINTS, COMPONENTS

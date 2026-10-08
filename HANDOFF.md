@@ -157,10 +157,21 @@ All in `src/core.js`. Format v2 (Sep 2026): a 3D figure, jointed like an artist'
 - Stage: `W = 400`, `CX = 200`, `FLOOR = 360` (SVG units, y down on screen). **World** (3D): x = the figure's right
   (as it starts), y = up, z = forward; the floor is y = 0 and the stage centre x = z = 0.
 - **Camera**: a keyframe's `camera` is a turn around the vertical, in degrees: `90` = side view (the figure faces
-  screen-right), `0` = front view (the figure's right on screen left). Screen x = CX + z·sin(camera) − x·cos(camera),
-  screen y = FLOOR − y. Between steps the camera turns; the body stays rigid.
-  The camera never tilts, so a move made flat in the floor's plane (a knee bending while lying on your side) can't be
-  seen from any angle: choose a position where it happens upright (the Towel Quad Stretch lies face down, not on its side).
+  screen-right), `0` = front view (the figure's right on screen left). Its `tilt` (0–90, default 0) looks down from
+  above, about the floor at the stage centre: with d = x·sin(camera) + z·cos(camera) (depth toward the camera), screen
+  x = CX + z·sin(camera) − x·cos(camera), screen y = FLOOR − (y·cos(tilt) − d·sin(tilt)), drawing depth
+  d·cos(tilt) + y·sin(tilt). Level (tilt 0) is the same as before tilt existed. Between steps the camera turns and tilts;
+  the body stays rigid. Tilt is for poses flat on the floor (Supine Twist: camera 75, tilt 30); level, a move made in
+  the floor's plane can't be seen from any angle.
+- **Looking down** (`tilt` > 0): the floor is a band (`floorShape`: `FLOOR_REACH` 200 either side of the stage centre,
+  its near and far edges) instead of the line, and the figure's shadow a flatter circle on it under the pelvis
+  (`drawFloor`); surfaces are drawn in 3D (`tiltedShapes`: a step or block as its outline and top, a bench or chair as
+  its seat, legs and back, a roller as a round-ended bar with its near end, a ball a circle); a wall stands on the
+  floor where it is (`wallOnScreen` gives its foot `y` and `top`); a slack band sags no lower than its lower end; the
+  floor ticks of a travelling exercise lie on the floor. The exercise page centres a tilted exercise in the stage at
+  the usual scale (the floor isn't near the bottom), the workout player's frame and the thumbnails take in the near end
+  below the usual floor (thumbnails centred too). The editor has a Tilt row; `tools/viewer3d.html` a Tilt
+  slider. Transitions between exercises blend the tilt with the camera.
 - Segments (`DEFAULT_SEGMENTS`): torso 100 (two halves: lower back `torso`, upper back `chest`), neck 14,
   head radius 18, upper arm 55, forearm 50, thigh 80, shin 80, foot 22, shoulder half-width 22, hip half-width 12.
   The figure is ~310 units tall ≈ 170 cm (≈ 1.8 units/cm) — use this to size equipment.
@@ -242,6 +253,7 @@ way. Walking Lunge, Lateral Band Walk, Heel-to-Toe Walk, Farmer's Carry, Side St
 |---|---|
 | `name`, `cue` | Step name and one instruction. NstructR+ reads `cue` during the run-through. Keep cues short and speakable. |
 | `camera` | Degrees around the vertical: `90` side view (default), `0` front view. The camera turns between steps. |
+| `tilt` | Degrees looking down from above, 0–90: `0` level (default); 20–35 for poses flat on the floor. Changes smoothly between steps, like the camera. |
 | `durationMs` | Time to move into this pose. Default 1000. **0 = instant** (used where two steps are the same position, e.g. 540° ≡ 180° in arm circles). |
 | `holdMs` | Time held. Default 500. A hold ≥ 3000 ms makes an exercise timed (see `measure`). |
 | `ease` | `"smooth"` (default, ease-in-out) or `"linear"` (constant speed — circles). |

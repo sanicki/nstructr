@@ -21,7 +21,7 @@
   svg{width:100%;height:auto;display:block}
   .bone{stroke-width:10;stroke-linecap:round;fill:none}
   .L{stroke:var(--L)} .R{stroke:var(--R)} .B{stroke:var(--body)}
-  .floor{stroke:var(--line);stroke-width:2}
+  .floor{stroke:var(--line);stroke-width:2;fill:var(--line);fill-opacity:.25}
   .note{color:var(--muted);font-size:13px}
   #step{min-width:220px}
 </style>
@@ -40,6 +40,7 @@
   <div class="bar">
     <label><input type="checkbox" id="follow" checked> Camera follows each step's camera</label>
     <label>Camera <input type="range" id="yaw" min="-180" max="180" value="90"> <span id="yawText"></span></label>
+    <label>Tilt <input type="range" id="tilt" min="0" max="90" value="0"> <span id="tiltText"></span></label>
   </div>
   <figure><svg id="v" viewBox="-50 0 500 400"></svg></figure>
 </main>
@@ -62,13 +63,14 @@ function draw() {
   if (!R.length) return;
   const b = R[i], a = R[(i - 1 + R.length) % R.length], raw = b.dur ? Math.min(1, t / b.dur) : 1;
   const e = b.ease === 'linear' ? raw : (raw < 0.5 ? 4 * raw ** 3 : 1 - (-2 * raw + 2) ** 3 / 2);
-  const f = frameAt(a, b, e, seg), yaw = $('#follow').checked ? f.cam : +$('#yaw').value;
-  if ($('#follow').checked) $('#yaw').value = Math.round(yaw);
+  const f = frameAt(a, b, e, seg), yaw = $('#follow').checked ? f.cam : +$('#yaw').value, tilt = $('#follow').checked ? f.tilt : +$('#tilt').value;
+  if ($('#follow').checked) { $('#yaw').value = Math.round(yaw); $('#tilt').value = Math.round(tilt); }
+  $('#tiltText').textContent = `${Math.round(tilt)}°`;
   $('#yawText').textContent = `${Math.round(yaw)}° ${Math.abs(yaw - 90) < 1 ? '(side)' : Math.abs(yaw) < 1 ? '(front)' : ''}`;
-  const Q = project(fkAt(f.pose, seg, f.pos), yaw);
+  const Q = project(fkAt(f.pose, seg, f.pos), yaw, tilt);
   order = boneOrder(Q, order);
-  let s = `<line class="floor" x1="-50" y1="${FLOOR}" x2="450" y2="${FLOOR}"/>`;
-  for (const sh of surfaceShapes(R.supports, yaw)) s += `<path d="${sh.d}" stroke="var(--line)" stroke-width="5" fill="none"/>`;
+  let s = `<path class="floor" d="${floorShape(yaw, tilt, 200, -50, 450).d}"/>`;
+  for (const sh of surfaceShapes(R.supports, yaw, tilt)) s += `<path d="${sh.d}" stroke="var(--line)" stroke-width="5" fill="none"/>`;
   for (const id of order) {
     const bn = BONES.find(x => x.id === id);
     s += `<line class="bone ${cls(bn.part)}" x1="${Q[bn.a].x.toFixed(1)}" y1="${Q[bn.a].y.toFixed(1)}" x2="${Q[bn.b].x.toFixed(1)}" y2="${Q[bn.b].y.toFixed(1)}"/>`;
@@ -92,6 +94,7 @@ fetch('../library/index.json').then(r => r.json()).then(d => {
 $('#play').addEventListener('click', () => { playing = !playing; $('#play').textContent = playing ? 'Pause' : 'Play'; });
 $('#step').addEventListener('input', e => { i = +e.target.value; t = R[i].dur; playing = false; $('#play').textContent = 'Play'; draw(); });
 $('#yaw').addEventListener('input', () => { $('#follow').checked = false; draw(); });
+$('#tilt').addEventListener('input', () => { $('#follow').checked = false; draw(); });
 </script>
 </body>
 </html>
