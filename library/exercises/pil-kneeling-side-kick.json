@@ -25,7 +25,8 @@
     {
       "name": "Lean over",
       "cue": "Kneel, place one hand down under your shoulder, other hand behind your head; lift the top leg to hip height.",
-      "camera": 30,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 1800,
       "holdMs": 200,
       "phase": "setup",
@@ -45,7 +46,8 @@
     {
       "name": "Kick forward",
       "cue": "Kick the top leg forward.",
-      "camera": 30,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 900,
       "holdMs": 0,
       "phase": "rep",
@@ -65,7 +67,8 @@
     {
       "name": "Sweep back",
       "cue": "Sweep it back behind you.",
-      "camera": 30,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 1100,
       "holdMs": 0,
       "phase": "rep",

@@ -20,7 +20,8 @@
     {
       "name": "Sit in Staff Pose",
       "cue": "Sit tall with the legs straight out in front.",
-      "camera": 90,
+      "camera": 30,
+      "tilt": 30,
       "durationMs": 1500,
       "holdMs": 1000,
       "phase": "setup",
@@ -45,7 +46,8 @@
     {
       "name": "Wide-Angled Seated Bend",
       "cue": "Open the legs wide and walk the hands forward.",
-      "camera": 0,
+      "camera": 30,
+      "tilt": 30,
       "durationMs": 2600,
       "holdMs": 5000,
       "phase": "rep",

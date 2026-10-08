@@ -161,8 +161,13 @@ All in `src/core.js`. Format v2 (Sep 2026): a 3D figure, jointed like an artist'
   above, about the floor at the stage centre: with d = x·sin(camera) + z·cos(camera) (depth toward the camera), screen
   x = CX + z·sin(camera) − x·cos(camera), screen y = FLOOR − (y·cos(tilt) − d·sin(tilt)), drawing depth
   d·cos(tilt) + y·sin(tilt). Level (tilt 0) is the same as before tilt existed. Between steps the camera turns and tilts;
-  the body stays rigid. Tilt is for poses flat on the floor (Supine Twist: camera 75, tilt 30); level, a move made in
-  the floor's plane can't be seen from any angle.
+  the body stays rigid. Tilt is for poses flat on the floor; level, a move made in the floor's plane can't be seen from
+  any angle. Tilted (Oct 2026; chosen from renders at several cameras): Supine Twist (camera 75, tilt 30); Russian Twist
+  and its kettlebell and medicine-ball versions, Wide-Angled Seated Forward Bend (camera 30, tilt 30); Spine Twist,
+  Saw, Bound Angle Pose, both Bound Angle Forward Bends, Lotus, Easy Pose (their cameras, tilt 30); Kneeling Side Kick,
+  Leg Circles and Band Leg Circles (camera 60, tilt 30); Corkscrew (camera 60, tilt 35); Reclined Bound Angle (camera
+  90, tilt 35); Heel Taps (camera 90, tilt 40). Found by measuring how much of each move goes toward or away from a
+  level camera (more than about a quarter).
 - **Looking down** (`tilt` > 0): the floor is a band (`floorShape`: `FLOOR_REACH` 200 either side of the stage centre,
   its near and far edges) instead of the line, and the figure's shadow a flatter circle on it under the pelvis
   (`drawFloor`); surfaces are drawn in 3D (`tiltedShapes`: a step or block as its outline and top, a bench or chair as
