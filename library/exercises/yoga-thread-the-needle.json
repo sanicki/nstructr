@@ -22,8 +22,9 @@
     {
       "name": "Tabletop",
       "cue": "On hands and knees, wrists under shoulders, knees under hips.",
+      "camera": 90,
+      "tilt": 30,
       "anchor": "kneeL",
-      "camera": 45,
       "touch": [
         {
           "point": "kneeR",
@@ -60,8 +61,9 @@
     {
       "name": "Open",
       "cue": "Breathe in, reach your right arm up to the ceiling.",
+      "camera": 90,
+      "tilt": 30,
       "anchor": "kneeL",
-      "camera": 45,
       "touch": [
         {
           "point": "kneeR",
@@ -98,8 +100,9 @@
     {
       "name": "",
       "cue": "",
+      "camera": 90,
+      "tilt": 30,
       "anchor": "kneeL",
-      "camera": 45,
       "touch": [
         {
           "point": "kneeR",
@@ -135,8 +138,9 @@
     {
       "name": "Thread",
       "cue": "Breathe out, slide it under your left arm; rest your shoulder and head down.",
+      "camera": 90,
+      "tilt": 30,
       "anchor": "kneeL",
-      "camera": 45,
       "touch": [
         {
           "point": "kneeR",

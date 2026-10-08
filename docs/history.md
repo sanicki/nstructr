@@ -256,6 +256,9 @@ By the HANDOFF section that describes the current behaviour.
   away from a level camera) and the 16 strong candidates tilted, each at the camera and tilt that read best in renders.
   Not tilted: Push-Ups (the hidden part is the elbows flaring; the side view is what matters), Kneeling Pallof Press
   (a front view already), and those with under about 15% hidden.
+- Oct 2026: filmstrips of the next five (current view and a suggested tilt) for the owner; applied to Hip Twist, Thread
+  the Needle, Figure-Four Stretch and the Turkish Get-Up (with its bodyweight and dumbbell versions); not Bicycle Crunch
+  (its side view already shows elbow to knee).
 
 ### 8.3b Between exercises: positions and at-rest poses (Oct 2026, owner's request)
 

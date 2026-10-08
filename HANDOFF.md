@@ -166,7 +166,8 @@ All in `src/core.js`. Format v2 (Sep 2026): a 3D figure, jointed like an artist'
   and its kettlebell and medicine-ball versions, Wide-Angled Seated Forward Bend (camera 30, tilt 30); Spine Twist,
   Saw, Bound Angle Pose, both Bound Angle Forward Bends, Lotus, Easy Pose (their cameras, tilt 30); Kneeling Side Kick,
   Leg Circles and Band Leg Circles (camera 60, tilt 30); Corkscrew (camera 60, tilt 35); Reclined Bound Angle (camera
-  90, tilt 35); Heel Taps (camera 90, tilt 40). Found by measuring how much of each move goes toward or away from a
+  90, tilt 35); Heel Taps (camera 90, tilt 40); Hip Twist (camera 60, tilt 30); Thread the Needle and Figure-Four
+  Stretch (camera 90, tilt 30); the three Turkish Get-Ups (camera 45, tilt 20). Bicycle Crunch stays level (owner). Found by measuring how much of each move goes toward or away from a
   level camera (more than about a quarter).
 - **Looking down** (`tilt` > 0): the floor is a band (`floorShape`: `FLOOR_REACH` 200 either side of the stage centre,
   its near and far edges) instead of the line, and the figure's shadow a flatter circle on it under the pelvis
