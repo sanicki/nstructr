@@ -62,8 +62,7 @@
       "items": [
         {
           "ex": "bw-glute-bridge",
-          "reps": 10,
-          "sets": 2
+          "reps": 10
         },
         {
           "ex": "pil-shoulder-bridge",
@@ -75,17 +74,8 @@
           "sides": "alternate"
         },
         {
-          "ex": "core-bird-dog",
-          "reps": 8,
-          "sides": "alternate"
-        },
-        {
-          "ex": "core-heel-taps",
-          "reps": 10
-        },
-        {
           "ex": "side-clamshell",
-          "reps": 12,
+          "reps": 10,
           "sides": "both"
         },
         {
@@ -107,11 +97,11 @@
         },
         {
           "ex": "core-forearm-plank",
-          "seconds": 60
+          "seconds": 45
         },
         {
           "ex": "yoga-child",
-          "seconds": 45
+          "seconds": 30
         }
       ]
     }

@@ -3,7 +3,7 @@
   "version": 2,
   "id": "beginner-kettlebell-20",
   "name": "20-Minute Beginner's Kettlebell",
-  "description": "A full-body workout with one kettlebell for beginners, about 20 minutes, in a small space: a halo, around the world and goblet squats to warm up, the deadlift, Romanian deadlift and swing, a row and press for each arm, lunges, sumo and goblet squats, then twists. Start with a light bell.",
+  "description": "A full-body workout with one kettlebell for beginners, about 20 minutes, in a small space: a halo, around the world and squats to warm up, the deadlift, Romanian deadlift and swing, a row and press for each arm, lunges, sumo and goblet squats, then twists and a dead bug. Start with a light bell.",
   "blocks": [
     {
       "name": "Warm up",
@@ -19,8 +19,8 @@
           "dir": "both"
         },
         {
-          "ex": "fw-kb-goblet-squat",
-          "reps": 8
+          "ex": "bw-squat",
+          "reps": 10
         }
       ]
     },
@@ -29,18 +29,16 @@
       "items": [
         {
           "ex": "fw-kb-deadlift",
-          "reps": 6,
-          "sets": 2
+          "reps": 8
         },
         {
           "ex": "kb-romanian-deadlift",
-          "reps": 8,
-          "sets": 2
+          "reps": 8
         },
         {
           "ex": "fw-kb-swing",
           "reps": 12,
-          "sets": 3
+          "sets": 2
         }
       ]
     },
@@ -50,14 +48,14 @@
         {
           "ex": "kb-single-arm-row",
           "reps": 8,
-          "sets": 2,
-          "sides": "both"
+          "sides": "both",
+          "sets": 2
         },
         {
           "ex": "kb-overhead-press",
-          "reps": 6,
-          "sets": 2,
-          "sides": "both"
+          "reps": 8,
+          "sides": "both",
+          "sets": 2
         }
       ]
     },
@@ -67,18 +65,15 @@
         {
           "ex": "kb-goblet-reverse-lunge",
           "reps": 6,
-          "sets": 2,
           "sides": "alternate"
         },
         {
           "ex": "kb-sumo-squat",
-          "reps": 10,
-          "sets": 2
+          "reps": 10
         },
         {
           "ex": "fw-kb-goblet-squat",
-          "reps": 8,
-          "sets": 2
+          "reps": 10
         }
       ]
     },
@@ -87,8 +82,12 @@
       "items": [
         {
           "ex": "kb-russian-twist",
-          "reps": 12,
-          "sets": 2
+          "reps": 12
+        },
+        {
+          "ex": "core-dead-bug",
+          "reps": 8,
+          "sides": "alternate"
         }
       ]
     }

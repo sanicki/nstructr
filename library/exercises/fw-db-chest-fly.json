@@ -24,7 +24,8 @@
     {
       "name": "Arms up",
       "cue": "Weights above your chest, palms facing.",
-      "camera": 90,
+      "camera": 45,
+      "tilt": 35,
       "durationMs": 1500,
       "holdMs": 300,
       "phase": "rep",
@@ -58,7 +59,8 @@
     {
       "name": "Open",
       "cue": "Lower the weights out to the sides in a wide arc.",
-      "camera": 90,
+      "camera": 45,
+      "tilt": 35,
       "durationMs": 1500,
       "holdMs": 300,
       "phase": "rep",

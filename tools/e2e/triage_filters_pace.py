@@ -18,8 +18,8 @@ async def main():
             await pg.click(f'#fCollection [data-coll="{c}"]'); await pg.wait_for_timeout(200)
             vis = await pg.evaluate("(()=>{const r=$('#fEquip').getBoundingClientRect(); return !$('#fEquip').hidden && r.height > 0})()")
             print(f'{c:<24}', await pg.evaluate(rows), '| equipment row visible:', vis)
-        # workout item settings
-        await pg.evaluate("WK.list.push({id:'p',name:'Pace',blocks:[{id:'b',name:'B',items:[newItem(exById('star-excursion-4-point')), newItem(exById('core-forearm-plank'))]}]}); saveWorkouts(); go('#/workout/p')"); await pg.wait_for_timeout(300)
+        # workout item settings (timed with NstructR: NstructR+, the default, adds its demonstration)
+        await pg.evaluate("WK.sound = 'voice'; WK.list.push({id:'p',name:'Pace',blocks:[{id:'b',name:'B',items:[newItem(exById('star-excursion-4-point')), newItem(exById('core-forearm-plank'))]}]}); saveWorkouts(); go('#/workout/p')"); await pg.wait_for_timeout(300)
         uid = await pg.evaluate("WK.list.find(w=>w.id==='p').blocks[0].items[0].uid")
         await pg.evaluate(f"openItemSettings('{uid}')"); await pg.wait_for_timeout(200)
         check('Star Excursion pace', await pg.evaluate("[repSeconds(exById('star-excursion-4-point')), $('#st-repSec').value, !$('#st-rest'), $('#itemEst').textContent]"), [10, '10', True, '61 s'], 'no rest-between-sets stepper (Oct 2026: the first rep starts where it waits)')
