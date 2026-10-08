@@ -26,6 +26,12 @@ comes off this list. How things work, and why past decisions were made, is in [H
   and Knee Push-Up (a toe 26 px); out of Child's Pose (a toe), Puppy (a toe 27 px), Thread the Needle (a hand 23 px) and
   Lizard (a toe 18 px). Better in the engine (hold such points during a move, as it holds a planted hand) than step by
   step; the build's move checks should catch it (they check the ends only).
+- **Camera tilt** (owner, Oct 2026): the camera only turns around the vertical (`camera`, a step's yaw), always at floor
+  level, so poses flat on the floor (Supine Twist, foam roller, Bound Angle) draw as lines along it. Add an optional
+  per-step tilt from above (default 0, so nothing changes; about 20–30° for floor poses): `project()` gets a second
+  rotation; the floor becomes a surface; the chair, bench, step, ball and roller outlines, the wall, bar, bands and
+  weights, the shadow and the stage framing all assume a level camera; the pose editor and `tools/viewer3d.html` get a
+  control.
 - **Exercises tab speed**: opening it draws all 358 thumbnails: 4.6 s on a slow phone (CPU 4×; 17 ms each, every
   thumbnail resolves its whole exercise). Draw them as they scroll into view, and/or cache each one. Startup itself is
   fine (1.3–1.9 s at 4–6× on a repeat visit), so no lazy-loading of the library (`tools/perf.py`, Oct 2026).
