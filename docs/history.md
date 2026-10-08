@@ -252,6 +252,10 @@ By the HANDOFF section that describes the current behaviour.
 - Oct 2026: the camera only turned around the vertical, level with the floor, so poses flat on the floor drew as lines
   along it (Supine Twist, owner: "does not appear correct"; it went to camera 60 first). Owner: add a tilt from above
   (roadmap item, then implemented): Supine Twist uses camera 75, tilt 30.
+- Oct 2026: the owner asked which other floor exercises would gain from it; measured (the share of each move toward or
+  away from a level camera) and the 16 strong candidates tilted, each at the camera and tilt that read best in renders.
+  Not tilted: Push-Ups (the hidden part is the elbows flaring; the side view is what matters), Kneeling Pallof Press
+  (a front view already), and those with under about 15% hidden.
 
 ### 8.3b Between exercises: positions and at-rest poses (Oct 2026, owner's request)
 

@@ -22,6 +22,7 @@
       "name": "Lie on your back",
       "cue": "Lie down, knees bent, feet flat.",
       "camera": 90,
+      "tilt": 35,
       "durationMs": 2000,
       "holdMs": 1000,
       "phase": "setup",
@@ -51,7 +52,8 @@
     {
       "name": "Reclined Bound Angle Pose",
       "cue": "Soles together, knees fall open, arms relaxed.",
-      "camera": 25,
+      "camera": 90,
+      "tilt": 35,
       "durationMs": 2600,
       "holdMs": 5000,
       "phase": "rep",

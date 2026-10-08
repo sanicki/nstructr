@@ -47,7 +47,8 @@
     {
       "name": "Lie on your back",
       "cue": "Lie on your back, arms by your sides.",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 1200,
       "holdMs": 400,
       "phase": "setup",
@@ -62,7 +63,8 @@
     {
       "name": "Leg up",
       "cue": "Lift your right leg to the ceiling.",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 1200,
       "holdMs": 400,
       "phase": "setup",
@@ -81,7 +83,8 @@
     {
       "name": "Up and across",
       "cue": "",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 225,
       "holdMs": 0,
       "ease": "linear",
@@ -102,7 +105,8 @@
     {
       "name": "Across",
       "cue": "Across your body.",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 225,
       "holdMs": 0,
       "ease": "linear",
@@ -122,7 +126,8 @@
     {
       "name": "Across and down",
       "cue": "",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 225,
       "holdMs": 0,
       "ease": "linear",
@@ -143,7 +148,8 @@
     {
       "name": "Down",
       "cue": "Down.",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 225,
       "holdMs": 0,
       "ease": "linear",
@@ -163,7 +169,8 @@
     {
       "name": "Down and out",
       "cue": "",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 225,
       "holdMs": 0,
       "ease": "linear",
@@ -184,7 +191,8 @@
     {
       "name": "Out",
       "cue": "Out to the side.",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 225,
       "holdMs": 0,
       "ease": "linear",
@@ -204,7 +212,8 @@
     {
       "name": "Out and up",
       "cue": "",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 225,
       "holdMs": 0,
       "ease": "linear",
@@ -225,7 +234,8 @@
     {
       "name": "Up",
       "cue": "Back up, and pause.",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 225,
       "holdMs": 250,
       "ease": "linear",
@@ -245,7 +255,8 @@
     {
       "name": "Lower the leg",
       "cue": "Lower the leg to the mat.",
-      "camera": 90,
+      "camera": 60,
+      "tilt": 30,
       "durationMs": 1200,
       "holdMs": 300,
       "phase": "finish",
