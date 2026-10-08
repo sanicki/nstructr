@@ -39,7 +39,7 @@ const POSE_ROWS = [{
   key: 'camera', label: 'Camera (90 side, 0 front)', auto: () => false, resolved: r => r.cam,
   get: kf => (kf.camera != null ? num(kf.camera) : 90), set: (kf, v) => { kf.camera = v; }
 }, {
-  key: 'tilt', label: 'Camera tilt (0 level, + from above)', auto: () => false, resolved: r => r.tilt,
+  key: 'tilt', label: 'Tilt (0 level, + from above)', auto: () => false, resolved: r => r.tilt,
   get: kf => num(kf.tilt), set: (kf, v) => { v = Math.max(0, Math.min(90, v)); if (v) kf.tilt = v; else delete kf.tilt; }
 }].concat(JOINTS.flatMap(([j, name, parts]) => parts.map((part, i) => {
   const ball = parts.length === 3, key = ball ? `${j}.${i}` : j;

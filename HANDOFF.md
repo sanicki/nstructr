@@ -170,7 +170,7 @@ All in `src/core.js`. Format v2 (Sep 2026): a 3D figure, jointed like an artist'
   floor where it is (`wallOnScreen` gives its foot `y` and `top`); a slack band sags no lower than its lower end; the
   floor ticks of a travelling exercise lie on the floor. The exercise page centres a tilted exercise in the stage at
   the usual scale (the floor isn't near the bottom), the workout player's frame and the thumbnails take in the near end
-  below the usual floor (thumbnails centred too). The editor has a Camera tilt row; `tools/viewer3d.html` a Tilt
+  below the usual floor (thumbnails centred too). The editor has a Tilt row; `tools/viewer3d.html` a Tilt
   slider. Transitions between exercises blend the tilt with the camera.
 - Segments (`DEFAULT_SEGMENTS`): torso 100 (two halves: lower back `torso`, upper back `chest`), neck 14,
   head radius 18, upper arm 55, forearm 50, thigh 80, shin 80, foot 22, shoulder half-width 22, hip half-width 12.
