@@ -259,6 +259,20 @@ By the HANDOFF section that describes the current behaviour.
 - Oct 2026: filmstrips of the next five (current view and a suggested tilt) for the owner; applied to Hip Twist, Thread
   the Needle, Figure-Four Stretch and the Turkish Get-Up (with its bodyweight and dumbbell versions); not Bicycle Crunch
   (its side view already shows elbow to knee).
+- Oct 2026: tilt for the rest of the library's strong candidates (Standing Torso Twists, the chair twists, the chest
+  flys, Chair Pigeon) and a turned camera for Wide-Legged Standing Forward Bend (45) and Seated Punches (60). The
+  renders showed no gain for Around the World, Halo, Side Crow and Firefly: left level.
+
+### 20-minute workouts and the default instruction (Oct 2026)
+
+- Oct 2026: the default was NstructR (`voice`) and the five 20-minute workouts were timed with it (19–21 min); with
+  NstructR+ they ran 21.7–24.6 min. Owner: NstructR+ the default again, the workouts fitted to it, with similar
+  exercises instead of sets of the same one where the library has them. Now 18.9–19.8 min with NstructR+: Free Weights
+  pairs goblet and dumbbell squats, row and reverse fly, Romanian and regular deadlift, press and lateral raise, two
+  triceps moves (no dumbbell alternative for the floor press or curl: two sets); Resistance Band adds a bent-over row,
+  chest fly, lateral raise and triceps kickback; Kettlebell has one set where it had two except the row, press and
+  swing (no kettlebell alternatives), a bodyweight squat to warm up and a dead bug to finish; Pilates drops Bird Dog
+  and Heel Taps (not Pilates) and a second Glute Bridge set; Yoga holds 35 s (was 45), Corpse 90 s.
 
 ### 8.3b Between exercises: positions and at-rest poses (Oct 2026, owner's request)
 

@@ -25,7 +25,8 @@
     {
       "name": "Twist left",
       "cue": "Arms crossed, turn your upper body to the left.",
-      "camera": 90,
+      "camera": 30,
+      "tilt": 30,
       "durationMs": 1500,
       "holdMs": 300,
       "phase": "rep",
@@ -65,7 +66,8 @@
     {
       "name": "Twist right",
       "cue": "Now turn to the right.",
-      "camera": 90,
+      "camera": 30,
+      "tilt": 30,
       "durationMs": 1500,
       "holdMs": 300,
       "phase": "rep",

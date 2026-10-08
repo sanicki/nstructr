@@ -23,7 +23,7 @@ Seconds of rest between the sets of an exercise done in more than one set, in ev
 Default 10. (Rest between circuit rounds is set on each block.)
 
 ### Instruction
-**Silent**, **Beeps**, **NstructR** (the default) or **NstructR+**: see [Working out → Instruction](Working-out.md#instruction). Also used
+**Silent**, **Beeps**, **NstructR** or **NstructR+** (the default): see [Working out → Instruction](Working-out.md#instruction). Also used
 by the exercise page (NstructR and NstructR+ read each step's cue once, then count).
 
 ### Words of encouragement

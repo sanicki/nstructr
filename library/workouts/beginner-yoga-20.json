@@ -3,26 +3,26 @@
   "version": 2,
   "id": "beginner-yoga-20",
   "name": "20-Minute Beginner's Yoga",
-  "description": "A gentle first yoga practice, about 20 minutes, with nothing but a mat: settle in, warm up the spine, a few standing poses held for 45 seconds each side, then floor poses and a rest at the end.",
+  "description": "A gentle first yoga practice, about 20 minutes, with nothing but a mat: settle in, warm up the spine, a few standing poses held for 35 seconds each side, then floor poses and a rest at the end.",
   "blocks": [
     {
       "name": "Arrive and warm up",
       "items": [
         {
           "ex": "yoga-easy",
-          "seconds": 60
+          "seconds": 45
         },
         {
           "ex": "yoga-cat-cow",
-          "reps": 8
+          "reps": 6
         },
         {
           "ex": "yoga-child",
-          "seconds": 45
+          "seconds": 35
         },
         {
           "ex": "yoga-downward-dog",
-          "seconds": 45
+          "seconds": 35
         }
       ]
     },
@@ -35,26 +35,26 @@
         },
         {
           "ex": "yoga-standing-forward-bend",
-          "seconds": 45
+          "seconds": 35
         },
         {
           "ex": "yoga-low-lunge",
-          "seconds": 45,
+          "seconds": 35,
           "sides": "both"
         },
         {
           "ex": "yoga-warrior-2",
-          "seconds": 45,
+          "seconds": 35,
           "sides": "both"
         },
         {
           "ex": "yoga-triangle",
-          "seconds": 45,
+          "seconds": 35,
           "sides": "both"
         },
         {
           "ex": "yoga-tree",
-          "seconds": 45,
+          "seconds": 35,
           "sides": "both"
         }
       ]
@@ -64,7 +64,7 @@
       "items": [
         {
           "ex": "yoga-sphinx",
-          "seconds": 45
+          "seconds": 35
         },
         {
           "ex": "yoga-bridge",
@@ -72,20 +72,20 @@
         },
         {
           "ex": "yoga-seated-forward-bend",
-          "seconds": 45
+          "seconds": 35
         },
         {
           "ex": "yoga-happy-baby",
-          "seconds": 45
+          "seconds": 35
         },
         {
           "ex": "yoga-supine-twist",
-          "seconds": 45,
+          "seconds": 35,
           "sides": "both"
         },
         {
           "ex": "yoga-corpse",
-          "seconds": 120
+          "seconds": 90
         }
       ]
     }

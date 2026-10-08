@@ -56,8 +56,8 @@ async def main():
         check('settings order', [await pg.evaluate("[...document.querySelectorAll('#view-settings .settings-title')].map(h=>h.textContent)"), await pg.evaluate("[...document.querySelectorAll('#view-settings section')][1].querySelectorAll('.body-large')[0].textContent")], [['Documentation', 'Workouts', 'Exercises', 'Display', 'Create with AI', 'Import & tools'], 'Rest between exercises'])
         check('docs link', await pg.evaluate("[$('#view-settings a').href, $('#view-settings a').target]"), ['https://github.com/sanicki/nstructr/blob/main/wiki/Home.md', '_blank'])
         await pg.fill('#setRestSets', '45'); await pg.dispatch_event('#setRestSets', 'change')
-        check('rest between sets', await pg.evaluate("[restSets(), (()=>{ const it={...newItem(exById('bw-squat')), sets:3, rest:5}; return itemSeconds(it) - itemSeconds({...it, sets:1})*3; })()]"), [45, 90], '2 rests of 45 s, item rest ignored')
-        w = "(()=>{ const w={id:'r',name:'R',blocks:[{id:'b',name:'B',items:[newItem(exById('bw-squat')),newItem(exById('bw-squat'))]}]}; return workoutSeconds(w); })()"
+        check('rest between sets', await pg.evaluate("[restSets(), (()=>{ WK.sound = 'voice'; const it={...newItem(exById('bw-squat')), sets:3, rest:5}; return itemSeconds(it) - itemSeconds({...it, sets:1})*3; })()]"), [45, 90], '2 rests of 45 s, item rest ignored')
+        w = "(()=>{ WK.sound = 'voice'; const w={id:'r',name:'R',blocks:[{id:'b',name:'B',items:[newItem(exById('bw-squat')),newItem(exById('bw-squat'))]}]}; return workoutSeconds(w); })()"
         t10 = await pg.evaluate(w); gap0 = await pg.evaluate("restGap()")
         await pg.fill('#setRest', '29'); await pg.dispatch_event('#setRest', 'change'); await pg.click('[data-rest-delta="1"]'); await pg.reload(wait_until='domcontentloaded'); await pg.wait_for_timeout(500)
         check('rest between exercises', [*(await pg.evaluate("[$('#setRest').value, restGap()]")), round(await pg.evaluate(w) - t10, 1)], ['30', 30, 30 - gap0], 'the one gap grows')

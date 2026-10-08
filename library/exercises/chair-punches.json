@@ -25,7 +25,7 @@
     {
       "name": "Fists up",
       "cue": "Sit tall, fists up in front of your face.",
-      "camera": 30,
+      "camera": 60,
       "durationMs": 1500,
       "holdMs": 300,
       "phase": "setup",
@@ -56,7 +56,7 @@
     {
       "name": "Right punch",
       "cue": "Punch your right fist forward.",
-      "camera": 30,
+      "camera": 60,
       "durationMs": 500,
       "holdMs": 100,
       "phase": "rep",
@@ -88,7 +88,7 @@
     {
       "name": "Left punch",
       "cue": "Bring it back as your left punches.",
-      "camera": 30,
+      "camera": 60,
       "durationMs": 500,
       "holdMs": 100,
       "phase": "rep",

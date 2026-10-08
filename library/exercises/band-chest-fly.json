@@ -25,7 +25,8 @@
     {
       "name": "Arms wide",
       "cue": "Band round your upper back, arms out wide at shoulder height.",
-      "camera": 45,
+      "camera": 0,
+      "tilt": 40,
       "durationMs": 1800,
       "holdMs": 300,
       "phase": "rep",
@@ -41,7 +42,8 @@
     {
       "name": "Hug",
       "cue": "Sweep your arms together in front of your chest.",
-      "camera": 45,
+      "camera": 0,
+      "tilt": 40,
       "durationMs": 1500,
       "holdMs": 400,
       "phase": "rep",

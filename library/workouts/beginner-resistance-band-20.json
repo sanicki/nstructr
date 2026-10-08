@@ -3,7 +3,7 @@
   "version": 2,
   "id": "beginner-resistance-band-20",
   "name": "20-Minute Beginner's Resistance Band",
-  "description": "A full-body workout with one resistance band for beginners, about 20 minutes, in a small space: pull-aparts and standing hip abductions to warm up, squats, deadlifts, bridges and clamshells, rows and presses, then arms. Pick a light band; you should finish each set with two or three reps to spare.",
+  "description": "A full-body workout with one resistance band for beginners, about 20 minutes, in a small space: pull-aparts and standing hip abductions to warm up, squats, deadlifts, bridges and clamshells, two kinds of row, chest press and fly, overhead press and lateral raise, then curls and two triceps moves. Pick a light band; you should finish each set with two or three reps to spare.",
   "blocks": [
     {
       "name": "Warm up",
@@ -14,7 +14,7 @@
         },
         {
           "ex": "bhf-abduction",
-          "reps": 12,
+          "reps": 10,
           "sides": "both"
         }
       ]
@@ -24,22 +24,19 @@
       "items": [
         {
           "ex": "bhf-squat",
-          "reps": 12,
-          "sets": 2
+          "reps": 12
         },
         {
           "ex": "band-rdl",
-          "reps": 12,
-          "sets": 2
+          "reps": 12
         },
         {
           "ex": "band-glute-bridge",
-          "reps": 12,
-          "sets": 2
+          "reps": 12
         },
         {
           "ex": "band-clamshell",
-          "reps": 12,
+          "reps": 10,
           "sides": "both"
         }
       ]
@@ -49,18 +46,27 @@
       "items": [
         {
           "ex": "band-seated-row",
-          "reps": 12,
-          "sets": 2
+          "reps": 12
+        },
+        {
+          "ex": "band-bent-over-row",
+          "reps": 12
         },
         {
           "ex": "bhf-chest-press",
-          "reps": 10,
-          "sets": 2
+          "reps": 10
+        },
+        {
+          "ex": "band-chest-fly",
+          "reps": 10
         },
         {
           "ex": "band-overhead-press",
-          "reps": 10,
-          "sets": 2
+          "reps": 10
+        },
+        {
+          "ex": "bhf-lateral-raise",
+          "reps": 10
         }
       ]
     },
@@ -74,8 +80,11 @@
         },
         {
           "ex": "band-overhead-triceps",
-          "reps": 10,
-          "sets": 2
+          "reps": 10
+        },
+        {
+          "ex": "band-triceps-kickback",
+          "reps": 10
         }
       ]
     }

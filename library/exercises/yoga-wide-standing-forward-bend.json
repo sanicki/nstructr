@@ -20,7 +20,7 @@
     {
       "name": "Mountain Pose",
       "cue": "Stand tall with your feet together and arms by your sides.",
-      "camera": 90,
+      "camera": 45,
       "durationMs": 1400,
       "holdMs": 1200,
       "phase": "setup",
@@ -31,7 +31,7 @@
     {
       "name": "Wide-Legged Forward Bend",
       "cue": "Step the feet wide and fold forward, hands to the floor.",
-      "camera": 90,
+      "camera": 45,
       "durationMs": 2600,
       "holdMs": 5000,
       "phase": "rep",

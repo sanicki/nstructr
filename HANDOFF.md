@@ -25,7 +25,7 @@ cutouts and flash sit along the bottom), no accidental skips.
 History: it started as "Pose Player" (a yoga pose animator), became "Motion Guide" (general exercise animator),
 and is now **NstructR**, with Workouts as the focus. Old names survive in localStorage keys on purpose (§11).
 
-Library today: **358 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with NstructR, the default since Oct 2026, at the default rests (5 s, 10 s); a few minutes more with NstructR+'s demonstrations; made for a small space: nothing that walks across the room, no Lateral Band Walk or carries (Oct 2026)). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
+Library today: **358 exercises, 5 workouts** (20-minute beginner's yoga, Pilates, resistance band, free weights and kettlebell, Sep 2026, timed with NstructR+, the default again since Oct 2026 (18.9–19.8 min with its demonstrations; NstructR 15.4–17.3), at the default rests (5 s, 10 s); a similar exercise in place of a second set where the library has one (owner, Oct 2026); made for a small space: nothing that walks across the room, no Lateral Band Walk or carries (Oct 2026)). Their default order is `library/workout-order.json` (the build sorts the bundle by it and fails if a workout is missing from it); a person's own order (`nstructr-libwk-order-v1`) comes first.
 
 | Collection | Count | Notes |
 |---|---|---|
@@ -167,7 +167,10 @@ All in `src/core.js`. Format v2 (Sep 2026): a 3D figure, jointed like an artist'
   Saw, Bound Angle Pose, both Bound Angle Forward Bends, Lotus, Easy Pose (their cameras, tilt 30); Kneeling Side Kick,
   Leg Circles and Band Leg Circles (camera 60, tilt 30); Corkscrew (camera 60, tilt 35); Reclined Bound Angle (camera
   90, tilt 35); Heel Taps (camera 90, tilt 40); Hip Twist (camera 60, tilt 30); Thread the Needle and Figure-Four
-  Stretch (camera 90, tilt 30); the three Turkish Get-Ups (camera 45, tilt 20). Bicycle Crunch stays level (owner). Found by measuring how much of each move goes toward or away from a
+  Stretch (camera 90, tilt 30); the three Turkish Get-Ups (camera 45, tilt 20). Standing Torso Twists (camera 0, tilt 35); Seated
+  Upper-Body Twist and Chair Twist (camera 30, tilt 30); Band Chest Fly (camera 0, tilt 40); Dumbbell Chest Fly (camera
+  45, tilt 35); Chair Pigeon (its cameras, tilt 30). Bicycle Crunch stays level (owner); Around the World, Halo, Side
+  Crow and Firefly too (no gain in renders). Found by measuring how much of each move goes toward or away from a
   level camera (more than about a quarter).
 - **Looking down** (`tilt` > 0): the floor is a band (`floorShape`: `FLOOR_REACH` 200 either side of the stage centre,
   its near and far edges) instead of the line, and the figure's shadow a flatter circle on it under the pelvis
@@ -1091,7 +1094,7 @@ the app fills in the `device` field (user agent, screen size, installed app or b
 | `nstructr-bookmarks-v1` | ids of bookmarked exercises, library or own (a flag; library ones aren't copied, so library fixes reach them) |
 | `motion-guide-workouts-v1` | `{list: [...]}` user workouts (runtime form with uids) |
 | `motion-guide-session-v1` | `{wid, i, swaps?}` resume point; `swaps` = the session's Easier/Harder swaps (item uid → exercise id, Sep 2026) |
-| `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name; since Oct 2026 `voice` is shown as **NstructR** (was "Voice", then "Coach") and `coach` as **NstructR+** (was "Coach", then "Instructor"), the values unchanged). Default **voice** (NstructR) since Oct 2026 (beeps until Sep 2026, then coach, NstructR+); a stored choice stays: the 20-minute workouts are timed with NstructR |
+| `motion-guide-sound-v1` | sound mode: off / beeps / voice / coach (shown as **Instruction** since Sep 2026; the key keeps its old name; since Oct 2026 `voice` is shown as **NstructR** (was "Voice", then "Coach") and `coach` as **NstructR+** (was "Coach", then "Instructor"), the values unchanged). Default **coach** (NstructR+) again since Oct 2026 (beeps until Sep 2026, then coach, then voice for a while); a stored choice stays: the 20-minute workouts are timed with NstructR+ |
 | `motion-guide-log-v1` | history sessions (capped at 500) |
 | `nstructr-fullscreen-v1` | `"off"` to disable the full-screen request |
 | `nstructr-theme-v1` | `system` / `light` / `dark` (applied by an inline script in `<head>` before first paint) |
