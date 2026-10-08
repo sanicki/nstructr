@@ -25,7 +25,8 @@
     {
       "name": "Lie on your back",
       "cue": "Knees bent, feet flat.",
-      "camera": 60,
+      "camera": 90,
+      "tilt": 30,
       "durationMs": 1500,
       "holdMs": 300,
       "phase": "setup",
@@ -55,7 +56,8 @@
     {
       "name": "Figure-Four Stretch",
       "cue": "Right ankle on your left knee, pull the left thigh toward you.",
-      "camera": 60,
+      "camera": 90,
+      "tilt": 30,
       "durationMs": 1500,
       "holdMs": 5000,
       "phase": "rep",
