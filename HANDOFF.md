@@ -417,8 +417,8 @@ too), `backThigh` (hamstrings), `lowerLegs` (calves, shins).
   the animated figure itself, `mgBody`: the engine's standing body from `DEFAULT_SEGMENTS`, arms 15° out and feet a little
   apart, projected at cameras 0 and 180; even capsules `MG_LIMB` 14 wide along its bones, a `MG_TORSO` 29-wide torso
   split into its groups, the shoulders limb-wide circles at the arm joints, a short neck, the head, plain hands and
-  feet; each limb outlined in its side's colour as in the player, right blue, left purple, with Right and Left in the
-  legend; the figure's right is on the left seen from the front), each group
+  feet; each limb outlined in its side's colour as in the player, right blue, left purple, the figure's right on the left
+  seen from the front; not in the legend (owner: a quiet cue, the fills are what to read)), each group
   filled by rating (`--mg-1`…`--mg-3` in `src/head.html`: lighter to darker in the light theme, darker to brighter in
   the dark one, so the order reads in greyscale), stretched groups outlined in dashed blue (`--mg-stretch`), a legend,
   and a list under seven headings (arms, shoulders, chest, back, core, upper legs and glutes, lower legs). Test:

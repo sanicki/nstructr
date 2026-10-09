@@ -79,7 +79,7 @@ function workoutMusclesHTML(w, compact) {
   const words = g => [t[g] >= 0.05 ? mgNum(t[g]) : '', st.has(g) ? 'stretched' : ''].filter(Boolean).join(', ');
   const list = MUSCLE_HEADS.map(([h, gs]) => { const x = gs.filter(g => t[g] >= 0.05 || st.has(g));
     return x.length ? `<li><b>${h}:</b> ${x.map(g => MUSCLE_NAMES[g] === h ? words(g) : `${MUSCLE_NAMES[g].toLowerCase()} ${words(g)}`).join('; ')}</li>` : ''; }).join('');
-  return `${fig}${MG_SCALE}<div class="mg-legend body-small" aria-hidden="true">${stList.length ? mgSwatch('var(--mg-empty)', true, 'Stretched') : ''}${mgSides()}</div><p class="body-small muted mg-note">Estimated work, in sets: green up to 2, amber 2–5, red above 5. A set near the suggested reps counts 1; muscles that help count ½, those that steady you ¼. Stretches don't add to the sets: a dashed blue outline marks every group the workout stretches.${unrated ? ` ${plural(unrated, { one: '# exercise has', other: '# exercises have' })} no muscle ratings.` : ''}</p>
+  return `${fig}${MG_SCALE}${stList.length ? `<div class="mg-legend body-small" aria-hidden="true">${mgSwatch('var(--mg-empty)', true, 'Stretched')}</div>` : ''}<p class="body-small muted mg-note">Estimated work, in sets: green up to 2, amber 2–5, red above 5. A set near the suggested reps counts 1; muscles that help count ½, those that steady you ¼. Stretches don't add to the sets: a dashed blue outline marks every group the workout stretches.${unrated ? ` ${plural(unrated, { one: '# exercise has', other: '# exercises have' })} no muscle ratings.` : ''}</p>
     <ul class="mg-list body-medium">${list}</ul>`;
 }
 /* "Works the front of thighs and glutes" for a card's label */
@@ -92,7 +92,8 @@ function worksText(ex) {
    and feet a little apart, seen from the front (camera 0) and the back (180), drawn as even capsules along its bones
    (MG_LIMB wide), a slimmer torso split into its groups, the shoulders as limb-wide circles at the arm joints, a short
    neck, the head, and plain hands and feet. Each limb is outlined in its side's colour, as in the player (right blue,
-   left purple: seen from the front, the figure's right is on the left). fill(g) gives a group's fill (null = empty),
+   left purple: seen from the front, the figure's right is on the left; not in the legend, owner: a quiet cue, the fills are
+   what to read). fill(g) gives a group's fill (null = empty),
    stretched(g) whether it's outlined as stretched (dashed, over the side colour). */
 const MG_LIMB = 14, MG_TORSO = 29;
 let MG_BODY = null;
@@ -137,8 +138,6 @@ function muscleFigure(fill, stretched, label) {
   };
   return `<svg class="mg-map" viewBox="0 0 400 326" role="img" aria-label="${esc(label)}">${view(true, 0)}${view(false, 200)}</svg>`;
 }
-/* the side colours' key (the limbs' outlines, as in the player) */
-const mgSides = () => ['R', 'L'].map(d => `<span class="mg-key"><svg width="22" height="14" aria-hidden="true"><rect x="1.5" y="1.5" width="19" height="11" rx="5.5" fill="var(--mg-empty)" stroke="var(--md-${d === 'R' ? 'primary' : 'tertiary'})" stroke-width="2"/></svg>${d === 'R' ? 'Right' : 'Left'}</span>`).join('');
 /* one swatch of the legend */
 const mgSwatch = (fill, stretch, label) => `<span class="mg-key"><svg width="22" height="14" aria-hidden="true"><rect x="1.5" y="1.5" width="19" height="11" rx="5.5" fill="${fill}" stroke="${stretch ? 'var(--mg-stretch)' : 'var(--mg-line)'}" stroke-width="${stretch ? 2.5 : 1.5}"${stretch ? ' stroke-dasharray="4 2"' : ''}/></svg>${label}</span>`;
 /* the exercise page's section: map, legend, and a list under the seven headings */
@@ -152,6 +151,6 @@ function musclesHTML(ex) {
   const label = MUSCLE_GROUPS.filter(g => m[g] || s.includes(g)).map(g => `${MUSCLE_NAMES[g]}: ${words(g)}`).join('. ');
   return `<section class="muscles" aria-labelledby="musclesTitle"><h3 class="title-small" id="musclesTitle">Muscles${s.length ? (Object.keys(m).length ? ' worked and stretched' : ' stretched') : ' worked'}</h3>
     ${muscleFigure(g => m[g] ? `var(--mg-${m[g]})` : null, g => s.includes(g), 'Muscle map. ' + label)}
-    <div class="mg-legend body-small" aria-hidden="true">${[3, 2, 1].map(v => mgSwatch(`var(--mg-${v})`, false, RATING_NAMES[v])).join('')}${mgSwatch('var(--mg-empty)', true, 'Stretched')}${mgSides()}</div>
+    <div class="mg-legend body-small" aria-hidden="true">${[3, 2, 1].map(v => mgSwatch(`var(--mg-${v})`, false, RATING_NAMES[v])).join('')}${mgSwatch('var(--mg-empty)', true, 'Stretched')}</div>
     <ul class="mg-list body-medium">${list}</ul></section>`;
 }

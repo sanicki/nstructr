@@ -270,7 +270,8 @@ By the HANDOFF section that describes the current behaviour.
 - Oct 2026: the map's outline was drawn by hand (legs 1.35× the torso against the animated figure's 1.6×, tapered
   limbs 12–18 wide, a 40-wide torso, shoulder circles of radius 11, a neck block, no hands or feet, grey outlines).
   Owner's choice from the options offered: drawn from the engine's own body, even limbs, a slimmer torso, limb-wide
-  shoulders, a short neck, hands and feet, the side colours on the limbs (not the filled head).
+  shoulders, a short neck, hands and feet, the side colours on the limbs (not the filled head). Right and Left were in
+  the legend at first; owner: keep the outline colours but not in the legend (they read less easily than the fills).
 
 ### 20-minute workouts and the default instruction (Oct 2026)
 
