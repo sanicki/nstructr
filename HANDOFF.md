@@ -169,7 +169,8 @@ All in `src/core.js`. Format v2 (Sep 2026): a 3D figure, jointed like an artist'
   90, tilt 35); Heel Taps (camera 90, tilt 40); Hip Twist (camera 60, tilt 30); Thread the Needle and Figure-Four
   Stretch (camera 90, tilt 30); the three Turkish Get-Ups (camera 45, tilt 20). Standing Torso Twists (camera 0, tilt 35); Seated
   Upper-Body Twist and Chair Twist (camera 30, tilt 30); Band Chest Fly (camera 0, tilt 40); Dumbbell Chest Fly (camera
-  45, tilt 35); Chair Pigeon (its cameras, tilt 30). Bicycle Crunch stays level (owner); Around the World, Halo, Side
+  45, tilt 35); Chair Pigeon (its cameras, tilt 30); Head-to-Knee (camera 45, tilt 30) and
+  Revolved Head-to-Knee (camera 0, tilt 30). Clamshell stays level (its knee opens upward, best seen level). Bicycle Crunch stays level (owner); Around the World, Halo, Side
   Crow and Firefly too (no gain in renders). Found by measuring how much of each move goes toward or away from a
   level camera (more than about a quarter).
 - **Looking down** (`tilt` > 0): the floor is a band (`floorShape`: `FLOOR_REACH` 200 either side of the stage centre,
