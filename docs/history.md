@@ -262,6 +262,8 @@ By the HANDOFF section that describes the current behaviour.
 - Oct 2026: tilt for the rest of the library's strong candidates (Standing Torso Twists, the chair twists, the chest
   flys, Chair Pigeon) and a turned camera for Wide-Legged Standing Forward Bend (45) and Seated Punches (60). The
   renders showed no gain for Around the World, Halo, Side Crow and Firefly: left level.
+- Oct 2026, owner: Head-to-Knee (close to Bound Angle Forward Bend) and Clamshell? Head-to-Knee and Revolved
+  Head-to-Knee tilted; Clamshell's knee opens upward, which a level camera shows best (every tilt read worse).
 
 ### 20-minute workouts and the default instruction (Oct 2026)
 
