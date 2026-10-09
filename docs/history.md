@@ -265,6 +265,13 @@ By the HANDOFF section that describes the current behaviour.
 - Oct 2026, owner: Head-to-Knee (close to Bound Angle Forward Bend) and Clamshell? Head-to-Knee and Revolved
   Head-to-Knee tilted; Clamshell's knee opens upward, which a level camera shows best (every tilt read worse).
 
+### The muscle map's figure (Oct 2026)
+
+- Oct 2026: the map's outline was drawn by hand (legs 1.35× the torso against the animated figure's 1.6×, tapered
+  limbs 12–18 wide, a 40-wide torso, shoulder circles of radius 11, a neck block, no hands or feet, grey outlines).
+  Owner's choice from the options offered: drawn from the engine's own body, even limbs, a slimmer torso, limb-wide
+  shoulders, a short neck, hands and feet, the side colours on the limbs (not the filled head).
+
 ### 20-minute workouts and the default instruction (Oct 2026)
 
 - Oct 2026: the default was NstructR (`voice`) and the five 20-minute workouts were timed with it (19–21 min); with

@@ -78,6 +78,8 @@ About shows which muscle groups an exercise works on a front and back outline of
 - **Primary** (red): what the exercise is for. **Secondary** (amber): muscles that help move the load.
   **Stabilizer** (green): muscles that hold you steady. Unfilled: not worked.
 - A **dashed blue outline**: that group is stretched.
+- The figure is the same one that does the exercises. Its limbs are outlined in the player's side colours: **right**
+  blue, **left** purple. Seen from the front, its right side is on your left.
 - The list below the figure says the same in words, under Arms, Shoulders, Chest, Back, Core, Upper legs and glutes,
   and Lower legs. The colours get darker the more a muscle works (brighter in the dark theme).
 - Eleven groups: shoulders, chest, upper back, lower back, biceps and forearms, triceps, core, front of thighs (with the

@@ -18,7 +18,7 @@ async def main():
         check('section title', await pg.evaluate("$('#musclesTitle').textContent"), 'Muscles worked')
         check('map parts filled', await pg.evaluate("[...document.querySelectorAll('.mg-map [fill^=\"var(--mg-\"]')].map(e => e.getAttribute('fill')).filter(f => f !== 'var(--mg-empty)').length"), 11)
         check('squat list', await pg.evaluate("[...document.querySelectorAll('.mg-list li')].map(li => li.textContent)"), ['Back: lower back (stabilizer)', 'Core: stabilizer', 'Upper legs and glutes: front of thighs (primary); glutes (secondary); back of thighs (stabilizer)', 'Lower legs: calves and shins (secondary)'])
-        check('legend', await pg.evaluate("$('.mg-legend').textContent"), 'PrimarySecondaryStabilizerStretched')
+        check('legend', await pg.evaluate("$('.mg-legend').textContent"), 'PrimarySecondaryStabilizerStretchedRightLeft', 'the side colours too (the limbs are outlined in them)')
         check('light primary colour', await pg.evaluate("getComputedStyle(document.documentElement).getPropertyValue('--mg-3').trim()"), '#9d2a20')
         await pg.goto(URL + '#/play/yoga-low-lunge'); await pg.wait_for_timeout(500)
         check('low lunge title', await pg.evaluate("$('#musclesTitle').textContent"), 'Muscles worked and stretched')

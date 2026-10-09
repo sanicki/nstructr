@@ -1,6 +1,6 @@
 /* ===================== Muscle groups (HANDOFF §13, docs/muscles.md) =====================
    Each exercise rates 11 groups 1–3 ("muscles": 3 primary, 2 secondary, 1 stabilizer) and lists the groups it
-   stretches. The exercise page shows them on a front and back outline of the stick figure (capsule limbs, round head),
+   stretches. The exercise page shows them on a front and back outline of the stick figure (its own standing body),
    coloured by rating (the --mg-* colours: darker = more in the light theme, brighter = more in the dark one), stretched
    groups outlined in dashed blue, with a legend and a text list. A user's copy of a library exercise (basedOn) that
    has no ratings of its own shows its original's. */
@@ -79,7 +79,7 @@ function workoutMusclesHTML(w, compact) {
   const words = g => [t[g] >= 0.05 ? mgNum(t[g]) : '', st.has(g) ? 'stretched' : ''].filter(Boolean).join(', ');
   const list = MUSCLE_HEADS.map(([h, gs]) => { const x = gs.filter(g => t[g] >= 0.05 || st.has(g));
     return x.length ? `<li><b>${h}:</b> ${x.map(g => MUSCLE_NAMES[g] === h ? words(g) : `${MUSCLE_NAMES[g].toLowerCase()} ${words(g)}`).join('; ')}</li>` : ''; }).join('');
-  return `${fig}${MG_SCALE}${stList.length ? `<div class="mg-legend body-small" aria-hidden="true">${mgSwatch('var(--mg-empty)', true, 'Stretched')}</div>` : ''}<p class="body-small muted mg-note">Estimated work, in sets: green up to 2, amber 2–5, red above 5. A set near the suggested reps counts 1; muscles that help count ½, those that steady you ¼. Stretches don't add to the sets: a dashed blue outline marks every group the workout stretches.${unrated ? ` ${plural(unrated, { one: '# exercise has', other: '# exercises have' })} no muscle ratings.` : ''}</p>
+  return `${fig}${MG_SCALE}<div class="mg-legend body-small" aria-hidden="true">${stList.length ? mgSwatch('var(--mg-empty)', true, 'Stretched') : ''}${mgSides()}</div><p class="body-small muted mg-note">Estimated work, in sets: green up to 2, amber 2–5, red above 5. A set near the suggested reps counts 1; muscles that help count ½, those that steady you ¼. Stretches don't add to the sets: a dashed blue outline marks every group the workout stretches.${unrated ? ` ${plural(unrated, { one: '# exercise has', other: '# exercises have' })} no muscle ratings.` : ''}</p>
     <ul class="mg-list body-medium">${list}</ul>`;
 }
 /* "Works the front of thighs and glutes" for a card's label */
@@ -88,33 +88,57 @@ function worksText(ex) {
   const p = MUSCLE_GROUPS.filter(g => r.muscles[g] === 3).map(g => MUSCLE_NAMES[g].toLowerCase());
   return p.length ? `Works ${p.length > 1 ? p.slice(0, -1).join(', ') + ' and ' + p[p.length - 1] : p[0]}` : '';
 }
-/* the outline: fill(g) gives a group's fill (null = empty), stretched(g) whether it's outlined as stretched */
+/* The outline is the animated figure itself (owner, Oct 2026: shaped alike): the engine's standing body, arms 15° out
+   and feet a little apart, seen from the front (camera 0) and the back (180), drawn as even capsules along its bones
+   (MG_LIMB wide), a slimmer torso split into its groups, the shoulders as limb-wide circles at the arm joints, a short
+   neck, the head, and plain hands and feet. Each limb is outlined in its side's colour, as in the player (right blue,
+   left purple: seen from the front, the figure's right is on the left). fill(g) gives a group's fill (null = empty),
+   stretched(g) whether it's outlined as stretched (dashed, over the side colour). */
+const MG_LIMB = 14, MG_TORSO = 29;
+let MG_BODY = null;
+function mgBody() {
+  if (MG_BODY) return MG_BODY;
+  const seg = DEFAULT_SEGMENTS, pose = normPose({ shoulderL: [0, 15, 0], shoulderR: [0, 15, 0], hipL: [0, 4, 0], hipR: [0, 4, 0] });
+  const P = fkAt(pose, seg, { x: 0, y: 0, z: 0 }), low = Math.min(...Object.values(P).map(q => q.y));
+  for (const k in P) P[k] = { ...P[k], y: P[k].y - low };
+  // screen points of each view, scaled so the head's top is at 12 and the floor at 300 (of the 326-high map)
+  const top = P.headTop.y + 2, s = 288 / top;
+  const view = yaw => { const Q = project(P, yaw), out = {}; for (const k in Q) out[k] = { x: 100 + (Q[k].x - CX) * s, y: 300 - (FLOOR - Q[k].y) * s }; return out; };
+  return (MG_BODY = { front: view(0), back: view(180), s, head: seg.head * s });
+}
 function muscleFigure(fill, stretched, label) {
-  const f = n => n.toFixed(1);
-  const attrs = g => { const s = stretched(g); return `fill="${fill(g) || 'var(--mg-empty)'}" stroke="${s ? 'var(--mg-stretch)' : 'var(--mg-line)'}" stroke-width="${s ? 4 : 1.5}"${s ? ' stroke-dasharray="6 3"' : ''}`; };
-  const cap = (x1, y1, x2, y2, w, g) => {
-    const len = Math.hypot(x2 - x1, y2 - y1), r = w / 2, nx = -(y2 - y1) / len * r, ny = (x2 - x1) / len * r;
-    return `<path d="M${f(x1 + nx)} ${f(y1 + ny)}L${f(x2 + nx)} ${f(y2 + ny)}A${r} ${r} 0 0 0 ${f(x2 - nx)} ${f(y2 - ny)}L${f(x1 - nx)} ${f(y1 - ny)}A${r} ${r} 0 0 0 ${f(x1 + nx)} ${f(y1 + ny)}Z" ${attrs(g)}/>`;
+  const f = n => n.toFixed(1), B = mgBody();
+  // a part's fill and outline: the side's colour for a limb, the line colour for the body; stretched: dashed blue
+  const attrs = (g, side) => { const st = g && stretched(g), line = side === 'R' ? 'var(--md-primary)' : side === 'L' ? 'var(--md-tertiary)' : 'var(--mg-line)';
+    return `fill="${(g && fill(g)) || 'var(--mg-empty)'}" stroke="${st ? 'var(--mg-stretch)' : line}" stroke-width="${st ? 4 : side ? 2 : 1.5}"${st ? ' stroke-dasharray="6 3"' : ''}`; };
+  const cap = (a, b, w, g, side) => {
+    const len = Math.hypot(b.x - a.x, b.y - a.y) || 0.01, r = w / 2, nx = -(b.y - a.y) / len * r, ny = (b.x - a.x) / len * r;
+    return `<path d="M${f(a.x + nx)} ${f(a.y + ny)}L${f(b.x + nx)} ${f(b.y + ny)}A${r} ${r} 0 0 0 ${f(b.x - nx)} ${f(b.y - ny)}L${f(a.x - nx)} ${f(a.y - ny)}A${r} ${r} 0 0 0 ${f(a.x + nx)} ${f(a.y + ny)}Z" ${attrs(g, side)}/>`;
   };
+  const dot = (p, r, g, side) => `<circle cx="${f(p.x)}" cy="${f(p.y)}" r="${f(r)}" ${attrs(g, side)}/>`;
   const view = (front, x0) => {
-    const X = x => x + x0;
-    const arm = d => { const sx = X(100 + d * 27), ex = X(100 + d * 40), hx = X(100 + d * 47);
-      return cap(sx, 70, ex, 120, 14, front ? 'biceps' : 'triceps') + cap(ex, 120, hx, 168, 12, 'biceps'); };
-    const leg = d => { const hx = X(100 + d * 11), kx = X(100 + d * 14), ax = X(100 + d * 15);
-      return cap(hx, 158, kx, 230, 18, front ? 'frontThigh' : 'backThigh') + cap(kx, 230, ax, 296, 14, 'lowerLegs'); };
-    const top = bottom => `M${X(80)} 70 Q${X(80)} 60 ${X(90)} 60 L${X(110)} 60 Q${X(120)} 60 ${X(120)} 70 L${X(120)} ${bottom} L${X(80)} ${bottom} Z`;
-    const torso = front
-      ? `<path d="${top(104)}" ${attrs('chest')}/><path d="M${X(80)} 104 L${X(120)} 104 L${X(119)} 150 Q${X(118)} 162 ${X(100)} 162 Q${X(82)} 162 ${X(81)} 150 Z" ${attrs('core')}/>`
-      : `<path d="${top(112)}" ${attrs('upperBack')}/><path d="M${X(80)} 112 L${X(120)} 112 L${X(120)} 138 L${X(80)} 138 Z" ${attrs('lowerBack')}/>
-         <path d="M${X(80)} 138 L${X(120)} 138 L${X(119)} 152 Q${X(118)} 166 ${X(100)} 164 Q${X(82)} 166 ${X(81)} 152 Z" ${attrs('glutes')}/>
-         <line x1="${X(100)}" y1="140" x2="${X(100)}" y2="164" stroke="var(--mg-line)" stroke-width="1.5"/>`;
-    const shoulders = [-1, 1].map(d => `<circle cx="${X(100 + d * 25)}" cy="68" r="11" ${attrs('shoulders')}/>`).join('');
-    return `${leg(-1)}${leg(1)}${arm(-1)}${arm(1)}${torso}${shoulders}
-      <rect x="${X(95)}" y="44" width="10" height="16" rx="4" fill="var(--mg-empty)" stroke="var(--mg-line)" stroke-width="1.5"/><circle cx="${X(100)}" cy="30" r="17" fill="var(--mg-empty)" stroke="var(--mg-line)" stroke-width="1.5"/>
-      <text x="${X(100)}" y="318" text-anchor="middle" font-size="13" fill="var(--md-on-surface-variant)">${front ? 'Front' : 'Back'}</text>`;
+    const V = front ? B.front : B.back, Q = {}; for (const k in V) Q[k] = { x: V[k].x + x0, y: V[k].y };
+    const legs = ['L', 'R'].map(d => cap(Q['ankle' + d], Q['toe' + d], 10, null, d) +
+      cap(Q['hip' + d], Q['knee' + d], MG_LIMB, front ? 'frontThigh' : 'backThigh', d) + cap(Q['knee' + d], Q['ankle' + d], MG_LIMB, 'lowerLegs', d)).join('');
+    const arms = ['L', 'R'].map(d => cap(Q['shoulder' + d], Q['elbow' + d], MG_LIMB, front ? 'biceps' : 'triceps', d) +
+      cap(Q['elbow' + d], Q['hand' + d], MG_LIMB, 'biceps', d) + dot(Q['hand' + d], 6.5 * B.s, null, d)).join('');
+    // the torso: from the shoulders to just below the hips, MG_TORSO wide, rounded at the shoulders; split into its groups
+    const cx = (Q.shoulderL.x + Q.shoulderR.x) / 2, l = cx - MG_TORSO / 2, rgt = cx + MG_TORSO / 2;
+    const y0 = Math.min(Q.shoulderL.y, Q.shoulderR.y) - MG_LIMB / 2, y1 = Math.max(Q.hipL.y, Q.hipR.y) + 6, at = t => y0 + (y1 - y0) * t, rr = 8;
+    const box = (a, b, g, roundTop, roundBottom) => `<path d="M${f(l)} ${f(a + (roundTop ? rr : 0))}${roundTop ? `Q${f(l)} ${f(a)} ${f(l + rr)} ${f(a)}L${f(rgt - rr)} ${f(a)}Q${f(rgt)} ${f(a)} ${f(rgt)} ${f(a + rr)}` : `L${f(rgt)} ${f(a)}`}` +
+      `L${f(rgt)} ${f(b - (roundBottom ? rr : 0))}${roundBottom ? `Q${f(rgt)} ${f(b)} ${f(rgt - rr)} ${f(b)}L${f(l + rr)} ${f(b)}Q${f(l)} ${f(b)} ${f(l)} ${f(b - rr)}` : `L${f(l)} ${f(b)}`}Z" ${attrs(g)}/>`;
+    const torso = front ? box(y0, at(0.43), 'chest', true, false) + box(at(0.43), y1, 'core', false, true)
+      : box(y0, at(0.51), 'upperBack', true, false) + box(at(0.51), at(0.76), 'lowerBack', false, false) + box(at(0.76), y1, 'glutes', false, true) +
+        `<line x1="${f(cx)}" y1="${f(at(0.78))}" x2="${f(cx)}" y2="${f(y1)}" stroke="var(--mg-line)" stroke-width="1.5"/>`;
+    const shoulders = ['L', 'R'].map(d => dot(Q['shoulder' + d], MG_LIMB / 2, 'shoulders')).join('');
+    const neck = cap({ x: cx, y: y0 + 2 }, { x: Q.head.x, y: Q.head.y + B.head - 2 }, 8, null);
+    return `${legs}${torso}${arms}${shoulders}${neck}${dot(Q.head, B.head, null)}
+      <text x="${100 + x0}" y="318" text-anchor="middle" font-size="13" fill="var(--md-on-surface-variant)">${front ? 'Front' : 'Back'}</text>`;
   };
   return `<svg class="mg-map" viewBox="0 0 400 326" role="img" aria-label="${esc(label)}">${view(true, 0)}${view(false, 200)}</svg>`;
 }
+/* the side colours' key (the limbs' outlines, as in the player) */
+const mgSides = () => ['R', 'L'].map(d => `<span class="mg-key"><svg width="22" height="14" aria-hidden="true"><rect x="1.5" y="1.5" width="19" height="11" rx="5.5" fill="var(--mg-empty)" stroke="var(--md-${d === 'R' ? 'primary' : 'tertiary'})" stroke-width="2"/></svg>${d === 'R' ? 'Right' : 'Left'}</span>`).join('');
 /* one swatch of the legend */
 const mgSwatch = (fill, stretch, label) => `<span class="mg-key"><svg width="22" height="14" aria-hidden="true"><rect x="1.5" y="1.5" width="19" height="11" rx="5.5" fill="${fill}" stroke="${stretch ? 'var(--mg-stretch)' : 'var(--mg-line)'}" stroke-width="${stretch ? 2.5 : 1.5}"${stretch ? ' stroke-dasharray="4 2"' : ''}/></svg>${label}</span>`;
 /* the exercise page's section: map, legend, and a list under the seven headings */
@@ -128,6 +152,6 @@ function musclesHTML(ex) {
   const label = MUSCLE_GROUPS.filter(g => m[g] || s.includes(g)).map(g => `${MUSCLE_NAMES[g]}: ${words(g)}`).join('. ');
   return `<section class="muscles" aria-labelledby="musclesTitle"><h3 class="title-small" id="musclesTitle">Muscles${s.length ? (Object.keys(m).length ? ' worked and stretched' : ' stretched') : ' worked'}</h3>
     ${muscleFigure(g => m[g] ? `var(--mg-${m[g]})` : null, g => s.includes(g), 'Muscle map. ' + label)}
-    <div class="mg-legend body-small" aria-hidden="true">${[3, 2, 1].map(v => mgSwatch(`var(--mg-${v})`, false, RATING_NAMES[v])).join('')}${mgSwatch('var(--mg-empty)', true, 'Stretched')}</div>
+    <div class="mg-legend body-small" aria-hidden="true">${[3, 2, 1].map(v => mgSwatch(`var(--mg-${v})`, false, RATING_NAMES[v])).join('')}${mgSwatch('var(--mg-empty)', true, 'Stretched')}${mgSides()}</div>
     <ul class="mg-list body-medium">${list}</ul></section>`;
 }
