@@ -44,6 +44,9 @@ Roadmap step 1 (below) was **done** apart from going live (item 6 below). What's
 - File formats renamed to `nstructr/exercise`, `nstructr/workout`, `nstructr/log`. Old `pose-player/*` files
   (and bare single exercise/workout objects) still import.
 - Browser tests ported to `tools/e2e/` (Python Playwright), pointed at a URL via `NSTRUCTR_URL`.
+- Nov 2026: the nightly browser tests failed from Nov 18 at setup ("Playwright does not support chromium on
+  ubuntu26.04-x64"): GitHub's `ubuntu-latest` became Ubuntu 26.04, which Playwright 1.56 doesn't support. Both
+  browser-test jobs now run on `ubuntu-24.04` (ROADMAP: upgrade Playwright, then go back).
 - Verified: build passes; both builds load 136 exercises, seed the routine, play exercises, run the full 24-item
   routine to completion; old and bare files import; gestures, editor, NstructR+ speech, layout, floor height and
   arm-circle continuity tests pass against the served build.
