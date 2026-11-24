@@ -31,9 +31,7 @@ jobs:
   # or a crash; their output is uploaded when one fails. Every test runs nightly (e2e-nightly.yml).
   browser-tests:
     if: github.event_name == 'pull_request'
-    # Ubuntu 24.04, not ubuntu-latest: since Nov 2026 that is 26.04, where Playwright 1.56 (tools/e2e/requirements.txt)
-    # can't install Chromium. Move on with a Playwright upgrade.
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

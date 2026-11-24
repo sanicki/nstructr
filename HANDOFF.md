@@ -1151,8 +1151,10 @@ The mixed prefixes are historical; renaming them would silently wipe users' data
   caption / figure never overlap on cover, phone, landscape), `floor_height_cover` (floor ≥ 23% above bottom),
   `arm_circles_continuity` (constant angular speed, never reverses), `star_excursion_coach`, `variations` (linked
   variations: exercise page, editor swaps, player swaps with NstructR+, session and Resume, history, Keep these changes).
-  Install with a Playwright version matching the Chromium you have (Claude Code's cloud sandbox:
-  `pip install playwright==1.56.0 pillow`, no `playwright install`). Still by hand: `tools/audit.py`, `tools/perf.py`
+  Install with a Playwright version matching the Chromium you have (CI: `tools/e2e/requirements.txt`, Playwright 1.65.2,
+  and `playwright install --with-deps chromium`; Claude Code's cloud sandbox has Playwright 1.65.2 for Python 3.13
+  (`python3.13 tools/e2e/run.py`) and Chromium build 1243 under `/opt/pw-browsers`, no `playwright install`; when that
+  build is older than the one Playwright asks for, link the asked-for folder name to it there). Still by hand: `tools/audit.py`, `tools/perf.py`
   (machine-dependent) and anything needing the internet (source links).
 
 ---

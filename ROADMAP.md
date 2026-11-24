@@ -26,9 +26,11 @@ comes off this list. How things work, and why past decisions were made, is in [H
   and Knee Push-Up (a toe 26 px); out of Child's Pose (a toe), Puppy (a toe 27 px), Thread the Needle (a hand 23 px) and
   Lizard (a toe 18 px). Better in the engine (hold such points during a move, as it holds a planted hand) than step by
   step; the build's move checks should catch it (they check the ends only).
-- **Playwright upgrade** (Nov 2026): the browser tests run on Ubuntu 24.04 because Playwright 1.56 can't install
-  Chromium on 26.04, GitHub's `ubuntu-latest` since Nov 2026. Upgrade it (1.65 is out), check every test still passes,
-  then go back to `ubuntu-latest` in `build.yml` and `e2e-nightly.yml` (24.04 runners won't last forever).
+- **Browser tests in CI** (owner, Nov 2026: 7 minutes felt too long): on Ubuntu 24.04 with Playwright 1.56 a pull
+  request's run took 7 min 20 s, 5 min 31 s of it installing Playwright's system packages. On `ubuntu-latest` (26.04)
+  with 1.65.2 it takes 2 min 13 s: setup 20 s, the tests (`run.py --jobs 4`) 1 min 37 s. What's left is the tests:
+  more `--jobs`, shorter fixed waits (`wait_for_timeout`) where a condition can be waited for instead. Watch the setup
+  time if it creeps back (Playwright's container image or a browser cache would cut it).
 - **Exercises tab speed**: opening it draws all 358 thumbnails: 4.6 s on a slow phone (CPU 4×; 17 ms each, every
   thumbnail resolves its whole exercise). Draw them as they scroll into view, and/or cache each one. Startup itself is
   fine (1.3–1.9 s at 4–6× on a repeat visit), so no lazy-loading of the library (`tools/perf.py`, Oct 2026).
