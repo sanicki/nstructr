@@ -47,6 +47,8 @@ Roadmap step 1 (below) was **done** apart from going live (item 6 below). What's
 - Nov 2026: the nightly browser tests failed from Nov 18 at setup ("Playwright does not support chromium on
   ubuntu26.04-x64"): GitHub's `ubuntu-latest` became Ubuntu 26.04, which Playwright 1.56 doesn't support. Both
   browser-test jobs now run on `ubuntu-24.04` (ROADMAP: upgrade Playwright, then go back).
+- Nov 2026: Playwright upgraded to 1.65.2 and both jobs back on `ubuntu-latest` (owner). A pull request's browser
+  tests took 7 min 20 s, 5 min 31 s of it installing Playwright and its system packages (ROADMAP item).
 - Verified: build passes; both builds load 136 exercises, seed the routine, play exercises, run the full 24-item
   routine to completion; old and bare files import; gestures, editor, NstructR+ speech, layout, floor height and
   arm-circle continuity tests pass against the served build.
